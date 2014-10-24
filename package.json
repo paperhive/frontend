@@ -1,0 +1,16 @@
+{
+  "name": "paperhub-frontend",
+  "version": "0.0.0",
+  "description": "PaperHub frontend",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nico Schlömer <nico.schloemer@gmail.com>",
+  "license": "GPL-3.0",
+  "private": true,
+  "dependencies": {
+    "angular": "^1.3.0",
+    "bootstrap": "^3.2.0",
+    "pdfjs-dist": "^1.0.927"
+  }
+}

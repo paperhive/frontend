@@ -1,0 +1,27 @@
+<!doctype html>
+<html ng-app="paperHub">
+
+<head>
+  <script src="./node_modules/angular/angular.js"></script>
+  <script src="./node_modules/pdfjs-dist/build/pdf.js"></script>
+  <script>
+    PDFJS.workerSrc='./node_modules/pdfjs-dist/build/pdf.worker.js';
+  </script>
+  <script src="hello.js"></script>
+</head>
+
+<body>
+  <form name="pdfForm"
+    ng-controller="DisplayController as displayCtrl"
+    ng-submit="displayCtrl.fetchPdf()"
+    >
+    Provide PDF URL ({{displayCtrl.url}}): <input type="url" ng-model="displayCtrl.url" />
+    <input type="submit" value="Fetch" />
+  </form>
+  <br/>
+  <br/>
+  <br/>
+  <canvas id="the-canvas" style="border:1px solid black;"/>
+</body>
+
+</html>
