@@ -13,7 +13,7 @@
         function(pdf) {
           // Using promise to fetch the page
           pdf.getPage(1).then(function(page) {
-            var scale = 0.5;
+            var scale = 1.0;
             var viewport = page.getViewport(scale);
 
             // Prepare canvas using PDF page dimensions
