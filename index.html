@@ -2,19 +2,20 @@
 <html ng-app="paperHub">
 
 <head>
-<script src="./bower_components/angular/angular.js"></script>
-<script src="./bower_components/pdfjs-dist/build/pdf.js"></script>
-<script>
-PDFJS.workerSrc='./bower_components/pdfjs-dist/build/pdf.worker.js';
-</script>
-<script src="app.js"></script>
-<!-- Bootstrap core CSS -->
-<link href="./bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="starter-template.css" rel="stylesheet">
+  <script src="./bower_components/angular/angular.js"></script>
+  <script src="./bower_components/pdfjs-dist/build/pdf.js"></script>
+  <script>
+  PDFJS.workerSrc='./bower_components/pdfjs-dist/build/pdf.worker.js';
+  </script>
+  <script src="app.js"></script>
+  <!-- Bootstrap core CSS -->
+  <link href="./bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="starter-template.css" rel="stylesheet">
 </head>
 
 <body>
 
+  <!-- Header bar -->
   <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
       <div class="navbar-header">
@@ -36,20 +37,16 @@ PDFJS.workerSrc='./bower_components/pdfjs-dist/build/pdf.worker.js';
     </div>
   </div>
 
+  <!-- Page content -->
   <div class="container">
-    <div class="row">
-      <h1>Display PDF</h1>
-      <form
-      name="pdfForm"
-      role="form"
-      ng-controller="DisplayController as displayCtrl"
-      ng-submit="displayCtrl.fetchPdf()"
-      >
-      <div class="form-group">
-        <input type="url" ng-model="displayCtrl.url" placeholder="PDF URL" />
-        <input class="btn btn-lg btn-default" type="submit" value="Fetch" />
-      </div>
-    </form>
+    <div class="row" ng-controller="DisplayController as displayCtrl" >
+      <h1>Display PDF {{displayCtrl.url}}</h1>
+      <form name="pdfForm" role="form" ng-submit="displayCtrl.fetchPdf()">
+        <div class="form-group">
+          <input type="url" ng-model="displayCtrl.url" placeholder="http://arxiv.org/pdf/1208.0264v3.pdf" />
+          <input class="btn btn-lg btn-default" type="submit" value="Fetch" />
+        </div>
+      </form>
     </div>
 
     <div class="row">

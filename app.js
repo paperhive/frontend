@@ -4,12 +4,12 @@
   app.controller('DisplayController', function() {
     this.display = {};
     // 'use strict';
-    var url = 'http://arxiv.org/pdf/1208.0264v3.pdf';
+    var url = '';
 
     this.fetchPdf = function() {
-      console.log(url);
+      console.log(this.url);
       // Fetch the PDF document from the URL using promises
-      PDFJS.getDocument(url).then(
+      PDFJS.getDocument(this.url).then(
         function(pdf) {
           // Using promise to fetch the page
           pdf.getPage(1).then(function(page) {
@@ -25,12 +25,12 @@
             // Render PDF page into canvas context
             var renderContext = {
               canvasContext: context,
-            viewport: viewport
+              viewport: viewport
             };
             page.render(renderContext);
           });
         });
-    };
-  });
-}
+      };
+    });
+  }
 )();
