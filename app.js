@@ -48,5 +48,9 @@
         });
       };
     });
+
+    jQuery(function ($) {
+      $('#the-canvas-wrapper').annotator();
+    });
   }
 )();
