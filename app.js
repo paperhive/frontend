@@ -12,11 +12,17 @@
       PDFJS.getDocument(this.url).then(
         function(pdf) {
           var canvasWrapper = document.getElementById('the-canvas-wrapper');
+          var wrapperWidth = canvasWrapper.offsetWidth;
           for(var i = 0; i < pdf.numPages; i++){
             // Using promise to fetch the page
             pdf.getPage(i).then(function(page) {
+              // Scale such that the width of the viewport is the fills the
+              // wrapper.
               var scale = 1.0;
               var viewport = page.getViewport(scale);
+              scale = wrapperWidth / viewport.width;
+              console.log(scale);
+              viewport = page.getViewport(scale);
 
               // Prepare canvas using PDF page dimensions
               //var canvas = document.getElementById('the-canvas');
