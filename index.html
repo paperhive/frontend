@@ -8,6 +8,10 @@
 <!--link rel="stylesheet"
     href="./bower_components/annotator/annotator.min.css"-->
 
+  <!-- MathJax -->
+  <!-- TODO replace with locally loaded version-->
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&delayStartupUntil=configured&dummy=.js"></script>
+
   <script src="./bower_components/angular/angular.js"></script>
   <script src="./bower_components/angular-sanitize/angular-sanitize.js"></script>
   <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.2.js"></script>
@@ -21,9 +25,11 @@
   <link href="starter-template.css" rel="stylesheet">
 
   <!-- Markdown -->
-  <script src="/bower_components/showdown/compressed/showdown.js"></script>
-  <script
-src="/bower_components/angular-markdown-filter/markdown.js"></script>
+  <!--script src="/bower_components/showdown/compressed/showdown.js"></script-->
+  <!--script src="/bower_components/angular-markdown-filter/markdown.js"></script-->
+
+  <script src="./bower_components/showdown/compressed/showdown.js"></script>
+  <script src="./bower_components/angular-markdown-directive/markdown.js"></script>
 </head>
 
 <body>
@@ -72,16 +78,18 @@ src="/bower_components/angular-markdown-filter/markdown.js"></script>
     </div>
   </div>
   </tab>
-    <tab heading="Issues" ng-controller="IssueController as issueCtrl">
-    <div class="container">
-      Issues here
-      <textarea class="form-control" ng-model='issueCtrl.body'></textarea>
-      <hr>
-      <div class="well well-lg" ng-bind-html="issueCtrl.body | markdown">
-      </div>
-      <button class='btn btn-default'>Submit</button>
-    </div>
-    </tab>
+  <tab heading="Issues" ng-controller="IssueController as issueCtrl">
+  <div class="container">
+    Issues here
+    <textarea class="form-control" ng-model='issueCtrl.body'></textarea>
+    <hr>
+    <div class="well well-lg" btf-markdown="issueCtrl.body"></div>
+    <!-- The raw HTML codes get automatically parsed by the sanitizer -->
+    <!--div class="well well-lg" ng-bind-html="issueCtrl.body | markdown"-->
+    <div class="well well-lg" dynamic="issueCtrl.body"></div>
+    <button class='btn btn-default'>Submit</button>
+  </div>
+  </tab>
   </tabset>
 
 </body>

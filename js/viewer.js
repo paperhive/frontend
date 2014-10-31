@@ -1,6 +1,49 @@
 (function(){
-  var app = angular.module('paperHub', ['ui.bootstrap', 'ngSanitize', 'markdown']);
+  var app = angular.module('paperHub', ['ui.bootstrap', 'ngSanitize', 'btford.markdown']);
 
+  //// http://stackoverflow.com/questions/16087146/getting-mathjax-to-update-after-changes-to-angularjs-model
+  MathJax.Hub.Config({
+    skipStartupTypeset: true,
+    messageStyle: "none",
+    "HTML-CSS": {
+      showMathMenu: false
+    }
+  });
+  MathJax.Hub.Configured();
+
+  app.directive("mathjaxBind", function() {
+    return {
+      restrict: "A",
+    scope:{
+      text: "@mathjaxBind"
+    },
+    controller: ["$scope", "$element", "$attrs", function($scope, $element, $attrs) {
+      $scope.$watch('text', function(value) {
+        var $script = angular.element("<script type='math/tex'>")
+        .html(value === undefined ? "" : value);
+      $element.html("");
+      $element.append($script);
+      MathJax.Hub.Queue(["Reprocess", MathJax.Hub, $element[0]]);
+      });
+    }]
+    };
+  });
+  app.directive('dynamic', function ($compile) {
+    return {
+      restrict: 'A',
+    replace: true,
+    link: function (scope, ele, attrs) {
+      scope.$watch(attrs.dynamic, function(html) {
+        // TODO intercept the case of empty html
+        console.log('xx', html);
+        html = html.replace(/\$\$([^$]+)\$\$/g, "<span style='display:block' mathjax-bind=\"$1\"></span>");
+        html = html.replace(/\$([^$]+)\$/g, "<div style='display:inline-block' mathjax-bind=\"$1\"></div>");
+        ele.html(html);
+        $compile(ele.contents())(scope);
+      });
+    }
+    };
+  });
 
   app.controller('IssueController', function() {
   });
