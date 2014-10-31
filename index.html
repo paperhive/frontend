@@ -1,5 +1,5 @@
-<!doctype html>
-<html ng-app="paperHub">
+<!DOCTYPE html>
+<html lang="en" ng-app="paperHub">
 
 <head>
 <!-- Annotator -->
@@ -9,6 +9,7 @@
     href="./bower_components/annotator/annotator.min.css"-->
 
   <script src="./bower_components/angular/angular.js"></script>
+  <script src="./bower_components/angular-sanitize/angular-sanitize.js"></script>
   <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.2.js"></script>
   <script src="./bower_components/pdfjs-dist/build/pdf.js"></script>
   <script>
@@ -18,6 +19,11 @@
   <!-- Bootstrap core CSS -->
   <link href="./bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="starter-template.css" rel="stylesheet">
+
+  <!-- Markdown -->
+  <script src="/bower_components/showdown/compressed/showdown.js"></script>
+  <script
+src="/bower_components/angular-markdown-filter/markdown.js"></script>
 </head>
 
 <body>
@@ -66,8 +72,15 @@
     </div>
   </div>
   </tab>
-    <tab heading="Issues">
+    <tab heading="Issues" ng-controller="IssueController as issueCtrl">
+    <div class="container">
       Issues here
+      <textarea class="form-control" ng-model='issueCtrl.body'></textarea>
+      <hr>
+      <div class="well well-lg" ng-bind-html="issueCtrl.body | markdown">
+      </div>
+      <button class='btn btn-default'>Submit</button>
+    </div>
     </tab>
   </tabset>
 

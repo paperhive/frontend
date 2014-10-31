@@ -1,5 +1,9 @@
 (function(){
-  var app = angular.module('paperHub', ['ui.bootstrap']);
+  var app = angular.module('paperHub', ['ui.bootstrap', 'ngSanitize', 'markdown']);
+
+
+  app.controller('IssueController', function() {
+  });
 
   app.controller('DisplayController', function() {
     this.display = {};
