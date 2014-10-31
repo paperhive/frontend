@@ -1,5 +1,5 @@
 (function(){
-  var app = angular.module('paperHub', []);
+  var app = angular.module('paperHub', ['ui.bootstrap']);
 
   app.controller('DisplayController', function() {
     this.display = {};
