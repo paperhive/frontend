@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   width="200"
+   height="200"
+   id="svg2987"
+   version="1.1"
+>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     showgrid="false"
+  />
+  <metadata id="metadata2992">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g id="layer1">
+    <circle
+       cx="100"
+       cy="100"
+       r="100"
+       fill="black"
+    />
+    <!-- Paper -->
+    <rect x="55" y="37" width="90" height="127" style="fill:#f9f8f4" />
+    <!-- Writing -->
+    <rect x="70" y="60" width="60" height="5" style="fill:#000000" />
+    <rect x="70" y="75" width="60" height="5" style="fill:#000000" />
+    <rect x="70" y="90" width="60" height="5" style="fill:#000000" />
+    <rect x="70" y="105" width="60" height="5" style="fill:#000000" />
+    <rect x="70" y="120" width="60" height="5" style="fill:#000000" />
+    <!-- Annotations -->
+    <rect x="135" y="60" width="20" height="20" style="fill:#f9e069" />
+    <rect x="135" y="100" width="20" height="20" style="fill:#f9e069" />
+  </g>
+</svg>
