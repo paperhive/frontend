@@ -19,6 +19,7 @@
   <script>
   PDFJS.workerSrc='./bower_components/pdfjs-dist/build/pdf.worker.js';
   </script>
+  <script src="js/filters.js"></script>
   <script src="js/viewer.js"></script>
   <!-- Bootstrap core CSS -->
   <link href="./bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -73,7 +74,7 @@
         <!--canvas id="the-canvas" style="border:1px solid black;"/-->
       </div>
       <div class="col-md-4">
-        Annotations column
+        Aannotations column
       </div>
     </div>
   </div>
@@ -83,11 +84,14 @@
     Issues here
     <textarea class="form-control" ng-model='issueCtrl.body'></textarea>
     <hr>
-    <div class="well well-lg" btf-markdown="issueCtrl.body"></div>
+    <div class="well well-lg" ng-model="issueCtrl.body" mymathjax mymarkdown></div>
+    <!--div class="well well-lg" ng-model="issueCtrl.body" phmarkdown></div-->
     <!-- The raw HTML codes get automatically parsed by the sanitizer -->
     <!--div class="well well-lg" ng-bind-html="issueCtrl.body | markdown"-->
-    <div class="well well-lg" dynamic="issueCtrl.body"></div>
-    <button class='btn btn-default'>Submit</button>
+    <!--div class="well well-lg" ng-model="issueCtrl.body" mymathjax></div-->
+    <!--button class='btn btn-default'>Submit</button-->
+    <!--div class="well well-lg" dynamic="issueCtrl.body"
+        btf-markdown="issueCtrl.body"></div-->
   </div>
   </tab>
   </tabset>
