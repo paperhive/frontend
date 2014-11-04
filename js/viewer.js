@@ -1,97 +1,59 @@
 (function(){
-  var app = angular.module('paperHub', ['ui.bootstrap', 'ngSanitize', 'btford.markdown', 'paperhub.markdown']);
+  var paperhub = angular.module('paperHub', ['ui.bootstrap', 'ngSanitize']);
 
-  //// http://stackoverflow.com/questions/16087146/getting-mathjax-to-update-after-changes-to-angularjs-model
   MathJax.Hub.Config({
     skipStartupTypeset: true,
     messageStyle: "none",
     "HTML-CSS": {
       showMathMenu: false
-    }
+    },
+    extension: ["Safe.js"]
   });
   MathJax.Hub.Configured();
 
-  app.directive("mathjaxBind", function() {
-    return {
-      restrict: "A",
-      scope:{
-        text: "@mathjaxBind"
-      },
-      controller: ["$scope", "$element", "$attrs", function($scope, $element, $attrs) {
-        $scope.$watch('text', function(value) {
-          var $script = angular.element("<script type='math/tex'>")
-          .html(value === undefined ? "" : value);
-          console.log('gg', $script);
-          console.log('gg', $element, $element.toString());
-          console.log('gg', $element[0]);
-          $element.html("");
-          $element.append($script);
-          console.log('ee', $element[0]);
-          MathJax.Hub.Queue(["Reprocess", MathJax.Hub, $element[0]]);
-        });
-      }]
+  paperhub.directive('kramjax', function ($sanitize) {
+    var renderer = new kramed.Renderer();
+    var orig_renderer = renderer.math;
+    renderer.math = function (content, language, display) {
+      if (display) {
+        return '<div class="mathjax">' + content + '</div>';
+      } else {
+        return '<span class="mathjax">' + content + '</span>';
+      }
     };
-  });
-  app.directive('mymathjax', function ($compile) {
+
     return {
-      require: "ngModel",
-      restrict: 'A',
-      priority: 5,
-      replace: true,
+      restrict: 'E',
+      require: 'ngModel',
       link: function (scope, element, attrs, ngModel) {
         scope.$watch(
-          // Watch the contents of the model for change
-          function() {return ngModel.$modelValue;},
-          function(modelValue) {
-            // TODO intercept the case of empty html
-            console.log('xx', modelValue);
-            //modelValue = modelValue.replace(/\$\$([^$]+)\$\$/g, "<span style='display:block' mathjax-bind=\"$1\"></span>");
-            //modelValue = modelValue.replace(/\$([^$]+)\$/g, "<div style='display:inline-block' mathjax-bind=\"$1\"></div>");
-            //modelValue = modelValue.replace(/\$([^$]+)\$/g, "<div style='color:green'>GO GO</div>");
-            modelValue += "Test";
-            console.log('XX', modelValue);
-            element.html(modelValue);
-            //$compile(element.contents())(scope);
-          });
+          function () {
+            return ngModel.$modelValue;
+          },
+          function(newValue){
+            try {
+              element.html($sanitize(kramed(newValue, {renderer: renderer})));
+              // replace span/div tags with script tags
+              $(element[0]).find('.mathjax').forEach(function (el) {
+                $(el).replaceWith(orig_renderer(
+                  $(el).text(), 'math/tex', $(el).prop('tagName')==='DIV'
+                ));
+              });
+              MathJax.Hub.Queue(["Typeset", MathJax.Hub, element[0]]);
+            } catch (e) {
+              console.log('Error: ' + e);
+            }
+          }
+        );
       }
     };
   });
-  app.directive('mymarkdown', function ($compile) {
-    return {
-      require: "ngModel",
-      restrict: 'A',
-      priority: 10,
-      replace: true,
-      link: function (scope, element, attrs, ngModel) {
-        scope.$watch(
-          function() {return ngModel.$modelValue;},
-          function(modelValue) {
-            modelValue += "2";
-            element.html(modelValue);
-          });
-      }
-    };
-  });
-  //app.directive("btnCheckbox", function(){
-  //  return {
-  //    require: "ngModel",
-  //    replace: true,
-  //    link: function(scope, element, attr, ngModel){
-  //      console.log("YES");
-  //      scope.$watch(
-  //        function() {return ngModel.$modelValue;},
-  //        function(modelValue) {
-  //          console.log('MODEL', modelValue);
-  //        });
-  //    }
-  //  };
-  //});
 
 
-  app.controller('IssueController', function() {
+  paperhub.controller('IssueController', function() {
   });
 
-  app.controller('DisplayController', function() {
+  paperhub.controller('DisplayController', function() {
     this.display = {};
     // 'use strict';
     var url = '';
