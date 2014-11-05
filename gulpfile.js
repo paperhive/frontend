@@ -40,6 +40,10 @@ gulp.task('js', ['templates'], function () {
         'MathJax': {
           path: 'bower_components/MathJax/MathJax.js',
           exports: 'MathJax'
+        },
+        'pdfjs': {
+          path: 'bower_components/pdfjs-dist/build/pdf.combined.js',
+          exports: 'PDFJS',
         }
       }
     }))
