@@ -27,14 +27,6 @@ gulp.task('js', ['templates'], function () {
           path: 'bower_components/angular/angular.js',
           exports: 'angular',
         },
-        'angular-bootstrap': {
-          path: 'bower_components/angular-bootstrap/ui-bootstrap.js',
-          exports: 'angular',
-          depends: {
-            angular: 'angular',
-            'angular-bootstrap-tpls': 'angular-bootstrap-tpls'
-          }
-        },
         'angular-bootstrap-tpls': {
           path: 'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
           exports: 'angular',

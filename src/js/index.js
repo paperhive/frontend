@@ -1,6 +1,6 @@
 (function(){
   var angular = require('angular');
-  require('angular-bootstrap'); // provides 'ui.bootstrap' module
+  require('angular-bootstrap-tpls'); // provides 'ui.bootstrap' module
   require('angular-sanitize'); // provides 'ngSanitize' module
   require('../../tmp/templates.js'); // provides 'templates' module
 
