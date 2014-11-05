@@ -29,12 +29,12 @@ gulp.task('js', ['templates'], function () {
         },
         'angular-bootstrap-tpls': {
           path: 'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
-          exports: 'angular',
+          exports: 'null',
           depends: {angular: 'angular'}
         },
         'angular-sanitize': {
           path: 'bower_components/angular-sanitize/angular-sanitize.js',
-          exports: 'angular',
+          exports: 'null',
           depends: {angular: 'angular'}
         },
         'MathJax': {
