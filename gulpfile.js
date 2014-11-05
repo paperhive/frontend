@@ -44,7 +44,11 @@ gulp.task('js', ['templates'], function () {
         'pdfjs': {
           path: 'bower_components/pdfjs-dist/build/pdf.combined.js',
           exports: 'PDFJS',
-        }
+        },
+        'highlightjs': {
+          path: 'bower_components/highlightjs/highlight.pack.js',
+          exports: 'hljs'
+        },
       }
     }))
     .pipe(gulp.dest('build'));

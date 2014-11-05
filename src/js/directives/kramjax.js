@@ -1,8 +1,18 @@
 var kramed = require('kramed');
 var MathJax = require('MathJax');
 
+// syntax highlighting with highlight.js
+kramed.setOptions({
+  highlight: function (code) {
+    return require('highlightjs').highlightAuto(code).value;
+  }
+});
+
 module.exports = function (app) {
   app.directive('kramjax', function ($sanitize) {
+
+    // modify the kramed renderer such that math items are wrapped in
+    // div and span groups
     var renderer = new kramed.Renderer();
     var orig_renderer = renderer.math;
     renderer.math = function (content, language, display) {
