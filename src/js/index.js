@@ -1,14 +1,13 @@
 (function(){
   var angular = require('angular');
-  require('angular-bootstrap');
-  require('angular-sanitize');
+  require('angular-bootstrap'); // provides 'ui.bootstrap' module
+  require('angular-sanitize'); // provides 'ngSanitize' module
+  require('../../tmp/templates.js'); // provides 'templates' module
 
-  var paperhubTemplates = require('../../tmp/templates.js'); // browserify shim
   var paperhub = angular.module(
     'paperHub',
     ['ui.bootstrap', 'ngSanitize', 'templates']
   );
-
 
   require('./config')(paperhub);
   require('./directives')(paperhub);
