@@ -17,7 +17,7 @@ var paths = {
 };
 
 // bundle js files + dependencies with browserify
-gulp.task('js', ['clean', 'templates'], function () {
+gulp.task('js', ['templates'], function () {
   return gulp.src('src/js/index.js')
     .pipe(browserify({
       debug: debug,
@@ -55,7 +55,7 @@ gulp.task('js', ['clean', 'templates'], function () {
 });
 
 // bundle html templates via angular's templateCache
-gulp.task('templates', ['clean'], function () {
+gulp.task('templates', function () {
   return gulp.src(paths.templates, {base: 'src'})
     .pipe(templateCache({
       moduleSystem: 'Browserify',
@@ -68,7 +68,7 @@ gulp.task('templates', ['clean'], function () {
 });
 
 // copy static files
-gulp.task('static', ['clean'], function () {
+gulp.task('static', function () {
   var src = gulp.src([paths.images, paths.html], {base: 'src'})
     .pipe(gulp.dest('build'));
   var bootstrap = gulp.src('bower_components/bootstrap/fonts/*')
@@ -77,7 +77,7 @@ gulp.task('static', ['clean'], function () {
 });
 
 // compile less to css
-gulp.task('style', ['clean'], function () {
+gulp.task('style', function () {
   return gulp.src('src/less/index.less')
     .pipe(less())
     .pipe(gulp.dest('build'));
