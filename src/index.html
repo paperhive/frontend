@@ -1,0 +1,85 @@
+<!doctype html>
+
+<html lang="en" ng-app="paperHub">
+
+  <head>
+    <!-- Annotator -->
+    <!--script src="./bower_components/jquery/dist/jquery.min.js"></script-->
+    <!--script src="./bower_components/annotator/annotator-full.min.js"></script-->
+    <!--link rel="stylesheet"
+        href="./bower_components/annotator/annotator.min.css"-->
+    <!-- MathJax -->
+    <!-- TODO replace with locally loaded version-->
+    <!--
+    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&delayStartupUntil=configured&dummy=.js"></script>
+    -->
+
+    <!-- zepto (jquery replacement) -->
+    <!--
+    <script src="bower_components/zepto/zepto.js"></script>
+
+    <script src="./bower_components/angular/angular.js"></script>
+    <script src="./bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.2.js"></script>
+    <script src="./bower_components/pdfjs-dist/build/pdf.js"></script>
+    <script>
+    PDFJS.workerSrc='./bower_components/pdfjs-dist/build/pdf.worker.js';
+    </script>
+    <script src="js/filters.js"></script>
+    <script src="js/viewer.js"></script>
+    -->
+    <!-- Bootstrap core CSS -->
+    <link href="./bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="starter-template.css" rel="stylesheet">
+
+    <!-- Kramdown -->
+    <!--
+    <script src="/node_modules/kramed/lib/kramed.js"></script>
+    -->
+    <script src="templates.js"></script>
+    <script src="index.js"></script>
+  </head>
+
+  <body>
+
+    <ng-include src="templates/navbar.html"></ng-include>
+
+    <tabset>
+    <tab heading="Paper">
+    <!-- Page content -->
+    <div class="container" ng-controller="DisplayController as displayCtrl" >
+      <div class="row">
+        <h1>Display PDF {{displayCtrl.url}}</h1>
+        <form name="pdfForm" role="form" ng-submit="displayCtrl.fetchPdf()">
+          <div class="form-group">
+            <input type="url" ng-model="displayCtrl.url"
+            placeholder="http://arxiv.org/pdf/1208.0264v3.pdf"
+            class="form-control"/>
+            <input class="btn btn-lg btn-default" type="submit" value="Fetch" />
+          </div>
+        </form>
+      </div>
+
+      <div class="row">
+        <div id="the-canvas-wrapper" class="col-md-8">
+          <!--canvas id="the-canvas" style="border:1px solid black;"/-->
+        </div>
+        <div class="col-md-4">
+          Aannotations column
+        </div>
+      </div>
+    </div>
+    </tab>
+    <tab heading="Issues" ng-controller="IssueController">
+      <div class="container">
+        Issues here
+        <textarea class="form-control" ng-model='body'></textarea>
+        <hr>
+        <kramjax ng-model="body"></kramjax>
+      </div>
+    </tab>
+    </tabset>
+
+  </body>
+
+</html>
