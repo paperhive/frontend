@@ -19,17 +19,20 @@
       <!--canvas id="the-canvas" style="border:1px solid black;"/-->
     </div>
     <div class="col-md-4">
-      Aannotations column
+      Annotations column
     </div>
   </div>
 </div>
 </tab>
 <tab heading="Issues" ng-controller="IssueCtrl">
   <div class="container">
-    Issues here
+    <h4>New issue</h4>
     <textarea class="form-control" ng-model='body'></textarea>
     <hr>
-    <kramjax ng-model="body"></kramjax>
+    <div style='border: 2px dotted #ccc; padding: 3px;'>
+      <kramjax ng-model="body"></kramjax>
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
   </div>
 </tab>
 </tabset>
