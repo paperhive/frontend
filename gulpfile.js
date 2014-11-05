@@ -68,6 +68,7 @@ gulp.task('static', ['clean'], function () {
   return merge(src, bootstrap);
 });
 
+// compile less to css
 gulp.task('style', ['clean'], function () {
   return gulp.src(paths.less)
     .pipe(less())
@@ -75,7 +76,7 @@ gulp.task('style', ['clean'], function () {
 });
 
 gulp.task('clean', function(cb) {
-  del(['build', 'tmp'], cb);
+  del(['build/**/*', 'tmp/**/*'], cb);
 });
 
 gulp.task('default', ['js', 'templates', 'static', 'style']);
