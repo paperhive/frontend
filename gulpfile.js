@@ -9,11 +9,11 @@ var merge = require('merge-stream');
 var debug = process.env.DEBUG || false;
 
 var paths = {
-  scripts: 'src/js/**/*.js',
+  js: 'src/js/**/*.js',
   templates: 'src/templates/**/*.html',
   images: 'src/img/**/*',
   html: 'src/index.html',
-  less: 'src/less/index.less'
+  less: 'src/less/**/*.less'
 };
 
 // bundle js files + dependencies with browserify
@@ -70,13 +70,20 @@ gulp.task('static', ['clean'], function () {
 
 // compile less to css
 gulp.task('style', ['clean'], function () {
-  return gulp.src(paths.less)
+  return gulp.src('src/less/index.less')
     .pipe(less())
     .pipe(gulp.dest('build'));
 });
 
 gulp.task('clean', function(cb) {
   del(['build/**/*', 'tmp/**/*'], cb);
+});
+
+// watch for changes
+gulp.task('watch', ['default'], function () {
+  gulp.watch([paths.js, paths.templates], ['js']);
+  gulp.watch([paths.images, paths.html], ['static']);
+  gulp.watch(paths.less, ['style']);
 });
 
 gulp.task('default', ['js', 'templates', 'static', 'style']);
