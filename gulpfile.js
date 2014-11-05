@@ -4,6 +4,7 @@ var browserify = require('gulp-browserify');
 var templateCache = require('gulp-angular-templatecache');
 var del = require('del');
 var less = require('gulp-less');
+var merge = require('merge-stream');
 
 var debug = process.env.DEBUG || false;
 
@@ -58,9 +59,13 @@ gulp.task('templates', ['clean'], function () {
     .pipe(gulp.dest('tmp'));
 });
 
+// copy static files
 gulp.task('static', ['clean'], function () {
-  return gulp.src([paths.images, paths.html], {base: 'src'})
+  var src = gulp.src([paths.images, paths.html], {base: 'src'})
     .pipe(gulp.dest('build'));
+  var bootstrap = gulp.src('bower_components/bootstrap/fonts/*')
+    .pipe(gulp.dest('build/assets/bootstrap/fonts'));
+  return merge(src, bootstrap);
 });
 
 gulp.task('style', ['clean'], function () {
