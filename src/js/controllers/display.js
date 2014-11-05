@@ -1,3 +1,5 @@
+var PDFJS = require('pdfjs');
+
 module.exports = function (app) {
   app.controller('DisplayCtrl', function() {
     this.display = {};
