@@ -1,7 +1,7 @@
 <tabset>
 <tab heading="Paper">
 <!-- Page content -->
-<div class="container" ng-controller="DisplayController as displayCtrl" >
+<div class="container" ng-controller="DisplayCtrl as displayCtrl" >
   <div class="row">
     <h1>Display PDF {{displayCtrl.url}}</h1>
     <form name="pdfForm" role="form" ng-submit="displayCtrl.fetchPdf()">
@@ -24,7 +24,7 @@
   </div>
 </div>
 </tab>
-<tab heading="Issues" ng-controller="IssueController">
+<tab heading="Issues" ng-controller="IssueCtrl">
   <div class="container">
     Issues here
     <textarea class="form-control" ng-model='body'></textarea>
