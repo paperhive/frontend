@@ -1,3 +1,6 @@
+var kramed = require('kramed');
+var MathJax = require('MathJax');
+
 module.exports = function (app) {
   app.directive('kramjax', function ($sanitize) {
     var renderer = new kramed.Renderer();

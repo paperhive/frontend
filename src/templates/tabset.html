@@ -1,0 +1,35 @@
+<tabset>
+<tab heading="Paper">
+<!-- Page content -->
+<div class="container" ng-controller="DisplayController as displayCtrl" >
+  <div class="row">
+    <h1>Display PDF {{displayCtrl.url}}</h1>
+    <form name="pdfForm" role="form" ng-submit="displayCtrl.fetchPdf()">
+      <div class="form-group">
+        <input type="url" ng-model="displayCtrl.url"
+        placeholder="http://arxiv.org/pdf/1208.0264v3.pdf"
+        class="form-control"/>
+        <input class="btn btn-lg btn-default" type="submit" value="Fetch" />
+      </div>
+    </form>
+  </div>
+
+  <div class="row">
+    <div id="the-canvas-wrapper" class="col-md-8">
+      <!--canvas id="the-canvas" style="border:1px solid black;"/-->
+    </div>
+    <div class="col-md-4">
+      Aannotations column
+    </div>
+  </div>
+</div>
+</tab>
+<tab heading="Issues" ng-controller="IssueController">
+  <div class="container">
+    Issues here
+    <textarea class="form-control" ng-model='body'></textarea>
+    <hr>
+    <kramjax ng-model="body"></kramjax>
+  </div>
+</tab>
+</tabset>
