@@ -30,6 +30,14 @@ gulp.task('js', ['clean', 'templates'], function () {
         'angular-bootstrap': {
           path: 'bower_components/angular-bootstrap/ui-bootstrap.js',
           exports: 'angular',
+          depends: {
+            angular: 'angular',
+            'angular-bootstrap-tpls': 'angular-bootstrap-tpls'
+          }
+        },
+        'angular-bootstrap-tpls': {
+          path: 'bower_components/angular-bootstrap/ui-bootstrap.js',
+          exports: 'angular',
           depends: {angular: 'angular'}
         },
         'angular-sanitize': {
