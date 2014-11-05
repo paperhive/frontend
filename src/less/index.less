@@ -1,5 +1,7 @@
 @import "../../bower_components/bootstrap/less/bootstrap.less";
 @icon-font-path: "assets/bootstrap/fonts/";
 // Import highlightjs's default color scheme. Unfortunately, gulp seems to have
-// problems processing CSS-@imports.
+// problems processing CSS-@imports. Renaming the css file into a less makes it
+// all work.
+// Bug <https://github.com/plus3network/gulp-less/issues/100>.
 @import "../../bower_components/highlightjs/styles/default.css";
