@@ -21,7 +21,6 @@ gulp.task('js', ['templates'], function () {
   return gulp.src('src/js/index.js')
     .pipe(browserify({
       debug: debug,
-      insertGlobals: true,
       shim: {
         angular: {
           path: 'bower_components/angular/angular.js',

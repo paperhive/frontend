@@ -1,5 +1,12 @@
 module.exports = function (app) {
+  // TODO: how to configure this beast?!
+  window.MathJax = {
+  };
+
+  var MathJax = require('MathJax');
+
   MathJax.Hub.Config({
+    root: 'assets/mathjax',
     skipStartupTypeset: true,
     messageStyle: "none",
     "HTML-CSS": {

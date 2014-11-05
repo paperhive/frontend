@@ -1,3 +1,3 @@
 module.exports = function (app) {
-  //require('./mathjax.js')(app);
+  require('./mathjax.js')(app);
 };
