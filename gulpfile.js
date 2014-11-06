@@ -41,6 +41,11 @@ gulp.task('js', ['templates'], function () {
           exports: null,
           depends: {angular: 'angular'}
         },
+        'angular-route': {
+          path: 'bower_components/angular-route/angular-route.js',
+          exports: null,
+          depends: {angular: 'angular'}
+        },
         /*'MathJax': {
           path: 'bower_components/MathJax/MathJax.js',
           exports: 'MathJax'
