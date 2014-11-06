@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var browserify = require('gulp-browserify');
 var templateCache = require('gulp-angular-templatecache');
-var del = require('del');
+var clean = require('gulp-clean');
 var less = require('gulp-less');
 var merge = require('merge-stream');
 var connect = require('gulp-connect');
@@ -90,8 +90,9 @@ gulp.task('style', function () {
     .pipe(gulp.dest('build'));
 });
 
-gulp.task('clean', function(cb) {
-  del(['build/**/*', 'tmp/**/*'], cb);
+gulp.task('clean', function() {
+  return gulp.src(['build/*', 'tmp/*'], {read: false})
+    .pipe(clean());
 });
 
 // watch for changes
