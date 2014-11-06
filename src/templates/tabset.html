@@ -27,11 +27,12 @@
 </div>
 </tab>
 <tab heading="Issues">
-<div class="container">
+<div class="container col-md-8 col-md-offset-1">
   <h4>New issue</h4>
   <form name="issueForm" ng-controller="IssueCtrl"
     ng-submit="issueForm.$valid && IssueCtrl.addAnnotation(pdf)" novalidate>
-    <textarea class="form-control" ng-model='body' required></textarea>
+    <textarea class="form-control" ng-model='body' rows="6"
+      style='resize:vertical;' required></textarea>
     <hr>
     <label for="preview">Preview</label>
     <div style='border: 2px dotted #ccc; padding: 3px;' id=preview>
