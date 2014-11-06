@@ -3,8 +3,8 @@
 <!-- Page content -->
 <div class="container" ng-controller="DisplayCtrl as displayCtrl" >
   <div class="row">
-    <h4>View PDF</h4>
-    <form name="pdfForm" role="form" ng-submit="displayCtrl.fetchPdf()">
+    <h4>View PDF G{{displayCtrl.fetchUrl}}G</h4>
+    <form name="pdfForm" role="form" ng-submit="displayCtrl.setFetchUrl()">
       <div class="form-group">
         <div class="col-xs-4">
           <input type="url" ng-model="displayCtrl.url"
@@ -17,26 +17,45 @@
   </div>
 
   <div class="row">
-    <div id="the-canvas-wrapper" class="col-md-8">
-      <!--canvas id="the-canvas" style="border:1px solid black;"/-->
-    </div>
+    <show-pdf url='{{displayCtrl.fetchUrl}}'></show-pdf>
+    <!--div id="the-canvas-wrapper" class="col-md-8">
+    </div-->
     <div class="col-md-4">
       Annotations column
     </div>
   </div>
 </div>
 </tab>
-<tab heading="Issues" ng-controller="IssueCtrl">
-  <div class="container">
-    <h4>New issue</h4>
-    <textarea class="form-control" ng-model='body'></textarea>
+<tab heading="Issues">
+<div class="container">
+  <h4>New issue</h4>
+  <form name="issueForm" ng-controller="IssueCtrl"
+    ng-submit="issueForm.$valid && IssueCtrl.addAnnotation(pdf)" novalidate>
+    <textarea class="form-control" ng-model='body' required></textarea>
     <hr>
     <label for="preview">Preview</label>
     <div style='border: 2px dotted #ccc; padding: 3px;' id=preview>
       <kramjax ng-model="body"></kramjax>
     </div>
     <hr>
-    <button type="submit" class="btn btn-default">Submit</button>
-  </div>
+    <!-- Open annotation motivations -->
+    <label>Motivation</label>
+    <label class="radio-inline">
+      <input type="radio" name="radioOptions" id="inlineCheckbox1" value="option1">Comment
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="radioOptions" id="inlineCheckbox2" value="option2">Edit
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="radioOptions" id="inlineCheckbox3" value="option3">Question
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="radioOptions" id="inlineCheckbox4" value="option4">Link
+    </label>
+    <hr>
+    <button type="submit" class="btn btn-default"
+      ng-disabled="issueForm.$invalid">Submit</button>
+  </form>
+</div>
 </tab>
 </tabset>
