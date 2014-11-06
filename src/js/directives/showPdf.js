@@ -11,6 +11,9 @@ module.exports = function (app) {
           return ngModel.$modelValue;
         },
         function(url) {
+          if (url === undefined) {
+            return;
+          }
           // Fetch the PDF document from the URL using promises
           PDFJS.getDocument(url).then(
             function(pdf) {
