@@ -6,6 +6,8 @@ var del = require('del');
 var less = require('gulp-less');
 var merge = require('merge-stream');
 var connect = require('gulp-connect');
+var sourcemaps = require('gulp-sourcemaps');
+var gutil = require('gulp-util');
 
 var debug = process.env.DEBUG || false;
 
@@ -82,7 +84,9 @@ gulp.task('static', function () {
 // compile less to css
 gulp.task('style', function () {
   return gulp.src('src/less/index.less')
+    .pipe(debug ? sourcemaps.init() : gutil.noop())
     .pipe(less())
+    .pipe(debug ? sourcemaps.write() : gutil.noop())
     .pipe(gulp.dest('build'));
 });
 
