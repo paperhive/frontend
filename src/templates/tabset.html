@@ -1,5 +1,6 @@
 <tabset>
-<tab heading="&#xf0f6; Article">
+<tab>
+<tab-heading><i class="fa fa-file-text-o fa-fw"></i> Article</tab-heading>
 <!-- Page content -->
 <div class="container" ng-controller="DisplayCtrl" >
   <div class="row">
@@ -14,18 +15,16 @@
       </div>
     </form>
   </div>
-
   <div class="row">
     <pdf ng-model="fetchUrl" class="col-md-8"></pdf>
-    <!--div id="the-canvas-wrapper" class="col-md-8">
-    </div-->
     <div class="col-md-4">
       Annotations column
     </div>
   </div>
 </div>
 </tab>
-<tab heading="&#xf040; Annotations">
+<tab>
+<tab-heading><i class="fa fa-pencil fa-fw"></i> Annotations</tab-heading>
 <div class="container col-md-8 col-md-offset-1">
   <h4>New issue</h4>
   <form name="issueForm" ng-controller="IssueCtrl"

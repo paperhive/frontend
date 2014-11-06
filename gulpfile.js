@@ -6,6 +6,8 @@ var del = require('del');
 var less = require('gulp-less');
 var merge = require('merge-stream');
 var connect = require('gulp-connect');
+var sourcemaps = require('gulp-sourcemaps');
+var gutil = require('gulp-util');
 
 var debug = process.env.DEBUG || false;
 
@@ -74,13 +76,17 @@ gulp.task('static', function () {
     .pipe(gulp.dest('build'));
   var bootstrap = gulp.src('bower_components/bootstrap/fonts/*')
     .pipe(gulp.dest('build/assets/bootstrap/fonts'));
-  return merge(src, bootstrap);
+  var fontawesome = gulp.src('bower_components/fontawesome/fonts/*')
+    .pipe(gulp.dest('build/assets/fontawesome/fonts'));
+  return merge(src, bootstrap, fontawesome);
 });
 
 // compile less to css
 gulp.task('style', function () {
   return gulp.src('src/less/index.less')
+    .pipe(debug ? sourcemaps.init() : gutil.noop())
     .pipe(less())
+    .pipe(debug ? sourcemaps.write() : gutil.noop())
     .pipe(gulp.dest('build'));
 });
 

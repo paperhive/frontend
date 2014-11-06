@@ -3,6 +3,8 @@ module.exports = function (app) {
   window.MathJax = {
   };
 
+  var $ = require('jquery');
+  console.log($);
   var MathJax = require('MathJax');
 
   MathJax.Hub.Config({
