@@ -1,14 +1,13 @@
 <tabset>
 <tab heading="&#xf0f6; Article">
 <!-- Page content -->
-<div class="container" ng-controller="DisplayCtrl as displayCtrl" >
+<div class="container" ng-controller="DisplayCtrl" >
   <div class="row">
-    <h4>View PDF G{{displayCtrl.fetchUrl}}G</h4>
-    <form name="pdfForm" role="form" ng-submit="displayCtrl.setFetchUrl()">
+    <h4>View PDF {{url}} {{fetchUrl}}</h4>
+    <form name="pdfForm" role="form" ng-submit="fetchUrl = url">
       <div class="form-group">
         <div class="col-xs-4">
-          <input type="url" ng-model="displayCtrl.url"
-          placeholder="Enter PDF URL"
+          <input type="url" ng-model="url" placeholder="Enter PDF URL"
           class="form-control"/>
         </div>
         <input class="btn btn-default" type="submit" value="Fetch" />
@@ -17,7 +16,7 @@
   </div>
 
   <div class="row">
-    <show-pdf url='{{displayCtrl.fetchUrl}}'></show-pdf>
+    <pdf ng-model="fetchUrl" class="col-md-8"></pdf>
     <!--div id="the-canvas-wrapper" class="col-md-8">
     </div-->
     <div class="col-md-4">
