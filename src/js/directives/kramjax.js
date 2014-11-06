@@ -1,5 +1,6 @@
 var kramed = require('kramed');
 var MathJax = require('MathJax');
+var $ = require('jquery');
 
 // syntax highlighting with highlight.js
 kramed.setOptions({
@@ -33,9 +34,11 @@ module.exports = function (app) {
           },
           function(newValue){
             try {
-              element.html($sanitize(kramed(newValue, {renderer: renderer})));
+              element.html(
+                $sanitize(kramed(newValue || '', {renderer: renderer}))
+              );
               // replace span/div tags with script tags
-              $(element[0]).find('.mathjax').forEach(function (el) {
+              $(element[0]).find('.mathjax').each(function (index, el) {
                 $(el).replaceWith(orig_renderer(
                   $(el).text(), 'math/tex', $(el).prop('tagName')==='DIV'
                 ));
