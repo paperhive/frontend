@@ -1,14 +1,10 @@
 module.exports = function (app) {
-  // TODO: how to configure this beast?!
-  window.MathJax = {
-  };
-
-  var $ = require('jquery');
-  console.log($);
+  // TODO: how to load+configure this beast via broserify/require()?!
+  /*
   var MathJax = require('MathJax');
+  */
 
   MathJax.Hub.Config({
-    root: 'assets/mathjax',
     skipStartupTypeset: true,
     messageStyle: "none",
     "HTML-CSS": {
