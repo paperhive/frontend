@@ -94,7 +94,6 @@ gulp.task('js', ['templates'], function () {
         },
       }
     }))
-    .pipe(browserify(browserify_args))
     .pipe(debug ? gutil.noop() : uglify())
     .pipe(gulp.dest('build'));
 });
