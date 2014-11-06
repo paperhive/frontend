@@ -9,6 +9,8 @@ var connect = require('gulp-connect');
 var sourcemaps = require('gulp-sourcemaps');
 var gutil = require('gulp-util');
 var uglify = require('gulp-uglify');
+var minifyCSS = require('gulp-minify-css');
+var minifyHTML = require('gulp-minify-html');
 
 var debug = process.env.DEBUG || false;
 
@@ -19,6 +21,38 @@ var paths = {
   html: 'src/index.html',
   less: 'src/less/**/*.less',
   build: 'build/**/*'
+};
+
+var browserify_args = {
+  debug: debug,
+  shim: {
+    angular: {
+      path: 'bower_components/angular/angular.js',
+      exports: 'angular',
+    },
+    'angular-bootstrap-tpls': {
+      path: 'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+      exports: null,
+      depends: {angular: 'angular'}
+    },
+    'angular-sanitize': {
+      path: 'bower_components/angular-sanitize/angular-sanitize.js',
+      exports: null,
+      depends: {angular: 'angular'}
+    },
+    /*'MathJax': {
+      path: 'bower_components/MathJax/MathJax.js',
+      exports: 'MathJax'
+    },*/
+    'pdfjs': {
+      path: 'bower_components/pdfjs-dist/build/pdf.combined.js',
+      exports: 'PDFJS',
+    },
+    'highlightjs': {
+      path: 'bower_components/highlightjs/highlight.pack.js',
+      exports: 'hljs'
+    },
+  }
 };
 
 // bundle js files + dependencies with browserify
@@ -60,6 +94,7 @@ gulp.task('js', ['templates'], function () {
         },
       }
     }))
+    .pipe(browserify(browserify_args))
     .pipe(debug ? gutil.noop() : uglify())
     .pipe(gulp.dest('build'));
 });
@@ -67,6 +102,7 @@ gulp.task('js', ['templates'], function () {
 // bundle html templates via angular's templateCache
 gulp.task('templates', function () {
   return gulp.src(paths.templates, {base: 'src'})
+    .pipe(debug ? gutil.noop() : minifyHTML())
     .pipe(templateCache({
       moduleSystem: 'Browserify',
       standalone: true,
@@ -79,13 +115,16 @@ gulp.task('templates', function () {
 
 // copy static files
 gulp.task('static', function () {
-  var src = gulp.src([paths.images, paths.html], {base: 'src'})
+  var html = gulp.src(paths.html, {base: 'src'})
+    .pipe(debug ? gutil.noop() : minifyHTML())
+    .pipe(gulp.dest('build'));
+  var images = gulp.src(paths.images, {base: 'src'})
     .pipe(gulp.dest('build'));
   var bootstrap = gulp.src('bower_components/bootstrap/fonts/*')
     .pipe(gulp.dest('build/assets/bootstrap/fonts'));
   var fontawesome = gulp.src('bower_components/fontawesome/fonts/*')
     .pipe(gulp.dest('build/assets/fontawesome/fonts'));
-  return merge(src, bootstrap, fontawesome);
+  return merge(html, images, bootstrap, fontawesome);
 });
 
 // compile less to css
@@ -94,6 +133,7 @@ gulp.task('style', function () {
     .pipe(debug ? sourcemaps.init() : gutil.noop())
     .pipe(less())
     .pipe(debug ? sourcemaps.write() : gutil.noop())
+    .pipe(debug ? gutil.noop() : minifyCSS())
     .pipe(gulp.dest('build'));
 });
 
