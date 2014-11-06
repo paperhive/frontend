@@ -8,6 +8,7 @@ var merge = require('merge-stream');
 var connect = require('gulp-connect');
 var sourcemaps = require('gulp-sourcemaps');
 var gutil = require('gulp-util');
+var uglify = require('gulp-uglify');
 
 var debug = process.env.DEBUG || false;
 
@@ -40,10 +41,10 @@ gulp.task('js', ['templates'], function () {
           exports: null,
           depends: {angular: 'angular'}
         },
-        'MathJax': {
+        /*'MathJax': {
           path: 'bower_components/MathJax/MathJax.js',
           exports: 'MathJax'
-        },
+        },*/
         'pdfjs': {
           path: 'bower_components/pdfjs-dist/build/pdf.combined.js',
           exports: 'PDFJS',
@@ -54,6 +55,7 @@ gulp.task('js', ['templates'], function () {
         },
       }
     }))
+    .pipe(debug ? gutil.noop() : uglify())
     .pipe(gulp.dest('build'));
 });
 

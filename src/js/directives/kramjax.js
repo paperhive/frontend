@@ -1,17 +1,17 @@
 var kramed = require('kramed');
-var MathJax = require('MathJax');
 var $ = require('jquery');
+// TODO: var MathJax = require('MathJax');
 
-// syntax highlighting with highlight.js
-kramed.setOptions({
-  highlight: function (code) {
-    return require('highlightjs').highlightAuto(code).value;
-  }
-});
 
 module.exports = function (app) {
-  app.directive('kramjax', function ($sanitize) {
+  // syntax highlighting with highlight.js
+  kramed.setOptions({
+    highlight: function (code) {
+      return require('highlightjs').highlightAuto(code).value;
+    }
+  });
 
+  app.directive('kramjax', ['$sanitize', function ($sanitize) {
     // modify the kramed renderer such that math items are wrapped in
     // div and span groups
     var renderer = new kramed.Renderer();
@@ -51,5 +51,5 @@ module.exports = function (app) {
         );
       }
     };
-  });
+  }]);
 };
