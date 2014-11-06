@@ -74,7 +74,9 @@ gulp.task('static', function () {
     .pipe(gulp.dest('build'));
   var bootstrap = gulp.src('bower_components/bootstrap/fonts/*')
     .pipe(gulp.dest('build/assets/bootstrap/fonts'));
-  return merge(src, bootstrap);
+  var fontawesome = gulp.src('bower_components/fontawesome/fonts/*')
+    .pipe(gulp.dest('build/assets/fontawesome/fonts'));
+  return merge(src, bootstrap, fontawesome);
 });
 
 // compile less to css
