@@ -14,12 +14,7 @@ module.exports = function (app) {
           // Fetch the PDF document from the URL using promises
           PDFJS.getDocument(url).then(
             function(pdf) {
-            //var canvasWrapper = document.getElementById('the-canvas-wrapper');
-            //var canvasWrapper = element;
-            var wrapperWidth = element.html.offsetWidth;
-            console.log('wrapperWidth', wrapperWidth);
-            wrapperWidth = 700;
-            console.log('wrapperWidth', wrapperWidth);
+            var wrapperWidth = element[0].offsetWidth;
 
             var showPage = function(page) {
               // Scale such that the width of the viewport is the fills the
