@@ -9,6 +9,7 @@ var connect = require('gulp-connect');
 var sourcemaps = require('gulp-sourcemaps');
 var gutil = require('gulp-util');
 var uglify = require('gulp-uglify');
+var minifyCSS = require('gulp-minify-css');
 
 var debug = process.env.DEBUG || false;
 
@@ -21,40 +22,42 @@ var paths = {
   build: 'build/**/*'
 };
 
+var browserify_args = {
+  debug: debug,
+  shim: {
+    angular: {
+      path: 'bower_components/angular/angular.js',
+      exports: 'angular',
+    },
+    'angular-bootstrap-tpls': {
+      path: 'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+      exports: null,
+      depends: {angular: 'angular'}
+    },
+    'angular-sanitize': {
+      path: 'bower_components/angular-sanitize/angular-sanitize.js',
+      exports: null,
+      depends: {angular: 'angular'}
+    },
+    /*'MathJax': {
+      path: 'bower_components/MathJax/MathJax.js',
+      exports: 'MathJax'
+    },*/
+    'pdfjs': {
+      path: 'bower_components/pdfjs-dist/build/pdf.combined.js',
+      exports: 'PDFJS',
+    },
+    'highlightjs': {
+      path: 'bower_components/highlightjs/highlight.pack.js',
+      exports: 'hljs'
+    },
+  }
+};
+
 // bundle js files + dependencies with browserify
 gulp.task('js', ['templates'], function () {
   return gulp.src('src/js/index.js')
-    .pipe(browserify({
-      debug: debug,
-      shim: {
-        angular: {
-          path: 'bower_components/angular/angular.js',
-          exports: 'angular',
-        },
-        'angular-bootstrap-tpls': {
-          path: 'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
-          exports: null,
-          depends: {angular: 'angular'}
-        },
-        'angular-sanitize': {
-          path: 'bower_components/angular-sanitize/angular-sanitize.js',
-          exports: null,
-          depends: {angular: 'angular'}
-        },
-        /*'MathJax': {
-          path: 'bower_components/MathJax/MathJax.js',
-          exports: 'MathJax'
-        },*/
-        'pdfjs': {
-          path: 'bower_components/pdfjs-dist/build/pdf.combined.js',
-          exports: 'PDFJS',
-        },
-        'highlightjs': {
-          path: 'bower_components/highlightjs/highlight.pack.js',
-          exports: 'hljs'
-        },
-      }
-    }))
+    .pipe(browserify(browserify_args))
     .pipe(debug ? gutil.noop() : uglify())
     .pipe(gulp.dest('build'));
 });
@@ -89,6 +92,7 @@ gulp.task('style', function () {
     .pipe(debug ? sourcemaps.init() : gutil.noop())
     .pipe(less())
     .pipe(debug ? sourcemaps.write() : gutil.noop())
+    .pipe(debug ? gutil.noop() : minifyCSS())
     .pipe(gulp.dest('build'));
 });
 
