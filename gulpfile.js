@@ -2,12 +2,13 @@ var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var browserify = require('gulp-browserify');
 var templateCache = require('gulp-angular-templatecache');
-var del = require('del');
+var clean = require('gulp-clean');
 var less = require('gulp-less');
 var merge = require('merge-stream');
 var connect = require('gulp-connect');
 var sourcemaps = require('gulp-sourcemaps');
 var gutil = require('gulp-util');
+var uglify = require('gulp-uglify');
 
 var debug = process.env.DEBUG || false;
 
@@ -40,10 +41,10 @@ gulp.task('js', ['templates'], function () {
           exports: null,
           depends: {angular: 'angular'}
         },
-        'MathJax': {
+        /*'MathJax': {
           path: 'bower_components/MathJax/MathJax.js',
           exports: 'MathJax'
-        },
+        },*/
         'pdfjs': {
           path: 'bower_components/pdfjs-dist/build/pdf.combined.js',
           exports: 'PDFJS',
@@ -54,6 +55,7 @@ gulp.task('js', ['templates'], function () {
         },
       }
     }))
+    .pipe(debug ? gutil.noop() : uglify())
     .pipe(gulp.dest('build'));
 });
 
@@ -90,8 +92,9 @@ gulp.task('style', function () {
     .pipe(gulp.dest('build'));
 });
 
-gulp.task('clean', function(cb) {
-  del(['build/**/*', 'tmp/**/*'], cb);
+gulp.task('clean', function() {
+  return gulp.src(['build/*', 'tmp/*'], {read: false})
+    .pipe(clean());
 });
 
 // watch for changes

@@ -1,4 +1,4 @@
 module.exports = function (app) {
-  app.controller('IssueCtrl', function() {
-  });
+  app.controller('IssueCtrl', [function() {
+  }]);
 };
