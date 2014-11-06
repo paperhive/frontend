@@ -35,6 +35,11 @@ var browserify_args = {
       exports: null,
       depends: {angular: 'angular'}
     },
+    'angular-route': {
+      path: 'bower_components/angular-route/angular-route.js',
+      exports: null,
+      depends: {angular: 'angular'}
+    },
     'angular-sanitize': {
       path: 'bower_components/angular-sanitize/angular-sanitize.js',
       exports: null,
@@ -58,42 +63,7 @@ var browserify_args = {
 // bundle js files + dependencies with browserify
 gulp.task('js', ['templates'], function () {
   return gulp.src('src/js/index.js')
-    .pipe(browserify({
-      debug: debug,
-      shim: {
-        angular: {
-          path: 'bower_components/angular/angular.js',
-          exports: 'angular',
-        },
-        'angular-bootstrap-tpls': {
-          path: 'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
-          exports: null,
-          depends: {angular: 'angular'}
-        },
-        'angular-sanitize': {
-          path: 'bower_components/angular-sanitize/angular-sanitize.js',
-          exports: null,
-          depends: {angular: 'angular'}
-        },
-        'angular-route': {
-          path: 'bower_components/angular-route/angular-route.js',
-          exports: null,
-          depends: {angular: 'angular'}
-        },
-        /*'MathJax': {
-          path: 'bower_components/MathJax/MathJax.js',
-          exports: 'MathJax'
-        },*/
-        'pdfjs': {
-          path: 'bower_components/pdfjs-dist/build/pdf.combined.js',
-          exports: 'PDFJS',
-        },
-        'highlightjs': {
-          path: 'bower_components/highlightjs/highlight.pack.js',
-          exports: 'hljs'
-        },
-      }
-    }))
+    .pipe(browserify(browserify_args))
     .pipe(debug ? gutil.noop() : uglify())
     .pipe(gulp.dest('build'));
 });
