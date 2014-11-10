@@ -104,11 +104,10 @@ gulp.task('style', function () {
     .pipe(gulp.dest('build'));
 });
 
-gulp.task('clean', function() {
-  var clean = require('gulp-clean');
+gulp.task('clean', function(cb) {
+  var del = require('del');
 
-  return gulp.src(['build/*', 'tmp/*'], {read: false})
-    .pipe(clean());
+  del(['build/*', 'tmp/*'], cb);
 });
 
 // watch for changes
