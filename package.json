@@ -9,12 +9,16 @@
   "license": "GPL-3.0",
   "private": true,
   "dependencies": {
-    "bower": "^1.3.12"
+    "bower": "^1.3.12",
+    "browserify": "^6.2.0",
+    "underscore": "^1.7.0",
+    "vinyl-source-stream": "^1.0.0",
+    "watchify": "^2.1.1"
   },
   "devDependencies": {
+    "browserify-shim": "^3.8.0",
     "gulp": "^3.8.10",
     "gulp-angular-templatecache": "^1.4.2",
-    "gulp-browserify": "^0.5.0",
     "gulp-clean": "^0.3.1",
     "gulp-connect": "^2.2.0",
     "gulp-if": "^1.2.5",
@@ -27,5 +31,21 @@
     "jquery": "^2.1.1",
     "kramed": "^0.4.3",
     "merge-stream": "^0.1.6"
+  },
+  "browser": {
+    "angular": "./bower_components/angular/angular.js",
+    "angular-bootstrap-tpls": "./bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
+    "angular-route": "./bower_components/angular-route/angular-route.js",
+    "angular-sanitize": "./bower_components/angular-sanitize/angular-sanitize.js",
+    "pdfjs": "./bower_components/pdfjs-dist/build/pdf.combined.js",
+    "highlightjs": "./bower_components/highlightjs/highlight.pack.js"
+  },
+  "browserify-shim": {
+    "angular": {"exports": "angular"},
+    "angular-bootstrap-tpls": {"exports": null, "depends": ["angular"]},
+    "angular-route": {"exports": null, "depends": ["angular"]},
+    "angular-sanitize": {"exports": null, "depends": ["angular"]},
+    "pdfjs": {"exports": "PDFJS"},
+    "highlightjs": {"exports": "hljs"}
   }
 }

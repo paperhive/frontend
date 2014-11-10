@@ -1,8 +1,6 @@
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
-var browserify = require('gulp-browserify');
-var templateCache = require('gulp-angular-templatecache');
-var clean = require('gulp-clean');
+var source = require('vinyl-source-stream');
 var less = require('gulp-less');
 var merge = require('merge-stream');
 var connect = require('gulp-connect');
@@ -11,6 +9,7 @@ var gutil = require('gulp-util');
 var uglify = require('gulp-uglify');
 var minifyCSS = require('gulp-minify-css');
 var minifyHTML = require('gulp-minify-html');
+var _ = require('underscore');
 
 var debug = process.env.DEBUG || false;
 
@@ -23,53 +22,52 @@ var paths = {
   build: 'build/**/*'
 };
 
-var browserify_args = {
-  debug: debug,
-  shim: {
-    angular: {
-      path: 'bower_components/angular/angular.js',
-      exports: 'angular',
-    },
-    'angular-bootstrap-tpls': {
-      path: 'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
-      exports: null,
-      depends: {angular: 'angular'}
-    },
-    'angular-route': {
-      path: 'bower_components/angular-route/angular-route.js',
-      exports: null,
-      depends: {angular: 'angular'}
-    },
-    'angular-sanitize': {
-      path: 'bower_components/angular-sanitize/angular-sanitize.js',
-      exports: null,
-      depends: {angular: 'angular'}
-    },
-    /*'MathJax': {
-      path: 'bower_components/MathJax/MathJax.js',
-      exports: 'MathJax'
-    },*/
-    'pdfjs': {
-      path: 'bower_components/pdfjs-dist/build/pdf.combined.js',
-      exports: 'PDFJS',
-    },
-    'highlightjs': {
-      path: 'bower_components/highlightjs/highlight.pack.js',
-      exports: 'hljs'
-    },
-  }
-};
-
 // bundle js files + dependencies with browserify
+// (and continue to do so on updates)
+// see https://github.com/gulpjs/gulp/blob/master/docs/recipes/fast-browserify-builds-with-watchify.md
+function js (watch) {
+  var browserify = require('browserify');
+  var shim = require('browserify-shim');
+  var watchify = require('watchify');
+
+  var browserify_args = _.extend(watchify.args, {debug: debug});
+  var bundler = browserify('./src/js/index.js', browserify_args);
+
+  // use shims defined in package.json via 'browser' and 'browserify-shim'
+  // properties
+  bundler.transform(shim);
+
+  // register watchify
+  if (watch) {
+    bundler = watchify(bundler);
+  }
+
+  function rebundle () {
+    return bundler.bundle()
+      .on('error', gutil.log.bind(gutil, 'Browserify error'))
+      .pipe(debug ? gutil.noop() : uglify())
+      .pipe(source('index.js'))
+      .pipe(gulp.dest('build'));
+  }
+  bundler.on('update', rebundle);
+
+  return rebundle();
+}
+
+// bundle once
 gulp.task('js', ['templates'], function () {
-  return gulp.src('src/js/index.js')
-    .pipe(browserify(browserify_args))
-    .pipe(debug ? gutil.noop() : uglify())
-    .pipe(gulp.dest('build'));
+  return js(false);
+});
+
+// bundle with watch
+gulp.task('js:watch', ['templates'], function () {
+  return js(true);
 });
 
 // bundle html templates via angular's templateCache
 gulp.task('templates', function () {
+  var templateCache = require('gulp-angular-templatecache');
+
   return gulp.src(paths.templates, {base: 'src'})
     .pipe(debug ? gutil.noop() : minifyHTML())
     .pipe(templateCache({
@@ -107,13 +105,15 @@ gulp.task('style', function () {
 });
 
 gulp.task('clean', function() {
+  var clean = require('gulp-clean');
+
   return gulp.src(['build/*', 'tmp/*'], {read: false})
     .pipe(clean());
 });
 
 // watch for changes
-gulp.task('watch', ['default'], function () {
-  gulp.watch([paths.js, paths.templates], ['js']);
+gulp.task('watch', ['default:watch'], function () {
+  gulp.watch(paths.templates, ['templates']);
   gulp.watch([paths.images, paths.html], ['static']);
   gulp.watch(paths.less, ['style']);
 });
@@ -142,3 +142,4 @@ gulp.task('serve:watch', ['default'], function () {
 
 
 gulp.task('default', ['js', 'templates', 'static', 'style']);
+gulp.task('default:watch', ['js:watch', 'templates', 'static', 'style']);
