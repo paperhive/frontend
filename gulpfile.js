@@ -7,6 +7,7 @@ var connect = require('gulp-connect');
 var sourcemaps = require('gulp-sourcemaps');
 var gutil = require('gulp-util');
 var uglify = require('gulp-uglify');
+var streamify = require('gulp-streamify');
 var minifyCSS = require('gulp-minify-css');
 var minifyHTML = require('gulp-minify-html');
 var _ = require('underscore');
@@ -45,8 +46,8 @@ function js (watch) {
   function rebundle () {
     return bundler.bundle()
       .on('error', gutil.log.bind(gutil, 'Browserify error'))
-      .pipe(debug ? gutil.noop() : uglify())
       .pipe(source('index.js'))
+      .pipe(debug ? gutil.noop() : streamify(uglify()))
       .pipe(gulp.dest('build'));
   }
   bundler.on('update', rebundle);
