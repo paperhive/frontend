@@ -86,13 +86,31 @@ gulp.task('static', function () {
   var html = gulp.src(paths.html, {base: 'src'})
     .pipe(debug ? gutil.noop() : minifyHTML())
     .pipe(gulp.dest('build'));
+
   var images = gulp.src(paths.images, {base: 'src'})
     .pipe(gulp.dest('build'));
+
   var bootstrap = gulp.src('bower_components/bootstrap/fonts/*')
     .pipe(gulp.dest('build/assets/bootstrap/fonts'));
+
   var fontawesome = gulp.src('bower_components/fontawesome/fonts/*')
     .pipe(gulp.dest('build/assets/fontawesome/fonts'));
-  return merge(html, images, bootstrap, fontawesome);
+
+  var mathjax_base = 'bower_components/MathJax/';
+  var mathjax_src = _.map([
+    'MathJax.js',
+    'config/TeX-AMS_HTML-full.js',
+    'config/Safe.js',
+    'extensions/Safe.js',
+    'fonts/HTML-CSS/TeX/woff/*.woff',
+    'jax/output/HTML-CSS/fonts/TeX/fontdata.js'
+  ], function(path) {
+    return mathjax_base + path;
+  });
+  var mathjax = gulp.src(mathjax_src, {base: mathjax_base})
+    .pipe(gulp.dest('build/assets/mathjax'));
+
+  return merge(html, images, bootstrap, fontawesome, mathjax);
 });
 
 // compile less to css
