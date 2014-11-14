@@ -6,12 +6,15 @@
   require('angular-route'); // provides 'ngRoute' module
   require('../../tmp/templates.js'); // provides 'templates' module
 
-  var paperhub = angular.module(
-    'paperHub',
-    ['ui.bootstrap', 'ngSanitize', 'ngRoute', 'templates']
-  );
+  var paperhub = angular
+    .module(
+      'paperHub',
+      ['ui.bootstrap', 'ngSanitize', 'ngRoute', 'templates']
+    )
+    .constant('config', require('../../config.json'));
 
   require('./config')(paperhub);
-  require('./directives')(paperhub);
   require('./controllers')(paperhub);
+  require('./directives')(paperhub);
+  require('./services')(paperhub);
 })();
