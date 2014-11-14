@@ -15,7 +15,6 @@ var _ = require('underscore');
 var debug = process.env.DEBUG || false;
 
 var paths = {
-  js: 'src/js/**/*.js',
   templates: 'src/templates/**/*.html',
   images: 'src/img/**/*',
   html: 'src/index.html',

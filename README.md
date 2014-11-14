@@ -13,9 +13,13 @@ git clone git@github.com:paperhub/paperhub-frontend.git
 cd paperhub-frontend
 npm install
 bower install
+cp config.json.default config.json
+```
+Adapt `config.json` to your needs and finally run:
+```
 gulp
 ```
-The resulting files for deployment are placed in the directory `build/`.
+Upon completion, the files for deployment are placed in the directory `build/`.
 
 #### Development
 Running
