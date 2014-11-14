@@ -15,6 +15,10 @@ module.exports = function (app) {
         .when('/settings', {
           templateUrl: 'templates/settings.html'
         })
+        .when('/oauth/orcid', {
+          templateUrl: 'templates/oauth.html',
+          controller: 'OauthOrcidCtrl'
+        })
         .otherwise({
           redirectTo: '/text'
         });
