@@ -11,7 +11,8 @@
       'paperHub',
       ['ui.bootstrap', 'ngSanitize', 'ngRoute', 'templates']
     )
-    .constant('config', require('../../config.json'));
+    //.constant('config', require('../../config.json'))
+    ;
 
   require('./config')(paperhub);
   require('./controllers')(paperhub);
