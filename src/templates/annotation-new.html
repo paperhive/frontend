@@ -1,0 +1,32 @@
+<!-- List issues -->
+<div class="col-md-8 col-md-offset-1">
+  <h4>New annotation</h4>
+  <form name="issueForm" ng-controller="IssueCtrl"
+    ng-submit="issueForm.$valid && IssueCtrl.addAnnotation(pdf)" novalidate>
+    <textarea class="form-control" ng-model='body' rows="6"
+      style='resize:vertical;' required></textarea>
+    <hr>
+    <label for="preview">Preview</label>
+    <div class="well well-lg" id=preview>
+      <kramjax ng-model="body" ></kramjax>
+    </div>
+    <hr>
+    <!-- Open annotation motivations -->
+    <label>Motivation</label>
+    <label class="radio-inline">
+      <input type="radio" name="radioOptions" id="inlineCheckbox1" value="option1">Comment
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="radioOptions" id="inlineCheckbox2" value="option2">Edit
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="radioOptions" id="inlineCheckbox3" value="option3">Question
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="radioOptions" id="inlineCheckbox4" value="option4">Link
+    </label>
+    <hr>
+    <button type="submit" class="btn btn-default"
+      ng-disabled="issueForm.$invalid">Submit</button>
+  </form>
+</div>
