@@ -12,6 +12,9 @@ module.exports = function (app) {
           templateUrl: 'templates/text.html',
           controller: 'DisplayCtrl'
         })
+        .when('/settings', {
+          templateUrl: 'templates/settings.html'
+        })
         .otherwise({
           redirectTo: '/text'
         });
