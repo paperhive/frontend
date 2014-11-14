@@ -1,9 +1,11 @@
 module.exports = function (app) {
 
   app.config(
-    ['$routeProvider',
-      function($routeProvider) {
-        $routeProvider
+    ['$routeProvider', function($routeProvider) {
+      $routeProvider
+        .when('/articles/:id', {
+          templateUrl: 'templates/article.html',
+        })
         .when('/annotations', {
           templateUrl: 'templates/annotation-list.html',
           controller: 'IssueListCtrl'
@@ -20,7 +22,7 @@ module.exports = function (app) {
           controller: 'OauthOrcidCtrl'
         })
         .otherwise({
-          redirectTo: '/text'
+          redirectTo: '/articles/0af5e13'
         });
       }]);
 
