@@ -9,7 +9,7 @@
 
 #### Build
 ```
-git@github.com:paperhub/paperhub-frontend.git
+git clone git@github.com:paperhub/paperhub-frontend.git
 cd paperhub-frontend
 npm install
 bower install
