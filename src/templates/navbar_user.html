@@ -1,8 +1,15 @@
 <ul ng-controller="UserCtrl" class="nav navbar-nav navbar-right">
-  <li ng-show="!auth.user">
+  <li ng-show="!auth.user && !auth.inProgress">
     <a href="{{config.api_url}}/oauth/orcid">
-      <i class="fa fa-fw fa-sign-in"></i> Sign in with ORCID
+      <i class="fa fa-fw fa-sign-in"></i> Sign in with your ORCID iD
     </a>
+  </li>
+  <li ng-show="!auth.user && auth.inProgress">
+    <p class="navbar-text">
+      <progressbar class="progress-striped active ph-no-margin" value="100">
+        <span style="padding-left: 2em; padding-right: 2em;">Signing in...</span>
+      </progressbar>
+    </p>
   </li>
   <li ng-show="auth.user" class="dropdown" is-open="dropdown_open">
     <a href class="dropdown-toggle">
@@ -11,12 +18,12 @@
     <ul class="dropdown-menu">
       <li>
         <a href="#/u/{{auth.user.username}}">
-          <i class="fa fw fa-user"></i> Profile
+          <i class="fa fa-fw fa-user"></i> Profile
         </a>
       </li>
       <li>
         <a href ng-click="auth.signout()">
-          <i class="fa fw fa-sign-out"></i> Sign out
+          <i class="fa fa-fw fa-sign-out"></i> Sign out
         </a>
       </li>
     </ul>

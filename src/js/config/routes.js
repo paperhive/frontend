@@ -3,7 +3,7 @@ module.exports = function (app) {
   app.config(
     ['$routeSegmentProvider', function($routeSegmentProvider) {
     $routeSegmentProvider
-    .when('/oauth', 'oauth')
+    .when('/oauth/orcid', 'oauth')
     .when('/articles', 'article')
     .when('/articles/:id', 'article.info')
     .when('/articles/:id/text', 'article.text')
@@ -11,7 +11,8 @@ module.exports = function (app) {
     .when('/articles/:id/settings', 'article.settings')
 
     .segment('oauth', {
-      templateUrl: 'templates/oauth.html'
+      templateUrl: 'templates/oauth.html',
+      controller: 'OauthOrcidCtrl'
     })
 
     .segment('article', {
