@@ -14,7 +14,7 @@
        'ngRoute', 'route-segment', 'view-segment',
        'templates']
     )
-    //.constant('config', require('../../config.json'))
+    .constant('config', require('../../config.json'))
     ;
 
   require('./config')(paperhub);
