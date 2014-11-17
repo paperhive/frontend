@@ -1,0 +1,17 @@
+<ul class="nav nav-pills nav-stacked" role="tablist">
+  <li role="presentation" ng-class="{active: ('text' | routeSegmentStartsWith)}">
+  <a href="#{{ 'text' | routeSegmentUrl }}">
+    <i class="fa fa-file-text-o fa-fw"></i> Text
+  </a>
+  </li>
+  <li role="presentation">
+  <a href="#{{ 'annotation' | routeSegmentUrl }}">
+    <i class="fa fa-pencil fa-fw"></i> Annotations <span class="badge">42</span>
+  </a>
+  </li>
+  <li role="presentation">
+  <a href="#settings">
+    <i class="fa fa-wrench fa-fw"></i> Settings
+  </a>
+  </li>
+</ul>
