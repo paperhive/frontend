@@ -19,6 +19,6 @@
 
   require('./config')(paperhub);
   require('./controllers')(paperhub);
-  //require('./directives')(paperhub);
-  //require('./services')(paperhub);
+  require('./directives')(paperhub);
+  require('./services')(paperhub);
 })();
