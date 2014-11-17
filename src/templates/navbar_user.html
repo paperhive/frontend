@@ -1,8 +1,10 @@
 <ul ng-controller="UserCtrl" class="nav navbar-nav navbar-right">
   <li ng-show="!auth.user && !auth.inProgress">
-    <a href="{{config.api_url}}/oauth/orcid">
-      <i class="fa fa-fw fa-sign-in"></i> Sign in with your ORCID iD
-    </a>
+    <p class="navbar-btn">
+      <a href="{{auth.orcidUrl}}" class="btn btn-primary" role="button">
+        <i class="fa fa-fw fa-sign-in"></i> Sign in with your ORCID iD
+      </a>
+    </p>
   </li>
   <li ng-show="!auth.user && auth.inProgress">
     <p class="navbar-text">

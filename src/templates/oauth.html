@@ -1,6 +1,8 @@
 <div ng-show="!auth.user && !auth.inProgress" class="text-center">
   <h2>Not signed in!</h2>
-  <a href="{{auth.orcidUrl}}" class="btn btn-primary" role="button">Sign in with your ORCID iD</a>
+  <a href="{{auth.orcidUrl}}" class="btn btn-primary" role="button">
+    <i class="fa fa-fw fa-sign-in"></i> Sign in with your ORCID iD
+  </a>
 </div>
 <div ng-show="!auth.user && auth.inProgress" class="text-center row">
   <h2>Signing in...</h2>
