@@ -1,7 +1,8 @@
-<div>
+<div style="border: 1px #e4e4e4 solid; border-radius: 5px; padding: 10px">
   <form name="issueForm" ng-controller="IssueCtrl"
     ng-submit="issueForm.$valid && IssueCtrl.addAnnotation(pdf)" novalidate>
     <input placeholder="Title" class="form-control"/>
+    <br/>
     <textarea class="form-control" ng-model='body' rows="6"
       style='resize:vertical;' placeholder="Leave an annotation..." required></textarea>
     <hr>
@@ -9,7 +10,6 @@
     <div class="well well-lg" id=preview>
       <kramjax ng-model="body" ></kramjax>
     </div>
-    <hr>
     <!-- Open annotation motivations -->
     <!--label>Motivation</label>
     <label class="radio-inline">
@@ -25,7 +25,9 @@
       <input type="radio" name="radioOptions" id="inlineCheckbox4" value="option4">Link
     </label>
     <hr-->
-    <button type="submit" class="btn btn-default"
-      ng-disabled="issueForm.$invalid">Submit</button>
+    <button type="submit" class="btn btn-default pull-right"
+      ng-disabled="issueForm.$invalid">
+      Submit
+    </button>
   </form>
 </div>
