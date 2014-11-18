@@ -17,7 +17,7 @@ module.exports = function (app) {
         authService.inProgress = true;
         $http
           .post(
-            config.api_url + '/oauth/orcid/login',
+            config.api_url + '/oauth/orcid/signin',
             {code: code, state: state},
             {timeout: 10000}
           )
