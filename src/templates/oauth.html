@@ -11,6 +11,8 @@
   </div>
 </div>
 <div ng-show="auth.user" class="text-center">
-  <h2>Welcome, {{auth.user.displayName}}!</h2>
-
+  <h2>
+    Welcome<span ng-show="!auth.user.firstLogin"> back</span>,
+    {{auth.user.displayName}}!
+  </h2>
 </div>
