@@ -8,6 +8,7 @@ module.exports = function (app) {
     .when('/articles/:id', 'article.info')
     .when('/articles/:id/text', 'article.text')
     .when('/articles/:id/annotations', 'article.annotations')
+    .when('/articles/:id/annotations/new', 'article.annotation-new')
     .when('/articles/:id/settings', 'article.settings')
 
     .segment('oauth', {
@@ -28,6 +29,10 @@ module.exports = function (app) {
     .segment('annotations', {
       templateUrl: 'templates/annotation-list.html',
       controller: 'IssueListCtrl',
+      dependencies: ['id']
+    })
+    .segment('annotation-new', {
+      templateUrl: 'templates/annotation-new.html',
       dependencies: ['id']
     })
     .segment('settings', {

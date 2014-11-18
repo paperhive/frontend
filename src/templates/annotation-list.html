@@ -1,4 +1,12 @@
-<ul class="list-group">
+<div class="row">
+  <a href="#{{'article.text' | routeSegmentUrl}}">
+    Test link
+  </a>
+  <form action="#{{'article.annotations.new' | routeSegmentUrl}}">
+    <input type="submit" class="btn btn-primary pull-right" value="New annotation">
+  </form>
+</div>
+<ul class="row list-group">
   <li class="list-group-item">
   <span class="badge">14</span>
   Annotation #1

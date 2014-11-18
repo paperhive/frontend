@@ -9,6 +9,11 @@
     <i class="fa fa-pencil fa-fw"></i> Annotations <span class="badge">42</span>
   </a>
   </li>
+  <li role="presentation" ng-class="{active: ('article.annotation-new' | routeSegmentStartsWith)}">
+  <a href="#{{'article.annotation-new' | routeSegmentUrl}}">
+    <i class="fa fa-pencil fa-fw"></i> New annotation
+  </a>
+  </li>
   <li role="presentation" ng-class="{active: ('article.settings' | routeSegmentStartsWith)}">
   <a href="#{{'article.settings' | routeSegmentUrl}}">
     <i class="fa fa-wrench fa-fw"></i> Settings

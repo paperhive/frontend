@@ -1,10 +1,9 @@
-<!-- List issues -->
-<div class="col-md-8 col-md-offset-1">
-  <h4>New annotation</h4>
+<div>
   <form name="issueForm" ng-controller="IssueCtrl"
     ng-submit="issueForm.$valid && IssueCtrl.addAnnotation(pdf)" novalidate>
+    <input placeholder="Title" class="form-control"/>
     <textarea class="form-control" ng-model='body' rows="6"
-      style='resize:vertical;' required></textarea>
+      style='resize:vertical;' placeholder="Leave an annotation..." required></textarea>
     <hr>
     <label for="preview">Preview</label>
     <div class="well well-lg" id=preview>
@@ -12,7 +11,7 @@
     </div>
     <hr>
     <!-- Open annotation motivations -->
-    <label>Motivation</label>
+    <!--label>Motivation</label>
     <label class="radio-inline">
       <input type="radio" name="radioOptions" id="inlineCheckbox1" value="option1">Comment
     </label>
@@ -25,7 +24,7 @@
     <label class="radio-inline">
       <input type="radio" name="radioOptions" id="inlineCheckbox4" value="option4">Link
     </label>
-    <hr>
+    <hr-->
     <button type="submit" class="btn btn-default"
       ng-disabled="issueForm.$invalid">Submit</button>
   </form>
