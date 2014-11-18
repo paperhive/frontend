@@ -1,6 +1,7 @@
-<div style="border: 1px #e4e4e4 solid; border-radius: 5px; padding: 10px">
-  <form name="issueForm" ng-controller="IssueCtrl"
-    ng-submit="issueForm.$valid && IssueCtrl.addAnnotation(pdf)" novalidate>
+<form name="issueForm" ng-controller="IssueCtrl"
+  ng-submit="issueForm.$valid && IssueCtrl.addAnnotation(pdf)" novalidate>
+  <row>
+  <div class="col-md-10" style="border: 1px #e4e4e4 solid; border-radius: 5px; padding: 10px">
     <input placeholder="Title" class="form-control"/>
     <br/>
     <textarea class="form-control" ng-model='body' rows="6"
@@ -10,24 +11,20 @@
     <div class="well well-lg" id=preview>
       <kramjax ng-model="body" ></kramjax>
     </div>
+  </div>
+  <div class="col-md-2">
     <!-- Open annotation motivations -->
-    <!--label>Motivation</label>
-    <label class="radio-inline">
-      <input type="radio" name="radioOptions" id="inlineCheckbox1" value="option1">Comment
-    </label>
-    <label class="radio-inline">
-      <input type="radio" name="radioOptions" id="inlineCheckbox2" value="option2">Edit
-    </label>
-    <label class="radio-inline">
-      <input type="radio" name="radioOptions" id="inlineCheckbox3" value="option3">Question
-    </label>
-    <label class="radio-inline">
-      <input type="radio" name="radioOptions" id="inlineCheckbox4" value="option4">Link
-    </label>
-    <hr-->
-    <button type="submit" class="btn btn-default pull-right"
-      ng-disabled="issueForm.$invalid">
-      Submit
-    </button>
-  </form>
-</div>
+    <h4>Labels</h4>
+    <button class="btn">comment</button><br/>
+    <button class="btn">edit</button><br/>
+    <button class="btn">question</button><br/>
+    <button class="btn">link</button>
+  </div>
+  </row>
+  <p>
+  <button type="submit" class="btn btn-default pull-right"
+    ng-disabled="issueForm.$invalid">
+    Submit
+  </button>
+  </row>
+</form>
