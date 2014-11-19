@@ -4,6 +4,7 @@ module.exports = function (app) {
     '$routeSegmentProvider', '$routeProvider',
     function($routeSegmentProvider, $routeProvider) {
       $routeSegmentProvider
+        .when('/welcome', 'welcome')
         .when('/oauth/orcid', 'oauth')
         .when('/articles', 'article')
         .when('/articles/:id', 'article.info')
@@ -11,6 +12,11 @@ module.exports = function (app) {
         .when('/articles/:id/annotations', 'article.annotations')
         .when('/articles/:id/annotations/new', 'article.annotation-new')
         .when('/articles/:id/settings', 'article.settings')
+
+        .segment('welcome', {
+          templateUrl: 'templates/welcome.html',
+          controller: 'WelcomeCtrl'
+        })
 
         .segment('oauth', {
           templateUrl: 'templates/oauth.html',

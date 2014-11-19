@@ -7,13 +7,13 @@ module.exports = function (app) {
       };
 
       function signin(url, data, config) {
-        var deferred = $q.defer();
         if (authService.inProgress) {
-          return deferred.reject('Already signing in.');
+          return $q.reject('Already signing in.');
         }
         if (authService.user) {
-          return deferred.reject('Already signed in.');
+          return $q.reject('Already signed in.');
         }
+        var deferred = $q.defer();
         authService.inProgress = true;
         $http
           .post(url, data, config)

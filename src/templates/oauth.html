@@ -1,18 +1,4 @@
-<div ng-show="!auth.user && !auth.inProgress" class="text-center">
-  <h2>Not signed in!</h2>
-  <a href="{{auth.orcidUrl}}" class="btn btn-primary" role="button">
-    <i class="fa fa-fw fa-sign-in"></i> Sign in with your ORCID iD
-  </a>
-</div>
-<div ng-show="!auth.user && auth.inProgress" class="text-center row">
-  <h2>Signing in...</h2>
-  <div class="col-md-4 col-md-offset-4">
-    <progressbar class="progress-striped active" value="100"></progressbar>
-  </div>
-</div>
-<div ng-show="auth.user" class="text-center">
-  <h2>
-    Welcome<span ng-show="!auth.user.firstSignin"> back</span>,
-    {{auth.user.displayName}}!
-  </h2>
-</div>
+<alert ng-show="error" type="danger">
+  <strong>Signing in failed:</strong> {{error}}
+</alert>
+<ng-include ng-show="!error" src="'templates/signin_status.html'"></ng-include>

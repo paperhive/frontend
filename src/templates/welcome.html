@@ -1,0 +1,7 @@
+<ng-include src="'templates/signin_status.html'"></ng-include>
+<div ng-show="auth.user" class="text-center">
+  <h2>
+    Welcome<span ng-show="!auth.user.firstSignin"> back</span>,
+    {{auth.user.givenNames}}!
+  </h2>
+</div>
