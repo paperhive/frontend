@@ -29,7 +29,7 @@ module.exports = function (app) {
         })
         .segment('annotations', {
           templateUrl: 'templates/annotation-list.html',
-          controller: 'IssueListCtrl',
+          controller: 'AnnotationListCtrl',
           dependencies: ['id']
         })
         .segment('annotation-new', {
