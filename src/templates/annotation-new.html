@@ -1,11 +1,16 @@
 <form name="issueForm" ng-controller="IssueCtrl"
   ng-submit="issueForm.$valid && IssueCtrl.addAnnotation(pdf)" novalidate>
   <div class="row">
-    <div class="col-md-10" style="border: 1px #e4e4e4 solid; border-radius: 5px; padding: 10px">
+    <div class="col-md-2">
+      <img
+      src="http://win.ua.ac.be/~nschloe/other/jimmy-thumbnail.png"
+      alt="thumbnail" class="img-thumbnail"/>
+    </div>
+    <div class="col-md-8 ph-newissuebox">
       <input placeholder="Title" class="form-control"/>
       <br/>
-      <textarea class="form-control" ng-model='body' rows="6"
-        style='resize:vertical;' placeholder="Leave an annotation..." required></textarea>
+      <textarea class="form-control ph-annotation-body" ng-model='body' rows="6"
+        placeholder="Leave an annotation..." required></textarea>
       <hr>
       <label for="preview">Preview</label>
       <div class="well well-lg" id=preview>
@@ -35,9 +40,11 @@
       </div>
     </div>
     <div class="row">
-      <button type="submit" class="btn btn-default pull-right"
-        ng-disabled="issueForm.$invalid">
-        Submit
-      </button>
+      <div class="col-md-10">
+        <button type="submit" class="btn btn-default pull-right"
+          ng-disabled="issueForm.$invalid">
+          Submit
+        </button>
+      </div>
     </div>
   </form>
