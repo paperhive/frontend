@@ -47,6 +47,7 @@ module.exports = function (app) {
         delete $http.defaults.headers['X-Auth-Token'];
         delete authService.user;
       }
+      authService.signout = signout;
 
       // grab token from session or local storage
       var token = $window.sessionStorage.token || $window.localStorage.token;
