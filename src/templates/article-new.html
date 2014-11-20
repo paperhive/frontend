@@ -1,0 +1,15 @@
+<!-- Page content -->
+<div class="container" ng-controller="DisplayCtrl" >
+  <div class="row">
+    <h4>View PDF</h4>
+    <form name="pdfForm" role="form" ng-submit="fetchUrl = url">
+      <div class="form-group">
+        <div class="col-xs-4">
+          <input type="url" ng-model="url" placeholder="Enter PDF URL"
+          class="form-control"/>
+        </div>
+        <input class="btn btn-default" type="submit" value="Fetch" />
+      </div>
+    </form>
+  </div>
+</div>

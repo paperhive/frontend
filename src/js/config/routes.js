@@ -7,6 +7,7 @@ module.exports = function (app) {
         .when('/welcome', 'welcome')
         .when('/oauth/orcid', 'oauth')
         .when('/articles', 'article')
+        .when('/articles/new', 'article-new')
         .when('/articles/:id', 'article.info')
         .when('/articles/:id/text', 'article.text')
         .when('/articles/:id/annotations', 'article.annotations')
@@ -22,6 +23,10 @@ module.exports = function (app) {
         .segment('oauth', {
           templateUrl: 'templates/oauth.html',
           controller: 'OauthOrcidCtrl'
+        })
+
+        .segment('article-new', {
+          templateUrl: 'templates/article-new.html'
         })
 
         .segment('article', {
