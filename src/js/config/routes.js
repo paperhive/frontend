@@ -11,6 +11,7 @@ module.exports = function (app) {
         .when('/articles/:id/text', 'article.text')
         .when('/articles/:id/annotations', 'article.annotations')
         .when('/articles/:id/annotations/new', 'article.annotation-new')
+        .when('/articles/:id/annotations/:num', 'article.annotation')
         .when('/articles/:id/settings', 'article.settings')
 
         .segment('welcome', {
@@ -37,6 +38,10 @@ module.exports = function (app) {
           templateUrl: 'templates/annotation-list.html',
           controller: 'AnnotationListCtrl',
           dependencies: ['id']
+        })
+        .segment('annotation', {
+          templateUrl: 'templates/annotation.html',
+          dependencies: ['id', 'num']
         })
         .segment('annotation-new', {
           templateUrl: 'templates/annotation-new.html',

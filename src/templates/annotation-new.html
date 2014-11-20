@@ -6,16 +6,18 @@
   </div>
   <form name="annotationForm" ng-controller="AnnotationCtrl"
     ng-submit="annotationForm.$valid && AnnotationCtrl.addAnnotation(pdf)" novalidate>
-    <div class="col-md-8 ph-newannotationbox">
-      <input placeholder="Title" type="text" name="title"
-      ng-model="annotation.title" class="form-control" required>
-      <br>
-      <textarea class="form-control ph-annotation-body" ng-model='annotation.body'
-        rows="6" placeholder="Leave an annotation..."></textarea>
-      <hr>
-      <label for="preview">Preview</label>
-      <div class="well well-lg" id=preview>
-        <kramjax ng-model="annotation.body"></kramjax>
+    <div class="col-md-8 panel panel-default">
+      <div class="panel-body">
+        <input placeholder="Title" type="text" name="title"
+        ng-model="annotation.title" class="form-control" required>
+        <br>
+        <textarea class="form-control ph-annotation-body" ng-model='annotation.body'
+          rows="6" placeholder="Leave an annotation..."></textarea>
+        <hr>
+        <label for="preview">Preview</label>
+        <div class="well well-lg" id=preview>
+          <kramjax ng-model="annotation.body"></kramjax>
+        </div>
       </div>
     </div>
     <div class="col-md-2">
