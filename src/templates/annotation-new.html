@@ -1,53 +1,56 @@
-<div class="row">
-  <div class="col-md-2">
-    <img
-    src="http://win.ua.ac.be/~nschloe/other/jimmy-thumbnail.png"
-    alt="thumbnail" class="img-thumbnail"/>
-  </div>
-  <form name="annotationForm" ng-controller="AnnotationCtrl"
-    ng-submit="annotationForm.$valid && AnnotationCtrl.addAnnotation(pdf)" novalidate>
-    <div class="col-md-8 panel panel-default">
-      <div class="panel-body">
-        <input placeholder="Title" type="text" name="title"
-        ng-model="annotation.title" class="form-control" required>
-        <br>
-        <textarea class="form-control ph-annotation-body" ng-model='annotation.body'
-          rows="6" placeholder="Leave an annotation..."></textarea>
-        <hr>
-        <label for="preview">Preview</label>
-        <div class="well well-lg" id=preview>
-          <kramjax ng-model="annotation.body"></kramjax>
+<div class="col-md-10">
+  <div class="row">
+    <div class="col-md-2">
+      <img
+      src="http://win.ua.ac.be/~nschloe/other/jimmy-thumbnail.png"
+      alt="thumbnail" class="img-thumbnail"/>
+    </div>
+    <form name="annotationForm" ng-controller="AnnotationCtrl"
+      ng-submit="annotationForm.$valid && AnnotationCtrl.addAnnotation(pdf)" novalidate>
+      <div class="col-md-10">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <input placeholder="Title" type="text" name="title"
+            ng-model="annotation.title" class="form-control" required>
+            <br>
+            <textarea class="form-control ph-annotation-body" ng-model='annotation.body'
+              rows="6" placeholder="Leave an annotation..."></textarea>
+            <hr>
+            <label for="preview">Preview</label>
+            <div class="well well-lg" id=preview>
+              <kramjax ng-model="annotation.body"></kramjax>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-2">
-      <!-- Open annotation motivations -->
-      <h4>Labels</h4>
-      <ul class="ph-labelset">
-        <li>
-        <input type="checkbox" id="button0"/>
-        <label for="button0" class="comment" onclick>comment</label>
-        </li>
-        <li>
-        <input type="checkbox" id="button1"/>
-        <label for="button1" class="edit" onclick>edit</label>
-        </li>
-        <li>
-        <input type="checkbox" id="button2"/>
-        <label for="button2" class="question" onclick>question</label>
-        </li>
-        <li>
-        <input type="checkbox" id="button3"/>
-        <label for="button3" class="link" onclick>link</label>
-        </li>
+        <div class="col-md-12">
+          <button type="submit" class="btn btn-primary pull-right"
+            ng-disabled="annotationForm.$invalid">
+            Submit
+          </button>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-10">
-        <button type="submit" class="btn btn-default pull-right"
-          ng-disabled="annotationForm.$invalid">
-          Submit
-        </button>
-      </div>
-    </div>
-  </form>
+    </form>
+  </div>
+</div>
+<div class="col-md-2">
+  <!-- Open annotation motivations -->
+  <h4>Labels</h4>
+  <ul class="ph-labelset">
+    <li>
+    <input type="checkbox" id="button0"/>
+    <label for="button0" class="comment" onclick>comment</label>
+    </li>
+    <li>
+    <input type="checkbox" id="button1"/>
+    <label for="button1" class="edit" onclick>edit</label>
+    </li>
+    <li>
+    <input type="checkbox" id="button2"/>
+    <label for="button2" class="question" onclick>question</label>
+    </li>
+    <li>
+    <input type="checkbox" id="button3"/>
+    <label for="button3" class="link" onclick>link</label>
+    </li>
+  </ul>
+</div>
