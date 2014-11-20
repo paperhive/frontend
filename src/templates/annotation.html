@@ -17,7 +17,6 @@
           <span class="pull-right"><i class="fa fa-pencil"></i></span>
         </div>
         <div class="panel-body">
-          <kramjax>
           Simple equations, like $$x^y$$ or $$x_n = \sqrt{a + b}$$ can be typeset
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
@@ -33,7 +32,6 @@
           y = sin(x)
           return y
           ```
-          </kramjax>
         </div>
       </div>
     </div>
@@ -58,7 +56,6 @@
           </span>
         </div>
         <div class="panel-body">
-          <kramjax>
           Simple equations, like $$x^y$$ or $$x_n = \sqrt{a + b}$$ can be typeset
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
@@ -74,12 +71,10 @@
           y = sin(x)
           return y
           ```
-          </kramjax>
         </div>
       </div>
     </div>
   </div>
-
 
   <div class="media">
     <a class="media-left" href="#">
@@ -95,7 +90,7 @@
           <form name="annotationForm" ng-controller="AnnotationCtrl"
             ng-submit="annotationForm.$valid && AnnotationCtrl.addAnnotation(pdf)" novalidate>
             <textarea class="form-control ph-annotation-body" ng-model='annotation.body'
-              rows="6" placeholder="Leave an annotation..."></textarea>
+              rows="6" placeholder="Leave an annotation..." required></textarea>
             <hr>
             <label for="preview">Preview</label>
             <div class="well well-lg" id=preview>
