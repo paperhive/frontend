@@ -2,13 +2,15 @@
 <a href="#">Erwin Lottomann</a> created this annotation 2 days ago &middot; 5 comments
 <hr>
 <div class="col-md-10">
-  <div class="row">
-    <div class="col-md-2">
+  <div class="media">
+    <a class="media-left" href="#">
       <img
       src="http://win.ua.ac.be/~nschloe/other/jimmy-thumbnail.png"
-      alt="thumbnail" class="img-thumbnail"/>
-    </div>
-    <div class="col-md-10">
+      alt="thumbnail"
+      width="80px"
+      >
+    </a>
+    <div class="media-body">
       <div class="panel panel-default">
         <div class="panel-heading">
           <a href="#">Jimmy</a> commented 2 days ago
@@ -37,13 +39,15 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-md-2">
+  <div class="media">
+    <a class="media-left" href="#">
       <img
       src="http://win.ua.ac.be/~nschloe/other/hoppenstedt.png"
-      alt="thumbnail" class="img-thumbnail"/>
-    </div>
-    <div class="col-md-10">
+      alt="thumbnail"
+      width="80px"
+      >
+    </a>
+    <div class="media-body">
       <div class="panel panel-default">
         <div class="panel-heading">
           <a href="#">Opa Hoppenstedt</a> commented 2 days ago
@@ -77,17 +81,19 @@
   </div>
 
 
-  <div class="row">
-    <div class="col-md-2">
+  <div class="media">
+    <a class="media-left" href="#">
       <img
       src="http://win.ua.ac.be/~nschloe/other/jimmy-thumbnail.png"
-      alt="thumbnail" class="img-thumbnail"/>
-    </div>
-    <div class="col-md-10">
-      <form name="annotationForm" ng-controller="AnnotationCtrl"
-        ng-submit="annotationForm.$valid && AnnotationCtrl.addAnnotation(pdf)" novalidate>
-        <div class="panel panel-default">
-          <div class="panel-body">
+      alt="thumbnail"
+      width="80px"
+      >
+    </a>
+    <div class="media-body" style="width:100%">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <form name="annotationForm" ng-controller="AnnotationCtrl"
+            ng-submit="annotationForm.$valid && AnnotationCtrl.addAnnotation(pdf)" novalidate>
             <textarea class="form-control ph-annotation-body" ng-model='annotation.body'
               rows="6" placeholder="Leave an annotation..."></textarea>
             <hr>
@@ -106,12 +112,13 @@
                 Submit
               </button>
             </span>
-          </div>
+          </form>
         </div>
       </div>
-    </form>
+    </div>
   </div>
 </div>
+
 <div class="col-md-2">
   <h5>Labels <span class="pull-right"><i class="fa fa-gear"></i></span></h5>
   <ul class="ph-labelset">
