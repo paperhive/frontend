@@ -14,6 +14,7 @@ module.exports = function (app) {
         .when('/articles/:id/annotations/new', 'article.annotation-new')
         .when('/articles/:id/annotations/:num', 'article.annotation')
         .when('/articles/:id/settings', 'article.settings')
+        .when('/users/:user', 'user')
 
         .segment('welcome', {
           templateUrl: 'templates/welcome.html',
@@ -23,6 +24,10 @@ module.exports = function (app) {
         .segment('oauth', {
           templateUrl: 'templates/oauth.html',
           controller: 'OauthOrcidCtrl'
+        })
+
+        .segment('user', {
+          templateUrl: 'templates/user.html'
         })
 
         .segment('article-new', {
