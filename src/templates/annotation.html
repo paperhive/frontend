@@ -103,27 +103,31 @@
     src="http://win.ua.ac.be/~nschloe/other/jimmy-thumbnail.png"
     alt="thumbnail" class="img-thumbnail"/>
   </div>
-  <form name="annotationForm" ng-controller="AnnotationCtrl"
-    ng-submit="annotationForm.$valid && AnnotationCtrl.addAnnotation(pdf)" novalidate>
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <div class="col-md-8">
-          <textarea class="form-control ph-annotation-body" ng-model='annotation.body'
-            rows="6" placeholder="Leave an annotation..."></textarea>
-          <hr>
-          <label for="preview">Preview</label>
-          <div class="well well-lg" id=preview>
-            <kramjax ng-model="annotation.body"></kramjax>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-10">
-            <button type="submit" class="btn btn-default pull-right"
-              ng-disabled="annotationForm.$invalid">
-              Submit
-            </button>
-          </div>
+  <div class="col-md-8">
+    <form name="annotationForm" ng-controller="AnnotationCtrl"
+      ng-submit="annotationForm.$valid && AnnotationCtrl.addAnnotation(pdf)" novalidate>
+      <div class="panel panel-default">
+        <div class="panel-body">
+            <textarea class="form-control ph-annotation-body" ng-model='annotation.body'
+              rows="6" placeholder="Leave an annotation..."></textarea>
+            <hr>
+            <label for="preview">Preview</label>
+            <div class="well well-lg" id=preview>
+              <kramjax ng-model="annotation.body"></kramjax>
+            </div>
+            <span class="pull-right">
+              <button type="submit" class="btn btn-default"
+                ng-disabled="annotationForm.$invalid">
+                Close annotation
+              </button>
+              &nbsp;
+              <button type="submit" class="btn btn-primary"
+                ng-disabled="annotationForm.$invalid">
+                Submit
+              </button>
+            </span>
         </div>
       </div>
     </div>
   </form>
+</div>
