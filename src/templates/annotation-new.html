@@ -1,11 +1,11 @@
-<form name="annotationForm" ng-controller="AnnotationCtrl"
-  ng-submit="annotationForm.$valid && AnnotationCtrl.addAnnotation(pdf)" novalidate>
-  <div class="row">
-    <div class="col-md-2">
-      <img
-      src="http://win.ua.ac.be/~nschloe/other/jimmy-thumbnail.png"
-      alt="thumbnail" class="img-thumbnail"/>
-    </div>
+<div class="row">
+  <div class="col-md-2">
+    <img
+    src="http://win.ua.ac.be/~nschloe/other/jimmy-thumbnail.png"
+    alt="thumbnail" class="img-thumbnail"/>
+  </div>
+  <form name="annotationForm" ng-controller="AnnotationCtrl"
+    ng-submit="annotationForm.$valid && AnnotationCtrl.addAnnotation(pdf)" novalidate>
     <div class="col-md-8 ph-newannotationbox">
       <input placeholder="Title" type="text" name="title"
       ng-model="annotation.title" class="form-control" required>
