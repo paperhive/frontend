@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" ng-controller="AnnotationCtrl">
   <a href="#{{'article.text' | routeSegmentUrl}}">
     Test link
   </a>
@@ -6,16 +6,27 @@
     <input type="submit" class="btn btn-primary pull-right" value="New annotation">
   </form>
 </div>
+<br>
 <ul class="row list-group">
-  <li class="list-group-item">
-  <span class="badge">14</span>
-  Annotation #1
-  </li>
-  <li class="list-group-item">
-  Annotation #2233
-  </li>
-  <li class="list-group-item">
-  <span class="badge">1</span>
-  Annotation #pi
-  </li>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-cog"></i> Annotations
+      <span class="pull-right">Sort</span>
+    </div>
+    <li class="list-group-item">
+    <span class="pull-right"><i class="fa-comments"></i> 14</span>
+    <h4><a href="#">my first annotation</a></h4>
+    #1 opened 3 hours ago by <a href="#">nschloe</a>
+    </li>
+    <li class="list-group-item">
+    <h4><a href="#">Yadda yadda</a></h4>
+    #22 opened just now by <a href="#">Meister Eder</a>
+    </li>
+    <li class="list-group-item">
+    <span class="pull-right"><i class="fa-comments"></i> 1</span>
+    <h4><a href="#">This paper isn't worth the paper it's printed on oh wait it's
+        not printed</a></h4>
+    #12 opened just now by <a href="#">Beatmaster S</a>
+    </li>
+  </div>
 </ul>

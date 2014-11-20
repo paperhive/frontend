@@ -1,7 +1,7 @@
 <ul class="nav nav-pills nav-stacked" role="tablist">
-  <li role="presentation" ng-class="{active: ('article.text' | routeSegmentStartsWith)}">
+  <li data-toggle="tooltip" data-placement="left" title="Tooltip on left" role="presentation" ng-class="{active: ('article.text' | routeSegmentStartsWith)}">
   <a href="#{{'article.text' | routeSegmentUrl}}">
-    <i class="fa fa-file-text-o fa-fw"></i> Text
+    <i class="fa fa-file-pdf-o fa-fw"></i> Text
   </a>
   </li>
   <li role="presentation" ng-class="{active: ('article.annotations' | routeSegmentStartsWith)}">
