@@ -59,7 +59,13 @@
         <div class="panel-body">
           <form name="annotationForm" ng-controller="AnnotationCtrl"
             ng-submit="annotationForm.$valid && AnnotationCtrl.addAnnotation(pdf)" novalidate>
-            <textarea class="form-control ph-annotation-body" ng-model='annotation.body'
+            <span id="helpBlock" class="help-block pull-right"
+              style="font-size:smaller">
+              You can use <a
+                href="http://daringfireball.net/projects/markdown/syntax">Markdown</a>,
+              $$<a href="#">LaTeX</a>$$
+            </span>
+            <textarea id="textbody" class="form-control ph-annotation-body" ng-model='annotation.body'
               rows="6" placeholder="Leave a comment..." required></textarea>
             <hr>
             <label for="preview">Preview</label>

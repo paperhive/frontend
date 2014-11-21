@@ -15,6 +15,12 @@
             <input placeholder="Title" type="text" name="title"
             ng-model="annotation.title" class="form-control" required>
             <br>
+            <span id="helpBlock" class="help-block pull-right"
+              style="font-size:smaller">
+              You can use <a
+                href="http://daringfireball.net/projects/markdown/syntax">Markdown</a>,
+              $$<a href="#">LaTeX</a>$$
+            </span>
             <textarea class="form-control ph-annotation-body" ng-model='annotation.body'
               rows="6" placeholder="Leave an annotation..."></textarea>
             <hr>
