@@ -1,16 +1,14 @@
-<div class="container">
+<div class="container" ng-controller="UserCtrl">
   <div class="col-md-3">
     <a href="#">
       <img class="img-thumbnail"
-      src="http://win.ua.ac.be/~nschloe/other/hoppenstedt.png"
+      src=https://secure.gravatar.com/avatar/{{user.gravatarMd5}}?s=100
       width="100%"
       >
     </a>
-    <h3>Opa Hoppenstedt</h3>
-    <h4>hoppi</h4>
+    <h3>{{user.displayName}}</h3>
+    <h4>{{user.userName}}</h4>
     <hr>
-    <i class="fa fa-envelope-o"></i> <a href="mailto:#">hoppi@loriot.fr</a>
-    <br>
     <i class="fa fa-clock-o"></i> Joined on Jan 3, 1987
   </div>
   <div class="col-md-9">

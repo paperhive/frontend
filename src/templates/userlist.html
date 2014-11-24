@@ -1,0 +1,17 @@
+<div class="container" ng-controller="UserCtrl">
+  <ul class="media-list">
+    <li class="media" ng-repeat="user in users">
+    <a class="media-left" href="#/users/{{user.userName}}">
+      <img
+      src="https://secure.gravatar.com/avatar/{{user.gravatarMd5}}?s=80"
+      alt="{{user.displayName}}"
+      width="80px"
+      >
+    </a>
+    <div class="media-body">
+      <h4 class="media-heading">{{user.displayName}}</h4>
+      Description
+    </div>
+    </li>
+  </ul>
+</div>
