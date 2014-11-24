@@ -15,7 +15,10 @@
   </li>
   <li ng-show="auth.user" class="dropdown" is-open="dropdown_open">
     <a href class="dropdown-toggle">
-      <i class="fa fa-fw fa-caret-down"></i> {{auth.user.displayName}}
+      <img src="https://secure.gravatar.com/avatar/{{auth.user.gravatarMd5}}?s=30"
+        class="ph-avatar" alt="{{auth.user.displayName}} avatar">
+      {{auth.user.displayName}}
+      <i class="fa fa-fw fa-caret-down"></i>
     </a>
     <ul class="dropdown-menu">
       <li>
