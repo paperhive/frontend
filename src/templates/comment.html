@@ -1,6 +1,6 @@
 <a class="media-left" href="#">
   <img
-  src="http://win.ua.ac.be/~nschloe/other/jimmy-thumbnail.png"
+  src="https://secure.gravatar.com/avatar/?s=80"
   alt="thumbnail"
   width="80px"
   >
@@ -8,25 +8,15 @@
 <div class="media-body">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <a href="#">Jimmy</a> commented 2 days ago
+      <a
+        href="/#/users/{{userLookup2[annoLookup[discussion.originalAnnotationId].authorId].userName}}"
+        >
+        {{userLookup2[annoLookup[discussion.originalAnnotationId].authorId].displayName}}
+      </a> commented 2 days ago
       <span class="pull-right"><i class="fa fa-pencil"></i></span>
     </div>
     <div class="panel-body">
-      Simple equations, like $$x^y$$ or $$x_n = \sqrt{a + b}$$ can be typeset
-      Lorem Ipsum is simply dummy text of the printing and typesetting
-      industry. Lorem Ipsum has been the industry's standard dummy text ever
-      since the 1500s, when an unknown printer took a galley of type and
-      scrambled it to make a type specimen book. It has survived not only
-      five centuries, but also the leap into electronic typesetting,
-      remaining essentially unchanged. It was popularised in the 1960s with
-      the release of Letraset sheets containing Lorem Ipsum passages, and
-      more recently with desktop publishing software like Aldus PageMaker
-      including versions of Lorem Ipsum.
-      ```python
-      def mysin(x):
-      y = sin(x)
-      return y
-      ```
+      {{annoLookup[discussion.originalAnnotationId].body}}
     </div>
   </div>
 </div>

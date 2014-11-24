@@ -25,9 +25,13 @@ module.exports = function (app) {
     }
   ];
   // create lookup array for debugging purposes
-  var lookup = {};
+  var userLookup = {};
   for (var i = 0, len = allUsers.length; i < len; i++) {
-    lookup[allUsers[i].userName] = allUsers[i];
+    userLookup[allUsers[i].userName] = allUsers[i];
+  }
+  var userLookup2 = {};
+  for (var i = 0, len = allUsers.length; i < len; i++) {
+    userLookup2[allUsers[i]._id] = allUsers[i];
   }
   // END debug code
 
@@ -39,7 +43,8 @@ module.exports = function (app) {
 
       $scope.users = allUsers;
 
-      $scope.user = lookup[$routeSegment.$routeParams.username];
+      $scope.user = userLookup[$routeSegment.$routeParams.username];
+      $scope.userLookup2 = userLookup2;
     }
   ]);
 };

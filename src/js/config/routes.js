@@ -56,7 +56,7 @@ module.exports = function (app) {
           dependencies: ['id']
         })
         .segment('annotation', {
-          templateUrl: 'templates/annotation.html',
+          templateUrl: 'templates/discussion.html',
           dependencies: ['id', 'num']
         })
         .segment('annotation-new', {
