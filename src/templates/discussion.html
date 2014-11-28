@@ -109,8 +109,20 @@
   </ul>
   <hr>
   <h5>Notifications</h5>
-  <button type="button" class="btn btn-default" style="width:100%"><i class="fa fa-bell"></i> Subscribe</button>
-  You're ignoring this thread.
+    <button type="button" class="btn btn-default" style="width:100%"
+      ng-disabled="!auth.user"
+      ng-click="toggleSubscribe()"
+      >
+      <span ng-show="isSubscribed">
+        <i class="fa fa-bell-slash"></i> Unsubscribe
+      </span>
+      <span ng-show="!isSubscribed">
+        <i class="fa fa-bell"></i> Subscribe
+      </span>
+    </button>
+    <span ng-show="isSubscribed" style="font-size:x-small;">You're receiving
+      notifications because you're subscribed to this thread.</span>
+    <span ng-show="!isSubscribed" style="font-size:x-small;">You're ignoring this thread.</span>
   <hr>
   <h5>Participants</h5>
   List of participants

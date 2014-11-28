@@ -36,11 +36,36 @@ for (var i = 0, len = allAnnotations.length; i < len; i++) {
 
 module.exports = function (app) {
   app.controller('AnnotationCtrl', [
-    '$scope',
-    function($scope) {
+    '$scope', 'AuthService',
+    function($scope, AuthService) {
     $scope.discussion = discussion;
     $scope.annoLookup = annoLookup;
+    $scope.auth = AuthService;
     this.annoLookup = annoLookup;
+
+    console.log(AuthService);
+
+    $scope.subscribers = [
+    ];
+    // '54789c34049715a67d7915d8'
+    if('user' in AuthService) {
+      $scope.isSubscribed = $scope.subscribers.indexOf(AuthService.user._id) > -1;
+    } else {
+      $scope.isSubscribed = false;
+    }
+
+    $scope.toggleSubscribe = function() {
+      var k = $scope.subscribers.indexOf(AuthService.user._id);
+      if (k > -1) {
+        // remove from to subscribers list
+        $scope.subscribers.splice(k, 1);
+        $scope.isSubscribed = false;
+      } else {
+        // add to subscribers list
+        $scope.subscribers.push(AuthService.user._id);
+        $scope.isSubscribed = true;
+      }
+    };
 
     this.addAnnotation = function(annotation) {
       return;
