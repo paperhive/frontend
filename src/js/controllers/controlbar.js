@@ -1,14 +1,15 @@
 module.exports = function (app) {
-  app.controller('ControlbarCtrl', [function() {
-    this.tab = 1;
+  app.controller('ControlbarCtrl', [
+    '$routeSegment',
+    function($routeSegment) {
+    //this.tab = 1;
 
-    this.isSet = function(checkTab) {
-      return this.tab === checkTab;
-    };
+    //this.isSet = function(checkTab) {
+    //  return this.tab === checkTab;
+    //};
 
-    this.setTab = function(activeTab) {
-      console.log("set tab", activeTab);
-      this.tab = activeTab;
-    };
+    //this.setTab = function(activeTab) {
+    //  this.tab = activeTab;
+    //};
   }]);
 };

@@ -11,8 +11,8 @@ module.exports = function (app) {
         .when('/articles/:id', 'article.info')
         .when('/articles/:id/text', 'article.text')
         .when('/articles/:id/annotations', 'article.annotations')
-        .when('/articles/:id/annotations/new', 'article.annotation-new')
-        .when('/articles/:id/annotations/:num', 'article.annotation')
+        .when('/articles/:id/annotations/new', 'article.annotations-new')
+        .when('/articles/:id/annotations/:num', 'article.annotations-single')
         .when('/articles/:id/settings', 'article.settings')
         .when('/users/', 'userlist')
         .when('/users/:username', 'user')
@@ -52,14 +52,13 @@ module.exports = function (app) {
         })
         .segment('annotations', {
           templateUrl: 'templates/annotation-list.html',
-          controller: 'AnnotationListCtrl',
           dependencies: ['id']
         })
-        .segment('annotation', {
+        .segment('annotations-single', {
           templateUrl: 'templates/discussion.html',
-          dependencies: ['id', 'num']
+          dependencies: ['num']
         })
-        .segment('annotation-new', {
+        .segment('annotations-new', {
           templateUrl: 'templates/annotation-new.html',
           dependencies: ['id']
         })

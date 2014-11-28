@@ -4,7 +4,7 @@ var discussion = {
   title: "Title of the annotation",
   number: 22,
   originalAnnotationId: "1242340",
-  repliesIds: [
+  replyIds: [
     "1242341",
     "1242342"
     ]
@@ -40,13 +40,22 @@ module.exports = function (app) {
     function($scope) {
     $scope.discussion = discussion;
     $scope.annoLookup = annoLookup;
+    this.annoLookup = annoLookup;
 
     this.addAnnotation = function(annotation) {
       return;
     };
 
-    this.getAnnotations = function() {
-      return this.annotations;
+    $scope.getUsername = function() {
+      return getUserById(annoLookup[discussion.originalAnnotationId].authorId).userName;
+    };
+
+    $scope.getOne = function() {
+      return "1";
+    };
+
+    this.getAnnotation = function(id) {
+      return this.annoLookup[id];
     };
 
     $scope.allAnnotations = allAnnotations;

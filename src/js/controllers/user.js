@@ -29,9 +29,9 @@ module.exports = function (app) {
   for (var i = 0, len = allUsers.length; i < len; i++) {
     userLookup[allUsers[i].userName] = allUsers[i];
   }
-  var userLookup2 = {};
+  var userLookupById = {};
   for (var i = 0, len = allUsers.length; i < len; i++) {
-    userLookup2[allUsers[i]._id] = allUsers[i];
+    userLookupById[allUsers[i]._id] = allUsers[i];
   }
   // END debug code
 
@@ -44,7 +44,10 @@ module.exports = function (app) {
       $scope.users = allUsers;
 
       $scope.user = userLookup[$routeSegment.$routeParams.username];
-      $scope.userLookup2 = userLookup2;
+
+      $scope.getUserById = function (id) {
+        return userLookupById[id];
+      };
     }
   ]);
 };

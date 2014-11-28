@@ -4,14 +4,15 @@
     <i class="fa fa-file-pdf-o fa-fw"></i> Text
   </a>
   </li>
-  <li role="presentation" ng-class="{active: ('article.annotations' | routeSegmentStartsWith)}">
+  <!--li role="presentation" ng-class="{active: ('article.annotations' |
+      routeSegmentStartsWith)}"-->
+  <li role="presentation" ng-class="{active:
+  ('article.annotations' | routeSegmentStartsWith)
+  || ('article.annotations-new' | routeSegmentStartsWith)
+  || ('article.annotations-single' | routeSegmentStartsWith)
+  }">
   <a href="#{{'article.annotations' | routeSegmentUrl}}">
     <i class="fa fa-pencil fa-fw"></i> Annotations <span class="badge">7</span>
-  </a>
-  </li>
-  <li role="presentation" ng-class="{active: ('article.annotation-new' | routeSegmentStartsWith)}">
-  <a href="#{{'article.annotation-new' | routeSegmentUrl}}">
-    <i class="fa fa-pencil fa-fw"></i> New annotation
   </a>
   </li>
   <li role="presentation" ng-class="{active: ('article.settings' | routeSegmentStartsWith)}">
