@@ -26,29 +26,29 @@ module.exports = function (app) {
 
     return {
       restrict: 'E',
-      require: 'ngModel',
-      link: function (scope, element, attrs, ngModel) {
+      scope: {body: "@"},
+      link: function (scope, element, attrs) {
         scope.$watch(
           function () {
-            return ngModel.$modelValue;
-          },
-          function(newValue){
-            try {
-              element.html(
-                $sanitize(kramed(newValue || '', {renderer: renderer}))
-              );
-              // replace span/div tags with script tags
-              $(element[0]).find('.mathjax').each(function (index, el) {
-                $(el).replaceWith(orig_renderer(
-                  $(el).text(), 'math/tex', $(el).prop('tagName')==='DIV'
-                ));
-              });
-              MathJax.Hub.Queue(["Typeset", MathJax.Hub, element[0]]);
-            } catch (e) {
-              console.log('Error: ' + e);
-            }
+          return scope.body;
+        },
+        function (newValue) {
+          try {
+            element.html(
+              $sanitize(kramed(newValue || '', {renderer: renderer}))
+            );
+            // replace span/div tags with script tags
+            $(element[0]).find('.mathjax').each(function (index, el) {
+              $(el).replaceWith(orig_renderer(
+                $(el).text(), 'math/tex', $(el).prop('tagName')==='DIV'
+              ));
+            });
+            MathJax.Hub.Queue(["Typeset", MathJax.Hub, element[0]]);
+            console.log("YY");
+          } catch (e) {
+            console.log('Error: ' + e);
           }
-        );
+        });
       }
     };
   }]);
