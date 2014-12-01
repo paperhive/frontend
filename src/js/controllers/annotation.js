@@ -44,8 +44,8 @@ var annotations = [
 
 var discussion = {
   _id: "857431",
-  title: "Title of the annotation",
-  number: 22,
+  title: "Title of the discussion",
+  number: 12,
   originalAnnotation: annotations[0],
   replies: [
     annotations[1],
