@@ -5,23 +5,18 @@
   width="80px"
   >
 </a>
-<div class="media-body" ng-controller="AnnotationCtrl">
+<div class="media-body">
   <div class="panel panel-default">
     <div class="panel-heading">
       <a
-        href="/#/users/{{userLookup2[annoLookup[discussion.originalAnnotationId].authorId].userName}}"
+        href="/#/users/{{annotation.author.userName}}"
         >
-        YY
-        {{getOne()}}
-        XX
-        {{AnnotationCtrl.getAnnotation(discussion.originalAnnotationId)}}
-        XX
-        {{userLookup2[AnnotationCtrl.getAnnotation(discussion.originalAnnotationId).authorId].displayName}}a
+        {{annotation.author.displayName}}
       </a> commented 2 days ago
       <span class="pull-right"><i class="fa fa-pencil"></i></span>
     </div>
     <div class="panel-body">
-      {{annoLookup[discussion.originalAnnotationId].body}}
+      {{annotation.body}}
     </div>
   </div>
 </div>
