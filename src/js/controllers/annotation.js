@@ -32,12 +32,12 @@ var annotations = [
 },
 {
   _id: "1242341",
-  authorId: users[1],
+  author: users[1],
   body: "Bringt doch alles nichts"
 },
 {
   _id: "1242342",
-  authorId: users[2],
+  author: users[2],
   body: "I like turtles"
 }
 ];
