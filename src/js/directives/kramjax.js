@@ -44,7 +44,6 @@ module.exports = function (app) {
               ));
             });
             MathJax.Hub.Queue(["Typeset", MathJax.Hub, element[0]]);
-            console.log("YY");
           } catch (e) {
             console.log('Error: ' + e);
           }

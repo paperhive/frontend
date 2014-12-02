@@ -66,6 +66,7 @@ module.exports = function (app) {
     function($scope, AuthService) {
       $scope.discussion = discussion;
       $scope.auth = AuthService;
+      $scope.annotationBody = null;
 
       console.log(AuthService);
 
@@ -90,16 +91,23 @@ module.exports = function (app) {
         }
       };
 
-      this.addAnnotation = function(annotation) {
+      $scope.addReply = function() {
+        // create the annotation
+        reply = {
+          _id: Math.random().toString(36).slice(2),
+          author: $scope.auth.user,
+          body: $scope.annotationBody,
+          time: new Date(),
+          labels: ["reply"]
+        };
+        $scope.discussion.replies.push(reply);
+        // clear body
+        $scope.annotationBody = null;
         return;
       };
 
       $scope.getUsername = function() {
         return getUserById(annoLookup[discussion.originalAnnotationId].authorId).userName;
-      };
-
-      $scope.getOne = function() {
-        return "1";
       };
 
       this.getAnnotation = function(id) {
