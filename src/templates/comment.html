@@ -16,7 +16,9 @@
       <div class="pull-right">
       <span ng-show="annotation.permissions.edit"><i class="fa fa-pencil"></i></span>
       <a href ng-show="annotation.permissions.delete"
-        ng-click="$parent.deleteReply(annotation._id)">
+        confirmed-click="$parent.deleteReply(annotation._id)"
+        ng-confirm-click="Really delete reply?"
+        >
         <i class="fa fa-remove"></i>
       </a>
     </div>
