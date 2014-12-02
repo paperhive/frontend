@@ -1,7 +1,7 @@
 <div ng-controller="AnnotationCtrl">
   <h4>{{discussion.title}} <span>#{{discussion.number}}</span></h4>
   <a href="#">{{discussion.originalAnnotation.author.displayName}}</a> created
-  this annotation 2 days ago &middot; {{discussion.replies.length}} replies
+  this annotation <span am-time-ago="{{discussion.originalAnnotation.time}}"></span> &middot; {{discussion.replies.length}} replies
   <hr>
   <div class="col-md-10">
     <ul class="media-list">

@@ -34,10 +34,13 @@
   "browser": {
     "angular": "./bower_components/angular/angular.js",
     "angular-bootstrap-tpls": "./bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
+    "angular-moment": "./bower_components/angular-moment/angular-moment.js",
     "angular-route": "./bower_components/angular-route/angular-route.js",
+    "angular-route-segment": "./bower_components/angular-route-segment/build/angular-route-segment.js",
     "angular-sanitize": "./bower_components/angular-sanitize/angular-sanitize.js",
-    "pdfjs": "./bower_components/pdfjs-dist/build/pdf.combined.js",
-    "highlightjs": "./bower_components/highlightjs/highlight.pack.js"
+    "highlightjs": "./bower_components/highlightjs/highlight.pack.js",
+    "momentjs": "./bower_components/moment/moment.js",
+    "pdfjs": "./bower_components/pdfjs-dist/build/pdf.combined.js"
   },
   "browserify-shim": {
     "angular": {
@@ -55,11 +58,27 @@
         "angular"
       ]
     },
+    "angular-route-segment": {
+      "exports": null,
+      "depends": [
+        "angular"
+      ]
+    },
     "angular-sanitize": {
       "exports": null,
       "depends": [
         "angular"
       ]
+    },
+    "angular-moment": {
+      "exports": null,
+      "depends": [
+        "angular",
+        "momentjs"
+      ]
+    },
+    "momentjs": {
+      "exports": "moment"
     },
     "pdfjs": {
       "exports": "PDFJS"
