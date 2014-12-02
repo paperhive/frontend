@@ -6,11 +6,12 @@
   <div class="col-md-10">
     <ul class="media-list">
       <li class="media">
-      <annotation content="discussion.originalAnnotation"></annotation>
+      <annotation content="discussion.originalAnnotation"
+      ng-show="discussion.originalAnnotation.permissions.read"></annotation>
       </li>
 
       <li class="media" ng-repeat="reply in discussion.replies">
-      <annotation content="reply"></annotation>
+      <annotation content="reply" ng-show="reply.permissions.read"></annotation>
       </li>
 
       <li class="media">

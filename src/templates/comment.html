@@ -13,7 +13,13 @@
         >
         {{annotation.author.displayName}}
       </a> commented <span am-time-ago="{{annotation.time}}"></span>
-      <span class="pull-right"><i class="fa fa-pencil"></i></span>
+      <div class="pull-right">
+      <span ng-show="annotation.permissions.edit"><i class="fa fa-pencil"></i></span>
+      <a href ng-show="annotation.permissions.delete"
+        ng-click="$parent.deleteReply(annotation._id)">
+        <i class="fa fa-remove"></i>
+      </a>
+    </div>
     </div>
     <div class="panel-body">
       <kramjax body="{{annotation.body}}"></kramjax>
