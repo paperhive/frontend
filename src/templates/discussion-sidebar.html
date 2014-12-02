@@ -1,0 +1,28 @@
+<a href="#"><h5>Labels <span class="pull-right"><i class="fa
+        fa-gear"></i></span></h5></a>
+<ul class="ph-tags">
+  <li ng-repeat="label in discussion.originalAnnotation.labels">
+  <a href="#" class="btn btn-default {{label}}">{{label}}</a>
+  </li>
+</ul>
+<hr>
+<h5>Notifications</h5>
+<button type="button" class="btn btn-default" style="width:100%"
+  ng-disabled="!auth.user"
+  ng-click="toggleSubscribe()"
+  >
+  <span ng-show="isSubscribed">
+    <i class="fa fa-bell-slash"></i> Unsubscribe
+  </span>
+  <span ng-show="!isSubscribed">
+    <i class="fa fa-bell"></i> Subscribe
+  </span>
+</button>
+<span ng-show="isSubscribed" style="font-size:x-small;">You're receiving
+  notifications because you're subscribed to this thread.</span>
+<span ng-show="!isSubscribed" style="font-size:x-small;">You're ignoring this thread.</span>
+<hr>
+<h5>Participants</h5>
+List of participants
+<hr>
+<a href=""><i class="fa fa-lock"></i> Lock discussion</a>
