@@ -92,6 +92,9 @@ module.exports = function (app) {
       };
 
       $scope.addReply = function() {
+        if (!$scope.auth.user) {
+            throw PhError("Not logged in?");
+        }
         // create the annotation
         reply = {
           _id: Math.random().toString(36).slice(2),

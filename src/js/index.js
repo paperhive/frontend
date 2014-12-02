@@ -29,4 +29,5 @@
   require('./controllers')(paperhub);
   require('./directives')(paperhub);
   require('./services')(paperhub);
+  require('./utils')(paperhub);
 })();
