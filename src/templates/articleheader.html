@@ -1,15 +1,18 @@
-<div class="media">
+<div class="media" ng-controller="AnnotationCtrl">
   <div class="media-left">
     <h3 class="media-heading"><i class="fa fa-file-text-o fa-fw"></i></h3>
   </div>
   <div class="media-body">
     <h3 class="media-heading">
-      <a href="#/articles/0af5e13">
-        Lirum, lorem Löffelstiel
-      </a><br/>
+      <!-- TODO use route segment here -->
+      <a href="#/articles/{{articles[0]._id}}">
+        {{articles[0].title}}
+      </a><br>
       <small>
-        <a href="#/users/asdas">Evelyn Hamann</a>,
-        <a href="#/users/dgfgs">Hans Hallmackenreuther</a>
+        <span ng-repeat="author in articles[0].authors">
+          <!-- TODO use route segment here -->
+          <a href="#/users/{{author.userName}}">{{author.displayName}}</a>{{$last ? '' :', '}}
+        </span>
       </small>
     </h3>
   </div>

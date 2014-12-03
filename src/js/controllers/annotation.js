@@ -73,6 +73,16 @@ var discussion = {
     annotations[2]
   ]
 };
+
+var articles = [
+  {
+  _id: "0af5e13",
+  url: "arxiv.org/pdf/1208.0264v3.pdf",
+  title: "Title of the article",
+  authors: [users[2], users[1]],
+  discussions: [discussion]
+}
+];
 // END DEBUG
 
 module.exports = function (app) {
@@ -80,6 +90,7 @@ module.exports = function (app) {
     '$scope', 'AuthService',
     function($scope, AuthService) {
       $scope.discussion = discussion;
+      $scope.articles = articles;
       $scope.auth = AuthService;
       $scope.annotationBody = null;
 

@@ -1,39 +1,45 @@
-<div class="row" ng-controller="AnnotationCtrl">
-  <span class="pull-right">
-    <!--input type="text" class="form-control" placeholder="Filter
+<div ng-controller="AnnotationCtrl">
+  <div class="row">
+    <span class="pull-right">
+      <!--input type="text" class="form-control" placeholder="Filter
         annotations"-->
-    <a href="#{{'article.annotations-new' | routeSegmentUrl}}"
-      class="btn btn-primary">
-      New annotation
-    </a>
-  </span>
-</div>
-<br>
-<div class="row">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <ul class="list-inline">
-        <li><a href="#"><strong><i class="fa fa-comment"></i> Annotations</strong></a></li>
-        <li><a href="#"><i class="fa fa-close"></i> Closed annotations</a></li>
+      <a href="#{{'article.annotations-new' | routeSegmentUrl}}"
+        class="btn btn-primary"
+        ng-disabled="!auth.user"
+        >
+        New annotation
+      </a>
+    </span>
+  </div>
+  <br>
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <ul class="list-inline">
+          <li><a href="#"><strong><i class="fa fa-comment"></i> Annotations</strong></a></li>
+          <li><a href="#"><i class="fa fa-close"></i> Closed annotations</a></li>
+        </ul>
+        <!--span class="pull-right">Sort</span-->
+      </div>
+      <ul class="list-group">
+        <li class="list-group-item" ng-repeat="discussion in articles[0].discussions">
+        <span class="pull-right" ng-if="discussion.replies.length > 0">
+          <i class="fa-comments"></i> {{discussion.replies.length}}
+        </span>
+        <h4>
+          <!-- TODO don't hardcode "12"-->
+          <a href="#{{'article.annotations-single' | routeSegmentUrl: {num: 12} }}">
+            {{discussion.title}}
+          </a>
+        </h4>
+        #{{discussion.number}} opened
+        <span am-time-ago="{{discussion.originalAnnotation.time}}"></span>
+        by
+        <a href="#/users/{{discussion.originalAnnotation.author.userName}}">
+          {{discussion.originalAnnotation.author.displayName}}
+        </a>
+        </li>
       </ul>
-      <!--span class="pull-right">Sort</span-->
     </div>
-    <ul class="list-group">
-      <li class="list-group-item">
-      <span class="pull-right"><i class="fa-comments"></i> 14</span>
-      <h4><a href="#">my first annotation</a></h4>
-      #1 opened 3 hours ago by <a href="#">nschloe</a>
-      </li>
-      <li class="list-group-item">
-      <h4><a href="#/articles/0af5e13/annotations/22">Yadda yadda</a></h4>
-      #22 opened just now by <a href="#">Meister Eder</a>
-      </li>
-      <li class="list-group-item">
-      <span class="pull-right"><i class="fa-comments"></i> 1</span>
-      <h4><a href="#">This paper isn't worth the paper it's printed on oh wait it's
-          not printed</a></h4>
-      #12 opened just now by <a href="#">Beatmaster S</a>
-      </li>
-    </ul>
   </div>
 </div>
