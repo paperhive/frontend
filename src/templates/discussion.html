@@ -15,7 +15,17 @@
       </li>
 
       <li class="media">
-      <ng-include src="'templates/annotation-new-block.html'"></ng-include>
+      <ng-include src="'templates/annotation-new-block.html'" ng-if="auth.user"></ng-include>
+      <div ng-if="!auth.user" class="media-body" style="width:100%;padding-left:90px;">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <a href="{{auth.orcidUrl}}" class="btn btn-primary">
+              Sign in with ORCID
+            </a>
+            to join this discussion on PaperHub.
+          </div>
+        </div>
+      </div>
       </li>
     </ul>
   </div>
