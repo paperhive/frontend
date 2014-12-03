@@ -1,45 +1,43 @@
-<div ng-controller="AnnotationCtrl">
-  <div class="row">
-    <span class="pull-right">
-      <!--input type="text" class="form-control" placeholder="Filter
+<div class="row">
+  <span class="pull-right">
+    <!--input type="text" class="form-control" placeholder="Filter
         annotations"-->
-      <a href="#{{'article.annotations-new' | routeSegmentUrl}}"
-        class="btn btn-primary"
-        ng-disabled="!auth.user"
-        >
-        New annotation
-      </a>
-    </span>
-  </div>
-  <br>
-  <div class="row">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <ul class="list-inline">
-          <li><a href="#"><strong><i class="fa fa-comment"></i> Annotations</strong></a></li>
-          <li><a href="#"><i class="fa fa-close"></i> Closed annotations</a></li>
-        </ul>
-        <!--span class="pull-right">Sort</span-->
-      </div>
-      <ul class="list-group">
-        <li class="list-group-item" ng-repeat="discussion in articles[0].discussions">
-        <span class="pull-right" ng-if="discussion.replies.length > 0">
-          <i class="fa-comments"></i> {{discussion.replies.length}}
-        </span>
-        <h4>
-          <!-- TODO don't hardcode "12"-->
-          <a href="#{{'article.annotations-single' | routeSegmentUrl: {num: 12} }}">
-            {{discussion.title}}
-          </a>
-        </h4>
-        #{{discussion.number}} opened
-        <span am-time-ago="{{discussion.originalAnnotation.time}}"></span>
-        by
-        <a href="#/users/{{discussion.originalAnnotation.author.userName}}">
-          {{discussion.originalAnnotation.author.displayName}}
-        </a>
-        </li>
+    <a href="#{{'article.annotations-new' | routeSegmentUrl}}"
+      class="btn btn-primary"
+      ng-disabled="!auth.user"
+      >
+      New annotation
+    </a>
+  </span>
+</div>
+<br>
+<div class="row">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <ul class="list-inline">
+        <li><a href="#"><strong><i class="fa fa-comment"></i> Annotations</strong></a></li>
+        <li><a href="#"><i class="fa fa-close"></i> Closed annotations</a></li>
       </ul>
+      <!--span class="pull-right">Sort</span-->
     </div>
+    <ul class="list-group">
+      <li class="list-group-item" ng-repeat="discussion in articles[0].discussions">
+      <span class="pull-right" ng-if="discussion.replies.length > 0">
+        <i class="fa-comments"></i> {{discussion.replies.length}}
+      </span>
+      <h4>
+        <!-- TODO don't hardcode "12"-->
+        <a href="#{{'article.annotations-single' | routeSegmentUrl: {num: 12} }}">
+          {{discussion.title}}
+        </a>
+      </h4>
+      #{{discussion.number}} opened
+      <span am-time-ago="{{discussion.originalAnnotation.time}}"></span>
+      by
+      <a href="#/users/{{discussion.originalAnnotation.author.userName}}">
+        {{discussion.originalAnnotation.author.displayName}}
+      </a>
+      </li>
+    </ul>
   </div>
 </div>

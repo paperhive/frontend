@@ -17,6 +17,11 @@ module.exports = function (app) {
             // Fetch the PDF document from the URL using promises
             PDFJS.getDocument(url).then(function(pdf) {
               var wrapperWidth = element[0].offsetWidth;
+              if (wrapperWidth === 0) {
+                // TODO make sure this error doesn't get silently intercepted
+                console.log("Invalid wrapper width");
+                throw Error("Invalid wrapper width");
+              }
 
               var showPage = function(page) {
                 // Scale such that the width of the viewport is the fills the
@@ -45,7 +50,7 @@ module.exports = function (app) {
                 element.append(canvas);
               };
 
-              for(var i = 0; i < pdf.numPages; i++){
+              for(var i = 1; i < pdf.numPages; i++){
                 // Using promise to fetch the page
                 pdf.getPage(i).then(showPage);
               }

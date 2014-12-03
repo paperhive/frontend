@@ -1,4 +1,3 @@
-<div ng-controller="AnnotationCtrl">
   <h4>{{discussion.title}} <span>#{{discussion.number}}</span></h4>
   <a href="#/users/{{discussion.originalAnnotation.author.userName}}">
     {{discussion.originalAnnotation.author.displayName}}
@@ -37,4 +36,3 @@
   <div class="col-md-2">
     <ng-include src="'templates/discussion-sidebar.html'"></ng-include>
   </div>
-</div>
