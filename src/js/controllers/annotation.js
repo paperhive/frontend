@@ -78,7 +78,7 @@ var articles = [
   {
   _id: "0af5e13",
   url: "http://arxiv.org/pdf/1208.0264v3.pdf",
-  title: "Title of the article",
+  title: "Preconditioned Recycling Krylov Subspace Methods for Self-Adjoint Problems",
   authors: [users[2], users[1]],
   discussions: [discussion]
 }
