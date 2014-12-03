@@ -47,7 +47,6 @@ module.exports = function (app) {
         .segment('text', {
           default: true,
           templateUrl: 'templates/text.html',
-          controller: 'DisplayCtrl',
           dependencies: ['id']
         })
         .segment('annotations', {
