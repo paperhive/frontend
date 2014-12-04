@@ -15,14 +15,17 @@
         {{annotation.author.displayName}}
       </a> commented <span am-time-ago="{{annotation.time}}"></span>
       <div class="pull-right">
-      <span ng-if="annotation.permissions.edit"><i class="fa fa-pencil"></i></span>
-      <a href ng-if="annotation.permissions.delete"
-        confirmed-click="$parent.deleteReply(annotation._id)"
-        ng-confirm-click="Really delete reply?"
-        >
-        <i class="fa fa-remove"></i>
-      </a>
-    </div>
+        <span ng-if="isArticleAuthor" class="ph-comment-tag">Author</span>
+        <span ng-if="annotation.permissions.edit"><i class="fa fa-pencil"></i></span>
+        <a
+          href
+          ng-if="canDelete && annotation.permissions.delete"
+          confirmed-click="$parent.deleteReply(annotation._id)"
+          ng-confirm-click="Really delete reply?"
+          >
+          <i class="fa fa-remove"></i>
+        </a>
+      </div>
     </div>
     <div class="panel-body">
       <kramjax body="{{annotation.body}}"></kramjax>

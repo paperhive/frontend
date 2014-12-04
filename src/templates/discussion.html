@@ -9,12 +9,21 @@
   <div class="col-md-10">
     <ul class="media-list">
       <li class="media">
-      <annotation content="discussion.originalAnnotation"
-      ng-show="discussion.originalAnnotation.permissions.read"></annotation>
+      <annotation
+      ng-if="discussion.originalAnnotation.permissions.read"
+      content="discussion.originalAnnotation"
+      is-article-author="isAuthor(discussion.originalAnnotation.author._id)"
+      can-delete="false"
+      ></annotation>
       </li>
 
       <li class="media" ng-repeat="reply in discussion.replies">
-      <annotation content="reply" ng-show="reply.permissions.read"></annotation>
+      <annotation
+      ng-if="reply.permissions.read"
+      content="reply"
+      is-article-author="isAuthor(reply.author._id)"
+      can-delete="true"
+      ></annotation>
       </li>
 
       <li class="media">
