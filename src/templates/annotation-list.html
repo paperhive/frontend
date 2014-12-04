@@ -32,8 +32,15 @@
     </div>
     <ul class="list-group">
       <li class="list-group-item" ng-repeat="discussion in articles[0].discussions">
-      <span class="pull-right" ng-if="discussion.replies.length > 0">
-        <i class="fa-comments"></i> {{discussion.replies.length}}
+      <span class="pull-right">
+        <ul class="ph-tags list-inline" style="display: inline-block;">
+          <li ng-repeat="label in discussion.originalAnnotation.labels">
+          <a href="#" class="btn btn-default {{label}}">{{label}}</a>
+          </li>
+        </ul>
+        <span ng-if="discussion.replies.length > 0" style="margin-left:15px;">
+          <i class="fa-comments"></i> {{discussion.replies.length}}
+        </span>
       </span>
       <h4>
         <!-- TODO don't hardcode "12"-->
