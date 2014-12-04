@@ -7,9 +7,7 @@
   ng-class="{active: ('article.text' | routeSegmentStartsWith)}"
   >
   <a href="#{{'article.text' | routeSegmentUrl}}"
-    tooltip-trigger="mouseover"
-    tooltip-placement="left"
-    tooltip="Text">
+    >
     <i class="fa fa-file-pdf-o fa-fw"></i> Text
   </a>
   </li>
@@ -21,9 +19,6 @@
   || ('article.annotations-single' | routeSegmentStartsWith)
   }">
   <a href="#{{'article.annotations' | routeSegmentUrl}}"
-    tooltip-trigger="mouseover"
-    tooltip-placement="left"
-    tooltip="Discussions"
     >
     <i class="fa fa-comments fa-fw"></i> Discussions
     <!--span class="badge">{{articles[0].discussions.length}}</span-->
@@ -32,10 +27,10 @@
   <hr>
   <li role="presentation" ng-class="{active: ('article.settings' | routeSegmentStartsWith)}">
   <a href="#{{'article.settings' | routeSegmentUrl}}"
-    tooltip-trigger="mouseover"
-    tooltip-placement="left"
-    tooltip="Settings"
     >
+    <!--tooltip-trigger="mouseover"
+    tooltip-placement="left"
+    tooltip="Settings"-->
     <i class="fa fa-wrench fa-fw"></i> Settings
   </a>
   </li>
