@@ -24,6 +24,15 @@ var users = [
 }
 ];
 
+var accounts = [
+{
+  _id: "ea5411da",
+  accountName: "arxiv",
+  displayName: "arXiv.org"
+}
+];
+
+
 var annotations = [
   {
   _id: "1242340",
@@ -80,7 +89,8 @@ var articles = [
   url: "http://arxiv.org/pdf/1208.0264v3.pdf",
   title: "Preconditioned Recycling Krylov Subspace Methods for Self-Adjoint Problems",
   authors: [users[2], users[1]],
-  discussions: [discussion]
+  discussions: [discussion],
+  owner: accounts[0]
 }
 ];
 // END DEBUG
