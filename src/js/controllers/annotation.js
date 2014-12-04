@@ -32,7 +32,6 @@ var accounts = [
 }
 ];
 
-
 var annotations = [
   {
   _id: "1242340",
@@ -95,6 +94,7 @@ var articles = [
 ];
 // END DEBUG
 
+
 module.exports = function (app) {
   app.controller('AnnotationCtrl', [
     '$scope', 'AuthService',
@@ -103,11 +103,8 @@ module.exports = function (app) {
       $scope.auth = AuthService;
       $scope.annotationBody = null;
 
-      console.log(AuthService);
-
       $scope.subscribers = [
       ];
-      // '54789c34049715a67d7915d8'
       if('user' in AuthService) {
         $scope.isSubscribed = $scope.subscribers.indexOf(AuthService.user._id) > -1;
       } else {

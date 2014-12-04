@@ -1,10 +1,15 @@
-<div ng-controller="AnnotationCtrl">
+<div ng-controller="ArticleCtrl">
   <div class="container">
-    <ng-include src="'templates/article-header.html'"></ng-include>
+    <ng-include
+    src="'templates/article-header.html'"
+    ></ng-include>
   </div>
   <hr/>
   <div class="container">
     <div app-view-segment="1" class="col-md-10"></div>
-    <ng-include src="'templates/controlbar.html'" class="col-md-2"></ng-include>
+    <ng-include
+    src="'templates/article-controlbar.html'"
+    class="col-md-2"
+    ></ng-include>
   </div>
 </div>

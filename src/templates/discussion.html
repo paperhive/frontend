@@ -9,31 +9,31 @@
       New discussion
     </a>
   </span>
-  {{articles[0].discussions[0].title}}
+  {{discussion.title}}
   <span style="color:#999;">
-    #{{articles[0].discussions[0].number}}
+    #{{discussion.number}}
   </span>
 </h3>
-<a href="#/users/{{articles[0].discussions[0].originalAnnotation.author.userName}}">
-  {{articles[0].discussions[0].originalAnnotation.author.displayName}}
+<a href="#/users/{{discussion.originalAnnotation.author.userName}}">
+  {{discussion.originalAnnotation.author.displayName}}
 </a>
 created this annotation
-<span am-time-ago="{{articles[0].discussions[0].originalAnnotation.time}}"></span>
-&middot; {{articles[0].discussions[0].replies.length}} replies
+<span am-time-ago="{{discussion.originalAnnotation.time}}"></span>
+&middot; {{discussion.replies.length}} replies
 
 <hr>
 <div class="col-md-10">
   <ul class="media-list">
     <li class="media">
     <annotation
-    ng-if="articles[0].discussions[0].originalAnnotation.permissions.read"
-    content="articles[0].discussions[0].originalAnnotation"
-    is-article-author="isAuthor(articles[0].discussions[0].originalAnnotation.author._id)"
+    ng-if="discussion.originalAnnotation.permissions.read"
+    content="discussion.originalAnnotation"
+    is-article-author="isAuthor(discussion.originalAnnotation.author._id)"
     can-delete="false"
     ></annotation>
     </li>
 
-    <li class="media" ng-repeat="reply in articles[0].discussions[0].replies">
+    <li class="media" ng-repeat="reply in discussion.replies">
     <annotation
     ng-if="reply.permissions.read"
     content="reply"

@@ -5,16 +5,16 @@
   <div class="media-body">
     <h3 class="media-heading">
       <!-- TODO use route segment here -->
-      <a href="#/articles/{{articles[0]._id}}">
-        {{articles[0].title}}
+      <a href="#/articles/{{article._id}}">
+        {{article.title}}
       </a><br>
       <small>
-        <span ng-repeat="author in articles[0].authors">
+        <span ng-repeat="author in article.authors">
           <!-- TODO use route segment here -->
           <a href="#/users/{{author.userName}}">{{author.displayName}}</a>{{$last ? '' :', '}}
         </span>
       </small>
     </h3>
-    from <a href="#/users/{{articles[0].owner.accountName}}">{{articles[0].owner.displayName}}</a>
+    from <a href="#/users/{{article.owner.accountName}}">{{article.owner.displayName}}</a>
   </div>
 </div>

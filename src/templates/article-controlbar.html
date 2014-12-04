@@ -16,12 +16,12 @@
   <li role="presentation" ng-class="{active:
   ('article.annotations' | routeSegmentStartsWith)
   || ('article.annotations-new' | routeSegmentStartsWith)
-  || ('article.annotations-single' | routeSegmentStartsWith)
+  || ('article.discussion' | routeSegmentStartsWith)
   }">
   <a href="#{{'article.annotations' | routeSegmentUrl}}"
     >
     <i class="fa fa-comments fa-fw"></i> Discussions
-    <!--span class="badge">{{articles[0].discussions.length}}</span-->
+    <!--span class="badge">{{article.discussions.length}}</span-->
   </a>
   </li>
   <hr>

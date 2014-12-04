@@ -12,7 +12,7 @@ module.exports = function (app) {
         .when('/articles/:id/text', 'article.text')
         .when('/articles/:id/annotations', 'article.annotations')
         .when('/articles/:id/annotations/new', 'article.annotations-new')
-        .when('/articles/:id/annotations/:num', 'article.annotations-single')
+        .when('/articles/:id/annotations/:num', 'article.discussion')
         .when('/articles/:id/settings', 'article.settings')
         .when('/users/', 'userlist')
         .when('/users/:username', 'user')
@@ -53,8 +53,9 @@ module.exports = function (app) {
           templateUrl: 'templates/discussions-list.html',
           dependencies: ['id']
         })
-        .segment('annotations-single', {
+        .segment('discussion', {
           templateUrl: 'templates/discussion.html',
+          controller: 'DiscussionCtrl',
           dependencies: ['num']
         })
         .segment('annotations-new', {
