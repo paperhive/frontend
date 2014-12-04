@@ -11,7 +11,7 @@ module.exports = function (app) {
         isArticleAuthor: "=",
         canDelete: "="
       },
-      templateUrl: 'templates/comment.html'
+      templateUrl: 'templates/annotation.html'
     };
   });
 };

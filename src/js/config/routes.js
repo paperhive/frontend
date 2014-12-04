@@ -50,7 +50,7 @@ module.exports = function (app) {
           dependencies: ['id']
         })
         .segment('annotations', {
-          templateUrl: 'templates/annotation-list.html',
+          templateUrl: 'templates/discussions-list.html',
           dependencies: ['id']
         })
         .segment('annotations-single', {
@@ -58,7 +58,7 @@ module.exports = function (app) {
           dependencies: ['num']
         })
         .segment('annotations-new', {
-          templateUrl: 'templates/annotation-new.html',
+          templateUrl: 'templates/discussion-new.html',
           dependencies: ['id']
         })
         .segment('settings', {
