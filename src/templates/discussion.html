@@ -1,47 +1,60 @@
-  <h4>{{discussion.title}} <span>#{{discussion.number}}</span></h4>
-  <a href="#/users/{{discussion.originalAnnotation.author.userName}}">
-    {{discussion.originalAnnotation.author.displayName}}
-  </a>
-  created this annotation
-  <span am-time-ago="{{discussion.originalAnnotation.time}}"></span>
-  &middot; {{discussion.replies.length}} replies
-  <hr>
-  <div class="col-md-10">
-    <ul class="media-list">
-      <li class="media">
-      <annotation
-      ng-if="discussion.originalAnnotation.permissions.read"
-      content="discussion.originalAnnotation"
-      is-article-author="isAuthor(discussion.originalAnnotation.author._id)"
-      can-delete="false"
-      ></annotation>
-      </li>
+<h3>
+  <span class="pull-right">
+    <!--input type="text" class="form-control" placeholder="Filter
+              annotations"-->
+    <a href="#{{'article.annotations-new' | routeSegmentUrl}}"
+      class="btn btn-primary"
+      ng-disabled="!auth.user"
+      >
+      New discussion
+    </a>
+  </span>
+  {{discussion.title}} <span style="color:#999;">#{{discussion.number}}</span>
+</h3>
+<a href="#/users/{{discussion.originalAnnotation.author.userName}}">
+  {{discussion.originalAnnotation.author.displayName}}
+</a>
+created this annotation
+<span am-time-ago="{{discussion.originalAnnotation.time}}"></span>
+&middot; {{discussion.replies.length}} replies
 
-      <li class="media" ng-repeat="reply in discussion.replies">
-      <annotation
-      ng-if="reply.permissions.read"
-      content="reply"
-      is-article-author="isAuthor(reply.author._id)"
-      can-delete="true"
-      ></annotation>
-      </li>
+<hr>
+<div class="col-md-10">
+  <ul class="media-list">
+    <li class="media">
+    <annotation
+    ng-if="discussion.originalAnnotation.permissions.read"
+    content="discussion.originalAnnotation"
+    is-article-author="isAuthor(discussion.originalAnnotation.author._id)"
+    can-delete="false"
+    ></annotation>
+    </li>
 
-      <li class="media">
-      <ng-include src="'templates/annotation-new-block.html'" ng-if="auth.user"></ng-include>
-      <div ng-if="!auth.user" class="media-body ph-login-info-block">
-        <div class="panel panel-default">
-          <div class="panel-body bg-info">
-            <a href="{{auth.orcidUrl}}" class="btn btn-primary">
-              Sign in with ORCID
-            </a>
-            to join this discussion on PaperHub.
-          </div>
+    <li class="media" ng-repeat="reply in discussion.replies">
+    <annotation
+    ng-if="reply.permissions.read"
+    content="reply"
+    is-article-author="isAuthor(reply.author._id)"
+    can-delete="true"
+    ></annotation>
+    </li>
+
+    <li class="media">
+    <ng-include src="'templates/annotation-new-block.html'" ng-if="auth.user"></ng-include>
+    <div ng-if="!auth.user" class="media-body ph-login-info-block">
+      <div class="panel panel-default">
+        <div class="panel-body bg-info">
+          <a href="{{auth.orcidUrl}}" class="btn btn-primary">
+            Sign in with ORCID
+          </a>
+          to join this discussion on PaperHub.
         </div>
       </div>
-      </li>
-    </ul>
-  </div>
+    </div>
+    </li>
+  </ul>
+</div>
 
-  <div class="col-md-2">
-    <ng-include src="'templates/discussion-sidebar.html'"></ng-include>
-  </div>
+<div class="col-md-2">
+  <ng-include src="'templates/discussion-sidebar.html'"></ng-include>
+</div>

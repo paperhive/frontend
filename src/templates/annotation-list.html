@@ -6,7 +6,7 @@
       class="btn btn-primary"
       ng-disabled="!auth.user"
       >
-      New annotation
+      New discussion
     </a>
   </span>
 </div>
@@ -15,8 +15,18 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <ul class="list-inline">
-        <li><a href="#"><strong><i class="fa fa-comment"></i> Annotations</strong></a></li>
-        <li><a href="#"><i class="fa fa-close"></i> Closed annotations</a></li>
+        <li>
+        <a href="#">
+          <strong>
+            <i class="fa fa-comment"></i> {{articles[0].discussions.length}} open
+          </strong>
+        </a>
+        </li>
+        <li>
+        <a href="#">
+          <i class="fa fa-close"></i> 0 closed
+        </a>
+        </li>
       </ul>
       <!--span class="pull-right">Sort</span-->
     </div>

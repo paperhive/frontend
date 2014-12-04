@@ -99,7 +99,6 @@ module.exports = function (app) {
   app.controller('AnnotationCtrl', [
     '$scope', 'AuthService',
     function($scope, AuthService) {
-      $scope.discussion = discussion;
       $scope.articles = articles;
       $scope.auth = AuthService;
       $scope.annotationBody = null;
