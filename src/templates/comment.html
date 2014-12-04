@@ -15,8 +15,8 @@
         {{annotation.author.displayName}}
       </a> commented <span am-time-ago="{{annotation.time}}"></span>
       <div class="pull-right">
-      <span ng-show="annotation.permissions.edit"><i class="fa fa-pencil"></i></span>
-      <a href ng-show="annotation.permissions.delete"
+      <span ng-if="annotation.permissions.edit"><i class="fa fa-pencil"></i></span>
+      <a href ng-if="annotation.permissions.delete"
         confirmed-click="$parent.deleteReply(annotation._id)"
         ng-confirm-click="Really delete reply?"
         >
