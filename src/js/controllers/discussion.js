@@ -5,6 +5,9 @@ module.exports = function (app) {
 
       // retrieve the discussion
       var _ = require('underscore');
+      //var k = _.find($scope.article.discussions,
+      //               function(obj){ return obj.number == parseInt($routeParams.num)}
+      //              );
       $scope.discussion = _.findWhere($scope.article.discussions,
                                       {"number": parseInt($routeParams.num)}
                                      );

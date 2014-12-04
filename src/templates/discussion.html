@@ -10,14 +10,15 @@
     </a>
   </span>
   {{discussion.title}}
-  <span style="color:#999;">
+  <i class="fa fa-pencil small"></i>
+  <span class="small">
     #{{discussion.number}}
   </span>
 </h3>
 <a href="#/users/{{discussion.originalAnnotation.author.userName}}">
   {{discussion.originalAnnotation.author.displayName}}
 </a>
-created this annotation
+created this discussion
 <span am-time-ago="{{discussion.originalAnnotation.time}}"></span>
 &middot; {{discussion.replies.length}} replies
 
