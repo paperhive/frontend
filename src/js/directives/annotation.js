@@ -3,13 +3,12 @@ module.exports = function (app) {
   app.directive('annotation', function() {
     return {
       restrict: 'E',
-      require: ['isArticleAuthor', 'canDelete'],
+      require: ['isArticleAuthor'],
       scope: {
         annotation: '=content',
         // For some reason, we can't use one-directional ('@') binding here,
         // cf. <http://stackoverflow.com/a/18016206/353337>.
         isArticleAuthor: "=",
-        canDelete: "=",
         deleteFunction: "="
       },
       templateUrl: 'templates/annotation.html'

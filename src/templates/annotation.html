@@ -19,7 +19,7 @@
         <span ng-if="annotation.permissions.edit"><i class="fa fa-pencil"></i></span>
         <a
           href
-          ng-if="canDelete && annotation.permissions.delete"
+          ng-if="deleteFunction && annotation.permissions.delete"
           confirmed-click="deleteFunction(annotation._id)"
           ng-confirm-click="Really delete reply?"
           >
