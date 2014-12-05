@@ -1,3 +1,4 @@
+<div ng-controller="DiscussionCtrl">
 <h3>
   <span class="pull-right">
     <!--input type="text" class="form-control" placeholder="Filter
@@ -31,6 +32,7 @@ created this discussion
     content="discussion.originalAnnotation"
     is-article-author="isAuthor(discussion.originalAnnotation.author._id)"
     can-delete="false"
+    delete-function="deleteReply"
     ></annotation>
     </li>
 
@@ -40,6 +42,7 @@ created this discussion
     content="reply"
     is-article-author="isAuthor(reply.author._id)"
     can-delete="true"
+    delete-function="deleteReply"
     ></annotation>
     </li>
 
@@ -61,4 +64,6 @@ created this discussion
 
 <div class="col-md-2">
   <ng-include src="'templates/discussion-sidebar.html'"></ng-include>
+</div>
+
 </div>

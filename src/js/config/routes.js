@@ -55,7 +55,6 @@ module.exports = function (app) {
         })
         .segment('discussion', {
           templateUrl: 'templates/discussion.html',
-          controller: 'DiscussionCtrl',
           dependencies: ['num']
         })
         .segment('annotations-new', {

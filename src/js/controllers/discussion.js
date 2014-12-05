@@ -56,18 +56,13 @@ module.exports = function (app) {
       $scope.deleteReply = function(deleteId) {
         // TODO remove reply from database, add the following code into the
         // success handler
-        var k = -1;
-        for (var i = 0; i < $scope.discussion.replies.length; i++) {
-          if ($scope.discussion.replies[i]._id === deleteId) {
-            k = i;
-            break;
-          }
-        }
-        // TODO use this instead of the 
-        //_ = require('underscore');
-        //var k = _.indexOf(_.pluck($scope.discussion.replies, '_id'), deleteId);
+        var _ = require('lodash');
+        var k = _.findIndex($scope.discussion.replies,
+                            function (item) {return item._id === deleteId;}
+                           );
         if (k < 0) {
-          throw PhError("Reply not found.");
+          console.log("Reply ", deleteId, " not found.");
+          throw PhError("Reply ", deleteId, " not found.");
         }
         // remove if from the list
         $scope.discussion.replies.splice(k, 1);

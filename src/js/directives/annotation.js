@@ -9,7 +9,8 @@ module.exports = function (app) {
         // For some reason, we can't use one-directional ('@') binding here,
         // cf. <http://stackoverflow.com/a/18016206/353337>.
         isArticleAuthor: "=",
-        canDelete: "="
+        canDelete: "=",
+        deleteFunction: "="
       },
       templateUrl: 'templates/annotation.html'
     };

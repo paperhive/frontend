@@ -26,6 +26,7 @@
     "gulp-util": "^3.0.1",
     "jquery": "^2.1.1",
     "kramed": "^0.4.3",
+    "lodash": "^2.4.1",
     "merge-stream": "^0.1.6",
     "underscore": "^1.7.0",
     "vinyl-source-stream": "^1.0.0",

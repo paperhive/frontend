@@ -20,7 +20,7 @@
         <a
           href
           ng-if="canDelete && annotation.permissions.delete"
-          confirmed-click="$parent.deleteReply(annotation._id)"
+          confirmed-click="deleteFunction(annotation._id)"
           ng-confirm-click="Really delete reply?"
           >
           <i class="fa fa-remove"></i>
