@@ -53,6 +53,12 @@ module.exports = function (app) {
         return;
       };
 
+      $scope.isAuthor = function(authorId) {
+        var _ = require('lodash');
+        var k = _.findWhere($scope.article.authors, {_id: authorId});
+        return (k !== undefined);
+      };
+
       $scope.deleteReply = function(deleteId) {
         // TODO remove reply from database, add the following code into the
         // success handler
