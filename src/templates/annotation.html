@@ -13,10 +13,11 @@
         href="/#/users/{{annotation.author.userName}}"
         >
         {{annotation.author.displayName}}
-      </a> commented <span am-time-ago="{{annotation.time}}"></span>
-      edited <span am-time-ago="{{annotation.editTime}}"></span>
-      {{annotation.editTime}}
-      <span ng-if="{{annotation.editTime}}">, edited {{annotation.editTime}}</span>
+      </a> commented <span am-time-ago="{{annotation.time}}"></span><span
+        ng-if="annotation.editTime"> <em>[edited]</em>
+        <!-- Unfortunately, dynamic edit time updates don't work -->
+        <!--span  am-time-ago="{{annotation.editTime}}"></span-->
+      </span>
       <span class="pull-right">
         <span ng-if="isArticleAuthor" class="ph-comment-tag">Author</span>
         <!-- Can't use ng-if here; it seems to create another scope. -->
