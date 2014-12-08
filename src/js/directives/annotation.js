@@ -4,6 +4,7 @@ module.exports = function (app) {
     return {
       restrict: 'E',
       require: ['isArticleAuthor'],
+      controller: 'AnnotationCtrl',
       scope: {
         annotation: '=content',
         // For some reason, we can't use one-directional ('@') binding here,

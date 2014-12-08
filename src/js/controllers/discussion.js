@@ -53,7 +53,7 @@ module.exports = function (app) {
         return;
       };
 
-      $scope.isAuthor = function(authorId) {
+      $scope.isArticleAuthor = function(authorId) {
         var _ = require('lodash');
         var k = _.findWhere($scope.article.authors, {_id: authorId});
         return (k !== undefined);

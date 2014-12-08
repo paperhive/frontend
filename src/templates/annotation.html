@@ -14,21 +14,33 @@
         >
         {{annotation.author.displayName}}
       </a> commented <span am-time-ago="{{annotation.time}}"></span>
-      <div class="pull-right">
+      <span class="pull-right">
         <span ng-if="isArticleAuthor" class="ph-comment-tag">Author</span>
-        <span ng-if="annotation.permissions.edit"><i class="fa fa-pencil"></i></span>
-        <a
-          href
+        <!-- Can't use ng-if here; it seems to create another scope. -->
+        <!--  ng-if="annotation.permissions.edit" -->
+        <button
+          class="btn btn-link"
+          ng-click="isEditMode = true"
+          >
+          <i class="fa fa-pencil"></i>
+        </button>
+        <button
           ng-if="deleteFunction && annotation.permissions.delete"
+          class="btn btn-link"
           confirmed-click="deleteFunction(annotation._id)"
           ng-confirm-click="Really delete reply?"
           >
           <i class="fa fa-remove"></i>
-        </a>
-      </div>
+        </button>
+      </span>
     </div>
     <div class="panel-body">
-      <kramjax body="{{annotation.body}}"></kramjax>
+      <ng-include
+      ng-if="isEditMode"
+      src="'templates/annotation-inline-edit.html'"
+      >
+      </ng-include>
+      <kramjax ng-if="!isEditMode" body="{{annotation.body}}"></kramjax>
     </div>
   </div>
 </div>
