@@ -4,6 +4,7 @@ module.exports = function (app) {
     function($scope, AuthService, $routeParams) {
 
       $scope.titleEditMode = false;
+      $scope.tmpTitle = undefined;
 
       // retrieve the discussion
       var _ = require('underscore');
@@ -25,7 +26,7 @@ module.exports = function (app) {
         $scope.titleEditMode = false;
       }
       $scope.updateTitle = function(newTitle) {
-        $scope.discussion.title = newTitle();
+        $scope.discussion.title = newTitle;
         $scope.titleEditMode = false;
       }
 

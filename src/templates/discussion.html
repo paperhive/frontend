@@ -17,12 +17,12 @@
     <input
     type="text"
     placeholder="Discussion title"
-    value="{{discussion.title}}"
+    ng-model="tmpTitle"
     >
     </input>
     <button
       class="btn btn-default"
-      ng-click=""
+      ng-click="updateTitle(tmpTitle)"
       >
       <i class="fa fa-check"></i>
     </button>
