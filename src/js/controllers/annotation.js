@@ -4,6 +4,17 @@ module.exports = function (app) {
     function($scope, AuthService) {
       $scope.isEditMode = false;
 
+      $scope.updateAnnotation = function(newBody) {
+        $scope.annotation.body = newBody;
+        $scope.isEditMode = false;
+      }
+
+      // Needed for access from child scope
+      $scope.setEditOn = function () {
+        $scope.isEditMode = true;
+        $scope.tmpBody = $scope.annotation.body;
+      };
+
       // Needed for access from child scope
       $scope.setEditOff = function () {
         $scope.isEditMode = false;
