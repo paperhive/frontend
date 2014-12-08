@@ -3,6 +3,8 @@ module.exports = function (app) {
     '$scope', 'AuthService', '$routeParams',
     function($scope, AuthService, $routeParams) {
 
+      $scope.titleEditMode = false;
+
       // retrieve the discussion
       var _ = require('underscore');
       //var k = _.find($scope.article.discussions,
@@ -13,6 +15,18 @@ module.exports = function (app) {
                                      );
       if ($scope.discussion === undefined) {
         throw PhError("Discussion not found.");
+      }
+
+      $scope.setTitleEditOn = function() {
+        $scope.tmpTitle = $scope.discussion.title;
+        $scope.titleEditMode = true;
+      }
+      $scope.setTitleEditOff = function() {
+        $scope.titleEditMode = false;
+      }
+      $scope.updateTitle = function(newTitle) {
+        $scope.discussion.title = newTitle();
+        $scope.titleEditMode = false;
       }
 
       $scope.subscribers = [

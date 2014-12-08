@@ -14,6 +14,9 @@
         >
         {{annotation.author.displayName}}
       </a> commented <span am-time-ago="{{annotation.time}}"></span>
+      edited <span am-time-ago="{{annotation.editTime}}"></span>
+      {{annotation.editTime}}
+      <span ng-if="{{annotation.editTime}}">, edited {{annotation.editTime}}</span>
       <span class="pull-right">
         <span ng-if="isArticleAuthor" class="ph-comment-tag">Author</span>
         <!-- Can't use ng-if here; it seems to create another scope. -->

@@ -38,6 +38,7 @@ var annotations = [
   author: users[0],
   body: "Simple equations, like $$x^y$$ or $$x_n = \\sqrt{a + b}$$ can be typeset Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ```python def mysin(x): y = sin(x) return y ```",
   time: new Date(),
+  editTime: undefined,
   labels: ["comment", "link"],
   permissions: {
     read: true,
@@ -50,6 +51,7 @@ var annotations = [
   author: users[1],
   body: "Bringt doch alles nichts",
   time: new Date(),
+  editTime: undefined,
   labels: ["reply"],
   permissions: {
     read: true,
@@ -62,6 +64,7 @@ var annotations = [
   author: users[2],
   body: "I like turtles",
   time: new Date(),
+  editTime: undefined,
   labels: ["reply"],
   permissions: {
     read: true,

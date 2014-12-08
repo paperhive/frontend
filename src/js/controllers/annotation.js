@@ -6,6 +6,7 @@ module.exports = function (app) {
 
       $scope.updateAnnotation = function(newBody) {
         $scope.annotation.body = newBody;
+        $scope.annotation.editTime = new Date();
         $scope.isEditMode = false;
       }
 

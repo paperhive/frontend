@@ -10,11 +10,38 @@
       New discussion
     </a>
   </span>
-  {{discussion.title}}
-  <i class="fa fa-pencil small"></i>
+  <span ng-if="!titleEditMode">
+    {{discussion.title}}
+  </span>
+  <span ng-if="titleEditMode">
+    <input
+    type="text"
+    placeholder="Discussion title"
+    value="{{discussion.title}}"
+    >
+    </input>
+    <button
+      class="btn btn-default"
+      ng-click=""
+      >
+      <i class="fa fa-check"></i>
+    </button>
+    <button
+      class="btn btn-default"
+      ng-click="setTitleEditOff()"
+      >
+      <i class="fa fa-remove"></i>
+    </button>
+  </span>
   <span class="small">
     #{{discussion.number}}
   </span>
+  <button
+    class="btn btn-link"
+    ng-click="setTitleEditOn()"
+    >
+    <i ng-if="!titleEditMode" class="fa fa-pencil"></i>
+  </button>
 </h3>
 <a href="#/users/{{discussion.originalAnnotation.author.userName}}">
   {{discussion.originalAnnotation.author.displayName}}
