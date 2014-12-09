@@ -47,7 +47,15 @@ module.exports = function (app) {
         .segment('text', {
           default: true,
           templateUrl: 'templates/text.html',
-          dependencies: ['id']
+          dependencies: ['id'],
+          resolve: {
+            data: function($timeout) {
+              return $timeout(function() { return 'SLOW DATA CONTENT'; }, 1000);
+            }
+          },
+          untilResolved: {
+            templateUrl: 'templates/progress-bar.html'
+          }
         })
         .segment('annotations', {
           templateUrl: 'templates/discussions-list.html',
