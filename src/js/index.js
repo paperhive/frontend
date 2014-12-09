@@ -6,6 +6,7 @@
   require('angular-route'); // provides 'ngRoute' module
   require('../../bower_components/moment/moment.js');
   require('angular-moment');
+  require('../../bower_components/ment.io/dist/mentio.js');
   require('angular-route-segment'); // provides 'route-segment' module
   require('../../tmp/templates.js'); // provides 'templates' module
 
@@ -14,6 +15,7 @@
       'paperHub',
       [
        'ui.bootstrap',
+       'mentio',
        'ngSanitize',
        'ngRoute',
        'route-segment',
