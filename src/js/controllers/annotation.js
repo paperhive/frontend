@@ -32,27 +32,6 @@ module.exports = function (app) {
 
       $scope.users = users;
 
-      console.log($scope.users);
-
-
-      $scope.items = [
-        'xxy', 'yxy', 'zxy'
-      ];
-
-      $scope.items2 = [
-        {label: 'asdf',
-          asda: 'gfg'
-      },
-        {label: 'bksdkf'},
-        {label: 'ccc'}
-      ];
-
-      $scope.items3 = [
-        {name: 'gfg'},
-        {name: 'bksdkf'},
-        {name: 'ccc'}
-      ];
-
       $scope.getPeopleText = function(item) {
         return '<strong><a href="#/users/' + item.userName + '">@' + item.userName + '</a></strong>';
       };
