@@ -4,7 +4,6 @@
   require('angular-bootstrap-tpls'); // provides 'ui.bootstrap' module
   require('angular-sanitize'); // provides 'ngSanitize' module
   require('angular-route'); // provides 'ngRoute' module
-  require('../../bower_components/moment/moment.js');
   require('angular-moment');
   require('../../bower_components/ment.io/dist/mentio.js');
   require('angular-route-segment'); // provides 'route-segment' module

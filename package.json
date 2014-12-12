@@ -9,6 +9,7 @@
   "license": "GPL-3.0",
   "private": true,
   "dependencies": {
+    "angular-moment": "^0.8.3",
     "bower": "^1.3.12",
     "browserify": "^6.2.0",
     "browserify-shim": "^3.8.0",
@@ -35,12 +36,10 @@
   "browser": {
     "angular": "./bower_components/angular/angular.js",
     "angular-bootstrap-tpls": "./bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
-    "angular-moment": "./bower_components/angular-moment/angular-moment.js",
     "angular-route": "./bower_components/angular-route/angular-route.js",
     "angular-route-segment": "./bower_components/angular-route-segment/build/angular-route-segment.js",
     "angular-sanitize": "./bower_components/angular-sanitize/angular-sanitize.js",
     "highlightjs": "./bower_components/highlightjs/highlight.pack.js",
-    "momentjs": "./bower_components/moment/moment.js",
     "pdfjs": "./bower_components/pdfjs-dist/build/pdf.combined.js"
   },
   "browserify-shim": {
@@ -70,16 +69,6 @@
       "depends": [
         "angular"
       ]
-    },
-    "angular-moment": {
-      "exports": null,
-      "depends": [
-        "angular",
-        "momentjs"
-      ]
-    },
-    "momentjs": {
-      "exports": "moment"
     },
     "pdfjs": {
       "exports": "PDFJS"
