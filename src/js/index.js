@@ -8,6 +8,8 @@
   require('../../bower_components/ment.io/dist/mentio.js');
   require('angular-route-segment'); // provides 'route-segment' module
   require('../../tmp/templates.js'); // provides 'templates' module
+  require('pdfjs');
+  require('../../node_modules/pdfjs-dist/web/pdf_viewer.js');
 
   var paperhub = angular
     .module(
