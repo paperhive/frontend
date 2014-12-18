@@ -43,7 +43,6 @@ module.exports = function (app) {
               // Document loaded, specifying document for the viewer.
               pdfViewer.setDocument(pdfDocument);
             });
-            // ================================================================
           }
         );
       }
