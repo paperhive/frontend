@@ -1,17 +1,16 @@
 <ul ng-controller="UserCtrl" class="nav navbar-nav navbar-right">
+  <li>
+    <a href="#" title="help">Help</a>
+  </li>
   <li ng-show="!auth.user && !auth.inProgress">
-    <p class="navbar-btn">
-      <a href="{{auth.orcidUrl}}" class="btn btn-primary" role="button">
-        <i class="fa fa-fw fa-sign-in"></i> Sign in with your ORCID iD
-      </a>
-    </p>
+    <a href="{{auth.orcidUrl}}" class="btn btn-default" title="Sign in with your ORCID iD">
+      <i class="fa fa-fw fa-sign-in"></i> Sign in
+    </a>
   </li>
   <li ng-show="!auth.user && auth.inProgress">
-    <p class="navbar-text">
-      <progressbar class="progress-striped active ph-no-margin" value="100">
-        <span class="ph-padding-left ph-padding-right">Signing in...</span>
-      </progressbar>
-    </p>
+    <progressbar class="progress-striped active ph-no-margin" value="100">
+      <span class="ph-padding-left ph-padding-right">Signing in...</span>
+    </progressbar>
   </li>
   <li ng-show="auth.user" class="dropdown" is-open="dropdown_open">
     <a href class="dropdown-toggle">
