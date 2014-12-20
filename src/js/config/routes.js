@@ -24,35 +24,35 @@ module.exports = function (app) {
         })
 
         .segment('welcome', {
-          templateUrl: 'templates/welcome.html',
+          templateUrl: 'templates/auth/welcome.html',
           controller: 'WelcomeCtrl'
         })
 
         .segment('oauth', {
-          templateUrl: 'templates/users/oauth.html',
+          templateUrl: 'templates/auth/oauth.html',
           controller: 'OauthOrcidCtrl'
         })
 
         .segment('userlist', {
-          templateUrl: 'templates/users/userlist.html'
+          templateUrl: 'templates/user/list.html'
         })
 
         .segment('user', {
-          templateUrl: 'templates/users/user.html',
+          templateUrl: 'templates/user/index.html',
           dependencies: ['username']
         })
 
         .segment('article-new', {
-          templateUrl: 'templates/article/article-new.html'
+          templateUrl: 'templates/article/new.html'
         })
 
         .segment('article', {
-          templateUrl: 'templates/article/article.html'
+          templateUrl: 'templates/article/index.html'
         })
         .within()
         .segment('text', {
           default: true,
-          templateUrl: 'templates/text.html',
+          templateUrl: 'templates/article/text.html',
           dependencies: ['id'],
           resolve: {
             data: function($timeout) {
@@ -60,19 +60,19 @@ module.exports = function (app) {
             }
           },
           untilResolved: {
-            templateUrl: 'templates/sharedObjects/progress-bar.html'
+            templateUrl: 'templates/shared/progress-bar.html'
           }
         })
         .segment('annotations', {
-          templateUrl: 'templates/article/discussion/discussions-list.html',
+          templateUrl: 'templates/article/discussion/list.html',
           dependencies: ['id']
         })
         .segment('discussion', {
-          templateUrl: 'templates/article/discussion/discussion.html',
+          templateUrl: 'templates/article/discussion/index.html',
           dependencies: ['num']
         })
         .segment('annotations-new', {
-          templateUrl: 'templates/article/discussion/discussion-new.html',
+          templateUrl: 'templates/article/discussion/new.html',
           dependencies: ['id']
         })
         .segment('settings', {
