@@ -1,5 +1,9 @@
 # PaperHub Frontend
 
+[![Dependency Status](https://gemnasium.com/paperhub/paperhub-frontend.svg)](https://gemnasium.com/paperhub/paperhub-frontend)
+
+---
+
 ### Setup
 #### Requirements
 * nodejs
