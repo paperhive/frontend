@@ -43,6 +43,33 @@ module.exports = function (app) {
               // Document loaded, specifying document for the viewer.
               pdfViewer.setDocument(pdfDocument);
             });
+            // --------
+            var container = document.createElement("div");
+            container.id = "container";
+            element.append(container);
+
+            //// Loading document.
+            //var PAGE_TO_VIEW = 1;
+            //var SCALE = 1.0;
+            //PDFJS.getDocument(url).then(function (pdfDocument) {
+            //  // Document loaded, retrieving the page.
+            //  return pdfDocument.getPage(PAGE_TO_VIEW).then(function (pdfPage) {
+            //    // Creating the page view with default parameters.
+            //    var pdfPageView = new PDFJS.PDFPageView({
+            //      container: container,
+            //      id: PAGE_TO_VIEW,
+            //      scale: SCALE,
+            //      defaultViewport: pdfPage.getViewport(SCALE),
+            //      // We can enable text/annotations layers, if needed
+            //      textLayerFactory: new PDFJS.DefaultTextLayerFactory(),
+            //      annotationsLayerFactory: new PDFJS.DefaultAnnotationsLayerFactory()
+            //    });
+            //    // Associates the actual page with the view, and drawing it
+            //    pdfPageView.setPdfPage(pdfPage);
+            //    return pdfPageView.draw();
+            //  });
+            //});
+            //// --------
           }
         );
       }
