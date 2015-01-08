@@ -21,7 +21,7 @@ module.exports = function (app) {
             }
 
             var container = document.createElement("div");
-            container.id = "container";
+            container.id = "pdfContainer";
             var viewer = document.createElement("div");
             viewer.id = "viewer";
             viewer.className = "pdfViewer";
@@ -44,9 +44,9 @@ module.exports = function (app) {
               pdfViewer.setDocument(pdfDocument);
             });
             // --------
-            var container = document.createElement("div");
-            container.id = "container";
-            element.append(container);
+            //var container = document.createElement("div");
+            //container.id = "container";
+            //element.append(container);
 
             //// Loading document.
             //var PAGE_TO_VIEW = 1;

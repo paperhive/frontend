@@ -90,6 +90,8 @@ var article =
   _id: "0af5e13",
   owner: accounts[0],
   url: "http://arxiv.org/pdf/1208.0264v3.pdf",
+  //_url: "http://win.ua.ac.be/~nschloe/other/pdf_commenting_new.pdf",
+  //url: "https://user.d00d3.net/~nschloe/pdf_commenting_new.pdf",
   title: "Preconditioned Recycling Krylov Subspace Methods for Self-Adjoint Problems",
   authors: [users[2], users[1]],
   discussions: [discussion]
