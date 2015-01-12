@@ -6,10 +6,12 @@
   </div>
   <hr/>
   <div class="container">
-    <div app-view-segment="1" class="col-md-10"></div>
-    <ng-include
-    src="'templates/article-controlbar.html'"
-    class="col-md-2"
-    ></ng-include>
+    <div class="row">
+      <ng-include
+      src="'templates/article-controlbar.html'"
+      class="col-md-1"
+      ></ng-include>
+      <div app-view-segment="1" class="col-md-11"></div>
+    </div>
   </div>
 </div>

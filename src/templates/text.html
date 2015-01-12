@@ -1,2 +1,30 @@
-<div id="annotation-column" class="col-md-1"></div>
-<pdf ng-model="article.url" class="col-md-11" annotatable place="annotation-column"></pdf>
+<div class="row" ng-controller="MarginNoteCtrl">
+  <!--actual text-->
+  <pdf
+  url="{{article.url}}"
+  offset-px=offsetPx
+  class="col-md-10"
+  style="padding-right:0px"
+  ></pdf>
+  <!--column for margin notes-->
+  <div
+    id="annotation-column"
+    class="col-md-2"
+    style="padding-left:0px"
+    >
+    <div
+      ng-style="
+      {
+      'top': offsetPx,
+      'position': 'relative',
+      'border': '1px solid black',
+      'width': '100%+60px',
+      'height': '100px',
+      'margin-left': '-60px',
+      'background': 'LightGray'
+      }
+      "
+      ng-show="offsetPx != undefined"
+      ></div>
+  </div>
+</div>
