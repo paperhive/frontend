@@ -12,19 +12,9 @@
     class="col-md-2"
     style="padding-left:0px"
     >
-    <div
-      ng-style="
-      {
-      'top': offsetPx,
-      'position': 'relative',
-      'border': '1px solid black',
-      'width': '100%+60px',
-      'height': '100px',
-      'margin-left': '-60px',
-      'background': 'LightGray'
-      }
-      "
-      ng-show="offsetPx != undefined"
-      ></div>
+    <ng-include
+    ng-if="offsetPx != undefined"
+    src="'templates/inline-annotation.html'"
+    ></ng-include>
   </div>
 </div>

@@ -1,0 +1,40 @@
+<div
+  ng-style="
+  {
+  'top': offsetPx,
+  'position': 'relative',
+  'border': '1px solid LightGray',
+  'width': '100%+60px',
+  'margin-left': '-60px',
+  'background': 'white',
+  'padding': '10px'
+  }
+  "
+  >
+  <img
+  src="https://secure.gravatar.com/avatar/{{auth.user.gravatarMd5}}?s=30"
+  class="ph-avatar" alt="{{auth.user.displayName}} avatar">
+  {{auth.user.displayName}}
+  <br/>
+  <form name="annotationForm"
+    ng-submit="annotationForm.$valid && addAnnotation()" novalidate>
+    <textarea
+      id="textbody"
+      class="form-control ph-annotation-body"
+      ng-model="tmpBody"
+      mentio
+      mentio-macros="macros"
+      mentio-search="searchPeople(term)"
+      mentio-items="localItems"
+      mentio-select="getPeopleText(item)"
+      mentio-template-url="/user-mentions.tpl"
+      mentio-require-leading-space="true"
+      rows="2"
+      >
+    </textarea>
+    <br/>
+    <button class="btn btn-sm btn-primary">Comment</button>
+    <button class="btn btn-sm btn-default">Cancel</button>
+  </form>
+</div>
+
