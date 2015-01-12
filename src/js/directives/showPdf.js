@@ -86,7 +86,18 @@ module.exports = function (app) {
             // Get vertical offset of the selection.
             if (window.getSelection) {
               selection = window.getSelection();
-              scope.offsetPx = selection.anchorNode.parentElement.offsetTop + "px";
+              // Collect all offsets until we are at the same level as the
+              // element in which the annotations are actually displayed (the
+              // annotation column). This is ugly since it makes assumptions
+              // about the DOM tree.
+              // TODO revise
+              totalOffset =
+                ( selection.anchorNode.parentElement.offsetTop +
+                selection.anchorNode.parentElement.parentElement.offsetTop +
+                selection.anchorNode.parentElement.parentElement.parentElement.offsetTop
+                );
+              console.log(totalOffset);
+              scope.offsetPx = totalOffset + "px";
             } else if (document.selection && document.selection.type != "Control") {
               scope.offsetPx = document.selection.createRange() + "px";
             }
