@@ -96,7 +96,6 @@ module.exports = function (app) {
                 selection.anchorNode.parentElement.parentElement.offsetTop +
                 selection.anchorNode.parentElement.parentElement.parentElement.offsetTop
                 );
-              console.log(totalOffset);
               scope.offsetPx = totalOffset + "px";
             } else if (document.selection && document.selection.type != "Control") {
               scope.offsetPx = document.selection.createRange() + "px";
