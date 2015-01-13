@@ -14,15 +14,18 @@
   >
   <img
   src="https://secure.gravatar.com/avatar/{{auth.user.gravatarMd5}}?s=30"
-  class="ph-avatar" alt="{{auth.user.displayName}} avatar">
-  {{auth.user.displayName}}
+  class="ph-avatar"
+  alt="{{auth.user.displayName}} avatar"
+  >
   <br/>
-  <form name="annotationForm"
-    ng-submit="annotationForm.$valid && addAnnotation()" novalidate>
+  <form
+    name="annotationForm"
+    ng-submit="annotationForm.$valid && addAnnotation()"
+    novalidate
+    >
     <textarea
       id="textbody"
       class="form-control ph-annotation-body"
-      ng-model="tmpBody"
       mentio
       mentio-macros="macros"
       mentio-search="searchPeople(term)"
@@ -34,8 +37,16 @@
       >
     </textarea>
     <br/>
-    <button class="btn btn-sm btn-primary">Comment</button>
-    <button class="btn btn-sm btn-default">Cancel</button>
+    <button
+      class="btn btn-sm btn-primary"
+      >
+      Comment
+    </button>
+    <button
+      class="btn btn-sm btn-default"
+      ng-click='offsetPx = undefined'
+      >
+      Cancel
+    </button>
   </form>
 </div>
-
