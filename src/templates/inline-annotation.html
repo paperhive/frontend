@@ -18,6 +18,11 @@
     alt="{{auth.user.displayName}} avatar"
     >
     {{auth.user.displayName}}
+    <span class="pull-right">
+      <a href="#">
+        <i class="fa fa-globe"></i>
+      </a>
+    </span>
   </div>
   <div class="panel-body">
     <form
@@ -27,21 +32,15 @@
       >
       <textarea
         id="textbody"
+        ng-model='annotation.body'
         class="form-group form-control ph-annotation-body"
-        placeholder=""
-        mentio
-        mentio-macros="macros"
-        mentio-search="searchPeople(term)"
-        mentio-items="localItems"
-        mentio-select="getPeopleText(item)"
-        mentio-template-url="/user-mentions.tpl"
-        mentio-require-leading-space="true"
         rows="2"
-        >
-      </textarea>
+        required
+        ></textarea>
       <span class="pull-right">
         <button
           class="btn btn-sm btn-primary"
+          ng-disabled="annotationForm.$invalid"
           >
           Comment
         </button>
