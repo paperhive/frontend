@@ -12,8 +12,11 @@
     class="col-md-2"
     style="padding-left:0px"
     >
+    <!-- Don't use ng-if here to keep the element in the DOM tree.
+    This makes sure that the entered text is preserved.
+    -->
     <ng-include
-    ng-if="offsetPx !== undefined"
+    ng-show="offsetPx !== undefined"
     src="'templates/inline-annotation.html'"
     ></ng-include>
   </div>
