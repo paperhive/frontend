@@ -20,7 +20,7 @@ module.exports = function (app) {
 
         // Init Main Page
         .segment('main',{
-          templateUrl: 'templates/main.html'
+          templateUrl: 'templates/main/main.html'
         })
 
         .segment('welcome', {

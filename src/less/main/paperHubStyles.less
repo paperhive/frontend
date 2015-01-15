@@ -1,3 +1,5 @@
+/* HEADER */
+/* Navigation */
 .navbar {
   .box-shadow(0 0 5px, 30%);
   .border-top(4px, solid, @ph-highlight-color);
@@ -11,6 +13,32 @@
   padding: @nav-link-padding;
 }
 
+/* MAIN */
+main .container:first-child,
+main .container-fluid:first-child {
+  margin-top:  125px;
+}
+
+/* Intro and Jumbotron */
+/* ******************* */
+.ph-intro {
+  margin-top: @ph-nav-distance;
+  background: url(../img/bg/schreibmaschiene-2.jpg) center no-repeat;
+}
+
+.jumbotron,
+.container .jumbotron,
+.container-fluid .jumbotron {
+  margin-bottom: 0;
+  padding: @jumbotron-padding*2 0;
+  background-color: none;
+}
+
+main .ph-intro .container {
+  margin-top: 0;
+}
+/* ******************* */
+
 /* FOOTER */
 footer {
   background-color: @gray;
@@ -18,4 +46,12 @@ footer {
   margin-top: @line-height-computed * 3;
   padding: @padding-large-horizontal;
   .border-bottom(4px, solid, @ph-highlight-color);
+}
+
+
+/* Elements */
+video {
+  padding: @padding-base-horizontal;
+  background-color: #fff;
+  box-shadow: @carousel-text-shadow;
 }
