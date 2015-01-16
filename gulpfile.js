@@ -22,6 +22,13 @@ var paths = {
   build: 'build/**/*'
 };
 
+// error handling, simplified version (without level) from
+// http://www.artandlogic.com/blog/2014/05/error-handling-in-gulp/
+function handleError(error) {
+  gutil.log(error);
+  process.exit(1);
+}
+
 // bundle js files + dependencies with browserify
 // (and continue to do so on updates)
 // see https://github.com/gulpjs/gulp/blob/master/docs/recipes/fast-browserify-builds-with-watchify.md
@@ -44,7 +51,7 @@ function js (watch) {
 
   function rebundle () {
     return bundler.bundle()
-      .on('error', gutil.log.bind(gutil, 'Browserify error'))
+      .on('error', handleError)
       .pipe(source('index.js'))
       .pipe(debug ? gutil.noop() : streamify(uglify()))
       .pipe(gulp.dest('build'));
@@ -117,6 +124,7 @@ gulp.task('style', function () {
   return gulp.src('src/less/index.less')
     .pipe(debug ? sourcemaps.init() : gutil.noop())
     .pipe(less())
+    .on('error', handleError)
     .pipe(debug ? sourcemaps.write() : gutil.noop())
     .pipe(debug ? gutil.noop() : minifyCSS())
     .pipe(gulp.dest('build'));
