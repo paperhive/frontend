@@ -41,7 +41,7 @@
     <div class="panel-body">
       <ng-include
       ng-if="isEditMode"
-      src="'templates/annotation-inline-edit.html'"
+      src="'templates/article/annotation/inline-edit.html'"
       >
       </ng-include>
       <kramjax ng-if="!isEditMode" body="{{annotation.body}}"></kramjax>

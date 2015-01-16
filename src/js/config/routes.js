@@ -4,6 +4,7 @@ module.exports = function (app) {
     '$routeSegmentProvider', '$routeProvider',
     function($routeSegmentProvider, $routeProvider) {
       $routeSegmentProvider
+        .when('/', 'main')
         .when('/welcome', 'welcome')
         .when('/oauth/orcid', 'oauth')
         .when('/articles', 'article')
@@ -17,36 +18,41 @@ module.exports = function (app) {
         .when('/users/', 'userlist')
         .when('/users/:username', 'user')
 
+        // Init Main Page
+        .segment('main',{
+          templateUrl: 'templates/main/main.html'
+        })
+
         .segment('welcome', {
-          templateUrl: 'templates/welcome.html',
+          templateUrl: 'templates/auth/welcome.html',
           controller: 'WelcomeCtrl'
         })
 
         .segment('oauth', {
-          templateUrl: 'templates/oauth.html',
+          templateUrl: 'templates/auth/oauth.html',
           controller: 'OauthOrcidCtrl'
         })
 
         .segment('userlist', {
-          templateUrl: 'templates/userlist.html'
+          templateUrl: 'templates/user/list.html'
         })
 
         .segment('user', {
-          templateUrl: 'templates/user.html',
+          templateUrl: 'templates/user/index.html',
           dependencies: ['username']
         })
 
         .segment('article-new', {
-          templateUrl: 'templates/article-new.html'
+          templateUrl: 'templates/article/new.html'
         })
 
         .segment('article', {
-          templateUrl: 'templates/article.html'
+          templateUrl: 'templates/article/index.html'
         })
         .within()
         .segment('text', {
           default: true,
-          templateUrl: 'templates/text.html',
+          templateUrl: 'templates/article/text.html',
           dependencies: ['id'],
           resolve: {
             data: function($timeout) {
@@ -54,23 +60,23 @@ module.exports = function (app) {
             }
           },
           untilResolved: {
-            templateUrl: 'templates/progress-bar.html'
+            templateUrl: 'templates/shared/progress-bar.html'
           }
         })
         .segment('annotations', {
-          templateUrl: 'templates/discussions-list.html',
+          templateUrl: 'templates/article/discussion/list.html',
           dependencies: ['id']
         })
         .segment('discussion', {
-          templateUrl: 'templates/discussion.html',
+          templateUrl: 'templates/article/discussion/index.html',
           dependencies: ['num']
         })
         .segment('annotations-new', {
-          templateUrl: 'templates/discussion-new.html',
+          templateUrl: 'templates/article/discussion/new.html',
           dependencies: ['id']
         })
         .segment('settings', {
-          templateUrl: 'templates/settings.html',
+          templateUrl: 'templates/article/settings.html',
           dependencies: ['id']
         })
         ;
