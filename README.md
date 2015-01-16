@@ -1,5 +1,7 @@
 # PaperHub Frontend
 
+[![Build
+Status](https://travis-ci.org/paperhub/paperhub-frontend.svg?branch=master)](https://travis-ci.org/paperhub/paperhub-frontend)
 [![Dependency Status](https://gemnasium.com/paperhub/paperhub-frontend.svg)](https://gemnasium.com/paperhub/paperhub-frontend)
 
 ---
