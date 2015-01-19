@@ -124,7 +124,6 @@ module.exports = function (app) {
           var text = "";
           if (window.getSelection) {
             text = window.getSelection().toString();
-            console.log(window.getSelection());
           } else if (document.selection && document.selection.type != "Control") {
             text = document.selection.createRange().text;
           }

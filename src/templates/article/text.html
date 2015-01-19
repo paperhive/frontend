@@ -3,21 +3,27 @@
   <pdf
   url="{{article.url}}"
   offset-px=offsetPx
-  class="col-md-10"
-  style="padding-right:0px"
+  class="col-md-11"
+  style="padding-left:0px; padding-right:0px;"
   ></pdf>
   <!--column for margin notes-->
   <div
     id="annotation-column"
-    class="col-md-2"
+    class="col-md-1"
     style="padding-left:0px"
     >
     <!-- Don't use ng-if here to keep the element in the DOM tree.
     This makes sure that the entered text is preserved.
     -->
     <ng-include
+    ng-if="auth.user"
     ng-show="offsetPx !== undefined"
-    src="'templates/inline-annotation.html'"
+    src="'templates/article/inline-annotation.html'"
+    ></ng-include>
+    <ng-include
+    ng-if="!auth.user"
+    ng-show="offsetPx !== undefined"
+    src="'templates/article/inline-annotation-substitute.html'"
     ></ng-include>
   </div>
 </div>
