@@ -52,7 +52,7 @@ module.exports = function (app) {
         .within()
         .segment('text', {
           default: true,
-          templateUrl: 'templates/article/text.html',
+          templateUrl: 'templates/article/text/index.html',
           dependencies: ['id'],
           resolve: {
             data: function($timeout) {
