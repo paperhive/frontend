@@ -2,9 +2,9 @@
   ng-submit="annotationForm.$valid && AnnotationCtrl.addAnnotation(pdf)" novalidate>
   <div class="col-md-10">
     <div class="media">
-      <a href="#" class="media-left">
+      <a href="#/users/{{auth.user.userName}}" class="media-left">
         <img
-        src=""
+        src="https://secure.gravatar.com/avatar/{{auth.user.gravatarMd5}}?s=80"
         alt="thumbnail"
         width="80px"
         >
