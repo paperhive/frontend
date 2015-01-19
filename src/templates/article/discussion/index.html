@@ -75,7 +75,10 @@ created this discussion
     </li>
 
     <li class="media">
-    <ng-include src="'templates/article/annotation/new-block.html'" ng-if="auth.user"></ng-include>
+    <ng-include
+    src="'templates/article/discussion/new-block.html'"
+    ng-if="auth.user"
+    ></ng-include>
     <div ng-if="!auth.user" class="media-body ph-login-info-block">
       <div class="panel panel-default">
         <div class="panel-body bg-info">
