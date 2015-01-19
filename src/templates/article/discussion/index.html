@@ -1,100 +1,106 @@
 <div ng-controller="DiscussionCtrl">
-<h3>
-  <span class="pull-right">
-    <!--input type="text" class="form-control" placeholder="Filter
+  <h3>
+    <span class="pull-right">
+      <!--input type="text" class="form-control" placeholder="Filter
               annotations"-->
-    <a href="#{{'article.annotations-new' | routeSegmentUrl}}"
-      class="btn btn-primary"
-      ng-disabled="!auth.user"
+      <a href="#{{'article.annotations-new' | routeSegmentUrl}}"
+        class="btn btn-primary"
+        ng-disabled="!auth.user"
+        >
+        New discussion
+      </a>
+    </span>
+    <!-- TODO check out contenteditable-->
+    <span ng-if="!titleEditMode">
+      {{discussion.title}}
+    </span>
+    <span ng-if="titleEditMode">
+      <input
+      type="text"
+      class="form-control ph-discussion-title"
+      size="{{discussion.title.length}}"
+      placeholder="Discussion title"
+      ng-model="tmpTitle"
       >
-      New discussion
-    </a>
-  </span>
-  <!-- TODO check out contenteditable-->
-  <span ng-if="!titleEditMode">
-    {{discussion.title}}
-  </span>
-  <span ng-if="titleEditMode">
-    <input
-    type="text"
-    class="form-control ph-discussion-title"
-    size="{{discussion.title.length}}"
-    placeholder="Discussion title"
-    ng-model="tmpTitle"
-    >
-    </input>
+      </input>
+      <button
+        class="btn btn-default"
+        ng-click="updateTitle(tmpTitle)"
+        >
+        <i class="fa fa-check"></i>
+      </button>
+      <button
+        class="btn btn-default"
+        ng-click="setTitleEditOff()"
+        >
+        <i class="fa fa-remove"></i>
+      </button>
+    </span>
+    <span class="small">
+      #{{discussion.number}}
+    </span>
     <button
-      class="btn btn-default"
-      ng-click="updateTitle(tmpTitle)"
+      class="btn btn-link"
+      ng-if="!titleEditMode"
+      ng-click="setTitleEditOn()"
       >
-      <i class="fa fa-check"></i>
+      <i class="fa fa-pencil"></i>
     </button>
-    <button
-      class="btn btn-default"
-      ng-click="setTitleEditOff()"
-      >
-      <i class="fa fa-remove"></i>
-    </button>
-  </span>
-  <span class="small">
-    #{{discussion.number}}
-  </span>
-  <button
-    class="btn btn-link"
-    ng-if="!titleEditMode"
-    ng-click="setTitleEditOn()"
-    >
-    <i class="fa fa-pencil"></i>
-  </button>
-</h3>
-<a href="#/users/{{discussion.originalAnnotation.author.userName}}">
-  {{discussion.originalAnnotation.author.displayName}}
-</a>
-created this discussion
-<span am-time-ago="{{discussion.originalAnnotation.time}}"></span>
-&middot; {{discussion.replies.length}} replies
+  </h3>
+  <a href="#/users/{{discussion.originalAnnotation.author.userName}}">
+    {{discussion.originalAnnotation.author.displayName}}
+  </a>
+  created this discussion
+  <span am-time-ago="{{discussion.originalAnnotation.time}}"></span>
+  &middot; {{discussion.replies.length}} replies
 
-<hr>
-<div class="col-md-10">
-  <ul class="media-list">
-    <li class="media">
-    <annotation
-    ng-if="discussion.originalAnnotation.permissions.read"
-    content="discussion.originalAnnotation"
-    is-article-author="isArticleAuthor(discussion.originalAnnotation.author._id)"
-    ></annotation>
-    </li>
+  <hr>
+  <div class="row">
+    <div class="col-md-10">
+      <ul class="media-list">
+        <li class="media">
+        <annotation
+        ng-if="discussion.originalAnnotation.permissions.read"
+        content="discussion.originalAnnotation"
+        is-article-author="isArticleAuthor(discussion.originalAnnotation.author._id)"
+        ></annotation>
+        </li>
 
-    <li class="media" ng-repeat="reply in discussion.replies">
-    <annotation
-    ng-if="reply.permissions.read"
-    content="reply"
-    is-article-author="isArticleAuthor(reply.author._id)"
-    delete-function="deleteReply"
-    ></annotation>
-    </li>
+        <li class="media" ng-repeat="reply in discussion.replies">
+        <annotation
+        ng-if="reply.permissions.read"
+        content="reply"
+        is-article-author="isArticleAuthor(reply.author._id)"
+        delete-function="deleteReply"
+        ></annotation>
+        </li>
 
-    <li class="media">
-    <ng-include
-    src="'templates/article/discussion/new-block.html'"
-    ng-if="auth.user"
-    ></ng-include>
-    <div ng-if="!auth.user" class="media-body ph-login-info-block">
-      <div class="panel panel-default">
-        <div class="panel-body bg-info">
-          <a href="{{auth.orcidUrl}}" class="btn btn-primary">
-            Sign in with ORCID
-          </a>
-          to join this discussion on PaperHub.
+        <li class="media">
+        <ng-include
+        src="'templates/article/discussion/new-comment.html'"
+        ng-if="auth.user"
+        ></ng-include>
+
+        <div
+          ng-if="!auth.user"
+          class="media-body ph-login-info-block"
+          >
+          <div class="panel panel-default">
+            <div class="panel-body bg-info">
+              <a href="{{auth.orcidUrl}}" class="btn btn-primary">
+                Sign in with ORCID
+              </a>
+              to join this discussion on PaperHub.
+            </div>
+          </div>
         </div>
-      </div>
+        </li>
+      </ul>
     </div>
-    </li>
-  </ul>
-</div>
 
-<div class="col-md-2">
-  <ng-include src="'templates/article/discussion/sidebar.html'"></ng-include>
-</div>
+    <div class="col-md-2">
+      <ng-include src="'templates/article/discussion/sidebar.html'"></ng-include>
+    </div>
 
+  </div>
 </div>

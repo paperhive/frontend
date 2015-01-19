@@ -18,12 +18,12 @@
     <ng-include
     ng-if="auth.user"
     ng-show="offsetPx !== undefined"
-    src="'templates/article/inline-annotation.html'"
+    src="'templates/article/text/inline-annotation.html'"
     ></ng-include>
     <ng-include
     ng-if="!auth.user"
     ng-show="offsetPx !== undefined"
-    src="'templates/article/inline-annotation-substitute.html'"
+    src="'templates/article/text/inline-annotation-substitute.html'"
     ></ng-include>
   </div>
 </div>
