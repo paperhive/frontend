@@ -1,15 +1,5 @@
-<div ng-controller="DiscussionCtrl">
+<!--div ng-controller="DiscussionCtrl">
   <h3>
-    <span class="pull-right">
-      <!--input type="text" class="form-control" placeholder="Filter
-              annotations"-->
-      <a href="#{{'article.annotations-new' | routeSegmentUrl}}"
-        class="btn btn-primary"
-        ng-disabled="!auth.user"
-        >
-        New discussion
-      </a>
-    </span>
     <!-- TODO check out contenteditable-->
     <span ng-if="!titleEditMode">
       {{discussion.title}}
@@ -50,7 +40,7 @@
   <a href="#/users/{{discussion.originalAnnotation.author.userName}}">
     {{discussion.originalAnnotation.author.displayName}}
   </a>
-  created this discussion
+  started this thread
   <span am-time-ago="{{discussion.originalAnnotation.time}}"></span>
   &middot; {{discussion.replies.length}} replies
 
@@ -103,4 +93,4 @@
     </div>
 
   </div>
-</div>
+</div-->

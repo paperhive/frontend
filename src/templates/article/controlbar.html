@@ -11,11 +11,11 @@
   <!--li role="presentation" ng-class="{active: ('article.annotations' |
       routeSegmentStartsWith)}"-->
   <li role="presentation" ng-class="{active:
-  ('article.annotations' | routeSegmentStartsWith)
-  || ('article.annotations-new' | routeSegmentStartsWith)
+  ('article.comments' | routeSegmentStartsWith)
+  || ('article.comments-new' | routeSegmentStartsWith)
   || ('article.discussion' | routeSegmentStartsWith)
   }">
-  <a href="#{{'article.annotations' | routeSegmentUrl}}"
+  <a href="#{{'article.comments' | routeSegmentUrl}}"
     >
     <i class="fa fa-comments fa-fw"></i> Comments view
     <!--span class="badge">{{article.discussions.length}}</span-->

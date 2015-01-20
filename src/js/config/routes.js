@@ -8,12 +8,12 @@ module.exports = function (app) {
         .when('/welcome', 'welcome')
         .when('/oauth/orcid', 'oauth')
         .when('/articles', 'article')
-        .when('/articles/new', 'article-new')
-        .when('/articles/:id', 'article.info')
+        .when('/articles/new', 'article.new')
+        .when('/articles/:id', 'article')
         .when('/articles/:id/text', 'article.text')
-        .when('/articles/:id/annotations', 'article.annotations')
-        .when('/articles/:id/annotations/new', 'article.annotations-new')
-        .when('/articles/:id/annotations/:num', 'article.discussion')
+        .when('/articles/:id/comments', 'article.comments')
+        .when('/articles/:id/comments/new', 'article.comments.new')
+        .when('/articles/:id/comments/:num', 'article.comments.num')
         .when('/articles/:id/settings', 'article.settings')
         .when('/users/', 'userlist')
         .when('/users/:username', 'user')
@@ -42,14 +42,13 @@ module.exports = function (app) {
           dependencies: ['username']
         })
 
-        .segment('article-new', {
-          templateUrl: 'templates/article/new.html'
-        })
-
         .segment('article', {
           templateUrl: 'templates/article/index.html'
         })
         .within()
+        .segment('new', {
+          templateUrl: 'templates/article/new.html'
+        })
         .segment('text', {
           default: true,
           templateUrl: 'templates/article/text/index.html',
@@ -63,18 +62,22 @@ module.exports = function (app) {
             templateUrl: 'templates/shared/progress-bar.html'
           }
         })
-        .segment('annotations', {
-          templateUrl: 'templates/article/discussion/list.html',
+        .segment('comments', {
+          templateUrl: 'templates/article/comment/index.html',
           dependencies: ['id']
         })
-        .segment('discussion', {
-          templateUrl: 'templates/article/discussion/index.html',
-          dependencies: ['num']
+        .within()
+        .segment('list', {
+          default: true,
+          templateUrl: 'templates/article/comment/list.html',
         })
-        .segment('annotations-new', {
-          templateUrl: 'templates/article/discussion/new.html',
-          dependencies: ['id']
+        .segment('new', {
+          templateUrl: 'templates/article/comment/new.html',
         })
+        .segment('num', {
+          templateUrl: 'templates/article/comment/discussion.html',
+        })
+        .up()
         .segment('settings', {
           templateUrl: 'templates/article/settings.html',
           dependencies: ['id']
