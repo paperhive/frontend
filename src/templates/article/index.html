@@ -1,17 +1,16 @@
 <div ng-controller="ArticleCtrl">
   <div class="container">
-        <ng-include
-        src="'templates/article/header.html'"
-        ></ng-include>
+    <ng-include
+    src="'templates/article/header.html'"
+    ></ng-include>
   </div>
   <hr/>
   <div class="container">
-    <div class="row">
-      <ng-include
-      src="'templates/article/controlbar.html'"
-      class="col-md-2"
-      ></ng-include>
-      <div app-view-segment="1" class="col-md-10"></div>
-    </div>
+    <ng-include
+    src="'templates/article/controlbar.html'"
+    ></ng-include>
+    <!-- TODO something better than <br> here? -->
+    <br>
+    <div app-view-segment="1"></div>
   </div>
 </div>

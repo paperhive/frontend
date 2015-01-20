@@ -1,14 +1,11 @@
-<ul class="nav nav-pills nav-stacked" role="tablist">
+<ul class="nav nav-tabs nav-justified" role="tablist">
   <li
-  data-toggle="tooltip"
-  data-placement="left"
-  title="Tooltip on left"
   role="presentation"
   ng-class="{active: ('article.text' | routeSegmentStartsWith)}"
   >
   <a href="#{{'article.text' | routeSegmentUrl}}"
     >
-    <i class="fa fa-file-pdf-o fa-fw"></i> Commented text
+    <i class="fa fa-file-pdf-o fa-fw"></i> Text view
   </a>
   </li>
   <!--li role="presentation" ng-class="{active: ('article.annotations' |
@@ -20,18 +17,17 @@
   }">
   <a href="#{{'article.annotations' | routeSegmentUrl}}"
     >
-    <i class="fa fa-comments fa-fw"></i> Comment list
+    <i class="fa fa-comments fa-fw"></i> Comments view
     <!--span class="badge">{{article.discussions.length}}</span-->
   </a>
   </li>
-  <hr>
   <li role="presentation" ng-class="{active: ('article.settings' | routeSegmentStartsWith)}">
   <a href="#{{'article.settings' | routeSegmentUrl}}"
     >
     <!--tooltip-trigger="mouseover"
     tooltip-placement="left"
     tooltip="Settings"-->
-    <i class="fa fa-wrench fa-fw"></i> Settings
+    <i class="fa fa-wrench fa-fw"></i> Article settings
   </a>
   </li>
 </ul>
