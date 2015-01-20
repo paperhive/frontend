@@ -36,7 +36,7 @@ module.exports = function (app) {
   // END debug code
 
   app.controller('UserCtrl', [
-    '$scope', '$routeSegment', 'config', 'AuthService',
+    '$scope', '$routeSegment', 'config', 'authService',
     function ($scope, $routeSegment, config, authService) {
       $scope.config = config;
       $scope.auth = authService;

@@ -26,8 +26,8 @@ var users = [
 
 module.exports = function (app) {
   app.controller('AnnotationCtrl', [
-    '$scope', 'AuthService',
-    function($scope, AuthService) {
+    '$scope', 'authService',
+    function($scope, authService) {
       $scope.isEditMode = false;
 
       $scope.users = users;
@@ -67,7 +67,7 @@ module.exports = function (app) {
       $scope.setEditOff = function () {
         $scope.isEditMode = false;
       };
-      //$scope.auth = AuthService;
+      //$scope.auth = authService;
       //$scope.annotationBody = null;
       //$scope.isEditMode = false;
       //
