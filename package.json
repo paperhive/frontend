@@ -36,6 +36,7 @@
   },
   "browser": {
     "angular": "./bower_components/angular/angular.js",
+    "angular-bootstrap-tpls": "./bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
     "angular-route": "./bower_components/angular-route/angular-route.js",
     "angular-route-segment": "./bower_components/angular-route-segment/build/angular-route-segment.js",
     "angular-sanitize": "./bower_components/angular-sanitize/angular-sanitize.js",
@@ -45,6 +46,12 @@
   "browserify-shim": {
     "angular": {
       "exports": "angular"
+    },
+    "angular-bootstrap-tpls": {
+      "exports": null,
+      "depends": [
+        "angular"
+      ]
     },
     "angular-route": {
       "exports": null,
