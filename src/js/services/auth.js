@@ -3,7 +3,12 @@ module.exports = function (app) {
     function (config, $http, $q, $window) {
       var authService = {
         inProgress: false,
-        orcidUrl: config.api_url + '/oauth/orcid'
+        orcidUrl: config.api_url + '/oauth/orcid',
+        user: {
+          displayName: "Karl Schmidt",
+          gravatarMd5: "abc",
+          userName: "karli"
+        }
       };
 
       function signin(url, data, config) {
