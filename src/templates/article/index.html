@@ -6,9 +6,28 @@
   </div>
   <hr/>
   <div class="container">
-    <ng-include
+    <!--ng-include
     src="'templates/article/controlbar.html'"
-    ></ng-include>
+    ></ng-include-->
+    <!-- Use row + col-12 here to get spacing for pull-right correct. -->
+    <div class="row">
+      <div class="col-md-12">
+        <span class="pull-right">
+          <a href="#{{'article.comments' | routeSegmentUrl}}"
+            class="btn btn-primary"
+            >
+            View all comments
+          </a>
+          <a href="#{{'article.comments.new' | routeSegmentUrl}}"
+            class="btn btn-primary"
+            ng-disabled="!auth.user"
+            >
+            Add general comment
+          </a>
+        </span>
+      </div>
+    </div>
+    <br>
     <!-- TODO something better than <br> here? -->
     <br>
     <div app-view-segment="1"></div>

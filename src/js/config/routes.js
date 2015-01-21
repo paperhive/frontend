@@ -52,15 +52,7 @@ module.exports = function (app) {
         .segment('text', {
           default: true,
           templateUrl: 'templates/article/text/index.html',
-          dependencies: ['id'],
-          resolve: {
-            data: function($timeout) {
-              return $timeout(function() { return 'SLOW DATA CONTENT'; }, 1000);
-            }
-          },
-          untilResolved: {
-            templateUrl: 'templates/shared/progress-bar.html'
-          }
+          dependencies: ['id']
         })
         .segment('comments', {
           templateUrl: 'templates/article/comment/index.html',
