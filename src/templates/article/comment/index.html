@@ -1,0 +1,22 @@
+<!-- Use row + col-12 here to get spacing for pull-right correct. -->
+<div class="row">
+  <div class="col-md-12">
+      <!--input type="text" class="form-control" placeholder="Filter
+        annotations"-->
+      <a href="#{{'article.comments.new' | routeSegmentUrl}}"
+        class="btn btn-primary"
+        ng-disabled="!auth.user"
+        >
+        New discussion
+      </a>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-md-2">
+    <pdf url="{{article.url}}"></pdf>
+  </div>
+  <div class="col-md-10">
+    <div app-view-segment="2"></div>
+  </div>
+</div>

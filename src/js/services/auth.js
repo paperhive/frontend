@@ -1,5 +1,5 @@
 module.exports = function (app) {
-  app.factory('AuthService', ['config', '$http', '$q', '$window',
+  app.factory('authService', ['config', '$http', '$q', '$window',
     function (config, $http, $q, $window) {
       var authService = {
         inProgress: false,

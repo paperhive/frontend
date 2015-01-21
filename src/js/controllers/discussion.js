@@ -1,7 +1,7 @@
 module.exports = function (app) {
   app.controller('DiscussionCtrl', [
-    '$scope', 'AuthService', '$routeParams',
-    function($scope, AuthService, $routeParams) {
+    '$scope', 'authService', '$routeParams',
+    function($scope, authService, $routeParams) {
 
       $scope.titleEditMode = false;
       $scope.tmpTitle = undefined;
@@ -32,20 +32,20 @@ module.exports = function (app) {
 
       $scope.subscribers = [
       ];
-      if('user' in AuthService) {
-        $scope.isSubscribed = $scope.subscribers.indexOf(AuthService.user._id) > -1;
+      if('user' in authService) {
+        $scope.isSubscribed = $scope.subscribers.indexOf(authService.user._id) > -1;
       } else {
         $scope.isSubscribed = false;
       }
       $scope.toggleSubscribe = function() {
-        var k = $scope.subscribers.indexOf(AuthService.user._id);
+        var k = $scope.subscribers.indexOf(authService.user._id);
         if (k > -1) {
           // remove from to subscribers list
           $scope.subscribers.splice(k, 1);
           $scope.isSubscribed = false;
         } else {
           // add to subscribers list
-          $scope.subscribers.push(AuthService.user._id);
+          $scope.subscribers.push(authService.user._id);
           $scope.isSubscribed = true;
         }
       };

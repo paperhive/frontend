@@ -1,6 +1,6 @@
 module.exports = function (app) {
   app.controller('WelcomeCtrl', [
-    '$scope', 'AuthService',
+    '$scope', 'authService',
     function($scope, authService) {
       $scope.auth = authService;
     }
