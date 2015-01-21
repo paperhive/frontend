@@ -76,6 +76,7 @@ module.exports = function (app) {
         })
         .segment('num', {
           templateUrl: 'templates/article/comment/discussion.html',
+          dependencies: ['num']
         })
         .up()
         .segment('settings', {

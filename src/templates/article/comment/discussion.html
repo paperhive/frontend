@@ -1,6 +1,5 @@
-<!--div ng-controller="DiscussionCtrl">
+<div ng-controller="DiscussionCtrl">
   <h3>
-    <!-- TODO check out contenteditable-->
     <span ng-if="!titleEditMode">
       {{discussion.title}}
     </span>
@@ -67,7 +66,7 @@
 
         <li class="media">
         <ng-include
-        src="'templates/article/discussion/new-comment.html'"
+        src="'templates/article/comment/new-comment.html'"
         ng-if="auth.user"
         ></ng-include>
 
@@ -89,8 +88,8 @@
     </div>
 
     <div class="col-md-2">
-      <ng-include src="'templates/article/discussion/sidebar.html'"></ng-include>
+      <ng-include src="'templates/article/comment/sidebar.html'"></ng-include>
     </div>
 
   </div>
-</div-->
+</div>

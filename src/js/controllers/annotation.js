@@ -73,8 +73,8 @@ module.exports = function (app) {
       //
       // Warn on page close if there still is unsaved text in the reply form.
       $scope.$on('$locationChangeStart', function(event) {
-        console.log("isEditOn", $scope.isEditOn);
-        console.log("tmpBody === anno.body", $scope.tmpBody !== $scope.annotation.body);
+        //console.log("isEditOn", $scope.isEditOn);
+        //console.log("tmpBody === anno.body", $scope.tmpBody !== $scope.annotation.body);
         if ($scope.isEditOn && $scope.tmpBody !== $scope.annotation.body) {
           var answer = confirm("There is unsaved content in the reply field. Are you sure you want to leave this page?");
           if (!answer) {
@@ -82,6 +82,5 @@ module.exports = function (app) {
           }
         }
       });
-
     }]);
 };

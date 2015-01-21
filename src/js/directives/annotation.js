@@ -12,7 +12,7 @@ module.exports = function (app) {
         isArticleAuthor: "=",
         deleteFunction: "="
       },
-      templateUrl: 'templates/article/comment/discussion.html'
+      templateUrl: 'templates/article/comment/comment.html'
     };
   });
 };
