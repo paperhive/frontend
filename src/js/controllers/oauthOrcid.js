@@ -3,7 +3,7 @@ module.exports = function (app) {
     '$scope', '$routeParams', '$location', 'authService',
     function ($scope, $routeParams, $location, authService) {
       authService
-        .signinOrcid($routeParams.code, $routeParams.state)
+        .signinToken($routeParams.token)
         .then(
           function success(data) {
             $location.path('/welcome').search({});
