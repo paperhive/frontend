@@ -3,12 +3,12 @@ module.exports = function (app) {
     function (config, $http, $q, $window) {
       var authService = {
         inProgress: false,
-        orcidUrl: config.api_url + '/oauth/orcid',
-        user: {
-          displayName: "Karl Schmidt",
-          gravatarMd5: "abc",
-          userName: "karli"
-        }
+        orcidUrl: config.api_url + '/oauth/orcid?app_callback=' +
+          encodeURIComponent(
+            $window.location.origin +
+            $window.location.pathname +
+            '#/oauth/orcid'
+          )
       };
 
       function signin(url, data, config) {
@@ -57,9 +57,9 @@ module.exports = function (app) {
       // grab token from session or local storage
       var token = $window.sessionStorage.token || $window.localStorage.token;
 
-      // sign in if token is present
-      if (token) {
-        signin(
+      // sign in with a token
+      authService.signinToken = function (token) {
+        return signin(
           config.api_url + '/signin',
           null,
           {
@@ -67,6 +67,11 @@ module.exports = function (app) {
             timeout: 10000
           }
         );
+      };
+
+      // sign in if token is present
+      if (token) {
+        authService.signinToken(token);
       }
 
       // sign in function for ORCID viaOAuth
