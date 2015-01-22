@@ -89,7 +89,7 @@ var article =
   {
   _id: "0af5e13",
   owner: accounts[0],
-  url: "http://arxiv.org/pdf/1208.0264v3.pdf",
+  url: "http://arxiv.org/pdf/1208.0264v4.pdf",
   //_url: "http://win.ua.ac.be/~nschloe/other/pdf_commenting_new.pdf",
   //url: "https://user.d00d3.net/~nschloe/pdf_commenting_new.pdf",
   title: "Preconditioned Recycling Krylov Subspace Methods for Self-Adjoint Problems",
@@ -100,8 +100,11 @@ var article =
 
 module.exports = function (app) {
   app.controller('ArticleCtrl', [
-    '$scope',
-    function($scope) {
+    '$scope', '$route', '$routeSegment',
+    function($scope, $route, $routeSegment) {
       $scope.article = article;
+      // Expose the routeSegment to be able to determine the active tab in the
+      // template.
+      $scope.$routeSegment = $routeSegment;
     }]);
 };
