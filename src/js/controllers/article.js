@@ -84,24 +84,28 @@ var discussion = {
     annotations[2]
   ]
 };
-
-var article =
-  {
-  _id: "0af5e13",
-  owner: accounts[0],
-  url: "http://arxiv.org/pdf/1208.0264v4.pdf",
-  //_url: "http://win.ua.ac.be/~nschloe/other/pdf_commenting_new.pdf",
-  //url: "https://user.d00d3.net/~nschloe/pdf_commenting_new.pdf",
-  title: "Preconditioned Recycling Krylov Subspace Methods for Self-Adjoint Problems",
-  authors: [users[2], users[1]],
-  discussions: [discussion]
-};
 // END DEBUG
 
 module.exports = function (app) {
   app.controller('ArticleCtrl', [
-    '$scope', '$route', '$routeSegment',
-    function($scope, $route, $routeSegment) {
+    '$scope', '$route', '$routeSegment', 'config',
+    function($scope, $route, $routeSegment, config) {
+
+      // DEBUG
+      var article =
+        {
+        _id: "0af5e13",
+        owner: accounts[0],
+        url: config.api_url + '/proxy?url=' +
+          encodeURIComponent('http://arxiv.org/pdf/1208.0264v4.pdf'),
+        //_url: "http://win.ua.ac.be/~nschloe/other/pdf_commenting_new.pdf",
+        //url: "https://user.d00d3.net/~nschloe/pdf_commenting_new.pdf",
+        title: "Preconditioned Recycling Krylov Subspace Methods for Self-Adjoint Problems",
+        authors: [users[2], users[1]],
+        discussions: [discussion]
+      };
+      // END DEBUG
+
       $scope.article = article;
       // Expose the routeSegment to be able to determine the active tab in the
       // template.
