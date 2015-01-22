@@ -12,8 +12,8 @@
       <span class="ph-padding-left ph-padding-right">Signing in...</span>
     </progressbar>
   </li>
-  <li ng-show="auth.user" class="dropdown" is-open="dropdown_open">
-    <a href class="dropdown-toggle">
+  <li ng-show="auth.user" class="dropdown" is-open="dropdown_open" dropdown>
+    <a href="" class="dropdown-toggle" dropdown-toggle>
       <img src="https://secure.gravatar.com/avatar/{{auth.user.gravatarMd5}}?s=30"
         class="ph-avatar" alt="{{auth.user.displayName}} avatar">
       {{auth.user.displayName}}
