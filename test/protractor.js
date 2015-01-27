@@ -4,29 +4,53 @@ exports.config = {
 
   multiCapabilities: [
     {
-    'browserName': 'firefox',
+    'browserName': 'android',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'PaperHub tests'
+    'name': 'PaperHub (Android)'
   },
   {
     'browserName': 'chrome',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'PaperHub tests'
+    'name': 'PaperHub (Chrome)'
+  },
+  {
+    'browserName': 'firefox',
+    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+    'build': process.env.TRAVIS_BUILD_NUMBER,
+    'name': 'PaperHub (Firefox)'
+  },
+  {
+    'browserName': 'internetexplorer',
+    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+    'build': process.env.TRAVIS_BUILD_NUMBER,
+    'name': 'PaperHub (Internet Explorer)'
+  },
+  {
+    'browserName': 'ipad',
+    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+    'build': process.env.TRAVIS_BUILD_NUMBER,
+    'name': 'PaperHub (iPad)'
+  },
+  {
+    'browserName': 'iphone',
+    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+    'build': process.env.TRAVIS_BUILD_NUMBER,
+    'name': 'PaperHub (iPhone)'
+  },
+  {
+    'browserName': 'opera',
+    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+    'build': process.env.TRAVIS_BUILD_NUMBER,
+    'name': 'PaperHub (Opera)'
   },
   {
     'browserName': 'safari',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'PaperHub tests'
+    'name': 'PaperHub (Safari)'
   },
-  {
-    'browserName': 'ie',
-    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'PaperHub tests'
-  }
   ],
   capabilities: {
     'browserName': 'chrome',
