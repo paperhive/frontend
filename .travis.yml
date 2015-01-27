@@ -7,11 +7,7 @@ before_script:
 script:
   - gulp
 
-# See <https://docs.saucelabs.com/ci-integrations/travis-ci/>
-env:
-  global:
-    - secure: f908pUU2L81Px4VboSGbuxKMDU8QCczv9GCqfXWjSJ+ulg9iiWpUKg6nLMzlPZKiphFD87DYb+HfD/9XXgl3HwI+9nTJGDyeVQNjvqn1Ili+MJJoDbVreZ6T96QIpNUTrlpBYvb1QHA6LrpDiscZuiGbo09OhEdhAz/qvVFH++8=
-    - secure: Zk/JBE1jBKUmQ+IIiP7L5FbYYNY79PUGsx7L7U+JagoVG9PlFJOpBISOFE6iPpTqY/k5BovZ5FBUg2kEzuffXgHwio5pM43Y2D72YC2IrbLLTpk5QCT3+N9KY2N9/2BmmgGOHMNDHnt+gyiuWeYJ+alKm6jwkOJTaT38Irc+vp0=
-
 addons:
-  sauce_connect: true
+  sauce_connect:
+    username: "nschloe"
+    access_key: "222f810b-0b68-403d-ba76-6648e1f18eda"
