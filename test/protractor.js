@@ -16,5 +16,6 @@ exports.config = {
     defaultTimeoutInterval: 30000
   },
 
-  baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8000')
+  seleniumAddress: 'http://localhost:4444/wd/hub'
+  //baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8000')
 };
