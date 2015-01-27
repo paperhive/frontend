@@ -22,7 +22,7 @@ exports.config = {
     'name': 'PaperHub (Firefox)'
   },
   {
-    'browserName': 'internetexplorer',
+    'browserName': 'iexplore',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'PaperHub (Internet Explorer)'
@@ -52,9 +52,6 @@ exports.config = {
     'name': 'PaperHub (Safari)'
   },
   ],
-  capabilities: {
-    'browserName': 'chrome',
-  },
 
   specs: ['spec.js'],
 
