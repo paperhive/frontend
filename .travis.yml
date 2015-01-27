@@ -10,5 +10,4 @@ script:
 addons:
   sauce_connect:
     username: "nschloe"
-    access_key:
-        secure: "JDDow7m6421BR4jRz/RQesNGq/aVgNCGe4lvfh4WNeRXbsFUXhTR+A/pRfBJO4peaUCurFXuz0iw/z98jwteHwxZIdihsTTNmjdU1fR1IPVZy9pddX49LPecVqImN9R5+YaAnTaUy/GLISOxNUyP6f9WnDRlGe5zZ+TeS8YZZo0="
+    access_key: "222f810b-0b68-403d-ba76-6648e1f18eda"
