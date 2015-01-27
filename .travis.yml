@@ -6,6 +6,7 @@ before_script:
   - npm install
 script:
   - gulp
+  - gulp test
 
 env:
   global:
