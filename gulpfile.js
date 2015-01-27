@@ -167,12 +167,13 @@ gulp.task('serve:watch', ['default:watch'], function () {
 });
 
 // test
-gulp.task('test', ['serve'], function () {
+gulp.task('test', ['serve:connect'], function () {
   gulp.src(["./test/*.js"])
   .pipe(protractor({
     configFile: "test/protractor.js"
   }))
-  .on('error', function(e) {throw e;});
+  .on('error', function(e) {throw e;})
+  .on('end', function(e) {connect.serverClose();});
 });
 
 
