@@ -57,7 +57,7 @@ exports.config = {
 
   jasmineNodeOpts: {
     showColors: true,
-    //defaultTimeoutInterval: 30000
+    defaultTimeoutInterval: 60000
   },
 
   // Can't specify seleniumAddress, see
