@@ -1,7 +1,9 @@
 language: node_js
 before_script:
   - cp config.json.default config.json
-  - npm install -g bower gulp
+  - npm install -g bower
+  - npm install -g gulp
+  - npm install -g protractor
   - bower install
   - npm install
 script:
