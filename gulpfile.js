@@ -167,7 +167,7 @@ gulp.task('serve:watch', ['default:watch'], function () {
 });
 
 // test
-gulp.task('test', [], function () {
+gulp.task('test', ['serve'], function () {
   gulp.src(["./test/*.js"])
   .pipe(protractor({
     configFile: "test/protractor.js"

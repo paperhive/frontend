@@ -6,7 +6,7 @@ exports.config = {
     'browserName': 'chrome',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'ngValidation Protractor Tests'
+    'name': 'PaperHub tests'
   },
 
   specs: ['spec.js'],
@@ -16,7 +16,8 @@ exports.config = {
     defaultTimeoutInterval: 30000
   },
 
-  // Check <http://stackoverflow.com/a/20889537/353337>
+  // Can't specify seleniumAddress, see
+  // <http://stackoverflow.com/a/20889537/353337>.
   //seleniumAddress: 'http://localhost:4444/wd/hub',
   baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8080')
 };
