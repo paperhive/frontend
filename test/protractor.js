@@ -2,11 +2,34 @@ exports.config = {
   sauceUser: process.env.SAUCE_USERNAME,
   sauceKey: process.env.SAUCE_ACCESS_KEY,
 
-  capabilities: {
+  multiCapabilities: [
+    {
+    'browserName': 'firefox',
+    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+    'build': process.env.TRAVIS_BUILD_NUMBER,
+    'name': 'PaperHub tests'
+  },
+  {
     'browserName': 'chrome',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'PaperHub tests'
+  },
+  {
+    'browserName': 'safari',
+    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+    'build': process.env.TRAVIS_BUILD_NUMBER,
+    'name': 'PaperHub tests'
+  },
+  {
+    'browserName': 'ie',
+    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+    'build': process.env.TRAVIS_BUILD_NUMBER,
+    'name': 'PaperHub tests'
+  }
+  ],
+  capabilities: {
+    'browserName': 'chrome',
   },
 
   specs: ['spec.js'],
