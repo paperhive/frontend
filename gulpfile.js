@@ -170,8 +170,7 @@ gulp.task('serve:watch', ['default:watch'], function () {
 gulp.task('test', [], function () {
   gulp.src(["./test/*.js"])
   .pipe(protractor({
-    configFile: "test/protractor.js",
-    args: ['--baseUrl', 'http://localhost:8000']
+    configFile: "test/protractor.js"
   }))
   .on('error', function(e) {throw e;});
 });
