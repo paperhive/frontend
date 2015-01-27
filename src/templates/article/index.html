@@ -3,38 +3,35 @@
     <ng-include
     src="'templates/article/header.html'"
     ></ng-include>
-    <div class="row">
-      <div class="col-md-12">
-        <ul class="nav nav-tabs pull-right">
-          <!-- ng-class="{active:isActive('/dashboard')}" -->
-          <!--li ng-class="{active:true}"-->
-          <li
-          ng-class="{active:$routeSegment.name === 'article.text'}"
-          >
-          <a href="#{{'article.text' | routeSegmentUrl}}">
-            <i class="fa fa-file-pdf-o"></i> Text view
-          </a>
-          </li>
-          <li
-          ng-class="{active:$routeSegment.chain[1].name === 'comments'}"
-          >
-          <a href="#{{'article.comments' | routeSegmentUrl}}"
-            >
-            <i class="fa fa-comments"></i> Comments view
-          </a>
-          </li>
-          <li
-          ng-class="{active:$routeSegment.name === 'article.settings'}"
-          >
-          <a href="#{{'article.settings' | routeSegmentUrl}}"
-            >
-            <i class="fa fa-wrench"></i> Article settings
-          </a>
-          </li>
-        </ul>
-      </div>
-    </div>
   </div>
+  <ul class="nav nav-tabs">
+    <li
+    ng-class="{active:$routeSegment.name === 'article.settings'}"
+    class="pull-right"
+    >
+    <a href="#{{'article.settings' | routeSegmentUrl}}"
+      >
+      <i class="fa fa-wrench"></i> Article settings
+    </a>
+    </li>
+    <li
+    ng-class="{active:$routeSegment.chain[1].name === 'comments'}"
+    class="pull-right"
+    >
+    <a href="#{{'article.comments' | routeSegmentUrl}}"
+      >
+      <i class="fa fa-comments"></i> Comments view
+    </a>
+    </li>
+    <li
+    ng-class="{active:$routeSegment.name === 'article.text'}"
+    class="pull-right"
+    >
+    <a href="#{{'article.text' | routeSegmentUrl}}">
+      <i class="fa fa-file-pdf-o"></i> Text view
+    </a>
+    </li>
+  </ul>
   <br>
   <div class="container">
     <!--ng-include
