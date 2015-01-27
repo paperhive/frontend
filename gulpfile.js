@@ -172,8 +172,11 @@ gulp.task('test', ['serve:connect'], function () {
   .pipe(protractor({
     configFile: "test/protractor.js"
   }))
-  .on('error', function(e) {throw e;})
-  .on('end', function(e) {connect.serverClose();});
+  .on('error', handleError)
+  .on('end', function(e) {
+    connect.serverClose();
+    process.exit(0);
+  });
 });
 
 
