@@ -32,9 +32,10 @@ exports.config = {
   baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8080')
 };
 
-console.log(process.env.TRAVIS_JOB_NUMBER);
-if (process.env.TRAVIS_JOB_NUMBER === undefined) {
-  // Only specify seleniumAddress locally, not for saucelabs,
-  // cf. <http://stackoverflow.com/a/20889537/353337>.
-  exports.config.seleniumAddress = 'http://localhost:4444/wd/hub';
-}
+//console.log(process.env.TRAVIS_JOB_NUMBER);
+//if (process.env.TRAVIS_JOB_NUMBER === undefined) {
+//  console.log("local console");
+//  // Only specify seleniumAddress locally, not for saucelabs,
+//  // cf. <http://stackoverflow.com/a/20889537/353337>.
+//  exports.config.seleniumAddress = 'http://localhost:4444/wd/hub';
+//}
