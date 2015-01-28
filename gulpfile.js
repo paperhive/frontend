@@ -144,6 +144,13 @@ gulp.task('watch', ['default:watch'], function () {
   gulp.watch(paths.less, ['style']);
 });
 
+// serve without watchin (no livereload)
+gulp.task('serve-nowatch', ['default'], function () {
+  connect.server({
+    root: 'build'
+  });
+});
+
 // serve with livereload
 gulp.task('serve', ['serve:connect', 'watch', 'serve:watch']);
 
@@ -167,7 +174,7 @@ gulp.task('serve:watch', ['default:watch'], function () {
 });
 
 // test
-gulp.task('test', ['serve:connect'], function () {
+gulp.task('test', ['serve-nowatch'], function () {
   gulp.src(["./test/*.js"])
   .pipe(protractor({
     configFile: "test/protractor.js"
