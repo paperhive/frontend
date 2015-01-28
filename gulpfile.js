@@ -182,7 +182,6 @@ gulp.task('test', ['serve-nowatch'], function () {
   .on('error', handleError)
   .on('end', function(e) {
     connect.serverClose();
-    process.exit(0);
   });
 });
 
