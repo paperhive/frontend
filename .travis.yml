@@ -7,7 +7,7 @@ before_script:
   - bower install
   - npm install
 script:
-  - gulp test
+  - DEBUG=1 gulp test
 
 env:
   global:
