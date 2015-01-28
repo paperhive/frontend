@@ -3,12 +3,12 @@ exports.config = {
   sauceKey: process.env.SAUCE_ACCESS_KEY,
 
   multiCapabilities: [
-    {
-    'browserName': 'android',
-    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'PaperHub (Android)'
-  },
+  //  {
+  //  'browserName': 'android',
+  //  'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+  //  'build': process.env.TRAVIS_BUILD_NUMBER,
+  //  'name': 'PaperHub (Android)'
+  //},
   {
     'browserName': 'chrome',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
@@ -29,24 +29,24 @@ exports.config = {
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'PaperHub (Internet Explorer)'
   },
-  {
-    'browserName': 'ipad',
-    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'PaperHub (iPad)'
-  },
-  {
-    'browserName': 'iphone',
-    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'PaperHub (iPhone)'
-  },
-  {
-    'browserName': 'opera',
-    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'PaperHub (Opera)'
-  },
+  //{
+  //  'browserName': 'ipad',
+  //  'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+  //  'build': process.env.TRAVIS_BUILD_NUMBER,
+  //  'name': 'PaperHub (iPad)'
+  //},
+  //{
+  //  'browserName': 'iphone',
+  //  'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+  //  'build': process.env.TRAVIS_BUILD_NUMBER,
+  //  'name': 'PaperHub (iPhone)'
+  //},
+  //{
+  //  'browserName': 'opera',
+  //  'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+  //  'build': process.env.TRAVIS_BUILD_NUMBER,
+  //  'name': 'PaperHub (Opera)'
+  //},
   {
     'browserName': 'safari',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
