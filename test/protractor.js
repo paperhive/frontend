@@ -12,8 +12,7 @@ browsers.forEach(
   tests.pop({
     'browserName': entry,
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'PaperHub (' + entry + ')'
+    'build': process.env.TRAVIS_BUILD_NUMBER
   });}
 );
 
@@ -33,7 +32,8 @@ exports.config = {
   baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8080')
 };
 
-if (!process.env.TRAVIS_JOB_NUMBER) {
+console.log(process.env.TRAVIS_JOB_NUMBER);
+if (process.env.TRAVIS_JOB_NUMBER === undefined) {
   // Only specify seleniumAddress locally, not for saucelabs,
   // cf. <http://stackoverflow.com/a/20889537/353337>.
   exports.config.seleniumAddress = 'http://localhost:4444/wd/hub';
