@@ -41,7 +41,8 @@
     "highlightjs": "./bower_components/highlightjs/highlight.pack.js",
     "pdfjs": "./bower_components/pdfjs-dist/build/pdf.combined.js",
     "mentio": "./bower_components/ment.io/dist/mentio.js",
-    "jquery": "./bower_components/jquery/dist/jquery.js"
+    "jquery": "./bower_components/jquery/dist/jquery.js",
+    "kramed": "./bower_components/kramed/lib/kramed.js"
   },
   "browserify-shim": {
     "angular": {
