@@ -26,6 +26,7 @@
     "ment.io": "~0.9.22",
     "pdfjs-dist": "1.0.1130",
     "lodash": "~3.0.0",
-    "kramed": "git@github.com:GitbookIO/kramed"
+    "kramed": "git@github.com:GitbookIO/kramed",
+    "jquery": "~2.1.3"
   }
 }
