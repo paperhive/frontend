@@ -7,7 +7,7 @@ module.exports = function (app) {
       $scope.tmpTitle = undefined;
 
       // retrieve the discussion
-      var _ = require('underscore');
+      var _ = require('lodash');
       //var k = _.find($scope.article.discussions,
       //               function(obj){ return obj.number == parseInt($routeParams.num)}
       //              );
