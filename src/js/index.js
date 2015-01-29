@@ -4,7 +4,7 @@
   require('angular-sanitize'); // provides 'ngSanitize' module
   require('angular-route'); // provides 'ngRoute' module
   require('angular-moment');
-  require('../../bower_components/ment.io/dist/mentio.js');
+  require('mentio');
   require('angular-route-segment'); // provides 'route-segment' module
   require('../../tmp/templates.js'); // provides 'templates' module
   require('pdfjs');
