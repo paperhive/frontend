@@ -31,7 +31,6 @@
     "kramed": "^0.4.3",
     "lodash": "^3.0.0",
     "merge-stream": "^0.1.7",
-    "pdfjs-dist": "^1.0.1076",
     "vinyl-source-stream": "^1.0.0",
     "watchify": "^2.2.1"
   },
