@@ -4,6 +4,8 @@
 Status](https://travis-ci.org/paperhub/paperhub-frontend.svg?branch=master)](https://travis-ci.org/paperhub/paperhub-frontend)
 [![Dependency Status](https://gemnasium.com/paperhub/paperhub-frontend.svg)](https://gemnasium.com/paperhub/paperhub-frontend)
 
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/nschloe.svg)](https://saucelabs.com/u/nschloe)
+
 ---
 
 ### Setup

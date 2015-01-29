@@ -1,8 +1,18 @@
 language: node_js
 before_script:
   - cp config.json.default config.json
-  - npm install -g bower gulp
+  - npm install -g bower
+  - npm install -g gulp
+  - npm install -g protractor
   - bower install
   - npm install
 script:
-  - gulp
+  - gulp test
+
+env:
+  global:
+    - secure: htpFvFnIWQWt5OE/UempJalrnle2bP3mAv0ZTD/pi9pPWV8lgHcR9pINL6Pzu3udbMFPGiKVJR7iMxNrkhNR5Iw3o00O4DJZl238K1P4A6XRAF0itu2o7tQ+/8eT91oITwsoPj0xAtBIKlZ67nGk5efJGP89YGZTip1Jb7B0P6s=
+    - secure: kbgPNvbAPh7UyBFFMmRjFVn30Eq57MRNWdv4YmBYzGv04Fns7CHe6sscSWlOBvzjAhrht9XYBt56QMHe7b/dlimG0/UO+kyij1UYU1dYv54tynamnl0PEDkhuH/knewfFVFOy6KsVfw5FK7dTyGTD0YsL4wuiS91wYUo7l1uptw=
+
+addons:
+  sauce_connect: true

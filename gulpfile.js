@@ -11,6 +11,7 @@ var streamify = require('gulp-streamify');
 var minifyCSS = require('gulp-minify-css');
 var minifyHTML = require('gulp-minify-html');
 var _ = require('underscore');
+var protractor = require("gulp-protractor").protractor;
 
 var debug = process.env.DEBUG || false;
 
@@ -143,6 +144,13 @@ gulp.task('watch', ['default:watch'], function () {
   gulp.watch(paths.less, ['style']);
 });
 
+// serve without watchin (no livereload)
+gulp.task('serve-nowatch', ['default'], function () {
+  connect.server({
+    root: 'build'
+  });
+});
+
 // serve with livereload
 gulp.task('serve', ['serve:connect', 'watch', 'serve:watch']);
 
@@ -163,6 +171,18 @@ gulp.task('serve:reload', function () {
 // watch built files and initiate live reload
 gulp.task('serve:watch', ['default:watch'], function () {
   gulp.watch(paths.build, ['serve:reload']);
+});
+
+// test
+gulp.task('test', ['serve-nowatch'], function () {
+  gulp.src(["./test/*.js"])
+  .pipe(protractor({
+    configFile: "test/protractor.js"
+  }))
+  .on('error', handleError)
+  .on('end', function(e) {
+    connect.serverClose();
+  });
 });
 
 
