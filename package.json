@@ -27,6 +27,7 @@
     "gulp-streamify": "0.0.5",
     "gulp-uglify": "^1.1.0",
     "gulp-util": "^3.0.2",
+    "lodash": "~3.0.0",
     "kramed": "^0.4.3",
     "merge-stream": "^0.1.7",
     "vinyl-source-stream": "^1.0.0",
@@ -38,8 +39,7 @@
     "angular-route": "./bower_components/angular-route/angular-route.js",
     "angular-route-segment": "./bower_components/angular-route-segment/build/angular-route-segment.js",
     "angular-sanitize": "./bower_components/angular-sanitize/angular-sanitize.js",
-    "highlightjs": "./bower_components/highlightjs/highlight.pack.js",
-    "pdfjs": "./node_modules/pdfjs-dist/build/pdf.combined.js"
+    "highlightjs": "./bower_components/highlightjs/highlight.pack.js"
   },
   "browserify-shim": {
     "angular": {
