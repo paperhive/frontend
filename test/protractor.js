@@ -1,59 +1,62 @@
-exports.config = {
-  sauceUser: process.env.SAUCE_USERNAME,
-  sauceKey: process.env.SAUCE_ACCESS_KEY,
-
-  multiCapabilities: [
+if (process.env.TRAVIS_JOB_NUMBER) {
+  var capabilities = [
   //  {
   //  'browserName': 'android',
   //  'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-  //  'build': process.env.TRAVIS_BUILD_NUMBER,
-  //  'name': 'PaperHub (Android)'
+  //  'build': process.env.TRAVIS_BUILD_NUMBER
   //},
   {
     'browserName': 'chrome',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'PaperHub (Chrome)'
+    'build': process.env.TRAVIS_BUILD_NUMBER
   },
   {
     'browserName': 'firefox',
     // http://stackoverflow.com/a/27645817/353337
     'version': "34",
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'PaperHub (Firefox)'
+    'build': process.env.TRAVIS_BUILD_NUMBER
   },
   {
     'browserName': 'iexplore',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'PaperHub (Internet Explorer)'
+    'build': process.env.TRAVIS_BUILD_NUMBER
   },
   //{
   //  'browserName': 'ipad',
   //  'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-  //  'build': process.env.TRAVIS_BUILD_NUMBER,
-  //  'name': 'PaperHub (iPad)'
+  //  'build': process.env.TRAVIS_BUILD_NUMBER
   //},
   //{
   //  'browserName': 'iphone',
   //  'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-  //  'build': process.env.TRAVIS_BUILD_NUMBER,
-  //  'name': 'PaperHub (iPhone)'
+  //  'build': process.env.TRAVIS_BUILD_NUMBER
   //},
   //{
   //  'browserName': 'opera',
   //  'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-  //  'build': process.env.TRAVIS_BUILD_NUMBER,
-  //  'name': 'PaperHub (Opera)'
+  //  'build': process.env.TRAVIS_BUILD_NUMBER
   //},
   {
     'browserName': 'safari',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'PaperHub (Safari)'
+    'build': process.env.TRAVIS_BUILD_NUMBER
   },
-  ],
+  ];
+} else {
+  // Only test chrome locally
+  var capabilities = [
+  {
+    'browserName': 'chrome'
+  },
+  ];
+}
+
+exports.config = {
+  sauceUser: process.env.SAUCE_USERNAME,
+  sauceKey: process.env.SAUCE_ACCESS_KEY,
+
+  multiCapabilities: capabilities,
 
   specs: ['spec.js'],
 
