@@ -10,7 +10,7 @@ var uglify = require('gulp-uglify');
 var streamify = require('gulp-streamify');
 var minifyCSS = require('gulp-minify-css');
 var minifyHTML = require('gulp-minify-html');
-var _ = require('underscore');
+var _ = require('lodash');
 var protractor = require("gulp-protractor").protractor;
 
 var debug = process.env.DEBUG || false;

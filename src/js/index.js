@@ -1,15 +1,14 @@
 (function(){
-  var $ = require('jquery');
   var angular = require('angular');
   require('angular-bootstrap-tpls'); // provides 'ui.bootstrap' module
   require('angular-sanitize'); // provides 'ngSanitize' module
   require('angular-route'); // provides 'ngRoute' module
   require('angular-moment');
-  require('../../bower_components/ment.io/dist/mentio.js');
+  require('mentio');
   require('angular-route-segment'); // provides 'route-segment' module
   require('../../tmp/templates.js'); // provides 'templates' module
   require('pdfjs');
-  require('../../node_modules/pdfjs-dist/web/pdf_viewer.js');
+  require('../../bower_components/pdfjs-dist/web/pdf_viewer.js');
 
   var paperhub = angular
     .module(
