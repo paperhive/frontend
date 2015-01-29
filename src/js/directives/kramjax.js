@@ -1,5 +1,4 @@
 var kramed = require('kramed');
-var $ = require('jquery');
 // TODO: var MathJax = require('MathJax');
 
 

@@ -1,5 +1,4 @@
 (function(){
-  var $ = require('jquery');
   var angular = require('angular');
   require('angular-bootstrap-tpls'); // provides 'ui.bootstrap' module
   require('angular-sanitize'); // provides 'ngSanitize' module
