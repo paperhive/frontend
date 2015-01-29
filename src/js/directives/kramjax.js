@@ -1,4 +1,5 @@
-var kramed = require('kramed');
+var kramed = require('../../../bower_components/kramed/lib/kramed.js');
+// var kramed = require('kramed');
 // TODO: var MathJax = require('MathJax');
 
 
