@@ -8,19 +8,22 @@ if (process.env.TRAVIS_JOB_NUMBER) {
   {
     'browserName': 'chrome',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER
+    'build': process.env.TRAVIS_BUILD_NUMBER,
+    'name': 'PaperHub (chrome)'
   },
   {
     'browserName': 'firefox',
     // http://stackoverflow.com/a/27645817/353337
     'version': "34",
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER
+    'build': process.env.TRAVIS_BUILD_NUMBER,
+    'name': 'PaperHub (firefox)'
   },
   {
     'browserName': 'iexplore',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER
+    'build': process.env.TRAVIS_BUILD_NUMBER,
+    'name': 'PaperHub (iexplore)'
   },
   //{
   //  'browserName': 'ipad',
@@ -40,7 +43,8 @@ if (process.env.TRAVIS_JOB_NUMBER) {
   {
     'browserName': 'safari',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER
+    'build': process.env.TRAVIS_BUILD_NUMBER,
+    'name': 'PaperHub (safari)'
   },
   ];
 } else {
