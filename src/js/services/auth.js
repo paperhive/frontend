@@ -11,26 +11,33 @@ module.exports = function (app) {
           )
       };
 
-      function signin(url, data, config) {
-        if (authService.inProgress) {
-          return $q.reject('Already signing in.');
-        }
+      // sign in with a token
+      function signinToken (token) {
         if (authService.user) {
           return $q.reject('Already signed in.');
+        }
+        if (authService.inProgress) {
+          return $q.reject('Already signing in.');
         }
         var deferred = $q.defer();
         authService.inProgress = true;
         $http
-          .post(url, data, config)
+          .post(
+            config.api_url + '/signin',
+            null, 
+            {
+              headers: {'X-Auth-Token': token},
+              timeout: 10000
+            }
+          )
           .success(function (data, status) {
             authService.inProgress = false;
-            authService.user = data.user;
 
-            // save token
+            // store token in session storage
             $window.sessionStorage.token = data.token;
-            if (data.user.settings.remember) {
-              $window.localStorage.token = data.token;
-            }
+
+            // set user
+            setUser(data.user);
 
             // use token for all subsequent HTTP requests to API
             $http.defaults.headers.common['X-Auth-Token'] = data.token;
@@ -45,8 +52,22 @@ module.exports = function (app) {
 
         return deferred.promise;
       }
+      authService.signinToken = signinToken;
 
-      function signout() {
+      // set user
+      function setUser (user) {
+        authService.user = user;
+        // store token in local storage (if requested by user)
+        if (user.settings.remember) {
+          $window.localStorage.token = $window.sessionStorage.token;
+        } else {
+          delete $window.localStorage.token;
+        }
+      }
+      authService.setUser = setUser;
+
+      // sign out and forget token
+      function signout () {
         delete $window.sessionStorage.token;
         delete $window.localStorage.token;
         delete $http.defaults.headers['X-Auth-Token'];
@@ -56,18 +77,6 @@ module.exports = function (app) {
 
       // grab token from session or local storage
       var token = $window.sessionStorage.token || $window.localStorage.token;
-
-      // sign in with a token
-      authService.signinToken = function (token) {
-        return signin(
-          config.api_url + '/signin',
-          null,
-          {
-            headers: {'X-Auth-Token': token},
-            timeout: 10000
-          }
-        );
-      };
 
       // sign in if token is present
       if (token) {
