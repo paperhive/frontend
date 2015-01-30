@@ -1,6 +1,6 @@
 module.exports = function (app) {
-  app.factory('authService', ['config', '$http', '$q', '$window',
-    function (config, $http, $q, $window) {
+  app.factory('authService', ['config', '$http', '$q', '$rootScope', '$window',
+    function (config, $http, $q, $rootScope, $window) {
       var authService = {
         inProgress: false,
         orcidUrl: config.api_url + '/oauth/orcid?app_callback=' +
@@ -32,12 +32,11 @@ module.exports = function (app) {
           )
           .success(function (data, status) {
             authService.inProgress = false;
+            authService.user = data.user;
+            authService.token = token;
 
             // store token in session storage
             $window.sessionStorage.token = data.token;
-
-            // set user
-            setUser(data.user);
 
             // use token for all subsequent HTTP requests to API
             $http.defaults.headers.common['X-Auth-Token'] = data.token;
@@ -54,17 +53,17 @@ module.exports = function (app) {
       }
       authService.signinToken = signinToken;
 
-      // set user
-      function setUser (user) {
-        authService.user = user;
-        // store token in local storage (if requested by user)
-        if (user.settings.remember) {
-          $window.localStorage.token = $window.sessionStorage.token;
+      // store/remove token in local storage (if requested by user)
+      $rootScope.$watch(function () {
+        return authService.user && authService.user.settings && 
+            authService.user.settings.remember && authService.token;
+      }, function (token) {
+        if (token) {
+          $window.localStorage.token = token;
         } else {
           delete $window.localStorage.token;
         }
-      }
-      authService.setUser = setUser;
+      }, true);
 
       // sign out and forget token
       function signout () {
@@ -72,6 +71,7 @@ module.exports = function (app) {
         delete $window.localStorage.token;
         delete $http.defaults.headers['X-Auth-Token'];
         delete authService.user;
+        delete authService.token;
       }
       authService.signout = signout;
 

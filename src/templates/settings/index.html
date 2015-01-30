@@ -10,7 +10,7 @@
         </li>
         <li role="presentation" ng-class="{active: tab == 'site'}">
           <a href ng-click="tab = 'site'">
-            <i class="fa fa-fw fa-cog"></i> Site
+            <i class="fa fa-fw fa-cog"></i> Site preferences
           </a>
         </li>
       </ul>
@@ -94,8 +94,11 @@
       <!--save-->
       <div class="row ph-lg-margin-top">
         <div class="col-sm-6 col-sm-offset-3">
-          <buttonn ng-click="save()" class="btn btn-primary">
-            <i class="fa fa-check"></i> Save
+          <button ng-click="save()" class="btn btn-primary"
+              ng-class="{disabled: busy}">
+              <i class="fa fa-fw fa-check" ng-show="!busy"></i>
+              <i class="fa fa-fw fa-spinner fa-spin" ng-show="busy"></i>
+              Save
           </button>
         </div>
       </div>

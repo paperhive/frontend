@@ -5,10 +5,16 @@ module.exports = function (app) {
     function ($scope, $http, config, authService) {
       $scope.tab = 'profile';
       $scope.auth = authService;
+
+      // keep user copy up to date
       $scope.$watch('auth.user', function (user) {
         $scope.user = _.cloneDeep(user);
       });
+
+      // save to api
       $scope.save = function () {
+        $scope.busy = true;
+
         var obj = _.cloneDeep($scope.user);
        
         // remove all keys which we are not allowed to set
@@ -18,9 +24,12 @@ module.exports = function (app) {
         // save
         $http.put(config.api_url + '/users/' + $scope.user._id, obj).
           success(function (data) {
-            authService.setUser(data);
+            $scope.busy = false;
+            authService.user = data;
           }).
           error(function (data) {
+            $scope.busy = false;
+            // TODO
             console.log(data);
           });
       };
