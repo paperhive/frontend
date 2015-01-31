@@ -23,6 +23,10 @@ var paths = {
   build: 'build/**/*'
 };
 
+var htmlOpts = {
+  empty: true // allow empty attributes (required, e.g., for href="")
+};
+
 // error handling, simplified version (without level) from
 // http://www.artandlogic.com/blog/2014/05/error-handling-in-gulp/
 function handleError(error) {
@@ -77,7 +81,7 @@ gulp.task('templates', function () {
   var templateCache = require('gulp-angular-templatecache');
 
   return gulp.src(paths.templates, {base: 'src'})
-    .pipe(debug ? gutil.noop() : minifyHTML())
+    .pipe(debug ? gutil.noop() : minifyHTML(htmlOpts))
     .pipe(templateCache({
       moduleSystem: 'Browserify',
       standalone: true,
@@ -91,7 +95,7 @@ gulp.task('templates', function () {
 // copy static files
 gulp.task('static', function () {
   var html = gulp.src(paths.html, {base: 'src'})
-    .pipe(debug ? gutil.noop() : minifyHTML())
+    .pipe(debug ? gutil.noop() : minifyHTML(htmlOpts))
     .pipe(gulp.dest('build'));
 
   var images = gulp.src(paths.images, {base: 'src'})
