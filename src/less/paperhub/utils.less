@@ -45,6 +45,10 @@
   .box-shadow(@style, rgba(0,0,0, @alpha));
 }
 
+.text-shadow(@position: 0px 3px, @blur: 4px, @color: rgba(0, 0, 0, 0.3)) {
+  text-shadow: @position @blur @color;
+}
+
 /* Creating Borders */
 .border (@width: 1px, @style: solid, @color){
   border: @width @style @color;
