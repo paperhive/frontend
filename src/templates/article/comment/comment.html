@@ -23,14 +23,14 @@
         <!-- Can't use ng-if here; it seems to create another scope. -->
         <!--  ng-if="annotation.permissions.edit" -->
         <button
-          class="btn btn-link ph-no-topdown-padding"
+          class="btn btn-link ph-no-padding-top ph-no-padding-bottom"
           ng-click="setEditOn()"
           >
           <i class="fa fa-pencil"></i>
         </button>
         <button
           ng-if="deleteFunction && annotation.permissions.delete"
-          class="btn btn-link ph-no-topdown-padding"
+          class="btn btn-link ph-no-padding-top ph-no-padding-bottom"
           confirmed-click="deleteFunction(annotation._id)"
           ng-confirm-click="Really delete reply?"
           >

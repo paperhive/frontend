@@ -1,0 +1,64 @@
+.generate-directions(@name, @property, @value) {
+  .@{name}-top {
+    @{property}-top: @value;
+  }
+  .@{name}-bottom {
+    @{property}-bottom: @value;
+  }
+  .@{name}-left {
+    @{property}-left: @value;
+  }
+  .@{name}-right {
+    @{property}-right: @value;
+  }
+  .@{name} {
+    @{property}: @value;
+  }
+}
+
+// no-(padding|border|margin)
+.generate-directions(ph-no-padding, padding, 0);
+.generate-directions(ph-no-border, border, 0);
+.generate-directions(ph-no-margin, margin, 0);
+
+// sm-(padding|border|margin)
+.generate-directions(ph-sm-padding, padding, 0.5em);
+.generate-directions(ph-sm-border, border, 0.5em);
+.generate-directions(ph-sm-margin, margin, 0.5em);
+
+// md-(padding|border|margin)
+.generate-directions(ph-md-padding, padding, 1em);
+.generate-directions(ph-md-border, border, 1em);
+.generate-directions(ph-md-margin, margin, 1em);
+
+// lg-(padding|border|margin)
+.generate-directions(ph-lg-padding, padding, 2em);
+.generate-directions(ph-lg-border, border, 2em);
+.generate-directions(ph-lg-margin, margin, 2em);
+
+/* Creatin Box-Shadow */
+/*
+.box-shadow(@style, @c) when (iscolor(@c)) {
+  -webkit-box-shadow: @style @c;
+  box-shadow: @style @c;
+}
+.box-shadow(@style, @alpha: 50%) when (isnumber(@alpha)) {
+  .box-shadow(@style, rgba(0,0,0, @alpha));
+}*/
+
+/* Creating Borders */
+.border (@width: 1px, @style: solid, @color){
+  border: @width @style @color;
+}
+.border-top (@width: 1px, @style: solid, @color){
+  border-top: @width @style @color;
+}
+.border-right (@width: 1px, @style: solid, @color){
+  border-right: @width @style @color;
+}
+.border-bottom (@width: 1px, @style: solid, @color){
+  border-bottom: @width @style @color;
+}
+.border-left (@width: 1px, @style: solid, @color){
+  border-left: @width @style @color;
+}

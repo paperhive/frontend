@@ -1,0 +1,35 @@
+.ph-labelset {
+  list-style-type: none;
+  padding: 0px;
+}
+
+.ph-labelset li label {
+  font: inherit;
+  font-size: inherit;
+  background: #fcfcfc;
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.ph-labelset li input {
+  display: none;
+}
+
+.ph-labelset li input[type=checkbox]:checked ~ label {
+  font-weight: bold;
+}
+.ph-labelset li input[type=checkbox]:checked ~ label.comment {
+  background: #f0ad4e;
+}
+.ph-labelset li input[type=checkbox]:checked ~ label.edit {
+  background: #d9534f;
+}
+.ph-labelset li input[type=checkbox]:checked ~ label.question {
+  background: #5cb85c;
+}
+.ph-labelset li input[type=checkbox]:checked ~ label.link {
+  background: #5bc0de;
+}
