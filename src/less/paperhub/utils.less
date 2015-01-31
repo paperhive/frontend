@@ -36,6 +36,9 @@
 .generate-directions(ph-lg-border, border, 2em);
 .generate-directions(ph-lg-margin, margin, 2em);
 
+// highlight border
+.generate-directions(ph-highlight-border, border, @ph-border-height solid @ph-highlight-color);
+
 /* Creatin Box-Shadow */
 .box-shadow(@style, @c) when (iscolor(@c)) {
   -webkit-box-shadow: @style @c;
