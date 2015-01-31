@@ -8,15 +8,24 @@
   background-color: @ph-white;
   margin: auto;
   border-radius: 100px;
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
   text-align: center;
+  @media (min-width: @screen-sm-min) {
+    width: 150px;
+    height: 150px;
+  }
 }
 
 .ph-icon .glyphicon {
-  font-size: 500%;
+  font-size: 333%;
+  height: 100px;
   display: block;
-  height: 150px;
-  top: 26%;
   .text-shadow();
+  top: 26%;
+  @media (min-width: @screen-sm-min) {
+    font-size: 500%;
+    height: 150px;
+  }
 }
+
