@@ -1,3 +1,7 @@
+body {
+  margin-top: @navbar-height + @ph-navbar-border;
+}
+
 .navbar .ph-avatar {
   width: 30px;
   height: 30px;
@@ -19,7 +23,7 @@
 /* Navigation */
 .navbar {
   .box-shadow(0 0 5px, 30%);
-  .border-top(4px, solid, @ph-highlight-color);
+  .border-top(@ph-navbar-border, solid, @ph-highlight-color);
   padding: @ph-navbar-default-padding;
 }
 /*.nav.navbar-nav.navbar-right {
