@@ -126,7 +126,7 @@ gulp.task('style', function () {
     .pipe(debug ? sourcemaps.init() : gutil.noop())
     .pipe(less())
     .on('error', handleError)
-    .pipe(debug ? sourcemaps.write() : gutil.noop())
+    .pipe(debug ? sourcemaps.write('./') : gutil.noop())
     .pipe(debug ? gutil.noop() : minifyCSS())
     .pipe(gulp.dest('build'));
 });
