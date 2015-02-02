@@ -4,28 +4,27 @@
     <div class="col-md-10">
       <div class="media">
         <a href="#/users/{{auth.user.userName}}" class="media-left">
-          <img
-          src="https://secure.gravatar.com/avatar/{{auth.user.gravatarMd5}}?s=80"
-          alt="thumbnail"
-          width="80px"
-          >
+          <img alt="thumbnail" width="80px"
+              src="https://secure.gravatar.com/avatar/{{auth.user.gravatarMd5}}?s=80">
         </a>
         <div class="media-body" style="width:100%">
           <div class="panel panel-default">
             <div class="panel-body">
               <input placeholder="Title" type="text" name="title"
-              ng-model="annotation.title" class="form-control" required>
+                  ng-model="annotation.title" class="form-control" required>
               <br>
               <span id="helpBlock" class="help-block pull-right"
-                style="font-size:smaller">
-                You can use <a
+                  style="font-size:smaller">
+                You can use
+                <a
                   href="http://kramdown.gettalong.org/syntax.html">Markdown</a>,
                 $$<a
                   href="http://www.mathjax.org/demos/tex-samples/">LaTeX</a>$$,
                 ```<a href="https://highlightjs.org/">code blocks</a>```
               </span>
-              <textarea class="form-control ph-annotation-body" ng-model='annotation.body'
-                rows="6" placeholder="Leave an annotation..."></textarea>
+              <textarea class="form-control ph-annotation-body"
+                  ng-model='annotation.body'
+                  rows="6" placeholder="Leave an annotation..."></textarea>
               <hr>
               <label for="preview">Preview</label>
               <div class="well well-lg" id=preview>
@@ -36,7 +35,7 @@
         </div>
       </div>
       <button type="submit" class="btn btn-primary pull-right"
-        ng-disabled="annotationForm.$invalid">
+          ng-disabled="annotationForm.$invalid">
         Submit
       </button>
     </div>
@@ -45,20 +44,20 @@
       <h4>Labels</h4>
       <ul class="ph-labelset">
         <li>
-        <input type="checkbox" id="button0"/>
-        <label for="button0" class="comment" onclick>comment</label>
+          <input type="checkbox" id="button0"/>
+          <label for="button0" class="comment" onclick>comment</label>
         </li>
         <li>
-        <input type="checkbox" id="button1"/>
-        <label for="button1" class="edit" onclick>edit</label>
+          <input type="checkbox" id="button1"/>
+          <label for="button1" class="edit" onclick>edit</label>
         </li>
         <li>
-        <input type="checkbox" id="button2"/>
-        <label for="button2" class="question" onclick>question</label>
+          <input type="checkbox" id="button2"/>
+          <label for="button2" class="question" onclick>question</label>
         </li>
         <li>
-        <input type="checkbox" id="button3"/>
-        <label for="button3" class="link" onclick>link</label>
+          <input type="checkbox" id="button3"/>
+          <label for="button3" class="link" onclick>link</label>
         </li>
       </ul>
     </div>

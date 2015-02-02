@@ -11,10 +11,16 @@
       <small>
         <span ng-repeat="author in article.authors">
           <!-- TODO use route segment here -->
-          <a href="#/users/{{author.userName}}">{{author.displayName}}</a>{{$last ? '' :', '}}
+          <a href="#/users/{{author.userName}}">
+            {{author.displayName}}
+          </a>
+          {{$last ? '' :', '}}
         </span>
       </small>
     </h3>
-    uploaded by <a href="#/users/{{article.owner.accountName}}">{{article.owner.displayName}}</a>
+    uploaded by
+    <a href="#/users/{{article.owner.accountName}}">
+      {{article.owner.displayName}}
+    </a>
   </div>
 </div>

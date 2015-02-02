@@ -1,12 +1,9 @@
 <ul class="nav nav-tabs nav-justified" role="tablist">
-  <li
-  role="presentation"
-  ng-class="{active: ('article.text' | routeSegmentStartsWith)}"
-  >
-  <a href="#{{'article.text' | routeSegmentUrl}}"
-    >
-    <i class="fa fa-file-pdf-o fa-fw"></i> Text view
-  </a>
+  <li ng-class="{active: ('article.text' | routeSegmentStartsWith)}"
+      role="presentation">
+    <a href="#{{'article.text' | routeSegmentUrl}}">
+      <i class="fa fa-file-pdf-o fa-fw"></i> Text view
+    </a>
   </li>
   <!--li role="presentation" ng-class="{active: ('article.annotations' |
       routeSegmentStartsWith)}"-->
@@ -15,19 +12,18 @@
   || ('article.comments-new' | routeSegmentStartsWith)
   || ('article.discussion' | routeSegmentStartsWith)
   }">
-  <a href="#{{'article.comments' | routeSegmentUrl}}"
-    >
-    <i class="fa fa-comments fa-fw"></i> Comments view
-    <!--span class="badge">{{article.discussions.length}}</span-->
-  </a>
+    <a href="#{{'article.comments' | routeSegmentUrl}}">
+      <i class="fa fa-comments fa-fw"></i> Comments view
+      <!--span class="badge">{{article.discussions.length}}</span-->
+    </a>
   </li>
-  <li role="presentation" ng-class="{active: ('article.settings' | routeSegmentStartsWith)}">
-  <a href="#{{'article.settings' | routeSegmentUrl}}"
-    >
-    <!--tooltip-trigger="mouseover"
-    tooltip-placement="left"
-    tooltip="Settings"-->
-    <i class="fa fa-wrench fa-fw"></i> Article settings
-  </a>
+  <li ng-class="{active: ('article.settings' | routeSegmentStartsWith)}"
+      role="presentation">
+    <a href="#{{'article.settings' | routeSegmentUrl}}">
+      <!--tooltip-trigger="mouseover"
+      tooltip-placement="left"
+      tooltip="Settings"-->
+      <i class="fa fa-wrench fa-fw"></i> Article settings
+    </a>
   </li>
 </ul>

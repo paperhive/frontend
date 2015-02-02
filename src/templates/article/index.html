@@ -1,38 +1,27 @@
 <div ng-controller="ArticleCtrl">
   <div class="container">
-    <ng-include
-    src="'templates/article/header.html'"
-    ></ng-include>
+    <ng-include src="'templates/article/header.html'"></ng-include>
   </div>
   <ul class="nav nav-tabs">
-    <li
-    ng-class="{active:$routeSegment.name === 'article.settings'}"
-    class="pull-right"
-    >
-    <a href="#{{'article.settings' | routeSegmentUrl}}"
-      >
-      <i class="fa fa-wrench"></i> Article settings
-    </a>
+    <li ng-class="{active:$routeSegment.name === 'article.settings'}"
+        class="pull-right">
+      <a href="#{{'article.settings' | routeSegmentUrl}}">
+        <i class="fa fa-wrench"></i> Article settings
+      </a>
     </li>
-    <li
-    ng-class="{active:$routeSegment.chain[1].name === 'comments'}"
-    class="pull-right"
-    >
-    <a href="#{{'article.comments' | routeSegmentUrl}}"
-      >
-      <i class="fa fa-comments"></i> Comments view
-    </a>
+    <li ng-class="{active:$routeSegment.chain[1].name === 'comments'}"
+        class="pull-right" >
+      <a href="#{{'article.comments' | routeSegmentUrl}}">
+        <i class="fa fa-comments"></i> Comments view
+      </a>
     </li>
-    <li
-    ng-class="{active:$routeSegment.name === 'article.text'}"
-    class="pull-right"
-    >
-    <a href="#{{'article.text' | routeSegmentUrl}}">
-      <i class="fa fa-file-pdf-o"></i> Text view
-    </a>
+    <li ng-class="{active:$routeSegment.name === 'article.text'}"
+        class="pull-right">
+      <a href="#{{'article>>.text' | routeSegmentUrl}}">
+        <i class="fa fa-file-pdf-o"></i> Text view
+      </a>
     </li>
   </ul>
-  <br>
   <div class="container">
     <!--ng-include
     src="'templates/article/controlbar.html'"
@@ -42,15 +31,12 @@
       <div class="col-md-12">
         <span class="pull-right">
           <a href="#{{'article.comments.new' | routeSegmentUrl}}"
-            class="btn btn-primary"
-            ng-disabled="!auth.user"
-            >
+              class="btn btn-primary" ng-disabled="!auth.user">
             Add general comment
           </a>
         </span>
       </div>
     </div>
-    <br>
     <div app-view-segment="1"></div>
   </div>
 </div>

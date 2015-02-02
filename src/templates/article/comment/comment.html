@@ -1,20 +1,17 @@
 <a class="media-left" href="#">
-  <img
-  src="https://secure.gravatar.com/avatar/?s=80"
-  alt="thumbnail"
-  class="img-rounded"
-  width="80px"
-  >
+  <img src="https://secure.gravatar.com/avatar/?s=80" alt="thumbnail"
+      class="img-rounded" width="80px">
 </a>
 <div class="media-body" style="width:100%">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <a
-        href="/#/users/{{annotation.author.userName}}"
-        >
+      <a href="/#/users/{{annotation.author.userName}}">
         {{annotation.author.displayName}}
-      </a> commented <span am-time-ago="{{annotation.time}}"></span><span
-        ng-if="annotation.editTime"> <em>[edited]</em>
+      </a>
+      commented
+      <span am-time-ago="{{annotation.time}}"></span>
+      <span ng-if="annotation.editTime">
+        <em>[edited]</em>
         <!-- Unfortunately, dynamic edit time updates don't work -->
         <!--span  am-time-ago="{{annotation.editTime}}"></span-->
       </span>
@@ -22,27 +19,23 @@
         <span ng-if="isArticleAuthor" class="ph-comment-tag">Author</span>
         <!-- Can't use ng-if here; it seems to create another scope. -->
         <!--  ng-if="annotation.permissions.edit" -->
-        <button
-          class="btn btn-link ph-no-padding-top ph-no-padding-bottom"
-          ng-click="setEditOn()"
-          >
+        <button class="btn btn-link ph-no-padding-top ph-no-padding-bottom"
+            ng-click="setEditOn()">
           <i class="fa fa-pencil"></i>
         </button>
         <button
-          ng-if="deleteFunction && annotation.permissions.delete"
-          class="btn btn-link ph-no-padding-top ph-no-padding-bottom"
-          confirmed-click="deleteFunction(annotation._id)"
-          ng-confirm-click="Really delete reply?"
-          >
+            ng-if="deleteFunction && annotation.permissions.delete"
+            class="btn btn-link ph-no-padding-top ph-no-padding-bottom"
+            confirmed-click="deleteFunction(annotation._id)"
+            ng-confirm-click="Really delete reply?"
+            >
           <i class="fa fa-remove"></i>
         </button>
       </span>
     </div>
     <div class="panel-body">
-      <ng-include
-      ng-if="isEditMode"
-      src="'templates/article/comment/inline-edit.html'"
-      >
+      <ng-include ng-if="isEditMode"
+          src="'templates/article/comment/inline-edit.html'">
       </ng-include>
       <kramjax ng-if="!isEditMode" body="{{annotation.body}}"></kramjax>
     </div>
