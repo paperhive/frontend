@@ -117,7 +117,11 @@ gulp.task('static', function () {
   var mathjax = gulp.src(mathjax_src, {base: mathjax_base})
     .pipe(gulp.dest('build/assets/mathjax'));
 
-  return merge(html, images, bootstrap, fontawesome, mathjax);
+  var pdfjs = gulp.src('bower_components/pdfjs-dist/build/pdf.worker.js')
+    .pipe(debug ? gutil.noop() : streamify(uglify()))
+    .pipe(gulp.dest('build/assets/pdfjs'));
+
+  return merge(html, images, bootstrap, fontawesome, mathjax, pdfjs);
 });
 
 // compile less to css
