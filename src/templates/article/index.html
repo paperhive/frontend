@@ -1,5 +1,5 @@
 <div ng-controller="ArticleCtrl">
-  <div class="ph-article-header">
+  <div class="ph-article-header ph-lg-margin-bottom">
     <div class="container">
       <div class="row">
         <div class="col-sm-12">
@@ -30,21 +30,8 @@
       </div>
     </div>
   </div>
-  <div class="container ph-xl-padding-top">
-    <!--ng-include
-    src="'templates/article/controlbar.html'"
-    ></ng-include-->
-    <!-- Use row + col-12 here to get spacing for pull-right correct. -->
-    <!--div class="row">
-      <div class="col-md-12">
-        <span class="pull-right">
-          <a href="#{{'article.comments.new' | routeSegmentUrl}}"
-              class="btn btn-primary" ng-disabled="!auth.user">
-            Add general comment
-          </a>
-        </span>
-      </div>
-    </div-->
+  <div class="container">
+    <!--ng-include src="'templates/article/controlbar.html'"></ng-include-->
     <div app-view-segment="1"></div>
   </div>
 </div>
