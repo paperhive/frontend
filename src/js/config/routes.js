@@ -17,6 +17,9 @@ module.exports = function (app) {
         .when('/settings', 'settings')
         .when('/users/', 'userlist')
         .when('/users/:username', 'user')
+        .when('/users/:username/profile', 'user.profile')
+        .when('/users/:username/articles', 'user.articles')
+        .when('/users/:username/comments', 'user.comments')
         .when('/welcome', 'welcome')
 
         // Init Main Page
@@ -76,6 +79,21 @@ module.exports = function (app) {
           templateUrl: 'templates/user/index.html',
           dependencies: ['username']
         })
+        .within()
+          .segment('profile', {
+            default: true,
+            templateUrl: 'templates/user/profile.html',
+            dependencies: ['username']
+          })
+          .segment('articles', {
+            templateUrl: 'templates/user/profile.html',
+            dependencies: ['username']
+          })
+          .segment('comments', {
+            templateUrl: 'templates/user/profile.html',
+            dependencies: ['username']
+          })
+        .up()
 
         .segment('welcome', {
           templateUrl: 'templates/auth/welcome.html',
