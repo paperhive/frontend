@@ -1,46 +1,53 @@
+<div class="row ph-lg-margin-bottom">
+  <div class="col-md-12 text-right">
+    <a href="#{{'article.comments.new' | routeSegmentUrl}}"
+        class="btn btn-primary" ng-disabled="!auth.user">
+      Add general comment
+    </a>
+  </div>
+</div>
 <div class="panel panel-default">
   <div class="panel-heading">
     <ul class="list-inline">
       <li>
-      <a href="#">
-        <strong>
-          <i class="fa fa-comment"></i> {{article.discussions.length}} open
-        </strong>
-      </a>
+        <a href="#">
+          <strong>
+            <i class="fa fa-comment"></i> {{article.discussions.length}} open
+          </strong>
+        </a>
       </li>
       <li>
-      <a href="#">
-        <i class="fa fa-close"></i> 0 closed
-      </a>
+        <a href="#">
+          <i class="fa fa-close"></i> 0 closed
+        </a>
       </li>
     </ul>
     <!--span class="pull-right">Sort</span-->
   </div>
   <ul class="list-group">
     <li class="list-group-item" ng-repeat="discussion in article.discussions">
-    <span class="pull-right">
-      <span ng-if="discussion.replies.length > 0" style="margin-left:15px;">
-        <i class="fa fa-comments"></i> {{discussion.replies.length}}
+      <span class="pull-right">
+        <span ng-if="discussion.replies.length > 0" style="margin-left:15px;">
+          <i class="fa fa-comments"></i> {{discussion.replies.length}}
+        </span>
       </span>
-    </span>
-    <h4>
-      <a
-        href="#{{'article.comments.num' | routeSegmentUrl: {num: discussion.number} }}"
-        style="margin-right:15px;"
-        >
-        {{discussion.title}}</a>
-      <ul class="ph-tags list-inline" style="display: inline-block;">
-        <li ng-repeat="label in discussion.originalAnnotation.labels">
-        <a href="#" class="btn btn-default {{label}}">{{label}}</a>
-        </li>
-      </ul>
-    </h4>
-    #{{discussion.number}} opened
-    <span am-time-ago="{{discussion.originalAnnotation.time}}"></span>
-    by
-    <a href="#/users/{{discussion.originalAnnotation.author.userName}}">
-      {{discussion.originalAnnotation.author.displayName}}
-    </a>
+      <h4>
+        <a style="margin-right:15px;"
+            href="#{{'article.comments.num' | routeSegmentUrl: {num: discussion.number} }}">
+          {{discussion.title}}
+        </a>
+        <ul class="ph-tags list-inline" style="display: inline-block;">
+          <li ng-repeat="label in discussion.originalAnnotation.labels">
+            <a href="#" class="btn btn-default {{label}}">{{label}}</a>
+          </li>
+        </ul>
+      </h4>
+      #{{discussion.number}} opened
+      <span am-time-ago="{{discussion.originalAnnotation.time}}"></span>
+      by
+      <a href="#/users/{{discussion.originalAnnotation.author.userName}}">
+        {{discussion.originalAnnotation.author.displayName}}
+      </a>
     </li>
   </ul>
 </div>

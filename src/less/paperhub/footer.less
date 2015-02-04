@@ -1,0 +1,26 @@
+// sticky footer, see http://getbootstrap.com/examples/sticky-footer-navbar/
+
+html {
+  // sticky footer
+  position: relative;
+  min-height: 100%;
+  // end sticky footer
+}
+body {
+  // sticky footer
+  padding-bottom: @ph-footer-height;
+  // end sticky footer
+}
+
+footer {
+  // sticky footer
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: @ph-footer-height;
+  // end sticky footer
+  background-color: @gray;
+  color: @body-bg;
+  padding: @padding-large-horizontal;
+  .ph-highlight-border-bottom();
+}

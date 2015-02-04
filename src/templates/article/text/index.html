@@ -1,29 +1,25 @@
+<!-- Use row + col-12 here to get spacing for pull-right correct. -->
+<div class="row ph-lg-margin-bottom">
+  <div class="col-md-12 text-right">
+    <a href="#{{'article.comments.new' | routeSegmentUrl}}"
+        class="btn btn-primary" ng-disabled="!auth.user">
+      Add general comment
+    </a>
+  </div>
+</div>
 <div class="row" ng-controller="MarginNoteCtrl">
   <!--actual text-->
-  <pdf
-  url="{{article.url}}"
-  offset-px=offsetPx
-  class="col-md-11"
-  style="padding-left:0px; padding-right:0px;"
-  ></pdf>
+  <pdf url="{{article.url}}" offset-px="offsetPx" class="col-md-11"></pdf>
   <!--column for margin notes-->
-  <div
-    id="annotation-column"
-    class="col-md-1"
-    style="padding-left:0px"
-    >
+  <div id="annotation-column" class="col-md-1">
     <!-- Don't use ng-if here to keep the element in the DOM tree.
     This makes sure that the entered text is preserved.
     -->
-    <ng-include
-    ng-if="auth.user"
-    ng-show="offsetPx !== undefined"
-    src="'templates/article/text/inline-annotation.html'"
-    ></ng-include>
-    <ng-include
-    ng-if="!auth.user"
-    ng-show="offsetPx !== undefined"
-    src="'templates/article/text/inline-annotation-substitute.html'"
-    ></ng-include>
+    <ng-include ng-if="auth.user" ng-show="offsetPx !== undefined"
+        src="'templates/article/text/inline-annotation.html'" >
+    </ng-include>
+    <ng-include ng-if="!auth.user" ng-show="offsetPx !== undefined"
+        src="'templates/article/text/inline-annotation-substitute.html'">
+    </ng-include>
   </div>
 </div>

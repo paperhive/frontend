@@ -1,21 +1,46 @@
 <!-- Header bar -->
-<div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container-fluid">
+<div ng-controller="NavbarCtrl" class="navbar navbar-default navbar-fixed-top"
+    role="navigation">
+  <div class="container">
     <div class="navbar-header">
+      <!-- toggle nav -->
+      <button ng-click="collapsed=!collapsed" type="button" class="navbar-toggle">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <!-- brand -->
       <a class="navbar-brand" rel="home" href="#/" title="PaperHub">
         <img class="ph-title-logo" src="img/logo2.svg">
       </a>
+      <a class="navbar-brand" rel="home" href="#/" title="PaperHub">
+        PaperHub
+      </a>
     </div>
-    <form class="navbar-form navbar-left" role="search">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search PaperHub" name="srch-term" id="srch-term">
-        <div class="input-group-btn">
-          <button class="btn btn-default" type="submit">
-            <i class="fa fa-search"></i>
-          </button>
-        </div>
+
+    <!-- collect everything in this div for responsive collapsing -->
+    <div class="collapse navbar-collapse" collapse="collapsed">
+      <!-- left -->
+      <div class="navbar-left">
+        <form class="navbar-form" role="search">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search PaperHub" name="srch-term" id="srch-term">
+            <div class="input-group-btn">
+              <button class="btn btn-default" type="submit">
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
-    </form>
-    <ng-include src="'templates/shared/navbar_user.html'"></ng-include>
-  </div>
-</div>
+      <!-- right -->
+      <div class="navbar-right">
+        <ul class="nav navbar-nav">
+          <li><a href="#" title="help">Help</a></li>
+        </ul>
+        <ng-include src="'templates/shared/navbar_user.html'"></ng-include>
+      </div>
+    </div><!-- collapse -->
+  </div><!-- container-fluid -->
+</div><!-- navbar -->

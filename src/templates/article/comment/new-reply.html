@@ -1,21 +1,17 @@
 <a class="media-left" href="#">
-  <img
-  src="https://secure.gravatar.com/avatar/?s=80"
-  alt="thumbnail"
-  width="80px"
-  >
+  <img src="https://secure.gravatar.com/avatar/?s=80" alt="thumbnail"
+      width="80px" >
 </a>
 <div class="media-body" style="width:100%">
   <div class="panel panel-default">
     <div class="panel-body">
       <form name="annotationForm" ng-controller="AnnotationCtrl"
-        ng-submit="annotationForm.$valid && addReply()" novalidate>
+          ng-submit="annotationForm.$valid && addReply()" novalidate>
         <span id="helpBlock" class="help-block pull-right"
-          style="font-size:smaller">
-          You can use <a
-            href="http://kramdown.gettalong.org/syntax.html">Markdown</a>,
-          $$<a
-            href="http://www.mathjax.org/demos/tex-samples/">LaTeX</a>$$,
+            style="font-size:smaller">
+          You can use
+          <a href="http://kramdown.gettalong.org/syntax.html">Markdown</a>,
+          $$<a href="http://www.mathjax.org/demos/tex-samples/">LaTeX</a>$$,
           ```<a href="https://highlightjs.org/">code blocks</a>```
         </span>
         <textarea id="textbody" class="form-control ph-annotation-body"
@@ -32,7 +28,7 @@
           </button>
           &nbsp;
           <button type="submit" class="btn btn-primary"
-            ng-disabled="annotationForm.$invalid">
+              ng-disabled="annotationForm.$invalid">
             Submit
           </button>
         </span>
