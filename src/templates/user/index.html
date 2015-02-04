@@ -1,24 +1,26 @@
 <div class="container" ng-controller="UserCtrl">
-  <div class="col-md-3">
-    <a href="#">
-      <img class="img-thumbnail"
-      src=https://secure.gravatar.com/avatar/{{user.gravatarMd5}}?s=100
-      width="100%"
-      >
-    </a>
-    <h3>{{user.displayName}}</h3>
-    <h4>{{user.userName}}</h4>
-    <hr>
-    <i class="fa fa-clock-o"></i> Joined on Jan 3, 1987
-  </div>
-  <div class="col-md-9">
-    <tabset>
-    <tab heading="Comments">
-    List of comments
-    </tab>
-    <tab heading="Articles">
-    List of articles
-    </tab>
-    </tabset>
+  <div class="row ph-lg-margin-top">
+    <div class="col-md-3">
+      <a href="#">
+        <img class="img-thumbnail"
+        src=https://secure.gravatar.com/avatar/{{user.gravatarMd5}}?s=100
+        width="100%"
+        >
+      </a>
+      <h3>{{user.displayName}}</h3>
+      <h4>{{user.userName}}</h4>
+      <hr>
+      <i class="fa fa-clock-o"></i> Joined on Jan 3, 1987
+    </div>
+    <div class="col-md-9">
+      <tabset>
+      <tab heading="Comments">
+      List of comments
+      </tab>
+      <tab heading="Articles">
+      List of articles
+      </tab>
+      </tabset>
+    </div>
   </div>
 </div>
