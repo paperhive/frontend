@@ -1,12 +1,3 @@
-<!-- Use row + col-12 here to get spacing for pull-right correct. -->
-<div class="row ph-lg-margin-bottom">
-  <div class="col-md-12 text-right">
-    <a href="#{{'article.comments.new' | routeSegmentUrl}}"
-        class="btn btn-primary" ng-disabled="!auth.user">
-      Add general comment
-    </a>
-  </div>
-</div>
 <div class="row" ng-controller="MarginNoteCtrl">
   <!--actual text-->
   <pdf url="{{article.url}}" offset-px="offsetPx" class="col-md-11"></pdf>
