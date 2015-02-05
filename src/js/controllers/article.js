@@ -88,8 +88,8 @@ var discussion = {
 
 module.exports = function (app) {
   app.controller('ArticleCtrl', [
-    '$scope', '$route', '$routeSegment', 'config',
-    function($scope, $route, $routeSegment, config) {
+    '$scope', '$route', '$routeSegment', 'config', 'authService',
+    function($scope, $route, $routeSegment, config, authService) {
 
       // DEBUG
       var article =
@@ -106,6 +106,7 @@ module.exports = function (app) {
       };
       // END DEBUG
 
+      $scope.auth = authService;
       $scope.article = article;
       // Expose the routeSegment to be able to determine the active tab in the
       // template.
