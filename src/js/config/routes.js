@@ -8,11 +8,12 @@ module.exports = function (app) {
         .when('/articles', 'article')
         .when('/articles/new', 'article.new')
         .when('/articles/:id', 'article')
-        .when('/articles/:id/text', 'article.text')
+        .when('/articles/:id/activity', 'article.activity')
         .when('/articles/:id/comments', 'article.comments')
         .when('/articles/:id/comments/new', 'article.comments.new')
         .when('/articles/:id/comments/:num', 'article.comments.num')
         .when('/articles/:id/settings', 'article.settings')
+        .when('/articles/:id/text', 'article.text')
         .when('/oauth/orcid', 'oauth')
         .when('/settings', 'settings')
         .when('/users/', 'userlist')
@@ -31,6 +32,10 @@ module.exports = function (app) {
           templateUrl: 'templates/article/index.html'
         })
         .within()
+          .segment('activity', {
+            templateUrl: 'templates/article/activity.html',
+            dependencies: ['id']
+          })
           .segment('comments', {
             templateUrl: 'templates/article/comment/index.html',
             dependencies: ['id']
@@ -86,11 +91,11 @@ module.exports = function (app) {
             dependencies: ['username']
           })
           .segment('articles', {
-            templateUrl: 'templates/user/profile.html',
+            templateUrl: 'templates/user/articles.html',
             dependencies: ['username']
           })
           .segment('comments', {
-            templateUrl: 'templates/user/profile.html',
+            templateUrl: 'templates/user/comments.html',
             dependencies: ['username']
           })
         .up()
