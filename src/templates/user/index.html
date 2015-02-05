@@ -1,21 +1,23 @@
 <div ng-controller="UserCtrl">
-  <div class="ph-header ph-xl-margin-bottom">
+  <div class="ph-header ph-header-large ph-xl-margin-bottom">
     <div class="container">
       <div class="row">
         <div class="col-sm-12">
           <!-- title -->
-          <div class="ph-lg-padding-top ph-lg-padding-bottom
-              ph-md-padding-left ph-md-padding-right">
-            <img class="img-thumbnail pull-left ph-md-margin-right"
-              ng-src="https://secure.gravatar.com/avatar/{{user.gravatarMd5}}?s=100"
-              width="100px"
-              >
-            <h2 class="ph-no-margin-top">{{user.displayName}}</h2>
-            <h4>{{user.userName}}</h4>
-            <p class="text-muted">
-              <i class="fa fa-fw fa-clock-o"></i> Joined on Jan 3, 1987
-            </p>
-            <div class="clearfix"></div>
+          <div class="media">
+            <div class="media-left">
+              <!--picture-->
+              <img class="media-object"
+                ng-src="https://secure.gravatar.com/avatar/{{user.gravatarMd5}}?s=120">
+            </div>
+            <div class="media-body">
+              <!--heading-->
+              <h2 class="media-heading">{{user.displayName}}</h2>
+              <h4>{{user.userName}}</h4>
+              <p class="text-muted">
+                <i class="fa fa-fw fa-clock-o"></i> Joined on Jan 3, 1987
+              </p>
+            </div>
           </div>
         </div>
       </div>

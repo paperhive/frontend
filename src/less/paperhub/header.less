@@ -2,13 +2,48 @@
   background-color: #ffffff;
   background-image: url(https://paperhub.io/dev/static/exclusive-paper.png);
 
-  // icon
-  .ph-icon {
-    font-size: 2em;
-    .fa-stack-1x {
-      .text-shadow();
+  // padding of media element
+  .media {
+    .ph-md-padding();
+    .media-left {
+      // icon
+      .ph-icon {
+        font-size: @font-size-h2;
+        .fa-stack-1x {
+          .text-shadow();
+        }
+      }
+      // image
+      .media-object {
+        width: 2*@font-size-h2;
+      }
+    }
+    // center body vertically
+    .media-body {
+      vertical-align: middle;
     }
   }
+
+  &.ph-header-large {
+    .media {
+      // larger padding
+      .ph-lg-padding-top();
+      .ph-lg-padding-bottom();
+      // large icon
+      .ph-icon {
+        font-size: 2*@font-size-h2;
+      }
+      // large image
+      .media-object {
+        width: 4*@font-size-h2;
+      }
+      // top-align body
+      .media-body {
+        vertical-align: top;
+      }
+    }
+  }
+
 
   // submenu
   > .ph-header-submenu-container {
