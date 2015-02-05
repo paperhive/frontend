@@ -20,29 +20,34 @@
         </div>
       </div>
     </div>
-    <div class="ph-header-submenu-container">
+    <div class="ph-header-submenu-container" ng-controller="SubNavCtrl">
       <div class="container">
         <div class="row">
           <div class="col-sm-12">
-            <ul class="nav nav-tabs ph-header-submenu pull-left">
-              <li ng-class="{active:$routeSegment.chain[1].name === 'profile'}">
-                <a href="#{{'user.profile' | routeSegmentUrl}}">
-                  <i class="fa fa-fw fa-user"></i> Profile
-                </a>
-              </li>
-              <li ng-class="{active:$routeSegment.chain[1].name ===
-                'articles'}">
-                <a href="#{{'user.articles' | routeSegmentUrl}}">
-                  <i class="fa fa-fw fa-leanpub"></i> Articles
-                </a>
-              </li>
-              <li ng-class="{active:$routeSegment.chain[1].name ===
-                'comments'}">
-                <a href="#{{'user.comments' | routeSegmentUrl}}">
-                  <i class="fa fa-fw fa-comments"></i> Comments
-                </a>
-              </li>
-            </ul>
+            <button ng-click="collapsed=!collapsed" type="button" class="btn btn-default visible-xs">
+              <i class="fa fa-fw fa-bars"></i> Toggle Navigation
+            </button>
+            <div class="collapse navbar-collapse ph-no-padding" collapse="collapsed">
+              <ul class="nav nav-tabs ph-header-submenu pull-left">
+                <li ng-class="{active:$routeSegment.chain[1].name === 'profile'}">
+                  <a ng-click="collapsed = true" href="#{{'user.profile' | routeSegmentUrl}}">
+                    <i class="fa fa-fw fa-user"></i> Profile
+                  </a>
+                </li>
+                <li ng-class="{active:$routeSegment.chain[1].name ===
+                  'articles'}">
+                  <a ng-click="collapsed = true" href="#{{'user.articles' | routeSegmentUrl}}">
+                    <i class="fa fa-fw fa-leanpub"></i> Articles
+                  </a>
+                </li>
+                <li ng-class="{active:$routeSegment.chain[1].name ===
+                  'comments'}">
+                  <a ng-click="collapsed = true" href="#{{'user.comments' | routeSegmentUrl}}">
+                    <i class="fa fa-fw fa-comments"></i> Comments
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
