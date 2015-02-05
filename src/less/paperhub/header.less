@@ -1,6 +1,8 @@
 .ph-header {
   background-color: #ffffff;
   background-image: url(https://paperhub.io/dev/static/exclusive-paper.png);
+  // bottom border
+  border-bottom: 1px solid @nav-tabs-border-color;
 
   // padding of media element
   .media {
@@ -47,10 +49,8 @@
 
   // submenu
   > .ph-header-submenu-container {
-    // bottom border
-    border-bottom: 1px solid @nav-tabs-border-color;
     > .container {
-      // overlay bottom border
+      // overlay bottom border from ph-header
       margin-bottom: -1px;
     }
     .btn.btn-primary {
