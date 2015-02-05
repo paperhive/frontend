@@ -1,7 +1,24 @@
-<ng-include src="'templates/auth/signin_status.html'"></ng-include>
-<div ng-show="auth.user" class="text-center">
-  <h2>
-    Welcome<span ng-show="!auth.user.firstSignin"> back</span>,
-    {{auth.user.givenNames}}!
-  </h2>
+<div class="ph-header ph-header-large ph-xl-margin-bottom">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="media">
+          <div class="media-left">
+            <!--icon-->
+            <span class="fa-stack ph-icon">
+              <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
+              <i class="fa fa-heart fa-stack-1x"></i>
+            </span>
+          </div>
+          <div class="media-body ph-vertical-middle">
+            <!--heading-->
+            <h1 class="media-heading" ng-show="auth.user">
+              Welcome<span ng-show="!auth.user.firstSignin"> back</span>,
+              {{auth.user.givenNames}}!
+            </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
