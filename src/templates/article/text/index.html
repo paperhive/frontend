@@ -1,3 +1,12 @@
+<div class="row ph-md-margin-bottom">
+  <div class="col-md-12">
+    <a href="#{{'article.comments.new' | routeSegmentUrl}}"
+      class="btn btn-primary pull-right" ng-disabled="!auth.user">
+      <i class="fa fa-fw fa-plus"></i> Add general comment
+    </a>
+    <div class="clearfix"></div>
+  </div>
+</div>
 <div class="row" ng-controller="MarginNoteCtrl">
   <!--actual text-->
   <pdf url="{{article.url}}" offset-px="offsetPx" class="col-md-11"></pdf>
