@@ -24,6 +24,40 @@ body {
   .box-shadow(0 0 5px, 30%);
   .ph-highlight-border-top();
   padding: @ph-navbar-default-padding;
+  @media (max-width: @screen-xs-max){
+    .navbar-collapse, .navbar-form {
+      border: none;
+      box-shadow: none;
+    }
+  }
+}
+
+
+@media (max-width: @screen-xs-max){
+  header .nav {
+    margin: 0;
+    > li {
+      border-top: 1px solid #fff;
+
+      > a {
+      }
+    }
+  }
+  header .ng-scope {
+    margin-bottom: 15px;
+    > li {
+      .ph-avatar {
+        float: right;
+        position: relative;
+        top: 5px;
+        //margin-top: 10px;
+      }
+    }
+    p {
+      text-align: right;
+      margin-right: 0;
+    }
+  }
 }
 /*.nav.navbar-nav.navbar-right {
   margin: 8px 0;
