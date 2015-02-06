@@ -36,19 +36,22 @@ module.exports = function (app) {
   // END debug code
 
   app.controller('UserCtrl', [
-    '$scope', '$routeSegment', 'config', 'authService',
-    function ($scope, $routeSegment, config, authService) {
+    '$scope', '$routeSegment', 'config', '$http', 'NotificationsService',
+    function ($scope, $routeSegment, config, $http, notificationsService) {
+      // expose $routeSegment for subnav
       $scope.$routeSegment = $routeSegment;
-      $scope.config = config;
-      $scope.auth = authService;
 
-      $scope.users = allUsers;
-
-      $scope.user = userLookup[$routeSegment.$routeParams.username];
-
-      $scope.getUserById = function (id) {
-        return userLookupById[id];
-      };
+      // fetch user
+      $http.get(config.api_url + '/users/' + $routeSegment.$routeParams.username)
+        .success(function (data) {
+          $scope.user = data;
+        })
+        .error(function (data) {
+          notificationsService.notifications.push({
+            type: 'error',
+            message: data.message
+          });
+        });
     }
   ]);
 };
