@@ -4,6 +4,8 @@ module.exports = function (app) {
   require('./discussion.js')(app);
   require('./marginnote.js')(app);
   require('./navbar.js')(app);
+  require('./navbar_user.js')(app);
+  require('./notifications.js')(app);
   require('./oauthOrcid.js')(app);
   require('./settings.js')(app);
   require('./user.js')(app);
