@@ -1,0 +1,123 @@
+.ph-header {
+  background-color: #ffffff;
+  background-image: url(https://paperhub.io/dev/static/exclusive-paper.png);
+  // bottom border
+  border-bottom: 1px solid @nav-tabs-border-color;
+
+  // padding of media element
+  .media {
+    .ph-md-padding();
+    .media-left {
+      // icon
+      .ph-icon {
+        font-size: @font-size-h2;
+        .fa-stack-1x {
+          .text-shadow();
+        }
+      }
+      // image
+      .media-object {
+        width: 2*@font-size-h2;
+      }
+    }
+  }
+
+  &.ph-header-large {
+    .media {
+      // larger padding
+      .ph-lg-padding-top();
+      .ph-lg-padding-bottom();
+      // large icon
+      .ph-icon {
+        font-size: 2*@font-size-h2;
+      }
+      // large image
+      .media-object {
+        width: 4*@font-size-h2;
+      }
+    }
+  }
+
+
+  // submenu
+  > .ph-header-submenu-container {
+    > .container {
+      // overlay bottom border from ph-header
+      margin-bottom: -1px;
+    }
+    .btn.btn-primary {
+      padding-top: 7px;
+      padding-bottom: 7px;
+    }
+  }
+  @media (max-width: @screen-xs-max){
+    .navbar-collapse {
+      border: none;
+    }
+
+    .navbar-collapse, .btn-default {
+      width: 100%;
+      min-width: 100% !important;
+    }
+
+    .btn-default {
+      border-left: none;
+      border-right: none;
+      border-color: @nav-tabs-border-color;
+      border-top: @ph-border-height solid @ph-highlight-color;
+      text-align: left;
+    }
+  }
+}
+
+.ph-header-submenu {
+  > li {
+    margin-right: 4px;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+
+    @media (max-width: @screen-xs-max) {
+      float: none;
+      margin: 0;
+
+    }
+
+    > a {
+      background-color: rgba(255, 255, 255, 0.65);
+      padding-left: 20px;
+      padding-right: 20px;
+      margin: 0;
+      border: none;
+      border-top: @ph-border-height solid transparent;
+      &:hover {
+        border-top: @ph-border-height solid @ph-highlight-color;
+      }
+      @media (max-width: @screen-xs-max){
+        padding-left: 12px;
+        padding-right: 12px;
+        border: none;
+        &:hover {
+          border: none;
+        }
+      }
+    }
+    &.active {
+      border-left: 1px solid @nav-tabs-border-color;
+      border-right: 1px solid @nav-tabs-border-color;
+      > a  {
+        &, &:hover, &:focus {
+          border: none;
+          border-top: @ph-border-height solid @ph-highlight-color;
+          border-bottom: 1px solid transparent;
+          @media (max-width: @screen-xs-max){
+            border: none;
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: @screen-xs-max) {
+    width: 100%;
+  }
+}

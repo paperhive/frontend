@@ -1,26 +1,62 @@
-<div class="container" ng-controller="UserCtrl">
-  <div class="row ph-lg-margin-top">
-    <div class="col-md-3">
-      <a href="#">
-        <img class="img-thumbnail"
-        src=https://secure.gravatar.com/avatar/{{user.gravatarMd5}}?s=100
-        width="100%"
-        >
-      </a>
-      <h3>{{user.displayName}}</h3>
-      <h4>{{user.userName}}</h4>
-      <hr>
-      <i class="fa fa-clock-o"></i> Joined on Jan 3, 1987
+<div ng-controller="UserCtrl">
+  <div class="ph-header ph-header-large ph-xl-margin-bottom">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <!-- title -->
+          <div class="media">
+            <div class="media-left">
+              <!--picture-->
+              <img class="media-object"
+                ng-src="https://secure.gravatar.com/avatar/{{user.gravatarMd5}}?s=120">
+            </div>
+            <div class="media-body">
+              <!--heading-->
+              <h2 class="media-heading">{{user.displayName}}</h2>
+              <h4>{{user.userName}}</h4>
+              <p class="text-muted">
+                <i class="fa fa-fw fa-clock-o"></i> Joined on Jan 3, 1987
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="col-md-9">
-      <tabset>
-      <tab heading="Comments">
-      List of comments
-      </tab>
-      <tab heading="Articles">
-      List of articles
-      </tab>
-      </tabset>
+    <div class="ph-header-submenu-container" ng-controller="SubNavCtrl">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <button ng-click="collapsed = !collapsed" type="button" class="btn btn-default visible-xs">
+              <i class="fa fa-fw fa-bars"></i> Toggle Navigation
+            </button>
+            <div class="collapse navbar-collapse ph-no-padding" collapse="collapsed">
+              <ul class="nav nav-tabs ph-header-submenu pull-left">
+                <li ng-class="{active:$routeSegment.chain[1].name === 'profile'}">
+                  <a ng-click="collapsed = true" href="#{{'user.profile' | routeSegmentUrl}}">
+                    <i class="fa fa-fw fa-user"></i> Profile
+                  </a>
+                </li>
+                <li ng-class="{active:$routeSegment.chain[1].name ===
+                  'articles'}">
+                  <a ng-click="collapsed = true" href="#{{'user.articles' | routeSegmentUrl}}">
+                    <i class="fa fa-fw fa-leanpub"></i> Articles
+                  </a>
+                </li>
+                <li ng-class="{active:$routeSegment.chain[1].name ===
+                  'comments'}">
+                  <a ng-click="collapsed = true" href="#{{'user.comments' | routeSegmentUrl}}">
+                    <i class="fa fa-fw fa-comments"></i> Comments
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+  </div>
+  <div class="container">
+    <div app-view-segment="1"></div>
   </div>
 </div>

@@ -1,35 +1,48 @@
 <div ng-controller="ArticleCtrl">
-  <div class="ph-article-header ph-lg-margin-bottom">
+  <div class="ph-header ph-header-large ph-md-margin-bottom">
     <div class="container">
       <div class="row">
         <div class="col-sm-12">
-          <!-- title -->
-          <div class="ph-lg-padding-top ph-md-padding-bottom
-            ph-md-padding-left ph-md-padding-right ph-article-title">
-            <ng-include src="'templates/article/header.html'"></ng-include>
-          </div>
-          <!-- article submenu -->
-          <ul class="nav nav-tabs nav-justified ph-article-submenu">
-            <li ng-class="{active:$routeSegment.name === 'article.text'}">
-              <a href="#{{'article.text' | routeSegmentUrl}}">
-                <i class="fa fa-fw fa-file-pdf-o"></i> Text view
-              </a>
-            </li>
-            <li ng-class="{active:$routeSegment.chain[1].name === 'comments'}">
-              <a href="#{{'article.comments' | routeSegmentUrl}}">
-                <i class="fa fa-fw fa-comments"></i> Comments view
-              </a>
-            </li>
-            <li ng-class="{active:$routeSegment.name === 'article.settings'}">
-              <a href="#{{'article.settings' | routeSegmentUrl}}">
-                <i class="fa fa-fw fa-wrench"></i> Article settings
-              </a>
-            </li>
-          </ul>
+          <ng-include src="'templates/article/header.html'"></ng-include>
         </div>
       </div>
     </div>
-  </div>
+    <div class="ph-header-submenu-container" ng-controller="SubNavCtrl">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <button ng-click="collapsed = !collapsed" type="button" class="btn btn-default visible-xs">
+              <i class="fa fa-fw fa-bars"></i> Toggle Navigation
+            </button>
+            <div class="collapse navbar-collapse ph-no-padding" collapse="collapsed">
+              <ul class="nav nav-tabs ph-header-submenu pull-left">
+                <li ng-class="{active:$routeSegment.name === 'article.text'}">
+                  <a  ng-click="collapsed = true" href="#{{'article.text' | routeSegmentUrl}}">
+                    <i class="fa fa-fw fa-file-pdf-o"></i> Text view
+                  </a>
+                </li>
+                <li ng-class="{active:$routeSegment.chain[1].name === 'comments'}">
+                  <a ng-click="collapsed = true" href="#{{'article.comments' | routeSegmentUrl}}">
+                    <i class="fa fa-fw fa-comments"></i> Comments view
+                  </a>
+                </li>
+                <li ng-class="{active:$routeSegment.chain[1].name === 'activity'}">
+                  <a ng-click="collapsed = true" href="#{{'article.activity' | routeSegmentUrl}}">
+                    <i class="fa fa-fw fa-clock-o"></i> Activity
+                  </a>
+                </li>
+                <li ng-class="{active:$routeSegment.name === 'article.settings'}">
+                  <a ng-click="collapsed = true" href="#{{'article.settings' | routeSegmentUrl}}">
+                    <i class="fa fa-fw fa-wrench"></i> Article settings
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> <!-- ph-header -->
   <div class="container">
     <!--ng-include src="'templates/article/controlbar.html'"></ng-include-->
     <div app-view-segment="1"></div>

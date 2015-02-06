@@ -1,5 +1,26 @@
-<div class="container" ng-controller="UserCtrl">
-  <h1>Users</h1>
+<div ng-controller="UserCtrl">
+  <div class="ph-header ph-xl-margin-bottom">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="media">
+            <div class="media-left">
+              <!--icon-->
+              <span class="fa-stack ph-icon">
+                <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
+                <i class="fa fa-users fa-stack-1x"></i>
+              </span>
+            </div>
+            <div class="media-body ph-vertical-middle">
+              <!--heading-->
+              <h2 class="media-heading">Users</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
   <ul class="media-list">
     <li class="media" ng-repeat="user in users">
     <a class="media-left" href="#/users/{{user.userName}}">

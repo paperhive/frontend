@@ -8,15 +8,19 @@ module.exports = function (app) {
         .when('/articles', 'article')
         .when('/articles/new', 'article.new')
         .when('/articles/:id', 'article')
-        .when('/articles/:id/text', 'article.text')
+        .when('/articles/:id/activity', 'article.activity')
         .when('/articles/:id/comments', 'article.comments')
         .when('/articles/:id/comments/new', 'article.comments.new')
         .when('/articles/:id/comments/:num', 'article.comments.num')
         .when('/articles/:id/settings', 'article.settings')
+        .when('/articles/:id/text', 'article.text')
         .when('/oauth/orcid', 'oauth')
         .when('/settings', 'settings')
         .when('/users/', 'userlist')
         .when('/users/:username', 'user')
+        .when('/users/:username/profile', 'user.profile')
+        .when('/users/:username/articles', 'user.articles')
+        .when('/users/:username/comments', 'user.comments')
         .when('/welcome', 'welcome')
 
         // Init Main Page
@@ -28,6 +32,10 @@ module.exports = function (app) {
           templateUrl: 'templates/article/index.html'
         })
         .within()
+          .segment('activity', {
+            templateUrl: 'templates/article/activity.html',
+            dependencies: ['id']
+          })
           .segment('comments', {
             templateUrl: 'templates/article/comment/index.html',
             dependencies: ['id']
@@ -76,6 +84,21 @@ module.exports = function (app) {
           templateUrl: 'templates/user/index.html',
           dependencies: ['username']
         })
+        .within()
+          .segment('profile', {
+            default: true,
+            templateUrl: 'templates/user/profile.html',
+            dependencies: ['username']
+          })
+          .segment('articles', {
+            templateUrl: 'templates/user/articles.html',
+            dependencies: ['username']
+          })
+          .segment('comments', {
+            templateUrl: 'templates/user/comments.html',
+            dependencies: ['username']
+          })
+        .up()
 
         .segment('welcome', {
           templateUrl: 'templates/auth/welcome.html',

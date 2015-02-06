@@ -73,3 +73,13 @@
 .border-left (@width: 1px, @style: solid, @color){
   border-left: @width @style @color;
 }
+
+// vertical align
+.generate-vertical(@align) {
+  .ph-vertical-@{align} {
+    vertical-align: @align;
+  }
+}
+.generate-vertical(top);
+.generate-vertical(middle);
+.generate-vertical(bottom);

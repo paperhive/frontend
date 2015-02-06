@@ -1,13 +1,11 @@
 <div class="media">
   <div class="media-left">
-    <h2 class="media-heading">
-      <span class="fa-stack ph-icon">
-        <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
-        <i class="fa fa-file-text-o fa-stack-1x"></i>
-      </span>
-    </h2>
+    <span class="fa-stack ph-icon">
+      <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
+      <i class="fa fa-file-text-o fa-stack-1x"></i>
+    </span>
   </div>
-  <div class="media-body ph-">
+  <div class="media-body">
     <h2 class="media-heading">
       <!-- TODO use route segment here -->
       <a href="#/articles/{{article._id}}">
@@ -22,7 +20,7 @@
       </span>
     </h4>
     <p class="text-muted">
-      uploaded by
+      <i class="fa fa-fw fa-cloud-upload"></i> uploaded by
       <a href="#/users/{{article.owner.accountName}}">
         {{article.owner.displayName}}
       </a>

@@ -23,4 +23,18 @@ footer {
   color: @body-bg;
   padding: @padding-large-horizontal;
   .ph-highlight-border-bottom();
+
+  // copyright
+  .ph-copyright {
+    color: @ph-footer-copyright-color;
+  }
+
+  // links
+  a {
+    color: @ph-footer-link-color;
+    &:hover {
+      text-decoration: none;
+      color: @ph-footer-link-hover-color;
+    }
+  }
 }

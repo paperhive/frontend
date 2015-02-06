@@ -1,106 +1,125 @@
-<div ng-controller="SettingsCtrl" class="container">
-  <h1>Settings</h1>
-  <div class="row ph-lg-margin-top">
-    <div class="col-sm-3">
-      <ul class="nav nav-pills nav-stacked">
-        <li role="presentation" ng-class="{active: tab == 'profile'}">
-          <a href ng-click="tab = 'profile'">
-            <i class="fa fa-fw fa-user"></i> Profile
-          </a>
-        </li>
-        <li role="presentation" ng-class="{active: tab == 'site'}">
-          <a href ng-click="tab = 'site'">
-            <i class="fa fa-fw fa-cog"></i> Site preferences
-          </a>
-        </li>
-      </ul>
-    </div>
-    <div class="col-sm-9" ng-switch="tab">
-      <div ng-switch-when="profile">
-        <form class="form-horizontal">
-          <!--givenNames-->
-          <div class="form-group">
-            <label for="givenNames" class="col-sm-3 control-label">
-              Given names
-            </label>
-            <div class="col-sm-6">
-              <input ng-model="user.givenNames" type="text"
-              class="form-control" id="givenNames" placeholder="Ada">
-            </div>
+<div class="ph-header ph-xl-margin-bottom">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="media">
+          <div class="media-left">
+            <!--icon-->
+            <span class="fa-stack ph-icon">
+              <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
+              <i class="fa fa-cogs fa-stack-1x"></i>
+            </span>
           </div>
-          <!--familyName-->
-          <div class="form-group">
-            <label for="familyName" class="col-sm-3 control-label">
-              Family name
-            </label>
-            <div class="col-sm-6">
-              <input ng-model="user.familyName" type="text"
-                class="form-control" id="familyName" placeholder="Lovelace">
-            </div>
+          <div class="media-body ph-vertical-middle">
+            <!--heading-->
+            <h2 class="media-heading">Settings</h2>
           </div>
-          <!--displayName-->
-          <div class="form-group">
-            <label for="displayName" class="col-sm-3 control-label">
-              Display name
-            </label>
-            <div class="col-sm-6">
-              <input ng-model="user.displayName" type="text"
-                class="form-control" id="displayName"
-                placeholder="Ada Lovelace">
-            </div>
-          </div>
-          <!--email-->
-          <div class="form-group">
-            <label for="email" class="col-sm-3 control-label">
-              E-Mail
-            </label>
-            <div class="col-sm-6">
-              <input ng-model="user.email"
-                type="email" class="form-control" id="email"
-                placeholder="ada@lovelace.net" readonly>
-            </div>
-          </div>
-          <!--avatar-->
-          <div class="form-group">
-            <label for="email" class="col-sm-3 control-label">
-              Avatar
-            </label>
-            <div class="col-sm-6">
-              <img class="img-thumbnail"
-                src="https://secure.gravatar.com/avatar/{{auth.user.gravatarMd5}}?s=200"
-                alt="Gravatar image associated with {{user.email}}">
-            </div>
-          </div>
-        </form>
-      </div>
-      <!--site-->
-      <div ng-switch-when="site">
-        <form class="form-horizontal">
-          <!--remember-->
-          <div class="form-group">
-            <label for="remember" class="col-sm-3 control-label">
-              Log in automatically
-            </label>
-            <div class="col-sm-6 checkbox">
-              <label>
-                <input ng-model="user.settings.remember"
-                  type="checkbox" id="remember">
-                Remember login
-              </label>
-            </div>
-          </div>
-        </form>
-      </div>
-      <!--save-->
-      <div class="row ph-lg-margin-top">
-        <div class="col-sm-6 col-sm-offset-3">
-          <button ng-click="save()" class="btn btn-primary"
-              ng-class="{disabled: busy}">
-              <i class="fa fa-fw fa-check" ng-show="!busy"></i>
-              <i class="fa fa-fw fa-spinner fa-spin" ng-show="busy"></i>
-              Save
-          </button>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div ng-controller="SettingsCtrl" class="container">
+  <div class="col-sm-3">
+    <ul class="nav nav-pills nav-stacked">
+      <li role="presentation" ng-class="{active: tab == 'profile'}">
+        <a href ng-click="tab = 'profile'">
+          <i class="fa fa-fw fa-user"></i> Profile
+        </a>
+      </li>
+      <li role="presentation" ng-class="{active: tab == 'site'}">
+        <a href ng-click="tab = 'site'">
+          <i class="fa fa-fw fa-cog"></i> Site preferences
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="col-sm-9" ng-switch="tab">
+    <div ng-switch-when="profile">
+      <form class="form-horizontal">
+        <!--givenNames-->
+        <div class="form-group">
+          <label for="givenNames" class="col-sm-3 control-label">
+            Given names
+          </label>
+          <div class="col-sm-6">
+            <input ng-model="user.givenNames" type="text"
+            class="form-control" id="givenNames" placeholder="Ada">
+          </div>
+        </div>
+        <!--familyName-->
+        <div class="form-group">
+          <label for="familyName" class="col-sm-3 control-label">
+            Family name
+          </label>
+          <div class="col-sm-6">
+            <input ng-model="user.familyName" type="text"
+              class="form-control" id="familyName" placeholder="Lovelace">
+          </div>
+        </div>
+        <!--displayName-->
+        <div class="form-group">
+          <label for="displayName" class="col-sm-3 control-label">
+            Display name
+          </label>
+          <div class="col-sm-6">
+            <input ng-model="user.displayName" type="text"
+              class="form-control" id="displayName"
+              placeholder="Ada Lovelace">
+          </div>
+        </div>
+        <!--email-->
+        <div class="form-group">
+          <label for="email" class="col-sm-3 control-label">
+            E-Mail
+          </label>
+          <div class="col-sm-6">
+            <input ng-model="user.email"
+              type="email" class="form-control" id="email"
+              placeholder="ada@lovelace.net" readonly>
+          </div>
+        </div>
+        <!--avatar-->
+        <div class="form-group">
+          <label for="email" class="col-sm-3 control-label">
+            Avatar
+          </label>
+          <div class="col-sm-6">
+            <img class="img-thumbnail"
+              src="https://secure.gravatar.com/avatar/{{auth.user.gravatarMd5}}?s=200"
+              alt="Gravatar image associated with {{user.email}}">
+          </div>
+        </div>
+      </form>
+    </div>
+    <!--site-->
+    <div ng-switch-when="site">
+      <form class="form-horizontal">
+        <!--remember-->
+        <div class="form-group">
+          <label for="remember" class="col-sm-3 control-label">
+            Log in automatically
+          </label>
+          <div class="col-sm-6 checkbox">
+            <label>
+              <input ng-model="user.settings.remember"
+                type="checkbox" id="remember">
+              Remember login
+            </label>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!--save-->
+    <div class="row ph-lg-margin-top">
+      <div class="col-sm-6 col-sm-offset-3">
+        <button ng-click="save()" class="btn btn-primary"
+            ng-class="{disabled: busy}">
+            <i class="fa fa-fw fa-check" ng-show="!busy"></i>
+            <i class="fa fa-fw fa-spinner fa-spin" ng-show="busy"></i>
+            Save
+        </button>
       </div>
     </div>
   </div>

@@ -8,4 +8,5 @@ module.exports = function (app) {
   require('./settings.js')(app);
   require('./user.js')(app);
   require('./welcome.js')(app);
+  require('./subnav.js')(app);
 };
