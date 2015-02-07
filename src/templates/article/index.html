@@ -11,33 +11,22 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-12">
-            <button ng-click="collapsed = !collapsed" type="button" class="btn btn-default visible-xs">
-              <i class="fa fa-fw fa-bars"></i> Toggle Navigation
-            </button>
-            <div class="collapse navbar-collapse ph-no-padding" collapse="collapsed">
-              <ul class="nav nav-tabs ph-header-submenu pull-left">
-                <li ng-class="{active:$routeSegment.name === 'article.text'}">
-                  <a  ng-click="collapsed = true" href="#{{'article.text' | routeSegmentUrl}}">
-                    <i class="fa fa-fw fa-file-pdf-o"></i> Text view
-                  </a>
+            <subnav>
+              <ul class="nav nav-tabs ph-header-submenu">
+                <li subnav-target="article.text">
+                  <a><i class="fa fa-fw fa-file-pdf-o"></i> Text view</a>
                 </li>
-                <li ng-class="{active:$routeSegment.chain[1].name === 'comments'}">
-                  <a ng-click="collapsed = true" href="#{{'article.comments' | routeSegmentUrl}}">
-                    <i class="fa fa-fw fa-comments"></i> Comments view
-                  </a>
+                <li subnav-target="article.comments">
+                  <a><i class="fa fa-fw fa-comments"></i> Comments view</a>
                 </li>
-                <li ng-class="{active:$routeSegment.chain[1].name === 'activity'}">
-                  <a ng-click="collapsed = true" href="#{{'article.activity' | routeSegmentUrl}}">
-                    <i class="fa fa-fw fa-clock-o"></i> Activity
-                  </a>
+                <li subnav-target="article.activity">
+                  <a><i class="fa fa-fw fa-clock-o"></i> Activity</a>
                 </li>
-                <li ng-class="{active:$routeSegment.name === 'article.settings'}">
-                  <a ng-click="collapsed = true" href="#{{'article.settings' | routeSegmentUrl}}">
-                    <i class="fa fa-fw fa-wrench"></i> Article settings
-                  </a>
+                <li subnav-target="article.settings">
+                  <a><i class="fa fa-fw fa-cog"></i> Article settings</a>
                 </li>
               </ul>
-            </div>
+            </subnav>
           </div>
         </div>
       </div>
