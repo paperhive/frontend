@@ -1,0 +1,110 @@
+// HEADINGS MAIN CONTENT -- START
+.ph-home {
+  h1, h2 {
+    text-align: center;
+    > small {
+      display: block;
+      margin-top: @grid-gutter-width/4;
+      text-decoration: underline;
+      line-height: @line-height-computed*1.5;
+    } // TODO Adding underline distance to the text or use border instead.
+  }
+}
+// HEADINGS MAIN CONTENT -- END
+
+// PANEL WITH ICONS -- START
+.panel.ph-teaser {
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+
+  .ph-icon {
+    font-size: 4em;
+
+    .fa-stack-1x {
+      .text-shadow();
+    }
+
+    @media (min-width: @screen-sm-min) {
+      font-size: 6em;
+    }
+  }
+
+  // Media Query, Styles for XtraSmall Devices
+  @media (max-width: @screen-xs-max){
+
+    .panel-body.text-center {
+      text-align: left;
+    }
+    &:nth-child(odd) {
+      .panel-heading{
+        margin-right: @grid-gutter-width/2;
+        float: left;
+        clear: right;
+      }
+    }
+    &:nth-child(even) {
+      .panel-heading{
+        margin-left: @grid-gutter-width/2;
+        float: right;
+        clear: left;
+      }
+    }
+  }
+}
+// PANEL WITH ICONS -- END
+
+// CAROUSEL -- START
+.carousel.ph-carousel-home {
+  padding: 0 @grid-gutter-width*2;
+  margin-bottom: @grid-gutter-width;
+  // carousel controls
+  > .carousel-control{
+    background-image: none;
+    background-color: @brand-primary;
+    width: 40px;
+    height: 40px;
+    opacity: 1;
+    border-radius: 100px;
+    top: 39%;
+    cursor: pointer;
+
+    &:hover, &:focus {
+      background-color: @ph-highlight-color;
+    }
+    .glyphicon {
+        font-size: 28px;
+    }
+    @media (max-width: @screen-xs-max){
+      .glyphicon-chevron-left, .icon-prev, .glyphicon-chevron-right, .icon-next{
+        top: 13%;
+      }
+      .glyphicon-chevron-left, .icon-prev {
+        left: 40%;
+      }
+      .glyphicon-chevron-right, .icon-next {
+        right: 40%;
+      }
+    }
+  }
+  .carousel-indicators {
+    bottom: -@grid-gutter-width;
+
+    > li {
+      background-color: @brand-primary;
+      border-color: @brand-primary;
+      border-width: 2px;
+      margin: 1px 2.5px;
+      &.active {
+      margin: 0 2.5px;
+
+      }
+      &.active, &:hover, &:focus {
+        background-color: @ph-highlight-color;
+        border-color: @ph-highlight-color;
+
+      }
+    }
+  }
+}
+// CAROUSEL -- END
