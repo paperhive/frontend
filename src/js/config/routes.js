@@ -67,7 +67,6 @@ module.exports = function (app) {
           })
         .up()
 
-        // Init Contect Page
         .segment('contact',{
           templateUrl: 'templates/contact/contact.html'
         })
