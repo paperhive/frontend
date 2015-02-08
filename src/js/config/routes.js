@@ -5,7 +5,6 @@ module.exports = function (app) {
     function($routeSegmentProvider, $routeProvider) {
       $routeSegmentProvider
         .when('/', 'main')
-        .when('/contact', 'contact')
         .when('/articles', 'article')
         .when('/articles/new', 'article.new')
         .when('/articles/:id', 'article')
@@ -15,6 +14,7 @@ module.exports = function (app) {
         .when('/articles/:id/comments/:num', 'article.comments.num')
         .when('/articles/:id/settings', 'article.settings')
         .when('/articles/:id/text', 'article.text')
+        .when('/contact', 'contact')
         .when('/oauth/orcid', 'oauth')
         .when('/settings', 'settings')
         .when('/users/', 'userlist')
@@ -28,12 +28,6 @@ module.exports = function (app) {
         .segment('main',{
           templateUrl: 'templates/main/main.html'
         })
-
-        // Init Contect Page
-        .segment('contact',{
-          templateUrl: 'templates/contact/contact.html'
-        })
-
         .segment('article', {
           templateUrl: 'templates/article/index.html'
         })
@@ -72,6 +66,11 @@ module.exports = function (app) {
             dependencies: ['id']
           })
         .up()
+
+        // Init Contect Page
+        .segment('contact',{
+          templateUrl: 'templates/contact/contact.html'
+        })
 
         .segment('oauth', {
           templateUrl: 'templates/auth/oauth.html',
