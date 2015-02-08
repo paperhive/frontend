@@ -5,6 +5,7 @@ module.exports = function (app) {
     function($routeSegmentProvider, $routeProvider) {
       $routeSegmentProvider
         .when('/', 'main')
+        .when('/contact', 'contact')
         .when('/articles', 'article')
         .when('/articles/new', 'article.new')
         .when('/articles/:id', 'article')
@@ -26,6 +27,11 @@ module.exports = function (app) {
         // Init Main Page
         .segment('main',{
           templateUrl: 'templates/main/main.html'
+        })
+
+        // Init Contect Page
+        .segment('contact',{
+          templateUrl: 'templates/contact/contact.html'
         })
 
         .segment('article', {
