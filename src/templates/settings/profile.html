@@ -1,57 +1,78 @@
-<div class="row">
-  <form class="form-horizontal">
-    <!--givenNames-->
-    <div class="form-group">
-      <label for="givenNames" class="col-sm-3 control-label">
-        Given names
-      </label>
-      <div class="col-sm-6">
-        <input ng-model="user.givenNames" type="text"
-        class="form-control" id="givenNames" placeholder="Ada">
-      </div>
-    </div>
-    <!--familyName-->
-    <div class="form-group">
-      <label for="familyName" class="col-sm-3 control-label">
-        Family name
-      </label>
-      <div class="col-sm-6">
-        <input ng-model="user.familyName" type="text"
-          class="form-control" id="familyName" placeholder="Lovelace">
-      </div>
-    </div>
-    <!--displayName-->
-    <div class="form-group">
-      <label for="displayName" class="col-sm-3 control-label">
-        Display name
-      </label>
-      <div class="col-sm-6">
-        <input ng-model="user.displayName" type="text"
-          class="form-control" id="displayName"
-          placeholder="Ada Lovelace">
-      </div>
-    </div>
-    <!--email-->
-    <div class="form-group">
-      <label for="email" class="col-sm-3 control-label">
-        E-Mail
-      </label>
-      <div class="col-sm-6">
-        <input ng-model="user.email"
-          type="email" class="form-control" id="email"
-          placeholder="ada@lovelace.net" readonly>
-      </div>
-    </div>
-    <!--avatar-->
-    <div class="form-group">
-      <label for="email" class="col-sm-3 control-label">
-        Avatar
-      </label>
-      <div class="col-sm-6">
-        <img class="img-thumbnail"
-          src="https://secure.gravatar.com/avatar/{{auth.user.gravatarMd5}}?s=200"
-          alt="Gravatar image associated with {{user.email}}">
-      </div>
-    </div>
-  </form>
+<div class="row ph-lg-margin-bottom">
+  <div class="col-sm-6 col-sm-offset-3">
+    <button ng-click="syncFromOrcid()" class="btn btn-primary"
+        ng-class="{disabled: busy}">
+        <i class="fa fa-fw fa-cloud-download" ng-show="!busy"></i>
+        <i class="fa fa-fw fa-spinner fa-spin" ng-show="busy"></i>
+        Sync profile from ORCID
+    </button>
+  </div>
 </div>
+<form class="form-horizontal ph-lg-margin-bottom">
+  <!--givenNames-->
+  <div class="form-group">
+    <label for="givenNames" class="col-sm-3 control-label">
+      Given names
+    </label>
+    <div class="col-sm-6">
+      <input ng-model="user.givenNames" type="text"
+      class="form-control" id="givenNames" placeholder="Ada">
+    </div>
+  </div>
+  <!--familyName-->
+  <div class="form-group">
+    <label for="familyName" class="col-sm-3 control-label">
+      Family name
+    </label>
+    <div class="col-sm-6">
+      <input ng-model="user.familyName" type="text"
+        class="form-control" id="familyName" placeholder="Lovelace">
+    </div>
+  </div>
+  <!--displayName-->
+  <div class="form-group">
+    <label for="displayName" class="col-sm-3 control-label">
+      Display name
+    </label>
+    <div class="col-sm-6">
+      <input ng-model="user.displayName" type="text"
+        class="form-control" id="displayName"
+        placeholder="Ada Lovelace">
+    </div>
+  </div>
+  <!--email-->
+  <div class="form-group">
+    <label for="email" class="col-sm-3 control-label">
+      E-Mail
+    </label>
+    <div class="col-sm-6">
+      <input ng-model="user.email"
+        type="email" class="form-control" id="email"
+        placeholder="ada@lovelace.net" readonly>
+      <p class="text-muted ph-sm-margin-top">
+        Set up and verify an E-Mail address with <em>limited</em> or
+        <em>public</em> privacy setting in your
+        <a href="https://sandbox.orcid.org/my-orcid" target="_blank">
+          ORCID profile
+        </a>
+        and then sync your PaperHub profile from ORCID.
+      </p>
+    </div>
+  </div>
+  <!--avatar-->
+  <div class="form-group">
+    <label for="email" class="col-sm-3 control-label">
+      Avatar
+    </label>
+    <div class="col-sm-6">
+      <img class="img-thumbnail pull-left ph-sm-margin-right"
+        src="https://secure.gravatar.com/avatar/{{auth.user.gravatarMd5}}?s=200"
+        alt="Gravatar image associated with {{user.email}}">
+      <p class="text-muted ph-sm-margin-top">
+        Head over to
+        <a href="https://gravatar.com" target="_blank">gravatar</a>
+        in order to change the avatar for the above E-Mail address.
+      </p>
+    </div>
+  </div>
+</form>

@@ -1,17 +1,15 @@
-<div class="row">
-  <form class="form-horizontal">
-    <!--remember-->
-    <div class="form-group">
-      <label for="remember" class="col-sm-3 control-label">
-        Log in automatically
+<form class="form-horizontal ph-lg-margin-bottom">
+  <!--remember-->
+  <div class="form-group">
+    <label for="remember" class="col-sm-3 control-label">
+      Log in automatically
+    </label>
+    <div class="col-sm-6 checkbox">
+      <label>
+        <input ng-model="user.settings.remember"
+          type="checkbox" id="remember">
+        Remember login
       </label>
-      <div class="col-sm-6 checkbox">
-        <label>
-          <input ng-model="user.settings.remember"
-            type="checkbox" id="remember">
-          Remember login
-        </label>
-      </div>
     </div>
-  </form>
-</div>
+  </div>
+</form>
