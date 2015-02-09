@@ -1,18 +1,13 @@
 
+
 module.exports = function (app) {
-  app.controller('sideNavAnchorScrollCtrl', ['$anchorScroll', '$location', '$scope',
+  app.controller('SideNavCtrl', ['$anchorScroll', '$location', '$scope',
     function ($anchorScroll, $location, $scope) {
-      $scope.gotoAnchor = function( anchorLinkName ) {
+      $scope.gotoAnchor = function(anchorLinkName) {
+        $anchorScroll.yOffset = 100;   // always scroll by 50 extra pixels
         var newHash = anchorLinkName;
-        if ($location.hash() !== newHash) {
-          // set the $location.hash to `newHash` and
-          // $anchorScroll will automatically scroll to it
-          $location.hash( anchorLinkName );
-        } else {
-          // call $anchorScroll() explicitly,
-          // since $location.hash hasn't changed
-          $anchorScroll();
-        }
+        $location.hash(anchorLinkName);
+        $anchorScroll();
       };
     }
   ]);
