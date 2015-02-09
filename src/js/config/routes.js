@@ -17,6 +17,7 @@ module.exports = function (app) {
         .when('/contact', 'contact')
         .when('/oauth/orcid', 'oauth')
         .when('/settings', 'settings')
+        .when('/team', 'team')
         .when('/users/', 'userlist')
         .when('/users/:username', 'user')
         .when('/users/:username/profile', 'user.profile')
@@ -78,6 +79,10 @@ module.exports = function (app) {
 
         .segment('settings', {
           templateUrl: 'templates/settings/index.html'
+        })
+
+        .segment('team', {
+          templateUrl: 'templates/team/team.html'
         })
 
         .segment('userlist', {
