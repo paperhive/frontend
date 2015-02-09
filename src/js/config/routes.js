@@ -82,7 +82,7 @@ module.exports = function (app) {
         })
 
         .segment('team', {
-          templateUrl: 'templates/team/team.html'
+          templateUrl: 'templates/team/index.html'
         })
 
         .segment('userlist', {
