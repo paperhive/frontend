@@ -1,0 +1,57 @@
+<div class="row">
+  <form class="form-horizontal">
+    <!--givenNames-->
+    <div class="form-group">
+      <label for="givenNames" class="col-sm-3 control-label">
+        Given names
+      </label>
+      <div class="col-sm-6">
+        <input ng-model="user.givenNames" type="text"
+        class="form-control" id="givenNames" placeholder="Ada">
+      </div>
+    </div>
+    <!--familyName-->
+    <div class="form-group">
+      <label for="familyName" class="col-sm-3 control-label">
+        Family name
+      </label>
+      <div class="col-sm-6">
+        <input ng-model="user.familyName" type="text"
+          class="form-control" id="familyName" placeholder="Lovelace">
+      </div>
+    </div>
+    <!--displayName-->
+    <div class="form-group">
+      <label for="displayName" class="col-sm-3 control-label">
+        Display name
+      </label>
+      <div class="col-sm-6">
+        <input ng-model="user.displayName" type="text"
+          class="form-control" id="displayName"
+          placeholder="Ada Lovelace">
+      </div>
+    </div>
+    <!--email-->
+    <div class="form-group">
+      <label for="email" class="col-sm-3 control-label">
+        E-Mail
+      </label>
+      <div class="col-sm-6">
+        <input ng-model="user.email"
+          type="email" class="form-control" id="email"
+          placeholder="ada@lovelace.net" readonly>
+      </div>
+    </div>
+    <!--avatar-->
+    <div class="form-group">
+      <label for="email" class="col-sm-3 control-label">
+        Avatar
+      </label>
+      <div class="col-sm-6">
+        <img class="img-thumbnail"
+          src="https://secure.gravatar.com/avatar/{{auth.user.gravatarMd5}}?s=200"
+          alt="Gravatar image associated with {{user.email}}">
+      </div>
+    </div>
+  </form>
+</div>
