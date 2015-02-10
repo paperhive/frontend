@@ -1,18 +1,24 @@
 .ph-sidenav {
-
   margin-top: @line-height-computed;
 
   > li {
+    .ph-md-margin-bottom;
 
-    &.active {
-      > a:hover {
-
-      }
+    &.active > a, {
+      border-left-color: @ph-highlight-color;
+      color: @link-hover-color;
     }
-    > a {
-      &:hover, &:focus {
-      }
 
+    > a {
+      border-left: @ph-border-height/2 solid transparent;
+      padding: @padding-base-vertical/2 @padding-base-horizontal/2;
+      font-size: 110%;
+      .ph-sm-margin-bottom;
+
+      &:hover, &:focus {
+        border-left-color: @ph-highlight-color;
+        background: none;
+      }
     }
   }
 }
@@ -22,12 +28,37 @@
 
   > li {
 
+    &.active > a {
+      color: @link-hover-color;
+      .fa {
+        display: inline-block;
+      }
+    }
 
     > a {
+      padding: @padding-base-vertical/3 0;
 
-      &:hover, &:focus {
+      .fa {
+        display: none;
+        font-size: 12px;
+        .ph-sm-margin-left;
       }
 
+      &:hover, &:focus {
+        background: none;
+      }
     }
+  }
+}
+
+.ph-sidenav.affix {
+  // Add scrollbar if screen resolution is less then 768px
+  @media screen and (max-height: 768px) {
+    overflow: scroll;
+    height: 100%;
+  }
+  // Prevent affixed element to get to small after pagereload
+  li > a, .ph-sidenav-sub > li > a {
+    min-width: 190px !important;
   }
 }
