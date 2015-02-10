@@ -33,113 +33,115 @@
 
     <!-- Help left-row Start -->
     <div class="col-sm-3">
-      <ul class="nav ph-sidenav hidden-xs" bs-affix data-offset-top="-80" ng-controller="SideNavCtrl">
-        <li data-target="#section01" bs-scrollspy>
-          <a href="" ng-click="gotoAnchor('section01')">Section 1</a>
-          <ul class="nav ph-sidenav-sub">
-            <li data-target="#subsection01" bs-scrollspy>
-              <a href="" ng-click="gotoAnchor('subsection01')">
-                Sub Section 01
-                <i class="fa fa-chevron-right fa-fw"></i>
-              </a>
-            </li>
-            <li data-target="#subsection02" bs-scrollspy>
-              <a href="" ng-click="gotoAnchor('subsection02')">
-                Sub Section 02
-                <i class="fa fa-chevron-right fa-fw"></i>
-              </a>
-            </li>
-            <li data-target="#subsection03" bs-scrollspy>
-              <a href="" ng-click="gotoAnchor('subsection03')">
-                Sub Section 03
-                <i class="fa fa-chevron-right fa-fw"></i>
-              </a>
-            </li>
-            <li data-target="#subsection04" bs-scrollspy>
-              <a href="" ng-click="gotoAnchor('subsection04')">
-                Sub Section 04
-                <i class="fa fa-chevron-right fa-fw"></i>
-              </a>
-            </li>
-            <li data-target="#subsection05" bs-scrollspy>
-              <a href="" ng-click="gotoAnchor('subsection05')">
-                Sub Section 05
-                <i class="fa fa-chevron-right fa-fw"></i>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li data-target="#section02" bs-scrollspy>
-          <a href="" ng-click="gotoAnchor('section02')">Section 2</a>
-          <ul class="nav ph-sidenav-sub">
-            <li data-target="#subsection11" bs-scrollspy>
-              <a href="" ng-click="gotoAnchor('subsection11')">
-                Sub Section 01
-                <i class="fa fa-chevron-right fa-fw"></i>
-              </a>
-            </li>
-            <li data-target="#subsection12" bs-scrollspy>
-              <a href="" ng-click="gotoAnchor('subsection12')">
-                Sub Section 02
-                <i class="fa fa-chevron-right fa-fw"></i>
-              </a>
-            </li>
-            <li data-target="#subsection13" bs-scrollspy>
-              <a href="" ng-click="gotoAnchor('subsection13')">
-                Sub Section 03
-                <i class="fa fa-chevron-right fa-fw"></i>
-              </a>
-            </li>
-            <li data-target="#subsection14" bs-scrollspy>
-              <a href="" ng-click="gotoAnchor('subsection14')">
-                Sub Section 04
-                <i class="fa fa-chevron-right fa-fw"></i>
-              </a>
-            </li>
-            <li data-target="#subsection15" bs-scrollspy>
-              <a href="" ng-click="gotoAnchor('subsection15')">
-                Sub Section 05
-                <i class="fa fa-chevron-right fa-fw"></i>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li data-target="#section03" bs-scrollspy>
-          <a href="" ng-click="gotoAnchor('section03')">Section 3</a>
-          <ul class="nav ph-sidenav-sub">
-            <li data-target="#subsection21" bs-scrollspy>
-              <a href="" ng-click="gotoAnchor('subsection21')">
-                Sub Section 01
-                <i class="fa fa-chevron-right fa-fw"></i>
-              </a>
-            </li>
-            <li data-target="#subsection22" bs-scrollspy>
-              <a href="" ng-click="gotoAnchor('subsection22')">
-                Sub Section 02
-                <i class="fa fa-chevron-right fa-fw"></i>
-              </a>
-            </li>
-            <li data-target="#subsection23" bs-scrollspy>
-              <a href="" ng-click="gotoAnchor('subsection23')">
-                Sub Section 03
-                <i class="fa fa-chevron-right fa-fw"></i>
-              </a>
-            </li>
-            <li data-target="#subsection24" bs-scrollspy>
-              <a href="" ng-click="gotoAnchor('subsection24')">
-                Sub Section 04
-                <i class="fa fa-chevron-right fa-fw"></i>
-              </a>
-            </li>
-            <li data-target="#subsection25" bs-scrollspy>
-              <a href="" ng-click="gotoAnchor('subsection25')">
-                Sub Section 05
-                <i class="fa fa-chevron-right fa-fw"></i>
-              </a>
-            </li>
-          </ul>
-        </li>
-      </ul>
+      <div class="ph-sidenav-wrap" bs-affix data-offset-top="-80">
+        <ul class="nav ph-sidenav hidden-xs" ng-controller="SideNavCtrl">
+          <li data-target="#section01" bs-scrollspy>
+            <a href="" ng-click="gotoAnchor('section01')">Section 1</a>
+            <ul class="nav ph-sidenav-sub">
+              <li data-target="#subsection01" bs-scrollspy>
+                <a href="" ng-click="gotoAnchor('subsection01')">
+                  Sub Section 01
+                  <i class="fa fa-chevron-right fa-fw"></i>
+                </a>
+              </li>
+              <li data-target="#subsection02" bs-scrollspy>
+                <a href="" ng-click="gotoAnchor('subsection02')">
+                  Sub Section 02
+                  <i class="fa fa-chevron-right fa-fw"></i>
+                </a>
+              </li>
+              <li data-target="#subsection03" bs-scrollspy>
+                <a href="" ng-click="gotoAnchor('subsection03')">
+                  Sub Section 03
+                  <i class="fa fa-chevron-right fa-fw"></i>
+                </a>
+              </li>
+              <li data-target="#subsection04" bs-scrollspy>
+                <a href="" ng-click="gotoAnchor('subsection04')">
+                  Sub Section 04
+                  <i class="fa fa-chevron-right fa-fw"></i>
+                </a>
+              </li>
+              <li data-target="#subsection05" bs-scrollspy>
+                <a href="" ng-click="gotoAnchor('subsection05')">
+                  Sub Section 05
+                  <i class="fa fa-chevron-right fa-fw"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li data-target="#section02" bs-scrollspy>
+            <a href="" ng-click="gotoAnchor('section02')">Section 2</a>
+            <ul class="nav ph-sidenav-sub">
+              <li data-target="#subsection11" bs-scrollspy>
+                <a href="" ng-click="gotoAnchor('subsection11')">
+                  Sub Section 01
+                  <i class="fa fa-chevron-right fa-fw"></i>
+                </a>
+              </li>
+              <li data-target="#subsection12" bs-scrollspy>
+                <a href="" ng-click="gotoAnchor('subsection12')">
+                  Sub Section 02
+                  <i class="fa fa-chevron-right fa-fw"></i>
+                </a>
+              </li>
+              <li data-target="#subsection13" bs-scrollspy>
+                <a href="" ng-click="gotoAnchor('subsection13')">
+                  Sub Section 03
+                  <i class="fa fa-chevron-right fa-fw"></i>
+                </a>
+              </li>
+              <li data-target="#subsection14" bs-scrollspy>
+                <a href="" ng-click="gotoAnchor('subsection14')">
+                  Sub Section 04
+                  <i class="fa fa-chevron-right fa-fw"></i>
+                </a>
+              </li>
+              <li data-target="#subsection15" bs-scrollspy>
+                <a href="" ng-click="gotoAnchor('subsection15')">
+                  Sub Section 05
+                  <i class="fa fa-chevron-right fa-fw"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li data-target="#section03" bs-scrollspy>
+            <a href="" ng-click="gotoAnchor('section03')">Section 3</a>
+            <ul class="nav ph-sidenav-sub">
+              <li data-target="#subsection21" bs-scrollspy>
+                <a href="" ng-click="gotoAnchor('subsection21')">
+                  Sub Section 01
+                  <i class="fa fa-chevron-right fa-fw"></i>
+                </a>
+              </li>
+              <li data-target="#subsection22" bs-scrollspy>
+                <a href="" ng-click="gotoAnchor('subsection22')">
+                  Sub Section 02
+                  <i class="fa fa-chevron-right fa-fw"></i>
+                </a>
+              </li>
+              <li data-target="#subsection23" bs-scrollspy>
+                <a href="" ng-click="gotoAnchor('subsection23')">
+                  Sub Section 03
+                  <i class="fa fa-chevron-right fa-fw"></i>
+                </a>
+              </li>
+              <li data-target="#subsection24" bs-scrollspy>
+                <a href="" ng-click="gotoAnchor('subsection24')">
+                  Sub Section 04
+                  <i class="fa fa-chevron-right fa-fw"></i>
+                </a>
+              </li>
+              <li data-target="#subsection25" bs-scrollspy>
+                <a href="" ng-click="gotoAnchor('subsection25')">
+                  Sub Section 05
+                  <i class="fa fa-chevron-right fa-fw"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </div>
     <!-- Help left-row End -->
 

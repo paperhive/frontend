@@ -51,14 +51,15 @@
   }
 }
 
-.ph-sidenav.affix {
+.ph-sidenav-wrap.affix {
   // Add scrollbar if screen resolution is less then 768px
   @media screen and (max-height: 768px) {
     overflow: scroll;
-    height: 100%;
+    height: 85%;
+    .ph-md-margin-bottom;
   }
   // Prevent affixed element to get to small after pagereload
-  li > a, .ph-sidenav-sub > li > a {
+  .ph-sidenav li > a, .ph-sidenav-sub > li > a {
     min-width: 190px !important;
   }
 }
