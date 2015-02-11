@@ -11,12 +11,30 @@ module.exports = function (app) {
         $scope.user = _.cloneDeep(user);
       });
 
+      // sync from orcid
+      $scope.syncFromOrcid = function () {
+        $scope.busy = true;
+
+        var account = _.find($scope.user.accounts, {type: 'orcid'});
+
+        $http.put(config.api_url + '/users/' + $scope.user._id + '/syncFromOrcid/' + account.id).
+          success(function (data) {
+            $scope.busy = false;
+            authService.user = data;
+          }).
+          error(function (data) {
+            $scope.busy = false;
+            // TODO
+            console.log(data);
+          });
+      };
+
       // save to api
       $scope.save = function () {
         $scope.busy = true;
 
         var obj = _.cloneDeep($scope.user);
-       
+
         // remove all keys which we are not allowed to set
         var deleteKeys = ['_id', 'accounts', 'email', 'gravatarMd5'];
         _.forEach(deleteKeys, function (key) { delete obj[key]; });
