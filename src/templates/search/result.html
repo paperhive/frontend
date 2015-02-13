@@ -1,13 +1,13 @@
 <div class="col-sm-9">
 
-  <div class="row ph-md-margin-bottom">
+  <div class="row ph-lg-margin-bottom">
 
-    <div class="col-sm-10">
+    <div class="col-sm-9">
       <h3 class="ph-no-margin-top">Showing <span class="text-info">221</span> available Paper results</h3>
     </div>
 
-    <div class="col-sm-2" ng-controller="NavbarCtrl">
-      <div class="btn-group" dropdown is-open="status.isopen">
+    <div class="col-sm-3" ng-controller="NavbarCtrl">
+      <div class="btn-group pull-right" dropdown is-open="status.isopen">
         <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle ng-disabled="disabled">
           <span class="text-muted">Sort:</span>
           Best Match
@@ -24,13 +24,16 @@
         </ul>
       </div>
     </div>
+
   </div>
+
   <div class="clearfix"></div>
 
-  <!--Search results Start -->
   <div class="row">
-    <div class="ph-search-result-item">
-      <div class="col-sm-10">
+    <div class="col-sm-12">
+
+      <!--Search results Start -->
+      <div class="ph-search-result-item">
 
         <!-- Icon Start -->
         <span class="fa-stack ph-icon">
@@ -62,12 +65,121 @@
             View Article
             <i class="fa fa-chevron-right fa-fw"></i>
           </a>
+          <div class="clearfix"></div>
         </div>
         <!-- Result content Start -->
 
       </div>
+
+      <div class="ph-search-result-item">
+
+        <!-- Icon Start -->
+        <span class="fa-stack ph-icon">
+          <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
+          <i class="fa fa-file-text-o fa-stack-1x"></i>
+        </span>
+        <!-- Icon End -->
+
+        <!-- Result content Start -->
+        <div class="ph-search-result-item-content">
+          <h4><a href="#">Preconditioned Recycling Krylov Subspace Methods for Self-Adjoint Problems</a></h4>
+          <p>
+            <a href="#">Jimmy, Opa Hoppenstedt</a>
+            <span class="text-muted pull-right">
+              <i class="fa fa-fw fa-cloud-upload"></i>
+              uploaded by
+              <a href="#/users/arxiv" class="ng-binding">arXiv.org</a>
+            </span>
+          </p>
+          <p class="well">
+            /articles/0af5e13
+            <a class="pull-right">
+              <i class="fa fa-comments fa-fw"></i>
+              Comments
+              <span class="badge ph-badge">23</span>
+            </a>
+          </p>
+          <a class="pull-right" href="#">
+            View Article
+            <i class="fa fa-chevron-right fa-fw"></i>
+          </a>
+          <div class="clearfix"></div>
+        </div>
+        <!-- Result content Start -->
+
+      </div>
+
+      <div class="ph-search-result-item">
+
+        <!-- Icon Start -->
+        <span class="fa-stack ph-icon">
+          <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
+          <i class="fa fa-file-text-o fa-stack-1x"></i>
+        </span>
+        <!-- Icon End -->
+
+        <!-- Result content Start -->
+        <div class="ph-search-result-item-content">
+          <h4><a href="#">Preconditioned Recycling Krylov Subspace Methods for Self-Adjoint Problems</a></h4>
+          <p>
+            <a href="#">Jimmy, Opa Hoppenstedt</a>
+            <span class="text-muted pull-right">
+              <i class="fa fa-fw fa-cloud-upload"></i>
+              uploaded by
+              <a href="#/users/arxiv" class="ng-binding">arXiv.org</a>
+            </span>
+          </p>
+          <p class="well">
+            /articles/0af5e13
+            <a class="pull-right">
+              <i class="fa fa-comments fa-fw"></i>
+              Comments
+              <span class="badge ph-badge">23</span>
+            </a>
+          </p>
+          <a class="pull-right" href="#">
+            View Article
+            <i class="fa fa-chevron-right fa-fw"></i>
+          </a>
+          <div class="clearfix"></div>
+        </div>
+        <!-- Result content Start -->
+
+      </div>
+      <!--Search results End -->
+
     </div>
   </div>
-  <!--Search results End -->
+
+  <!-- Pagination Start -->
+  <div class="row">
+    <div class="col-sm-12">
+      <nav class="pull-right">
+        <ul class="pagination">
+          <li class="disabled">
+            <a href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="active">
+            <a href="#">
+            1
+            <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li><a href="#">4</a></li>
+          <li><a href="#">5</a></li>
+          <li>
+            <a href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <!-- Pagination End -->
 
 </div>
