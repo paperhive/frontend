@@ -46,3 +46,28 @@
     }
   }
 }
+
+.ph-search-result-item {
+  .ph-lg-margin-bottom;
+  .ph-md-padding-bottom;
+  border-bottom: 1px solid @list-group-border;
+  clear: both;
+
+  .well {
+    padding: @grid-gutter-width/3 @grid-gutter-width/2-@ph-border-height/2;
+    .ph-sm-margin-bottom;
+  }
+
+  .ph-icon {
+    float: left;
+    font-size: @font-size-h2;
+
+    .fa-stack-1x {
+      .text-shadow();
+    }
+  }
+}
+.ph-search-result-item-content {
+  margin-left: @font-size-h2*2+@grid-gutter-width/2;
+  .ph-sm-padding-top;
+}
