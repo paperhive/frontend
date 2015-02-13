@@ -1,0 +1,44 @@
+<!-- Header Start -->
+<div class="ph-header ph-xl-margin-bottom">
+  <div class="container">
+    <div class="row">
+
+      <div class="col-sm-12">
+        <div class="media">
+
+          <div class="media-left">
+            <!--icon-->
+            <span class="fa-stack ph-icon">
+              <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
+              <i class="fa fa-search fa-stack-1x"></i>
+            </span>
+          </div>
+
+          <div class="media-body ph-vertical-middle">
+            <!--heading-->
+            <h2 class="media-heading ph-no-margin">Search on PaperHub</h2>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Header End -->
+
+<!-- Content Start -->
+<div class="container">
+  <div class="row">
+
+    <!-- Searchfilter - Left Row Start -->
+    <ng-include src="'templates/search/filter.html'"></ng-include>
+    <!-- Searchfilter - Left Row End -->
+
+    <!-- Searchresults - Right Row Start -->
+    <ng-include src="'templates/search/result.html'"></ng-include>
+    <!-- Searchresults - Right Row End -->
+
+  </div>
+</div>
+<!-- Content End -->
