@@ -22,7 +22,12 @@
     <!-- collect everything in this div for responsive collapsing -->
     <div class="collapse navbar-collapse" collapse="collapsed">
       <!-- left -->
-      <div class="navbar-left">
+
+      <!--
+        The active state of the searchfield is disabled.
+        To see the active state, add class "active" to the following DIV-Wrap
+      -->
+      <div class="ph-search navbar-left">
         <form class="navbar-form" role="search">
           <div class="input-group">
             <input type="text" class="form-control" placeholder="Search PaperHub" name="srch-term" id="srch-term">
@@ -32,6 +37,14 @@
               </button>
             </div>
           </div>
+          <div class="ph-search-active">
+            <ul class="ph-search-list">
+              <li><a href="#">Preconditioned Recycling Krylov...</a></li>
+              <li><a href="#">Some other stuff...</a></li>
+              <li><a href="#">We'll Display only 3 suggestions...</a></li>
+            </ul>
+          </div>
+
         </form>
       </div>
       <!-- right -->

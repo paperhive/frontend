@@ -5,6 +5,7 @@ module.exports = function (app) {
   require('./marginnote.js')(app);
   require('./navbar.js')(app);
   require('./oauthOrcid.js')(app);
+  require('./search.js')(app);
   require('./settings.js')(app);
   require('./user.js')(app);
   require('./welcome.js')(app);
