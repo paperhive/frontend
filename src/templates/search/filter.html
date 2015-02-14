@@ -6,7 +6,7 @@
   <!-- Search form End -->
 
   <!-- Filter Start -->
-  <div class="ph-filter">
+  <div class="ph-filter" ng-controller="AdvancedSearchCtrl">
     <ul class="ph-search-list-group">
       <li class="active">
         <a href="#">
@@ -29,16 +29,51 @@
           <span class="badge ph-badge pull-right">32</span>
         </a>
       </li>
-      <li>
-        <a href="#" title="Advanced search">
-          <i class="fa fa-wrench fa-fw"></i>
-          Advanced search
-          <span class="pull-right">
-            <i class="fa fa-chevron-right fa-fw"></i>
-          </span>
-        </a>
-      </li>
+
     </ul>
+
+    <button class="btn btn-primary" ng-click="isCollapsed = !isCollapsed">
+      <i class="fa fa-wrench fa-fw"></i>
+      Advanced search
+      <span class="caret">
+      </span>
+    </button>
+    <div collapse="isCollapsed">
+		  <div class="well">
+		    <h5>Publication period</h5>
+        <form class="form-inline" ng-controller="DatepickerCtrl">
+          <div class="form-group">
+            <div class="input-group ph-sm-margin-bottom">
+              <div class="input-group-addon"><i class="fa fa-play"></i></div>
+              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" max-date="minDate" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </div>
+              <div class="input-group ph-md-margin-bottom">
+                <div class="input-group-addon"><i class="fa fa-stop"></i></div>
+                <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" max-date="minDate" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+              </div>
+          </div>
+          
+          <div class="clearfix"></div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="">
+              Search for coherently words
+            </label>
+              <label>
+                <input type="checkbox" value="">
+                Use Some other Filters
+              </label>
+          </div>
+        </form>
+
+		  </div>
+	  </div>
   </div>
   <!-- Filter End -->
 
