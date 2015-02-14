@@ -66,6 +66,9 @@
 // Filter
 .ph-filter {
 
+  .btn.btn-primary{
+    width: 100%;
+  }
 }
 
 .ph-search-list-group {
@@ -106,6 +109,12 @@
     }
   }
 }
+.well {
+  .ph-search-result-item &, .ph-filter & {
+    padding: @grid-gutter-width/3 @grid-gutter-width/2-@ph-border-height/2;
+    .ph-sm-margin-bottom;
+  }
+}
 
 .ph-search-result-title {
     margin-top: 5px;
@@ -117,12 +126,6 @@
   .ph-md-padding-bottom;
   border-bottom: 1px solid @list-group-border;
   clear: both;
-
-
-  .well {
-    padding: @grid-gutter-width/3 @grid-gutter-width/2-@ph-border-height/2;
-    .ph-sm-margin-bottom;
-  }
 
   .ph-icon {
     float: left;
