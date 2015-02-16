@@ -13,7 +13,7 @@ module.exports = function (app) {
 
       // sync from orcid
       $scope.syncFromOrcid = function () {
-        $scope.busy = true;
+        $scope.busy = 'sync';
 
         var account = _.find($scope.user.accounts, {type: 'orcid'});
 
@@ -31,7 +31,7 @@ module.exports = function (app) {
 
       // save to api
       $scope.save = function () {
-        $scope.busy = true;
+        $scope.busy = 'save';
 
         var obj = _.cloneDeep($scope.user);
 
