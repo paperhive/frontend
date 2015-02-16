@@ -12,7 +12,9 @@
             <div class="col-sm-6">
               <input ng-model="user.username" name="username" type="text"
                 class="form-control" id="username"
-                required ng-minlength="1" ng-maxlength="25" pattern="\w*">
+                required ng-minlength="1" ng-maxlength="25"
+                pattern="[a-z0-9_]*"
+                validate-username>
               <i ng-show="profileForm.username.$invalid"
                 class="fa fa-times form-control-feedback" aria-hidden="true"></i>
               <p class="help-block" ng-show="profileForm.username.$error.required">
@@ -28,6 +30,11 @@
                 <i class="fa fa-fw fa-warning"></i>
                 Username can only contain lowercase characters <mark>a-z</mark>,
                 numbers <mark>0-9</mark> and underscores <mark>_</mark>.
+              </p>
+              <p class="help-block" ng-show="profileForm.username.$error.username">
+                <i class="fa fa-fw fa-warning"></i>
+                The username <em>{{profileForm.username.$viewValue}}</em> is already taken.
+                Please use a different username.
               </p>
             </div>
           </div>
