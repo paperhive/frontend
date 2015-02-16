@@ -42,16 +42,5 @@
   <!--content-->
   <div class="container" ng-form="settingsForm">
     <div app-view-segment="1"></div>
-    <!--save-->
-    <div class="row">
-      <div class="col-sm-6 col-sm-offset-3">
-        <button ng-click="save()" class="btn btn-primary"
-            ng-disabled="settingsForm.$invalid || busy">
-          <i class="fa fa-fw fa-check" ng-show="busy !== 'save'"></i>
-          <i class="fa fa-fw fa-spinner fa-spin" ng-show="busy === 'save'"></i>
-          Save
-        </button>
-      </div>
-    </div>
   </div>
 </div>

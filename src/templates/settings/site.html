@@ -1,4 +1,4 @@
-<form class="form-horizontal ph-lg-margin-bottom">
+<form class="form-horizontal ph-lg-margin-bottom" name="siteForm">
   <!--remember-->
   <div class="form-group">
     <label for="remember" class="col-sm-3 control-label">
@@ -10,6 +10,17 @@
           type="checkbox" id="remember">
         Remember login
       </label>
+    </div>
+  </div>
+  <!--save-->
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <button ng-click="save()" class="btn btn-primary"
+          ng-disabled="settingsForm.$invalid || busy">
+        <i class="fa fa-fw fa-check" ng-show="busy !== 'save'"></i>
+        <i class="fa fa-fw fa-spinner fa-spin" ng-show="busy === 'save'"></i>
+        Save
+      </button>
     </div>
   </div>
 </form>
