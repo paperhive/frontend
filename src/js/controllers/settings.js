@@ -36,7 +36,7 @@ module.exports = function (app) {
         var obj = _.cloneDeep($scope.user);
 
         // remove all keys which we are not allowed to set
-        var deleteKeys = ['_id', 'accounts', 'email', 'gravatarMd5'];
+        var deleteKeys = ['_id', 'accounts', 'email', 'gravatarMd5', 'firstSignin'];
         _.forEach(deleteKeys, function (key) { delete obj[key]; });
 
         // save
