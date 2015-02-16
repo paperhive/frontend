@@ -7,3 +7,9 @@
 
 // set font path
 @icon-font-path: "assets/bootstrap/fonts/";
+
+// fix an issue with form-control-feedback and fontawesome
+// see https://github.com/FortAwesome/Font-Awesome/issues/4313
+.form-control + .form-control-feedback {
+  .form-control-feedback;
+}
