@@ -10,7 +10,9 @@
               Username
             </label>
             <div class="col-sm-6">
-              <input ng-model="user.username" name="username" type="text"
+              <input ng-model="user.username"
+                ng-model-options="{ debounce: 250 }"
+                name="username" type="text"
                 class="form-control" id="username"
                 required ng-minlength="1" ng-maxlength="25"
                 pattern="[a-z0-9_]*"
@@ -33,8 +35,8 @@
               </p>
               <p class="help-block" ng-show="profileForm.username.$error.username">
                 <i class="fa fa-fw fa-warning"></i>
-                The username <em>{{profileForm.username.$viewValue}}</em> is already taken.
-                Please use a different username.
+                The username <em>{{profileForm.username.$viewValue}}</em> is
+                already taken. Please use a different username.
               </p>
             </div>
           </div>
