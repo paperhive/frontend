@@ -1,26 +1,47 @@
 <div class="row">
-  <div class="col-sm-6">
-    <h4>Personal information</h4>
+  <div class="col-sm-5">
 
-    <dl class="dl-horizontal">
-      <dt>Given names</dt>
-      <dd>{{user.givenNames}}</dd>
-      <dt ng-show="user.familyName">Family name</dt>
-      <dd ng-show="user.familyName">{{user.familyName}}</dd>
-    </dl>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">Personal information</h4>
+      </div>
+      <div class="panel-body">
+        <table class="table ph-table-no-border-top">
+          <tbody>
+            <tr>
+              <th scope="row">Given Names</th>
+              <td>{{user.givenNames}}</td>
+            </tr>
+            <tr ng-show="user.familyName">
+              <th scope="row">Family Name</th>
+              <td>{{user.familyName}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
-  <div ng-show="user.accounts.length" class="col-sm-6">
-    <h4>{{user.displayName}} on the web</h4>
-    <dl class="dl-horizontal">
-      <dt ng-repeat-start="account in user.accounts" ng-switch="account.type">
-        <span ng-switch-when="orcid">ORCID</span>
-        <span ng-switch-default>{{account.type}}</span>
-      </dt>
-      <dd ng-repeat-end ng-switch="account.type">
-        <a ng-switch-when="orcid" href="https://sandbox.orcid.org/{{account.id}}">{{account.id}}</a>
-        <span ng-switch-default>{{account.id}}</span>
-      </dd>
-    </dl>
+  <div ng-show="user.accounts.length" class="col-sm-5 col-sm-offset-1">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">{{user.displayName}} on the web</h4>
+      </div>
+      <div class="panel-body">
+
+        <table class="table ph-table-no-border-top">
+          <tbody>
+            <tr ng-repeat="account in user.accounts">
+              <th scope="row" ng-switch="account.type">
+                <span ng-switch-when="orcid">ORCID</span>
+                <span ng-switch-default>{{account.type}}</span>
+              </th>
+              <td ng-switch="account.type">
+                <a ng-switch-when="orcid" href="https://sandbox.orcid.org/{{account.id}}">{{account.id}}</a>
+                <span ng-switch-default>{{account.id}}</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
   </div>
 </div>
