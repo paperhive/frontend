@@ -22,8 +22,8 @@
       <i class="fa fa-fw fa-caret-down"></i>
     </a>
     <ul class="dropdown-menu">
-      <li>
-        <a href="#/users/{{auth.user._id}}">
+      <li ng-show="auth.user.username">
+        <a href="#/users/{{auth.user.username}}">
           <i class="fa fa-fw fa-user"></i> Profile
         </a>
       </li>

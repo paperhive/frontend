@@ -42,7 +42,7 @@ module.exports = function (app) {
       $scope.$routeSegment = $routeSegment;
 
       // fetch user
-      $http.get(config.api_url + '/users/' + $routeSegment.$routeParams.username)
+      $http.get(config.api_url + '/users/byUsername/' + $routeSegment.$routeParams.username)
         .success(function (data) {
           $scope.user = data;
         })
