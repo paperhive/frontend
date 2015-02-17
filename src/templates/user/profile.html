@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-sm-6">
+    <h4>Personal information</h4>
+
+    <dl class="dl-horizontal">
+      <dt>Given names</dt>
+      <dd>{{user.givenNames}}</dd>
+      <dt ng-show="user.familyName">Family name</dt>
+      <dd ng-show="user.familyName">{{user.familyName}}</dd>
+    </dl>
+  </div>
+
+  <div ng-show="user.accounts.length" class="col-sm-6">
+    <h4>{{user.displayName}} on the web</h4>
+    <dl class="dl-horizontal">
+      <dt ng-repeat-start="account in user.accounts" ng-switch="account.type">
+        <span ng-switch-when="orcid">ORCID</span>
+        <span ng-switch-default>{{account.type}}</span>
+      </dt>
+      <dd ng-repeat-end ng-switch="account.type">
+        <a ng-switch-when="orcid" href="https://sandbox.orcid.org/{{account.id}}">{{account.id}}</a>
+        <span ng-switch-default>{{account.id}}</span>
+      </dd>
+    </dl>
+  </div>
+</div>
