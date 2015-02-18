@@ -18,7 +18,7 @@ module.exports = function (app) {
         highlighter.highlightSelection("ph-highlight", $scope.userSelection);
       };
 
-      $scope.unHighlightSelection = function() {
+      $scope.phUnhighlightSelection = function() {
         highlighter.unhighlightSelection(userSelection);
       };
     }]);
