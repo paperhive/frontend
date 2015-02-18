@@ -1,25 +1,25 @@
 module.exports = function (app) {
   app.controller('MarginNoteCtrl', [
-    '$scope',
-    function($scope) {
+    '$scope', '$window',
+    function($scope, $window) {
       $scope.offsetPx = undefined;
       $scope.text = undefined;
 
-      $scope.focus = false;
+      var rangy = require("rangy");
+      var highlighter = rangy.createHighlighter();
+      highlighter.addClassApplier(rangy.createClassApplier("ph-highlight", {
+        ignoreWhiteSpace: true,
+        tagNames: ["span", "a"]
+      }));
+
+      var userSelection;
       $scope.phHighlightSelection = function() {
-        $scope.focus = true;
-        //highlightSelection();
-        var userSelection = window.getSelection().getRangeAt(0);
-        var rangy = require("rangy");
-        var highlighter = rangy.createHighlighter();
-        highlighter.addClassApplier(rangy.createClassApplier("ph-highlight", {
-          ignoreWhiteSpace: true,
-          tagNames: ["span", "a"]
-        }));
-        highlighter.highlightSelection("ph-highlight", userSelection);
+        userSelection = $window.getSelection().getRangeAt(0);
+        highlighter.highlightSelection("ph-highlight", $scope.userSelection);
       };
+
       $scope.unHighlightSelection = function() {
-        $scope.focus = false;
+        highlighter.unhighlightSelection(userSelection);
       };
     }]);
 };
