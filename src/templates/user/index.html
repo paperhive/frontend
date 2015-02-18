@@ -18,6 +18,11 @@
                 <i class="fa fa-fw fa-clock-o"></i>
                 Joined on {{user.createdAt | date:'MMM d, yyyy'}}
               </p>
+              <a ng-show="auth.user.username === user.username"
+                  href="#/settings/profile" class="btn btn-default">
+                <i class="fa fa-fw fa-pencil"></i>
+                Edit my profile
+              </a>
             </div>
           </div>
         </div>

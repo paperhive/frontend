@@ -1,9 +1,14 @@
 module.exports = function (app) {
   app.controller('UserCtrl', [
     '$scope', '$routeSegment', 'config', '$http', 'NotificationsService',
-    function ($scope, $routeSegment, config, $http, notificationsService) {
+    'authService',
+    function ($scope, $routeSegment, config, $http, notificationsService,
+              authService) {
       // expose $routeSegment for subnav
       $scope.$routeSegment = $routeSegment;
+
+      // expose auth for checking if this is the user's own profile
+      $scope.auth = authService;
 
       // fetch user
       $http.get(config.api_url + '/users/byUsername/' + $routeSegment.$routeParams.username)
