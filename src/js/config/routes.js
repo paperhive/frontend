@@ -16,8 +16,10 @@ module.exports = function (app) {
         .when('/articles/:id/text', 'article.text')
         .when('/contact', 'contact')
         .when('/oauth/orcid', 'oauth')
-        .when('/settings', 'settings')
         .when('/team', 'team')
+        .when('/settings', 'settings')
+        .when('/settings/profile', 'settings.profile')
+        .when('/settings/site', 'settings.site')
         .when('/users/', 'userlist')
         .when('/users/:username', 'user')
         .when('/users/:username/profile', 'user.profile')
@@ -80,6 +82,15 @@ module.exports = function (app) {
         .segment('settings', {
           templateUrl: 'templates/settings/index.html'
         })
+        .within()
+          .segment('profile', {
+            default: true,
+            templateUrl: 'templates/settings/profile.html'
+          })
+          .segment('site', {
+            templateUrl: 'templates/settings/site.html'
+          })
+        .up()
 
         .segment('team', {
           templateUrl: 'templates/team/index.html'
