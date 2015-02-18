@@ -1,0 +1,27 @@
+<div class="ph-notifications" ng-controller="NotificationsCtrl"
+    ng-class="{hidden: !notifications.length}">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <alert ng-repeat="notification in notifications"
+            type="{{types[notification.type]}}" close="close($index)">
+          <h3>
+            <span ng-show="notification.type == 'error'">
+              <i class="fa fa-fw fa-warning"></i> Error
+            </span>
+            <span ng-show="notification.type == 'warning'">
+              <i class="fa fa-fw fa-warning"></i> Warning
+            </span>
+            <span ng-show="notification.type == 'info'">
+              <i class="fa fa-fw fa-info-circle"></i> Info
+            </span>
+            <span ng-show="notification.type == 'success'">
+              <i class="fa fa-fw fa-info-circle"></i> Success
+            </span>
+            <small>{{notification.message}}</small>
+          </h3>
+        </alert>
+      </div>
+    </div>
+  </div>
+</div>

@@ -3,4 +3,6 @@ module.exports = function (app) {
   require('./confirmed-click.js')(app);
   require('./kramjax.js')(app);
   require('./showPdf.js')(app);
+  require('./subnav')(app);
+  require('./validate-username')(app);
 };
