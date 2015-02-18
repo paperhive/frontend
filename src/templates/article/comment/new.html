@@ -42,30 +42,12 @@
                 mentio-macros="macros"
                 mentio-search="searchPeople(term)"
                 mentio-items="localItems"
-                mentio-template-url="/user-mentions.tpl"
+                mentio-template-url="templates/directive/mentio-list.html"
                 mentio-select="getPeopleText(item)"
                 mentio-require-leading-space="true"
                 rows="6"
                 placeholder="Leave an annotation..."
                 ></textarea>
-
-              <!-- TODO deduplicate from inline-comment -->
-              <script type="text/ng-template" id="/user-mentions.tpl">
-              <ul class="list-group user-search">
-                <li
-                  ng-repeat="user in items"
-                  mentio-menu-item="user"
-                  class="list-group-item"
-                  >
-                  <img class="user-photo"
-                    ng-src="https://secure.gravatar.com/avatar/{{user.gravatarMd5}}?s=20"
-                    >
-                  <strong>{{user.userName}}</strong>
-                  <span style="color:#888;">{{user.displayName}}</span>
-                </li>
-              </ul>
-              </script>
-
               <hr>
               <label for="preview">Preview</label>
               <div class="well well-lg" id=preview>
