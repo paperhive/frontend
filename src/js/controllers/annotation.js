@@ -35,7 +35,8 @@ module.exports = function (app) {
       $scope.tmpBody = undefined;
 
       $scope.getPeopleText = function(item) {
-        return '<strong><a href="#/users/' + item.userName + '">@' + item.userName + '</a></strong>';
+        //return '<strong><a href="#/users/' + item.userName + '">@' + item.userName + '</a></strong>';
+        return '@' + item.userName;
       };
 
       // For a more advanced example, using promises, see
