@@ -1,12 +1,19 @@
 <a class="media-left" href="#">
-  <img src="https://secure.gravatar.com/avatar/?s=80" alt="thumbnail"
-      width="80px" >
+  <img
+    src="https://secure.gravatar.com/avatar/?s=80"
+    alt="thumbnail"
+    width="80px"
+    >
 </a>
 <div class="media-body" style="width:100%">
   <div class="panel panel-default">
     <div class="panel-body">
-      <form name="annotationForm" ng-controller="AnnotationCtrl"
-          ng-submit="annotationForm.$valid && addReply()" novalidate>
+      <form
+        name="annotationForm"
+        ng-submit="annotationForm.$valid
+        && addReply(annotationBody); annotationBody=null"
+        novalidate
+        >
         <span id="helpBlock" class="help-block pull-right"
             style="font-size:smaller">
           You can use
@@ -14,9 +21,14 @@
           $$<a href="http://www.mathjax.org/demos/tex-samples/">LaTeX</a>$$,
           ```<a href="https://highlightjs.org/">code blocks</a>```
         </span>
-        <textarea id="textbody" class="form-control ph-annotation-body"
+        <textarea
+          id="textbody"
+          class="form-control ph-annotation-body"
           ng-model='annotationBody'
-          rows="6" placeholder="Leave a comment..." required></textarea>
+          rows="6"
+          placeholder="Leave a comment..."
+          required
+          ></textarea>
         <hr>
         <label for="preview">Preview</label>
         <div class="well well-lg" id=preview>
@@ -27,8 +39,11 @@
             Close discussion
           </button>
           &nbsp;
-          <button type="submit" class="btn btn-primary"
-              ng-disabled="annotationForm.$invalid">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            ng-disabled="annotationForm.$invalid"
+            >
             Submit
           </button>
         </span>

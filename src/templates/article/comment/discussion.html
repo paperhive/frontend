@@ -36,29 +36,35 @@
       <ul class="media-list">
         <li class="media">
           <annotation
-              ng-if="discussion.originalAnnotation.permissions.read"
-              content="discussion.originalAnnotation"
-              is-article-author="isArticleAuthor(discussion.originalAnnotation.author._id)"
-              >
+            ng-if="discussion.originalAnnotation.permissions.read"
+            content="discussion.originalAnnotation"
+            is-article-author="isArticleAuthor(discussion.originalAnnotation.author._id)"
+            >
           </annotation>
         </li>
 
         <li class="media" ng-repeat="reply in discussion.replies">
           <annotation
-              ng-if="reply.permissions.read"
-              content="reply"
-              is-article-author="isArticleAuthor(reply.author._id)"
-              delete-function="deleteReply"
-              >
+            content="reply"
+            is-article-author="isArticleAuthor(reply.author._id)"
+            delete-function="deleteReply"
+            >
+            <!--ng-if="reply.permissions.read"-->
           </annotation>
         </li>
 
         <li class="media">
-          <ng-include src="'templates/article/comment/new-reply.html'"
-              ng-if="auth.user">
+          <ng-include
+            src="'templates/article/comment/new-reply.html'"
+            ng-if="auth.user"
+            >
           </ng-include>
+          {{annotationBody}}
 
-          <div ng-if="!auth.user" class="media-body ph-login-info-block">
+          <div
+            ng-if="!auth.user"
+            class="media-body ph-login-info-block"
+            >
             <div class="panel panel-default">
               <div class="panel-body bg-info">
                 <a href="{{auth.orcidUrl}}" class="btn btn-primary">
