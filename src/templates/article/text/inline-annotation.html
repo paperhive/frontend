@@ -35,8 +35,11 @@
         ng-model='annotation.body'
         class="form-group form-control ph-annotation-body"
         rows="2"
+        ng-focus="phHighlightSelection()"
+        ng-blur="unHighlightSelection()"
         required
         ></textarea>
+      Focus? {{focus}}
       <span class="pull-right">
         <button
           class="btn btn-sm btn-primary"

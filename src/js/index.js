@@ -10,6 +10,11 @@
   require('pdfjs');
   require('../../bower_components/pdfjs-dist/web/pdf_viewer.js');
 
+  // TODO urgs. get this fixed upstream
+  require('rangy');
+  require('rangy-classapplier');
+  require('rangy-highlighter');
+
   var paperhub = angular
     .module(
       'paperHub',

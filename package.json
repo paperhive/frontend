@@ -42,7 +42,10 @@
     "pdfjs": "./bower_components/pdfjs-dist/build/pdf.js",
     "mentio": "./bower_components/ment.io/dist/mentio.js",
     "jquery": "./bower_components/jquery/dist/jquery.js",
-    "kramed": "./bower_components/kramed/lib/kramed.js"
+    "kramed": "./bower_components/kramed/lib/kramed.js",
+    "rangy": "./bower_components/rangy/rangy-core.js",
+    "rangy-classapplier": "./bower_components/rangy/rangy-classapplier.js",
+    "rangy-highlighter": "./bower_components/rangy/rangy-highlighter.js"
   },
   "browserify-shim": {
     "angular": {
