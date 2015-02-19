@@ -1,5 +1,9 @@
-<form name="annotationForm" ng-controller="AnnotationCtrl"
-  ng-submit="annotationForm.$valid && AnnotationCtrl.addAnnotation(pdf)" novalidate>
+<form
+  name="annotationForm"
+  ng-controller="AnnotationCtrl"
+  ng-submit="annotationForm.$valid && addAnnotation(pdf)"
+  novalidate
+  >
   <div class="row">
     <div class="col-md-10">
       <div class="media">
@@ -56,8 +60,11 @@
           </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary pull-right"
-          ng-disabled="annotationForm.$invalid">
+      <button
+        type="submit"
+        class="btn btn-primary pull-right"
+        ng-disabled="annotationForm.$invalid"
+        >
         Submit
       </button>
     </div>

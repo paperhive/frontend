@@ -1,10 +1,7 @@
 module.exports = function (app) {
   app.controller('MarginNoteCtrl', [
-    '$scope', '$window',
-    function($scope, $window) {
-      $scope.offsetPx = undefined;
-      $scope.text = undefined;
-
+    '$scope', 
+    function($scope) {
       var rangy = require("rangy");
       var highlighter = rangy.createHighlighter();
       highlighter.addClassApplier(rangy.createClassApplier("ph-highlight", {
@@ -12,14 +9,14 @@ module.exports = function (app) {
         tagNames: ["span", "a"]
       }));
 
-      var userSelection;
+      var rangySelection;
       $scope.phHighlightSelection = function() {
-        userSelection = $window.getSelection().getRangeAt(0);
-        highlighter.highlightSelection("ph-highlight", $scope.userSelection);
+        rangySelection = rangy.getSelection();
+        highlighter.highlightSelection("ph-highlight", rangySelection);
       };
 
       $scope.phUnhighlightSelection = function() {
-        highlighter.unhighlightSelection(userSelection);
+        highlighter.unhighlightSelection(rangySelection);
       };
 
     }]);
