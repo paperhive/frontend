@@ -1,0 +1,169 @@
+<form class="form-horizontal ph-lg-margin-bottom" name="profileForm">
+  <div class="row ph-lg-margin-bottom">
+    <div class="col-sm-offset-1 col-sm-8">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <!--username-->
+          <div class="form-group has-feedback"
+              ng-class="{'has-error': profileForm.username.$invalid}">
+            <label for="user" class="col-sm-3 control-label">
+              Username
+            </label>
+            <div class="col-sm-6">
+              <input ng-model="user.username"
+                ng-model-options="{ debounce: 250 }"
+                name="username" type="text"
+                class="form-control" id="username"
+                required ng-minlength="1" ng-maxlength="25"
+                pattern="[a-z0-9_]*"
+                validate-username>
+              <i ng-show="profileForm.username.$invalid"
+                class="fa fa-times form-control-feedback" aria-hidden="true"></i>
+              <p class="help-block" ng-show="profileForm.username.$error.required">
+                <i class="fa fa-fw fa-warning"></i>
+                Username is required.
+              </p>
+              <p class="help-block" ng-show="profileForm.username.$error.minlength
+                  || profileForm.username.$error.maxlength">
+                <i class="fa fa-fw fa-warning"></i>
+                Username must have between 1 and 25 characters.
+              </p>
+              <p class="help-block" ng-show="profileForm.username.$error.pattern">
+                <i class="fa fa-fw fa-warning"></i>
+                Username can only contain lowercase characters <mark>a-z</mark>,
+                numbers <mark>0-9</mark> and underscores <mark>_</mark>.
+              </p>
+              <p class="help-block" ng-show="profileForm.username.$error.username">
+                <i class="fa fa-fw fa-warning"></i>
+                The username <em>{{profileForm.username.$viewValue}}</em> is
+                already taken. Please use a different username.
+              </p>
+            </div>
+          </div>
+          <!--displayName-->
+          <div class="form-group has-feedback"
+              ng-class="{'has-error': profileForm.displayName.$invalid}">
+            <label for="displayName" class="col-sm-3 control-label">
+              Display name
+            </label>
+            <div class="col-sm-6">
+              <input ng-model="user.displayName" name="displayName" type="text"
+                class="form-control" id="displayName"
+                required ng-minlength="3" ng-maxlength="25">
+              <i ng-show="profileForm.displayName.$invalid"
+                class="fa fa-times form-control-feedback" aria-hidden="true"></i>
+              <p class="help-block" ng-show="profileForm.displayName.$error.required">
+                <i class="fa fa-fw fa-warning"></i>
+                Display name is required.
+              </p>
+              <p class="help-block" ng-show="profileForm.displayName.$error.minlength
+                  || profileForm.displayName.$error.maxlength">
+                <i class="fa fa-fw fa-warning"></i>
+                Display name must have between 3 and 25 characters.
+              </p>
+            </div>
+          </div>
+          <!--save-->
+          <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+              <button ng-click="save()" class="btn btn-primary"
+                  ng-disabled="settingsForm.$invalid || busy">
+                <i class="fa fa-fw fa-check" ng-show="busy !== 'save'"></i>
+                <i class="fa fa-fw fa-spinner fa-spin" ng-show="busy === 'save'"></i>
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-offset-1 col-sm-8">
+      <div class="panel panel-default">
+        <div class="panel-heading"><h4 class="panel-title">ORCID profile</h4></div>
+        <div class="panel-body">
+          <!--syncFromOrcid-->
+          <div class="row ph-md-margin-bottom">
+            <div class="col-sm-9 col-sm-offset-3">
+              <p class="ph-md-margin-bottom">
+                The following profile options can only be set in your
+                <a href="https://sandbox.orcid.org/my-orcid" target="_blank">
+                  ORCID profile</a>. Once you've made your changes there, you can
+                sync them to your PaperHub account here.
+              </p>
+              <button ng-click="syncFromOrcid()" class="btn btn-primary"
+                  ng-disabled="busy">
+                <i class="fa fa-fw fa-cloud-download" ng-show="busy !== 'sync'"></i>
+                <i class="fa fa-fw fa-spinner fa-spin" ng-show="busy === 'sync'"></i>
+                Sync profile from ORCID
+              </button>
+            </div>
+          </div>
+          <!--givenNames-->
+          <div class="form-group">
+            <label for="givenNames" class="col-sm-3 control-label">
+              Given names
+            </label>
+            <div class="col-sm-9">
+              <input ng-model="user.givenNames" name="givenNames" type="text"
+                class="form-control" id="givenNames" readonly>
+            </div>
+          </div>
+          <!--familyName-->
+          <div class="form-group">
+            <label for="familyName" class="col-sm-3 control-label">
+              Family name
+            </label>
+            <div class="col-sm-9">
+              <input ng-model="user.familyName" type="text"
+                class="form-control" id="familyName" readonly>
+            </div>
+          </div>
+          <!--email-->
+          <div class="form-group has-feedback"
+              ng-class="{'has-error': !user.email}">
+            <label for="email" class="col-sm-3 control-label">
+              Email
+            </label>
+            <div class="col-sm-9">
+              <input ng-model="user.email" type="email" class="form-control"
+                id="email" readonly>
+              <i ng-show="!user.email"
+                class="fa fa-times form-control-feedback" aria-hidden="true"></i>
+              <p class="help-block" ng-show="!user.email">
+                <i class="fa fa-fw fa-warning"></i>
+                No email address set!
+              </p>
+              <p class="text-muted help-block">
+                Set up and verify an email address with <em>limited</em> or
+                <em>public</em> privacy setting in your
+                <a href="https://sandbox.orcid.org/my-orcid" target="_blank">
+                  ORCID profile
+                </a>
+                and then sync your PaperHub profile from ORCID.
+              </p>
+            </div>
+          </div>
+          <!--avatar-->
+          <div class="form-group">
+            <label for="email" class="col-sm-3 control-label">
+              Profile picture
+            </label>
+            <div class="col-sm-9">
+              <img class="img-thumbnail pull-left ph-sm-margin-right"
+                src="https://secure.gravatar.com/avatar/{{auth.user.gravatarMd5}}?s=100"
+                alt="Gravatar image associated with {{user.email}}">
+              <p class="text-muted ph-sm-margin-top">
+                Head over to
+                <a href="https://gravatar.com" target="_blank">Gravatar</a>
+                in order to change the profile picture for the above email
+                address.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
