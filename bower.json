@@ -28,6 +28,6 @@
     "lodash": "~3.3.0",
     "kramed": "https://github.com/GitbookIO/kramed.git",
     "jquery": "~2.1.3",
-    "rangy": "1.3"
+    "rangy": "~1.3"
   }
 }
