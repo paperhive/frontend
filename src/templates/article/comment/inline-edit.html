@@ -25,7 +25,7 @@
     mentio-require-leading-space="true"
     rows="6"
     placeholder="Leave a comment..."
-    required
+    ng-required="requiresBody"
     >
   </textarea>
   <hr>
@@ -38,9 +38,12 @@
       Cancel
     </button>
     &nbsp;
-    <button ng-click="updateAnnotation(tmpBody)"
-        ng-disabled="annotationForm.$invalid" type="submit"
-        class="btn btn-primary">
+    <button
+      ng-click="updateAnnotation(tmpBody)"
+      ng-disabled="annotationForm.$invalid"
+      type="submit"
+      class="btn btn-primary"
+      >
       Update annotation
     </button>
   </span-->

@@ -39,6 +39,7 @@
             ng-if="discussion.originalAnnotation.permissions.read"
             content="discussion.originalAnnotation"
             is-article-author="isArticleAuthor(discussion.originalAnnotation.author._id)"
+            requires-body="false"
             >
           </annotation>
         </li>
@@ -48,6 +49,7 @@
             content="reply"
             is-article-author="isArticleAuthor(reply.author._id)"
             delete-function="deleteReply"
+            requires-body="true"
             >
             <!--ng-if="reply.permissions.read"-->
           </annotation>

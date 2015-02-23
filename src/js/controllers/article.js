@@ -79,6 +79,7 @@ var discussion = {
   title: "Title of the discussion",
   number: 12,
   originalAnnotation: annotations[0],
+  textSelection: undefined,
   replies: [
     annotations[1],
     annotations[2]
@@ -88,8 +89,10 @@ var discussion = {
 
 module.exports = function (app) {
   app.controller('ArticleCtrl', [
-    '$scope', '$route', '$routeSegment', 'config', 'authService',
-    function($scope, $route, $routeSegment, config, authService) {
+    '$scope', '$route', '$routeSegment', 'config',
+    'authService', 'NotificationsService',
+    function($scope, $route, $routeSegment, config,
+             authService, notificationsService) {
 
       // DEBUG
       var article =
@@ -102,7 +105,7 @@ module.exports = function (app) {
         //url: "https://user.d00d3.net/~nschloe/pdf_commenting_new.pdf",
         title: "Preconditioned Recycling Krylov Subspace Methods for Self-Adjoint Problems",
         authors: [users[2], users[1]],
-        discussions: [discussion]
+        discussions: [discussion],
       };
       // END DEBUG
 
@@ -111,5 +114,40 @@ module.exports = function (app) {
       // Expose the routeSegment to be able to determine the active tab in the
       // template.
       $scope.$routeSegment = $routeSegment;
+
+      var number = 0;
+      $scope.addDiscussion = function(title, body, textSelection) {
+
+        // We always needs a title.
+        // This conditional applies for short inline comments
+        // on the PDF.
+        if (title === undefined) {
+          title = body;
+          body = undefined;
+        }
+
+        number++;
+        article.discussions.push(
+          {
+          _id: "857431",
+          title: title,
+          number: number,
+          textSelection: textSelection,
+          originalAnnotation: {
+            _id: "1242340",
+            author: $scope.auth.user,
+            body: body,
+            time: new Date(),
+            editTime: undefined,
+            labels: [],
+            permissions: {
+              read: true,
+              edit: true,
+              delete: true
+            },
+          },
+          replies: []
+        });
+      };
     }]);
 };
