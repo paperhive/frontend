@@ -45,7 +45,8 @@
     "kramed": "./bower_components/kramed/lib/kramed.js",
     "rangy": "./bower_components/rangy/rangy-core.js",
     "rangy-classapplier": "./bower_components/rangy/rangy-classapplier.js",
-    "rangy-highlighter": "./bower_components/rangy/rangy-highlighter.js"
+    "rangy-highlighter": "./bower_components/rangy/rangy-highlighter.js",
+    "rangy-serializer": "./bower_components/rangy/rangy-serializer.js"
   },
   "browserify-shim": {
     "angular": {

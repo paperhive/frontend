@@ -79,7 +79,7 @@ var discussion = {
   title: "Title of the discussion",
   number: 12,
   originalAnnotation: annotations[0],
-  textSelection: undefined,
+  serializedSelection: undefined,
   replies: [
     annotations[1],
     annotations[2]
@@ -115,9 +115,10 @@ module.exports = function (app) {
       // template.
       $scope.$routeSegment = $routeSegment;
 
+      var rangy = require("rangy");
       var number = 0;
-      $scope.addDiscussion = function(title, body, textSelection) {
-
+      $scope.addDiscussion = function(title, body, serializedTextSelection) {
+        console.log('> addDiscussion');
         // We always needs a title.
         // This conditional applies for short inline comments
         // on the PDF.
@@ -126,13 +127,20 @@ module.exports = function (app) {
           body = undefined;
         }
 
+        if (!serializedTextSelection) {
+          notificationsService.notifications.push({
+            type: 'error',
+            message: 'No text selected.'
+          });
+          return;
+        }
+
         number++;
-        article.discussions.push(
-          {
+        var newDiscussion = {
           _id: "857431",
           title: title,
           number: number,
-          textSelection: textSelection,
+          serializedSelection: serializedTextSelection,
           originalAnnotation: {
             _id: "1242340",
             author: $scope.auth.user,
@@ -147,7 +155,69 @@ module.exports = function (app) {
             },
           },
           replies: []
-        });
+        };
+        article.discussions.push(newDiscussion);
+
+        // finally, flush title and body
+        title = undefined;
+        body = undefined;
+
+        console.log(article.discussions);
+        console.log('< addDiscussion');
+      };
+
+      var highlighter = rangy.createHighlighter();
+      highlighter.addClassApplier(rangy.createClassApplier("ph-highlight", {
+        ignoreWhiteSpace: true,
+        tagNames: ["span", "a"]
+      }));
+
+      $scope.phHighlightSerializedSelection = function(serializedSelection) {
+        console.log('phHighlightSerializedSelection');
+        if (!serializedSelection) {
+          console.log('yy');
+          return;
+        }
+        //if (!serializedSelection) {
+        //  notificationsService.notifications.push({
+        //    type: 'warning',
+        //    message: 'Empty selection object.'
+        //  });
+        //  return;
+        //}
+        if (!rangy.canDeserializeSelection(serializedSelection)) {
+          notificationsService.notifications.push({
+            type: 'error',
+            message: 'Cannot unserialize selection object.'
+          });
+          return;
+        }
+        highlighter.highlightSelection(
+          "ph-highlight",
+          rangy.deserializeSelection(serializedSelection)
+        );
+      };
+
+      $scope.latestRangySelection = null;
+      $scope.latestRangySelectionSerialized = null;
+      $scope.phHighlightSelection = function() {
+        $scope.latestRangySelection = rangy.getSelection();
+        highlighter.highlightSelection(
+          "ph-highlight",
+          $scope.latestRangySelection
+        );
+        // Already serialize the selection at this point since for some reason
+        // ```
+        // $scope.latestRangySelectionSerialized.getAllRanges()
+        // ```
+        // is empty and hence cannot be serialized anymore.
+        $scope.latestRangySelectionSerialized =
+          rangy.serializeSelection($scope.latestRangySelection);
+      };
+
+      $scope.phUnhighlightSelection = function() {
+        highlighter.unhighlightSelection($scope.latestRangySelection);
+        //$scope.latestRangySelection = null;
       };
     }]);
 };

@@ -18,47 +18,8 @@
     alt="{{auth.user.displayName}} avatar"
     >
     {{auth.user.displayName}}
-    <span class="pull-right">
-      <a href="#">
-        <i class="fa fa-globe"></i>
-      </a>
-    </span>
   </div>
   <div class="panel-body">
-    <form
-      name="annotationForm"
-      ng-submit="annotationForm.$valid && addDiscussion(annotation.title,
-      annotation.body)"
-      novalidate
-      >
-      <input
-        type="text"
-        ng-if='annotation.body.length > 20'
-        id="annotation-title"
-        ng-model='annotation.title'
-        class="form-group form-control"
-        placeholder="Enter title..."
-        required
-        >
-      <textarea
-        id="textbody"
-        placeholder="Enter comment..."
-        ng-model='annotation.body'
-        class="form-group form-control ph-annotation-body"
-        rows="2"
-        ng-focus="phHighlightSelection()"
-        ng-blur="phUnhighlightSelection()"
-        required
-        ></textarea>
-      <!--ng-readonly="rangySelection === null"-->
-      <span class="pull-right">
-        <button
-          class="btn btn-sm btn-primary"
-          ng-disabled="annotationForm.$invalid"
-          >
-          Add comment
-        </button>
-      </span>
-    </form>
+    {{annotation.body}}
   </div>
 </div>
