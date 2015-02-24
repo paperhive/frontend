@@ -13,13 +13,18 @@
   >
   <div class="panel-heading">
     <img
-    src="https://secure.gravatar.com/avatar/{{auth.user.gravatarMd5}}?s=30"
+    src="https://secure.gravatar.com/avatar/{{author.gravatarMd5}}?s=30"
     class="ph-avatar"
-    alt="{{auth.user.displayName}} avatar"
+    alt="{{author.displayName}} avatar"
     >
-    {{auth.user.displayName}}
+    {{author.displayName}}
   </div>
   <div class="panel-body">
-    {{annotation.body}}
+    <div ng-if='title !== undefined'>
+      {{title}}
+    </div>
+    <div ng-if='title === undefined'>
+      {{body}}
+    </div>
   </div>
 </div>
