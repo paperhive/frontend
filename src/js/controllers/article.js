@@ -116,56 +116,6 @@ module.exports = function (app) {
       $scope.$routeSegment = $routeSegment;
 
       var rangy = require("rangy");
-      var number = 0;
-      $scope.addDiscussion = function(title, body, serializedTextSelection) {
-        console.log('> addDiscussion');
-        // We always needs a title.
-        // This conditional applies for short inline comments
-        // on the PDF.
-        if (title === undefined) {
-          title = body;
-          body = undefined;
-        }
-
-        if (!serializedTextSelection) {
-          notificationsService.notifications.push({
-            type: 'error',
-            message: 'No text selected.'
-          });
-          return;
-        }
-
-        number++;
-        var newDiscussion = {
-          _id: "857431",
-          title: title,
-          number: number,
-          serializedSelection: serializedTextSelection,
-          originalAnnotation: {
-            _id: "1242340",
-            author: $scope.auth.user,
-            body: body,
-            time: new Date(),
-            editTime: undefined,
-            labels: [],
-            permissions: {
-              read: true,
-              edit: true,
-              delete: true
-            },
-          },
-          replies: []
-        };
-        article.discussions.push(newDiscussion);
-
-        // finally, flush title and body
-        title = undefined;
-        body = undefined;
-
-        console.log(article.discussions);
-        console.log('< addDiscussion');
-      };
-
       var highlighter = rangy.createHighlighter();
       highlighter.addClassApplier(rangy.createClassApplier("ph-highlight", {
         ignoreWhiteSpace: true,
@@ -175,7 +125,6 @@ module.exports = function (app) {
       $scope.phHighlightSerializedSelection = function(serializedSelection) {
         console.log('phHighlightSerializedSelection');
         if (!serializedSelection) {
-          console.log('yy');
           return;
         }
         //if (!serializedSelection) {
