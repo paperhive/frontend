@@ -9,9 +9,9 @@
 </div>
 <div class="row">
   <!--actual text-->
-  <pdf url="{{article.url}}" offset-px="offsetPx" class="col-md-11"></pdf>
+  <pdf url="{{article.url}}" offset-px="offsetPx" class="col-md-9"></pdf>
   <!--column for margin notes-->
-  <div id="annotation-column" class="col-md-1">
+  <div id="annotation-column" class="col-md-3">
     <inline-annotation
       ng-repeat="discussion in article.discussions | filter:
       {serializedSelection: '!undefined'}"
@@ -35,8 +35,6 @@
       'top': offsetPx,
       'position': 'relative',
       'border': '1px solid LightGray',
-      'width': '100%+200px',
-      'margin-left': '-200px',
       'background': 'white'
       }
       "
