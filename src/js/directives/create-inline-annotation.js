@@ -21,8 +21,6 @@ module.exports = function (app) {
             // We always needs a title.
             // This conditional applies for short inline comments
             // on the PDF.
-            console.log(scope.title);
-            console.log(scope.body);
             if (scope.title === undefined) {
               scope.title = scope.body;
               scope.body = undefined;
