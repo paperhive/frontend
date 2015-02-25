@@ -6,7 +6,7 @@ module.exports = function (app) {
       return {
         restrict: 'E',
         scope: {
-          offset: '=',
+          verticalOffset: '=',
           onSave: '&',
           onFocus: '=',
           onBlur: '=',
@@ -48,6 +48,7 @@ module.exports = function (app) {
             var newDiscussion = {
               title: scope.title,
               serializedSelection: scope.serializedSelection,
+              verticalOffset: scope.verticalOffset,
               originalAnnotation: {
                 author: scope.auth.user,
                 body: scope.body,

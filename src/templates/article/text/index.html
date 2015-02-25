@@ -18,18 +18,14 @@
       title='discussion.title'
       body='discussion.body'
       author='discussion.originalAnnotation.author'
+      vertical-offset='discussion.verticalOffset'
       >
     </inline-annotation>
     <!-- Don't use ng-if here to keep the element in the DOM tree.
     This makes sure that the entered text is preserved.
     -->
-    <create-inline-annotation
-      ng-if="auth.user"
+    <div
       ng-show="offsetPx !== undefined"
-      serialized-selection="latestRangySelectionSerialized"
-      on-save="article.discussions.push($discussion)"
-      on-focus="phHighlightSelection"
-      on-blur="phUnhighlightSelection"
       ng-style="
       {
       'top': offsetPx,
@@ -37,12 +33,20 @@
       }
       "
       >
-    </create-inline-annotation>
-    <ng-include
+      <create-inline-annotation
+      ng-if="auth.user"
+      serialized-selection="latestRangySelectionSerialized"
+      vertical-offset="offsetPx"
+      on-save="article.discussions.push($discussion)"
+      on-focus="phHighlightSelection"
+      on-blur="phUnhighlightSelection"
+      >
+      </create-inline-annotation>
+      <ng-include
       ng-if="!auth.user"
-      ng-show="offsetPx !== undefined"
       src="'templates/article/text/inline-annotation-substitute.html'"
       >
-    </ng-include>
+      </ng-include>
+    </div>
   </div>
 </div>

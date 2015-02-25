@@ -7,7 +7,8 @@ module.exports = function (app) {
       scope: {
         title: '=',
         body: '=',
-        author: '='
+        author: '=',
+        verticalOffset: '='
       },
       templateUrl: 'templates/article/text/inline-annotation.html'
     };
