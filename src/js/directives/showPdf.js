@@ -1,5 +1,5 @@
 module.exports = function (app) {
-  app.directive('pdf', [function () {
+  app.directive('pdf', ['$document', function ($document) {
     return {
       restrict: 'E',
       scope: {
@@ -169,7 +169,7 @@ module.exports = function (app) {
           //// --------
 
           // Intercept mouseup event to display new annotation box
-          element.on('mouseup', function(event) {
+          $document.on('mouseup', function(event) {
             // Get selected text, cf.
             // <http://stackoverflow.com/a/5379408/353337>.
             var text = "";
