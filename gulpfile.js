@@ -135,11 +135,11 @@ gulp.task('static', function () {
 // compile less to css
 gulp.task('style', function () {
   return gulp.src('src/less/index.less')
-    .pipe(debug ? sourcemaps.init() : gutil.noop())
+    .pipe(sourcemaps.init())
     .pipe(less())
     .on('error', handleError)
-    .pipe(debug ? sourcemaps.write('./') : gutil.noop())
     .pipe(debug ? gutil.noop() : minifyCSS())
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('build'));
 });
 
