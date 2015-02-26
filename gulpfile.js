@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
 var less = require('gulp-less');
 var merge = require('merge-stream');
 var connect = require('gulp-connect');
@@ -42,7 +43,7 @@ function js (watch) {
   var shim = require('browserify-shim');
   var watchify = require('watchify');
 
-  var browserify_args = _.extend(watchify.args, {debug: debug});
+  var browserify_args = _.extend(watchify.args, {debug: true});
   var bundler = browserify('./src/js/index.js', browserify_args);
 
   // use shims defined in package.json via 'browser' and 'browserify-shim'
@@ -58,7 +59,10 @@ function js (watch) {
     return bundler.bundle()
       .on('error', handleError)
       .pipe(source('index.js'))
-      .pipe(debug ? gutil.noop() : streamify(uglify()))
+      .pipe(buffer())
+      .pipe(sourcemaps.init({loadMaps: true}))
+        .pipe(debug ? gutil.noop() : streamify(uglify()))
+      .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest('build'));
   }
   bundler.on('update', rebundle);
@@ -131,11 +135,11 @@ gulp.task('static', function () {
 // compile less to css
 gulp.task('style', function () {
   return gulp.src('src/less/index.less')
-    .pipe(debug ? sourcemaps.init() : gutil.noop())
+    .pipe(sourcemaps.init())
     .pipe(less())
     .on('error', handleError)
-    .pipe(debug ? sourcemaps.write('./') : gutil.noop())
     .pipe(debug ? gutil.noop() : minifyCSS())
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('build'));
 });
 
