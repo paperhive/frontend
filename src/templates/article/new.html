@@ -1,14 +1,63 @@
-<!-- Page content -->
-<div class="container">
-  <div class="row">
-    <h4>View PDF</h4>
-    <form name="pdfForm" role="form" ng-submit="fetchUrl = url">
-      <div class="form-group">
-        <div class="col-xs-4">
-          <input type="url" ng-model="url" placeholder="Enter PDF URL"
-              class="form-control"/>
+<div ng-controller="ArticleNewCtrl">
+  <div class="ph-header ph-lg-margin-bottom">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <!-- title -->
+          <div class="media">
+            <div class="media-left">
+              <span class="fa-stack ph-icon">
+                <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
+                <i class="fa fa-file-text-o fa-stack-1x"></i>
+              </span>
+            </div>
+            <div class="media-body ph-vertical-middle">
+              <!--heading-->
+              <h2 class="media-heading">Add an article</h2>
+            </div>
+          </div>
         </div>
-        <input class="btn btn-default" type="submit" value="Fetch" />
+      </div>
+    </div>
+
+  </div>
+  <div class="container">
+    <form name="articleNewForm" role="form" ng-submit="fetchUrl = url">
+      <div class="row">
+        <div class="col-md-12">
+          <p>
+            You can add any arXiv article to PaperHub by providing an arXiv URL
+            or an arxiv id such as <em>1208.0264v4</em>. More article
+            repositories will become available in the near future!
+          </p>
+          <div class="row">
+            <div class="form-group">
+              <div class="col-xs-4">
+                <input ng-model="handle"
+                  placeholder="Enter arxiv URL or arxiv id"
+                  class="form-control"/>
+              </div>
+            </div>
+          </div>
+          <div class="row" ng-show="metadata">
+            <div class="col-xs-6">
+              <table class="table">
+                <tr>
+                  <th scope="row">Title</td>
+                  <td>{{metadata.title}}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Authors</td>
+                  <td>
+                    <span ng-repeat="author in metadata.authors">
+                      {{author}}<span ng-show="!$last">,</span>
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </form>
   </div>

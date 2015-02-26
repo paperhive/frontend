@@ -6,7 +6,7 @@ module.exports = function (app) {
       $routeSegmentProvider
         .when('/', 'main')
         .when('/articles', 'article')
-        .when('/articles/new', 'article.new')
+        .when('/articles/new', 'articlenew')
         .when('/articles/:id', 'article')
         .when('/articles/:id/activity', 'article.activity')
         .when('/articles/:id/comments', 'article.comments')
@@ -56,9 +56,6 @@ module.exports = function (app) {
               dependencies: ['num']
             })
           .up()
-          .segment('new', {
-            templateUrl: 'templates/article/new.html'
-          })
           .segment('settings', {
             templateUrl: 'templates/article/settings.html',
             dependencies: ['id']
@@ -69,6 +66,9 @@ module.exports = function (app) {
             dependencies: ['id']
           })
         .up()
+        .segment('articlenew', {
+          templateUrl: 'templates/article/new.html'
+        })
 
         .segment('contact',{
           templateUrl: 'templates/contact/contact.html'
