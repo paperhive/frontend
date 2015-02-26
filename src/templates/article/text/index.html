@@ -12,7 +12,6 @@
   <pdf
     url="{{article.url}}"
     vertical-offset-selection="verticalOffsetSelection"
-    text-is-selected="textIsSelected"
     class="col-md-9"
     ></pdf>
   <!--column for margin notes-->
@@ -29,6 +28,8 @@
     <!-- Don't use ng-if here to keep the element in the DOM tree.
     This makes sure that the entered text is preserved.
     -->
+    X{{verticalOffsetSelection}}X
+    X{{verticalOffsetHighlighted}}X
     <div
       ng-show="verticalOffsetSelection || verticalOffsetHighlighted"
       ng-style="

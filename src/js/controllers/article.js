@@ -89,9 +89,9 @@ var discussion = {
 
 module.exports = function (app) {
   app.controller('ArticleCtrl', [
-    '$scope', '$route', '$routeSegment', 'config',
+    '$scope', '$route', '$routeSegment', '$document', 'config',
     'authService', 'NotificationsService',
-    function($scope, $route, $routeSegment, config,
+    function($scope, $route, $routeSegment, $document, config,
              authService, notificationsService) {
 
       // DEBUG
@@ -164,14 +164,19 @@ module.exports = function (app) {
         // is empty and hence cannot be serialized anymore.
         $scope.latestRangySelectionSerialized =
           rangy.serializeSelection($scope.latestRangySelection);
-
-        $scope.textIsHighlighted = true;
       };
 
       $scope.phUnhighlightSelection = function() {
         highlighter.unhighlightSelection($scope.latestRangySelection);
         //$scope.latestRangySelection = null;
-        $scope.textIsHighlighted = false;
       };
+
+      //// On mousedown anywhere in the document, release the highlighted
+      //// selection.
+      //$document.on('mousedown', function(event) {
+      //  console.log(123);
+      //  $scope.verticalOffsetHighlighted = undefined;
+      //});
+
     }]);
 };

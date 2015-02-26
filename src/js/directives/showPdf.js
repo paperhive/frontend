@@ -5,7 +5,6 @@ module.exports = function (app) {
       scope: {
         'url': '@',
         'verticalOffsetSelection': '=',
-        'textIsSelected': '=',
         'simple': '@'
       },
       link: function (scope, element, attrs) {
@@ -179,8 +178,6 @@ module.exports = function (app) {
             } else if (document.selection && document.selection.type != "Control") {
               text = document.selection.createRange().text;
             }
-
-            scope.textIsSelected = (text !== "");
 
             if (text === "") {
               scope.verticalOffsetSelection = undefined;
