@@ -123,7 +123,6 @@ module.exports = function (app) {
       }));
 
       $scope.phHighlightSerializedSelection = function(serializedSelection) {
-        console.log('phHighlightSerializedSelection');
         if (!serializedSelection) {
           return;
         }
@@ -150,6 +149,9 @@ module.exports = function (app) {
       $scope.latestRangySelection = null;
       $scope.latestRangySelectionSerialized = null;
       $scope.phHighlightSelection = function() {
+        //// Unhighlight previous selection
+        //highlighter.unhighlightSelection($scope.latestRangySelection);
+
         $scope.latestRangySelection = rangy.getSelection();
         highlighter.highlightSelection(
           "ph-highlight",

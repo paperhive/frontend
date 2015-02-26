@@ -11,7 +11,7 @@
   <!--actual text-->
   <pdf
     url="{{article.url}}"
-    vertical-offset="verticalOffset"
+    vertical-offset-selection="verticalOffsetSelection"
     text-is-selected="textIsSelected"
     class="col-md-9"
     ></pdf>
@@ -33,24 +33,26 @@
       ng-show="textIsSelected || textIsHighlighted"
       ng-style="
       {
-      'top': verticalOffset,
+      'top': verticalOffsetSelection || verticalOffsetHighlighted,
       'position': 'relative'
       }
       "
       >
       <create-inline-annotation
-      ng-if="auth.user"
-      serialized-selection="latestRangySelectionSerialized"
-      vertical-offset="verticalOffset"
-      on-save="article.discussions.push($discussion)"
-      on-focus="phHighlightSelection"
-      on-blur="phUnhighlightSelection"
-      >
+        ng-if="auth.user"
+        serialized-selection="latestRangySelectionSerialized"
+        vertical-offset="verticalOffsetSelection"
+        on-save="article.discussions.push($discussion)"
+        on-blur="phUnhighlightSelection"
+        ng-mousedown="
+        $parent.verticalOffsetHighlighted = $parent.verticalOffsetSelection;
+        phHighlightSelection()"
+        >
       </create-inline-annotation>
       <ng-include
-      ng-if="!auth.user"
-      src="'templates/article/text/inline-annotation-substitute.html'"
-      >
+        ng-if="!auth.user"
+        src="'templates/article/text/inline-annotation-substitute.html'"
+        >
       </ng-include>
     </div>
   </div>

@@ -10,8 +10,7 @@ module.exports = function (app) {
           onSave: '&',
           onFocus: '=',
           onBlur: '=',
-          serializedSelection: '=',
-          verticalOffset: '='
+          serializedSelection: '='
         },
         templateUrl: 'templates/article/text/create-inline-annotation.html',
         link: function(scope) {
