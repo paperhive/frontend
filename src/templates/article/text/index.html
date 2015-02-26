@@ -11,7 +11,8 @@
   <!--actual text-->
   <pdf
     url="{{article.url}}"
-    offset-px="offsetPx"
+    vertical-offset="verticalOffset"
+    text-is-selected="textIsSelected"
     class="col-md-9"
     ></pdf>
   <!--column for margin notes-->
@@ -29,10 +30,10 @@
     This makes sure that the entered text is preserved.
     -->
     <div
-      ng-show="offsetPx !== undefined"
+      ng-show="textIsSelected || textIsHighlighted"
       ng-style="
       {
-      'top': offsetPx,
+      'top': verticalOffset,
       'position': 'relative'
       }
       "
@@ -40,7 +41,7 @@
       <create-inline-annotation
       ng-if="auth.user"
       serialized-selection="latestRangySelectionSerialized"
-      vertical-offset="offsetPx"
+      vertical-offset="verticalOffset"
       on-save="article.discussions.push($discussion)"
       on-focus="phHighlightSelection"
       on-blur="phUnhighlightSelection"

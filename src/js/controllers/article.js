@@ -162,11 +162,14 @@ module.exports = function (app) {
         // is empty and hence cannot be serialized anymore.
         $scope.latestRangySelectionSerialized =
           rangy.serializeSelection($scope.latestRangySelection);
+
+        $scope.textIsHighlighted = true;
       };
 
       $scope.phUnhighlightSelection = function() {
         highlighter.unhighlightSelection($scope.latestRangySelection);
         //$scope.latestRangySelection = null;
+        $scope.textIsHighlighted = false;
       };
     }]);
 };

@@ -4,7 +4,8 @@ module.exports = function (app) {
       restrict: 'E',
       scope: {
         'url': '@',
-        'offsetPx': '=',
+        'verticalOffset': '=',
+        'textIsSelected': '=',
         'simple': '@'
       },
       link: function (scope, element, attrs) {
@@ -179,8 +180,10 @@ module.exports = function (app) {
               text = document.selection.createRange().text;
             }
 
+            scope.textIsSelected = (text !== "");
+
             if (text === "") {
-              scope.offsetPx = undefined;
+              scope.verticalOffset = undefined;
             } else {
               // Get vertical offset of the selection.
               if (window.getSelection) {
@@ -195,9 +198,9 @@ module.exports = function (app) {
                    selection.anchorNode.parentElement.parentElement.offsetTop +
                    selection.anchorNode.parentElement.parentElement.parentElement.offsetTop
                   );
-                  scope.offsetPx = totalOffset + "px";
+                  scope.verticalOffset = totalOffset + "px";
               } else if (document.selection && document.selection.type != "Control") {
-                scope.offsetPx = document.selection.createRange() + "px";
+                scope.verticalOffset = document.selection.createRange() + "px";
               }
             }
             scope.$apply();
