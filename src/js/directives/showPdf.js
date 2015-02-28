@@ -1,11 +1,13 @@
 module.exports = function (app) {
   app.directive('pdf', [
-    function () {
+    '$document',
+    function ($document) {
     return {
       restrict: 'E',
       scope: {
         'url': '@',
-        'verticalOffsetSelection': '=',
+        'onMouseup': '&',
+        'onOutsideMouseup': '&',
         'simple': '@'
       },
       link: function (scope, element, attrs) {
@@ -168,43 +170,22 @@ module.exports = function (app) {
           //  });
           //});
           //// --------
-
-          // Intercept mouseup event to display new annotation box
           element.on('mouseup', function(event) {
-            // Get selected text, cf.
-            // <http://stackoverflow.com/a/5379408/353337>.
-            var text = "";
-            if (window.getSelection) {
-              text = window.getSelection().toString();
-            } else if (document.selection && document.selection.type != "Control") {
-              text = document.selection.createRange().text;
+            console.log("PDF element mouseup");
+            if (scope.onMouseup) {
+              scope.onMouseup();
             }
-
-            if (text === "") {
-              scope.verticalOffsetSelection = undefined;
-            } else {
-              // Get vertical offset of the selection.
-              if (window.getSelection) {
-                selection = window.getSelection();
-                // Collect all offsets until we are at the same level as the
-                // element in which the annotations are actually displayed (the
-                // annotation column). This is ugly since it makes assumptions
-                // about the DOM tree.
-                // TODO revise
-                totalOffset =
-                  ( selection.anchorNode.parentElement.offsetTop +
-                   selection.anchorNode.parentElement.parentElement.offsetTop +
-                   selection.anchorNode.parentElement.parentElement.parentElement.offsetTop
-                  );
-                  scope.verticalOffsetSelection = totalOffset + "px";
-              } else if (document.selection &&
-                         document.selection.type != "Control") {
-                scope.verticalOffsetSelection =
-                  document.selection.createRange() + "px";
-              }
-            }
-            scope.$apply();
+            // Don't propagate the PDF mouseup event to $document.
+            event.stopPropagation();
           });
+
+          $document.on('mouseup', function(event) {
+            console.log("PDF outside mouseup");
+            if (scope.onOutsideMouseup) {
+              scope.onOutsideMouseup();
+            }
+          });
+
         }
       }
     };

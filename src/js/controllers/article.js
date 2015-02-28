@@ -174,5 +174,48 @@ module.exports = function (app) {
         }
       };
 
+      $scope.getSelection = function() {
+        // Intercept mouseup event to display new annotation box
+        console.log('getSelection');
+        // Get selected text, cf.
+        // <http://stackoverflow.com/a/5379408/353337>.
+        var text = "";
+        if (window.getSelection) {
+          text = window.getSelection().toString();
+        } else if (document.selection && document.selection.type != "Control") {
+          text = document.selection.createRange().text;
+        }
+
+        if (text === "") {
+          $scope.verticalOffsetSelection = undefined;
+        } else {
+          // Get vertical offset of the selection.
+          if (window.getSelection) {
+            selection = window.getSelection();
+            // Collect all offsets until we are at the same level as the
+            // element in which the annotations are actually displayed (the
+            // annotation column). This is ugly since it makes assumptions
+            // about the DOM tree.
+            // TODO revise
+            totalOffset =
+              ( selection.anchorNode.parentElement.offsetTop +
+               selection.anchorNode.parentElement.parentElement.offsetTop +
+               selection.anchorNode.parentElement.parentElement.parentElement.offsetTop
+              );
+              $scope.verticalOffsetSelection = totalOffset + "px";
+          } else if (document.selection &&
+                     document.selection.type != "Control") {
+            $scope.verticalOffsetSelection =
+            document.selection.createRange() + "px";
+          }
+        }
+        $scope.$apply();
+      };
+
+      $scope.purgeSelection = function() {
+        console.log('purgeSelection');
+        $scope.verticalOffsetSelection = undefined;
+      };
+
     }]);
 };
