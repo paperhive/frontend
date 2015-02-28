@@ -146,37 +146,33 @@ module.exports = function (app) {
         );
       };
 
-      $scope.latestRangySelection = null;
-      $scope.latestRangySelectionSerialized = null;
+      $scope.latestRangySelection = undefined;
+      $scope.latestRangySelectionSerialized = undefined;
       $scope.phHighlightSelection = function() {
         //// Unhighlight previous selection
         //highlighter.unhighlightSelection($scope.latestRangySelection);
-
-        $scope.latestRangySelection = rangy.getSelection();
-        highlighter.highlightSelection(
-          "ph-highlight",
-          $scope.latestRangySelection
-        );
-        // Already serialize the selection at this point since for some reason
-        // ```
-        // $scope.latestRangySelectionSerialized.getAllRanges()
-        // ```
-        // is empty and hence cannot be serialized anymore.
-        $scope.latestRangySelectionSerialized =
-          rangy.serializeSelection($scope.latestRangySelection);
+        if ($scope.latestRangySelection === undefined) {
+          $scope.latestRangySelection = rangy.getSelection();
+          highlighter.highlightSelection(
+            "ph-highlight",
+            $scope.latestRangySelection
+          );
+          // Already serialize the selection at this point since for some reason
+          // ```
+          // $scope.latestRangySelectionSerialized.getAllRanges()
+          // ```
+          // is empty and hence cannot be serialized anymore.
+          $scope.latestRangySelectionSerialized =
+            rangy.serializeSelection($scope.latestRangySelection);
+        }
       };
 
       $scope.phUnhighlightSelection = function() {
-        highlighter.unhighlightSelection($scope.latestRangySelection);
-        //$scope.latestRangySelection = null;
+        if ($scope.latestRangySelection) {
+          highlighter.unhighlightSelection($scope.latestRangySelection);
+          $scope.latestRangySelection = undefined;
+        }
       };
-
-      //// On mousedown anywhere in the document, release the highlighted
-      //// selection.
-      //$document.on('mousedown', function(event) {
-      //  console.log(123);
-      //  $scope.verticalOffsetHighlighted = undefined;
-      //});
 
     }]);
 };

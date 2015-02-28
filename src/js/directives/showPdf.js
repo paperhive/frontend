@@ -1,5 +1,6 @@
 module.exports = function (app) {
-  app.directive('pdf', [function () {
+  app.directive('pdf', [
+    function () {
     return {
       restrict: 'E',
       scope: {

@@ -1,19 +1,34 @@
 module.exports = function (app) {
 
   app.directive('createInlineAnnotation', [
-    'authService', 'NotificationsService',
-    function(authService, notificationsService) {
+    'authService', 'NotificationsService', '$document',
+    function(authService, notificationsService, $document) {
       return {
         restrict: 'E',
         scope: {
           onSave: '&',
-          onFocus: '=',
-          onBlur: '=',
+          onMousedown: '&',
+          onOutsideMousedown: '&',
           serializedSelection: '='
         },
         templateUrl: 'templates/article/text/create-inline-annotation.html',
-        link: function(scope) {
+        link: function(scope, element) {
           scope.auth = authService;
+
+          // On mousedown anywhere in the document, release the highlighted
+          // selection.
+          $document.on('mousedown', function(event) {
+            if (scope.onOutsideMousedown) {
+              scope.onOutsideMousedown();
+            }
+          });
+          element.on('mousedown', function(event) {
+            if (scope.onMousedown) {
+              scope.onMousedown();
+            }
+            // Stop propagation to $document.on('mousedown', ...).
+            event.stopPropagation();
+          });
 
           scope.addDiscussion = function() {
             // We always needs a title.
