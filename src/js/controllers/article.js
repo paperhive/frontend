@@ -167,13 +167,18 @@ module.exports = function (app) {
         }
       };
 
-      $scope.phSoftPurgeSelection = function() {
+      $scope.phSoftPurgeSelection = function(annotationHasBody) {
+        if (annotationHasBody) {
+          return;
+        }
         if ($scope.latestRangySelection) {
           highlighter.unhighlightSelection($scope.latestRangySelection);
           $scope.latestRangySelection = undefined;
         }
         $scope.verticalOffsetSelection = undefined;
       };
+
+      $scope.newAnnotation = {};
 
       $scope.getSelection = function() {
         // Intercept mouseup event to display new annotation box
