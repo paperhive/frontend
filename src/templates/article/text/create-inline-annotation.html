@@ -1,0 +1,50 @@
+<div
+  class="panel panel-default ph-inline-annotation-edit"
+  >
+  <div class="panel-heading">
+    <img
+    src="https://secure.gravatar.com/avatar/{{auth.user.gravatarMd5}}?s=30"
+    class="ph-avatar"
+    alt="{{auth.user.displayName}} avatar"
+    >
+    {{auth.user.displayName}}
+    <span class="pull-right">
+      <a href="#">
+        <i class="fa fa-globe"></i>
+      </a>
+    </span>
+  </div>
+  <div class="panel-body">
+    <form
+      name="annotationForm"
+      ng-submit="annotationForm.$valid && addDiscussion()"
+      novalidate
+      >
+      <input
+        type="text"
+        ng-if="body.length > 20"
+        id="annotation-title"
+        ng-model="$parent.title"
+        class="form-group form-control"
+        placeholder="Enter title..."
+        required
+        >
+      <textarea
+        id="textbody"
+        placeholder="Enter comment..."
+        ng-model="body"
+        class="form-group form-control ph-annotation-body"
+        rows="2"
+        required
+        ></textarea>
+      <span class="pull-right">
+        <button
+          class="btn btn-sm btn-primary"
+          ng-disabled="annotationForm.$invalid"
+          >
+          Add comment
+        </button>
+      </span>
+    </form>
+  </div>
+</div>

@@ -21,14 +21,14 @@ module.exports = function (app) {
       $scope.setTitleEditOn = function() {
         $scope.tmpTitle = $scope.discussion.title;
         $scope.titleEditMode = true;
-      }
+      };
       $scope.setTitleEditOff = function() {
         $scope.titleEditMode = false;
-      }
+      };
       $scope.updateTitle = function(newTitle) {
         $scope.discussion.title = newTitle;
         $scope.titleEditMode = false;
-      }
+      };
 
       $scope.subscribers = [
       ];
@@ -50,21 +50,19 @@ module.exports = function (app) {
         }
       };
 
-      $scope.addReply = function() {
+      $scope.addReply = function(body) {
         if (!$scope.auth.user) {
-            throw PhError("Not logged in?");
+          throw PhError("Not logged in?");
         }
         // create the annotation
         reply = {
           _id: Math.random().toString(36).slice(2),
           author: $scope.auth.user,
-          body: $scope.annotationBody,
+          body: body,
           time: new Date(),
           labels: ["reply"]
         };
         $scope.discussion.replies.push(reply);
-        // clear body
-        $scope.annotationBody = null;
         return;
       };
 

@@ -7,19 +7,49 @@
     <div class="clearfix"></div>
   </div>
 </div>
-<div class="row" ng-controller="MarginNoteCtrl">
-  <!--actual text-->
-  <pdf url="{{article.url}}" offset-px="offsetPx" class="col-md-11"></pdf>
+<div class="row">
+  <pdf
+    url="{{article.url}}"
+    on-mouseup="phGetSelection()"
+    class="col-md-9"
+    ></pdf>
   <!--column for margin notes-->
-  <div id="annotation-column" class="col-md-1">
+  <div id="annotation-column" class="col-md-3">
+    <inline-annotation
+      ng-repeat="discussion in article.discussions | filter:
+      {serializedSelection: '!undefined'}"
+      title='discussion.title'
+      body='discussion.body'
+      author='discussion.originalAnnotation.author'
+      vertical-offset='discussion.verticalOffset'
+      >
+    </inline-annotation>
     <!-- Don't use ng-if here to keep the element in the DOM tree.
     This makes sure that the entered text is preserved.
     -->
-    <ng-include ng-if="auth.user" ng-show="offsetPx !== undefined"
-        src="'templates/article/text/inline-annotation.html'" >
-    </ng-include>
-    <ng-include ng-if="!auth.user" ng-show="offsetPx !== undefined"
-        src="'templates/article/text/inline-annotation-substitute.html'">
-    </ng-include>
+    <div
+      ng-show="verticalOffsetSelection"
+      ng-style="
+      {
+      'top': verticalOffsetSelection,
+      'position': 'relative'
+      }
+      "
+      >
+      <create-inline-annotation
+        ng-if="auth.user"
+        serialized-selection="latestRangySelectionSerialized"
+        on-save="article.discussions.push($discussion)"
+        on-mousedown="phHighlightSelection()"
+        on-outside-mousedown="!newAnnotation.body && phPurgeSelection()"
+        body="newAnnotation.body"
+        >
+      </create-inline-annotation>
+      <ng-include
+        ng-if="!auth.user"
+        src="'templates/article/text/inline-annotation-substitute.html'"
+        >
+      </ng-include>
+    </div>
   </div>
 </div>

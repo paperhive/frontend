@@ -2,7 +2,6 @@ module.exports = function (app) {
   require('./annotation.js')(app);
   require('./article.js')(app);
   require('./discussion.js')(app);
-  require('./marginnote.js')(app);
   require('./navbar.js')(app);
   require('./navbar_user.js')(app);
   require('./notifications.js')(app);

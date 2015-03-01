@@ -1,6 +1,10 @@
-<a class="media-left" href="#">
-  <img src="https://secure.gravatar.com/avatar/?s=80" alt="thumbnail"
-      class="img-rounded" width="80px">
+<a class="media-left" href="/#/users/{{annotation.author.userName}}">
+  <img
+    alt="thumbnail"
+    src="https://secure.gravatar.com/avatar/?s=80"
+    width="80px"
+    class="img-rounded"
+    >
 </a>
 <div class="media-body" style="width:100%">
   <div class="panel panel-default">
@@ -19,25 +23,40 @@
         <span ng-if="isArticleAuthor" class="ph-comment-tag">Author</span>
         <!-- Can't use ng-if here; it seems to create another scope. -->
         <!--  ng-if="annotation.permissions.edit" -->
-        <button class="btn btn-link ph-no-padding-top ph-no-padding-bottom"
-            ng-click="setEditOn()">
+        <button
+          class="btn btn-link ph-no-padding-top ph-no-padding-bottom"
+          ng-click="setEditOn()"
+          >
           <i class="fa fa-pencil"></i>
         </button>
         <button
-            ng-if="deleteFunction && annotation.permissions.delete"
-            class="btn btn-link ph-no-padding-top ph-no-padding-bottom"
-            confirmed-click="deleteFunction(annotation._id)"
-            ng-confirm-click="Really delete reply?"
-            >
+          ng-if="deleteFunction && annotation.permissions.delete"
+          class="btn btn-link ph-no-padding-top ph-no-padding-bottom"
+          confirmed-click="deleteFunction(annotation._id)"
+          ng-confirm-click="Really delete reply?"
+          >
           <i class="fa fa-remove"></i>
         </button>
       </span>
     </div>
     <div class="panel-body">
-      <ng-include ng-if="isEditMode"
-          src="'templates/article/comment/inline-edit.html'">
+      <ng-include
+        ng-if="isEditMode"
+        src="'templates/article/comment/inline-edit.html'"
+        >
       </ng-include>
-      <kramjax ng-if="!isEditMode" body="{{annotation.body}}"></kramjax>
+      <kramjax
+        ng-if="!isEditMode && annotation.body !== undefined"
+        body="{{annotation.body}}"
+        ></kramjax>
+      <!--span ng-if="annotation.body === undefined">No description
+      provided.</span-->
+      <em
+        ng-if="!annotation.body"
+        class="ph-replacement-text"
+        >
+        No description provided.
+      </em>
     </div>
   </div>
 </div>

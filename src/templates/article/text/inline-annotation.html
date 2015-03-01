@@ -2,22 +2,18 @@
   class="panel panel-default ph-inline-annotation"
   ng-style="
   {
-  'top': offsetPx,
-  'position': 'relative',
-  'border': '1px solid LightGray',
-  'width': '100%+200px',
-  'margin-left': '-200px',
-  'background': 'white'
+  'top': verticalOffset,
+  'position': 'relative'
   }
   "
   >
   <div class="panel-heading">
     <img
-    src="https://secure.gravatar.com/avatar/{{auth.user.gravatarMd5}}?s=30"
+    src="https://secure.gravatar.com/avatar/{{author.gravatarMd5}}?s=30"
     class="ph-avatar"
-    alt="{{auth.user.displayName}} avatar"
+    alt="{{author.displayName}} avatar"
     >
-    {{auth.user.displayName}}
+    {{author.displayName}}
     <span class="pull-right">
       <a href="#">
         <i class="fa fa-globe"></i>
@@ -25,26 +21,11 @@
     </span>
   </div>
   <div class="panel-body">
-    <form
-      name="annotationForm"
-      ng-submit="annotationForm.$valid && addAnnotation()"
-      novalidate
-      >
-      <textarea
-        id="textbody"
-        ng-model='annotation.body'
-        class="form-group form-control ph-annotation-body"
-        rows="2"
-        required
-        ></textarea>
-      <span class="pull-right">
-        <button
-          class="btn btn-sm btn-primary"
-          ng-disabled="annotationForm.$invalid"
-          >
-          Comment
-        </button>
-      </span>
-    </form>
+    <div ng-if='title !== undefined'>
+      {{title}}
+    </div>
+    <div ng-if='title === undefined'>
+      {{body}}
+    </div>
   </div>
 </div>
