@@ -27,6 +27,7 @@ module.exports = function (app) {
           )
             .success(function (article) {
               $scope.article = article;
+              $scope.metadataCollapsed = false;
             })
             .error(function () {
               $scope.article = undefined;
