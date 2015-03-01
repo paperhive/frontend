@@ -10,7 +10,7 @@ var gutil = require('gulp-util');
 var uglify = require('gulp-uglify');
 var streamify = require('gulp-streamify');
 var minifyCSS = require('gulp-minify-css');
-var minifyHTML = require('gulp-minify-html');
+var htmlmin = require('gulp-htmlmin');
 var _ = require('lodash');
 var protractor = require("gulp-protractor").protractor;
 
@@ -25,7 +25,6 @@ var paths = {
 };
 
 var htmlOpts = {
-  empty: true // allow empty attributes (required, e.g., for href="")
 };
 
 // error handling, simplified version (without level) from
@@ -85,7 +84,7 @@ gulp.task('templates', function () {
   var templateCache = require('gulp-angular-templatecache');
 
   return gulp.src(paths.templates, {base: 'src'})
-    .pipe(debug ? gutil.noop() : minifyHTML(htmlOpts))
+    .pipe(debug ? gutil.noop() : htmlmin(htmlOpts))
     .pipe(templateCache({
       moduleSystem: 'Browserify',
       standalone: true,
@@ -99,7 +98,7 @@ gulp.task('templates', function () {
 // copy static files
 gulp.task('static', function () {
   var html = gulp.src(paths.html, {base: 'src'})
-    .pipe(debug ? gutil.noop() : minifyHTML(htmlOpts))
+    .pipe(debug ? gutil.noop() : htmlmin(htmlOpts))
     .pipe(gulp.dest('build'));
 
   var images = gulp.src(paths.images, {base: 'src'})
