@@ -8,11 +8,9 @@
   </div>
 </div>
 <div class="row">
-  <!--actual text-->
   <pdf
     url="{{article.url}}"
     on-mouseup="getSelection()"
-    on-outside-mouseup="purgeSelection()"
     class="col-md-9"
     ></pdf>
   <!--column for margin notes-->
@@ -29,7 +27,6 @@
     <!-- Don't use ng-if here to keep the element in the DOM tree.
     This makes sure that the entered text is preserved.
     -->
-    {{verticalOffsetSelection}}
     <div
       ng-show="verticalOffsetSelection"
       ng-style="
@@ -44,7 +41,7 @@
         serialized-selection="latestRangySelectionSerialized"
         on-save="article.discussions.push($discussion)"
         on-mousedown="phHighlightSelection()"
-        on-outside-mousedown="phUnhighlightSelection()"
+        on-outside-mousedown="phSoftPurgeSelection()"
         >
       </create-inline-annotation>
       <ng-include

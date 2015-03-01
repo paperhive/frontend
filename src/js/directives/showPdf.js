@@ -171,7 +171,6 @@ module.exports = function (app) {
           //});
           //// --------
           element.on('mouseup', function(event) {
-            console.log("PDF element mouseup");
             if (scope.onMouseup) {
               $rootScope.$apply(scope.onMouseup);
             }
@@ -180,7 +179,6 @@ module.exports = function (app) {
           });
 
           $document.on('mouseup', function(event) {
-            console.log("PDF document mouseup");
             if (scope.onOutsideMouseup) {
               $rootScope.$apply(scope.onOutsideMouseup);
             }

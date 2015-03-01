@@ -167,16 +167,16 @@ module.exports = function (app) {
         }
       };
 
-      $scope.phUnhighlightSelection = function() {
+      $scope.phSoftPurgeSelection = function() {
         if ($scope.latestRangySelection) {
           highlighter.unhighlightSelection($scope.latestRangySelection);
           $scope.latestRangySelection = undefined;
         }
+        $scope.verticalOffsetSelection = undefined;
       };
 
       $scope.getSelection = function() {
         // Intercept mouseup event to display new annotation box
-        console.log('getSelection');
         // Get selected text, cf.
         // <http://stackoverflow.com/a/5379408/353337>.
         var text = "";
@@ -209,10 +209,6 @@ module.exports = function (app) {
               document.selection.createRange() + "px";
           }
         }
-      };
-
-      $scope.purgeSelection = function() {
-        $scope.verticalOffsetSelection = undefined;
       };
 
     }]);
