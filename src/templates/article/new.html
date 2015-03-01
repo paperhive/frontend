@@ -22,43 +22,127 @@
 
   </div>
   <div class="container">
-    <form name="articleNewForm" role="form" ng-submit="fetchUrl = url">
+    <form name="articleNewForm" role="form">
+
+      <!-- article source -->
       <div class="row">
-        <div class="col-md-12">
-          <p>
-            You can add any arXiv article to PaperHub by providing an arXiv URL
-            or an arxiv id such as <em>1208.0264v4</em>. More article
-            repositories will become available in the near future!
-          </p>
-          <div class="row">
-            <div class="form-group">
-              <div class="col-xs-4">
-                <input ng-model="handle"
-                  placeholder="Enter arxiv URL or arxiv id"
-                  class="form-control"/>
+
+        <!-- approved source -->
+        <div class="col-sm-5">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">Add from approved source</h4>
+            </div>
+            <div class="panel-body">
+              <div class="form-horizontal">
+                <div class="form-group has-feedback">
+                  <label for="handle" class="control-label col-sm-3">
+                    Article URL
+                  </label>
+                  <div class="col-sm-9">
+                    <input ng-model="handle"
+                      name="handle" type="text"
+                      class="form-control" id="handle"
+                      placeholder="Provide article URL or identifier">
+                  </div>
+                </div>
+                <div ng-show="article._id">
+                  <div class="row">
+                    <div class="col-sm-offset-3 col-sm-9">
+                      <p>
+                        This article has already been added to PaperHub.
+                      </p>
+                      <p class="text-right">
+                        <a href="#/articles/{{article._id}}" class="btn btn-primary">
+                          <i class="fa fa-fw fa-file-pdf-o"></i>
+                          Show article
+                        </a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div ng-show="!article._id">
+                  <div class="row">
+                    <div class="col-sm-offset-3 col-sm-9">
+                      <p class="text-right">
+                        <button type="submit" ng-disabled="!article"
+                            ng-click="metadataCollapsed = !metadataCollapsed"
+                            class="btn btn-default">
+                            <i class="fa fa-fw" ng-class="{
+                              'fa-caret-down': metadataCollapsed,
+                              'fa-caret-up': !metadataCollapsed
+                              }"></i>
+                          <span ng-show="metadataCollapsed">Show</span>
+                          <span ng-show="!metadataCollapsed">Hide</span>
+                          metadata
+                        </button>
+                        <button type="submit" ng-disabled="!article || submitting"
+                            ng-click="submitApproved()"
+                            class="btn btn-primary">
+                          <i class="fa fa-fw fa-plus" ng-show="!submitting"></i>
+                          <i class="fa fa-fw fa-spinner fa-spin" ng-show="submitting"></i>
+                          Add to PaperHub
+                        </button>
+                      </p>
+                    </div>
+                  </div>
+                  <div collapse="metadataCollapsed" ng-init="metadataCollapsed = true">
+                    <div class="panel panel-default">
+                      <div class="panel-body">
+                        <div class="form-group">
+                          <label class="control-label col-sm-3">
+                            Title
+                          </label>
+                          <div class="col-sm-9">
+                            <p class="form-control-static">
+                              {{article.title}}
+                            </p>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="control-label col-sm-3">
+                            Authors
+                          </label>
+                          <div class="col-sm-9">
+                            <p class="form-control-static">
+                              <span ng-repeat="author in article.authors">
+                                {{author}}{{$last ? '' : ', '}}
+                              </span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="row" ng-show="metadata">
-            <div class="col-xs-6">
-              <table class="table">
-                <tr>
-                  <th scope="row">Title</td>
-                  <td>{{metadata.title}}</td>
-                </tr>
-                <tr>
-                  <th scope="row">Authors</td>
-                  <td>
-                    <span ng-repeat="author in metadata.authors">
-                      {{author}}<span ng-show="!$last">,</span>
-                    </span>
-                  </td>
-                </tr>
-              </table>
+            <div class="panel-footer">
+                Currently approved article sources are:
+                <ul>
+                  <li><a href="http://arxiv.org/">arXiv</a></li>
+                </ul>
+                Please <a href="#/contact">contact us</a> to suggest further article sources.
             </div>
           </div>
         </div>
+
+        <!-- private PDF -->
+        <div class="col-sm-offset-1 col-sm-5">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">Upload PDF (disabled!)</h4>
+            </div>
+            <div class="panel-body">
+              <button type="button" class="btn btn-default" disabled>
+                Upload PDF
+              </button>
+            </div>
+          </div>
+        </div>
+
       </div>
     </form>
+
   </div>
 </div>
