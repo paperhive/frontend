@@ -9,11 +9,17 @@ module.exports = function (app) {
           onSave: '&',
           onMousedown: '&',
           onOutsideMousedown: '&',
-          serializedSelection: '='
+          serializedSelection: '=',
+          hasBody: '='
         },
         templateUrl: 'templates/article/text/create-inline-annotation.html',
         link: function(scope, element) {
           scope.auth = authService;
+
+          scope.hasBody = 123;
+
+          //console.log(scope.body);
+          //scope.hasContent = !!scope.body;
 
           // On mousedown anywhere in the document, release the highlighted
           // selection.
@@ -25,8 +31,11 @@ module.exports = function (app) {
             }
           });
           element.on('mousedown', function(event) {
+            console.log(scope.body);
             if (scope.onMousedown) {
-              $rootScope.$apply(scope.onMousedown);
+              $rootScope.$apply(function() {
+                scope.onMousedown();
+              });
             }
             // Stop propagation to $document.on('mousedown', ...).
             event.stopPropagation();

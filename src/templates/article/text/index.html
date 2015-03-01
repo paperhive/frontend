@@ -36,12 +36,14 @@
       }
       "
       >
+      X{{hasAnnoBody}}X
       <create-inline-annotation
         ng-if="auth.user"
         serialized-selection="latestRangySelectionSerialized"
         on-save="article.discussions.push($discussion)"
         on-mousedown="phHighlightSelection()"
         on-outside-mousedown="phSoftPurgeSelection()"
+        has-body="hasAnnoBody"
         >
       </create-inline-annotation>
       <ng-include
