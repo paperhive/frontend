@@ -168,14 +168,13 @@ module.exports = function (app) {
       };
 
       $scope.phSoftPurgeSelection = function(annotationHasBody) {
-        if (annotationHasBody) {
-          return;
+        if (!annotationHasBody) {
+          if ($scope.latestRangySelection) {
+            highlighter.unhighlightSelection($scope.latestRangySelection);
+            $scope.latestRangySelection = undefined;
+          }
+          $scope.verticalOffsetSelection = undefined;
         }
-        if ($scope.latestRangySelection) {
-          highlighter.unhighlightSelection($scope.latestRangySelection);
-          $scope.latestRangySelection = undefined;
-        }
-        $scope.verticalOffsetSelection = undefined;
       };
 
       $scope.newAnnotation = {};
@@ -191,10 +190,13 @@ module.exports = function (app) {
           text = document.selection.createRange().text;
         }
 
-        if (text === "") {
-          $scope.verticalOffsetSelection = undefined;
-        } else {
-          // Get vertical offset of the selection.
+        if (!!text) {
+          // Unhighlight previous selection.
+          if ($scope.latestRangySelection) {
+            highlighter.unhighlightSelection($scope.latestRangySelection);
+            $scope.latestRangySelection = undefined;
+          }
+          // Get vertical offset of the current selection.
           if (window.getSelection) {
             selection = window.getSelection();
             // Collect all offsets until we are at the same level as the
@@ -202,12 +204,21 @@ module.exports = function (app) {
             // annotation column). This is ugly since it makes assumptions
             // about the DOM tree.
             // TODO revise
-            totalOffset =
-              ( selection.anchorNode.parentElement.offsetTop +
-               selection.anchorNode.parentElement.parentElement.offsetTop +
-               selection.anchorNode.parentElement.parentElement.parentElement.offsetTop
-              );
-              $scope.verticalOffsetSelection = totalOffset + "px";
+            var totalOffset = 0;
+            if (selection) {
+              if (selection.anchorNode) {
+                if (selection.anchorNode.parentElement) {
+                  totalOffset += selection.anchorNode.parentElement.offsetTop;
+                  if (selection.anchorNode.parentElement.parentElement) {
+                    totalOffset += selection.anchorNode.parentElement.parentElement.offsetTop;
+                    if (selection.anchorNode.parentElement.parentElement.parentElement) {
+                      totalOffset += selection.anchorNode.parentElement.parentElement.parentElement.offsetTop;
+                    }
+                  }
+                }
+              }
+            }
+            $scope.verticalOffsetSelection = totalOffset + "px";
           } else if (document.selection &&
                      document.selection.type != "Control") {
             $scope.verticalOffsetSelection =
