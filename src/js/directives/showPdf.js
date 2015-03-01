@@ -1,7 +1,7 @@
 module.exports = function (app) {
   app.directive('pdf', [
-    '$document',
-    function ($document) {
+    '$document', '$rootScope',
+    function ($document, $rootScope) {
     return {
       restrict: 'E',
       scope: {
@@ -173,16 +173,16 @@ module.exports = function (app) {
           element.on('mouseup', function(event) {
             console.log("PDF element mouseup");
             if (scope.onMouseup) {
-              scope.onMouseup();
+              $rootScope.$apply(scope.onMouseup);
             }
             // Don't propagate the PDF mouseup event to $document.
             event.stopPropagation();
           });
 
           $document.on('mouseup', function(event) {
-            console.log("PDF outside mouseup");
+            console.log("PDF document mouseup");
             if (scope.onOutsideMouseup) {
-              scope.onOutsideMouseup();
+              $rootScope.$apply(scope.onOutsideMouseup);
             }
           });
 

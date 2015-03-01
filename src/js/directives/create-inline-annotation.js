@@ -1,8 +1,8 @@
 module.exports = function (app) {
 
   app.directive('createInlineAnnotation', [
-    'authService', 'NotificationsService', '$document',
-    function(authService, notificationsService, $document) {
+    'authService', 'NotificationsService', '$document', '$rootScope',
+    function(authService, notificationsService, $document, $rootScope) {
       return {
         restrict: 'E',
         scope: {
@@ -19,12 +19,14 @@ module.exports = function (app) {
           // selection.
           $document.on('mousedown', function(event) {
             if (scope.onOutsideMousedown) {
-              scope.onOutsideMousedown();
+              // wrap the call in a $rootScope.$apply to make sure Angular
+              // updates the scope on changes
+              $rootScope.$apply(scope.onOutsideMousedown);
             }
           });
           element.on('mousedown', function(event) {
             if (scope.onMousedown) {
-              scope.onMousedown();
+              $rootScope.$apply(scope.onMousedown);
             }
             // Stop propagation to $document.on('mousedown', ...).
             event.stopPropagation();

@@ -206,14 +206,12 @@ module.exports = function (app) {
           } else if (document.selection &&
                      document.selection.type != "Control") {
             $scope.verticalOffsetSelection =
-            document.selection.createRange() + "px";
+              document.selection.createRange() + "px";
           }
         }
-        $scope.$apply();
       };
 
       $scope.purgeSelection = function() {
-        console.log('purgeSelection');
         $scope.verticalOffsetSelection = undefined;
       };
 
