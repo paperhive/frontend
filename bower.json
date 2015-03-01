@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "homepage": "https://github.com/paperhub/paperhub-frontend",
   "authors": [
+    "André Gaul <andre@gaul.io>",
     "Nico Schlömer <nico.schloemer@gmail.com>"
   ],
   "main": "index.html",
