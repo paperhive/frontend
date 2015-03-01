@@ -10,7 +10,7 @@
 <div class="row">
   <pdf
     url="{{article.url}}"
-    on-mouseup="getSelection()"
+    on-mouseup="phGetSelection()"
     class="col-md-9"
     ></pdf>
   <!--column for margin notes-->
@@ -41,7 +41,7 @@
         serialized-selection="latestRangySelectionSerialized"
         on-save="article.discussions.push($discussion)"
         on-mousedown="phHighlightSelection()"
-        on-outside-mousedown="phSoftPurgeSelection(!!newAnnotation.body)"
+        on-outside-mousedown="!newAnnotation.body && phPurgeSelection()"
         body="newAnnotation.body"
         >
       </create-inline-annotation>

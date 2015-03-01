@@ -167,19 +167,17 @@ module.exports = function (app) {
         }
       };
 
-      $scope.phSoftPurgeSelection = function(annotationHasBody) {
-        if (!annotationHasBody) {
-          if ($scope.latestRangySelection) {
-            highlighter.unhighlightSelection($scope.latestRangySelection);
-            $scope.latestRangySelection = undefined;
-          }
-          $scope.verticalOffsetSelection = undefined;
+      $scope.phPurgeSelection = function() {
+        if ($scope.latestRangySelection) {
+          highlighter.unhighlightSelection($scope.latestRangySelection);
+          $scope.latestRangySelection = undefined;
         }
+        $scope.verticalOffsetSelection = undefined;
       };
 
       $scope.newAnnotation = {};
 
-      $scope.getSelection = function() {
+      $scope.phGetSelection = function() {
         // Intercept mouseup event to display new annotation box
         // Get selected text, cf.
         // <http://stackoverflow.com/a/5379408/353337>.
@@ -191,11 +189,6 @@ module.exports = function (app) {
         }
 
         if (!!text) {
-          // Unhighlight previous selection.
-          if ($scope.latestRangySelection) {
-            highlighter.unhighlightSelection($scope.latestRangySelection);
-            $scope.latestRangySelection = undefined;
-          }
           // Get vertical offset of the current selection.
           if (window.getSelection) {
             selection = window.getSelection();
@@ -219,6 +212,13 @@ module.exports = function (app) {
               }
             }
             $scope.verticalOffsetSelection = totalOffset + "px";
+            // Unhighlight previous selection.
+            if ($scope.latestRangySelection) {
+              highlighter.unhighlightSelection($scope.latestRangySelection);
+              $scope.latestRangySelection = undefined;
+            }
+            // TODO ATTENTION! The selection is of type "None" after rangy
+            // messed around.
           } else if (document.selection &&
                      document.selection.type != "Control") {
             $scope.verticalOffsetSelection =
