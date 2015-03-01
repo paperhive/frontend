@@ -21,10 +21,10 @@ module.exports = function (app) {
 
           // initiate http request
           canceler = $q.defer();
-          $http.get(
-            config.api_url + '/articles/external/' + encodeURIComponent(handle),
-            {timeout: canceler.promise}
-          )
+          $http.get(config.api_url + '/articles/external', {
+            params: {handle: handle},
+            timeout: canceler.promise
+          })
             .success(function (article) {
               $scope.article = article;
               $scope.metadataCollapsed = false;
@@ -37,10 +37,9 @@ module.exports = function (app) {
 
       $scope.submitApproved = function () {
         $scope.submitting = true;
-        $http.post(
-          config.api_url + '/articles/external/' +
-          encodeURIComponent($scope.handle)
-        )
+        $http.post(config.api_url + '/articles/external', undefined, {
+          params: {handle: $scope.handle},
+        })
           .success(function (article) {
             $scope.submitting = false;
             $location.path('/articles/' + article._id);
