@@ -6,7 +6,7 @@
   require('rangy');
   require('rangy-classapplier');
   require('rangy-highlighter');
-  require('rangy-serializer')
+  require('rangy-serializer');
 
   var angular = require('angular');
   require('angular-bootstrap-tpls'); // provides 'ui.bootstrap' module
