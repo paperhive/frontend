@@ -9,7 +9,7 @@
   >
   <div class="panel-heading">
     <img
-    src="https://secure.gravatar.com/avatar/{{author.gravatarMd5}}?s=30&d=identicon"
+    ng-src="{{{gravatarMd5: auth.user.gravatarMd5, size:30} | gravatarUrl}}"
     class="ph-avatar"
     alt="{{author.displayName}} avatar"
     >

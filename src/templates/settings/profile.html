@@ -151,9 +151,11 @@
               Profile picture
             </label>
             <div class="col-sm-9">
-              <img class="img-thumbnail pull-left ph-sm-margin-right"
-                src="https://secure.gravatar.com/avatar/{{auth.user.gravatarMd5}}?s=100&d=identicon"
-                alt="Gravatar image associated with {{user.email}}">
+              <img
+                class="img-thumbnail pull-left ph-sm-margin-right"
+                ng-src="{{{gravatarMd5: auth.user.gravatarMd5, size:100} gravatarUrl}}"
+                alt="Gravatar image associated with {{user.email}}"
+                >
               <p class="text-muted ph-sm-margin-top">
                 Head over to
                 <a href="https://gravatar.com" target="_blank">Gravatar</a>

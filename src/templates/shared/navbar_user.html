@@ -17,7 +17,7 @@
   <li ng-show="auth.user" class="dropdown" is-open="dropdown_open" dropdown>
     <a href="" class="dropdown-toggle" dropdown-toggle>
       <img
-        src="https://secure.gravatar.com/avatar/{{auth.user.gravatarMd5}}?s=30&d=identicon"
+        ng-src="{{{gravatarMd5: auth.user.gravatarMd5, size:30} | gravatarUrl}}"
         class="ph-avatar img-circle"
         alt="{{auth.user.displayName}} avatar"
         >

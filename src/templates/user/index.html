@@ -9,7 +9,7 @@
               <!--picture-->
               <img
                 class="media-object"
-                ng-src="https://secure.gravatar.com/avatar/{{user.gravatarMd5}}?s=120&d=identicon"
+                ng-src="{{{gravatarMd5: user.gravatarMd5, size:120} | gravatarUrl}}"
                 >
             </div>
             <div class="media-body">

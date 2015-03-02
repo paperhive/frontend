@@ -1,7 +1,7 @@
 <a class="media-left" href="/#/users/{{annotation.author.userName}}">
   <img
     alt="thumbnail"
-    src="https://secure.gravatar.com/avatar/{{annotation.author.gravatarMd5}}?s=80&d=identicon"
+    ng-src="{{{gravatarMd5: annotation.author.gravatarMd5, size:80} | gravatarUrl}}"
     width="80px"
     class="img-rounded"
     >
