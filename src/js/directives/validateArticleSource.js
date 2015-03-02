@@ -10,21 +10,32 @@ module.exports = function (app) {
           validateArticleSource: '='
         },
         link: function (scope, elm, attrs, ctrl) {
+          // allows to cancel pending requests
+          var canceler;
+
           ctrl.$asyncValidators.articleSource = function (modelValue, viewValue) {
             scope.validateArticleSource = undefined;
+
+            if (canceler) {
+              canceler.resolve();
+              canceler = undefined;
+            }
 
             // allow empty article source (prohibited by required)
             if (ctrl.$isEmpty(modelValue)) return $q.when();
 
+            canceler = $q.defer();
             var defer = $q.defer();
             $http.get(config.api_url + '/articles/sources', {
-              params: {handle: modelValue}
+              params: {handle: modelValue},
+              timeout: canceler.promise
             })
               .success(function (data) {
                 scope.validateArticleSource = data;
                 defer.resolve();
               })
               .error(function (data, status) {
+                scope.validateArticleSource = undefined;
                 if (status === 404) {
                   defer.reject('Article source is not recognized');
                 }
