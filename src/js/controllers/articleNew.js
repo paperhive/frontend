@@ -21,7 +21,7 @@ module.exports = function (app) {
 
           // initiate http request
           canceler = $q.defer();
-          $http.get(config.api_url + '/articles/external', {
+          $http.get(config.api_url + '/articles/sources', {
             params: {handle: handle},
             timeout: canceler.promise
           })
@@ -37,7 +37,7 @@ module.exports = function (app) {
 
       $scope.submitApproved = function () {
         $scope.submitting = true;
-        $http.post(config.api_url + '/articles/external', undefined, {
+        $http.post(config.api_url + '/articles/sources', undefined, {
           params: {handle: $scope.handle},
         })
           .success(function (article) {
