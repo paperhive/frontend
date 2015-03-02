@@ -9,5 +9,6 @@ module.exports = function (app) {
   require('./oauthOrcid.js')(app);
   require('./settings.js')(app);
   require('./user.js')(app);
+  require('./userArticles.js')(app);
   require('./welcome.js')(app);
 };
