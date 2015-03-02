@@ -13,6 +13,7 @@ var minifyCSS = require('gulp-minify-css');
 var minifyHTML = require('gulp-minify-html');
 var _ = require('lodash');
 var protractor = require("gulp-protractor").protractor;
+var jshint = require("gulp-jshint");
 
 var debug = process.env.DEBUG || false;
 
@@ -78,6 +79,13 @@ gulp.task('js', ['templates'], function () {
 // bundle with watch
 gulp.task('js:watch', ['templates'], function () {
   return js(true);
+});
+
+gulp.task('jshint', function() {
+  return gulp.src('./src/js/**/*.js')
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'))
+    .pipe(jshint.reporter('fail'));
 });
 
 // bundle html templates via angular's templateCache
@@ -198,5 +206,5 @@ gulp.task('test', ['serve-nowatch'], function () {
 });
 
 
-gulp.task('default', ['js', 'templates', 'static', 'style']);
+gulp.task('default', ['jshint', 'js', 'templates', 'static', 'style']);
 gulp.task('default:watch', ['js:watch', 'templates', 'static', 'style']);

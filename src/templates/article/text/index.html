@@ -7,9 +7,9 @@
     <div class="clearfix"></div>
   </div>
 </div>
-<div class="row">
+<div class="row" ng-if="article.file.url">
   <pdf
-    url="{{article.url}}"
+    url="{{article.file.url}}"
     on-mouseup="phGetSelection()"
     class="col-md-9"
     ></pdf>
