@@ -5,9 +5,10 @@
   class="list-group-item"
   >
   <img
-  class="user-photo"
-  ng-src="https://secure.gravatar.com/avatar/{{user.gravatarMd5}}?s=20"
-  >
+    class="user-photo"
+    gravatar-user="user"
+    gravatar-size="20"
+    >
   <strong>{{user.userName}}</strong>
   <span style="color:#888;">{{user.displayName}}</span>
   </li>

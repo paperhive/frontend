@@ -9,9 +9,8 @@
       <div class="media">
         <a href="#/users/{{auth.user.userName}}" class="media-left">
           <img
-            alt="thumbnail"
-            width="80px"
-            src="https://secure.gravatar.com/avatar/{{auth.user.gravatarMd5}}?s=80"
+            gravatar-user="auth.user"
+            gravatar-size="80"
             >
         </a>
         <div class="media-body" style="width:100%">

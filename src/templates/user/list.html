@@ -25,10 +25,9 @@
     <li class="media" ng-repeat="user in users">
     <a class="media-left" href="#/users/{{user.userName}}">
       <img
-      src="https://secure.gravatar.com/avatar/{{user.gravatarMd5}}?s=80"
-      alt="{{user.displayName}}"
-      width="80px"
-      >
+        gravatar-user="user"
+        gravatar-size="80"
+        >
     </a>
     <div class="media-body">
       <h4 class="media-heading">{{user.displayName}}</h4>
