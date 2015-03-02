@@ -3,7 +3,7 @@ module.exports = function (app) {
     '$scope', '$http', '$q', '$location', 'config', 'authService',
     'NotificationsService',
     function($scope, $http, $q, $location, config, authService,
-             NotificationService) {
+             NotificationsService) {
       // used to cancel running http requests
       var canceler;
 
