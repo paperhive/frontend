@@ -15,14 +15,19 @@
       </span>
     </h4>
     <p class="text-muted">
+      <i class="fa fa-fw fa-clock-o"></i> published on
+      {{article.publishedAt | date:'longDate'}}
+    </p>
+    <p class="text-muted">
       <i class="fa fa-fw fa-cloud-download"></i> imported by
-      <a href="#/users/{{article.uploadedBy.username}}">
-        {{article.uploadedBy.displayName}}
+      <a href="#/users/{{article.importedBy.username}}">
+        {{article.importedBy.displayName}}
       </a>
       from
       <a href="{{article.source.url}}">
         {{article.source.name}}
       </a>
+      on {{article.createdAt | date:'longDate'}}
     </p>
   </div>
 </div>
