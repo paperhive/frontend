@@ -35,7 +35,11 @@
             </div>
             <div class="panel-body">
               <div class="form-horizontal">
-                <div class="form-group has-feedback">
+                <div class="form-group has-feedback" ng-class="{
+                    'has-success': articleNewForm.handle.$valid,
+                    'has-error': articleNewForm.handle.$invalid &&
+                      articleNewForm.handle.$dirty
+                  }">
                   <label for="handle" class="control-label col-sm-3">
                     Article URL
                   </label>
@@ -43,20 +47,29 @@
                     <input ng-model="handle" ng-disabled="submitting"
                       name="handle" type="text"
                       class="form-control" id="handle"
-                      placeholder="Provide article URL or identifier">
-                      <i ng-if="checking" class="fa fa-fw fa-spinner fa-spin form-control-feedback" aria-hidden="true"></i>
-                      <i ng-if="article._id" class="fa fa-fw fa-check form-control-feedback" aria-hidden="true"></i>
-                      <i ng-if="articleNewForm.handle.$dirty && !checking && !article._id" class="fa fa-fw fa-times form-control-feedback" aria-hidden="true"></i>
+                      placeholder="Provide article URL or identifier"
+                      validate-article-source="check.article"
+                      required>
+                    <i ng-if="articleNewForm.handle.$valid"
+                      class="fa fa-fw fa-check form-control-feedback"
+                      aria-hidden="true"></i>
+                    <i ng-if="articleNewForm.handle.$pending"
+                      class="fa fa-fw fa-spinner fa-spin form-control-feedback"
+                      aria-hidden="true"></i>
+                    <i ng-if="articleNewForm.handle.$invalid &&
+                      articleNewForm.handle.$dirty"
+                      class="fa fa-fw fa-times form-control-feedback"
+                      aria-hidden="true"></i>
                   </div>
                 </div>
-                <div ng-show="article._id">
+                <div ng-show="check.article._id">
                   <div class="row">
                     <div class="col-sm-offset-3 col-sm-9">
                       <p>
                         This article has already been added to PaperHub.
                       </p>
                       <p class="text-right">
-                        <a href="#/articles/{{article._id}}" class="btn btn-primary">
+                        <a href="#/articles/{{check.article._id}}" class="btn btn-primary">
                           <i class="fa fa-fw fa-file-pdf-o"></i>
                           Show article
                         </a>
@@ -64,11 +77,11 @@
                     </div>
                   </div>
                 </div>
-                <div ng-show="!article._id">
+                <div ng-show="!check.article._id">
                   <div class="row">
                     <div class="col-sm-offset-3 col-sm-9">
                       <p class="text-right">
-                        <button type="submit" ng-disabled="!article || submitting"
+                        <button type="submit" ng-disabled="!articleNewForm.$valid || submitting"
                             ng-click="submitApproved()"
                             class="btn btn-primary">
                           <i class="fa fa-fw fa-plus" ng-show="!submitting"></i>
@@ -78,7 +91,7 @@
                       </p>
                     </div>
                   </div>
-                  <div collapse="metadataCollapsed" ng-init="metadataCollapsed = true">
+                  <div collapse="!check.article || check.article._id">
                     <div class="panel panel-default">
                       <div class="panel-body">
                         <div class="form-group">
@@ -87,7 +100,7 @@
                           </label>
                           <div class="col-sm-9">
                             <p class="form-control-static">
-                              {{article.title}}
+                              {{check.article.title}}
                             </p>
                           </div>
                         </div>
@@ -97,7 +110,7 @@
                           </label>
                           <div class="col-sm-9">
                             <p class="form-control-static">
-                              <span ng-repeat="author in article.authors">
+                              <span ng-repeat="author in check.article.authors">
                                 {{author}}{{$last ? '' : ', '}}
                               </span>
                             </p>
@@ -109,17 +122,17 @@
                           </label>
                           <div class="col-sm-9">
                             <p class="form-control-static">
-                              {{article.publishedAt | date:'longDate'}}
+                              {{check.article.publishedAt | date:'longDate'}}
                             </p>
                           </div>
                         </div>
-                        <div class="form-group" ng-if="article.tags.length">
+                        <div class="form-group" ng-if="check.article.tags.length">
                           <label class="control-label col-sm-3">
                             Tags
                           </label>
                           <div class="col-sm-9">
                             <p class="form-control-static">
-                              <span ng-repeat="tag in article.tags">
+                              <span ng-repeat="tag in check.article.tags">
                                 {{tag}}{{$last ? '' : ', '}}
                               </span>
                             </p>
