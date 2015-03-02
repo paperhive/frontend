@@ -34,6 +34,10 @@ module.exports = function (app) {
             .error(function () {
               $scope.article = undefined;
               $scope.checking = false;
+              NotificationsService.notifications.push({
+                type: 'error',
+                message: data.message || 'could not check article (unknown reason)'
+              });
             });
         }
       });
