@@ -25,7 +25,7 @@ module.exports = function (app) {
               "?s=" + scope.gravatarSize +
               "&d=identicon"
             );
-            element.attr('alt', "\"" + user.displayName + " avatar\"");
+            element.attr('alt', user.displayName + " avatar");
           }
         );
       }
