@@ -16,10 +16,15 @@
   </li>
   <li ng-show="auth.user" class="dropdown" is-open="dropdown_open" dropdown>
     <a href="" class="dropdown-toggle" dropdown-toggle>
-      <img
-        ng-src="{{{gravatarMd5: auth.user.gravatarMd5, size:30} | gravatarUrl}}"
+      <!--img
         class="ph-avatar img-circle"
+        ng-src="{{{gravatarMd5: auth.user.gravatarMd5, size:30} | gravatarUrl}}"
         alt="{{auth.user.displayName}} avatar"
+        -->
+      <img
+        gravatar-user="auth.user"
+        gravatar-size="30"
+        class="ph-avatar img-circle"
         >
       {{auth.user.displayName}}
       <i class="fa fa-fw fa-caret-down"></i>

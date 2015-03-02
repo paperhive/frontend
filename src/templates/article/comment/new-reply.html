@@ -1,8 +1,7 @@
 <a class="media-left" href="#">
   <img
-    ng-src="{{{gravatarMd5: auth.user.gravatarMd5, size:80} | gravatarUrl}}"
-    alt="thumbnail"
-    width="80px"
+    gravatar-user="auth.user"
+    gravatar-size="80"
     >
 </a>
 <div class="media-body" style="width:100%">
