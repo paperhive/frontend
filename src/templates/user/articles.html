@@ -1,5 +1,10 @@
 <div class="row" ng-controller="UserArticlesCtrl" ng-if="user">
-  <div class="col-sm-5">
+  <div class="col-md-12" ng-if="auth.user._id === user._id">
+    <p class="text-right">
+      <a href="#/articles/new" class="btn btn-default">Add an article</a>
+    </p>
+  </div>
+  <div class="col-sm-6">
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">Authored articles</h4>
@@ -24,12 +29,15 @@
     </div>
   </div>
 
-  <div class="col-sm-offset-1 col-sm-5">
+  <div class="col-sm-6">
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">Imported articles</h4>
       </div>
       <div class="panel-body">
+        <p ng-if="!articles.length">
+          No imported articles yet.
+        </p>
         <div ng-repeat="article in articles" class="ph-md-margin-bottom">
           <div class="media">
             <div class="media-left">
