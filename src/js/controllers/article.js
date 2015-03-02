@@ -89,10 +89,23 @@ var discussion = {
 
 module.exports = function (app) {
   app.controller('ArticleCtrl', [
-    '$scope', '$route', '$routeSegment', '$document', 'config',
+    '$scope', '$route', '$routeSegment', '$document', '$http', 'config',
     'authService', 'NotificationsService',
-    function($scope, $route, $routeSegment, $document, config,
+    function($scope, $route, $routeSegment, $document, $http, config,
              authService, notificationsService) {
+
+      // fetch article
+      $http.get(config.api_url + '/articles/' + $routeSegment.$routeParams.id)
+        .success(function (article) {
+          $scope.article = article;
+        })
+        .error(function (data) {
+          notificationsService.notifications.push({
+            type: 'error',
+            message: data.message ? data.message : 'could not fetch article ' +
+              '(unknown reason)'
+          });
+        });
 
       // DEBUG
       var article =
@@ -110,7 +123,6 @@ module.exports = function (app) {
       // END DEBUG
 
       $scope.auth = authService;
-      $scope.article = article;
       // Expose the routeSegment to be able to determine the active tab in the
       // template.
       $scope.$routeSegment = $routeSegment;
