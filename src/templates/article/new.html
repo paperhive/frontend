@@ -44,6 +44,9 @@
                       name="handle" type="text"
                       class="form-control" id="handle"
                       placeholder="Provide article URL or identifier">
+                      <i ng-if="checking" class="fa fa-fw fa-spinner fa-spin form-control-feedback" aria-hidden="true"></i>
+                      <i ng-if="article._id" class="fa fa-fw fa-check form-control-feedback" aria-hidden="true"></i>
+                      <i ng-if="articleNewForm.handle.$dirty && !checking && !article._id" class="fa fa-fw fa-times form-control-feedback" aria-hidden="true"></i>
                   </div>
                 </div>
                 <div ng-show="article._id">

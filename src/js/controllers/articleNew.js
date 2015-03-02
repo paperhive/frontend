@@ -20,6 +20,7 @@ module.exports = function (app) {
           }
 
           // initiate http request
+          $scope.checking = true;
           canceler = $q.defer();
           $http.get(config.api_url + '/articles/sources', {
             params: {handle: handle},
@@ -27,10 +28,12 @@ module.exports = function (app) {
           })
             .success(function (article) {
               $scope.article = article;
+              $scope.checking = false;
               $scope.metadataCollapsed = false;
             })
             .error(function () {
               $scope.article = undefined;
+              $scope.checking = false;
             });
         }
       });
