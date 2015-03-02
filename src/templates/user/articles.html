@@ -35,7 +35,7 @@
         <h4 class="panel-title">Imported articles</h4>
       </div>
       <div class="panel-body">
-        <p ng-if="!articles.length">
+        <p ng-if="articles && !articles.length">
           No imported articles yet.
         </p>
         <div ng-repeat="article in articles" class="ph-md-margin-bottom">
