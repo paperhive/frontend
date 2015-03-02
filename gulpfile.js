@@ -25,6 +25,8 @@ var paths = {
 };
 
 var htmlOpts = {
+  collapseWhitespace: true,
+  removeComments: true
 };
 
 // error handling, simplified version (without level) from
