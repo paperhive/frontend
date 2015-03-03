@@ -21,18 +21,19 @@
     </div>
   </div>
   <div class="container">
-  <ul class="media-list">
-    <li class="media" ng-repeat="user in users">
-    <a class="media-left" href="#/users/{{user.userName}}">
-      <img
+    <ul class="media-list">
+      <li class="media" ng-repeat="user in users">
+      <a class="media-left" href="#/users/{{user.userName}}">
+        <img
         gravatar-user="user"
         gravatar-size="80"
         >
-    </a>
-    <div class="media-body">
-      <h4 class="media-heading">{{user.displayName}}</h4>
-      Description
-    </div>
-    </li>
-  </ul>
+      </a>
+      <div class="media-body">
+        <h4 class="media-heading">{{user.displayName}}</h4>
+        Description
+      </div>
+      </li>
+    </ul>
+  </div>
 </div>

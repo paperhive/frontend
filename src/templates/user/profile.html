@@ -8,14 +8,14 @@
       <div class="panel-body">
         <table class="table ph-table-no-border-top">
           <tbody>
-            <tr>
-              <th scope="row">Given Names</th>
-              <td>{{user.givenNames}}</td>
-            </tr>
-            <tr ng-show="user.familyName">
-              <th scope="row">Family Name</th>
-              <td>{{user.familyName}}</td>
-            </tr>
+          <tr>
+            <th scope="row">Given Names</th>
+            <td>{{user.givenNames}}</td>
+          </tr>
+          <tr ng-show="user.familyName">
+            <th scope="row">Family Name</th>
+            <td>{{user.familyName}}</td>
+          </tr>
           </tbody>
         </table>
       </div>
@@ -31,17 +31,19 @@
 
         <table class="table ph-table-no-border-top">
           <tbody>
-            <tr ng-repeat="account in user.accounts">
-              <th scope="row" ng-switch="account.type">
-                <span ng-switch-when="orcid">ORCID</span>
-                <span ng-switch-default>{{account.type}}</span>
-              </th>
-              <td ng-switch="account.type">
-                <a ng-switch-when="orcid" href="https://sandbox.orcid.org/{{account.id}}">{{account.id}}</a>
-                <span ng-switch-default>{{account.id}}</span>
-              </td>
-            </tr>
+          <tr ng-repeat="account in user.accounts">
+            <th scope="row" ng-switch="account.type">
+              <span ng-switch-when="orcid">ORCID</span>
+              <span ng-switch-default>{{account.type}}</span>
+            </th>
+            <td ng-switch="account.type">
+              <a ng-switch-when="orcid" href="https://sandbox.orcid.org/{{account.id}}">{{account.id}}</a>
+              <span ng-switch-default>{{account.id}}</span>
+            </td>
+          </tr>
           </tbody>
         </table>
+      </div>
+    </div>
   </div>
 </div>
