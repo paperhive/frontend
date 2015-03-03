@@ -84,6 +84,23 @@ module.exports = function (app) {
             container: container
           });
 
+          // From pdfjs's pdf_viewer.js and viewer.js, we have
+          // ```
+          // var PresentationModeState = {
+          //   UNKNOWN: 0,
+          //   NORMAL: 1,
+          //   CHANGING: 2,
+          //   FULLSCREEN: 3,
+          // };
+          // ```
+          // Setting the presentationModeState to FULLSCREEN avoids
+          // unnecessary padding otherwise introduced in pdfjs's
+          // `_setScale()`.
+          // See <https://github.com/mozilla/pdf.js/issues/5559>.
+          //
+          // TODO replace this magic number by something semantic
+          pdfViewer.presentationModeState = 3;
+
           container.addEventListener('pagesinit', function () {
             pdfViewer.currentScaleValue = 'page-width';
           });
