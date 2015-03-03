@@ -18,10 +18,10 @@
     <inline-annotation
       ng-repeat="discussion in article.discussions | filter:
       {serializedSelection: '!undefined'}"
-      title='discussion.title'
-      body='discussion.body'
-      author='discussion.originalAnnotation.author'
-      vertical-offset='discussion.verticalOffset'
+      title="discussion.title"
+      body="discussion.body"
+      author="discussion.originalAnnotation.author"
+      vertical-offset="discussion.verticalOffset"
       >
     </inline-annotation>
     <!-- Don't use ng-if here to keep the element in the DOM tree.

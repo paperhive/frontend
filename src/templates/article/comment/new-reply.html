@@ -28,7 +28,7 @@
         <textarea
           id="textbody"
           class="form-control ph-annotation-body"
-          ng-model='annotationBody'
+          ng-model="annotationBody"
           mentio
           mentio-macros="macros"
           mentio-search="searchPeople(term)"
@@ -42,7 +42,7 @@
           ></textarea>
         <hr>
         <label for="preview">Preview</label>
-        <div class="well well-lg" id=preview>
+        <div class="well well-lg" id="preview">
           <kramjax body="{{annotationBody}}"></kramjax>
         </div>
         <span class="pull-right">
