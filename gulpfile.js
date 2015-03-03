@@ -14,6 +14,7 @@ var htmlmin = require('gulp-htmlmin');
 var _ = require('lodash');
 var protractor = require("gulp-protractor").protractor;
 var jshint = require("gulp-jshint");
+var htmlhint = require("gulp-htmlhint");
 
 var debug = process.env.DEBUG || false;
 
@@ -25,9 +26,13 @@ var paths = {
   build: 'build/**/*'
 };
 
-var htmlOpts = {
+var htmlminOpts = {
   collapseWhitespace: true,
   removeComments: true
+};
+
+var htmlhintOpts = {
+  "doctype-first": false
 };
 
 // error handling, simplified version (without level) from
@@ -89,12 +94,19 @@ gulp.task('jshint', function() {
     .pipe(jshint.reporter('fail'));
 });
 
+gulp.task('htmlhint', function() {
+  return gulp.src('./src/templates/**/*.html')
+    .pipe(htmlhint(htmlhintOpts))
+    .pipe(htmlhint.reporter())
+    .pipe(htmlhint.failReporter());
+});
+
 // bundle html templates via angular's templateCache
 gulp.task('templates', function () {
   var templateCache = require('gulp-angular-templatecache');
 
   return gulp.src(paths.templates, {base: 'src'})
-    .pipe(debug ? gutil.noop() : htmlmin(htmlOpts))
+    .pipe(debug ? gutil.noop() : htmlmin(htmlminOpts))
     .pipe(templateCache({
       moduleSystem: 'Browserify',
       standalone: true,
@@ -108,7 +120,7 @@ gulp.task('templates', function () {
 // copy static files
 gulp.task('static', function () {
   var html = gulp.src(paths.html, {base: 'src'})
-    .pipe(debug ? gutil.noop() : htmlmin(htmlOpts))
+    .pipe(debug ? gutil.noop() : htmlmin(htmlminOpts))
     .pipe(gulp.dest('build'));
 
   var images = gulp.src(paths.images, {base: 'src'})
@@ -207,5 +219,11 @@ gulp.task('test', ['serve-nowatch'], function () {
 });
 
 
-gulp.task('default', ['jshint', 'js', 'templates', 'static', 'style']);
-gulp.task('default:watch', ['js:watch', 'templates', 'static', 'style']);
+gulp.task(
+  'default',
+  ['jshint', 'htmlhint', 'js', 'templates', 'static', 'style']
+);
+gulp.task(
+  'default:watch', 
+  ['js:watch', 'templates', 'static', 'style']
+);
