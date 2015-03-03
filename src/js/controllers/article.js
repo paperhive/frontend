@@ -1,3 +1,5 @@
+var rangy = require("rangy");
+
 // DEBUG
 var users = [
   {
@@ -94,6 +96,22 @@ module.exports = function (app) {
     function($scope, $route, $routeSegment, $document, $http, config,
              authService, notificationsService) {
 
+      // contains everything related to a new annotation
+      $scope.newAnnotation = {};
+
+      // called on select/deselect
+      $scope.onSelect = function (selection) {
+        console.log(selection);
+
+        $scope.newAnnotation.serializedSelection = selection ?
+          rangy.serializeSelection(selection, $scope.pdfElement) : undefined;
+
+        if (selection) {
+          var reference = selection.isBackwards() ? selection.focusNode :
+            selection.anchorNode;
+        }
+      };
+
       // fetch article
       $http.get(config.api_url + '/articles/' + $routeSegment.$routeParams.id)
         .success(function (article) {
@@ -127,7 +145,6 @@ module.exports = function (app) {
       // template.
       $scope.$routeSegment = $routeSegment;
 
-      var rangy = require("rangy");
       var highlighter = rangy.createHighlighter();
       highlighter.addClassApplier(rangy.createClassApplier("ph-highlight", {
         ignoreWhiteSpace: true,

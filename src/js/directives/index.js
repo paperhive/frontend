@@ -5,6 +5,7 @@ module.exports = function (app) {
   require('./gravatar.js')(app);
   require('./inline-annotation.js')(app);
   require('./kramjax.js')(app);
+  require('./selection.js')(app);
   require('./showPdf.js')(app);
   require('./subnav')(app);
   require('./validateArticleSource')(app);
