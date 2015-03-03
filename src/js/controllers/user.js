@@ -1,8 +1,8 @@
 module.exports = function (app) {
   app.controller('UserCtrl', [
-    '$scope', '$routeSegment', 'config', '$http', 'NotificationsService',
+    '$scope', '$routeSegment', 'config', '$http', 'notificationService',
     'authService',
-    function ($scope, $routeSegment, config, $http, notificationsService,
+    function ($scope, $routeSegment, config, $http, notificationService,
               authService) {
       // expose $routeSegment for subnav
       $scope.$routeSegment = $routeSegment;
@@ -16,7 +16,7 @@ module.exports = function (app) {
           $scope.user = data;
         })
         .error(function (data) {
-          notificationsService.notifications.push({
+          notificationService.notifications.push({
             type: 'error',
             message: data.message
           });
