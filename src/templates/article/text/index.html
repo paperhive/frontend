@@ -9,8 +9,9 @@
 </div>
 <div class="row" ng-if="article.file.url">
   <pdf
-    url="{{article.file.url}}"
-    on-mouseup="phGetSelection()"
+    url="article.file.url"
+    text-overlay="true"
+    on-select="onSelect($selection)"
     class="col-md-9"
     ></pdf>
   <!--column for margin notes-->
