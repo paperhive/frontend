@@ -95,7 +95,7 @@ gulp.task('jshint', function() {
 });
 
 gulp.task('htmlhint', function() {
-  return gulp.src('./src/templates/**/*.html')
+  return gulp.src([paths.html, paths.templates], {base: 'src'})
     .pipe(htmlhint(htmlhintOpts))
     .pipe(htmlhint.reporter())
     .pipe(htmlhint.failReporter());
