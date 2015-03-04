@@ -5,10 +5,7 @@ module.exports = function (app) {
       restrict: 'E',
       controller: 'AnnotationCtrl',
       scope: {
-        title: '=',
-        body: '=',
-        author: '=',
-        verticalOffset: '='
+        annotation: '=',
       },
       templateUrl: 'templates/article/text/inline-annotation.html'
     };
