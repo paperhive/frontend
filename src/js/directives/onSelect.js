@@ -42,7 +42,7 @@ module.exports = function (app) {
                 return onSelect(undefined);
               }
 
-              return onSelect(selection);
+              return onSelect(rangy.serializeSelection(selection, true, element[0]));
             });
           };
 
