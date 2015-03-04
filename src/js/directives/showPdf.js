@@ -1,14 +1,14 @@
 module.exports = function (app) {
-  app.directive('pdf', function () {
+  app.directive('pdf', ['$parse', function ($parse) {
     return {
       restrict: 'E',
       link: function (scope, element, attrs) {
-        scope.$watch('url', renderPdf);
-        scope.$watch('textOverlay', renderPdf);
+        scope.$watchGroup(['url', 'textOverlay'], renderPdf);
 
         function renderPdf () {
           var url = scope.$eval(attrs.url);
           var textOverlay = scope.$eval(attrs.textOverlay);
+          var onLoaded = $parse(attrs.onLoaded);
           if (!url) return;
 
           // From
@@ -61,6 +61,8 @@ module.exports = function (app) {
                 // Using promise to fetch the page
                 pdf.getPage(i).then(showPage);
               }
+
+              // TODO: call onLoaded
             });
           } else {
             // Complex viewer with bells & whistles
@@ -83,6 +85,15 @@ module.exports = function (app) {
 
             // Loading document.
             PDFJS.getDocument(url).then(function (pdf) {
+              // fire onLoaded when last page has been rendered
+              container.addEventListener('pagerendered', function (e) {
+                if (e.detail.pageNumber === pdf.numPages) {
+                  scope.$apply(function () {
+                    onLoaded(scope);
+                  });
+                }
+              });
+
               // Document loaded, specifying document for the viewer.
               pdfViewer.setDocument(pdf);
             });
@@ -162,8 +173,8 @@ module.exports = function (app) {
             //});
             //// --------
           }
-        };
+        }
       }
     };
-  });
+  }]);
 };
