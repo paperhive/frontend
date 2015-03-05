@@ -1,8 +1,8 @@
 module.exports = function (app) {
 
   app.directive('createInlineAnnotation', [
-    'authService', 'NotificationsService', '$document', '$rootScope',
-    function(authService, notificationsService, $document, $rootScope) {
+    'authService', 'notificationService', '$document', '$rootScope',
+    function(authService, notificationService, $document, $rootScope) {
       return {
         restrict: 'E',
         scope: {
@@ -45,7 +45,7 @@ module.exports = function (app) {
             }
 
             if (!scope.serializedSelection) {
-              notificationsService.notifications.push({
+              notificationService.notifications.push({
                 type: 'error',
                 message: 'No text selected.'
               });

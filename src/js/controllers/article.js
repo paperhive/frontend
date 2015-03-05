@@ -90,9 +90,9 @@ var discussion = {
 module.exports = function (app) {
   app.controller('ArticleCtrl', [
     '$scope', '$route', '$routeSegment', '$document', '$http', 'config',
-    'authService', 'NotificationsService',
+    'authService', 'notificationService',
     function($scope, $route, $routeSegment, $document, $http, config,
-             authService, notificationsService) {
+             authService, notificationService) {
 
       // fetch article
       $http.get(config.api_url + '/articles/' + $routeSegment.$routeParams.id)
@@ -100,7 +100,7 @@ module.exports = function (app) {
           $scope.article = article;
         })
         .error(function (data) {
-          notificationsService.notifications.push({
+          notificationService.notifications.push({
             type: 'error',
             message: data.message ? data.message : 'could not fetch article ' +
               '(unknown reason)'
@@ -139,14 +139,14 @@ module.exports = function (app) {
           return;
         }
         //if (!serializedSelection) {
-        //  notificationsService.notifications.push({
+        //  notificationService.notifications.push({
         //    type: 'warning',
         //    message: 'Empty selection object.'
         //  });
         //  return;
         //}
         if (!rangy.canDeserializeSelection(serializedSelection)) {
-          notificationsService.notifications.push({
+          notificationService.notifications.push({
             type: 'error',
             message: 'Cannot unserialize selection object.'
           });
