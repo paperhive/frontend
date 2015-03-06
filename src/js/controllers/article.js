@@ -92,9 +92,9 @@ var discussion = {
 module.exports = function (app) {
   app.controller('ArticleCtrl', [
     '$scope', '$route', '$routeSegment', '$document', '$http', 'config',
-    'authService', 'NotificationsService',
+    'authService', 'notificationService',
     function($scope, $route, $routeSegment, $document, $http, config,
-             authService, notificationsService) {
+             authService, notificationService) {
 
       // expose authService
       $scope.auth = authService;
@@ -108,7 +108,7 @@ module.exports = function (app) {
           $scope.article = article;
         })
         .error(function (data) {
-          notificationsService.notifications.push({
+          notificationService.notifications.push({
             type: 'error',
             message: data.message ? data.message : 'could not fetch article ' +
               '(unknown reason)'
@@ -134,6 +134,11 @@ module.exports = function (app) {
         */
         // DEBUG END
       };
+
+      $scope.auth = authService;
+      // Expose the routeSegment to be able to determine the active tab in the
+      // template.
+      $scope.$routeSegment = $routeSegment;
 
       // called on select/deselect
       $scope.onSelect = function (target) {

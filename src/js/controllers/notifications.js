@@ -1,9 +1,9 @@
 module.exports = function (app) {
-  app.controller('NotificationsCtrl', ['$scope', 'NotificationsService', 
-    function ($scope, notificationsService) {
-      $scope.notifications = notificationsService.notifications;
+  app.controller('NotificationsCtrl', ['$scope', 'notificationService', 
+    function ($scope, notificationService) {
+      $scope.notifications = notificationService.notifications;
       $scope.close = function (index) {
-        notificationsService.notifications.splice(index, 1);
+        notificationService.notifications.splice(index, 1);
       };
       $scope.types = {
         'error': 'danger',

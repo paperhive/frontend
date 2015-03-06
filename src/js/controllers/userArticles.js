@@ -1,8 +1,8 @@
 module.exports = function (app) {
   app.controller('UserArticlesCtrl', [
-    '$scope', '$routeSegment', 'config', '$http', 'NotificationsService',
+    '$scope', '$routeSegment', 'config', '$http', 'notificationService',
     'authService',
-    function ($scope, $routeSegment, config, $http, notificationsService) {
+    function ($scope, $routeSegment, config, $http, notificationService) {
       $http.get(
         config.api_url + '/users/' + $scope.user._id + '/importedArticles'
       ).
@@ -10,7 +10,7 @@ module.exports = function (app) {
           $scope.articles = articles;
         }).
         error(function (data) {
-          notificationsService.notifications.push({
+          notificationService.notifications.push({
             type: 'error',
             message: data.message
           });

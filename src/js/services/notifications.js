@@ -1,5 +1,5 @@
 module.exports = function (app) {
-  app.factory('NotificationsService', [
+  app.factory('notificationService', [
     function () {
       return {
         notifications: []
