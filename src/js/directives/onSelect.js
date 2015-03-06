@@ -7,12 +7,17 @@ module.exports = function (app) {
       return {
         restrict: 'A',
         link: function (scope, element, attrs) {
+          var lastRanges;
+
           // define event handler
           var handler = function () {
             scope.$apply(function () {
               // result function
               var onSelect = function (ranges) {
-                $parse(attrs.onSelect)(scope, {$ranges: ranges});
+                if (!_.isEqual(ranges, lastRanges)) {
+                  lastRanges = ranges;
+                  $parse(attrs.onSelect)(scope, {$ranges: ranges});
+                }
               };
 
               // get current selection
