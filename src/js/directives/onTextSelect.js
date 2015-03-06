@@ -13,8 +13,24 @@ module.exports = function (app) {
           // define event handler
           var handler = function () {
             scope.$apply(function () {
+
               // result function
-              var onTextSelect = function (serializedRanges, selection) {
+              var onTextSelect = function (selection) {
+
+                var serializedRanges;
+
+                // serialize ALL the ranges (if a selection is given)
+                if (selection) {
+                  serializedRanges = _.map(
+                    selection.getAllRanges(),
+                    function (range) {
+                      return rangy.serializeRange(
+                        selection.getRangeAt(0), true, element[0]
+                      );
+                    }
+                  );
+                }
+
                 // only call expression if something happened
                 // (otherwise every keypress calls the expression)
                 if (!_.isEqual(serializedRanges, lastSerializedRanges)) {
@@ -62,17 +78,7 @@ module.exports = function (app) {
                 return onTextSelect();
               }
 
-              // serialize ALL the ranges
-              var serializedRanges = _.map(
-                selection.getAllRanges(),
-                function (range) {
-                  return rangy.serializeRange(
-                    selection.getRangeAt(0), true, element[0]
-                  );
-                }
-              );
-
-              return onTextSelect(serializedRanges, selection);
+              return onTextSelect(selection);
             });
           };
 
