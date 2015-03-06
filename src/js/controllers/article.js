@@ -136,9 +136,10 @@ module.exports = function (app) {
       };
 
       // called on select/deselect
-      $scope.onSelect = function (ranges) {
-        if (ranges) {
-          $scope.annotations.draft.ranges = ranges;
+      $scope.onSelect = function (target) {
+        console.log(target);
+        if (target) {
+          $scope.annotations.draft.target = target;
         }
       };
 

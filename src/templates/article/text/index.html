@@ -13,11 +13,11 @@
       url="article.file.url"
       text-overlay="true"
       on-loaded="onPdfLoaded()"
-      on-text-select="onSelect($ranges)"
+      on-text-select="onSelect($target)"
       highlight-root
       ></pdf>
     <div class="ph-highlight-layer">
-      <div highlight-ranges="annotations.draft.ranges"></div>
+      <div highlight-target="annotations.draft.target"></div>
       <!--div ng-repeat="annotation for annotations.stored"
         hightlight-annotation="annotation"></div-->
       <!--div hightlight-annotation="annotations.draft"></div-->

@@ -34,7 +34,7 @@ module.exports = function (app) {
       restrict: 'A',
       require: '^^highlightContainer',
       link: function (scope, element, attrs, containerCtrl) {
-        containerCtrl.getRects = function (serializedRanges) {
+        containerCtrl.getRangesRects = function (serializedRanges) {
           if (!serializedRanges || !serializedRanges.length) return [];
 
           var containerRect = element[0].getBoundingClientRect();
@@ -96,14 +96,18 @@ module.exports = function (app) {
     };
   });
   
-  app.directive('highlightRanges', ['$parse', function ($parse) {
+  app.directive('highlightTarget', ['$parse', function ($parse) {
     return {
       restrict: 'A',
       require: '^^highlightContainer',
-      templateUrl: 'templates/directives/highlightRanges.html',
+      templateUrl: 'templates/directives/highlightTarget.html',
       link: function (scope, element, attrs, containerCtrl) {
-        scope.$watch(attrs.highlightRanges, function (ranges) {
-          scope.rects = containerCtrl.getRects(ranges);
+        scope.$watch(attrs.highlightTarget, function (target) {
+          if (!target) return;
+
+          if (target.ranges) {
+            scope.rects = containerCtrl.getRangesRects(target.ranges);
+          }
         }, true);
       }
     };

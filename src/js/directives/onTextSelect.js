@@ -2,6 +2,7 @@ var rangy = require('rangy');
 var _ = require('lodash');
 
 module.exports = function (app) {
+
   app.directive('onTextSelect', ['$document', '$parse',
     function ($document, $parse) {
       return {
@@ -13,10 +14,20 @@ module.exports = function (app) {
           var handler = function () {
             scope.$apply(function () {
               // result function
-              var onTextSelect = function (ranges) {
+              var onTextSelect = function (ranges, selection) {
                 if (!_.isEqual(ranges, lastRanges)) {
                   lastRanges = ranges;
-                  $parse(attrs.onTextSelect)(scope, {$ranges: ranges});
+
+                  var target;
+                  // construct target object if valid ranges are given
+                  if (ranges && ranges.length && selection) {
+                    target = {
+                      text: selection.toString(),
+                      ranges: ranges
+                    };
+                  }
+
+                  $parse(attrs.onTextSelect)(scope, {$target: target});
                 }
               };
 
@@ -25,7 +36,7 @@ module.exports = function (app) {
 
               // no selection object or no anchor/focus
               if (!selection || !selection.anchorNode || !selection.focusNode) {
-                return onTextSelect(undefined);
+                return onTextSelect();
               }
 
               // check if current selection starts or ends in element
@@ -35,18 +46,18 @@ module.exports = function (app) {
               // selection not contained in element?
               if (!rangy.dom.isAncestorOf(element[0], anchor) ||
                   !rangy.dom.isAncestorOf(element[0], focus)) {
-                return onTextSelect(undefined);
+                return onTextSelect();
               }
 
               // do not allow collapsed / empty selections
               if (!selection.toString()) {
-                return onTextSelect(undefined);
+                return onTextSelect();
               }
 
               // do not allow selections without a range
               // (André: I guess that's possible in crazy browsers)
               if (!selection.rangeCount) {
-                return onTextSelect(undefined);
+                return onTextSelect();
               }
 
               // serialize ALL the ranges
@@ -59,7 +70,7 @@ module.exports = function (app) {
                 }
               );
 
-              return onTextSelect(serializedRanges);
+              return onTextSelect(serializedRanges, selection);
             });
           };
 
