@@ -56,16 +56,14 @@ module.exports = function (app) {
           // (see pdf directive)
           var rects = [];
           _.forEach(ranges, function (range) {
-            //console.log(range);
             // split start container if necessary
             range.splitBoundaries();
 
             // get TextNodes inside the range
             var textNodes = _.filter(
               getTextNodes(range.commonAncestorContainer),
-              function (node) {
-                return range.containsNodeText(node);
-              }
+              range.containsNodeText,
+              range
             );
 
             // wrap each TextNode in a span to measure it
@@ -106,7 +104,6 @@ module.exports = function (app) {
       link: function (scope, element, attrs, containerCtrl) {
         scope.$watch(attrs.highlightRanges, function (ranges) {
           scope.rects = containerCtrl.getRects(ranges);
-          console.log(scope.rects);
         }, true);
       }
     };
