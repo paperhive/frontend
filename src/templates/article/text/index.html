@@ -17,7 +17,8 @@
       highlight-root
       ></pdf>
     <div class="ph-highlight-layer">
-      <div highlight-target="annotations.draft.target"></div>
+      <div highlight-target="annotations.draft.target"
+        highlight-info="annotations.highlightInfos[annotations.draft._id]"></div>
       <!--div ng-repeat="annotation for annotations.stored"
         hightlight-annotation="annotation"></div-->
       <!--div hightlight-annotation="annotations.draft"></div-->
@@ -38,8 +39,8 @@
     -->
     <div
       class="ph-annotation"
-      ng-if="annotations.offsets[annotations.draft._id].y"
-      ng-style="{'top': annotations.offsets[annotations.draft._id].y + 'px'}"
+      ng-if="annotations.highlightInfos[annotations.draft._id].top"
+      ng-style="{'top': annotations.highlightInfos[annotations.draft._id].top + 'px'}"
       >
       <create-inline-annotation
         ng-if="auth.user"

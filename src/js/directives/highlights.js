@@ -100,13 +100,36 @@ module.exports = function (app) {
     return {
       restrict: 'A',
       require: '^^highlightContainer',
+      scope: {
+        highlightTarget: '=',
+        highlightInfo: '='
+      },
       templateUrl: 'templates/directives/highlightTarget.html',
       link: function (scope, element, attrs, containerCtrl) {
-        scope.$watch(attrs.highlightTarget, function (target) {
-          if (!target) return;
+        scope.$watch('highlightTarget', function (target) {
+          if (!target) {
+            scope.rects = undefined;
+            scope.highlightInfo = undefined;
+            return;
+          }
 
           if (target.ranges) {
             scope.rects = containerCtrl.getRangesRects(target.ranges);
+
+            // gather bbox information and expose it on the scope
+            var info = {
+              left: _.min(_.pluck(scope.rects, 'left')),
+              right: _.max(_.map(scope.rects, function (rect) {
+                return rect.left + rect.width;
+              })),
+              top: _.min(_.pluck(scope.rects, 'top')),
+              bottom: _.max(_.map(scope.rects, function (rect) {
+                return rect.top + rect.height;
+              }))
+            };
+            info.width = info.right - info.left;
+            info.height = info.bottom - info.top;
+            scope.highlightInfo = info;
           }
         }, true);
       }

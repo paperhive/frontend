@@ -118,7 +118,7 @@ module.exports = function (app) {
       $scope.annotations = {
         draft: {_id: _.uniqueId()},
         stored: [],
-        offsets: {}
+        highlightInfos: {}
       };
 
       $scope.onPdfLoaded = function () {
@@ -137,7 +137,6 @@ module.exports = function (app) {
 
       // called on select/deselect
       $scope.onSelect = function (target) {
-        console.log(target);
         if (target) {
           $scope.annotations.draft.target = target;
         }
