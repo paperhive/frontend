@@ -4,6 +4,7 @@ var $ = require('jquery');
 
 module.exports = function (app) {
 
+  // returns all leaf text nodes that are descendants of node or are node
   var getTextNodes = function (node) {
     if (!node) return [];
     if (node.nodeType === Node.TEXT_NODE) return [node];
@@ -28,7 +29,7 @@ module.exports = function (app) {
     };
   });
   
-  app.directive('highlightTarget', ['$window', function ($window) {
+  app.directive('highlightTarget', function () {
     return {
       restrict: 'A',
       require: '^^highlightContainer',
@@ -95,7 +96,7 @@ module.exports = function (app) {
         };
       },
     };
-  }]);
+  });
   
   app.directive('highlightRanges', ['$parse', function ($parse) {
     return {
@@ -106,54 +107,6 @@ module.exports = function (app) {
         scope.$watch(attrs.highlightRanges, function (ranges) {
           scope.rects = containerCtrl.getRects(ranges);
           console.log(scope.rects);
-        }, true);
-      }
-    };
-  }]);
-
-  app.directive('highlightAnnotations', ['$parse', function ($parse) {
-    return {
-      restrict: 'A',
-      link: function (scope, element, attrs) {
-        var offsetsGetter = $parse(attrs.highlightOffsets);
-
-        function addAnnotation (annotation) {
-          if (!annotation.ranges) return;
-
-
-          console.log(rects);
-
-          /*
-          // get offset
-          function getOffset (el) {
-            var offset = {x: 0, y: 0};
-            while (el !== element[0]) {
-              offset.x += el.offsetLeft || 0;
-              offset.y += el.offsetTop || 0;
-              el = el.parentNode;
-            }
-            return offset;
-          }
-          var anchorOffset = getOffset(selection.anchorNode);
-          var focusOffset = getOffset(selection.focusNode);
-          var offset = {
-            x: Math.min(anchorOffset.x, focusOffset.x),
-            y: Math.min(anchorOffset.y, focusOffset.y)
-          };
-
-          // store offset
-          var offsets = offsetsGetter(scope);
-          if (offsets) {
-            offsets[annotation._id] = offset;
-          }
-
-          // get rid of selection
-          selection.detach();
-         */
-        }
-
-        scope.$watch(attrs.highlightAnnotations, function (annotations) {
-          _.forEach(annotations, addAnnotation);
         }, true);
       }
     };
