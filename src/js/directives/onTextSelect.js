@@ -2,7 +2,7 @@ var rangy = require('rangy');
 var _ = require('lodash');
 
 module.exports = function (app) {
-  app.directive('onSelect', ['$document', '$parse',
+  app.directive('onTextSelect', ['$document', '$parse',
     function ($document, $parse) {
       return {
         restrict: 'A',
@@ -13,10 +13,10 @@ module.exports = function (app) {
           var handler = function () {
             scope.$apply(function () {
               // result function
-              var onSelect = function (ranges) {
+              var onTextSelect = function (ranges) {
                 if (!_.isEqual(ranges, lastRanges)) {
                   lastRanges = ranges;
-                  $parse(attrs.onSelect)(scope, {$ranges: ranges});
+                  $parse(attrs.onTextSelect)(scope, {$ranges: ranges});
                 }
               };
 
@@ -25,7 +25,7 @@ module.exports = function (app) {
 
               // no selection object or no anchor/focus
               if (!selection || !selection.anchorNode || !selection.focusNode) {
-                return onSelect(undefined);
+                return onTextSelect(undefined);
               }
 
               // check if current selection starts or ends in element
@@ -35,18 +35,18 @@ module.exports = function (app) {
               // selection not contained in element?
               if (!rangy.dom.isAncestorOf(element[0], anchor) ||
                   !rangy.dom.isAncestorOf(element[0], focus)) {
-                return onSelect(undefined);
+                return onTextSelect(undefined);
               }
 
               // do not allow collapsed / empty selections
               if (!selection.toString()) {
-                return onSelect(undefined);
+                return onTextSelect(undefined);
               }
 
               // do not allow selections without a range
               // (André: I guess that's possible in crazy browsers)
               if (!selection.rangeCount) {
-                return onSelect(undefined);
+                return onTextSelect(undefined);
               }
 
               // serialize ALL the ranges
@@ -59,13 +59,12 @@ module.exports = function (app) {
                 }
               );
 
-              return onSelect(serializedRanges);
+              return onTextSelect(serializedRanges);
             });
           };
 
           // register event handler
           $document.on('mouseup keyup', handler); // key events are not fired on PDFs
-          //element.on('mouseup', handler);
         }
       };
   }

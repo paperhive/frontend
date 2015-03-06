@@ -6,7 +6,7 @@ module.exports = function (app) {
   require('./highlights')(app);
   require('./inline-annotation.js')(app);
   require('./kramjax.js')(app);
-  require('./onSelect.js')(app);
+  require('./onTextSelect.js')(app);
   require('./showPdf.js')(app);
   require('./subnav')(app);
   require('./validateArticleSource')(app);
