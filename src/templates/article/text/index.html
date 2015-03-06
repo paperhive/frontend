@@ -44,8 +44,8 @@
       >
       <create-inline-annotation
         ng-if="auth.user"
-        on-save="annotations.stored.push($annotation) && purgeDraft"
-        on-outside-mousedown="!annotations.draft.body && purgeDraft"
+        on-save="annotations.stored.push($annotation) && purgeDraft()"
+        on-outside-mousedown="!annotations.draft.body && purgeDraft()"
         annotation="annotations.draft"
         >
       </create-inline-annotation>

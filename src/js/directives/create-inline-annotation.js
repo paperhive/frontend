@@ -7,23 +7,12 @@ module.exports = function (app) {
         restrict: 'E',
         scope: {
           onSave: '&',
-          onOutsideMousedown: '&',
           annotation: '='
         },
         templateUrl: 'templates/article/text/create-inline-annotation.html',
         link: function(scope, element) {
           scope.auth = authService;
           scope.annotation.author = authService.user._id;
-
-          // On mousedown anywhere in the document, release the highlighted
-          // selection.
-          $document.on('mousedown', function(event) {
-            if (scope.onOutsideMousedown) {
-              // wrap the call in a $rootScope.$apply to make sure Angular
-              // updates the scope on changes
-              $rootScope.$apply(scope.onOutsideMousedown);
-            }
-          });
 
           scope.addDiscussion = function() {
             // We always need a title.
