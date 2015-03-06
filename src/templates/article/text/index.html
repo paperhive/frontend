@@ -13,7 +13,7 @@
       url="article.file.url"
       text-overlay="true"
       on-loaded="onPdfLoaded()"
-      on-text-select="onSelect($target)"
+      on-text-select="$target && (annotations.draft.target = $target)"
       highlight-root
       ></pdf>
     <div class="ph-highlight-layer">

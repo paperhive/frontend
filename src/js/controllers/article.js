@@ -135,13 +135,6 @@ module.exports = function (app) {
         // DEBUG END
       };
 
-      // called on select/deselect
-      $scope.onSelect = function (target) {
-        if (target) {
-          $scope.annotations.draft.target = target;
-        }
-      };
-
       $scope.purgeDraft = function() {
         $scope.annotations.draft = {_id: _.uniqueId()};
       };
