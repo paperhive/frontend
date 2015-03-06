@@ -22,9 +22,9 @@
       >
       <input
         type="text"
-        ng-if="body.length > 20"
+        ng-if="annotation.body.length > 20"
         id="annotation-title"
-        ng-model="$parent.title"
+        ng-model="annotation.title"
         class="form-group form-control"
         placeholder="Enter title..."
         required
@@ -32,7 +32,7 @@
       <textarea
         id="textbody"
         placeholder="Enter comment..."
-        ng-model="body"
+        ng-model="annotation.body"
         class="form-group form-control ph-annotation-body"
         rows="2"
         required

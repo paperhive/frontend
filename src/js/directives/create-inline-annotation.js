@@ -12,7 +12,7 @@ module.exports = function (app) {
         templateUrl: 'templates/article/text/create-inline-annotation.html',
         link: function(scope, element) {
           scope.auth = authService;
-          scope.annotation.author = authService.user._id;
+          scope.annotation.author = authService.user;
 
           scope.addDiscussion = function() {
             // We always need a title.
@@ -23,7 +23,7 @@ module.exports = function (app) {
               scope.annotation.body = undefined;
             }
 
-            if (!scope.annotation.selection) {
+            if (!scope.annotation.target) {
               notificationsService.notifications.push({
                 type: 'error',
                 message: 'No text selected.'

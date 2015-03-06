@@ -17,19 +17,20 @@
       highlight-root
       ></pdf>
     <div class="ph-highlight-layer">
-      <div highlight-target="annotations.draft.target"
+      <div
+        highlight-target="annotations.draft.target"
         highlight-info="annotations.highlightInfos[annotations.draft._id]"></div>
-      <!--div ng-repeat="annotation for annotations.stored"
-        hightlight-annotation="annotation"></div-->
-      <!--div hightlight-annotation="annotations.draft"></div-->
+      <div ng-repeat="annotation in annotations.stored"
+        highlight-target="annotation.target"
+        highlight-info="annotations.highlightInfos[annotation._id]"></div>
     </div>
   </div>
   <!--column for margin notes-->
   <div id="annotation-column" class="col-md-3">
     <inline-annotation
       ng-repeat="annotation in annotations.stored"
-      ng-if="annotations.offsets[annotation._id].y"
-      ng-style="{'top': annotations.offsets[annotation._id].y + 'px'}"
+      ng-if="annotations.highlightInfos[annotation._id].top"
+      ng-style="{'top': annotations.highlightInfos[annotation._id].top + 'px'}"
       annotation="annotation"
       class="ph-annotation"
       >
