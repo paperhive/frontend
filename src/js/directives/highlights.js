@@ -29,7 +29,7 @@ module.exports = function (app) {
     };
   });
   
-  app.directive('highlightTarget', function () {
+  app.directive('highlightRoot', function () {
     return {
       restrict: 'A',
       require: '^^highlightContainer',
