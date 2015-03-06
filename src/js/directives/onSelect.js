@@ -1,4 +1,5 @@
 var rangy = require('rangy');
+var _ = require('lodash');
 
 module.exports = function (app) {
   app.directive('onSelect', ['$document', '$parse',
@@ -6,17 +7,12 @@ module.exports = function (app) {
       return {
         restrict: 'A',
         link: function (scope, element, attrs) {
-          var currentSelection;
-
           // define event handler
           var handler = function () {
             scope.$apply(function () {
               // result function
-              var onSelect = function (selection) {
-                if (selection || selection !== currentSelection) {
-                  currentSelection = selection;
-                  $parse(attrs.onSelect)(scope, {$selection: selection});
-                }
+              var onSelect = function (ranges) {
+                $parse(attrs.onSelect)(scope, {$ranges: ranges});
               };
 
               // get current selection
@@ -42,7 +38,23 @@ module.exports = function (app) {
                 return onSelect(undefined);
               }
 
-              return onSelect(rangy.serializeSelection(selection, true, element[0]));
+              // do not allow selections without a range
+              // (André: I guess that's possible in crazy browsers)
+              if (!selection.rangeCount) {
+                return onSelect(undefined);
+              }
+
+              // serialize ALL the ranges
+              var serializedRanges = _.map(
+                selection.getAllRanges(),
+                function (range) {
+                  return rangy.serializeRange(
+                    selection.getRangeAt(0), true, element[0]
+                  );
+                }
+              );
+
+              return onSelect(serializedRanges);
             });
           };
 
