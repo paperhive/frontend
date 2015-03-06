@@ -116,26 +116,30 @@ module.exports = function (app) {
           });
         });
 
+      $scope.annotations = {
+        draft: {_id: _.uniqueId()},
+        stored: [],
+        offsets: {}
+      };
+
       $scope.onPdfLoaded = function () {
         // DEBUG START contains everything related to a annotations
-        $scope.annotations = {
-          draft: {_id: _.uniqueId()},
-          stored: [{
-            _id: _.uniqueId(),
-            selection: '0/10/1/0/0/0:35,0/10/1/0/0/0:41',
-            author: authService.user,
-            title: 'Matrix properties',
-            body: 'Is it SPD?',
-          }],
-          offsets: {}
-        };
+        /*
+        $scope.annotations.stored = [{
+          _id: _.uniqueId(),
+          selection: '0/10/1/0/0/0:35,0/10/1/0/0/0:41',
+          author: authService.user,
+          title: 'Matrix properties',
+          body: 'Is it SPD?',
+        }];
+        */
         // DEBUG END
       };
 
       // called on select/deselect
-      $scope.onSelect = function (selection) {
-        if (selection) {
-          $scope.annotations.draft.selection = selection;
+      $scope.onSelect = function (ranges) {
+        if (ranges) {
+          $scope.annotations.draft.ranges = ranges;
         }
       };
 
