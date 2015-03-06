@@ -1,3 +1,5 @@
+$ = require('jquery');
+
 module.exports = function (app) {
   function registerOutsideDirective (eventName, directiveName) {
     app.directive(directiveName, [
@@ -8,7 +10,7 @@ module.exports = function (app) {
           link: function (scope, element, attrs) {
             var handler = function(event) {
               // determine if clicked inside the element
-              var clickedInside = element.find(event.target).length > 0;
+              var clickedInside = $.contains(element[0], event.target);
 
               // get callback that was specified in attribute
               var callback = $parse(attrs[directiveName]);
