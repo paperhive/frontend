@@ -8,22 +8,24 @@ module.exports = function (app) {
       return {
         restrict: 'A',
         link: function (scope, element, attrs) {
-          var lastRanges;
+          var lastSerializedRanges;
 
           // define event handler
           var handler = function () {
             scope.$apply(function () {
               // result function
-              var onTextSelect = function (ranges, selection) {
-                if (!_.isEqual(ranges, lastRanges)) {
-                  lastRanges = ranges;
+              var onTextSelect = function (serializedRanges, selection) {
+                // only call expression if something happened
+                // (otherwise every keypress calls the expression)
+                if (!_.isEqual(serializedRanges, lastSerializedRanges)) {
+                  lastSerializedRanges = serializedRanges;
 
                   var target;
                   // construct target object if valid ranges are given
-                  if (ranges && ranges.length && selection) {
+                  if (serializedRanges && serializedRanges.length && selection) {
                     target = {
                       text: selection.toString(),
-                      ranges: ranges
+                      ranges: serializedRanges
                     };
                   }
 
