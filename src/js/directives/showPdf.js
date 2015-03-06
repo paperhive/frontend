@@ -73,7 +73,7 @@ module.exports = function (app) {
             viewer.className = "pdfViewer";
             container.appendChild(viewer);
 
-            element.append(container);
+            element.prepend(container);
 
             var pdfViewer = new PDFJS.PDFViewer({
               container: container
@@ -87,6 +87,12 @@ module.exports = function (app) {
             PDFJS.getDocument(url).then(function (pdf) {
               // fire onLoaded when last page has been rendered
               container.addEventListener('pagerendered', function (e) {
+                // normalize the DOM subtree of the rendered page
+                // (otherwise serialized ranges may be based on different
+                // DOM states)
+                e.target.normalize();
+
+                // fire onLoaded if last page has been rendered
                 if (e.detail.pageNumber === pdf.numPages) {
                   scope.$apply(function () {
                     onLoaded(scope);
