@@ -135,11 +135,6 @@ module.exports = function (app) {
         // DEBUG END
       };
 
-      $scope.auth = authService;
-      // Expose the routeSegment to be able to determine the active tab in the
-      // template.
-      $scope.$routeSegment = $routeSegment;
-
       // called on select/deselect
       $scope.onSelect = function (target) {
         if (target) {
