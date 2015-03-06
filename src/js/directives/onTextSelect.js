@@ -24,9 +24,7 @@ module.exports = function (app) {
                   serializedRanges = _.map(
                     selection.getAllRanges(),
                     function (range) {
-                      return rangy.serializeRange(
-                        selection.getRangeAt(0), true, element[0]
-                      );
+                      return rangy.serializeRange(range, true, element[0]);
                     }
                   );
                 }
