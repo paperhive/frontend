@@ -1,9 +1,9 @@
 module.exports = function (app) {
   app.controller('ArticleNewCtrl', [
     '$scope', '$http', '$q', '$location', 'config', 'authService',
-    'NotificationsService',
+    'notificationService',
     function($scope, $http, $q, $location, config, authService,
-             NotificationsService) {
+             notificationService) {
       $scope.check = {};
 
       $scope.submitApproved = function () {
@@ -17,7 +17,7 @@ module.exports = function (app) {
           })
           .error(function (data) {
             $scope.submitting = false;
-            NotificationsService.notifications.push({
+            notificationService.notifications.push({
               type: 'error',
               message: data.message || 'could not add article (unknown reason)'
             });

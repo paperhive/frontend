@@ -24,8 +24,8 @@
     "gulp-htmlmin": "^1.1.1",
     "gulp-if": "^1.2.5",
     "gulp-jshint": "^1.9.2",
-    "gulp-less": "^3.0.0",
-    "gulp-minify-css": "^0.4.6",
+    "gulp-less": "^3.0.1",
+    "gulp-minify-css": "^0.5.1",
     "gulp-protractor": "0.0.12",
     "gulp-sourcemaps": "^1.5.0",
     "gulp-streamify": "0.0.5",
@@ -55,7 +55,10 @@
   },
   "browserify-shim": {
     "angular": {
-      "exports": "angular"
+      "exports": "angular",
+      "depends": [
+        "jquery"
+      ]
     },
     "angular-bootstrap-tpls": {
       "exports": null,
@@ -80,6 +83,9 @@
       "depends": [
         "angular"
       ]
+    },
+    "jquery": {
+      "exports": "$"
     },
     "pdfjs": {
       "exports": "PDFJS"

@@ -139,7 +139,9 @@ gulp.task('static', function () {
     'config/Safe.js',
     'extensions/Safe.js',
     'fonts/HTML-CSS/TeX/woff/*.woff',
-    'jax/output/HTML-CSS/fonts/TeX/fontdata.js'
+    'jax/element/**',
+    'jax/output/HTML-CSS/autoload/**',
+    'jax/output/HTML-CSS/fonts/TeX/**'
   ], function(path) {
     return mathjax_base + path;
   });

@@ -4,8 +4,6 @@
   // `rangy.init()` for the core rangy object to work (which is used
   // in some controllers, i.e., by angular).
   require('rangy');
-  require('rangy-classapplier');
-  require('rangy-highlighter');
   require('rangy-serializer');
 
   var angular = require('angular');
