@@ -8,7 +8,7 @@ module.exports = function (app) {
   var getTextNodes = function (node) {
     if (!node) return [];
     if (node.nodeType === Node.TEXT_NODE) return [node];
-    
+
     // process childs
     var nodes = [];
     $(node).contents().each(function (index, el) {
@@ -28,7 +28,7 @@ module.exports = function (app) {
       }]
     };
   });
-  
+
   app.directive('highlightRoot', function () {
     return {
       restrict: 'A',
@@ -67,6 +67,8 @@ module.exports = function (app) {
             );
 
             // wrap each TextNode in a span to measure it
+            // See this discussion:
+            // https://github.com/paperhub/paperhub-frontend/pull/68#discussion_r25970589
             _.forEach(textNodes, function (node) {
               var $node = $(node);
               var $span = $node.wrap('<span/>').parent();
@@ -95,7 +97,7 @@ module.exports = function (app) {
       },
     };
   });
-  
+
   app.directive('highlightTarget', ['$parse', function ($parse) {
     return {
       restrict: 'A',
