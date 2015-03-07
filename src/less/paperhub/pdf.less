@@ -1,5 +1,7 @@
 pdf {
   display: block;
+  // no selection of divs (only textLayer)
+  .ph-selection(none);
 }
 
 /* Don't use PDFJS's PNG shadow. */
@@ -24,4 +26,13 @@ pdf {
 
 .pdfViewer .page .loadingIcon {
   background: none;
+}
+
+.pdfViewer .textLayer {
+  z-index: 1000;
+  // allow text selections
+  .ph-selection(text);
+}
+.pdfViewer .annotationLayer {
+  z-index: 1001;
 }

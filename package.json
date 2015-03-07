@@ -54,7 +54,10 @@
   },
   "browserify-shim": {
     "angular": {
-      "exports": "angular"
+      "exports": "angular",
+      "depends": [
+        "jquery"
+      ]
     },
     "angular-bootstrap-tpls": {
       "exports": null,
@@ -79,6 +82,9 @@
       "depends": [
         "angular"
       ]
+    },
+    "jquery": {
+      "exports": "$"
     },
     "pdfjs": {
       "exports": "PDFJS"

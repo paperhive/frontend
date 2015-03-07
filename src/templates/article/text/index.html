@@ -8,41 +8,46 @@
   </div>
 </div>
 <div class="row" ng-if="article.file.url">
-  <pdf
-    url="{{article.file.url}}"
-    on-mouseup="phGetSelection()"
-    class="col-md-9"
-    ></pdf>
+  <div highlight-container class="col-md-9">
+    <pdf
+      url="article.file.url"
+      text-overlay="true"
+      on-loaded="onPdfLoaded()"
+      on-text-select="$target && (annotations.draft.target = $target)"
+      highlight-root
+      ></pdf>
+    <div class="ph-highlight-layer">
+      <div
+        highlight-target="annotations.draft.target"
+        highlight-info="annotations.highlightInfos[annotations.draft._id]"></div>
+      <div ng-repeat="annotation in annotations.stored"
+        highlight-target="annotation.target"
+        highlight-info="annotations.highlightInfos[annotation._id]"></div>
+    </div>
+  </div>
   <!--column for margin notes-->
   <div id="annotation-column" class="col-md-3">
     <inline-annotation
-      ng-repeat="discussion in article.discussions | filter:
-      {serializedSelection: '!undefined'}"
-      title='discussion.title'
-      body='discussion.body'
-      author='discussion.originalAnnotation.author'
-      vertical-offset='discussion.verticalOffset'
+      ng-repeat="annotation in annotations.stored"
+      ng-if="annotations.highlightInfos[annotation._id].top"
+      ng-style="{'top': annotations.highlightInfos[annotation._id].top + 'px'}"
+      annotation="annotation"
+      class="ph-annotation"
       >
     </inline-annotation>
     <!-- Don't use ng-if here to keep the element in the DOM tree.
     This makes sure that the entered text is preserved.
     -->
     <div
-      ng-show="verticalOffsetSelection"
-      ng-style="
-      {
-      'top': verticalOffsetSelection,
-      'position': 'relative'
-      }
-      "
+      class="ph-annotation"
+      ng-if="annotations.highlightInfos[annotations.draft._id].top"
+      ng-style="{'top': annotations.highlightInfos[annotations.draft._id].top + 'px'}"
       >
       <create-inline-annotation
         ng-if="auth.user"
-        serialized-selection="latestRangySelectionSerialized"
-        on-save="article.discussions.push($discussion)"
-        on-mousedown="phHighlightSelection()"
-        on-outside-mousedown="!newAnnotation.body && phPurgeSelection()"
-        body="newAnnotation.body"
+        on-save="annotations.stored.push($annotation) && purgeDraft()"
+        on-outside-mousedown="!annotations.draft.body && purgeDraft()"
+        annotation="annotations.draft"
         >
       </create-inline-annotation>
       <ng-include

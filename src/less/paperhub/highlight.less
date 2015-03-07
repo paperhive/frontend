@@ -1,0 +1,11 @@
+.ph-highlight-layer{
+  position: absolute;
+  top: 0;
+}
+
+.ph-highlight-target {
+  position: absolute;
+  background-color: rgba(255, 255, 0, 0.4);
+  z-index: 500; // must be between z-index of PDF canvas and PDF text layer
+  .ph-selection(none);
+}

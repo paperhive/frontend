@@ -1,3 +1,5 @@
+var _ = require('lodash');
+
 // DEBUG
 var users = [
   {
@@ -94,6 +96,12 @@ module.exports = function (app) {
     function($scope, $route, $routeSegment, $document, $http, config,
              authService, notificationService) {
 
+      // expose authService
+      $scope.auth = authService;
+      // Expose the routeSegment to be able to determine the active tab in the
+      // template.
+      $scope.$routeSegment = $routeSegment;
+
       // fetch article
       $http.get(config.api_url + '/articles/' + $routeSegment.$routeParams.id)
         .success(function (article) {
@@ -107,137 +115,28 @@ module.exports = function (app) {
           });
         });
 
-      // DEBUG
-      var article =
-        {
-        _id: "0af5e13",
-        owner: accounts[0],
-        url: config.api_url + '/proxy?url=' +
-          encodeURIComponent('http://arxiv.org/pdf/1208.0264v4.pdf'),
-        //_url: "http://win.ua.ac.be/~nschloe/other/pdf_commenting_new.pdf",
-        //url: "https://user.d00d3.net/~nschloe/pdf_commenting_new.pdf",
-        title: "Preconditioned Recycling Krylov Subspace Methods for Self-Adjoint Problems",
-        authors: [users[2], users[1]],
-        discussions: [discussion],
-      };
-      // END DEBUG
-
-      $scope.auth = authService;
-      // Expose the routeSegment to be able to determine the active tab in the
-      // template.
-      $scope.$routeSegment = $routeSegment;
-
-      var rangy = require("rangy");
-      var highlighter = rangy.createHighlighter();
-      highlighter.addClassApplier(rangy.createClassApplier("ph-highlight", {
-        ignoreWhiteSpace: true,
-        tagNames: ["span", "a"]
-      }));
-
-      $scope.phHighlightSerializedSelection = function(serializedSelection) {
-        if (!serializedSelection) {
-          return;
-        }
-        //if (!serializedSelection) {
-        //  notificationService.notifications.push({
-        //    type: 'warning',
-        //    message: 'Empty selection object.'
-        //  });
-        //  return;
-        //}
-        if (!rangy.canDeserializeSelection(serializedSelection)) {
-          notificationService.notifications.push({
-            type: 'error',
-            message: 'Cannot unserialize selection object.'
-          });
-          return;
-        }
-        highlighter.highlightSelection(
-          "ph-highlight",
-          rangy.deserializeSelection(serializedSelection)
-        );
+      $scope.annotations = {
+        draft: {_id: _.uniqueId()},
+        stored: [],
+        highlightInfos: {}
       };
 
-      $scope.latestRangySelection = undefined;
-      $scope.latestRangySelectionSerialized = undefined;
-      $scope.phHighlightSelection = function() {
-        //// Unhighlight previous selection
-        //highlighter.unhighlightSelection($scope.latestRangySelection);
-        if ($scope.latestRangySelection === undefined) {
-          $scope.latestRangySelection = rangy.getSelection();
-          highlighter.highlightSelection(
-            "ph-highlight",
-            $scope.latestRangySelection
-          );
-          // Already serialize the selection at this point since for some reason
-          // ```
-          // $scope.latestRangySelectionSerialized.getAllRanges()
-          // ```
-          // is empty and hence cannot be serialized anymore.
-          $scope.latestRangySelectionSerialized =
-            rangy.serializeSelection($scope.latestRangySelection);
-        }
+      $scope.onPdfLoaded = function () {
+        // DEBUG START contains everything related to a annotations
+        /*
+        $scope.annotations.stored = [{
+          _id: _.uniqueId(),
+          selection: '0/10/1/0/0/0:35,0/10/1/0/0/0:41',
+          author: authService.user,
+          title: 'Matrix properties',
+          body: 'Is it SPD?',
+        }];
+        */
+        // DEBUG END
       };
 
-      $scope.phPurgeSelection = function() {
-        if ($scope.latestRangySelection) {
-          highlighter.unhighlightSelection($scope.latestRangySelection);
-          $scope.latestRangySelection = undefined;
-        }
-        $scope.verticalOffsetSelection = undefined;
+      $scope.purgeDraft = function() {
+        $scope.annotations.draft = {_id: _.uniqueId()};
       };
-
-      $scope.newAnnotation = {};
-
-      $scope.phGetSelection = function() {
-        // Intercept mouseup event to display new annotation box
-        // Get selected text, cf.
-        // <http://stackoverflow.com/a/5379408/353337>.
-        var text = "";
-        if (window.getSelection) {
-          text = window.getSelection().toString();
-        } else if (document.selection && document.selection.type != "Control") {
-          text = document.selection.createRange().text;
-        }
-
-        if (!!text) {
-          // Get vertical offset of the current selection.
-          if (window.getSelection) {
-            selection = window.getSelection();
-            // Collect all offsets until we are at the same level as the
-            // element in which the annotations are actually displayed (the
-            // annotation column). This is ugly since it makes assumptions
-            // about the DOM tree.
-            // TODO revise
-            var totalOffset = 0;
-            if (selection) {
-              if (selection.anchorNode) {
-                if (selection.anchorNode.parentElement) {
-                  totalOffset += selection.anchorNode.parentElement.offsetTop;
-                  if (selection.anchorNode.parentElement.parentElement) {
-                    totalOffset += selection.anchorNode.parentElement.parentElement.offsetTop;
-                    if (selection.anchorNode.parentElement.parentElement.parentElement) {
-                      totalOffset += selection.anchorNode.parentElement.parentElement.parentElement.offsetTop;
-                    }
-                  }
-                }
-              }
-            }
-            $scope.verticalOffsetSelection = totalOffset + "px";
-            // Unhighlight previous selection.
-            if ($scope.latestRangySelection) {
-              highlighter.unhighlightSelection($scope.latestRangySelection);
-              $scope.latestRangySelection = undefined;
-            }
-            // TODO ATTENTION! The selection is of type "None" after rangy
-            // messed around.
-          } else if (document.selection &&
-                     document.selection.type != "Control") {
-            $scope.verticalOffsetSelection =
-              document.selection.createRange() + "px";
-          }
-        }
-      };
-
     }]);
 };
