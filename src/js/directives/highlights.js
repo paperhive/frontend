@@ -20,10 +20,7 @@ module.exports = function (app) {
   app.directive('highlightContainer', function () {
     return {
       restrict: 'A',
-      transclude: true,
-      replace: true,
       scope: {},
-      template: '<div ng-transclude></div>',
       controller: ['$scope', function ($scope) {
       }]
     };
