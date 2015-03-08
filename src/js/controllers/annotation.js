@@ -1,29 +1,3 @@
-// TODO fetch from database
-var users = [
-  {
-  _id: "08ea4",
-  orcidId: "dasdasd0",
-  userName: "hondi",
-  displayName: "Hondanz",
-  gravatarMd5: ""
-},
-{
-  _id: "152ea4",
-  orcidId: "dasdasd1",
-  userName:  "hoppenstedt",
-  displayName: "Opa Hoppenstedt",
-  gravatarMd5: ""
-},
-{
-  _id: "ea5411",
-  orcidId: "dasdasd2",
-  userName: "jimmy",
-  displayName: "Jimmy",
-  email: "jimmy@best.com",
-  gravatarMd5: ""
-}
-];
-
 module.exports = function (app) {
   app.controller('AnnotationCtrl', [
     '$scope', 'authService',
