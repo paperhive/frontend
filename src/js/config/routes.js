@@ -11,7 +11,7 @@ module.exports = function (app) {
         .when('/articles/:id/activity', 'article.activity')
         .when('/articles/:id/comments', 'article.comments')
         .when('/articles/:id/comments/new', 'article.comments.new')
-        .when('/articles/:id/comments/:num', 'article.comments.num')
+        .when('/articles/:id/comments/:index', 'article.comments.index')
         .when('/articles/:id/settings', 'article.settings')
         .when('/articles/:id/text', 'article.text')
         .when('/contact', 'contact')
@@ -51,9 +51,9 @@ module.exports = function (app) {
             .segment('new', {
               templateUrl: 'templates/article/comment/new.html',
             })
-            .segment('num', {
+            .segment('index', {
               templateUrl: 'templates/article/comment/discussion.html',
-              dependencies: ['num']
+              dependencies: ['index']
             })
           .up()
           .segment('settings', {

@@ -4,9 +4,13 @@
       {{discussion.title}}
     </span>
     <span ng-if="titleEditMode">
-      <input type="text" class="form-control ph-discussion-title"
-          size="{{discussion.title.length}}" placeholder="Discussion title"
-          ng-model="tmpTitle">
+      <input
+        type="text"
+        class="form-control ph-discussion-title"
+        size="{{discussion.title.length}}"
+        placeholder="Discussion title"
+        ng-model="tmpTitle"
+        >
       </input>
       <button class="btn btn-default" ng-click="updateTitle(tmpTitle)">
         <i class="fa fa-check"></i>
@@ -16,7 +20,7 @@
       </button>
     </span>
     <span class="small">
-      #{{discussion.number}}
+      #{{discussion.index}}
     </span>
     <button class="btn btn-link" ng-if="!titleEditMode"
         ng-click="setTitleEditOn()">
@@ -28,7 +32,12 @@
   </a>
   started this thread
   <span am-time-ago="{{discussion.originalAnnotation.time}}"></span>
-  &middot; {{discussion.replies.length}} replies
+  <span ng-if="discussion.replies.length == 1">
+    &middot; {{discussion.replies.length}} reply
+  </span>
+  <span ng-if="discussion.replies.length > 1">
+    &middot; {{discussion.replies.length}} replies
+  </span>
 
   <hr>
   <div class="row">

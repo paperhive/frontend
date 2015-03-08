@@ -1,22 +1,29 @@
 module.exports = function (app) {
   app.controller('DiscussionCtrl', [
-    '$scope', 'authService', '$routeParams',
-    function($scope, authService, $routeParams) {
+    '$scope', 'authService', '$routeSegment', '$http', 'config',
+    'notificationService',
+    function($scope, authService, $routeSegment, $http, config,
+             notificationService) {
+
+      // fetch discussion
+      $http.get(
+        config.api_url +
+          '/articles/' + $routeSegment.$routeParams.id +
+          '/discussions/' + $routeSegment.$routeParams.index
+      )
+        .success(function (discussion) {
+          $scope.discussion = discussion;
+        })
+        .error(function (data) {
+          notificationService.notifications.push({
+            type: 'error',
+            message: data.message ? data.message : 'could not fetch discussion ' +
+              '(unknown reason)'
+          });
+        });
 
       $scope.titleEditMode = false;
       $scope.tmpTitle = undefined;
-
-      // retrieve the discussion
-      var _ = require('lodash');
-      //var k = _.find($scope.article.discussions,
-      //               function(obj){ return obj.number == parseInt($routeParams.num)}
-      //              );
-      $scope.discussion = _.findWhere($scope.article.discussions,
-                                      {"number": parseInt($routeParams.num)}
-                                     );
-      if ($scope.discussion === undefined) {
-        throw PhError("Discussion not found.");
-      }
 
       $scope.setTitleEditOn = function() {
         $scope.tmpTitle = $scope.discussion.title;
