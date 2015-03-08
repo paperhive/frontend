@@ -66,7 +66,7 @@ module.exports = function (app) {
         $scope.discussions.draft = {_id: _.uniqueId()};
       };
 
-      $scope.addDiscussion = function(articleId, annotation) {
+      $scope.addDiscussion = function(annotation) {
         // We always need a title.
         // This conditional applies for short inline comments
         // on the PDF.
@@ -86,7 +86,9 @@ module.exports = function (app) {
 
         $scope.submitting = true;
         $http.post(
-          config.api_url + '/articles/' + articleId + '/discussions',
+          config.api_url +
+            '/articles/' + $routeSegment.$routeParams.id +
+            '/discussions',
           discussion
         )
         .success(function (discussion) {
