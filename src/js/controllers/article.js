@@ -42,7 +42,7 @@ module.exports = function (app) {
         });
       });
 
-      $scope.annotations = {
+      $scope.discussions = {
         draft: {_id: _.uniqueId()},
         stored: [],
         highlightInfos: {}
@@ -51,7 +51,7 @@ module.exports = function (app) {
       $scope.onPdfLoaded = function () {
         // DEBUG START contains everything related to a annotations
         /*
-        $scope.annotations.stored = [{
+        $scope.discussions.stored = [{
           _id: _.uniqueId(),
           selection: '0/10/1/0/0/0:35,0/10/1/0/0/0:41',
           author: authService.user,
@@ -63,7 +63,7 @@ module.exports = function (app) {
       };
 
       $scope.purgeDraft = function() {
-        $scope.annotations.draft = {_id: _.uniqueId()};
+        $scope.discussions.draft = {_id: _.uniqueId()};
       };
 
       $scope.addDiscussion = function(articleId, annotation) {
@@ -91,7 +91,7 @@ module.exports = function (app) {
         )
         .success(function (discussion) {
           $scope.submitting = false;
-          $scope.annotations.stored.push(discussion);
+          $scope.discussions.stored.push(discussion);
         })
         .error(function (data) {
           $scope.submitting = false;
