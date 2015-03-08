@@ -1,6 +1,6 @@
 module.exports = function (app) {
 
-  app.directive('createInlineAnnotation', [
+  app.directive('inlineAnnotationDraft', [
     'authService', 'notificationService', '$document', '$rootScope',
     function(authService, notificationService, $document, $rootScope) {
       return {
@@ -14,7 +14,28 @@ module.exports = function (app) {
           scope.auth = authService;
           scope.annotation.author = authService.user;
 
-          scope.onSave({$annotation: scope.annotation});
+          scope.addDiscussion = function() {
+            // We always need a title.
+            // This conditional applies for short inline comments
+            // on the PDF.
+            if (scope.annotation.title === undefined) {
+              scope.annotation.title = scope.annotation.body;
+              scope.annotation.body = undefined;
+            }
+
+            if (!scope.annotation.target) {
+              notificationService.notifications.push({
+                type: 'error',
+                message: 'No text selected.'
+              });
+              return;
+            }
+
+            // TODO: store in database
+            if (scope.onSave !== undefined) {
+              scope.onSave({$annotation: scope.annotation});
+            }
+          };
         }
       };
     }]);
