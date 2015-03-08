@@ -1,0 +1,31 @@
+<span ng-if="!c.isEditMode">
+  {{ngModel}}
+</span>
+<span ng-if="c.isEditMode">
+  <input
+    type="text"
+    class="form-control ph-discussion-title"
+    size="{{content.length + 5}}"
+    ng-model="c.updatedContent"
+    >
+  </input>
+  <button
+    class="btn btn-default"
+    ng-click="onSave(updatedContent); c.isEditMode = false;"
+    >
+    <i class="fa fa-check"></i>
+  </button>
+  <button
+    class="btn btn-default"
+    ng-click="c.isEditMode = false"
+    >
+    <i class="fa fa-remove"></i>
+  </button>
+</span>
+<button
+  ng-if="!c.isEditMode"
+  class="btn btn-link"
+  ng-click="c.isEditMode = true"
+  >
+  <i class="fa fa-pencil"></i>
+</button>
