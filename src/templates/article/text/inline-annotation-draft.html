@@ -17,7 +17,7 @@
   <div class="panel-body">
     <form
       name="annotationForm"
-      ng-submit="annotationForm.$valid && addDiscussion(articleId, annotation)"
+      ng-submit="annotationForm.$valid && $parent.addDiscussion($parent.article._id, annotation)"
       novalidate
       >
       <input

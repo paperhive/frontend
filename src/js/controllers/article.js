@@ -26,6 +26,22 @@ module.exports = function (app) {
           });
         });
 
+      $http.get(
+        config.api_url +
+          '/articles/' + $routeSegment.$routeParams.id + '/discussions'
+      )
+      .success(function (discussions) {
+        $scope.discussions = discussions;
+        console.log(discussions);
+      })
+      .error(function (data) {
+        notificationService.notifications.push({
+          type: 'error',
+          message: data.message ? data.message : 'could not fetch discussions ' +
+            '(unknown reason)'
+        });
+      });
+
       $scope.annotations = {
         draft: {_id: _.uniqueId()},
         stored: [],
@@ -50,7 +66,6 @@ module.exports = function (app) {
         $scope.annotations.draft = {_id: _.uniqueId()};
       };
 
-      $scope.discussions = [];
       $scope.addDiscussion = function(articleId, annotation) {
         // We always need a title.
         // This conditional applies for short inline comments
@@ -60,11 +75,32 @@ module.exports = function (app) {
           annotation.body = undefined;
         }
 
-        $scope.discussions.push({
-          article: articleId,
-          originalAnnotation: annotation,
-          replies: []
+        discussion = {
+          originalAnnotation: {
+            title: annotation.title,
+            body: annotation.body,
+            target: annotation.target,
+            tags: annotation.tags
+          }
+        };
+
+        $scope.submitting = true;
+        $http.post(
+          config.api_url + '/articles/' + articleId + '/discussions',
+          discussion
+        )
+        .success(function (discussion) {
+          $scope.submitting = false;
+          $scope.annotations.stored.push(discussion);
+        })
+        .error(function (data) {
+          $scope.submitting = false;
+          notificationService.notifications.push({
+            type: 'error',
+            message: data.message || 'could not add discussion (unknown reason)'
+          });
         });
       };
+
     }]);
 };
