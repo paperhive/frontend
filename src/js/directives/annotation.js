@@ -3,7 +3,6 @@ module.exports = function (app) {
   app.directive('annotation', function() {
     return {
       restrict: 'E',
-      require: ['isArticleAuthor', 'requiresBody'],
       controller: 'AnnotationCtrl',
       scope: {
         annotation: '=content',

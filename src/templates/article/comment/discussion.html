@@ -1,7 +1,7 @@
 <div ng-controller="DiscussionCtrl">
   <h3 class="ph-no-margin-top">
     <span ng-if="!titleEditMode">
-      {{discussion.title}}
+      {{discussion.originalAnnotation.title}}
     </span>
     <span ng-if="titleEditMode">
       <input
@@ -31,7 +31,7 @@
     {{discussion.originalAnnotation.author.displayName}}
   </a>
   started this thread
-  <span am-time-ago="{{discussion.originalAnnotation.time}}"></span>
+  <span am-time-ago="discussion.originalAnnotation.createdAt"></span>
   <span ng-if="discussion.replies.length == 1">
     &middot; {{discussion.replies.length}} reply
   </span>
@@ -45,9 +45,8 @@
       <ul class="media-list">
         <li class="media">
           <annotation
-            ng-if="discussion.originalAnnotation.permissions.read"
             content="discussion.originalAnnotation"
-            is-article-author="isArticleAuthor(discussion.originalAnnotation.author._id)"
+            is-article-author="false"
             requires-body="false"
             >
           </annotation>
