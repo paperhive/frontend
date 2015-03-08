@@ -43,13 +43,13 @@
       ng-if="annotations.highlightInfos[annotations.draft._id].top"
       ng-style="{'top': annotations.highlightInfos[annotations.draft._id].top + 'px'}"
       >
-      <create-inline-annotation
+      <inline-annotation-draft
         ng-if="auth.user"
         on-save="annotations.stored.push($annotation) && purgeDraft()"
         on-outside-mousedown="!annotations.draft.body && purgeDraft()"
         annotation="annotations.draft"
         >
-      </create-inline-annotation>
+      </inline-annotation-draft>
       <ng-include
         ng-if="!auth.user"
         src="'templates/article/text/inline-annotation-substitute.html'"
