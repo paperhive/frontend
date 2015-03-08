@@ -47,6 +47,8 @@ module.exports = function (app) {
         }
       };
 
+      $scope.annotation = {};
+
       $scope.addReply = function(body) {
         if (!$scope.auth.user) {
           throw PhError("Not logged in?");

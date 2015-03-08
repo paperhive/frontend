@@ -11,7 +11,7 @@
         name="annotationForm"
         ng-controller="AnnotationCtrl"
         ng-submit="annotationForm.$valid
-        && addReply(annotationBody); annotationBody=null"
+        && addReply(annotation.body); annotation.body=undefined;"
         novalidate
         >
         <span
@@ -28,7 +28,7 @@
         <textarea
           id="textbody"
           class="form-control ph-annotation-body"
-          ng-model='annotationBody'
+          ng-model='annotation.body'
           mentio
           mentio-macros="macros"
           mentio-search="searchPeople(term)"
@@ -43,7 +43,7 @@
         <hr>
         <label for="preview">Preview</label>
         <div class="well well-lg" id=preview>
-          <kramjax body="{{annotationBody}}"></kramjax>
+          <kramjax body="{{annotation.body}}"></kramjax>
         </div>
         <span class="pull-right">
           <button type="submit" class="btn btn-default">
