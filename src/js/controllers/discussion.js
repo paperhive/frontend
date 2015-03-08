@@ -47,22 +47,29 @@ module.exports = function (app) {
         }
       };
 
-      $scope.annotation = {};
-
-      $scope.addReply = function(body) {
-        if (!$scope.auth.user) {
-          throw PhError("Not logged in?");
-        }
-        // create the annotation
+      $scope.addReply = function (body) {
         reply = {
-          _id: Math.random().toString(36).slice(2),
-          author: $scope.auth.user,
-          body: body,
-          time: new Date(),
-          labels: ["reply"]
+          body: body
         };
-        $scope.discussion.replies.push(reply);
-        return;
+        $scope.submitting = true;
+        $http.post(
+          config.api_url +
+            '/articles/' + $routeSegment.$routeParams.id +
+            '/discussions/' + $routeSegment.$routeParams.index +
+            '/replies/',
+            reply
+        )
+        .success(function (reply) {
+          $scope.submitting = false;
+          $scope.discussion.replies.push(reply);
+        })
+        .error(function (data) {
+          $scope.submitting = false;
+          notificationService.notifications.push({
+            type: 'error',
+            message: data.message || 'could not add reply (unknown reason)'
+          });
+        });
       };
 
       $scope.isArticleAuthor = function(authorId) {

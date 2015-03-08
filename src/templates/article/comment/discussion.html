@@ -40,10 +40,11 @@
           </annotation>
         </li>
 
+        {{discussion.replies}}
         <li class="media" ng-repeat="reply in discussion.replies">
+          {{reply}}
           <annotation
             content="reply"
-            is-article-author="isArticleAuthor(reply.author._id)"
             delete-function="deleteReply"
             requires-body="true"
             >

@@ -8,6 +8,8 @@ module.exports = function (app) {
 
       $scope.tmpBody = undefined;
 
+      $scope.annotation = {};
+
       $scope.getPeopleText = function(item) {
         //return '<strong><a href="#/users/' + item.userName + '">@' + item.userName + '</a></strong>';
         return '@' + item.userName;
