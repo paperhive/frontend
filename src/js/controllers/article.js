@@ -49,5 +49,22 @@ module.exports = function (app) {
       $scope.purgeDraft = function() {
         $scope.annotations.draft = {_id: _.uniqueId()};
       };
+
+      $scope.discussions = [];
+      $scope.addDiscussion = function(articleId, annotation) {
+        // We always need a title.
+        // This conditional applies for short inline comments
+        // on the PDF.
+        if (!annotation.title) {
+          annotation.title = annotation.body;
+          annotation.body = undefined;
+        }
+
+        $scope.discussions.push({
+          article: articleId,
+          originalAnnotation: annotation,
+          replies: []
+        });
+      };
     }]);
 };
