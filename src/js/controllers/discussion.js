@@ -22,16 +22,6 @@ module.exports = function (app) {
           });
         });
 
-      $scope.titleEditMode = false;
-      $scope.tmpTitle = undefined;
-
-      $scope.setTitleEditOn = function() {
-        $scope.tmpTitle = $scope.discussion.title;
-        $scope.titleEditMode = true;
-      };
-      $scope.setTitleEditOff = function() {
-        $scope.titleEditMode = false;
-      };
       $scope.updateTitle = function(newTitle) {
         $scope.discussion.title = newTitle;
         $scope.titleEditMode = false;
