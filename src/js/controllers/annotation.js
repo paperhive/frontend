@@ -1,10 +1,10 @@
 module.exports = function (app) {
   app.controller('AnnotationCtrl', [
-    '$scope', 'authService',
-    function($scope, authService) {
+    '$scope', 'authService', '$http', 'config', '$routeSegment',
+    'notificationService',
+    function($scope, authService, $http, config, $routeSegment,
+             notificationService) {
       $scope.isEditMode = false;
-
-      $scope.users = users;
 
       $scope.tmpBody = undefined;
 
@@ -28,8 +28,36 @@ module.exports = function (app) {
 
       $scope.updateAnnotation = function(newBody) {
         $scope.annotation.body = newBody;
-        $scope.annotation.editTime = new Date();
         $scope.isEditMode = false;
+
+        $scope.submitting = true;
+
+        var updatedDiscussion = {
+          originalAnnotation: {
+            title: $scope.annotation.title,
+            body: newBody,
+            tags: $scope.annotation.tags,
+            target: $scope.annotation.target
+          }
+        };
+
+        $http.put(
+          config.api_url +
+            '/articles/' + $routeSegment.$routeParams.id +
+            '/discussions/' + $routeSegment.$routeParams.index,
+          updatedDiscussion
+        )
+        .success(function (discussion) {
+          $scope.submitting = false;
+          $scope.annotation = discussion.originalAnnotation;
+        })
+        .error(function (data) {
+          $scope.submitting = false;
+          notificationService.notifications.push({
+            type: 'error',
+            message: data.message || 'could not add discussion (unknown reason)'
+          });
+        });
       };
 
       // Needed for access from child scope
