@@ -103,17 +103,20 @@ module.exports = function (app) {
       $scope.$routeSegment = $routeSegment;
 
       // fetch article
-      $http.get(config.api_url + '/articles/' + $routeSegment.$routeParams.id)
-        .success(function (article) {
-          $scope.article = article;
-        })
-        .error(function (data) {
-          notificationService.notifications.push({
-            type: 'error',
-            message: data.message ? data.message : 'could not fetch article ' +
-              '(unknown reason)'
-          });
+      $http.get(
+        config.api_url +
+          '/articles/' + $routeSegment.$routeParams.articleId
+      )
+      .success(function (article) {
+        $scope.article = article;
+      })
+      .error(function (data) {
+        notificationService.notifications.push({
+          type: 'error',
+          message: data.message ? data.message : 'could not fetch article ' +
+            '(unknown reason)'
         });
+      });
 
       $scope.annotations = {
         draft: {_id: _.uniqueId()},
