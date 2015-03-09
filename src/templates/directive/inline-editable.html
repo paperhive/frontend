@@ -1,17 +1,30 @@
 <span ng-if="!c.isEditMode">
   {{ngModel}}
-</span>
-<span ng-if="c.isEditMode">
-  <input
-    type="text"
-    class="form-control ph-discussion-title"
-    size="{{content.length + 5}}"
-    ng-model="c.updatedContent"
+  <button
+    class="btn btn-link"
+    ng-click="c.isEditMode = true"
     >
+    <i class="fa fa-pencil"></i>
+  </button>
+</span>
+<form
+  ng-if="c.isEditMode"
+  name="inlineEditForm"
+  ng-submit="inlineEditForm.$valid && (onSave(ngModel); c.isEditMode = false;)"
+  novalidate
+  >
+  <input
+  type="text"
+  class="form-control ph-discussion-title"
+  size="{{ngModel.length + 5}}"
+  ng-model="ngModel"
+  required
+  >
   </input>
   <button
     class="btn btn-default"
-    ng-click="onSave(updatedContent); c.isEditMode = false;"
+    ng-disabled="!inlineEditForm.$valid"
+    type="submit"
     >
     <i class="fa fa-check"></i>
   </button>
@@ -21,11 +34,4 @@
     >
     <i class="fa fa-remove"></i>
   </button>
-</span>
-<button
-  ng-if="!c.isEditMode"
-  class="btn btn-link"
-  ng-click="c.isEditMode = true"
-  >
-  <i class="fa fa-pencil"></i>
-</button>
+</form>

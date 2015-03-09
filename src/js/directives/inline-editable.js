@@ -5,6 +5,7 @@ module.exports = function (app) {
       restrict: 'E',
       require: 'ngModel',
       scope: {
+        ngModel: '=',
         onSave: '&'
       },
       templateUrl: 'templates/directive/inline-editable.html',
