@@ -40,15 +40,12 @@
           </annotation>
         </li>
 
-        {{discussion.replies}}
         <li class="media" ng-repeat="reply in discussion.replies">
-          {{reply}}
           <annotation
             content="reply"
             delete-function="deleteReply"
             requires-body="true"
             >
-            <!--ng-if="reply.permissions.read"-->
           </annotation>
         </li>
 
