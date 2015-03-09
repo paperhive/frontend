@@ -34,8 +34,7 @@ module.exports = function (app) {
           '/articles/' + $routeSegment.$routeParams.articleId + '/discussions'
       )
       .success(function (discussions) {
-        $scope.discussions = discussions;
-        console.log(discussions);
+        $scope.discussions.stored = discussions;
       })
       .error(function (data) {
         notificationService.notifications.push({

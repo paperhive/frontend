@@ -17,7 +17,7 @@
     <!--span class="pull-right">Sort</span-->
   </div>
   <ul class="list-group">
-    <li class="list-group-item" ng-repeat="discussion in discussions">
+    <li class="list-group-item" ng-repeat="discussion in discussions.stored">
       <span class="pull-right">
         <span ng-if="discussion.replies.length > 0" style="margin-left:15px;">
           <i class="fa fa-comments"></i> {{discussion.replies.length}}
