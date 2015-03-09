@@ -12,7 +12,7 @@
         {{annotation.author.displayName}}
       </a>
       commented
-      <span am-time-ago="{{annotation.time}}"></span>
+      <span am-time-ago="annotation.createdAt"></span>
       <span ng-if="annotation.createdAt !== annotation.updatedAt">
         <em>[edited]</em>
         <!-- Unfortunately, dynamic edit time updates don't work -->
