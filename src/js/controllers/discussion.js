@@ -11,7 +11,7 @@ module.exports = function (app) {
       $http.get(
         config.api_url +
           '/articles/' + $routeSegment.$routeParams.articleId +
-          '/discussions/' + $routeSegment.$routeParams.index
+          '/discussions/' + $routeSegment.$routeParams.discussionIndex
       )
         .success(function (discussion) {
           $scope.discussion = discussion;
@@ -49,7 +49,7 @@ module.exports = function (app) {
           $http.put(
             config.api_url +
               '/articles/' + $routeSegment.$routeParams.articleId +
-              '/discussions/' + $routeSegment.$routeParams.index,
+              '/discussions/' + $routeSegment.$routeParams.discussionIndex,
             newDiscussion
           )
           .success(function (discussion) {
@@ -94,7 +94,7 @@ module.exports = function (app) {
         $http.post(
           config.api_url +
             '/articles/' + $routeSegment.$routeParams.articleId +
-            '/discussions/' + $routeSegment.$routeParams.index +
+            '/discussions/' + $routeSegment.$routeParams.discussionIndex +
             '/replies/',
             reply
         )

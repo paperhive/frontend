@@ -26,8 +26,8 @@
       <h4>
         <a style="margin-right:15px;"
             href="#{{'article.comments.index' | routeSegmentUrl:
-            {dicussionIndex: discussion.index} }}">
-          {{discussion.title}}
+            {discussionIndex: discussion.index} }}">
+          {{discussion.originalAnnotation.title}}
         </a>
         <ul class="ph-tags list-inline" style="display: inline-block;">
           <li ng-repeat="tag in discussion.originalAnnotation.tags">

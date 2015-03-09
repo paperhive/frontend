@@ -55,7 +55,7 @@ module.exports = function (app) {
           $http.put(
             config.api_url +
               '/articles/' + $routeSegment.$routeParams.articleId +
-              '/discussions/' + $routeSegment.$routeParams.index,
+              '/discussions/' + $routeSegment.$routeParams.discussionIndex,
             updatedDiscussion
           )
           .success(function (discussion) {
