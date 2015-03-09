@@ -1,6 +1,8 @@
 module.exports = function (app) {
 
-  app.directive('annotation', function() {
+  app.directive('annotation', [
+    '$http', 'config', '$routeSegment',
+    function($http, config, $routeSegment) {
     return {
       restrict: 'E',
       scope: {
@@ -96,5 +98,5 @@ module.exports = function (app) {
         });
       }
     };
-  });
+  }]);
 };

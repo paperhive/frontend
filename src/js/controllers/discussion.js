@@ -45,7 +45,6 @@ module.exports = function (app) {
               ['title', 'body', 'target', 'tags']
             )
           };
-          console.log(newDiscussion);
 
           $http.put(
             config.api_url +
