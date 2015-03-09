@@ -3,18 +3,24 @@ module.exports = function (app) {
   app.directive('inlineEditable', function() {
     return {
       restrict: 'E',
-      require: 'ngModel',
       scope: {
         ngModel: '=',
         onSave: '&'
       },
       templateUrl: 'templates/directive/inline-editable.html',
-      link: function (scope, element, attrs, ngModelCtrl) {
-        console.log(ngModelCtrl.$modelValue);
-        console.log(ngModelCtrl.$viewValue);
+      link: function (scope, element, attrs) {
         scope.c = {
-          isEditMode: false,
-          updatedContent: scope.content
+          isEditMode: false
+        };
+
+        scope.reset = function() {
+          scope.c.isEditMode = false;
+        };
+
+        scope.update = function(newContent) {
+          scope.ngModel = newContent;
+          scope.onSave({$content: newContent});
+          scope.c.isEditMode = false;
         };
       }
     };

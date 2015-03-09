@@ -10,7 +10,7 @@
 <form
   ng-if="c.isEditMode"
   name="inlineEditForm"
-  ng-submit="inlineEditForm.$valid && (onSave(ngModel); c.isEditMode = false;)"
+  ng-submit="inlineEditForm.$valid && update(ngModel)"
   novalidate
   >
   <input
@@ -30,7 +30,7 @@
   </button>
   <button
     class="btn btn-default"
-    ng-click="c.isEditMode = false"
+    ng-click="reset()"
     >
     <i class="fa fa-remove"></i>
   </button>

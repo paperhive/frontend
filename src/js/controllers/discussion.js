@@ -1,3 +1,5 @@
+var _ = require('lodash');
+
 module.exports = function (app) {
   app.controller('DiscussionCtrl', [
     '$scope', 'authService', '$routeSegment', '$http', 'config',
@@ -22,10 +24,48 @@ module.exports = function (app) {
           });
         });
 
-      $scope.updateTitle = function(newTitle) {
-        $scope.discussion.title = newTitle;
-        $scope.titleEditMode = false;
-      };
+        // Problem:
+        //   When updateTitle() is run, the newTitle needs to be populated in
+        //   the scope. This may not necessarily be the case.
+        // Workaround:
+        //   Explicitly set the newTitle in the $scope.
+        // Disadvantage:
+        //   The title is set twice, and this is kind of ugly.
+        // TODO find a better solution
+        $scope.updateTitle = function(newTitle) {
+          $scope.discussion.originalAnnotation.title = newTitle;
+          $scope.updateDiscussion();
+        };
+
+        $scope.updateDiscussion = function() {
+          $scope.submitting = true;
+          var newDiscussion = {
+            originalAnnotation: _.pick(
+              $scope.discussion.originalAnnotation,
+              ['title', 'body', 'target', 'tags']
+            )
+          };
+          console.log(newDiscussion);
+
+          $http.put(
+            config.api_url +
+              '/articles/' + $routeSegment.$routeParams.id +
+              '/discussions/' + $routeSegment.$routeParams.index,
+            newDiscussion
+          )
+          .success(function (discussion) {
+            $scope.submitting = false;
+            $scope.discussion.originalAnnotation = discussion.originalAnnotation;
+          })
+          .error(function (data) {
+            $scope.submitting = false;
+            notificationService.notifications.push({
+              type: 'error',
+              message: data.message ||
+                'could not update discussion (unknown reason)'
+            });
+          });
+        };
 
       $scope.subscribers = [
       ];
@@ -92,6 +132,5 @@ module.exports = function (app) {
         // remove if from the list
         $scope.discussion.replies.splice(k, 1);
       };
-
     }]);
 };

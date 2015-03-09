@@ -2,6 +2,7 @@
   <h3 class="ph-no-margin-top">
     <inline-editable
       ng-model="discussion.originalAnnotation.title"
+      on-save="updateTitle($content)"
       >
     </inline-editable>
     <span class="small">
