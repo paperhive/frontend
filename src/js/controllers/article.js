@@ -31,7 +31,7 @@ module.exports = function (app) {
 
       $http.get(
         config.api_url +
-          '/articles/' + $routeSegment.$routeParams.id + '/discussions'
+          '/articles/' + $routeSegment.$routeParams.articleId + '/discussions'
       )
       .success(function (discussions) {
         $scope.discussions = discussions;
@@ -90,7 +90,7 @@ module.exports = function (app) {
         $scope.submitting = true;
         $http.post(
           config.api_url +
-            '/articles/' + $routeSegment.$routeParams.id +
+            '/articles/' + $routeSegment.$routeParams.articleId +
             '/discussions',
           discussion
         )
