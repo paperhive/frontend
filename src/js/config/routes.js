@@ -7,13 +7,13 @@ module.exports = function (app) {
         .when('/', 'main')
         .when('/articles', 'article')
         .when('/articles/new', 'articlenew')
-        .when('/articles/:id', 'article')
-        .when('/articles/:id/activity', 'article.activity')
-        .when('/articles/:id/comments', 'article.comments')
-        .when('/articles/:id/comments/new', 'article.comments.new')
-        .when('/articles/:id/comments/:index', 'article.comments.index')
-        .when('/articles/:id/settings', 'article.settings')
-        .when('/articles/:id/text', 'article.text')
+        .when('/articles/:articleId', 'article')
+        .when('/articles/:articleId/activity', 'article.activity')
+        .when('/articles/:articleId/comments', 'article.comments')
+        .when('/articles/:articleId/comments/new', 'article.comments.new')
+        .when('/articles/:articleId/comments/:num', 'article.comments.num')
+        .when('/articles/:articleId/settings', 'article.settings')
+        .when('/articles/:articleId/text', 'article.text')
         .when('/contact', 'contact')
         .when('/oauth/orcid', 'oauth')
         .when('/team', 'team')
@@ -37,11 +37,11 @@ module.exports = function (app) {
         .within()
           .segment('activity', {
             templateUrl: 'templates/article/activity.html',
-            dependencies: ['id']
+            dependencies: ['articleId']
           })
           .segment('comments', {
             templateUrl: 'templates/article/comment/index.html',
-            dependencies: ['id']
+            dependencies: ['articleId']
           })
           .within()
             .segment('list', {
@@ -58,12 +58,12 @@ module.exports = function (app) {
           .up()
           .segment('settings', {
             templateUrl: 'templates/article/settings.html',
-            dependencies: ['id']
+            dependencies: ['articleId']
           })
           .segment('text', {
             default: true,
             templateUrl: 'templates/article/text/index.html',
-            dependencies: ['id']
+            dependencies: ['articleId']
           })
         .up()
         .segment('articlenew', {
