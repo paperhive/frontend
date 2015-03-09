@@ -12,7 +12,7 @@ module.exports = function (app) {
         .when('/articles/:articleId/comments', 'article.comments')
         .when('/articles/:articleId/comments/new', 'article.comments.new')
         .when('/articles/:articleId/comments/:discussionIndex',
-              'article.comments.discussionIndex')
+              'article.comments.index')
         .when('/articles/:articleId/settings', 'article.settings')
         .when('/articles/:articleId/text', 'article.text')
         .when('/contact', 'contact')
@@ -52,7 +52,7 @@ module.exports = function (app) {
             .segment('new', {
               templateUrl: 'templates/article/comment/new.html',
             })
-            .segment('discussionIndex', {
+            .segment('index', {
               templateUrl: 'templates/article/comment/discussion.html',
               dependencies: ['discussionIndex']
             })
