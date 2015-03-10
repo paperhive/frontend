@@ -101,7 +101,8 @@ module.exports = function (app) {
       require: '^^highlightContainer',
       scope: {
         highlightTarget: '=',
-        highlightInfo: '='
+        highlightInfo: '=',
+        highlightBorder: '='
       },
       templateUrl: 'templates/directives/highlightTarget.html',
       link: function (scope, element, attrs, containerCtrl) {

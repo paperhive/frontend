@@ -9,7 +9,7 @@ module.exports = function (app) {
   require('./kramjax.js')(app);
   require('./onOutside')(app);
   require('./onTextSelect')(app);
-  require('./showPdf.js')(app);
+  require('./pdf.js')(app);
   require('./subnav')(app);
   require('./validateArticleSource')(app);
   require('./validate-username')(app);

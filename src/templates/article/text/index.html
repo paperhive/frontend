@@ -1,60 +1,79 @@
-<div class="row ph-md-margin-bottom">
-  <div class="col-md-12">
-    <a href="#{{'article.comments.new' | routeSegmentUrl}}"
-      class="btn btn-primary pull-right" ng-disabled="!auth.user">
-      <i class="fa fa-fw fa-plus"></i> Add general comment
-    </a>
-    <div class="clearfix"></div>
-  </div>
-</div>
-<div class="row" ng-if="article.file.url">
-  <div highlight-container class="col-md-9">
-    <pdf
-      url="article.file.url"
-      text-overlay="true"
-      on-loaded="onPdfLoaded()"
-      on-text-select="$target && (discussions.draft.target = $target)"
-      highlight-root
-      ></pdf>
-    <div class="ph-highlight-layer">
-      <div
-        highlight-target="discussions.draft.target"
-        highlight-info="discussions.highlightInfos[discussions.draft._id]"></div>
-      <div ng-repeat="discussion in discussions.stored"
-        highlight-target="discussion.originalAnnotation.target"
-        highlight-info="discussions.highlightInfos[discussion._id]"></div>
+<div ng-controller="ArticleTextCtrl">
+  <div class="row ph-md-margin-bottom">
+    <div class="col-md-12">
+      <a href="#{{'article.comments.new' | routeSegmentUrl}}"
+        class="btn btn-primary pull-right" ng-disabled="!auth.user">
+        <i class="fa fa-fw fa-plus"></i> Add general comment
+      </a>
+      <div class="clearfix"></div>
     </div>
   </div>
-  <!--column for margin notes-->
-  <div id="annotation-column" class="col-md-3">
-    <inline-annotation
-      ng-repeat="discussion in discussions.stored"
-      ng-if="discussions.highlightInfos[discussion._id].top"
-      ng-style="{'top': discussions.highlightInfos[discussion._id].top + 'px'}"
-      annotation="discussion"
-      class="ph-annotation"
-      >
-    </inline-annotation>
-    <!-- Don't use ng-if here to keep the element in the DOM tree.
-    This makes sure that the entered text is preserved.
-    -->
-    <div
-      class="ph-annotation"
-      ng-if="discussions.draft.target && discussions.highlightInfos[discussions.draft._id].top"
-      ng-style="{'top': discussions.highlightInfos[discussions.draft._id].top + 'px'}"
-      >
-      <inline-annotation-draft
-        ng-if="auth.user"
-        on-submit="addDiscussion($discussion)"
-        on-outside-mousedown="!discussions.draft.body && purgeDraft()"
-        annotation="discussions.draft"
+  <div class="row" ng-if="article.file.url">
+    <div highlight-container class="col-md-9">
+      <pdf
+        pdf-url="article.file.url"
+        pdf-text-overlay="true"
+        pdf-progress="article.pdfProgress"
+        on-text-select="$target && (discussions.draft.target = $target)"
+        highlight-root
+        ></pdf>
+      <div class="ph-highlight-layer" ng-if="article.pdfProgress.finished">
+        <div
+          highlight-target="discussions.draft.target"
+          highlight-info="text.highlightInfos[discussions.draft._id]"></div>
+        <div ng-repeat="discussion in discussions.stored"
+          highlight-target="discussion.originalAnnotation.target"
+          highlight-info="text.highlightInfos[discussion._id]"
+          highlight-border="text.highlightBorder[discussion._id]"
+          ></div>
+      </div>
+    </div>
+    <!--column for margin notes-->
+    <div id="annotation-column" class="col-md-3">
+      <div ng-if="article.pdfProgress.downloading">
+        <progressbar class="progress-striped active" value="100">
+          Downloading...
+        </progressbar>
+      </div>
+      <div ng-if="article.pdfProgress.numPages && !article.pdfProgress.finished">
+        <progressbar class="progress-striped active"
+          value="article.pdfProgress.renderedPages.length"
+          max="article.pdfProgress.numPages">
+          {{article.pdfProgress.renderedPages.length}} /
+          {{article.pdfProgress.numPages}} pages
+        </progressbar>
+      </div>
+      <inline-annotation
+        ng-repeat="discussion in discussions.stored"
+        ng-if="text.highlightInfos[discussion._id].top"
+        ng-style="{'top': text.highlightInfos[discussion._id].top + 'px'}"
+        annotation="discussion"
+        class="ph-annotation"
+        ng-mouseenter="text.highlightBorder[discussion._id] = true"
+        ng-mouseleave="text.highlightBorder[discussion._id] = false"
         >
-      </inline-annotation-draft>
-      <ng-include
-        ng-if="!auth.user"
-        src="'templates/article/text/inline-annotation-substitute.html'"
+      </inline-annotation>
+      <!-- Don't use ng-if here to keep the element in the DOM tree.
+      This makes sure that the entered text is preserved.
+      -->
+      <div
+        class="ph-annotation"
+        ng-if="discussions.draft.target && text.highlightInfos[discussions.draft._id].top"
+        ng-style="{'top': text.highlightInfos[discussions.draft._id].top + 'px'}"
         >
-      </ng-include>
+        <inline-annotation-draft
+          ng-if="auth.user"
+          on-submit="addDiscussion($discussion)"
+          on-outside-mousedown="!discussions.draft.body && purgeDraft()"
+          annotation="discussions.draft"
+          >
+        </inline-annotation-draft>
+        <ng-include
+          ng-if="!auth.user"
+          src="'templates/article/text/inline-annotation-substitute.html'"
+          >
+        </ng-include>
+      </div>
     </div>
   </div>
 </div>

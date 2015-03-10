@@ -1,6 +1,7 @@
 module.exports = function (app) {
   require('./annotation.js')(app);
   require('./article.js')(app);
+  require('./articleText.js')(app);
   require('./articleNew.js')(app);
   require('./discussion.js')(app);
   require('./navbar.js')(app);
