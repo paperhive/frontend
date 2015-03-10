@@ -26,7 +26,7 @@
     "jquery": "~2.1.3",
     "kramed": "https://github.com/GitbookIO/kramed.git",
     "lodash": "~3.3.1",
-    "MathJax": "~2.5.0",
+    "MathJax": "~2.5.1",
     "ment.io": "~0.9.23",
     "pdfjs-dist": "1.0.1149",
     "rangy": "~1.3"
