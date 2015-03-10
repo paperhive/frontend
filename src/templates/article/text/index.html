@@ -27,6 +27,14 @@
   </div>
   <!--column for margin notes-->
   <div id="annotation-column" class="col-md-3">
+    <div ng-if="article.pdfProgress.numPages && !article.pdfProgress.finished">
+      <progressbar class="progress-striped active"
+        value="article.pdfProgress.renderedPages.length"
+        max="article.pdfProgress.numPages">
+        {{article.pdfProgress.renderedPages.length}} /
+        {{article.pdfProgress.numPages}} pages
+      </progressbar>
+    </div>
     <inline-annotation
       ng-repeat="discussion in discussions.stored"
       ng-if="discussions.highlightInfos[discussion._id].top"

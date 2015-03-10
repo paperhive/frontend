@@ -1,3 +1,4 @@
+var _ = require('lodash');
 module.exports = function (app) {
   app.directive('pdf', ['$parse', function ($parse) {
     return {
@@ -12,7 +13,9 @@ module.exports = function (app) {
           var progress = {
             downloading: false,
             rendering: false,
-            finished: false
+            finished: false,
+            numPages: undefined,
+            numRenderedPages: undefined
           };
           var progressParsed = $parse(attrs.pdfProgress);
           if (progressParsed && progressParsed.assign) {
@@ -94,7 +97,7 @@ module.exports = function (app) {
             PDFJS.getDocument(url).then(function (pdf) {
 
               // update progress when a page has been rendered
-              progress.renderedPages = {};
+              progress.renderedPages = [];
               element[0].addEventListener('pagerendered', function (e) {
                 // normalize the DOM subtree of the rendered page
                 // (otherwise serialized ranges may be based on different
@@ -102,11 +105,14 @@ module.exports = function (app) {
                 e.target.normalize();
 
                 scope.$apply(function () {
-                  progress.renderedPages[e.detail.pageNumber] = true;
+                  progress.renderedPages.push(e.detail.pageNumber);
+
                   // fire onLoaded if last page has been rendered
-                  if (e.detail.pageNumber === pdf.numPages) {
-                    progress.rendering = false;
-                    progress.finished = true;
+                  if (progress.renderedPages.length === pdf.numPages) {
+                    _.assign(progress, {
+                      rendering: false,
+                      finished: true
+                    });
                   }
                   });
               });
@@ -115,9 +121,11 @@ module.exports = function (app) {
               pdfViewer.setDocument(pdf);
 
               scope.$apply(function () {
-                progress.downloading = false;
-                progress.rendering = true;
-                progress.numPages = pdf.numPages;
+                _.assign(progress, {
+                  downloading: false,
+                  rendering: true,
+                  numPages: pdf.numPages,
+                });
               });
             });
 
