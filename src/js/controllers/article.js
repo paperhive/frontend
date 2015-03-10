@@ -46,28 +46,9 @@ module.exports = function (app) {
 
       $scope.discussions = {
         draft: {_id: _.uniqueId()},
-        stored: [],
-        highlightInfos: {},
-        highlightBorder: {}
+        stored: []
       };
 
-      $scope.onPdfLoaded = function () {
-        // DEBUG START contains everything related to a annotations
-        /*
-        $scope.discussions.stored = [{
-          _id: _.uniqueId(),
-          selection: '0/10/1/0/0/0:35,0/10/1/0/0/0:41',
-          author: authService.user,
-          title: 'Matrix properties',
-          body: 'Is it SPD?',
-        }];
-        */
-        // DEBUG END
-      };
-
-      $scope.purgeDraft = function() {
-        $scope.discussions.draft = {_id: _.uniqueId()};
-      };
 
       $scope.addDiscussion = function(annotation) {
         // We always need a title.
