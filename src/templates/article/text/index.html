@@ -10,13 +10,13 @@
 <div class="row" ng-if="article.file.url">
   <div highlight-container class="col-md-9">
     <pdf
-      url="article.file.url"
-      text-overlay="true"
-      on-loaded="onPdfLoaded()"
+      pdf-url="article.file.url"
+      pdf-text-overlay="true"
+      pdf-progress="article.pdfProgress"
       on-text-select="$target && (discussions.draft.target = $target)"
       highlight-root
       ></pdf>
-    <div class="ph-highlight-layer">
+    <div class="ph-highlight-layer" ng-if="article.pdfProgress.finished">
       <div
         highlight-target="discussions.draft.target"
         highlight-info="discussions.highlightInfos[discussions.draft._id]"></div>

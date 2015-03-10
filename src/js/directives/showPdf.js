@@ -3,12 +3,22 @@ module.exports = function (app) {
     return {
       restrict: 'E',
       link: function (scope, element, attrs) {
-        scope.$watchGroup(['url', 'textOverlay'], renderPdf);
+        scope.$watchGroup(['pdfUrl', 'pdfTextOverlay'], renderPdf);
 
         function renderPdf () {
-          var url = scope.$eval(attrs.url);
-          var textOverlay = scope.$eval(attrs.textOverlay);
-          var onLoaded = $parse(attrs.onLoaded);
+          var url = scope.$eval(attrs.pdfUrl);
+          var textOverlay = scope.$eval(attrs.pdfTextOverlay);
+
+          var progress = {
+            downloading: false,
+            rendering: false,
+            finished: false
+          };
+          var progressParsed = $parse(attrs.pdfProgress);
+          if (progressParsed && progressParsed.assign) {
+            progressParsed.assign(scope, progress);
+          }
+
           if (!url) return;
 
           // From
@@ -66,42 +76,49 @@ module.exports = function (app) {
             });
           } else {
             // Complex viewer with bells & whistles
-            var container = document.createElement("div");
-            container.id = "pdfContainer";
-            var viewer = document.createElement("div");
-            viewer.id = "viewer";
-            viewer.className = "pdfViewer";
-            container.appendChild(viewer);
-
-            element.prepend(container);
-
             var pdfViewer = new PDFJS.PDFViewer({
-              container: container
+              // use element as container and viewer element
+              // (container is only used for size measurements and events)
+              container: element[0],
+              viewer: element[0]
             });
 
-            container.addEventListener('pagesinit', function () {
+            // set scale
+            element[0].addEventListener('pagesinit', function () {
               pdfViewer.currentScaleValue = 'page-width';
             });
 
-            // Loading document.
+
+            // load document
+            progress.downloading = true;
             PDFJS.getDocument(url).then(function (pdf) {
-              // fire onLoaded when last page has been rendered
-              container.addEventListener('pagerendered', function (e) {
+
+              // update progress when a page has been rendered
+              progress.renderedPages = {};
+              element[0].addEventListener('pagerendered', function (e) {
                 // normalize the DOM subtree of the rendered page
                 // (otherwise serialized ranges may be based on different
                 // DOM states)
                 e.target.normalize();
 
-                // fire onLoaded if last page has been rendered
-                if (e.detail.pageNumber === pdf.numPages) {
-                  scope.$apply(function () {
-                    onLoaded(scope);
+                scope.$apply(function () {
+                  progress.renderedPages[e.detail.pageNumber] = true;
+                  // fire onLoaded if last page has been rendered
+                  if (e.detail.pageNumber === pdf.numPages) {
+                    progress.rendering = false;
+                    progress.finished = true;
+                  }
                   });
-                }
               });
 
-              // Document loaded, specifying document for the viewer.
+              // document loaded, specifying document for the viewer
               pdfViewer.setDocument(pdf);
+
+              scope.$apply(function () {
+                progress.downloading = false;
+                progress.rendering = true;
+                progress.numPages = pdf.numPages;
+              });
             });
 
             // --------------------------------------------------------------------
