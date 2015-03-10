@@ -30,6 +30,11 @@
     </div>
     <!--column for margin notes-->
     <div id="annotation-column" class="col-md-3">
+      <div ng-if="article.pdfProgress.downloading">
+        <progressbar class="progress-striped active" value="100">
+          Downloading...
+        </progressbar>
+      </div>
       <div ng-if="article.pdfProgress.numPages && !article.pdfProgress.finished">
         <progressbar class="progress-striped active"
           value="article.pdfProgress.renderedPages.length"
