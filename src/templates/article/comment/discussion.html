@@ -1,33 +1,31 @@
 <div ng-controller="DiscussionCtrl">
   <h3 class="ph-no-margin-top">
-    <span ng-if="!titleEditMode">
-      {{discussion.title}}
-    </span>
-    <span ng-if="titleEditMode">
-      <input type="text" class="form-control ph-discussion-title"
-          size="{{discussion.title.length}}" placeholder="Discussion title"
-          ng-model="tmpTitle">
-      <button class="btn btn-default" ng-click="updateTitle(tmpTitle)">
-        <i class="fa fa-check"></i>
-      </button>
-      <button class="btn btn-default" ng-click="setTitleEditOff()">
-        <i class="fa fa-remove"></i>
-      </button>
-    </span>
+    <inline-editable
+      ng-model="discussion.originalAnnotation.title"
+      on-save="updateTitle($content)"
+      >
+    </inline-editable>
     <span class="small">
-      #{{discussion.number}}
+      #{{discussion.index}}
     </span>
-    <button class="btn btn-link" ng-if="!titleEditMode"
-        ng-click="setTitleEditOn()">
-      <i class="fa fa-pencil"></i>
-    </button>
   </h3>
-  <a href="#/users/{{discussion.originalAnnotation.author.userName}}">
-    {{discussion.originalAnnotation.author.displayName}}
-  </a>
-  started this thread
-  <span am-time-ago="{{discussion.originalAnnotation.time}}"></span>
-  &middot; {{discussion.replies.length}} replies
+  <a href="#/users/{{discussion.originalAnnotation.author.username}}">
+    {{discussion.originalAnnotation.author.displayName}}</a>
+  opened this discussion
+  <span am-time-ago="discussion.originalAnnotation.createdAt"></span>
+  <span ng-if="discussion.replies.length == 1">
+    &middot; {{discussion.replies.length}} reply
+  </span>
+  <span ng-if="discussion.replies.length > 1">
+    &middot; {{discussion.replies.length}} replies
+  </span>
+
+  <div ng-if="discussion.originalAnnotation.target">
+    <hr>
+    <blockquote>
+      {{discussion.originalAnnotation.target.text}}
+    </blockquote>
+  </div>
 
   <hr>
   <div class="row">
@@ -35,9 +33,8 @@
       <ul class="media-list">
         <li class="media">
           <annotation
-            ng-if="discussion.originalAnnotation.permissions.read"
             content="discussion.originalAnnotation"
-            is-article-author="isArticleAuthor(discussion.originalAnnotation.author._id)"
+            is-article-author="false"
             requires-body="false"
             >
           </annotation>
@@ -46,11 +43,9 @@
         <li class="media" ng-repeat="reply in discussion.replies">
           <annotation
             content="reply"
-            is-article-author="isArticleAuthor(reply.author._id)"
             delete-function="deleteReply"
             requires-body="true"
             >
-            <!--ng-if="reply.permissions.read"-->
           </annotation>
         </li>
 
@@ -60,7 +55,7 @@
             ng-if="auth.user"
             >
           </ng-include>
-          {{annotationBody}}
+          {{annotation.body}}
 
           <div
             ng-if="!auth.user"

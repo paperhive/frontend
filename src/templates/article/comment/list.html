@@ -4,7 +4,7 @@
       <li>
         <a href="#">
           <strong>
-            <i class="fa fa-comment"></i> {{article.discussions.length}} open
+            <i class="fa fa-comment"></i> {{discussions.length}} open
           </strong>
         </a>
       </li>
@@ -17,7 +17,7 @@
     <!--span class="pull-right">Sort</span-->
   </div>
   <ul class="list-group">
-    <li class="list-group-item" ng-repeat="discussion in article.discussions">
+    <li class="list-group-item" ng-repeat="discussion in discussions.stored">
       <span class="pull-right">
         <span ng-if="discussion.replies.length > 0" style="margin-left:15px;">
           <i class="fa fa-comments"></i> {{discussion.replies.length}}
@@ -25,19 +25,20 @@
       </span>
       <h4>
         <a style="margin-right:15px;"
-            href="#{{'article.comments.num' | routeSegmentUrl: {num: discussion.number} }}">
-          {{discussion.title}}
+            href="#{{'article.comments.index' | routeSegmentUrl:
+            {discussionIndex: discussion.index} }}">
+          {{discussion.originalAnnotation.title}}
         </a>
         <ul class="ph-tags list-inline" style="display: inline-block;">
-          <li ng-repeat="label in discussion.originalAnnotation.labels">
-            <a href="#" class="btn btn-default {{label}}">{{label}}</a>
+          <li ng-repeat="tag in discussion.originalAnnotation.tags">
+            <a href="#" class="btn btn-default">{{tag}}</a>
           </li>
         </ul>
       </h4>
-      #{{discussion.number}} opened
-      <span am-time-ago="{{discussion.originalAnnotation.time}}"></span>
+      #{{discussion.index}} opened
+      <span am-time-ago="discussion.originalAnnotation.createdAt"></span>
       by
-      <a href="#/users/{{discussion.originalAnnotation.author.userName}}">
+      <a href="#/users/{{discussion.originalAnnotation.author.username}}">
         {{discussion.originalAnnotation.author.displayName}}
       </a>
     </li>

@@ -13,25 +13,25 @@
       url="article.file.url"
       text-overlay="true"
       on-loaded="onPdfLoaded()"
-      on-text-select="$target && (annotations.draft.target = $target)"
+      on-text-select="$target && (discussions.draft.target = $target)"
       highlight-root
       ></pdf>
     <div class="ph-highlight-layer">
       <div
-        highlight-target="annotations.draft.target"
-        highlight-info="annotations.highlightInfos[annotations.draft._id]"></div>
-      <div ng-repeat="annotation in annotations.stored"
-        highlight-target="annotation.target"
-        highlight-info="annotations.highlightInfos[annotation._id]"></div>
+        highlight-target="discussions.draft.target"
+        highlight-info="discussions.highlightInfos[discussions.draft._id]"></div>
+      <div ng-repeat="discussion in discussions.stored"
+        highlight-target="discussion.originalAnnotation.target"
+        highlight-info="discussions.highlightInfos[discussion._id]"></div>
     </div>
   </div>
   <!--column for margin notes-->
   <div id="annotation-column" class="col-md-3">
     <inline-annotation
-      ng-repeat="annotation in annotations.stored"
-      ng-if="annotations.highlightInfos[annotation._id].top"
-      ng-style="{'top': annotations.highlightInfos[annotation._id].top + 'px'}"
-      annotation="annotation"
+      ng-repeat="discussion in discussions.stored"
+      ng-if="discussions.highlightInfos[discussion._id].top"
+      ng-style="{'top': discussions.highlightInfos[discussion._id].top + 'px'}"
+      annotation="discussion"
       class="ph-annotation"
       >
     </inline-annotation>
@@ -40,14 +40,14 @@
     -->
     <div
       class="ph-annotation"
-      ng-if="annotations.highlightInfos[annotations.draft._id].top"
-      ng-style="{'top': annotations.highlightInfos[annotations.draft._id].top + 'px'}"
+      ng-if="discussions.draft.target && discussions.highlightInfos[discussions.draft._id].top"
+      ng-style="{'top': discussions.highlightInfos[discussions.draft._id].top + 'px'}"
       >
       <inline-annotation-draft
         ng-if="auth.user"
-        on-save="annotations.stored.push($annotation) && purgeDraft()"
-        on-outside-mousedown="!annotations.draft.body && purgeDraft()"
-        annotation="annotations.draft"
+        on-submit="addDiscussion($discussion)"
+        on-outside-mousedown="!discussions.draft.body && purgeDraft()"
+        annotation="discussions.draft"
         >
       </inline-annotation-draft>
       <ng-include

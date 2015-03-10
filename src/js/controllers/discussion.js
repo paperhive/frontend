@@ -1,34 +1,70 @@
+var _ = require('lodash');
+
 module.exports = function (app) {
   app.controller('DiscussionCtrl', [
-    '$scope', 'authService', '$routeParams',
-    function($scope, authService, $routeParams) {
+    '$scope', 'authService', '$routeSegment', '$http', 'config',
+    'notificationService',
+    function($scope, authService, $routeSegment, $http, config,
+             notificationService) {
 
-      $scope.titleEditMode = false;
-      $scope.tmpTitle = undefined;
+      // fetch discussion
+      $http.get(
+        config.api_url +
+          '/articles/' + $routeSegment.$routeParams.articleId +
+          '/discussions/' + $routeSegment.$routeParams.discussionIndex
+      )
+        .success(function (discussion) {
+          $scope.discussion = discussion;
+        })
+        .error(function (data) {
+          notificationService.notifications.push({
+            type: 'error',
+            message: data.message ? data.message : 'could not fetch discussion ' +
+              '(unknown reason)'
+          });
+        });
 
-      // retrieve the discussion
-      var _ = require('lodash');
-      //var k = _.find($scope.article.discussions,
-      //               function(obj){ return obj.number == parseInt($routeParams.num)}
-      //              );
-      $scope.discussion = _.findWhere($scope.article.discussions,
-                                      {"number": parseInt($routeParams.num)}
-                                     );
-      if ($scope.discussion === undefined) {
-        throw PhError("Discussion not found.");
-      }
+        // Problem:
+        //   When updateTitle() is run, the newTitle needs to be populated in
+        //   the scope. This may not necessarily be the case.
+        // Workaround:
+        //   Explicitly set the newTitle in the $scope.
+        // Disadvantage:
+        //   The title is set twice, and this is kind of ugly.
+        // TODO find a better solution
+        $scope.updateTitle = function(newTitle) {
+          $scope.discussion.originalAnnotation.title = newTitle;
+          $scope.updateDiscussion();
+        };
 
-      $scope.setTitleEditOn = function() {
-        $scope.tmpTitle = $scope.discussion.title;
-        $scope.titleEditMode = true;
-      };
-      $scope.setTitleEditOff = function() {
-        $scope.titleEditMode = false;
-      };
-      $scope.updateTitle = function(newTitle) {
-        $scope.discussion.title = newTitle;
-        $scope.titleEditMode = false;
-      };
+        $scope.updateDiscussion = function() {
+          $scope.submitting = true;
+          var newDiscussion = {
+            originalAnnotation: _.pick(
+              $scope.discussion.originalAnnotation,
+              ['title', 'body', 'target', 'tags']
+            )
+          };
+
+          $http.put(
+            config.api_url +
+              '/articles/' + $routeSegment.$routeParams.articleId +
+              '/discussions/' + $routeSegment.$routeParams.discussionIndex,
+            newDiscussion
+          )
+          .success(function (discussion) {
+            $scope.submitting = false;
+            $scope.discussion.originalAnnotation = discussion.originalAnnotation;
+          })
+          .error(function (data) {
+            $scope.submitting = false;
+            notificationService.notifications.push({
+              type: 'error',
+              message: data.message ||
+                'could not update discussion (unknown reason)'
+            });
+          });
+        };
 
       $scope.subscribers = [
       ];
@@ -50,20 +86,29 @@ module.exports = function (app) {
         }
       };
 
-      $scope.addReply = function(body) {
-        if (!$scope.auth.user) {
-          throw PhError("Not logged in?");
-        }
-        // create the annotation
+      $scope.addReply = function (body) {
         reply = {
-          _id: Math.random().toString(36).slice(2),
-          author: $scope.auth.user,
-          body: body,
-          time: new Date(),
-          labels: ["reply"]
+          body: body
         };
-        $scope.discussion.replies.push(reply);
-        return;
+        $scope.submitting = true;
+        $http.post(
+          config.api_url +
+            '/articles/' + $routeSegment.$routeParams.articleId +
+            '/discussions/' + $routeSegment.$routeParams.discussionIndex +
+            '/replies/',
+            reply
+        )
+        .success(function (reply) {
+          $scope.submitting = false;
+          $scope.discussion.replies.push(reply);
+        })
+        .error(function (data) {
+          $scope.submitting = false;
+          notificationService.notifications.push({
+            type: 'error',
+            message: data.message || 'could not add reply (unknown reason)'
+          });
+        });
       };
 
       $scope.isArticleAuthor = function(authorId) {
@@ -86,6 +131,5 @@ module.exports = function (app) {
         // remove if from the list
         $scope.discussion.replies.splice(k, 1);
       };
-
     }]);
 };
