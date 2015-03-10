@@ -68,11 +68,13 @@
           annotation="discussions.draft"
           >
         </inline-annotation-draft>
-        <ng-include
-          ng-if="!auth.user"
-          src="'templates/articles/text/inline-annotation-substitute.html'"
-          >
-        </ng-include>
+        <div ng-if="!auth.user" class="panel panel-default ph-inline-annotation">
+          <div class="panel-body">
+            <a href="{{auth.orcidUrl}}" class="btn btn-primary">
+              Sign in with ORCID
+            </a> to comment.
+          </div>
+        </div>
       </div>
     </div>
   </div>
