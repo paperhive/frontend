@@ -9,7 +9,7 @@ module.exports = function (app) {
           onSubmit: '&',
           annotation: '='
         },
-        templateUrl: 'templates/articles/text/inline-annotation-draft.html',
+        templateUrl: 'templates/directives/inline-annotation-draft.html',
         link: function(scope, element) {
           scope.auth = authService;
           scope.annotation.author = authService.user;

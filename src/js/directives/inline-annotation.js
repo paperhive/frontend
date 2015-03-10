@@ -6,7 +6,7 @@ module.exports = function (app) {
       scope: {
         annotation: '=',
       },
-      templateUrl: 'templates/articles/text/inline-annotation.html'
+      templateUrl: 'templates/directives/inline-annotation.html'
     };
   });
 };

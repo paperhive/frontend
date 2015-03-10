@@ -13,7 +13,7 @@ module.exports = function (app) {
         deleteFunction: "=",
         requiresBody: "="
       },
-      templateUrl: 'templates/articles/comment/comment.html',
+      templateUrl: 'templates/directives/annotation.html',
       link: function(scope, element, attrs) {
         scope.isEditMode = false;
 
