@@ -49,6 +49,10 @@ module.exports = function (app) {
         stored: []
       };
 
+      $scope.purgeDraft = function() {
+        $scope.discussions.draft = {_id: _.uniqueId()};
+      };
+
 
       $scope.addDiscussion = function(annotation) {
         // We always need a title.
