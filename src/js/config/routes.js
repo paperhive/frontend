@@ -98,25 +98,25 @@ module.exports = function (app) {
         })
 
         .segment('userlist', {
-          templateUrl: 'templates/user/list.html'
+          templateUrl: 'templates/users/list.html'
         })
 
         .segment('user', {
-          templateUrl: 'templates/user/index.html',
+          templateUrl: 'templates/users/index.html',
           dependencies: ['username']
         })
         .within()
           .segment('profile', {
             default: true,
-            templateUrl: 'templates/user/profile.html',
+            templateUrl: 'templates/users/profile.html',
             dependencies: ['username']
           })
           .segment('articles', {
-            templateUrl: 'templates/user/articles.html',
+            templateUrl: 'templates/users/articles.html',
             dependencies: ['username']
           })
           .segment('comments', {
-            templateUrl: 'templates/user/comments.html',
+            templateUrl: 'templates/users/comments.html',
             dependencies: ['username']
           })
         .up()
