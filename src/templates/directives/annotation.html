@@ -38,11 +38,59 @@
       </span>
     </div>
     <div class="panel-body">
-      <ng-include
+      <form name="annotationForm"
         ng-if="isEditMode"
-        src="'templates/articles/comment/inline-edit.html'"
+        ng-submit="annotationForm.$valid && updateAnnotation()"
+        novalidate
         >
-      </ng-include>
+        <span
+          id="helpBlock"
+          class="ph-help-block pull-right"
+          >
+          You can use
+          <a href="http://kramdown.gettalong.org/syntax.html" target="_blank">Markdown</a>,
+          $$<a href="http://en.wikibooks.org/wiki/LaTeX/Mathematics#Symbols"
+            target="_blank">LaTeX</a>$$,
+          ```<a href="https://highlightjs.org/" target="_blank">code blocks</a>```,
+          <a href="http://jeff-collins.github.io/ment.io/#/"
+            target="_blank">@mentions</a>
+        </span>
+        <textarea
+          id="textbody"
+          class="form-control ph-annotation-body"
+          ng-model="tmpBody"
+          mentio
+          mentio-macros="macros"
+          mentio-search="searchPeople(term)"
+          mentio-items="localItems"
+          mentio-select="getPeopleText(item)"
+          mentio-template-url="templates/directives/mentio-list.html"
+          mentio-require-leading-space="true"
+          rows="6"
+          placeholder="Leave a comment..."
+          ng-required="requiresBody"
+          >
+        </textarea>
+        <hr>
+        <label for="preview">Preview</label>
+        <div class="well well-lg" id="preview">
+          <kramjax body="{{tmpBody}}"></kramjax>
+        </div>
+        <span class="pull-right">
+          <button type="submit" class="btn btn-danger" ng-click="setEditOff()">
+            Cancel
+          </button>
+          &nbsp;
+          <button
+            ng-click="updateAnnotation(tmpBody)"
+            ng-disabled="annotationForm.$invalid"
+            type="submit"
+            class="btn btn-primary"
+            >
+            Update annotation
+          </button>
+        </span>
+      </form>
       <kramjax
         ng-if="!isEditMode && annotation.body !== undefined"
         body="{{annotation.body}}"
