@@ -78,12 +78,9 @@ module.exports = function (app) {
         }
 
         discussion = {
-          originalAnnotation: {
-            title: annotation.title,
-            body: annotation.body,
-            target: annotation.target,
-            tags: annotation.tags
-          }
+          originalAnnotation: _.cloneDeep(_.pick(
+            annotation, ['title', 'body', 'target', 'tags']
+          ))
         };
 
         $scope.submitting = true;
@@ -96,6 +93,7 @@ module.exports = function (app) {
         .success(function (discussion) {
           $scope.submitting = false;
           $scope.discussions.stored.push(discussion);
+          $scope.purgeDraft();
         })
         .error(function (data) {
           $scope.submitting = false;

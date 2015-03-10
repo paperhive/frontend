@@ -6,7 +6,7 @@ module.exports = function (app) {
       return {
         restrict: 'E',
         scope: {
-          onSave: '&',
+          onSubmit: '&',
           annotation: '='
         },
         templateUrl: 'templates/article/text/inline-annotation-draft.html',

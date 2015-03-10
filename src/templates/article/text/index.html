@@ -20,18 +20,18 @@
       <div
         highlight-target="discussions.draft.target"
         highlight-info="discussions.highlightInfos[discussions.draft._id]"></div>
-      <div ng-repeat="annotation in discussions.stored"
-        highlight-target="annotation.target"
-        highlight-info="discussions.highlightInfos[annotation._id]"></div>
+      <div ng-repeat="discussion in discussions.stored"
+        highlight-target="discussion.originalAnnotation.target"
+        highlight-info="discussions.highlightInfos[discussion._id]"></div>
     </div>
   </div>
   <!--column for margin notes-->
   <div id="annotation-column" class="col-md-3">
     <inline-annotation
-      ng-repeat="annotation in discussions.stored"
-      ng-if="discussions.highlightInfos[annotation._id].top"
-      ng-style="{'top': discussions.highlightInfos[annotation._id].top + 'px'}"
-      annotation="annotation"
+      ng-repeat="discussion in discussions.stored"
+      ng-if="discussions.highlightInfos[discussion._id].top"
+      ng-style="{'top': discussions.highlightInfos[discussion._id].top + 'px'}"
+      annotation="discussion"
       class="ph-annotation"
       >
     </inline-annotation>
@@ -40,12 +40,12 @@
     -->
     <div
       class="ph-annotation"
-      ng-if="discussions.highlightInfos[discussions.draft._id].top"
+      ng-if="discussions.draft.target && discussions.highlightInfos[discussions.draft._id].top"
       ng-style="{'top': discussions.highlightInfos[discussions.draft._id].top + 'px'}"
       >
       <inline-annotation-draft
         ng-if="auth.user"
-        on-save="discussions.stored.push($annotation) && purgeDraft()"
+        on-submit="addDiscussion($discussion)"
         on-outside-mousedown="!discussions.draft.body && purgeDraft()"
         annotation="discussions.draft"
         >

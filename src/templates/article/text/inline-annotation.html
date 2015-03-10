@@ -1,7 +1,7 @@
 <div class="panel panel-default ph-inline-annotation">
   <div class="panel-heading">
-    <img gravatar-user="annotation.author" gravatar-size="30" >
-    {{annotation.author.displayName}}
+    <img gravatar-user="annotation.originalAnnotation.author" gravatar-size="30" >
+    {{annotation.originalAnnotation.author.displayName}}
     <span class="pull-right">
       <a href="#">
         <i class="fa fa-globe"></i>
@@ -9,7 +9,9 @@
     </span>
   </div>
   <div class="panel-body">
-    <h4 class="ph-no-margin-top">{{annotation.title}}</h4>
-    <div ng-if="annotation.body">{{annotation.body}}</div>
+    <h4 class="ph-no-margin-top">{{annotation.originalAnnotation.title}}</h4>
+    <div ng-if="annotation.originalAnnotation.body">
+      {{annotation.originalAnnotation.body}}
+    </div>
   </div>
 </div>
