@@ -7,7 +7,7 @@ module.exports = function (app) {
         ngModel: '=',
         onSave: '&'
       },
-      templateUrl: 'templates/directive/inline-editable.html',
+      templateUrl: 'templates/directives/inline-editable.html',
       link: function (scope, element, attrs) {
         scope.c = {
           isEditMode: false
