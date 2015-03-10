@@ -5,70 +5,68 @@ module.exports = function (app) {
     function($routeSegmentProvider, $routeProvider) {
       $routeSegmentProvider
         .when('/', 'main')
-        .when('/articles', 'article')
-        .when('/articles/new', 'articlenew')
-        .when('/articles/:articleId', 'article')
-        .when('/articles/:articleId/activity', 'article.activity')
-        .when('/articles/:articleId/comments', 'article.comments')
-        .when('/articles/:articleId/comments/new', 'article.comments.new')
-        .when('/articles/:articleId/comments/:discussionIndex',
-              'article.comments.index')
-        .when('/articles/:articleId/settings', 'article.settings')
-        .when('/articles/:articleId/text', 'article.text')
+        .when('/articles/new', 'articles_new')
+        .when('/articles/:articleId', 'articles')
+        .when('/articles/:articleId/activity', 'articles.activity')
+        .when('/articles/:articleId/discussions', 'articles.discussions')
+        .when('/articles/:articleId/discussions/new', 'articles.discussions.new')
+        .when('/articles/:articleId/discussions/:discussionIndex',
+              'articles.discussions.thread')
+        .when('/articles/:articleId/settings', 'articles.settings')
+        .when('/articles/:articleId/text', 'articles.text')
         .when('/contact', 'contact')
         .when('/oauth/orcid', 'oauth')
-        .when('/team', 'team')
         .when('/settings', 'settings')
         .when('/settings/profile', 'settings.profile')
         .when('/settings/site', 'settings.site')
-        .when('/users/', 'userlist')
-        .when('/users/:username', 'user')
-        .when('/users/:username/profile', 'user.profile')
-        .when('/users/:username/articles', 'user.articles')
-        .when('/users/:username/comments', 'user.comments')
+        .when('/team', 'team')
+        .when('/users/:username', 'users')
+        .when('/users/:username/profile', 'users.profile')
+        .when('/users/:username/articles', 'users.articles')
+        .when('/users/:username/activity', 'users.activity')
         .when('/welcome', 'welcome')
 
         // Init Main Page
         .segment('main',{
           templateUrl: 'templates/main/main.html'
         })
-        .segment('article', {
-          templateUrl: 'templates/article/index.html'
+        .segment('articles', {
+          templateUrl: 'templates/articles/index.html'
         })
         .within()
           .segment('activity', {
-            templateUrl: 'templates/article/activity.html',
+            templateUrl: 'templates/articles/activity.html',
             dependencies: ['articleId']
           })
-          .segment('comments', {
-            templateUrl: 'templates/article/comment/index.html',
+          .segment('discussions', {
+            templateUrl: 'templates/articles/discussions/index.html',
             dependencies: ['articleId']
           })
           .within()
             .segment('list', {
               default: true,
-              templateUrl: 'templates/article/comment/list.html',
+              templateUrl: 'templates/articles/discussions/list.html',
             })
             .segment('new', {
-              templateUrl: 'templates/article/comment/new.html',
+              templateUrl: 'templates/articles/discussions/new.html',
             })
-            .segment('index', {
-              templateUrl: 'templates/article/comment/discussion.html',
+            .segment('thread', {
+              templateUrl: 'templates/articles/discussions/thread.html',
               dependencies: ['discussionIndex']
             })
           .up()
           .segment('settings', {
-            templateUrl: 'templates/article/settings.html',
+            templateUrl: 'templates/articles/settings.html',
             dependencies: ['articleId']
           })
           .segment('text', {
             default: true,
-            templateUrl: 'templates/article/text/index.html',
+            templateUrl: 'templates/articles/text.html',
             dependencies: ['articleId']
           })
         .up()
-        .segment('articlenew', {
-          templateUrl: 'templates/article/new.html'
+        .segment('articles_new', {
+          templateUrl: 'templates/articles/new.html'
         })
 
         .segment('contact',{
@@ -97,37 +95,33 @@ module.exports = function (app) {
           templateUrl: 'templates/team/index.html'
         })
 
-        .segment('userlist', {
-          templateUrl: 'templates/user/list.html'
-        })
-
-        .segment('user', {
-          templateUrl: 'templates/user/index.html',
+        .segment('users', {
+          templateUrl: 'templates/users/index.html',
           dependencies: ['username']
         })
         .within()
           .segment('profile', {
             default: true,
-            templateUrl: 'templates/user/profile.html',
+            templateUrl: 'templates/users/profile.html',
             dependencies: ['username']
           })
           .segment('articles', {
-            templateUrl: 'templates/user/articles.html',
+            templateUrl: 'templates/users/articles.html',
             dependencies: ['username']
           })
-          .segment('comments', {
-            templateUrl: 'templates/user/comments.html',
+          .segment('activity', {
+            templateUrl: 'templates/users/activity.html',
             dependencies: ['username']
           })
         .up()
 
         .segment('welcome', {
-          templateUrl: 'templates/auth/welcome.html',
+          templateUrl: 'templates/welcome.html',
           controller: 'WelcomeCtrl'
         })
         ;
 
-      $routeProvider.otherwise({redirectTo: '/articles/0af5e13'});
+      $routeProvider.otherwise({redirectTo: '/'});
     }
   ]);
 };

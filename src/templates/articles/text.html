@@ -1,7 +1,7 @@
 <div ng-controller="ArticleTextCtrl">
   <div class="row ph-md-margin-bottom">
     <div class="col-md-12">
-      <a href="#{{'article.comments.new' | routeSegmentUrl}}"
+      <a href="#{{'articles.discussions.new' | routeSegmentUrl}}"
         class="btn btn-primary pull-right" ng-disabled="!auth.user">
         <i class="fa fa-fw fa-plus"></i> Add general comment
       </a>
@@ -68,11 +68,13 @@
           annotation="discussions.draft"
           >
         </inline-annotation-draft>
-        <ng-include
-          ng-if="!auth.user"
-          src="'templates/article/text/inline-annotation-substitute.html'"
-          >
-        </ng-include>
+        <div ng-if="!auth.user" class="panel panel-default ph-inline-annotation">
+          <div class="panel-body">
+            <a href="{{auth.orcidUrl}}" class="btn btn-primary">
+              Sign in with ORCID
+            </a> to comment.
+          </div>
+        </div>
       </div>
     </div>
   </div>

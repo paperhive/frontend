@@ -1,0 +1,176 @@
+<div ng-controller="DiscussionCtrl">
+  <h3 class="ph-no-margin-top">
+    <inline-editable
+      ng-model="discussion.originalAnnotation.title"
+      on-save="updateTitle($content)"
+      >
+    </inline-editable>
+    <span class="small">
+      #{{discussion.index}}
+    </span>
+  </h3>
+  <a href="#/users/{{discussion.originalAnnotation.author.username}}">
+    {{discussion.originalAnnotation.author.displayName}}</a>
+  opened this discussion
+  <span am-time-ago="discussion.originalAnnotation.createdAt"></span>
+  <span ng-if="discussion.replies.length == 1">
+    &middot; {{discussion.replies.length}} reply
+  </span>
+  <span ng-if="discussion.replies.length > 1">
+    &middot; {{discussion.replies.length}} replies
+  </span>
+
+  <div ng-if="discussion.originalAnnotation.target">
+    <hr>
+    <blockquote>
+      {{discussion.originalAnnotation.target.text}}
+    </blockquote>
+  </div>
+
+  <hr>
+  <div class="row">
+    <div class="col-md-10">
+      <ul class="media-list">
+        <li class="media">
+          <annotation
+            content="discussion.originalAnnotation"
+            is-article-author="false"
+            requires-body="false"
+            >
+          </annotation>
+        </li>
+
+        <li class="media" ng-repeat="reply in discussion.replies">
+          <annotation
+            content="reply"
+            delete-function="deleteReply"
+            requires-body="true"
+            >
+          </annotation>
+        </li>
+
+        <li class="media">
+          <div ng-if="auth.user">
+            <a class="media-left" href="#/users/{{auth.user.username}}">
+              <img
+              gravatar-user="auth.user"
+              gravatar-size="80"
+              >
+            </a>
+            <div class="media-body" style="width:100%">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <form
+                    name="annotationForm"
+                    ng-controller="AnnotationCtrl"
+                    ng-submit="annotationForm.$valid
+                    && addReply(annotation.body); annotation.body=undefined;"
+                    novalidate
+                    >
+                    <span
+                      id="helpBlock"
+                      class="ph-help-block pull-right"
+                      >
+                      You can use
+                      <a href="http://kramdown.gettalong.org/syntax.html" target="_blank">Markdown</a>,
+                      $$<a href="http://en.wikibooks.org/wiki/LaTeX/Mathematics#Symbols"
+                        target="_blank">LaTeX</a>$$,
+                      ```<a href="https://highlightjs.org/" target="_blank">code blocks</a>```,
+                      <a href="http://jeff-collins.github.io/ment.io/#/"
+                        target="_blank">@mentions</a>
+                    </span>
+                    <textarea
+                      id="textbody"
+                      class="form-control ph-annotation-body"
+                      ng-model="annotation.body"
+                      mentio
+                      mentio-macros="macros"
+                      mentio-search="searchPeople(term)"
+                      mentio-items="localItems"
+                      mentio-template-url="templates/directives/mentio-list.html"
+                      mentio-select="getPeopleText(item)"
+                      mentio-require-leading-space="true"
+                      rows="6"
+                      placeholder="Leave a comment..."
+                      required
+                      ></textarea>
+                    <hr>
+                    <label for="preview">Preview</label>
+                    <div class="well well-lg" id="preview">
+                      <kramjax body="{{annotation.body}}"></kramjax>
+                    </div>
+                    <span class="pull-right">
+                      <!--
+                      <button type="submit" class="btn btn-default">
+                        Close discussion
+                      </button>
+                      &nbsp;
+                      -->
+                      <button
+                        type="submit"
+                        class="btn btn-primary"
+                        ng-disabled="annotationForm.$invalid"
+                        >
+                        Submit
+                      </button>
+                    </span>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{annotation.body}}
+
+          <div
+            ng-if="!auth.user"
+            class="media-body ph-login-info-block"
+            >
+            <div class="panel panel-default">
+              <div class="panel-body bg-info">
+                <a href="{{auth.orcidUrl}}" class="btn btn-primary">
+                  Sign in with ORCID
+                </a>
+                to join this discussion on PaperHub.
+              </div>
+            </div>
+          </div>
+
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-2">
+      <a href="#">
+        <h5>
+          Labels <span class="pull-right"><i class="fa fa-gear"></i></span>
+        </h5>
+      </a>
+      <ul class="ph-tags">
+        <li ng-repeat="label in discussion.originalAnnotation.labels">
+        <a href="#" class="btn btn-default {{label}}">{{label}}</a>
+        </li>
+      </ul>
+      <hr>
+      <h5>Notifications</h5>
+      <button type="button" class="btn btn-default" style="width:100%"
+        ng-disabled="!auth.user" ng-click="toggleSubscribe()">
+        <span ng-show="isSubscribed">
+          <i class="fa fa-bell-slash"></i> Unsubscribe
+        </span>
+        <span ng-show="!isSubscribed">
+          <i class="fa fa-bell"></i> Subscribe
+        </span>
+      </button>
+      <span ng-show="isSubscribed" style="font-size:x-small;">
+        You're receiving notifications because you're subscribed to this thread.
+      </span>
+      <span ng-show="!isSubscribed" style="font-size:x-small;">
+        You're ignoring this thread.
+      </span>
+      <hr>
+      <h5>Participants</h5>
+      List of participants
+    </div>
+
+  </div>
+</div>

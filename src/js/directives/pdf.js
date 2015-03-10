@@ -51,6 +51,8 @@ module.exports = function (app) {
                 var link = document.createElement("a");
                 // From <http://stackoverflow.com/a/14717011/353337>
                 // link.setAttribute("href", "#/articles/0af5e13/text?scrollTo=pageContainer".concat(page.pageIndex+1));
+                //
+                // TODO: solve this outside the pdf directive
                 link.setAttribute("href", "#/articles/0af5e13/text");
                 var canvas = document.createElement("canvas");
                 canvas.setAttribute("class", "ph-page");
