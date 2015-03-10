@@ -33,42 +33,42 @@ module.exports = function (app) {
           templateUrl: 'templates/main/main.html'
         })
         .segment('article', {
-          templateUrl: 'templates/article/index.html'
+          templateUrl: 'templates/articles/index.html'
         })
         .within()
           .segment('activity', {
-            templateUrl: 'templates/article/activity.html',
+            templateUrl: 'templates/articles/activity.html',
             dependencies: ['articleId']
           })
           .segment('comments', {
-            templateUrl: 'templates/article/comment/index.html',
+            templateUrl: 'templates/articles/comment/index.html',
             dependencies: ['articleId']
           })
           .within()
             .segment('list', {
               default: true,
-              templateUrl: 'templates/article/comment/list.html',
+              templateUrl: 'templates/articles/comment/list.html',
             })
             .segment('new', {
-              templateUrl: 'templates/article/comment/new.html',
+              templateUrl: 'templates/articles/comment/new.html',
             })
             .segment('index', {
-              templateUrl: 'templates/article/comment/discussion.html',
+              templateUrl: 'templates/articles/comment/discussion.html',
               dependencies: ['discussionIndex']
             })
           .up()
           .segment('settings', {
-            templateUrl: 'templates/article/settings.html',
+            templateUrl: 'templates/articles/settings.html',
             dependencies: ['articleId']
           })
           .segment('text', {
             default: true,
-            templateUrl: 'templates/article/text/index.html',
+            templateUrl: 'templates/articles/text/index.html',
             dependencies: ['articleId']
           })
         .up()
         .segment('articlenew', {
-          templateUrl: 'templates/article/new.html'
+          templateUrl: 'templates/articles/new.html'
         })
 
         .segment('contact',{
