@@ -41,19 +41,19 @@ module.exports = function (app) {
             dependencies: ['articleId']
           })
           .segment('comments', {
-            templateUrl: 'templates/articles/comment/index.html',
+            templateUrl: 'templates/articles/discussions/index.html',
             dependencies: ['articleId']
           })
           .within()
             .segment('list', {
               default: true,
-              templateUrl: 'templates/articles/comment/list.html',
+              templateUrl: 'templates/articles/discussions/list.html',
             })
             .segment('new', {
-              templateUrl: 'templates/articles/comment/new.html',
+              templateUrl: 'templates/articles/discussions/new.html',
             })
             .segment('index', {
-              templateUrl: 'templates/articles/comment/discussion.html',
+              templateUrl: 'templates/articles/discussions/discussion.html',
               dependencies: ['discussionIndex']
             })
           .up()
