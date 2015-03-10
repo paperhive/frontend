@@ -47,7 +47,8 @@ module.exports = function (app) {
       $scope.discussions = {
         draft: {_id: _.uniqueId()},
         stored: [],
-        highlightInfos: {}
+        highlightInfos: {},
+        highlightBorder: {}
       };
 
       $scope.onPdfLoaded = function () {
