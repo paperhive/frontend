@@ -63,7 +63,7 @@ module.exports = function (app) {
           })
           .segment('text', {
             default: true,
-            templateUrl: 'templates/articles/text/index.html',
+            templateUrl: 'templates/articles/text.html',
             dependencies: ['articleId']
           })
         .up()
