@@ -1,8 +1,8 @@
 module.exports = function (app) {
 
   app.directive('annotation', [
-    '$http', 'config', '$routeSegment',
-    function($http, config, $routeSegment) {
+    '$http', 'config', '$routeSegment', 'notificationService',
+    function($http, config, $routeSegment, notificationService) {
     return {
       restrict: 'E',
       scope: {
