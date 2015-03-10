@@ -15,10 +15,6 @@ module.exports = function (app) {
       )
         .success(function (discussion) {
           $scope.discussion = discussion;
-          // TODO this should be returned by the API
-          if ($scope.discussion.replies === undefined) {
-              $scope.discussion.replies = [];
-          }
         })
         .error(function (data) {
           notificationService.notifications.push({
