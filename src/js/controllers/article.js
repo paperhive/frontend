@@ -44,37 +44,35 @@ module.exports = function (app) {
         });
       });
 
+      $scope.originalComment = {
+        draft: {}
+      };
       $scope.discussions = {
-        draft: {_id: _.uniqueId()},
         stored: []
       };
 
       $scope.purgeDraft = function() {
-        $scope.discussions.draft = {_id: _.uniqueId()};
+        $scope.originalComment.draft = {};
       };
 
+      $scope.addDiscussion = function (comment) {
+        var originalComment = _.cloneDeep(_.pick(
+          comment, ['title', 'body', 'target', 'tags']
+        ));
 
-      $scope.addDiscussion = function(annotation) {
         // We always need a title.
-        // This conditional applies for short inline comments
-        // on the PDF.
-        if (!annotation.title) {
-          annotation.title = annotation.body;
-          annotation.body = undefined;
+        // This conditional applies for short inline comments on the PDF.
+        if (!originalComment.title) {
+          originalComment.title = originalComment.body;
+          originalComment.body = undefined;
         }
-
-        discussion = {
-          originalAnnotation: _.cloneDeep(_.pick(
-            annotation, ['title', 'body', 'target', 'tags']
-          ))
-        };
 
         $scope.submitting = true;
         $http.post(
           config.api_url +
             '/articles/' + $routeSegment.$routeParams.articleId +
             '/discussions',
-          discussion
+          {originalAnnotation: originalComment}
         )
         .success(function (discussion) {
           $scope.submitting = false;

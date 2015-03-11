@@ -4,7 +4,7 @@ module.exports = function (app) {
     return {
       restrict: 'E',
       scope: {
-        annotation: '=',
+        discussion: '=',
       },
       templateUrl: 'templates/directives/margin-discussion.html'
     };

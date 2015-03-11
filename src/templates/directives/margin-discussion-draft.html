@@ -10,15 +10,14 @@
   </div>
   <div class="panel-body">
     <form
-      name="annotationForm"
-      ng-submit="annotationForm.$valid && onSubmit({$discussion: annotation})"
+      name="commentForm"
+      ng-submit="commentForm.$valid && onSubmit({$comment: comment})"
       novalidate
       >
       <input
         type="text"
-        ng-if="annotation.body.length > 20"
-        id="annotation-title"
-        ng-model="annotation.title"
+        ng-if="comment.body.length > 20"
+        ng-model="comment.title"
         class="form-group form-control"
         placeholder="Enter title..."
         required
@@ -26,15 +25,15 @@
       <textarea
         id="textbody"
         placeholder="Enter comment..."
-        ng-model="annotation.body"
-        class="form-group form-control ph-annotation-body"
+        ng-model="comment.body"
+        class="form-group form-control ph-comment-body"
         rows="2"
         required
         ></textarea>
       <span class="pull-right">
         <button
           class="btn btn-sm btn-primary"
-          ng-disabled="annotationForm.$invalid"
+          ng-disabled="commentForm.$invalid"
           >
           Add comment
         </button>

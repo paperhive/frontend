@@ -1,7 +1,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <img gravatar-user="annotation.originalAnnotation.author" gravatar-size="30" >
-    {{annotation.originalAnnotation.author.displayName}}
+    <img gravatar-user="discussion.originalAnnotation.author" gravatar-size="30" >
+    {{discussion.originalAnnotation.author.displayName}}
     <span class="pull-right">
       <a href="#">
         <i class="fa fa-globe"></i>
@@ -9,9 +9,9 @@
     </span>
   </div>
   <div class="panel-body">
-    <h4 class="ph-no-margin-top">{{annotation.originalAnnotation.title}}</h4>
-    <div ng-if="annotation.originalAnnotation.body">
-      {{annotation.originalAnnotation.body}}
+    <h4 class="ph-no-margin-top">{{discussion.originalAnnotation.title}}</h4>
+    <div ng-if="discussion.originalAnnotation.body">
+      {{discussion.originalAnnotation.body}}
     </div>
   </div>
 </div>
