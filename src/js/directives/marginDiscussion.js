@@ -6,7 +6,7 @@ module.exports = function (app) {
       scope: {
         discussion: '=',
       },
-      templateUrl: 'templates/directives/margin-discussion.html'
+      templateUrl: 'templates/directives/marginDiscussion.html'
     };
   });
 };

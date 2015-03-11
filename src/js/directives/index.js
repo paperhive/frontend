@@ -1,16 +1,16 @@
 module.exports = function (app) {
-  require('./annotation.js')(app);
-  require('./confirmed-click.js')(app);
+  require('./annotation')(app);
+  require('./confirmed-clicks')(app);
   require('./elementSize')(app);
-  require('./gravatar.js')(app);
+  require('./gravatars')(app);
   require('./highlights')(app);
-  require('./margin-discussion.js')(app);
-  require('./margin-discussion-draft.js')(app);
-  require('./inline-editable.js')(app);
-  require('./kramjax.js')(app);
+  require('./marginDiscussion')(app);
+  require('./marginDiscussionDraft')(app);
+  require('./inline-editable')(app);
+  require('./kramjax')(app);
   require('./onOutside')(app);
   require('./onTextSelect')(app);
-  require('./pdf.js')(app);
+  require('./pdf')(app);
   require('./subnav')(app);
   require('./validateArticleSource')(app);
   require('./validate-username')(app);

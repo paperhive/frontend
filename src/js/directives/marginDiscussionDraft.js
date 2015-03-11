@@ -9,7 +9,7 @@ module.exports = function (app) {
           onSubmit: '&',
           comment: '='
         },
-        templateUrl: 'templates/directives/margin-discussion-draft.html',
+        templateUrl: 'templates/directives/marginDiscussionDraft.html',
         link: function(scope, element) {
           scope.auth = authService;
         }
