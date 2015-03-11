@@ -43,39 +43,23 @@
           {{article.pdfProgress.numPages}} pages
         </progressbar>
       </div>
-      <inline-annotation
+      <margin-discussion
         ng-repeat="discussion in discussions.stored"
         ng-if="text.highlightInfos[discussion._id].top"
         ng-style="{'top': text.highlightInfos[discussion._id].top + 'px'}"
         annotation="discussion"
-        class="ph-annotation"
         ng-mouseenter="text.highlightBorder[discussion._id] = true"
         ng-mouseleave="text.highlightBorder[discussion._id] = false"
         >
-      </inline-annotation>
-      <!-- Don't use ng-if here to keep the element in the DOM tree.
-      This makes sure that the entered text is preserved.
-      -->
-      <div
-        class="ph-annotation"
+      </margin-discussion>
+      <margin-discussion-draft
         ng-if="discussions.draft.target && text.highlightInfos[discussions.draft._id].top"
         ng-style="{'top': text.highlightInfos[discussions.draft._id].top + 'px'}"
+        on-submit="addDiscussion($discussion)"
+        on-outside-mousedown="!discussions.draft.body && purgeDraft()"
+        annotation="discussions.draft"
         >
-        <inline-annotation-draft
-          ng-if="auth.user"
-          on-submit="addDiscussion($discussion)"
-          on-outside-mousedown="!discussions.draft.body && purgeDraft()"
-          annotation="discussions.draft"
-          >
-        </inline-annotation-draft>
-        <div ng-if="!auth.user" class="panel panel-default ph-inline-annotation">
-          <div class="panel-body">
-            <a href="{{auth.orcidUrl}}" class="btn btn-primary">
-              Sign in with ORCID
-            </a> to comment.
-          </div>
-        </div>
-      </div>
+      </margin-discussion-draft>
     </div>
   </div>
 </div>

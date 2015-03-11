@@ -45,7 +45,7 @@
         >
         <span
           id="helpBlock"
-          class="ph-help-block pull-right"
+          class="ph-comment-help pull-right"
           >
           You can use
           <a href="http://kramdown.gettalong.org/syntax.html" target="_blank">Markdown</a>,
@@ -95,12 +95,7 @@
         ng-if="!isEditMode && annotation.body !== undefined"
         body="{{annotation.body}}"
         ></kramjax>
-      <!--span ng-if="annotation.body === undefined">No description
-      provided.</span-->
-      <em
-        ng-if="!annotation.body"
-        class="ph-replacement-text"
-        >
+      <em ng-if="!annotation.body" class="text-muted">
         No description provided.
       </em>
     </div>

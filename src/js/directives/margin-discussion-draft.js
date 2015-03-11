@@ -1,6 +1,6 @@
 module.exports = function (app) {
 
-  app.directive('inlineAnnotationDraft', [
+  app.directive('marginDiscussionDraft', [
     'authService', 'notificationService', '$document', '$rootScope',
     function(authService, notificationService, $document, $rootScope) {
       return {
@@ -9,7 +9,7 @@ module.exports = function (app) {
           onSubmit: '&',
           annotation: '='
         },
-        templateUrl: 'templates/directives/inline-annotation-draft.html',
+        templateUrl: 'templates/directives/margin-discussion-draft.html',
         link: function(scope, element) {
           scope.auth = authService;
           scope.annotation.author = authService.user;

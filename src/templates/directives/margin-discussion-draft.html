@@ -1,12 +1,6 @@
-<div
-  class="panel panel-default ph-inline-annotation-edit"
-  >
+<div ng-if="auth.user" class="panel panel-default">
   <div class="panel-heading">
-    <img
-      gravatar-user="auth.user"
-      gravatar-size="30"
-      class="ph-avatar"
-      >
+    <img gravatar-user="auth.user" gravatar-size="30" class="ph-avatar">
     {{auth.user.displayName}}
     <span class="pull-right">
       <a href="#">
@@ -46,5 +40,12 @@
         </button>
       </span>
     </form>
+  </div>
+</div>
+<div ng-if="!auth.user" class="panel panel-default">
+  <div class="panel-body">
+    <a href="{{auth.orcidUrl}}" class="btn btn-primary">
+      Sign in with ORCID
+    </a> to comment.
   </div>
 </div>
