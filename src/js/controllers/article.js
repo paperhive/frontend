@@ -68,7 +68,7 @@ module.exports = function (app) {
         }
 
         $scope.submitting = true;
-        $http.post(
+        return $http.post(
           config.api_url +
             '/articles/' + $routeSegment.$routeParams.articleId +
             '/discussions',
@@ -81,11 +81,8 @@ module.exports = function (app) {
         })
         .error(function (data) {
           $scope.submitting = false;
-          notificationService.notifications.push({
-            type: 'error',
-            message: data.message || 'could not add discussion (unknown reason)'
-          });
-        });
+        })
+          .error(notificationService.httpError('could not add discussion'));
       };
 
     }]);

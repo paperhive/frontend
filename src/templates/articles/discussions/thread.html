@@ -20,7 +20,7 @@
     &middot; {{discussion.replies.length}} replies
   </span>
 
-  <div ng-if="discussion.originalAnnotation.target">
+  <div ng-if="discussion.originalAnnotation.target.text">
     <hr>
     <blockquote>
       {{discussion.originalAnnotation.target.text}}
@@ -119,14 +119,13 @@
               </div>
             </div>
           </div>
-          {{annotation.body}}
 
           <div
             ng-if="!auth.user"
             class="media-body ph-login-info-block"
             >
             <div class="panel panel-default">
-              <div class="panel-body bg-info">
+              <div class="panel-body">
                 <a href="{{auth.orcidUrl}}" class="btn btn-primary">
                   Sign in with ORCID
                 </a>
