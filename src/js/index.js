@@ -7,6 +7,7 @@
   require('rangy-serializer');
 
   var angular = require('angular');
+  require('angular-animate'); // provides 'ngAnimate' module
   require('angular-bootstrap-tpls'); // provides 'ui.bootstrap' module
   require('angular-sanitize'); // provides 'ngSanitize' module
   require('angular-route'); // provides 'ngRoute' module
@@ -24,6 +25,7 @@
       [
        'ui.bootstrap',
        'mentio',
+       'ngAnimate',
        'ngSanitize',
        'ngRoute',
        'route-segment',

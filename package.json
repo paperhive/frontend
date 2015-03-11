@@ -39,6 +39,7 @@
   },
   "browser": {
     "angular": "./bower_components/angular/angular.js",
+    "angular-animate": "./bower_components/angular-animate/angular-animate.js",
     "angular-bootstrap-tpls": "./node_modules/angular-bootstrap/dist/ui-bootstrap-tpls.js",
     "angular-route": "./bower_components/angular-route/angular-route.js",
     "angular-route-segment": "./bower_components/angular-route-segment/build/angular-route-segment.js",
@@ -59,6 +60,12 @@
       "exports": "angular",
       "depends": [
         "jquery"
+      ]
+    },
+    "angular-animate": {
+      "exports": null,
+      "depends": [
+        "angular"
       ]
     },
     "angular-bootstrap-tpls": {
