@@ -4,7 +4,7 @@ module.exports = function (app) {
       restrict: 'A',
       link: function (scope, element, attrs) {
         var size = {};
-        var resizeHandler = function (e, omitApply) {
+        var resizeHandler = function (e) {
           var height = element[0].offsetHeight;
           var width = element[0].offsetWidth;
 
@@ -17,7 +17,7 @@ module.exports = function (app) {
           var setter = $parse(attrs.elementSize);
           if (setter && setter.assign) {
             setter.assign(scope, size);
-            if (!omitApply) {
+            if (e) {
               scope.$apply();
             }
           }
@@ -32,7 +32,7 @@ module.exports = function (app) {
         });
 
         // call handler once
-        resizeHandler(undefined, true);
+        resizeHandler();
       }
     };
   }]);
