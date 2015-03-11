@@ -11,6 +11,7 @@
   require('angular-sanitize'); // provides 'ngSanitize' module
   require('angular-route'); // provides 'ngRoute' module
   require('angular-moment');
+  require('detect-element-resize'); // injects resize+removeResize to jquery
   require('mentio');
   require('angular-route-segment'); // provides 'route-segment' module
   require('../../tmp/templates.js'); // provides 'templates' module

@@ -1,6 +1,7 @@
 module.exports = function (app) {
   require('./annotation.js')(app);
   require('./confirmed-click.js')(app);
+  require('./elementSize')(app);
   require('./gravatar.js')(app);
   require('./highlights')(app);
   require('./inline-annotation.js')(app);
