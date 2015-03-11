@@ -1,5 +1,5 @@
 module.exports = function (app) {
-  app.controller('AnnotationCtrl', [
+  app.controller('CommentCtrl', [
     '$scope',
     function($scope) {
     }]);

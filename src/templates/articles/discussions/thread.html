@@ -32,21 +32,24 @@
     <div class="col-md-10">
       <ul class="media-list">
         <li class="media">
-          <annotation
+          <comment
             content="discussion.originalAnnotation"
-            is-article-author="false"
+            on-update="updateDiscussion($comment)"
             requires-body="false"
+            deletable="false"
             >
-          </annotation>
+          </comment>
         </li>
 
         <li class="media" ng-repeat="reply in discussion.replies">
-          <annotation
+          <comment
             content="reply"
-            delete-function="deleteReply"
+            on-delete="deleteReply($comment, $index)"
+            on-update="updateReply($comment, $index)"
             requires-body="true"
+            deletable="true"
             >
-          </annotation>
+          </comment>
         </li>
 
         <li class="media">
@@ -61,16 +64,13 @@
               <div class="panel panel-default">
                 <div class="panel-body">
                   <form
-                    name="annotationForm"
-                    ng-controller="AnnotationCtrl"
-                    ng-submit="annotationForm.$valid
-                    && addReply(annotation.body); annotation.body=undefined;"
+                    name="commentForm"
+                    ng-controller="CommentCtrl"
+                    ng-submit="commentForm.$valid
+                    && addReply(comment.body); comment.body=undefined;"
                     novalidate
                     >
-                    <span
-                      id="helpBlock"
-                      class="ph-comment-help pull-right"
-                      >
+                    <span class="ph-comment-help pull-right">
                       You can use
                       <a href="http://kramdown.gettalong.org/syntax.html" target="_blank">Markdown</a>,
                       $$<a href="http://en.wikibooks.org/wiki/LaTeX/Mathematics#Symbols"
@@ -81,14 +81,14 @@
                     </span>
                     <textarea
                       id="textbody"
-                      class="form-control ph-annotation-body"
-                      ng-model="annotation.body"
+                      class="form-control ph-comment-body"
+                      ng-model="comment.body"
                       mentio
                       mentio-macros="macros"
-                      mentio-search="searchPeople(term)"
+                      mentio-search="searchUsers(term)"
                       mentio-items="localItems"
                       mentio-template-url="templates/directives/mentio-list.html"
-                      mentio-select="getPeopleText(item)"
+                      mentio-select="getUserText(item)"
                       mentio-require-leading-space="true"
                       rows="6"
                       placeholder="Leave a comment..."
@@ -97,7 +97,7 @@
                     <hr>
                     <label for="preview">Preview</label>
                     <div class="well well-lg" id="preview">
-                      <kramjax body="{{annotation.body}}"></kramjax>
+                      <kramjax body="{{comment.body}}"></kramjax>
                     </div>
                     <span class="pull-right">
                       <!--
@@ -109,7 +109,7 @@
                       <button
                         type="submit"
                         class="btn btn-primary"
-                        ng-disabled="annotationForm.$invalid"
+                        ng-disabled="commentForm.$invalid"
                         >
                         Submit
                       </button>

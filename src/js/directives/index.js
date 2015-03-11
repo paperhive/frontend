@@ -1,5 +1,5 @@
 module.exports = function (app) {
-  require('./annotation')(app);
+  require('./comment')(app);
   require('./confirmed-click')(app);
   require('./elementSize')(app);
   require('./gravatar')(app);
