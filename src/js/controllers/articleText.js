@@ -18,7 +18,7 @@ module.exports = function (app) {
       var updateOffsets = function () {
         var draftTop = $scope.originalComment.draft.target &&
           $scope.text.highlightInfos.draft &&
-          $scope.text.highlightInfos.draft.top;
+          $scope.text.highlightInfos.draft.top || 0;
         var draftHeight = draftTop &&
           $scope.text.marginDiscussionSizes.draft &&
           $scope.text.marginDiscussionSizes.draft.height;
@@ -26,10 +26,12 @@ module.exports = function (app) {
         var offsets = _.sortBy(_.compact(_.map(
           $scope.text.highlightInfos,
           function (val, key) {
-            return key !== 'draft' ? {id: key, top: val.top} : undefined;
+            var height = $scope.text.marginDiscussionSizes[key] &&
+              $scope.text.marginDiscussionSizes[key].height;
+            return (key !== 'draft' && val.top !== undefined &&
+                    height !==  undefined) ? 
+                    {id: key, top: val.top, height: height} : undefined;
           })), 'top');
-        console.log(offsets);
-        var currentOffset = 0;
 
         marginOffsets = {};
 
@@ -40,30 +42,59 @@ module.exports = function (app) {
 
         var padding = 5;
 
-        // place all other discussions
-        _.forEach(offsets, function (offset) {
-          var height = $scope.text.marginDiscussionSizes[offset.id] &&
-            $scope.text.marginDiscussionSizes[offset.id].height;
-          if (!offset.top || !height) return;
+        // treat above and below separately (no draft: draftTop === 0)
+        var offsetsAbove = _.filter(offsets, function (offset) {
+          return offset.top < draftTop;
+        });
+        var offsetsBelow = _.filter(offsets, function (offset) {
+          return offset.top >= draftTop;
+        });
+
+        // move bottom elements from above to below if there's not enough space
+        var getTotalHeight = function (offsets) {
+          return _.sum(_.pluck(offsets, 'height')) + offsets.length * padding;
+        };
+        while (getTotalHeight(offsetsAbove) > draftTop) {
+          // remove last one in above
+          var last = offsetsAbove.splice(-1, 1);
+          // insert to beginning of below
+          offsetsBelow.unshift(last[0]);
+        }
+
+        // place offsets above the draft, i.e. above draftTop
+        // (does nothing if no draft is visible)
+        (function placeAbove() {
+
+          // make sure we can always fit everything between topBarrier and
+          // draftTop
+          var topBarrier = 0;
+          var remainingHeight = getTotalHeight(offsetsAbove);
+
+          // place above elements top-down and pack when not enough space
+          var offset;
+          while ((offset = offsetsAbove.shift())) {
+            var top = _.max([topBarrier, offset.top]);
+
+            // doesn't fit with wanted top? pile 'em up close to draftTop
+            if (top + remainingHeight > draftTop) {
+              top = draftTop - remainingHeight;
+            }
+            marginOffsets[offset.id] = top;
+            topBarrier = top + offset.height + padding;
+            remainingHeight -= offset.height + padding;
+          }
+        })();
+
+        // place offsets below the draft (or below 0) in 'open end' mode
+        var topBarrier = draftTop && draftHeight ?
+          draftTop + draftHeight + padding : 0;
+        _.forEach(offsetsBelow, function (offset) {
 
           // do not fall above previously set offset
-          var top = _.max([offset.top, currentOffset]);
+          var top = _.max([offset.top, topBarrier]);
 
-          // if we don't have a draft: just place it to the first possible pos
-          if (!draftTop || !draftHeight) {
-            marginOffsets[offset.id] = top;
-            currentOffset = top + height + padding;
-            return;
-          }
-
-          // fits above draft: place it there
-          if (top + height < draftTop - padding) {
-            marginOffsets[offset.id] = top;
-          // otherwise: place it below draft
-          } else {
-            marginOffsets[offset.id] = _.max([top, draftTop + draftHeight + padding]);
-          }
-          currentOffset = marginOffsets[offset.id] + height + padding;
+          marginOffsets[offset.id] = top;
+          topBarrier = top + offset.height + padding;
         });
         $scope.text.marginOffsets = marginOffsets;
       };
