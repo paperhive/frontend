@@ -18,4 +18,11 @@ margin-discussion-draft {
   > .panel {
     .ph-no-margin();
   }
+  transition: opacity 0.5s ease;
+  &.ng-enter, &.ng-leave.ng-leave-active {
+    opacity: 0;
+  }
+  &.ng-enter.ng-enter-active, &.ng-leave {
+    opacity: 1;
+  }
 }
