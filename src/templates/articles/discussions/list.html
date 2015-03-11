@@ -19,17 +19,18 @@
   <ul class="list-group">
     <li class="list-group-item" ng-repeat="discussion in discussions.stored">
       <span class="pull-right">
-        <span ng-if="discussion.replies.length > 0" style="margin-left:15px;">
+        <span ng-if="discussion.replies.length > 0">
           <i class="fa fa-comments"></i> {{discussion.replies.length}}
         </span>
       </span>
       <h4>
-        <a style="margin-right:15px;"
-            href="#{{'articles.discussions.thread' | routeSegmentUrl:
+        <a href="#{{'articles.discussions.thread' | routeSegmentUrl:
             {discussionIndex: discussion.index} }}">
-          {{discussion.originalAnnotation.title}}
-        </a>
-        <ul class="ph-tags list-inline" style="display: inline-block;">
+          {{discussion.originalAnnotation.title}}</a>
+        <ul
+          ng-if="discussion.originalAnnotation.tags.length > 0"
+          class="ph-tags list-inline"
+          >
           <li ng-repeat="tag in discussion.originalAnnotation.tags">
             <a href="#" class="btn btn-default">{{tag}}</a>
           </li>

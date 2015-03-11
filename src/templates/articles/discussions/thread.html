@@ -60,7 +60,7 @@
               gravatar-size="80"
               >
             </a>
-            <div class="media-body" style="width:100%">
+            <div class="media-body">
               <div class="panel panel-default">
                 <div class="panel-body">
                   <form
@@ -152,7 +152,7 @@
       </ul>
       <hr>
       <h5>Notifications</h5>
-      <button type="button" class="btn btn-default" style="width:100%"
+      <button type="button" class="btn btn-default ph-subscription-button"
         ng-disabled="!auth.user" ng-click="toggleSubscribe()">
         <span ng-show="isSubscribed">
           <i class="fa fa-bell-slash"></i> Unsubscribe
@@ -161,10 +161,10 @@
           <i class="fa fa-bell"></i> Subscribe
         </span>
       </button>
-      <span ng-show="isSubscribed" style="font-size:x-small;">
+      <span ng-show="isSubscribed" class="ph-subscription-text">
         You're receiving notifications because you're subscribed to this thread.
       </span>
-      <span ng-show="!isSubscribed" style="font-size:x-small;">
+      <span ng-show="!isSubscribed" class="ph-subscription-text">
         You're ignoring this thread.
       </span>
       <hr>
