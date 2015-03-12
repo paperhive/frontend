@@ -113,7 +113,7 @@ module.exports = function (app) {
             return;
           }
 
-          if (target.ranges) {
+          if (target.ranges.length) {
             scope.rects = containerCtrl.getRangesRects(target.ranges);
 
             // gather bbox information and expose it on the scope

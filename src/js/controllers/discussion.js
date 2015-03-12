@@ -13,16 +13,10 @@ module.exports = function (app) {
           '/articles/' + $routeSegment.$routeParams.articleId +
           '/discussions/' + $routeSegment.$routeParams.discussionIndex
       )
-        .success(function (discussion) {
-          $scope.discussion = discussion;
-        })
-        .error(function (data) {
-          notificationService.notifications.push({
-            type: 'error',
-            message: data.message ? data.message : 'could not fetch discussion ' +
-              '(unknown reason)'
-          });
-        });
+      .success(function (discussion) {
+        $scope.discussion = discussion;
+      })
+      .error(notificationService.httpError('could not fetch discussion'));
 
         // Problem:
         //   When updateTitle() is run, the newTitle needs to be populated in
@@ -34,19 +28,19 @@ module.exports = function (app) {
         // TODO find a better solution
         $scope.updateTitle = function(newTitle) {
           $scope.discussion.originalAnnotation.title = newTitle;
-          $scope.updateDiscussion();
+          $scope.updateDiscussion($scope.discussion.originalAnnotation);
         };
 
-        $scope.updateDiscussion = function() {
+        $scope.updateDiscussion = function(comment) {
           $scope.submitting = true;
           var newDiscussion = {
             originalAnnotation: _.pick(
-              $scope.discussion.originalAnnotation,
+              comment,
               ['title', 'body', 'target', 'tags']
             )
           };
 
-          $http.put(
+          return $http.put(
             config.api_url +
               '/articles/' + $routeSegment.$routeParams.articleId +
               '/discussions/' + $routeSegment.$routeParams.discussionIndex,
@@ -58,14 +52,58 @@ module.exports = function (app) {
           })
           .error(function (data) {
             $scope.submitting = false;
-            notificationService.notifications.push({
-              type: 'error',
-              message: data.message ||
-                'could not update discussion (unknown reason)'
-            });
-          });
+          })
+          .error(notificationService.httpError('could not update discussion'));
         };
+      
+      $scope.addReply = function (body) {
+        $scope.submitting = true;
+        $http.post(
+          config.api_url +
+            '/articles/' + $routeSegment.$routeParams.articleId +
+            '/discussions/' + $routeSegment.$routeParams.discussionIndex +
+            '/replies/',
+          {body: body}
+        )
+        .success(function (reply) {
+          $scope.submitting = false;
+          $scope.discussion.replies.push(reply);
+        })
+        .error(function (data) {
+          $scope.submitting = false;
+        })
+        .error(notificationService.httpError('could not update reply'));
+      };
 
+      $scope.updateReply = function (comment, index) {
+        return $http.put(
+          config.api_url +
+            '/articles/' + $routeSegment.$routeParams.articleId +
+            '/discussions/' + $routeSegment.$routeParams.discussionIndex +
+            '/replies/' + comment._id,
+          {body: comment.body}
+        )
+        .success(function (data) {
+          $scope.discussion.replies[index] = data;
+        })
+        .error(notificationService.httpError('could not update reply'));
+      };
+
+      $scope.deleteReply = function (comment, index) {
+        return $http.delete(
+          config.api_url +
+            '/articles/' + $routeSegment.$routeParams.articleId +
+            '/discussions/' + $routeSegment.$routeParams.discussionIndex +
+            '/replies/' + comment._id
+        )
+        .success(function (data) {
+          $scope.discussion.replies.splice(index, 1);
+        })
+        .error(notificationService.httpError('could not delete reply'));
+      };
+
+      // currently unused
+      /*
       $scope.subscribers = [
       ];
       if('user' in authService) {
@@ -86,50 +124,11 @@ module.exports = function (app) {
         }
       };
 
-      $scope.addReply = function (body) {
-        reply = {
-          body: body
-        };
-        $scope.submitting = true;
-        $http.post(
-          config.api_url +
-            '/articles/' + $routeSegment.$routeParams.articleId +
-            '/discussions/' + $routeSegment.$routeParams.discussionIndex +
-            '/replies/',
-            reply
-        )
-        .success(function (reply) {
-          $scope.submitting = false;
-          $scope.discussion.replies.push(reply);
-        })
-        .error(function (data) {
-          $scope.submitting = false;
-          notificationService.notifications.push({
-            type: 'error',
-            message: data.message || 'could not add reply (unknown reason)'
-          });
-        });
-      };
-
       $scope.isArticleAuthor = function(authorId) {
         var _ = require('lodash');
         var k = _.findWhere($scope.article.authors, {_id: authorId});
         return (k !== undefined);
       };
-
-      $scope.deleteReply = function(deleteId) {
-        // TODO remove reply from database, add the following code into the
-        // success handler
-        var _ = require('lodash');
-        var k = _.findIndex($scope.discussion.replies,
-                            function (item) {return item._id === deleteId;}
-                           );
-        if (k < 0) {
-          console.log("Reply ", deleteId, " not found.");
-          throw PhError("Reply ", deleteId, " not found.");
-        }
-        // remove if from the list
-        $scope.discussion.replies.splice(k, 1);
-      };
+      */
     }]);
 };

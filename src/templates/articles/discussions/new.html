@@ -1,33 +1,31 @@
 <form
-  name="annotationForm"
-  ng-controller="AnnotationCtrl"
-  ng-submit="annotationForm.$valid && addDiscussion(annotation)"
+  name="commentForm"
+  ng-controller="CommentCtrl"
+  ng-submit="commentForm.$valid && save()"
+  ng-disabled="submitting"
   novalidate
   >
   <div class="row">
     <div class="col-md-10">
       <div class="media">
         <a href="#/users/{{auth.user.username}}" class="media-left">
-          <img
-            gravatar-user="auth.user"
-            gravatar-size="80"
-            >
+          <img gravatar-user="auth.user" gravatar-size="80">
         </a>
-        <div class="media-body" style="width:100%">
+        <div class="media-body">
           <div class="panel panel-default">
             <div class="panel-body">
               <input
                 placeholder="Title"
                 type="text"
                 name="title"
-                ng-model="annotation.title"
+                ng-model="comment.title"
                 class="form-control"
                 required
                 >
               <br>
               <span
                 id="helpBlock"
-                class="ph-help-block pull-right"
+                class="ph-comment-help pull-right"
                 >
                 You can use
                 <a
@@ -43,8 +41,8 @@
                         target="_blank">@mentions</a>
               </span>
               <textarea
-                class="form-control ph-annotation-body"
-                ng-model="annotation.body"
+                class="form-control ph-comment-body"
+                ng-model="comment.body"
                 mentio
                 mentio-macros="macros"
                 mentio-search="searchPeople(term)"
@@ -53,12 +51,12 @@
                 mentio-select="getPeopleText(item)"
                 mentio-require-leading-space="true"
                 rows="6"
-                placeholder="Leave an annotation..."
+                placeholder="Leave an comment..."
                 ></textarea>
               <hr>
               <label for="preview">Preview</label>
               <div class="well well-lg" id="preview">
-                <kramjax body="{{annotation.body}}"></kramjax>
+                <kramjax body="{{comment.body}}"></kramjax>
               </div>
             </div>
           </div>
@@ -67,13 +65,15 @@
       <button
         type="submit"
         class="btn btn-primary pull-right"
-        ng-disabled="annotationForm.$invalid"
+        ng-disabled="commentForm.$invalid"
         >
+        <i ng-if="!submitting" class="fa fa-fw fa-check"></i>
+        <i ng-if="submitting" class="fa fa-fw fa-spinner fa-spin"></i>
         Submit
       </button>
     </div>
     <div class="col-md-2">
-      <!-- Open annotation motivations -->
+      <!-- Open comment motivations -->
       <h4>Labels</h4>
       <ul class="ph-labelset">
         <li>

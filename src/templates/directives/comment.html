@@ -1,36 +1,35 @@
-<a class="media-left" href="#/users/{{annotation.author.username}}">
+<a class="media-left" href="#/users/{{comment.author.username}}">
   <img
-    gravatar-user="annotation.author"
+    gravatar-user="comment.author"
     gravatar-size="80"
     class="img-rounded"
     >
 </a>
-<div class="media-body" style="width:100%">
+<div class="media-body">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <a href="#/users/{{annotation.author.username}}">
-        {{annotation.author.displayName}}</a>
+      <a href="#/users/{{comment.author.username}}">
+        {{comment.author.displayName}}</a>
       commented
-      <span am-time-ago="annotation.createdAt"></span>
-      <span ng-if="annotation.createdAt !== annotation.updatedAt">
-        <em>[edited <span am-time-ago="annotation.updatedAt"></span>]</em>
-        <!-- Unfortunately, dynamic edit time updates don't work -->
-        <!--span  am-time-ago="{{annotation.editTime}}"></span-->
+      <span am-time-ago="comment.createdAt"></span>
+      <span ng-if="comment.createdAt !== comment.updatedAt">
+        <em class="text-muted">(edited <span am-time-ago="comment.updatedAt"></span>)</em>
       </span>
       <span class="pull-right">
-        <span ng-if="isArticleAuthor" class="ph-comment-tag">Author</span>
-        <!-- Can't use ng-if here; it seems to create another scope. -->
-        <!--  ng-if="annotation.permissions.edit" -->
+        <!--span ng-if="auth.user._id === comment.author._id"
+          class="ph-comment-tag">Article author</span-->
         <button
           class="btn btn-link ph-no-padding-top ph-no-padding-bottom"
-          ng-click="setEditOn()"
+          ng-disabled="submitting"
+          ng-click="editMode = true"
           >
           <i class="fa fa-pencil"></i>
         </button>
         <button
-          ng-if="deleteFunction && annotation.permissions.delete"
+          ng-if="deletable && auth.user._id === comment.author._id"
           class="btn btn-link ph-no-padding-top ph-no-padding-bottom"
-          confirmed-click="deleteFunction(annotation._id)"
+          confirmed-click="delete()"
+          ng-disabled="submitting"
           ng-confirm-click="Really delete reply?"
           >
           <i class="fa fa-remove"></i>
@@ -38,14 +37,14 @@
       </span>
     </div>
     <div class="panel-body">
-      <form name="annotationForm"
-        ng-if="isEditMode"
-        ng-submit="annotationForm.$valid && updateAnnotation()"
+      <form name="commentForm"
+        ng-if="editMode"
+        ng-submit="commentForm.$valid && update()"
         novalidate
         >
         <span
           id="helpBlock"
-          class="ph-help-block pull-right"
+          class="ph-comment-help pull-right"
           >
           You can use
           <a href="http://kramdown.gettalong.org/syntax.html" target="_blank">Markdown</a>,
@@ -57,13 +56,13 @@
         </span>
         <textarea
           id="textbody"
-          class="form-control ph-annotation-body"
-          ng-model="tmpBody"
+          class="form-control ph-comment-body"
+          ng-model="comment.body"
           mentio
           mentio-macros="macros"
-          mentio-search="searchPeople(term)"
+          mentio-search="searchUsers(term)"
           mentio-items="localItems"
-          mentio-select="getPeopleText(item)"
+          mentio-select="getUserText(item)"
           mentio-template-url="templates/directives/mentio-list.html"
           mentio-require-leading-space="true"
           rows="6"
@@ -74,33 +73,30 @@
         <hr>
         <label for="preview">Preview</label>
         <div class="well well-lg" id="preview">
-          <kramjax body="{{tmpBody}}"></kramjax>
+          <kramjax body="{{comment.body}}"></kramjax>
         </div>
         <span class="pull-right">
-          <button type="submit" class="btn btn-danger" ng-click="setEditOff()">
+          <button type="button" class="btn btn-danger" ng-click="cancel()" ng-disabled="submitting">
+            <i class="fa fa-fw fa-times"></i>
             Cancel
           </button>
           &nbsp;
           <button
-            ng-click="updateAnnotation(tmpBody)"
-            ng-disabled="annotationForm.$invalid"
+            ng-disabled="commentForm.$invalid || submitting"
             type="submit"
             class="btn btn-primary"
             >
-            Update annotation
+            <i ng-if="!submitting" class="fa fa-fw fa-check"></i>
+            <i ng-if="submitting" class="fa fa-fw fa-spinner fa-spin"></i>
+            Update comment
           </button>
         </span>
       </form>
       <kramjax
-        ng-if="!isEditMode && annotation.body !== undefined"
-        body="{{annotation.body}}"
+        ng-if="!editMode && comment.body"
+        body="{{comment.body}}"
         ></kramjax>
-      <!--span ng-if="annotation.body === undefined">No description
-      provided.</span-->
-      <em
-        ng-if="!annotation.body"
-        class="ph-replacement-text"
-        >
+      <em ng-if="!comment.body" class="text-muted">
         No description provided.
       </em>
     </div>
