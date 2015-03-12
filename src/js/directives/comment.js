@@ -1,6 +1,7 @@
 var _ = require('lodash');
 
 module.exports = function (app) {
+  'use strict';
 
   app.directive('comment', [
     'authService', 'config', '$routeSegment', 'notificationService',

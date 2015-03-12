@@ -1,4 +1,5 @@
 module.exports = function (app) {
+  'use strict';
 
   app.directive('gravatarUser', function() {
     return {
