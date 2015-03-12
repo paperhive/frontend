@@ -35,10 +35,6 @@ var htmlhintOpts = {
   "doctype-first": false
 };
 
-var jshintOpts = {
-  strict: true
-}
-
 // error handling, simplified version (without level) from
 // http://www.artandlogic.com/blog/2014/05/error-handling-in-gulp/
 function handleError(error) {
@@ -93,7 +89,7 @@ gulp.task('js:watch', ['templates'], function () {
 
 gulp.task('jshint', function() {
   return gulp.src('./src/js/**/*.js')
-    .pipe(jshint(jshintOpts))
+    .pipe(jshint())
     .pipe(jshint.reporter('default'))
     .pipe(jshint.reporter('fail'));
 });
