@@ -1,17 +1,40 @@
 <div class="panel panel-default">
-  <div class="panel-heading">
-    <img gravatar-user="discussion.originalAnnotation.author" gravatar-size="30" >
-    {{discussion.originalAnnotation.author.displayName}}
-    <span class="pull-right">
-      <a href="#">
-        <i class="fa fa-globe"></i>
-      </a>
-    </span>
-  </div>
   <div class="panel-body">
-    <h4 class="ph-no-margin-top">{{discussion.originalAnnotation.title}}</h4>
-    <div ng-if="discussion.originalAnnotation.body">
-      {{discussion.originalAnnotation.body}}
+    <div class="media">
+      <div class="media-left">
+        <a href="/#/users/{{discussion.originalAnnotation.author.username}}">
+          <img
+          class="media-object"
+          gravatar-user="discussion.originalAnnotation.author"
+          gravatar-size="30"
+          >
+        </a>
+      </div>
+      <div class="media-body">
+        <h4 class="media-heading">
+          {{discussion.originalAnnotation.title}}
+        </h4>
+        {{discussion.originalAnnotation.body}}
+
+        <!-- TODO how to get the article id? -->
+        <a
+          href="/#/articles/xxx/dicussions/{{discussion.index}}"
+          class="pull-right"
+          >
+          <span ng-if="discussion.replies.length == 0">
+            <i class="fa fa-fw fa-comment"></i>
+            reply
+          </span>
+          <span ng-if="discussion.replies.length == 1">
+            <i class="fa fa-fw fa-comment"></i>
+            {{discussion.replies.length}} reply
+          </span>
+          <span ng-if="discussion.replies.length > 1">
+            <i class="fa fa-fw fa-comments"></i>
+            {{discussion.replies.length}} replies
+          </span>
+        </a>
+      </div>
     </div>
   </div>
 </div>
