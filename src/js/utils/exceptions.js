@@ -1,4 +1,6 @@
 module.exports = function (app) {
+  'use strict';
+
   function PhError(message) {
     this.name = 'PhError';
     this.message = message;

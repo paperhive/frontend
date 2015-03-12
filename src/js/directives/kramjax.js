@@ -5,6 +5,8 @@ var $ = require('jquery');
 
 
 module.exports = function (app) {
+  'use strict';
+
   // syntax highlighting with highlight.js
   kramed.setOptions({
     highlight: function (code) {

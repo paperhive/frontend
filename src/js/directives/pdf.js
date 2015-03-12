@@ -1,5 +1,7 @@
 var _ = require('lodash');
 module.exports = function (app) {
+  'use strict';
+
   app.directive('pdf', ['$parse', function ($parse) {
     return {
       restrict: 'E',
