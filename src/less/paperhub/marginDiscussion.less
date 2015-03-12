@@ -9,6 +9,7 @@ margin-discussion {
   > .panel {
     .ph-no-margin();
   }
+  transition: top 0.5s ease;
 }
 
 margin-discussion-draft {
@@ -16,5 +17,15 @@ margin-discussion-draft {
   box-shadow: 0px 0px 25px #888888;
   > .panel {
     .ph-no-margin();
+  }
+  transition: opacity 0.25s 0.25s ease;
+  &.ng-enter, &.ng-leave.ng-leave-active {
+    opacity: 0;
+  }
+  &.ng-enter.ng-enter-active, &.ng-leave {
+    opacity: 1;
+  }
+  &.ng-leave {
+    transition-delay: 0;
   }
 }
