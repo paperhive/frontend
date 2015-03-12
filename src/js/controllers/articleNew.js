@@ -1,4 +1,5 @@
 module.exports = function (app) {
+  'use strict';
   app.controller('ArticleNewCtrl', [
     '$scope', '$http', '$q', '$location', 'config', 'authService',
     'notificationService',

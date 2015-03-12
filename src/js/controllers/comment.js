@@ -1,4 +1,6 @@
 module.exports = function (app) {
+  'use strict';
+
   app.controller('CommentCtrl', [
     '$scope', '$location', '$routeSegment',
     function($scope, $location, $routeSegment) {

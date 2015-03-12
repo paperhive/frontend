@@ -1,4 +1,5 @@
 module.exports = function (app) {
+  'use strict';
   // TODO: how to load+configure this beast via broserify/require()?!
   /*
   var MathJax = require('MathJax');

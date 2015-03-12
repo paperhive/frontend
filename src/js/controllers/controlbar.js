@@ -1,4 +1,6 @@
 module.exports = function (app) {
+  'use strict';
+
   app.controller('ControlbarCtrl', [
     '$routeSegment',
     function($routeSegment) {
