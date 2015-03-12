@@ -1,6 +1,5 @@
+'use strict';
 module.exports = function (app) {
-  'use strict';
-
   app.factory('notificationService', [
     function () {
       var service = {

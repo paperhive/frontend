@@ -1,9 +1,9 @@
+'use strict';
 var rangy = require('rangy');
 var _ = require('lodash');
 var $ = require('jquery');
 
 module.exports = function (app) {
-  'use strict';
 
   // returns all leaf text nodes that are descendants of node or are node
   var getTextNodes = function (node) {

@@ -1,7 +1,7 @@
+'use strict';
 var _ = require('lodash');
 
 module.exports = function (app) {
-  'use strict';
 
   app.controller('ArticleTextCtrl', [
     '$scope', '$route', '$routeSegment', '$document', '$http', 'config',
@@ -35,7 +35,7 @@ module.exports = function (app) {
                     {id: key, top: val.top, height: height} : undefined;
           })), 'top');
 
-        marginOffsets = {};
+        var marginOffsets = {};
 
         // place draft
         if (draftTop && draftHeight) {

@@ -1,6 +1,5 @@
+'use strict';
 module.exports = function (app) {
-  'use strict';
-
   // see https://docs.angularjs.org/guide/forms
   app.directive('validateArticleSource', [
     '$q', '$http', 'config',

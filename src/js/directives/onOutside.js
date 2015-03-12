@@ -1,8 +1,7 @@
-$ = require('jquery');
+'use strict';
+var $ = require('jquery');
 
 module.exports = function (app) {
-  'use strict';
-
   function registerOutsideDirective (eventName, directiveName) {
     app.directive(directiveName, [
       '$parse', '$document',

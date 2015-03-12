@@ -1,7 +1,8 @@
+'use strict';
 var _ = require('lodash');
-module.exports = function (app) {
-  'use strict';
+var PDFJS = require('pdfjs');
 
+module.exports = function (app) {
   app.directive('pdf', ['$parse', function ($parse) {
     return {
       restrict: 'E',

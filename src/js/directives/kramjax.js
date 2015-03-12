@@ -1,11 +1,11 @@
+'use strict';
+
 var kramed = require('kramed');
 var $ = require('jquery');
 // var kramed = require('kramed');
 // TODO: var MathJax = require('MathJax');
 
-
 module.exports = function (app) {
-  'use strict';
 
   // syntax highlighting with highlight.js
   kramed.setOptions({

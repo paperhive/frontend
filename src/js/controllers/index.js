@@ -1,6 +1,5 @@
+'use strict';
 module.exports = function (app) {
-  'use strict';
-
   require('./article.js')(app);
   require('./articleText.js')(app);
   require('./articleNew.js')(app);

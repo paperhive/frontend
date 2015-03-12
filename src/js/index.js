@@ -1,5 +1,5 @@
+'use strict';
 (function(){
-  'use strict';
 
   // Rangy needs to be included after the initial DOM
   // and, importantly, BEFORE angular. This is because rangy needs to call

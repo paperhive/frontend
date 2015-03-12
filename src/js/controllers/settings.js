@@ -1,7 +1,7 @@
+'use strict';
 var _ = require('lodash');
 
 module.exports = function (app) {
-  'use strict';
 
   app.controller('SettingsCtrl', ['$scope', '$http', 'config', 'authService',
     function ($scope, $http, config, authService) {

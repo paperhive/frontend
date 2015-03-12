@@ -1,8 +1,8 @@
+'use strict';
 var _ = require('lodash');
+var angular = require('angular');
 
 module.exports = function (app) {
-  'use strict';
-
   app.directive('comment', [
     'authService', 'config', '$routeSegment', 'notificationService',
     function(authService, config, $routeSegment, notificationService) {
@@ -58,7 +58,7 @@ module.exports = function (app) {
             });
           }
         };
-        
+
         scope.delete = function () {
           scope.submitting = true;
           var promise = scope.onDelete({$comment: scope.content});

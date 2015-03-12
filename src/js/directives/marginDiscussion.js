@@ -1,5 +1,5 @@
+'use strict';
 module.exports = function (app) {
-  'use strict';
 
   app.directive('marginDiscussion', function() {
     return {

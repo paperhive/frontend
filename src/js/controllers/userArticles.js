@@ -1,6 +1,5 @@
+'use strict';
 module.exports = function (app) {
-  'use strict';
-
   app.controller('UserArticlesCtrl', [
     '$scope', '$routeSegment', 'config', '$http', 'notificationService',
     'authService',

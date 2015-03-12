@@ -1,6 +1,5 @@
+'use strict';
 module.exports = function (app) {
-  'use strict';
-
   app.controller('WelcomeCtrl', [
     '$scope', 'authService',
     function($scope, authService) {

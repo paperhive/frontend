@@ -1,6 +1,5 @@
+'use strict';
 module.exports = function (app) {
-  'use strict';
-
   app.config([
     '$routeSegmentProvider', '$routeProvider',
     function($routeSegmentProvider, $routeProvider) {

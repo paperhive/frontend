@@ -1,8 +1,8 @@
+'use strict';
 var rangy = require('rangy');
 var _ = require('lodash');
 
 module.exports = function (app) {
-  'use strict';
 
   app.directive('onTextSelect', ['$document', '$parse',
     function ($document, $parse) {
