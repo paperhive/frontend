@@ -14,7 +14,10 @@ module.exports = function (app) {
     }
   });
 
-  app.directive('kramjax', ['$sanitize', function ($sanitize) {
+  app.directive(
+    'kramjax',
+    ['$sanitize', 'notificationService',
+      function ($sanitize, notificationService) {
     // modify the kramed renderer such that math items are wrapped in
     // div and span groups
     var renderer = new kramed.Renderer();
@@ -48,7 +51,7 @@ module.exports = function (app) {
             });
             MathJax.Hub.Queue(["Typeset", MathJax.Hub, element[0]]);
           } catch (e) {
-            console.log('Error: ' + e);
+            notificationService.httpError('Error: ' + e);
           }
         });
       }

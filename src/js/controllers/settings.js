@@ -27,7 +27,7 @@ module.exports = function (app) {
           error(function (data) {
             $scope.busy = false;
             // TODO
-            console.log(data);
+            //console.log(data);
           });
       };
 
@@ -51,7 +51,7 @@ module.exports = function (app) {
           error(function (data) {
             $scope.busy = false;
             // TODO
-            console.log(data);
+            //console.log(data);
           });
       };
     }

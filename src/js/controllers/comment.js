@@ -9,7 +9,6 @@ module.exports = function (app) {
         var promise = $scope.addDiscussion($scope.comment);
         if (promise) {
           promise.success(function (data) {
-            console.log($routeSegment.$routeParams);
             $location.path($routeSegment.getSegmentUrl(
               'articles.discussions.thread',
               {
@@ -17,7 +16,6 @@ module.exports = function (app) {
                 discussionIndex: data.index
               }
             ));
-            console.log(data);
           })
           .finally(function () {
             $scope.submitting = false;

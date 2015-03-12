@@ -38,7 +38,6 @@ module.exports = function (app) {
               var wrapperWidth = element[0].offsetWidth;
               if (wrapperWidth === 0) {
                 // TODO make sure this error doesn't get silently intercepted
-                console.log("Invalid wrapper width");
                 throw Error("Invalid wrapper width");
               }
 
