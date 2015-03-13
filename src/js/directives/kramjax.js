@@ -51,7 +51,10 @@ module.exports = function (app) {
             });
             MathJax.Hub.Queue(["Typeset", MathJax.Hub, element[0]]);
           } catch (e) {
-            notificationService.httpError('Error: ' + e);
+            notificationService.notifications.push({
+              type: 'error',
+              message: e
+            });
           }
         });
       }
