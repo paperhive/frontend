@@ -1,44 +1,48 @@
-<div ng-if="auth.user" class="panel panel-primary">
-  <div class="panel-heading">
-    <img gravatar-user="auth.user" gravatar-size="30" class="ph-avatar">
-    {{auth.user.displayName}}
-    <span class="pull-right">
-      <a href="#">
-        <i class="fa fa-globe"></i>
-      </a>
-    </span>
-  </div>
+<div ng-if="auth.user" class="panel panel-default">
   <div class="panel-body">
-    <form
-      name="commentForm"
-      ng-submit="commentForm.$valid && onSubmit({$comment: comment})"
-      novalidate
-      >
-      <input
-        type="text"
-        ng-if="comment.body.length > 20"
-        ng-model="comment.title"
-        class="form-group form-control"
-        placeholder="Enter title..."
-        required
-        >
-      <textarea
-        id="textbody"
-        placeholder="Enter comment..."
-        ng-model="comment.body"
-        class="form-group form-control ph-comment-body"
-        rows="2"
-        required
-        ></textarea>
-      <span class="pull-right">
-        <button
-          class="btn btn-sm btn-primary"
-          ng-disabled="commentForm.$invalid"
+    <div class="media">
+      <div class="media-left">
+        <a href="/#/users/{{auth.user.username}}">
+          <img
+          class="media-object"
+          gravatar-user="auth.user"
+          gravatar-size="30"
           >
-          Add comment
-        </button>
-      </span>
-    </form>
+        </a>
+      </div>
+      <div class="media-body">
+        <form
+          name="commentForm"
+          ng-submit="commentForm.$valid && onSubmit({$comment: comment})"
+          novalidate
+          >
+          <input
+          type="text"
+          ng-if="comment.body.length > 20"
+          ng-model="comment.title"
+          class="form-group form-control"
+          placeholder="Enter title..."
+          required
+          >
+          <textarea
+            id="textbody"
+            placeholder="Enter comment..."
+            ng-model="comment.body"
+            class="form-group form-control ph-comment-body"
+            rows="2"
+            required
+            ></textarea>
+          <span class="pull-right">
+            <button
+              class="btn btn-sm btn-primary"
+              ng-disabled="commentForm.$invalid"
+              >
+              Add comment
+            </button>
+          </span>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 <div ng-if="!auth.user" class="panel panel-default">

@@ -1,17 +1,78 @@
 <div class="panel panel-default">
-  <div class="panel-heading">
-    <img gravatar-user="discussion.originalAnnotation.author" gravatar-size="30" >
-    {{discussion.originalAnnotation.author.displayName}}
-    <span class="pull-right">
-      <a href="#">
-        <i class="fa fa-globe"></i>
-      </a>
-    </span>
-  </div>
   <div class="panel-body">
-    <h4 class="ph-no-margin-top">{{discussion.originalAnnotation.title}}</h4>
-    <div ng-if="discussion.originalAnnotation.body">
-      {{discussion.originalAnnotation.body}}
+    <div class="media">
+      <div style="margin-bottom:5px;">
+        <div class="media-left media-middle">
+          <a
+            href="/#/users/{{discussion.originalAnnotation.author.username}}"
+            >
+            <img
+            gravatar-user="discussion.originalAnnotation.author"
+            gravatar-size="32"
+            >
+          </a>
+        </div>
+        <div class="media-body">
+          <div class="pull-right" dropdown>
+            <a href="" class="dropdown-toggle" dropdown-toggle>
+              <i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+              <a href="#/">
+                <i class="fa fa-fw fa-check"></i> Endorse
+              </a>
+              </li>
+              <li>
+              <a href="#/">
+                <i class="fa fa-fw fa-mail-reply"></i> Reply
+              </a>
+              </li>
+              <li>
+              <a href="#/">
+                <i class="fa fa-fw fa-flag"></i> Flag
+              </a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <small style="color: grey;">
+              <div>
+                {{discussion.originalAnnotation.author.displayName}}
+              </div>
+              {{discussion.originalAnnotation.createdAt | amCalendar}}
+            </small>
+          </div>
+        </div>
+      </div>
+      <div ng-if="discussion.originalAnnotation.body">
+        <strong>
+          {{discussion.originalAnnotation.title}}
+        </strong>
+        <kramjax body="{{discussion.originalAnnotation.body}}"></kramjax>
+      </div>
+      <div ng-if="!discussion.originalAnnotation.body">
+        <kramjax body="{{discussion.originalAnnotation.title}}"></kramjax>
+      </div>
+
+      <!-- TODO how to get the article id? -->
+      <!--a
+          href="/#/articles/xxx/dicussions/{{discussion.index}}"
+          class="pull-right"
+          >
+          <span ng-if="discussion.replies.length == 0">
+            <i class="fa fa-fw fa-comment"></i>
+            reply
+          </span>
+          <span ng-if="discussion.replies.length == 1">
+            <i class="fa fa-fw fa-comment"></i>
+            {{discussion.replies.length}} reply
+          </span>
+          <span ng-if="discussion.replies.length > 1">
+            <i class="fa fa-fw fa-comments"></i>
+            {{discussion.replies.length}} replies
+          </span>
+        </a-->
     </div>
   </div>
 </div>
