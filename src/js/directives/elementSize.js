@@ -1,4 +1,6 @@
+'use strict';
 module.exports = function (app) {
+
   app.directive('elementSize', ['$parse', function ($parse) {
     return {
       restrict: 'A',

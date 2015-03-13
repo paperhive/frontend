@@ -1,6 +1,9 @@
+'use strict';
 module.exports = function (app) {
 
-  app.directive('gravatarUser', function() {
+  app.directive('gravatarUser', [
+    'notificationService',
+    function(notificationService) {
     return {
       restrict: 'A',
       scope: {
@@ -9,7 +12,10 @@ module.exports = function (app) {
       },
       link: function(scope, element, attrs) {
         if (!scope.gravatarSize) {
-          console.error("Directive needs gravatarSize.");
+          notificationService.notifications.push({
+            type: 'error',
+            message: "Directive needs gravatarSize."
+          });
         }
         scope.$watch(
           'gravatarUser', function(user) {
@@ -30,5 +36,5 @@ module.exports = function (app) {
         );
       }
     };
-  });
+  }]);
 };

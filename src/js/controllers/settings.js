@@ -1,6 +1,8 @@
+'use strict';
 var _ = require('lodash');
 
 module.exports = function (app) {
+
   app.controller('SettingsCtrl', ['$scope', '$http', 'config', 'authService',
     function ($scope, $http, config, authService) {
       $scope.tab = 'profile';
@@ -25,7 +27,7 @@ module.exports = function (app) {
           error(function (data) {
             $scope.busy = false;
             // TODO
-            console.log(data);
+            //console.log(data);
           });
       };
 
@@ -49,7 +51,7 @@ module.exports = function (app) {
           error(function (data) {
             $scope.busy = false;
             // TODO
-            console.log(data);
+            //console.log(data);
           });
       };
     }

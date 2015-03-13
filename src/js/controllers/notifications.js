@@ -1,3 +1,4 @@
+'use strict';
 module.exports = function (app) {
   app.controller('NotificationsCtrl', ['$scope', 'notificationService', 
     function ($scope, notificationService) {

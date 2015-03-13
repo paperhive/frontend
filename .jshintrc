@@ -1,0 +1,7 @@
+{
+  "browserify": true,
+  "strict": true,
+  "globals": {
+    "MathJax": false
+  }
+}

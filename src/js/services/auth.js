@@ -1,3 +1,4 @@
+'use strict';
 module.exports = function (app) {
   app.factory('authService', ['config', '$http', '$q', '$rootScope', '$window',
     function (config, $http, $q, $rootScope, $window) {
@@ -82,15 +83,6 @@ module.exports = function (app) {
       if (token) {
         authService.signinToken(token);
       }
-
-      // sign in function for ORCID viaOAuth
-      authService.signinOrcid = function (code, state) {
-        return signin(
-          config.api_url + '/oauth/orcid/signin',
-          {code: code, state: state},
-          {timeout: 10000}
-        );
-      };
 
       return authService;
     }

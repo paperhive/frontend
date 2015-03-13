@@ -1,3 +1,4 @@
+'use strict';
 module.exports = function (app) {
   app.controller('OauthOrcidCtrl', [
     '$scope', '$routeParams', '$location', 'authService',

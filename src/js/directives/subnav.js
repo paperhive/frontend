@@ -1,6 +1,9 @@
+'use strict';
 var angular = require('angular');
 var $ = require('jquery');
+
 module.exports = function (app) {
+
   app.directive('subnav', ['$rootScope', '$routeSegment', '$filter',
     function($rootScope, $routeSegment, $filter) {
       return {
