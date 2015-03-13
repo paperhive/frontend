@@ -1,3 +1,4 @@
+'use strict';
 var rangy = require('rangy');
 var _ = require('lodash');
 var $ = require('jquery');

@@ -1,6 +1,8 @@
+'use strict';
 var _ = require('lodash');
 
 module.exports = function (app) {
+
   app.controller('ArticleCtrl', [
     '$scope', '$route', '$routeSegment', '$document', '$http', 'config',
     'authService', 'notificationService',

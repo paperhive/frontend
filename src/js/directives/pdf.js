@@ -1,4 +1,7 @@
+'use strict';
 var _ = require('lodash');
+var PDFJS = require('pdfjs');
+
 module.exports = function (app) {
   app.directive('pdf', ['$parse', function ($parse) {
     return {
@@ -35,7 +38,6 @@ module.exports = function (app) {
               var wrapperWidth = element[0].offsetWidth;
               if (wrapperWidth === 0) {
                 // TODO make sure this error doesn't get silently intercepted
-                console.log("Invalid wrapper width");
                 throw Error("Invalid wrapper width");
               }
 

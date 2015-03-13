@@ -1,3 +1,4 @@
+'use strict';
 module.exports = function (app) {
   app.controller('ArticleNewCtrl', [
     '$scope', '$http', '$q', '$location', 'config', 'authService',

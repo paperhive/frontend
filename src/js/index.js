@@ -1,4 +1,6 @@
+'use strict';
 (function(){
+
   // Rangy needs to be included after the initial DOM
   // and, importantly, BEFORE angular. This is because rangy needs to call
   // `rangy.init()` for the core rangy object to work (which is used
