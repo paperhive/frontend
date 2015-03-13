@@ -77,7 +77,10 @@ module.exports = function (app) {
           //console.log("isEditOn", scope.isEditOn);
           //console.log("tmpBody === anno.body", scope.tmpBody !== scope.annotation.body);
           if (scope.isEditOn && scope.tmpBody !== scope.annotation.body) {
-            var answer = confirm("There is unsaved content in the reply field. Are you sure you want to leave this page?");
+            var answer = confirm(
+              "There is unsaved content in the reply field. " +
+              "Are you sure you want to leave this page?"
+            );
             if (!answer) {
               event.preventDefault();
             }

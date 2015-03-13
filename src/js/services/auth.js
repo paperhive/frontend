@@ -84,15 +84,6 @@ module.exports = function (app) {
         authService.signinToken(token);
       }
 
-      // sign in function for ORCID viaOAuth
-      authService.signinOrcid = function (code, state) {
-        return signin(
-          config.api_url + '/oauth/orcid/signin',
-          {code: code, state: state},
-          {timeout: 10000}
-        );
-      };
-
       return authService;
     }
   ]);
