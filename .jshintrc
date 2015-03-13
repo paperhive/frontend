@@ -1,7 +1,5 @@
 {
-  "browser": true,
   "browserify": true,
-  "devel": true,
   "strict": true,
   "globals": {
     "MathJax": false

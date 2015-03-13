@@ -4,8 +4,8 @@ var angular = require('angular');
 
 module.exports = function (app) {
   app.directive('comment', [
-    'authService', 'config', '$routeSegment', 'notificationService',
-    function(authService, config, $routeSegment, notificationService) {
+    'authService', 'config', '$routeSegment', 'notificationService', '$window',
+    function(authService, config, $routeSegment, notificationService, $window) {
     return {
       restrict: 'E',
       scope: {
@@ -77,7 +77,7 @@ module.exports = function (app) {
           //console.log("isEditOn", scope.isEditOn);
           //console.log("tmpBody === anno.body", scope.tmpBody !== scope.annotation.body);
           if (scope.isEditOn && scope.tmpBody !== scope.annotation.body) {
-            var answer = confirm(
+            var answer = $window.confirm(
               "There is unsaved content in the reply field. " +
               "Are you sure you want to leave this page?"
             );
