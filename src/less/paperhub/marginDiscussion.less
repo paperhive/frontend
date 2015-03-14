@@ -3,39 +3,9 @@
   width: 100%;
 }
 
-.ph-arrow (@size, @bgcolor, @bordercolor) {
-  position: relative;
-  &:before, &:after {
-    content: "";
-    display: inline-block;
-    position: absolute;
-    margin-top: -@size;
-  }
-
-  &:before {
-    border: @size solid @bordercolor;
-  }
-  &.ph-arrow-right {
-    &:before {
-      top: 50%;
-      right: 0;
-      border-color: transparent @bordercolor transparent transparent;
-    }
- }
-
-  &:after{
-    border: @size solid @bgcolor;
-  }
-  &.ph-arrow-right {
-    &:after {
-      top: 50%;
-      right: -1px;
-      border-color: transparent @bgcolor transparent transparent;
-    }
-  }
-}
 @ph-panel-default-heading-bg: lighten(@panel-default-heading-bg, 5%);
 
+/*
 @ph-panel-heading-arrow-size: 8px;
 .ph-arrow-panel-heading {
   .ph-arrow (
@@ -43,7 +13,7 @@
     @ph-panel-default-heading-bg,
     @panel-default-border
   );
-}
+}*/
 .ph-default-panel-content {
   background-color: @ph-panel-default-heading-bg;
 }

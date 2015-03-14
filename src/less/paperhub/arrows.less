@@ -1,42 +1,112 @@
-// based on bootstraps popover
-.generate-arrows(@name, @size, @bgcolor, @bordercolor) {
-  .@{name} {
-    position: relative;
+.ph-arrow-direction (@name, @size, @bgcolor, @bordercolor, @rules, @rulesbefore, @rulesafter) {
+  // rules for both
+  &:before, &:after {
+    @rules();
+  }
 
-    &.ph-right > .ph-arrow {
-      top: 50%;
-      right: -@size - 1px;
-      margin-top: -@size - 1px;
-      border-left-width: 0;
-      border-right-color: @bordercolor;
-      // border-left-color: rgba(0,0,0,.25);
-
-      &:before{
-        right: 1px;
-        bottom: -@size;
-        content: " ";
-        border-left-width: 0;
-        border-right-color: @bgcolor;
-      }
+  // rules for
+  &.ph-arrow-@{name} {
+    &:before {
+      @rulesbefore();
     }
+  }
 
-    > .ph-arrow {
-      border-width: @size + 1px;
-    }
-    
-    > .ph-arrow:before{
-      content: "";
-      border-width: @size;
-    }
-
-    > .ph-arrow, > .ph-arrow:before{
-      position: absolute;
-      display: block;
-      width: 0;
-      height: 0;
-      border-color: transparent;
-      border-style: solid;
+  &.ph-arrow-@{name} {
+    &:after {
+      @rulesafter();
     }
   }
 }
 
+.ph-arrow-container (@size, @bgcolor, @bordercolor) {
+  position: relative;
+  /*
+  &.ph-arrow-inward {
+    &:before, &:after {
+      content: "";
+      display: inline-block;
+      position: absolute;
+    }
+    &:before {
+      border: @size solid @bordercolor;
+    }
+    &:after{
+      border: @size solid @bgcolor;
+    }
+
+    .ph-arrow-direction(right, @size, @bgcolor, @bordercolor,
+      { margin-top: -@size; top: 50%; },
+      { right: 0;
+        border-color: transparent @bordercolor transparent transparent; },
+      { right: -1px;
+        border-color: transparent @bgcolor transparent transparent; }
+    );
+    .ph-arrow-direction(left, @size, @bgcolor, @bordercolor,
+      { margin-top: -@size; top: 50%; },
+      { left: 0;
+        border-color: transparent transparent transparent @bordercolor; },
+      { left: -1px;
+        border-color: transparent transparent transparent @bgcolor; }
+    );
+  }
+  */
+  & > .ph-arrow {
+    position: absolute;
+    border: (@size + 1) transparent solid;
+
+    &:after {
+      position: absolute;
+      border: @size transparent solid;
+      content: "";
+    }
+
+    // mixin for an outward arrow pointing on one edge
+    .ph-arrow-outward-direction (@direction, @opposite, @ortho) {
+      &.ph-arrow-outward-@{direction} {
+        @{ortho}: 50%;
+        margin-@{ortho}: (-@size - 1);
+        @{direction}: (-@size - 1);
+        border-@{opposite}-color: @bordercolor;
+        border-@{direction}-width: 0;
+
+        &:after {
+          @{direction}: 1px;
+          @{ortho}: -@size;
+          border-@{opposite}-color: @bgcolor;
+          border-@{direction}-width: 0;
+        }
+      }
+    }
+    .ph-arrow-outward-direction (right, left, top);
+    .ph-arrow-outward-direction (left, right, top);
+    .ph-arrow-outward-direction (top, bottom, left);
+    .ph-arrow-outward-direction (bottom, top, left);
+
+    // mixin for an inward arrow pointing on one edge
+    .ph-arrow-inward-direction (@direction, @opposite, @ortho) {
+      &.ph-arrow-inward-@{direction} {
+        @{ortho}: 50%;
+        margin-@{ortho}: (-@size - 1);
+        @{direction}: -1px;
+        border-@{direction}-color: @bordercolor;
+        border-@{opposite}-width: 0;
+
+        &:after {
+          @{direction}: (-@size - 1);
+          @{ortho}: -@size;
+          border-@{direction}-color: @bgcolor;
+          border-@{opposite}-width: 0;
+        }
+      }
+    }
+    .ph-arrow-inward-direction (right, left, top);
+    .ph-arrow-inward-direction (left, right, top);
+    .ph-arrow-inward-direction (top, bottom, left);
+    .ph-arrow-inward-direction (bottom, top, left);
+  }
+}
+
+
+.ph-arrow-container-wb {
+  .ph-arrow-container(10px, #ffffff, #000000);
+}
