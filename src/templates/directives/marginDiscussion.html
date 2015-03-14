@@ -1,17 +1,31 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <img gravatar-user="discussion.originalAnnotation.author" gravatar-size="30" >
-    {{discussion.originalAnnotation.author.displayName}}
-    <span class="pull-right">
+
+    <div class="media">
+
+      <div class="media-left media-middle ph-no-padding-right ph-panel-border-right">
+        <div class="ph-sm-padding ph-md-padding-right ph-arrow-panel-heading ph-arrow-right">
+          <img gravatar-user="discussion.originalAnnotation.author"
+              gravatar-size="30">
+        </div>
+      </div>
+
+      <div class="media-body media-middle ph-sm-padding ph-default-panel-content">
+        <h4 class="ph-no-margin">{{discussion.originalAnnotation.title}}</h4>
+      </div>
+    <!--{{discussion.originalAnnotation.author.displayName}}-->
+    <!--span class="pull-right">
       <a href="#">
         <i class="fa fa-globe"></i>
       </a>
-    </span>
-  </div>
-  <div class="panel-body">
-    <h4 class="ph-no-margin-top">{{discussion.originalAnnotation.title}}</h4>
-    <div ng-if="discussion.originalAnnotation.body">
-      {{discussion.originalAnnotation.body}}
+    </span-->
     </div>
+  </div>
+  <div class="panel-body" ng-if="discussion.originalAnnotation.body">
+    {{discussion.originalAnnotation.body}}
+  </div>
+  <a href="#">
+  <div class="panel-body" ng-if="discussion.replies.lenth">
+    {{discussion.originalAnnotation.body}}
   </div>
 </div>
