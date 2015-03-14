@@ -1,17 +1,24 @@
 <div class="panel panel-default">
   <div class="panel-heading">
 
-    <div class="media">
+    <div class="media" style="display: table; height: 100%;">
 
-      <div class="media-left media-middle ph-no-padding-right ph-panel-border-right">
-        <div class="ph-sm-padding ph-md-padding-right ph-arrow-panel-heading ph-arrow-inward ph-arrow-right">
+      <div class="media-left media-middle ph-no-padding-right">
+        <div class="ph-sm-padding">
           <img gravatar-user="discussion.originalAnnotation.author"
               gravatar-size="30">
         </div>
       </div>
-
-      <div class="media-body media-middle ph-sm-padding ph-default-panel-content">
-        <h4 class="ph-no-margin">{{discussion.originalAnnotation.title}}</h4>
+      <div class="media-body media-middle" style="height: 100%;">
+        <div class="ph-arrow-panel-heading ph-panel-border-right" style="height: 100%;">
+          <div class="ph-arrow ph-arrow-inward-right"></div>
+          {{discussion.originalAnnotation.author.displayName}}
+        </div>
+      </div>
+      <div class="media-body media-middle ph-default-panel-content">
+        <div>
+          <h4 class="ph-no-margin">{{discussion.originalAnnotation.title}}</h4>
+        </div>
       </div>
     <!--{{discussion.originalAnnotation.author.displayName}}-->
     <!--span class="pull-right">

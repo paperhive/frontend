@@ -1,60 +1,11 @@
-.ph-arrow-direction (@name, @size, @bgcolor, @bordercolor, @rules, @rulesbefore, @rulesafter) {
-  // rules for both
-  &:before, &:after {
-    @rules();
-  }
-
-  // rules for
-  &.ph-arrow-@{name} {
-    &:before {
-      @rulesbefore();
-    }
-  }
-
-  &.ph-arrow-@{name} {
-    &:after {
-      @rulesafter();
-    }
-  }
-}
-
 .ph-arrow-container (@size, @bgcolor, @bordercolor) {
   position: relative;
-  /*
-  &.ph-arrow-inward {
-    &:before, &:after {
-      content: "";
-      display: inline-block;
-      position: absolute;
-    }
-    &:before {
-      border: @size solid @bordercolor;
-    }
-    &:after{
-      border: @size solid @bgcolor;
-    }
 
-    .ph-arrow-direction(right, @size, @bgcolor, @bordercolor,
-      { margin-top: -@size; top: 50%; },
-      { right: 0;
-        border-color: transparent @bordercolor transparent transparent; },
-      { right: -1px;
-        border-color: transparent @bgcolor transparent transparent; }
-    );
-    .ph-arrow-direction(left, @size, @bgcolor, @bordercolor,
-      { margin-top: -@size; top: 50%; },
-      { left: 0;
-        border-color: transparent transparent transparent @bordercolor; },
-      { left: -1px;
-        border-color: transparent transparent transparent @bgcolor; }
-    );
-  }
-  */
   & > .ph-arrow {
     position: absolute;
     border: (@size + 1) transparent solid;
 
-    &:after {
+    &::after {
       position: absolute;
       border: @size transparent solid;
       content: "";
@@ -69,7 +20,7 @@
         border-@{opposite}-color: @bordercolor;
         border-@{direction}-width: 0;
 
-        &:after {
+        &::after {
           @{direction}: 1px;
           @{ortho}: -@size;
           border-@{opposite}-color: @bgcolor;
@@ -91,7 +42,7 @@
         border-@{direction}-color: @bordercolor;
         border-@{opposite}-width: 0;
 
-        &:after {
+        &::after {
           @{direction}: (-@size - 1);
           @{ortho}: -@size;
           border-@{direction}-color: @bgcolor;
@@ -104,9 +55,4 @@
     .ph-arrow-inward-direction (top, bottom, left);
     .ph-arrow-inward-direction (bottom, top, left);
   }
-}
-
-
-.ph-arrow-container-wb {
-  .ph-arrow-container(10px, #ffffff, #000000);
 }
