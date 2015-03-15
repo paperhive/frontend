@@ -9,7 +9,9 @@
       <!-- author details are hidden by default -->
       <div class="ph-author-details"
           ng-class="{'ph-active': showAuthorDetails}">
-        {{discussion.originalAnnotation.author.displayName}}
+        <h5 class="ph-no-margin">{{discussion.originalAnnotation.author.displayName}}</h5>
+        <a href="#/users/{{discussion.originalAnnotation.author.username}}">
+          @{{discussion.originalAnnotation.author.username}}</a>
       </div>
       <div class="ph-discussion-details-container"
           ng-class="{'ph-inactive': showAuthorDetails}">
