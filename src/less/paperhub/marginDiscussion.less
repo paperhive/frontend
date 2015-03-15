@@ -1,8 +1,10 @@
 .ph-margin-discussion {
   position: absolute;
   width: 100%;
+  left: 0;
 
   .panel {
+    box-shadow: 0px 0px 15px #888888;
     position: relative;
     z-index: 1;
     & > .panel-heading {
@@ -94,7 +96,6 @@ margin-discussion, margin-discussion-draft {
 }
 
 margin-discussion {
-  box-shadow: 0px 0px 15px #888888;
   transition: top 0.5s ease;
 }
 
@@ -110,4 +111,79 @@ margin-discussion-draft {
   &.ng-leave {
     transition-delay: 0;
   }
+}
+
+@ph-margin-avatar-size: 30px;
+@ph-margin-avatar-padding: 2px;
+@ph-margin-avatar-arrow-padding: 5px;
+@ph-margin-arrow-size: 8px;
+@ph-margin-content-border-color: @panel-default-border;
+@ph-margin-content-bgcolor: #ffffff;
+@ph-margin-footer-bgcolor: @panel-default-heading-bg;
+.ph-margin-container {
+  margin-left: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding +
+    @ph-margin-arrow-size + @ph-margin-avatar-arrow-padding);
+  border: 1px @ph-margin-content-border-color solid;
+  background: @ph-margin-content-bgcolor;
+
+  // smaller line height
+  line-height: 1.2;
+
+  // debug
+  margin-bottom: 20px;
+
+  &, > .ph-margin-row > .ph-margin-avatar {
+    // required for shadows to stay below adjacent elements
+    position: relative;
+    z-index: 1;
+    box-shadow: 0px 0px 15px #888888;
+  }
+
+  > .ph-margin-row {
+    &.ph-margin-row-avatar {
+      min-height: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding);
+
+      > .ph-margin-row-arrow-container {
+        float: left;
+        width: 0;
+        height: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding);
+        z-index: 1; // above shadow
+        .ph-arrow-container(
+          @ph-margin-arrow-size,
+          @ph-margin-content-bgcolor,
+          @ph-margin-content-border-color
+        );
+      }
+    }
+
+    > .ph-margin-avatar {
+      position: absolute;
+      left: -(@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding +
+        @ph-margin-arrow-size + @ph-margin-avatar-arrow-padding);
+      width: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding);
+      height: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding);
+      padding: @ph-margin-avatar-padding;
+      background-color: #ffffff;
+    }
+
+  }
+  
+}
+
+.ph-margin-row-content {
+  padding: 3px 5px;
+}
+
+.ph-margin-row-border-top {
+  border-top: 1px @ph-margin-content-border-color solid;
+}
+
+.ph-margin-button {
+  background-color: @ph-margin-footer-bgcolor;
+}
+
+.ph-discussion-info {
+  .text-muted();
+  .ph-no-margin();
+  font-size: smaller;
 }
