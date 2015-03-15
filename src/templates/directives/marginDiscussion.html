@@ -1,31 +1,25 @@
 <div class="panel panel-default">
-  <div class="panel-heading">
+  <div class="panel-heading" ng-mouseleave="showAuthorDetails = false">
 
-    <div class="media" style="display: table; height: 100%;">
-
-      <div class="media-left media-middle ph-no-padding-right">
-        <div class="ph-sm-padding">
-          <img gravatar-user="discussion.originalAnnotation.author"
-              gravatar-size="30">
-        </div>
+    <div class="ph-avatar" ng-mouseenter="showAuthorDetails = true">
+      <img gravatar-user="discussion.originalAnnotation.author"
+        gravatar-size="30">
+    </div>
+    <div class="ph-header-container">
+      <!-- author details are hidden by default -->
+      <div class="ph-author-details"
+          ng-class="{'ph-active': showAuthorDetails}">
+        {{discussion.originalAnnotation.author.displayName}}
       </div>
-      <div class="media-body media-middle" style="height: 100%;">
-        <div class="ph-arrow-panel-heading ph-panel-border-right" style="height: 100%;">
-          <div class="ph-arrow ph-arrow-inward-right"></div>
-          {{discussion.originalAnnotation.author.displayName}}
+      <div class="ph-discussion-details-container"
+          ng-class="{'ph-inactive': showAuthorDetails}">
+        <div class="ph-arrow-container">
+          <div class="ph-arrow ph-arrow-outward-left"></div>
         </div>
-      </div>
-      <div class="media-body media-middle ph-default-panel-content">
-        <div>
+        <div class="ph-discussion-details">
           <h4 class="ph-no-margin">{{discussion.originalAnnotation.title}}</h4>
         </div>
       </div>
-    <!--{{discussion.originalAnnotation.author.displayName}}-->
-    <!--span class="pull-right">
-      <a href="#">
-        <i class="fa fa-globe"></i>
-      </a>
-    </span-->
     </div>
   </div>
   <div class="panel-body" ng-if="discussion.originalAnnotation.body">
