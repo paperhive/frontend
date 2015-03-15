@@ -19,7 +19,16 @@
           <div class="ph-arrow ph-arrow-outward-left"></div>
         </div>
         <div class="ph-discussion-details">
-          <p class="ph-time"><span am-time-ago="discussion.originalAnnotation.createdAt"></span></p>
+          <p class="ph-discussion-info">
+            <span am-time-ago="discussion.originalAnnotation.createdAt"></span>
+            <span ng-if="discussion.replies.length === 1">
+              ⋅ <i class="fa fa-fw fa-comment"></i> 1 reply
+            </span>
+            <span ng-if="discussion.replies.length > 1">
+              ⋅ <i class="fa fa-fw fa-comments"></i>
+              {{discussion.replies.length}} replies
+            </span>
+          </p>
           <h4 class="ph-no-margin">{{discussion.originalAnnotation.title}}</h4>
         </div>
       </div>
