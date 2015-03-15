@@ -2,73 +2,77 @@
   position: absolute;
   width: 100%;
 
-  .panel > .panel-heading {
-    .clearfix();
+  .panel {
+    position: relative;
+    z-index: 1;
+    & > .panel-heading {
+      .clearfix();
 
-    > .ph-avatar {
-      float: left;
-      padding: 5px;
-      width: 30px; // must match the img size
-    }
-
-    > .ph-header-container {
-      position: relative;
-      margin-left: 37px;
-      overflow-x: hidden;
-
-      > .ph-author-details {
-        padding: 3px 5px;
-        padding-left: 13px;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        left: -100%;
-        background-color: @panel-default-heading-bg;
-        transition: left 0.5s ease;
-        &.ph-active {
-          left: 0;
-        }
+      > .ph-avatar {
+        float: left;
+        padding: 5px;
+        width: 30px; // must match the img size
       }
 
-      @ph-margin-discussion-bg: lighten(@panel-default-heading-bg, 5%);
-      > .ph-discussion-details-container {
-        .clearfix();
-        transition: left 0.5s ease;
+      > .ph-header-container {
         position: relative;
-        left: 0;
-        &.ph-inactive {
-          left: 100%;
-        }
+        margin-left: 37px;
+        overflow-x: hidden;
 
-        @ph-panel-heading-arrow-size: 8px;
-        > .ph-arrow-container {
-          .ph-arrow-container(
-            @ph-panel-heading-arrow-size,
-            @ph-margin-discussion-bg,
-            @panel-default-border
-          );
-          float: left;
-          height: 40px;
-          margin-left: (@ph-panel-heading-arrow-size + 1);
-        }
-
-        > .ph-discussion-details {
-          margin-left: @ph-panel-heading-arrow-size;
-          border-left: 1px @panel-default-border solid;
-          padding: 0px 5px;
-          min-height: 40px;
-          background-color: @ph-margin-discussion-bg;
-
-          > .ph-time {
-            .text-muted();
-            .ph-no-margin();
-            font-size: smaller;
+        > .ph-author-details {
+          padding: 3px 5px;
+          padding-left: 13px;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          left: -100%;
+          background-color: @panel-default-heading-bg;
+          transition: left 0.5s ease;
+          &.ph-active {
+            left: 0;
           }
         }
 
-      }
-    }
+        @ph-margin-discussion-bg: lighten(@panel-default-heading-bg, 5%);
+        > .ph-discussion-details-container {
+          .clearfix();
+          transition: left 0.5s ease;
+          position: relative;
+          left: 0;
+          &.ph-inactive {
+            left: 100%;
+          }
 
+          @ph-panel-heading-arrow-size: 8px;
+          > .ph-arrow-container {
+            .ph-arrow-container(
+              @ph-panel-heading-arrow-size,
+              @ph-margin-discussion-bg,
+              @panel-default-border
+            );
+            float: left;
+            height: 40px;
+            margin-left: (@ph-panel-heading-arrow-size + 1);
+          }
+
+          > .ph-discussion-details {
+            margin-left: @ph-panel-heading-arrow-size;
+            border-left: 1px @panel-default-border solid;
+            padding: 0px 5px;
+            min-height: 40px;
+            background-color: @ph-margin-discussion-bg;
+
+            > .ph-discussion-info {
+              .text-muted();
+              .ph-no-margin();
+              font-size: smaller;
+            }
+          }
+
+        }
+      }
+
+    }
   }
 }
 
