@@ -1,5 +1,5 @@
 'use strict';
-module.exports = function (app) {
+module.exports = function(app) {
 
   app.directive('gravatarUser', [
     'notificationService',
@@ -14,7 +14,7 @@ module.exports = function (app) {
         if (!scope.gravatarSize) {
           notificationService.notifications.push({
             type: 'error',
-            message: "Directive needs gravatarSize."
+            message: 'Directive needs gravatarSize.'
           });
         }
         scope.$watch(
@@ -26,12 +26,12 @@ module.exports = function (app) {
             element.attr('height', scope.gravatarSize + 'px');
             element.attr(
               'src',
-              "https://secure.gravatar.com/avatar/" +
+              'https://secure.gravatar.com/avatar/' +
               user.gravatarMd5 +
-              "?s=" + scope.gravatarSize +
-              "&d=identicon"
+              '?s=' + scope.gravatarSize +
+              '&d=identicon'
             );
-            element.attr('alt', user.displayName + " avatar");
+            element.attr('alt', user.displayName + ' avatar');
           }
         );
       }

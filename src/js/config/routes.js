@@ -1,5 +1,5 @@
 'use strict';
-module.exports = function (app) {
+module.exports = function(app) {
   app.config([
     '$routeSegmentProvider', '$routeProvider',
     function($routeSegmentProvider, $routeProvider) {
@@ -9,7 +9,8 @@ module.exports = function (app) {
         .when('/articles/:articleId', 'articles')
         .when('/articles/:articleId/activity', 'articles.activity')
         .when('/articles/:articleId/discussions', 'articles.discussions')
-        .when('/articles/:articleId/discussions/new', 'articles.discussions.new')
+        .when('/articles/:articleId/discussions/new',
+              'articles.discussions.new')
         .when('/articles/:articleId/discussions/:discussionIndex',
               'articles.discussions.thread')
         .when('/articles/:articleId/settings', 'articles.settings')
@@ -27,7 +28,7 @@ module.exports = function (app) {
         .when('/welcome', 'welcome')
 
         // Init Main Page
-        .segment('main',{
+        .segment('main', {
           templateUrl: 'templates/main/main.html'
         })
         .segment('articles', {
@@ -69,7 +70,7 @@ module.exports = function (app) {
           templateUrl: 'templates/articles/new.html'
         })
 
-        .segment('contact',{
+        .segment('contact', {
           templateUrl: 'templates/contact/contact.html'
         })
 

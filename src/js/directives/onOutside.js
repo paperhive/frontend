@@ -1,14 +1,14 @@
 'use strict';
 var $ = require('jquery');
 
-module.exports = function (app) {
+module.exports = function(app) {
   function registerOutsideDirective (eventName, directiveName) {
     app.directive(directiveName, [
       '$parse', '$document',
-      function ($parse, $document) {
+      function($parse, $document) {
         return {
           restrict: 'A',
-          link: function (scope, element, attrs) {
+          link: function(scope, element, attrs) {
             var handler = function(event) {
               // determine if clicked inside the element
               var clickedInside = $.contains(element[0], event.target);
@@ -20,7 +20,7 @@ module.exports = function (app) {
 
                 // wrap the call in a scope.$apply to make sure Angular
                 // updates the scope on changes
-                scope.$apply(function () {
+                scope.$apply(function() {
                   callback(scope, {$event: event});
                 });
               }
@@ -30,7 +30,7 @@ module.exports = function (app) {
             $document.on(eventName, handler);
 
             // unregister handler on destruction of element
-            element.on('$destroy', function () {
+            element.on('$destroy', function() {
               $document.off(eventName, handler);
             });
 

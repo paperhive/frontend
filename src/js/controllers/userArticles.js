@@ -1,16 +1,16 @@
 'use strict';
-module.exports = function (app) {
+module.exports = function(app) {
   app.controller('UserArticlesCtrl', [
     '$scope', '$routeSegment', 'config', '$http', 'notificationService',
     'authService',
-    function ($scope, $routeSegment, config, $http, notificationService) {
+    function($scope, $routeSegment, config, $http, notificationService) {
       $http.get(
         config.apiUrl + '/users/' + $scope.user._id + '/importedArticles'
       ).
-        success(function (articles) {
+        success(function(articles) {
           $scope.articles = articles;
         }).
-        error(function (data) {
+        error(function(data) {
           notificationService.notifications.push({
             type: 'error',
             message: data.message

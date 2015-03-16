@@ -2,21 +2,21 @@
 var rangy = require('rangy');
 var _ = require('lodash');
 
-module.exports = function (app) {
+module.exports = function(app) {
 
   app.directive('onTextSelect', ['$document', '$parse',
-    function ($document, $parse) {
+    function($document, $parse) {
       return {
         restrict: 'A',
-        link: function (scope, element, attrs) {
+        link: function(scope, element, attrs) {
           var lastSerializedRanges;
 
           // define event handler
-          var handler = function () {
-            scope.$apply(function () {
+          var handler = function() {
+            scope.$apply(function() {
 
               // result function
-              var onTextSelect = function (selection) {
+              var onTextSelect = function(selection) {
 
                 var serializedRanges;
 
@@ -24,7 +24,7 @@ module.exports = function (app) {
                 if (selection) {
                   serializedRanges = _.map(
                     selection.getAllRanges(),
-                    function (range) {
+                    function(range) {
                       return rangy.serializeRange(range, true, element[0]);
                     }
                   );
@@ -37,7 +37,8 @@ module.exports = function (app) {
 
                   var target;
                   // construct target object if valid ranges are given
-                  if (serializedRanges && serializedRanges.length && selection) {
+                  if (serializedRanges && serializedRanges.length &&
+                      selection) {
                     target = {
                       text: selection.toString(),
                       ranges: serializedRanges
@@ -85,6 +86,6 @@ module.exports = function (app) {
           $document.on('mouseup keyup', handler); // key events are not fired on PDFs
         }
       };
-  }
+    }
   ]);
 };

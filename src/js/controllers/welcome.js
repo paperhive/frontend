@@ -1,5 +1,5 @@
 'use strict';
-module.exports = function (app) {
+module.exports = function(app) {
   app.controller('WelcomeCtrl', [
     '$scope', 'authService',
     function($scope, authService) {
@@ -7,4 +7,3 @@ module.exports = function (app) {
     }
   ]);
 };
-

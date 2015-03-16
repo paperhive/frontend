@@ -1,7 +1,7 @@
 'use strict';
 var _ = require('lodash');
 
-module.exports = function (app) {
+module.exports = function(app) {
 
   app.controller('ArticleTextCtrl', [
     '$scope', '$route', '$routeSegment', '$document', '$http', 'config',
@@ -17,7 +17,7 @@ module.exports = function (app) {
       };
 
       // compute offsets of margin discussions ('boingidi')
-      var updateOffsets = function () {
+      var updateOffsets = function() {
         var draftTop = $scope.originalComment.draft.target &&
           $scope.text.highlightInfos.draft &&
           $scope.text.highlightInfos.draft.top || 0;
@@ -27,11 +27,11 @@ module.exports = function (app) {
 
         var offsets = _.sortBy(_.compact(_.map(
           $scope.text.highlightInfos,
-          function (val, key) {
+          function(val, key) {
             var height = $scope.text.marginDiscussionSizes[key] &&
               $scope.text.marginDiscussionSizes[key].height;
             return (key !== 'draft' && val.top !== undefined &&
-                    height !==  undefined) ? 
+                    height !==  undefined) ?
                     {id: key, top: val.top, height: height} : undefined;
           })), 'top');
 
@@ -45,15 +45,15 @@ module.exports = function (app) {
         var padding = 5;
 
         // treat above and below separately (no draft: draftTop === 0)
-        var offsetsAbove = _.filter(offsets, function (offset) {
+        var offsetsAbove = _.filter(offsets, function(offset) {
           return offset.top < draftTop;
         });
-        var offsetsBelow = _.filter(offsets, function (offset) {
+        var offsetsBelow = _.filter(offsets, function(offset) {
           return offset.top >= draftTop;
         });
 
         // move bottom elements from above to below if there's not enough space
-        var getTotalHeight = function (offsets) {
+        var getTotalHeight = function(offsets) {
           return _.sum(_.pluck(offsets, 'height')) + offsets.length * padding;
         };
         while (getTotalHeight(offsetsAbove) > draftTop) {
@@ -90,7 +90,7 @@ module.exports = function (app) {
         // place offsets below the draft (or below 0) in 'open end' mode
         var topBarrier = draftTop && draftHeight ?
           draftTop + draftHeight + padding : 0;
-        _.forEach(offsetsBelow, function (offset) {
+        _.forEach(offsetsBelow, function(offset) {
 
           // do not fall above previously set offset
           var top = _.max([offset.top, topBarrier]);
