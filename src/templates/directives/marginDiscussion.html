@@ -14,9 +14,11 @@
       </div>
       <!-- row content -->
       <div class="ph-margin-row-content clearfix">
-        <div class="pull-right ph-discussion-info text-right">
-          <p class="ph-no-margin">
-            <span am-time-ago="discussion.originalAnnotation.createdAt"></span>
+        <div class="ph-margin-info">
+          <p class="ph-xs-margin-bottom">
+            <a href="#/users/{{discussion.originalAnnotation.author.username}}">
+              {{discussion.originalAnnotation.author.displayName}}</a>
+            · <span am-time-ago="discussion.originalAnnotation.createdAt"></span>
             <span ng-if="discussion.replies.length === 1">
               · <i class="fa fa-fw fa-comment"></i> 1 reply
             </span>
@@ -26,8 +28,13 @@
             </span>
           </p>
         </div>
-        <h4 class="ph-no-margin">{{discussion.originalAnnotation.title}}</h4>
+        <div ng-if="!discussion.originalAnnotation.body">
+          {{discussion.originalAnnotation.title}}
+        </div>
         <div ng-if="discussion.originalAnnotation.body">
+          <h4 class="ph-margin-title ph-no-margin ph-xs-margin-bottom">
+            {{discussion.originalAnnotation.title}}
+          </h4>
           {{discussion.originalAnnotation.body}}
         </div>
       </div><!-- / row content -->
@@ -48,9 +55,11 @@
         </div>
         <!-- row content -->
         <div class="ph-margin-row-content clearfix">
-          <div class="pull-right ph-discussion-info text-right">
-            <p class="ph-no-margin">
-              <span am-time-ago="reply.createdAt"></span>
+          <div class="ph-margin-info">
+            <p class="ph-xs-margin-bottom">
+              <a href="#/users/{{reply.author.username}}">
+                {{reply.author.displayName}}</a>
+              · <span am-time-ago="reply.createdAt"></span>
             </p>
           </div>
           {{reply.body}}
@@ -74,7 +83,7 @@
               id="textbody"
               placeholder="Reply..."
               ng-model="state.replyBody"
-              class="form-group form-control ph-comment-body ph-no-margin"
+              class="form-group form-control ph-comment-body ph-margin-textarea ph-no-margin"
               rows="1"
               required
               ng-focus="state.textFocused = true"
@@ -82,7 +91,8 @@
               ></textarea>
             <div ng-if="state.textFocused || state.replyBody"
               class="ph-sm-margin-top clearfix">
-              <button type="submit" class="btn btn-primary pull-right" >
+              <button type="submit" class="btn btn-primary btn-sm pull-right"
+                  ng-disabled="commentForm.$invalid">
                 Submit
               </button>
             </div>
