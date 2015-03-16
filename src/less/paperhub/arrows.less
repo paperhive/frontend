@@ -1,5 +1,5 @@
 .ph-arrow-container (@size, @bgcolor, @bordercolor) {
-  position: relative;
+  position: absolute;
 
   & > .ph-arrow {
     position: absolute;
@@ -21,7 +21,7 @@
         border-@{direction}-width: 0;
 
         &::after {
-          @{direction}: 1px;
+          @{direction}: 2px;
           @{ortho}: -@size;
           border-@{opposite}-color: @bgcolor;
           border-@{direction}-width: 0;
@@ -38,7 +38,7 @@
       &.ph-arrow-inward-@{direction} {
         @{ortho}: 50%;
         margin-@{ortho}: (-@size - 1);
-        @{direction}: -1px;
+        @{direction}: -2px;
         border-@{direction}-color: @bordercolor;
         border-@{opposite}-width: 0;
 

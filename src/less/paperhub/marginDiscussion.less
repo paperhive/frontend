@@ -1,24 +1,7 @@
-.ph-margin-discussion {
+margin-discussion, margin-discussion-draft {
   position: absolute;
   width: 100%;
   left: 0;
-}
-
-margin-discussion, margin-discussion-draft {
-  .ph-margin-discussion();
-  > .panel {
-    .ph-no-border-bottom();
-    .ph-no-margin();
-    > .panel-heading {
-      .ph-no-padding();
-      border-bottom: 1px @panel-default-border solid;
-    }
-    > .panel-body {
-      .ph-sm-padding();
-      border-bottom: 1px @panel-default-border solid;
-    }
-
-  }
 }
 
 margin-discussion {
@@ -44,8 +27,10 @@ margin-discussion-draft {
 @ph-margin-avatar-arrow-padding: 5px;
 @ph-margin-arrow-size: 8px;
 @ph-margin-content-border-color: @panel-default-border;
-@ph-margin-original-bgcolor: @panel-default-heading-bg;
+/*@ph-margin-original-bgcolor: @panel-default-heading-bg;
 @ph-margin-reply-bgcolor: #ffffff;
+*/
+
 .ph-margin-container {
   margin-left: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding +
     @ph-margin-arrow-size + @ph-margin-avatar-arrow-padding);
@@ -58,83 +43,64 @@ margin-discussion-draft {
   position: relative;
   z-index: 1;
   box-shadow: 0px 0px 15px #888888;
-
-  .row-mixin (@bgcolor) {
-    background: @bgcolor;
-    &.ph-margin-row-avatar {
-      position: relative;
-      min-height: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding + 4px);
-      display: table; // required for vertical centering
-
-      .ph-margin-row-arrow-container {
-        .ph-arrow-container(
-          @ph-margin-arrow-size,
-          @bgcolor,
-          @ph-margin-content-border-color
-        );
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 0;
-        height: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding);
-        z-index: 1; // above shadow
-      }
-
-      .ph-margin-row-content {
-        display: table-cell;
-        width: 100%;
-        vertical-align: middle;
-      }
-    }
-
-    > .ph-margin-avatar {
-      position: absolute;
-      left: -(@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding +
-        @ph-margin-arrow-size + @ph-margin-avatar-arrow-padding);
-      width: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding);
-      height: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding);
-      padding: @ph-margin-avatar-padding;
-      background-color: #ffffff;
-      z-index: 1; // required for shadows to stay below adjacent elements
-      box-shadow: 0px 0px 15px #888888;
-    }
-
-  }
-
-  .ph-margin-row {
-    .row-mixin(@ph-margin-original-bgcolor);
-  }
-
-  .ph-margin-row-reply {
-    .row-mixin(@ph-margin-reply-bgcolor);
-  }
-  
 }
 
-.ph-margin-row-content {
-  padding: 3px 5px;
+.ph-margin-row {
+  display: table; // required for vertical centering
+  width: 100%;
+}
+
+// everything related to the avatar
+.ph-margin-avatar-container {
+  position: relative;
+  min-height: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding + 4px);
+
+  // avatar
+  > .ph-margin-avatar {
+    position: absolute;
+    left: -(@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding +
+      @ph-margin-arrow-size + @ph-margin-avatar-arrow-padding);
+    width: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding);
+    height: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding);
+    padding: @ph-margin-avatar-padding;
+    background-color: #ffffff;
+    z-index: 1; // required for shadows to stay below adjacent elements
+    box-shadow: 0px 0px 15px #888888;
+  }
+}
+
+.ph-margin-row-container {
+  display: table-cell;
+  width: 100%;
+  vertical-align: middle;
+}
+
+.ph-margin-arrow-container {
+  .ph-arrow-container(
+    @ph-margin-arrow-size,
+    @btn-default-bg,
+    @ph-margin-content-border-color
+  );
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding);
+  z-index: 1; // above shadow
 }
 
 .ph-margin-link-default {
-  display: table-cell;
-  width: 100%;
   cursor: pointer;
   .button-variant(@btn-default-color; @btn-default-bg; @btn-default-border);
-
-  .ph-margin-row-arrow-container {
+  > .ph-margin-arrow-container {
     .ph-arrow-container(
       @ph-margin-arrow-size,
       @btn-default-bg,
       @ph-margin-content-border-color
     );
   }
-
-  &:hover,
-  &:focus,
-  &.focus,
-  &:active,
-  &.active {
-    .ph-margin-row-arrow-container {
+  &:hover, &:focus, &.focus, &:active, &.active {
+    > .ph-margin-arrow-container {
       .ph-arrow-container(
         @ph-margin-arrow-size,
         darken(@btn-default-bg, 10%),
@@ -144,18 +110,26 @@ margin-discussion-draft {
   }
 }
 
-.ph-margin-row-border-top {
-  border-top: 1px @ph-margin-content-border-color solid;
+.ph-margin-row-content {
+  display: table-cell;
+  width: 100%;
+  vertical-align: middle;
 }
 
-.ph-margin-button {
-  .ph-no-padding();
-  .ph-no-border();
-  font-size: small;
+.ph-margin-row-content {
+  padding: 3px 5px;
+}
+
+.ph-margin-row-border-top {
+  border-top: 1px @ph-margin-content-border-color solid;
 }
 
 .ph-discussion-info {
   .text-muted();
   .ph-no-margin();
   font-size: smaller;
+}
+
+.ph-margin-reply {
+  background-color: @btn-default-bg;
 }

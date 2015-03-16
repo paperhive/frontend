@@ -1,12 +1,14 @@
 <div class="ph-margin-container">
   <!-- original comment -->
-  <div class="ph-margin-row ph-margin-row-avatar">
+  <div class="ph-margin-row ph-margin-avatar-container">
     <!-- avatar -->
     <img gravatar-user="discussion.originalAnnotation.author"
       gravatar-size="30" class="ph-margin-avatar img-circle">
-    <div class="ph-margin-link-default" ng-click="state.showReplies = !state.showReplies">
+    <!-- container with arrow + content -->
+    <div ng-click="state.showReplies = !state.showReplies"
+        class="ph-margin-row-container ph-margin-link-default">
       <!-- arrow -->
-      <div class="ph-margin-row-arrow-container">
+      <div class="ph-margin-arrow-container">
         <div class="ph-arrow ph-arrow-outward-left"></div>
       </div>
       <!-- row content -->
@@ -27,50 +29,31 @@
         <div ng-if="discussion.originalAnnotation.body">
           {{discussion.originalAnnotation.body}}
         </div>
-      </div>
+      </div><!-- / row content -->
     </div>
   </div>
-  <!--div class="ph-margin-row ph-margin-row-border-top">
-    <button
-        ng-click="state.showReplies = !state.showReplies"
-        class="btn btn-default btn-block ph-margin-button"
-        >
-      <div ng-if="!state.showReplies">
-        <i class="fa fa-fw fa-caret-down"></i>
-        <span ng-if="!discussion.replies.length">reply to this comment</span>
-        <span ng-if="discussion.replies.length === 1">show 1 reply</span>
-        <span ng-if="discussion.replies.length > 1">
-          show {{discussion.replies.length}} replies
-        </span>
-      </div>
-      <div ng-if="state.showReplies">
-        <i class="fa fa-fw fa-caret-up"></i>
-        <span ng-if="!discussion.replies.length">hide reply draft</span>
-        <span ng-if="discussion.replies.length === 1">hide reply</span>
-        <span ng-if="discussion.replies.length > 1">hide replies</span>
-      </div>
-    </button>
-  </div-->
   <div collapse="!state.showReplies">
     <div
         ng-repeat="reply in discussion.replies"
-        class="ph-margin-row-reply ph-margin-row-avatar ph-margin-row-border-top"
+        class="ph-margin-row ph-margin-avatar-container ph-margin-row-border-top"
         >
       <!-- avatar -->
       <img gravatar-user="reply.author"
         gravatar-size="30" class="ph-margin-avatar img-circle">
-      <!-- arrow -->
-      <div class="ph-margin-row-arrow-container">
-        <div class="ph-arrow ph-arrow-outward-left"></div>
-      </div>
-      <!-- row content -->
-      <div class="ph-margin-row-content clearfix">
-        <div class="pull-right ph-discussion-info text-right">
-          <p class="ph-no-margin">
-            <span am-time-ago="reply.createdAt"></span>
-          </p>
+      <div class="ph-margin-row-container ph-margin-reply">
+        <!-- arrow -->
+        <div class="ph-margin-arrow-container">
+          <div class="ph-arrow ph-arrow-outward-left"></div>
         </div>
-        {{reply.body}}
+        <!-- row content -->
+        <div class="ph-margin-row-content clearfix">
+          <div class="pull-right ph-discussion-info text-right">
+            <p class="ph-no-margin">
+              <span am-time-ago="reply.createdAt"></span>
+            </p>
+          </div>
+          {{reply.body}}
+        </div>
       </div>
     </div>
   </div>
