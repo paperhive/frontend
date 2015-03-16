@@ -118,13 +118,12 @@ margin-discussion-draft {
 @ph-margin-avatar-arrow-padding: 5px;
 @ph-margin-arrow-size: 8px;
 @ph-margin-content-border-color: @panel-default-border;
-//@ph-margin-content-bgcolor: #ffffff;
-@ph-margin-content-bgcolor: @panel-default-heading-bg;
+@ph-margin-original-bgcolor: @panel-default-heading-bg;
+@ph-margin-reply-bgcolor: #ffffff;
 .ph-margin-container {
   margin-left: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding +
     @ph-margin-arrow-size + @ph-margin-avatar-arrow-padding);
   border: 1px @ph-margin-content-border-color solid;
-  background: @ph-margin-content-bgcolor;
 
   // smaller line height
   line-height: 1.2;
@@ -132,14 +131,13 @@ margin-discussion-draft {
   // debug
   margin-bottom: 20px;
 
-  &, .ph-margin-row > .ph-margin-avatar {
-    // required for shadows to stay below adjacent elements
-    position: relative;
-    z-index: 1;
-    box-shadow: 0px 0px 15px #888888;
-  }
+  // required for shadows to stay below adjacent elements
+  position: relative;
+  z-index: 1;
+  box-shadow: 0px 0px 15px #888888;
 
-  .ph-margin-row {
+  .row-mixin (@bgcolor) {
+    background: @bgcolor;
     &.ph-margin-row-avatar {
       position: relative;
       min-height: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding + 4px);
@@ -148,7 +146,7 @@ margin-discussion-draft {
       > .ph-margin-row-arrow-container {
         .ph-arrow-container(
           @ph-margin-arrow-size,
-          @ph-margin-content-bgcolor,
+          @bgcolor,
           @ph-margin-content-border-color
         );
         position: absolute;
@@ -174,8 +172,18 @@ margin-discussion-draft {
       height: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding);
       padding: @ph-margin-avatar-padding;
       background-color: #ffffff;
+      z-index: 1; // required for shadows to stay below adjacent elements
+      box-shadow: 0px 0px 15px #888888;
     }
 
+  }
+
+  .ph-margin-row {
+    .row-mixin(@ph-margin-original-bgcolor);
+  }
+
+  .ph-margin-row-reply {
+    .row-mixin(@ph-margin-reply-bgcolor);
   }
   
 }
