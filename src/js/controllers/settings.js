@@ -19,7 +19,7 @@ module.exports = function (app) {
 
         var account = _.find($scope.user.accounts, {type: 'orcid'});
 
-        $http.put(config.api_url + '/users/' + $scope.user._id + '/syncFromOrcid/' + account.id).
+        $http.put(config.apiUrl + '/users/' + $scope.user._id + '/syncFromOrcid/' + account.id).
           success(function (data) {
             $scope.busy = false;
             authService.user = data;
@@ -43,7 +43,7 @@ module.exports = function (app) {
         _.forEach(deleteKeys, function (key) { delete obj[key]; });
 
         // save
-        $http.put(config.api_url + '/users/' + $scope.user._id, obj).
+        $http.put(config.apiUrl + '/users/' + $scope.user._id, obj).
           success(function (data) {
             $scope.busy = false;
             authService.user = data;

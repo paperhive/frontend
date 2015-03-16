@@ -5,7 +5,7 @@ module.exports = function (app) {
     'authService',
     function ($scope, $routeSegment, config, $http, notificationService) {
       $http.get(
-        config.api_url + '/users/' + $scope.user._id + '/importedArticles'
+        config.apiUrl + '/users/' + $scope.user._id + '/importedArticles'
       ).
         success(function (articles) {
           $scope.articles = articles;

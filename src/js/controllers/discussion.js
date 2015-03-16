@@ -11,7 +11,7 @@ module.exports = function (app) {
 
       // fetch discussion
       $http.get(
-        config.api_url +
+        config.apiUrl +
           '/articles/' + $routeSegment.$routeParams.articleId +
           '/discussions/' + $routeSegment.$routeParams.discussionIndex
       )
@@ -43,7 +43,7 @@ module.exports = function (app) {
           };
 
           return $http.put(
-            config.api_url +
+            config.apiUrl +
               '/articles/' + $routeSegment.$routeParams.articleId +
               '/discussions/' + $routeSegment.$routeParams.discussionIndex,
             newDiscussion
@@ -61,7 +61,7 @@ module.exports = function (app) {
       $scope.addReply = function (body) {
         $scope.submitting = true;
         $http.post(
-          config.api_url +
+          config.apiUrl +
             '/articles/' + $routeSegment.$routeParams.articleId +
             '/discussions/' + $routeSegment.$routeParams.discussionIndex +
             '/replies/',
@@ -79,7 +79,7 @@ module.exports = function (app) {
 
       $scope.updateReply = function (comment, index) {
         return $http.put(
-          config.api_url +
+          config.apiUrl +
             '/articles/' + $routeSegment.$routeParams.articleId +
             '/discussions/' + $routeSegment.$routeParams.discussionIndex +
             '/replies/' + comment._id,
@@ -93,7 +93,7 @@ module.exports = function (app) {
 
       $scope.deleteReply = function (comment, index) {
         return $http.delete(
-          config.api_url +
+          config.apiUrl +
             '/articles/' + $routeSegment.$routeParams.articleId +
             '/discussions/' + $routeSegment.$routeParams.discussionIndex +
             '/replies/' + comment._id

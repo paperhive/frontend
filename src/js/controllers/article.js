@@ -17,7 +17,7 @@ module.exports = function (app) {
 
       // fetch article
       $http.get(
-        config.api_url +
+        config.apiUrl +
           '/articles/' + $routeSegment.$routeParams.articleId
       )
       .success(function (article) {
@@ -32,7 +32,7 @@ module.exports = function (app) {
       });
 
       $http.get(
-        config.api_url +
+        config.apiUrl +
           '/articles/' + $routeSegment.$routeParams.articleId + '/discussions'
       )
       .success(function (discussions) {
@@ -71,7 +71,7 @@ module.exports = function (app) {
 
         $scope.submitting = true;
         return $http.post(
-          config.api_url +
+          config.apiUrl +
             '/articles/' + $routeSegment.$routeParams.articleId +
             '/discussions',
           {originalAnnotation: originalComment}

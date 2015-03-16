@@ -1,5 +1,5 @@
 'use strict';
-module.exports = function (app) {
+module.exports = function(app) {
   function PhError(message) {
     this.name = 'PhError';
     this.message = message;

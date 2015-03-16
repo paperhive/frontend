@@ -12,7 +12,7 @@ module.exports = function (app) {
       $scope.auth = authService;
 
       // fetch user
-      $http.get(config.api_url + '/users/byUsername/' + $routeSegment.$routeParams.username)
+      $http.get(config.apiUrl + '/users/byUsername/' + $routeSegment.$routeParams.username)
         .success(function (data) {
           $scope.user = data;
         })

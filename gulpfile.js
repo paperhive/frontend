@@ -1,3 +1,5 @@
+'use strict';
+
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var source = require('vinyl-source-stream');
@@ -15,6 +17,8 @@ var _ = require('lodash');
 var protractor = require("gulp-protractor").protractor;
 var jshint = require("gulp-jshint");
 var htmlhint = require("gulp-htmlhint");
+var jscs = require('gulp-jscs');
+var jscsStylish = require('gulp-jscs-stylish');
 
 var debug = process.env.DEBUG || false;
 
@@ -92,6 +96,12 @@ gulp.task('jshint', function() {
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
     .pipe(jshint.reporter('fail'));
+});
+
+gulp.task('jscs', function () {
+  return gulp.src('./src/js/**/*.js')
+    .pipe(jscs())
+    .pipe(jscsStylish());  // log style errors
 });
 
 gulp.task('htmlhint', function() {
@@ -223,7 +233,7 @@ gulp.task('test', ['serve-nowatch'], function () {
 
 gulp.task(
   'default',
-  ['jshint', 'htmlhint', 'js', 'templates', 'static', 'style']
+  ['jshint', 'jscs', 'htmlhint', 'js', 'templates', 'static', 'style']
 );
 gulp.task(
   'default:watch', 

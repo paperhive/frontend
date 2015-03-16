@@ -1,10 +1,10 @@
 'use strict';
-module.exports = function (app) {
+module.exports = function(app) {
   app.factory('authService', ['config', '$http', '$q', '$rootScope', '$window',
-    function (config, $http, $q, $rootScope, $window) {
+    function(config, $http, $q, $rootScope, $window) {
       var authService = {
         inProgress: false,
-        orcidUrl: config.api_url + '/oauth/orcid?app_callback=' +
+        orcidUrl: config.apiUrl + '/oauth/orcid?app_callback=' +
           encodeURIComponent(
             $window.location.origin +
             $window.location.pathname +
@@ -13,7 +13,7 @@ module.exports = function (app) {
       };
 
       // sign in with a token
-      function signinToken (token) {
+      function signinToken(token) {
         if (authService.user) {
           return $q.reject('Already signed in.');
         }
@@ -24,14 +24,14 @@ module.exports = function (app) {
         authService.inProgress = true;
         $http
           .post(
-            config.api_url + '/signin',
-            null, 
+            config.apiUrl + '/signin',
+            null,
             {
               headers: {'X-Auth-Token': token},
               timeout: 10000
             }
           )
-          .success(function (data, status) {
+          .success(function(data, status) {
             authService.inProgress = false;
             authService.user = data.user;
             authService.token = token;
@@ -44,7 +44,7 @@ module.exports = function (app) {
 
             deferred.resolve(data);
           })
-          .error(function (data) {
+          .error(function(data) {
             authService.inProgress = false;
             signout();
             deferred.reject('signing in failed');
@@ -55,10 +55,10 @@ module.exports = function (app) {
       authService.signinToken = signinToken;
 
       // store/remove token in local storage (if requested by user)
-      $rootScope.$watch(function () {
-        return authService.user && authService.user.settings && 
+      $rootScope.$watch(function() {
+        return authService.user && authService.user.settings &&
             authService.user.settings.remember && authService.token;
-      }, function (token) {
+      }, function(token) {
         if (token) {
           $window.localStorage.token = token;
         } else {
@@ -67,7 +67,7 @@ module.exports = function (app) {
       }, true);
 
       // sign out and forget token
-      function signout () {
+      function signout() {
         delete $window.sessionStorage.token;
         delete $window.localStorage.token;
         delete $http.defaults.headers['X-Auth-Token'];
