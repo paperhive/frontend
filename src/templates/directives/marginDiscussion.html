@@ -14,27 +14,30 @@
       </div>
       <!-- row content -->
       <div class="ph-margin-row-content clearfix">
+        <div class="pull-right">
+          <span class="badge ph-margin-badge" ng-if="discussion.replies.length">
+            <i class="fa fa-fw fa-comments"></i>
+            {{discussion.replies.length}}
+          </span>
+          <button class="btn btn-link btn-xs"
+              class="ph-margin-show-hover">
+            <i class="fa fa-caret-down"></i>
+          </button>
+        </div>
         <div class="ph-margin-info">
           <p class="ph-xs-margin-bottom">
             <a href="#/users/{{discussion.originalAnnotation.author.username}}">
               {{discussion.originalAnnotation.author.displayName}}</a>
             · <span am-time-ago="discussion.originalAnnotation.createdAt"></span>
-            <span ng-if="discussion.replies.length === 1">
-              · <i class="fa fa-fw fa-comment"></i> 1 reply
-            </span>
-            <span ng-if="discussion.replies.length > 1">
-              · <i class="fa fa-fw fa-comments"></i>
-              {{discussion.replies.length}} replies
-            </span>
           </p>
         </div>
         <div ng-if="!discussion.originalAnnotation.body">
           {{discussion.originalAnnotation.title}}
         </div>
         <div ng-if="discussion.originalAnnotation.body">
-          <h4 class="ph-margin-title ph-no-margin ph-xs-margin-bottom">
+          <p class="ph-margin-title ph-no-margin ph-xs-margin-bottom">
             {{discussion.originalAnnotation.title}}
-          </h4>
+          </p>
           {{discussion.originalAnnotation.body}}
         </div>
       </div><!-- / row content -->
@@ -55,6 +58,12 @@
         </div>
         <!-- row content -->
         <div class="ph-margin-row-content clearfix">
+          <div class="pull-right">
+            <button class="btn btn-link btn-xs"
+                class="ph-margin-show-hover">
+              <i class="fa fa-caret-down"></i>
+            </button>
+          </div>
           <div class="ph-margin-info">
             <p class="ph-xs-margin-bottom">
               <a href="#/users/{{reply.author.username}}">
