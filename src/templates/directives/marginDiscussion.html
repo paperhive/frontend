@@ -10,9 +10,11 @@
     </div>
     <!-- row content -->
     <div class="ph-margin-row-content clearfix">
-      <p class="ph-discussion-info pull-right">
-        <span am-time-ago="discussion.originalAnnotation.createdAt"></span>
-      </p>
+      <div class="pull-right ph-discussion-info text-right">
+        <p class="ph-no-margin">
+          <span am-time-ago="discussion.originalAnnotation.createdAt"></span>
+        </p>
+      </div>
       <h4 class="ph-no-margin">{{discussion.originalAnnotation.title}}</h4>
       <div ng-if="discussion.originalAnnotation.body">
         {{discussion.originalAnnotation.body}}
@@ -20,18 +22,57 @@
     </div>
   </div>
   <div class="ph-margin-row ph-margin-row-border-top">
-    <button class="btn btn-default btn-block ph-no-padding ph-no-border">
-      <span ng-if="!discussion.replies.length">
-        <i class="fa fa-fw fa-comment"></i> reply to this comment...
-      </span>
-      <span ng-if="discussion.replies.length === 1">
-        <i class="fa fa-fw fa-comment"></i> show 1 reply
-      </span>
-      <span ng-if="discussion.replies.length > 1">
-        <i class="fa fa-fw fa-comments"></i>
-        show {{discussion.replies.length}} replies
-      </span>
+    <button
+        ng-click="state.showReplies = !state.showReplies"
+        class="btn btn-default btn-block ph-margin-button"
+        >
+      <div ng-if="!state.showReplies">
+        <span ng-if="!discussion.replies.length">
+          <i class="fa fa-fw fa-comment"></i> reply to this comment
+        </span>
+        <span ng-if="discussion.replies.length === 1">
+          <i class="fa fa-fw fa-comment"></i> show 1 reply
+        </span>
+        <span ng-if="discussion.replies.length > 1">
+          <i class="fa fa-fw fa-comments"></i>
+          show {{discussion.replies.length}} replies
+        </span>
+      </div>
+      <div ng-if="state.showReplies">
+        <span ng-if="!discussion.replies.length">
+          <i class="fa fa-fw fa-caret-up"></i> hide reply draft
+        </span>
+        <span ng-if="discussion.replies.length === 1">
+          <i class="fa fa-fw fa-caret-up"></i> hide reply
+        </span>
+        <span ng-if="discussion.replies.length > 1">
+          <i class="fa fa-fw fa-caret-up"></i> hide replies
+        </span>
+      </div>
     </button>
+  </div>
+  <div collapse="!state.showReplies">
+    <div
+        ng-repeat="reply in discussion.replies"
+        class="ph-margin-row ph-margin-row-avatar ph-margin-row-border-top"
+        >
+      <!-- avatar -->
+      <img gravatar-user="reply.author"
+        gravatar-size="30" class="ph-margin-avatar img-circle">
+      <!-- arrow -->
+      <div class="ph-margin-row-arrow-container">
+        <div class="ph-arrow ph-arrow-outward-left"></div>
+      </div>
+      <!-- row content -->
+      <div class="ph-margin-row-content clearfix">
+        <div class="pull-right ph-discussion-info text-right">
+          <p class="ph-no-margin">
+            <span am-time-ago="reply.createdAt"></span>
+          </p>
+        </div>
+        {{reply.body}}
+      </div>
+    </div>
   </div>
 </div>
 <div class="panel panel-default">

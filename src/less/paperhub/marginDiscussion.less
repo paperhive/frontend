@@ -118,8 +118,8 @@ margin-discussion-draft {
 @ph-margin-avatar-arrow-padding: 5px;
 @ph-margin-arrow-size: 8px;
 @ph-margin-content-border-color: @panel-default-border;
-@ph-margin-content-bgcolor: #ffffff;
-@ph-margin-footer-bgcolor: @panel-default-heading-bg;
+//@ph-margin-content-bgcolor: #ffffff;
+@ph-margin-content-bgcolor: @panel-default-heading-bg;
 .ph-margin-container {
   margin-left: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding +
     @ph-margin-arrow-size + @ph-margin-avatar-arrow-padding);
@@ -132,27 +132,37 @@ margin-discussion-draft {
   // debug
   margin-bottom: 20px;
 
-  &, > .ph-margin-row > .ph-margin-avatar {
+  &, .ph-margin-row > .ph-margin-avatar {
     // required for shadows to stay below adjacent elements
     position: relative;
     z-index: 1;
     box-shadow: 0px 0px 15px #888888;
   }
 
-  > .ph-margin-row {
+  .ph-margin-row {
     &.ph-margin-row-avatar {
+      position: relative;
       min-height: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding);
+      display: table; // required for vertical centering
 
       > .ph-margin-row-arrow-container {
-        float: left;
-        width: 0;
-        height: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding);
-        z-index: 1; // above shadow
         .ph-arrow-container(
           @ph-margin-arrow-size,
           @ph-margin-content-bgcolor,
           @ph-margin-content-border-color
         );
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 0;
+        height: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding);
+        z-index: 1; // above shadow
+      }
+
+      > .ph-margin-row-content {
+        display: table-cell;
+        width: 100%;
+        vertical-align: middle;
       }
     }
 
@@ -179,7 +189,9 @@ margin-discussion-draft {
 }
 
 .ph-margin-button {
-  background-color: @ph-margin-footer-bgcolor;
+  .ph-no-padding();
+  .ph-no-border();
+  font-size: small;
 }
 
 .ph-discussion-info {

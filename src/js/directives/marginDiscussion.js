@@ -7,7 +7,10 @@ module.exports = function (app) {
       scope: {
         discussion: '=',
       },
-      templateUrl: 'templates/directives/marginDiscussion.html'
+      templateUrl: 'templates/directives/marginDiscussion.html',
+      link: function (scope, element, attrs) {
+        scope.state = {};
+      }
     };
   });
 };
