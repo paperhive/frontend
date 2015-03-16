@@ -1,30 +1,32 @@
 <div class="ph-margin-container">
   <!-- original comment -->
-  <div class="ph-margin-row ph-margin-row-avatar">
+  <div class="ph-margin-row ph-margin-row-avatar ph-margin-link-default">
     <!-- avatar -->
     <img gravatar-user="discussion.originalAnnotation.author"
       gravatar-size="30" class="ph-margin-avatar img-circle">
-    <!-- arrow -->
-    <div class="ph-margin-row-arrow-container">
-      <div class="ph-arrow ph-arrow-outward-left"></div>
-    </div>
-    <!-- row content -->
-    <div class="ph-margin-row-content ph-margin-link clearfix" ng-click="state.showReplies = !state.showReplies">
-      <div class="pull-right ph-discussion-info text-right">
-        <p class="ph-no-margin">
-          <span am-time-ago="discussion.originalAnnotation.createdAt"></span>
-          <span ng-if="discussion.replies.length === 1">
-            · <i class="fa fa-fw fa-comment"></i> 1 reply
-          </span>
-          <span ng-if="discussion.replies.length > 1">
-            · <i class="fa fa-fw fa-comments"></i>
-            {{discussion.replies.length}} replies
-          </span>
-        </p>
+    <div class="ph-margin-link-default" ng-click="state.showReplies = !state.showReplies">
+      <!-- arrow -->
+      <div class="ph-margin-row-arrow-container">
+        <div class="ph-arrow ph-arrow-outward-left"></div>
       </div>
-      <h4 class="ph-no-margin">{{discussion.originalAnnotation.title}}</h4>
-      <div ng-if="discussion.originalAnnotation.body">
-        {{discussion.originalAnnotation.body}}
+      <!-- row content -->
+      <div class="ph-margin-row-content clearfix">
+        <div class="pull-right ph-discussion-info text-right">
+          <p class="ph-no-margin">
+            <span am-time-ago="discussion.originalAnnotation.createdAt"></span>
+            <span ng-if="discussion.replies.length === 1">
+              · <i class="fa fa-fw fa-comment"></i> 1 reply
+            </span>
+            <span ng-if="discussion.replies.length > 1">
+              · <i class="fa fa-fw fa-comments"></i>
+              {{discussion.replies.length}} replies
+            </span>
+          </p>
+        </div>
+        <h4 class="ph-no-margin">{{discussion.originalAnnotation.title}}</h4>
+        <div ng-if="discussion.originalAnnotation.body">
+          {{discussion.originalAnnotation.body}}
+        </div>
       </div>
     </div>
   </div>
