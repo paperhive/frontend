@@ -27,27 +27,18 @@
         class="btn btn-default btn-block ph-margin-button"
         >
       <div ng-if="!state.showReplies">
-        <span ng-if="!discussion.replies.length">
-          <i class="fa fa-fw fa-comment"></i> reply to this comment
-        </span>
-        <span ng-if="discussion.replies.length === 1">
-          <i class="fa fa-fw fa-comment"></i> show 1 reply
-        </span>
+        <i class="fa fa-fw fa-caret-down"></i>
+        <span ng-if="!discussion.replies.length">reply to this comment</span>
+        <span ng-if="discussion.replies.length === 1">show 1 reply</span>
         <span ng-if="discussion.replies.length > 1">
-          <i class="fa fa-fw fa-comments"></i>
           show {{discussion.replies.length}} replies
         </span>
       </div>
       <div ng-if="state.showReplies">
-        <span ng-if="!discussion.replies.length">
-          <i class="fa fa-fw fa-caret-up"></i> hide reply draft
-        </span>
-        <span ng-if="discussion.replies.length === 1">
-          <i class="fa fa-fw fa-caret-up"></i> hide reply
-        </span>
-        <span ng-if="discussion.replies.length > 1">
-          <i class="fa fa-fw fa-caret-up"></i> hide replies
-        </span>
+        <i class="fa fa-fw fa-caret-up"></i>
+        <span ng-if="!discussion.replies.length">hide reply draft</span>
+        <span ng-if="discussion.replies.length === 1">hide reply</span>
+        <span ng-if="discussion.replies.length > 1">hide replies</span>
       </div>
     </button>
   </div>
