@@ -46,8 +46,8 @@ margin-discussion-draft {
 }
 
 .ph-margin-row {
-  display: table; // required for vertical centering
-  width: 100%;
+  //display: table; // required for vertical centering
+  //width: 100%;
 }
 
 // everything related to the avatar
@@ -70,9 +70,12 @@ margin-discussion-draft {
 }
 
 .ph-margin-row-container {
-  display: table-cell;
+  display: table;
   width: 100%;
   vertical-align: middle;
+}
+.ph-margin-avatar-container > .ph-margin-row-container {
+  min-height: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding + 4px);
 }
 
 .ph-margin-arrow-container {
@@ -110,6 +113,27 @@ margin-discussion-draft {
   }
 }
 
+.ph-margin-link-primary {
+  cursor: pointer;
+  .button-variant(@btn-default-color; @btn-primary-bg; @btn-default-border);
+  > .ph-margin-arrow-container {
+    .ph-arrow-container(
+      @ph-margin-arrow-size,
+      @btn-primary-bg,
+      @ph-margin-content-border-color
+    );
+  }
+  &:hover, &:focus, &.focus, &:active, &.active {
+    > .ph-margin-arrow-container {
+      .ph-arrow-container(
+        @ph-margin-arrow-size,
+        darken(@btn-primary-bg, 10%),
+        @ph-margin-content-border-color
+      );
+    }
+  }
+}
+
 .ph-margin-row-content {
   display: table-cell;
   width: 100%;
@@ -117,7 +141,7 @@ margin-discussion-draft {
 }
 
 .ph-margin-row-content {
-  padding: 3px 5px;
+  padding: 7px 7px;
 }
 
 .ph-margin-row-border-top {
