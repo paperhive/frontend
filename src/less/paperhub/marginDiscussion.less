@@ -134,6 +134,19 @@ margin-discussion-draft {
   }
 }
 
+
+@ph-margin-reply-bgcolor: darken(@btn-default-bg, 5%);
+.ph-margin-reply {
+  background-color: @ph-margin-reply-bgcolor;
+  > .ph-margin-arrow-container {
+    .ph-arrow-container(
+      @ph-margin-arrow-size,
+      @ph-margin-reply-bgcolor,
+      @ph-margin-content-border-color
+    );
+  }
+}
+
 .ph-margin-row-content {
   display: table-cell;
   width: 100%;
@@ -152,8 +165,4 @@ margin-discussion-draft {
   .text-muted();
   .ph-no-margin();
   font-size: smaller;
-}
-
-.ph-margin-reply {
-  background-color: @btn-default-bg;
 }

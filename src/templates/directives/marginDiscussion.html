@@ -57,5 +57,38 @@
         </div>
       </div>
     </div>
+    <!-- reply form -->
+    <div class="ph-margin-row ph-margin-avatar-container ph-margin-row-border-top">
+      <!-- avatar -->
+      <img gravatar-user="auth.user"
+        gravatar-size="30" class="ph-margin-avatar img-circle">
+      <div class="ph-margin-row-container ph-margin-reply">
+        <!-- arrow -->
+        <div class="ph-margin-arrow-container">
+          <div class="ph-arrow ph-arrow-outward-left"></div>
+        </div>
+        <!-- row content -->
+        <div class="ph-margin-row-content">
+          <form name="commentForm" ng-submit="" novalidate >
+            <textarea
+              id="textbody"
+              placeholder="Reply..."
+              ng-model="state.replyBody"
+              class="form-group form-control ph-comment-body ph-no-margin"
+              rows="1"
+              required
+              ng-focus="state.textFocused = true"
+              ng-blur="state.textFocused = false"
+              ></textarea>
+            <div ng-if="state.textFocused || state.replyBody"
+              class="ph-sm-margin-top clearfix">
+              <button type="submit" class="btn btn-primary pull-right" >
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

@@ -1,7 +1,7 @@
 'use strict';
 module.exports = function (app) {
 
-  app.directive('marginDiscussion', function() {
+  app.directive('marginDiscussion', ['authService', function(authService) {
     return {
       restrict: 'E',
       scope: {
@@ -10,7 +10,8 @@ module.exports = function (app) {
       templateUrl: 'templates/directives/marginDiscussion.html',
       link: function (scope, element, attrs) {
         scope.state = {};
+        scope.auth = authService;
       }
     };
-  });
+  }]);
 };
