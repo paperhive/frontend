@@ -9,10 +9,17 @@
       <div class="ph-arrow ph-arrow-outward-left"></div>
     </div>
     <!-- row content -->
-    <div class="ph-margin-row-content clearfix">
+    <div class="ph-margin-row-content ph-margin-link clearfix" ng-click="state.showReplies = !state.showReplies">
       <div class="pull-right ph-discussion-info text-right">
         <p class="ph-no-margin">
           <span am-time-ago="discussion.originalAnnotation.createdAt"></span>
+          <span ng-if="discussion.replies.length === 1">
+            · <i class="fa fa-fw fa-comment"></i> 1 reply
+          </span>
+          <span ng-if="discussion.replies.length > 1">
+            · <i class="fa fa-fw fa-comments"></i>
+            {{discussion.replies.length}} replies
+          </span>
         </p>
       </div>
       <h4 class="ph-no-margin">{{discussion.originalAnnotation.title}}</h4>
@@ -21,7 +28,7 @@
       </div>
     </div>
   </div>
-  <div class="ph-margin-row ph-margin-row-border-top">
+  <!--div class="ph-margin-row ph-margin-row-border-top">
     <button
         ng-click="state.showReplies = !state.showReplies"
         class="btn btn-default btn-block ph-margin-button"
@@ -41,7 +48,7 @@
         <span ng-if="discussion.replies.length > 1">hide replies</span>
       </div>
     </button>
-  </div>
+  </div-->
   <div collapse="!state.showReplies">
     <div
         ng-repeat="reply in discussion.replies"
