@@ -13,6 +13,7 @@ module.exports = function (app) {
         templateUrl: 'templates/directives/marginDiscussionDraft.html',
         link: function(scope, element) {
           scope.auth = authService;
+          scope.state = {};
         }
       };
     }]);
