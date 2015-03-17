@@ -5,9 +5,9 @@ module.exports = function (app) {
 
   app.controller('ArticleTextCtrl', [
     '$scope', '$route', '$routeSegment', '$document', '$http', 'config',
-    'authService', 'notificationService',
+    'authService', 'notificationService', 'distangleService',
     function($scope, $route, $routeSegment, $document, $http, config,
-             authService, notificationService) {
+             authService, notificationService, distangleService) {
 
       $scope.text = {
         highlightInfos: {},
@@ -35,14 +35,27 @@ module.exports = function (app) {
                     {id: key, top: val.top, height: height} : undefined;
           })), 'top');
 
+        var padding = 8;
+        var ids = _.pluck(offsets, 'id');
+        var anchors = _.pluck(offsets, 'top');
+        var heights = _.map(_.pluck(offsets, 'height'), function (height) {
+          return height + padding;
+        });
+        var optOffsets = distangleService.distangle(
+          anchors, heights, 0
+        );
         var marginOffsets = {};
+        var i;
+        for (i = 0; i < anchors.length; i++) {
+          marginOffsets[ids[i]] = optOffsets[i];
+        }
+        $scope.text.marginOffsets = marginOffsets;
+        return;
 
         // place draft
         if (draftTop && draftHeight) {
           marginOffsets.draft = draftTop;
         }
-
-        var padding = 8;
 
         // treat above and below separately (no draft: draftTop === 0)
         var offsetsAbove = _.filter(offsets, function (offset) {
