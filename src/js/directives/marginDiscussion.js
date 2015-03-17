@@ -14,10 +14,12 @@ module.exports = function (app) {
         scope.replyDraft = {};
         scope.auth = authService;
         scope.replySubmit = function () {
-          scope.onReplySubmit({$reply: scope.replyDraft})
-            .success(function (reply) {
+          var promise = scope.onReplySubmit({$reply: scope.replyDraft});
+          if (promise && promise.success) {
+            promise.success(function (reply) {
               scope.replyDraft = {};
             });
+          }
         };
       }
     };
