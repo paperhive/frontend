@@ -6,11 +6,11 @@ margin-discussion, margin-discussion-draft {
 
 margin-discussion {
   transition: top 0.35s ease;
-  box-shadow: 0px 0px 15px #888888;
+  box-shadow: 0px 0px 10px #888888;
 }
 
 margin-discussion-draft {
-  box-shadow: 0px 0px 25px #888888;
+  box-shadow: 0px 0px 10px #888888;
   transition: opacity 0.25s 0.25s ease;
   &.ng-enter, &.ng-leave.ng-leave-active {
     opacity: 0;
@@ -38,8 +38,9 @@ margin-discussion-draft {
   line-height: 1.2;
 
   // required for shadows to stay below adjacent elements
-  position: relative;
-  z-index: 1;
+  // WARNING: disabled because it breaks dropdown menus
+  //position: relative;
+  //z-index: 1;
 }
 
 .ph-margin-row {
