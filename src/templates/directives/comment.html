@@ -73,7 +73,7 @@
         <hr>
         <label for="preview">Preview</label>
         <div class="well well-lg" id="preview">
-          <kramjax body="{{comment.body}}"></kramjax>
+          <kramjax body="comment.body"></kramjax>
         </div>
         <span class="pull-right">
           <button type="button" class="btn btn-danger" ng-click="cancel()" ng-disabled="submitting">
@@ -94,7 +94,7 @@
       </form>
       <kramjax
         ng-if="!editMode && comment.body"
-        body="{{comment.body}}"
+        body="comment.body"
         ></kramjax>
       <em ng-if="!comment.body" class="text-muted">
         No description provided.

@@ -32,13 +32,13 @@
           </p>
         </div>
         <div ng-if="!discussion.originalAnnotation.body">
-          <kramjax body="{{discussion.originalAnnotation.title}}"></kramjax>
+          <kramjax body="discussion.originalAnnotation.title"></kramjax>
         </div>
         <div ng-if="discussion.originalAnnotation.body">
           <p class="ph-margin-title ph-no-margin ph-xs-margin-bottom">
-            <kramjax body="{{discussion.originalAnnotation.title}}"></kramjax>
+            <kramjax body="discussion.originalAnnotation.title"></kramjax>
           </p>
-          <kramjax body="{{discussion.originalAnnotation.body}}"></kramjax>
+          <kramjax body="discussion.originalAnnotation.body"></kramjax>
         </div>
       </div><!-- / row content -->
     </div>
@@ -72,7 +72,7 @@
               · <span am-time-ago="reply.createdAt"></span>
             </p>
           </div>
-          <kramjax body="{{reply.body}}"></kramjax>
+          <kramjax body="reply.body"></kramjax>
         </div>
       </div>
     </div>
