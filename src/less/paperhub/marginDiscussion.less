@@ -5,7 +5,7 @@ margin-discussion, margin-discussion-draft {
 }
 
 margin-discussion {
-  transition: top 0.5s ease;
+  transition: top 0.35s ease;
 }
 
 margin-discussion-draft {
@@ -85,10 +85,11 @@ margin-discussion-draft {
     );
   }
   &:hover, &:focus, &.focus, &:active, &.active {
+    background-color: darken(@btn-default-bg, 8%);
     > .ph-margin-arrow-container {
       .ph-arrow-container(
         @ph-margin-arrow-size,
-        darken(@btn-default-bg, 10%),
+        darken(@btn-default-bg, 8%),
         @ph-margin-border-color
       );
     }
