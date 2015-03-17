@@ -20,9 +20,23 @@
             <i class="fa fa-fw fa-comments"></i>
             {{discussion.replies.length}}
           </span>
-          <button class="btn btn-link btn-xs">
-            <i class="fa fa-caret-down"></i>
-          </button>
+          <span class="dropdown" dropdown>
+            <button class="btn btn-link btn-xs dropdown-toggle"
+              dropdown-toggle ng-click="$event.stopPropagation();">
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right ph-margin-dropdown">
+              <li>
+                <a href><i class="fa fa-fw fa-pencil"></i> Edit</a>
+              </li>
+              <li>
+                <a href><i class="fa fa-fw fa-times"></i> Delete</a>
+              </li>
+              <li>
+                <a href><i class="fa fa-fw fa-flag"></i> Flag</a>
+              </li>
+            </ul>
+          </span>
         </div>
         <div class="ph-margin-info">
           <p class="ph-xs-margin-bottom">
