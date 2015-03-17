@@ -104,6 +104,19 @@ module.exports = function (app) {
           }
         }
 
+        if (ub !== undefined) {
+          offset = ub;
+          for (i = n-1; i>= 0; i--) {
+            if (opt_anchors[i] + sizes[i] <= offset) break;
+            opt_anchors[i] = offset - sizes[i];
+            offset = opt_anchors[i];
+          }
+
+          if (lb !== undefined && offset < lb) {
+            throw(new Error('elements do not fit between lower and upper bound'));
+          }
+        }
+
         // shift for upper bound
         return opt_anchors;
       }

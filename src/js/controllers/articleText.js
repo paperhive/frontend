@@ -35,6 +35,7 @@ module.exports = function (app) {
                     {id: key, top: val.top, height: height} : undefined;
           })), 'top');
 
+        // padding between elements
         var padding = 8;
         var ids = _.pluck(offsets, 'id');
         var anchors = _.pluck(offsets, 'top');
@@ -44,13 +45,9 @@ module.exports = function (app) {
         var optOffsets = distangleService.distangle(
           anchors, heights, 0
         );
+
+        // result
         var marginOffsets = {};
-        var i;
-        for (i = 0; i < anchors.length; i++) {
-          marginOffsets[ids[i]] = optOffsets[i];
-        }
-        $scope.text.marginOffsets = marginOffsets;
-        return;
 
         // place draft
         if (draftTop && draftHeight) {
@@ -59,10 +56,10 @@ module.exports = function (app) {
 
         // treat above and below separately (no draft: draftTop === 0)
         var offsetsAbove = _.filter(offsets, function (offset) {
-          return offset.top < draftTop;
+          return offset.top <= draftTop;
         });
         var offsetsBelow = _.filter(offsets, function (offset) {
-          return offset.top >= draftTop;
+          return offset.top > draftTop;
         });
 
         // move bottom elements from above to below if there's not enough space
@@ -76,42 +73,29 @@ module.exports = function (app) {
           offsetsBelow.unshift(last[0]);
         }
 
-        // place offsets above the draft, i.e. above draftTop
-        // (does nothing if no draft is visible)
-        (function placeAbove() {
-
-          // make sure we can always fit everything between topBarrier and
-          // draftTop
-          var topBarrier = 0;
-          var remainingHeight = getTotalHeight(offsetsAbove);
-
-          // place above elements top-down and pack when not enough space
-          var offset;
-          while ((offset = offsetsAbove.shift())) {
-            var top = _.max([topBarrier, offset.top]);
-
-            // doesn't fit with wanted top? pile 'em up close to draftTop
-            if (top + remainingHeight > draftTop) {
-              top = draftTop - remainingHeight;
-            }
-            marginOffsets[offset.id] = top;
-            topBarrier = top + offset.height + padding;
-            remainingHeight -= offset.height + padding;
+        var place = function (offsets, lb, ub) {
+          var ids = _.pluck(offsets, 'id');
+          var anchors = _.pluck(offsets, 'top');
+          var heights = _.map(_.pluck(offsets, 'height'), function (height) {
+            return height + padding;
+          });
+          var optOffsets = distangleService.distangle(anchors, heights, lb, ub);
+          var i;
+          for (i = 0; i < anchors.length; i++) {
+            marginOffsets[ids[i]] = optOffsets[i];
           }
-        })();
 
-        // place offsets below the draft (or below 0) in 'open end' mode
-        var topBarrier = draftTop && draftHeight ?
-          draftTop + draftHeight + padding : 0;
-        _.forEach(offsetsBelow, function (offset) {
+        };
 
-          // do not fall above previously set offset
-          var top = _.max([offset.top, topBarrier]);
+        if (offsetsAbove.length) {
+          place(offsetsAbove, 0, draftTop);
+          place(offsetsBelow, draftTop + draftHeight + padding);
+        } else {
+          place(offsetsBelow, 0);
+        }
 
-          marginOffsets[offset.id] = top;
-          topBarrier = top + offset.height + padding;
-        });
         $scope.text.marginOffsets = marginOffsets;
+        return;
       };
       $scope.$watch('text.highlightInfos', updateOffsets, true);
       $scope.$watch('text.marginDiscussionSizes', updateOffsets, true);
