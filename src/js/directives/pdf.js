@@ -125,7 +125,7 @@ module.exports = function (app) {
                   progress.renderedTextPages.push(e.detail.pageNumber);
                   checkFinished();
                 });
-              })
+              });
               element[0].addEventListener('pagerendered', function (e) {
                 scope.$apply(function () {
                   progress.renderedPages.push(e.detail.pageNumber);
