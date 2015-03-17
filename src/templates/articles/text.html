@@ -49,6 +49,7 @@
         ng-show="text.marginOffsets[discussion._id]"
         ng-style="{'top': text.marginOffsets[discussion._id] + 'px'}"
         discussion="discussion"
+        on-reply-submit="addReply(discussion, $reply)"
         ng-mouseenter="text.highlightBorder[discussion._id] = true"
         ng-mouseleave="text.highlightBorder[discussion._id] = false"
         element-size="text.marginDiscussionSizes[discussion._id]"

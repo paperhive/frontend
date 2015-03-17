@@ -90,7 +90,7 @@
         </div>
         <!-- row content -->
         <div class="ph-margin-row-content">
-          <form ng-submit="commentForm.$valid && onReplySubmit({$reply: replyDraft})"
+          <form ng-submit="commentForm.$valid && replySubmit()"
               name="commentForm" novalidate>
             <textarea ng-model="replyDraft.body" id="textbody"
               ng-focus="state.textFocused = true"

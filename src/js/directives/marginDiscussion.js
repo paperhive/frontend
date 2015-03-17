@@ -13,6 +13,12 @@ module.exports = function (app) {
         scope.state = {};
         scope.replyDraft = {};
         scope.auth = authService;
+        scope.replySubmit = function () {
+          scope.onReplySubmit({$reply: scope.replyDraft})
+            .success(function (reply) {
+              scope.replyDraft = {};
+            });
+        };
       }
     };
   }]);
