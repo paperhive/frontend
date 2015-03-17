@@ -1,13 +1,14 @@
 <div class="ph-margin-container">
   <!-- original comment -->
-  <div class="ph-margin-row ph-margin-avatar-container">
+  <div class="ph-margin-row">
     <!-- avatar -->
-    <img gravatar-user="discussion.originalAnnotation.author"
-      gravatar-size="30" class="ph-margin-avatar img-circle">
+    <div class="ph-margin-avatar-container">
+      <img gravatar-user="discussion.originalAnnotation.author"
+          gravatar-size="30" class="ph-margin-avatar">
+    </div>
     <!-- container with arrow + content -->
-    <div ng-click="state.showReplies = !state.showReplies"
-      class="ph-margin-row-container ph-margin-link-default"
-      >
+    <div class="ph-margin-row-container ph-margin-link-default"
+        ng-click="state.showReplies = !state.showReplies">
       <!-- arrow -->
       <div class="ph-margin-arrow-container">
         <div class="ph-arrow ph-arrow-outward-left"></div>
@@ -45,11 +46,13 @@
   <div collapse="!state.showReplies">
     <div
         ng-repeat="reply in discussion.replies"
-        class="ph-margin-row ph-margin-avatar-container ph-margin-row-border-top"
+        class="ph-margin-row ph-margin-row-border-top"
         >
       <!-- avatar -->
-      <img gravatar-user="reply.author"
-        gravatar-size="30" class="ph-margin-avatar img-circle">
+      <div class="ph-margin-avatar-container">
+        <img gravatar-user="reply.author" gravatar-size="30"
+            class="ph-margin-avatar">
+      </div>
       <div class="ph-margin-row-container ph-margin-reply">
         <!-- arrow -->
         <div class="ph-margin-arrow-container">
@@ -74,10 +77,12 @@
       </div>
     </div>
     <!-- reply form -->
-    <div class="ph-margin-row ph-margin-avatar-container ph-margin-row-border-top">
+    <div class="ph-margin-row ph-margin-row-border-top">
       <!-- avatar -->
-      <img gravatar-user="auth.user"
-        gravatar-size="30" class="ph-margin-avatar img-circle">
+      <div class="ph-margin-avatar-container">
+        <img gravatar-user="auth.user" gravatar-size="30"
+            class="ph-margin-avatar">
+      </div>
       <div class="ph-margin-row-container ph-margin-reply">
         <!-- arrow -->
         <div class="ph-margin-arrow-container">

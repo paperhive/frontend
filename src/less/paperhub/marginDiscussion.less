@@ -22,19 +22,16 @@ margin-discussion-draft {
   }
 }
 
+@ph-margin-basecolor: white;
 @ph-margin-avatar-size: 30px;
-@ph-margin-avatar-padding: 2px;
-@ph-margin-avatar-arrow-padding: 5px;
+@ph-margin-avatar-padding: 4px;
+@ph-margin-avatar-arrow-padding: 0px;
+@ph-margin-avatar-bgcolor: #e4e4e4;
 @ph-margin-arrow-size: 8px;
-@ph-margin-content-border-color: @panel-default-border;
-/*@ph-margin-original-bgcolor: @panel-default-heading-bg;
-@ph-margin-reply-bgcolor: #ffffff;
-*/
+@ph-margin-border-color: @panel-default-border;
 
 .ph-margin-container {
-  margin-left: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding +
-    @ph-margin-arrow-size + @ph-margin-avatar-arrow-padding);
-  border: 1px @ph-margin-content-border-color solid;
+  border: 1px @ph-margin-border-color solid;
 
   // smaller line height
   line-height: 1.2;
@@ -46,50 +43,35 @@ margin-discussion-draft {
 }
 
 .ph-margin-row {
-  //display: table; // required for vertical centering
-  //width: 100%;
+  display: table; // required for vertical centering
+  width: 100%;
 }
 
 // everything related to the avatar
 .ph-margin-avatar-container {
-  position: relative;
-  min-height: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding + 4px);
-
-  // avatar
-  > .ph-margin-avatar {
-    position: absolute;
-    left: -(@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding +
-      @ph-margin-arrow-size + @ph-margin-avatar-arrow-padding);
-    width: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding);
-    height: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding);
-    padding: @ph-margin-avatar-padding;
-    background-color: #ffffff;
-    z-index: 1; // required for shadows to stay below adjacent elements
-    box-shadow: 0px 0px 15px #888888;
-  }
+  display: table-cell;
+  top: 0; // required if content doesn't have full height
+  padding: @ph-margin-avatar-padding;
+  padding-right: (@ph-margin-avatar-padding + @ph-margin-arrow-size +
+    @ph-margin-avatar-arrow-padding);
+  border-right: 1px @ph-margin-border-color solid;
+  background-color: @ph-margin-avatar-bgcolor;
 }
 
 .ph-margin-row-container {
-  display: table;
+  display: table-cell;
   width: 100%;
   vertical-align: middle;
-}
-.ph-margin-avatar-container > .ph-margin-row-container {
-  min-height: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding + 4px);
 }
 
 .ph-margin-arrow-container {
   .ph-arrow-container(
     @ph-margin-arrow-size,
     @btn-default-bg,
-    @ph-margin-content-border-color
+    @ph-margin-border-color
   );
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 0;
   height: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding);
-  z-index: 1; // above shadow
 }
 
 .ph-margin-link-default {
@@ -99,7 +81,7 @@ margin-discussion-draft {
     .ph-arrow-container(
       @ph-margin-arrow-size,
       @btn-default-bg,
-      @ph-margin-content-border-color
+      @ph-margin-border-color
     );
   }
   &:hover, &:focus, &.focus, &:active, &.active {
@@ -107,7 +89,7 @@ margin-discussion-draft {
       .ph-arrow-container(
         @ph-margin-arrow-size,
         darken(@btn-default-bg, 10%),
-        @ph-margin-content-border-color
+        @ph-margin-border-color
       );
     }
   }
@@ -120,7 +102,7 @@ margin-discussion-draft {
     .ph-arrow-container(
       @ph-margin-arrow-size,
       @btn-primary-bg,
-      @ph-margin-content-border-color
+      @ph-margin-border-color
     );
   }
   &:hover, &:focus, &.focus, &:active, &.active {
@@ -128,7 +110,7 @@ margin-discussion-draft {
       .ph-arrow-container(
         @ph-margin-arrow-size,
         darken(@btn-primary-bg, 10%),
-        @ph-margin-content-border-color
+        @ph-margin-border-color
       );
     }
   }
@@ -142,23 +124,18 @@ margin-discussion-draft {
     .ph-arrow-container(
       @ph-margin-arrow-size,
       @ph-margin-reply-bgcolor,
-      @ph-margin-content-border-color
+      @ph-margin-border-color
     );
   }
 }
 
 .ph-margin-row-content {
-  display: table-cell;
-  width: 100%;
-  vertical-align: middle;
-}
-
-.ph-margin-row-content {
   padding: 5px 7px;
+  min-height: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding);
 }
 
 .ph-margin-row-border-top {
-  border-top: 1px @ph-margin-content-border-color solid;
+  border-top: 1px @ph-margin-border-color solid;
 }
 
 .ph-margin-title {
