@@ -6,10 +6,12 @@ module.exports = function (app) {
       restrict: 'E',
       scope: {
         discussion: '=',
+        onReplySubmit: '&',
       },
       templateUrl: 'templates/directives/marginDiscussion.html',
       link: function (scope, element, attrs) {
         scope.state = {};
+        scope.replyDraft = {};
         scope.auth = authService;
       }
     };

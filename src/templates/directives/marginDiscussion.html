@@ -90,21 +90,18 @@
         </div>
         <!-- row content -->
         <div class="ph-margin-row-content">
-          <form name="commentForm" ng-submit="" novalidate >
-            <textarea
-              id="textbody"
-              placeholder="Reply..."
-              ng-model="state.replyBody"
-              class="form-group form-control ph-comment-body ph-margin-textarea ph-no-margin"
-              rows="1"
-              required
+          <form ng-submit="commentForm.$valid && onReplySubmit({$reply: replyDraft})"
+              name="commentForm" novalidate>
+            <textarea ng-model="replyDraft.body" id="textbody"
               ng-focus="state.textFocused = true"
               ng-blur="state.textFocused = false"
+              class="form-group form-control ph-comment-body ph-margin-textarea ph-no-margin"
+              placeholder="Reply..." rows="1" required
               ></textarea>
-            <div ng-if="state.textFocused || state.replyBody"
+            <div ng-if="state.textFocused || replyDraft.body"
               class="ph-sm-margin-top clearfix">
               <button type="submit" class="btn btn-primary btn-sm pull-right"
-                  ng-disabled="commentForm.$invalid">
+                  ng-disabled="commentForm.$invalid || state.submitting">
                 Add reply
               </button>
             </div>
