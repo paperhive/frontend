@@ -29,8 +29,12 @@ module.exports = function (app) {
         element.resize(resizeHandler);
 
         // detach event handler upon destruction of element
+        // $destroy seems to be emitted multiple times, so we only
+        // clean up once
+        var destroyed = false;
         element.on('$destroy', function () {
-          element.removeResize(resizeHandler);
+          if (!destroyed) element.removeResize(resizeHandler);
+          destroyed = true;
         });
 
         // call handler once
