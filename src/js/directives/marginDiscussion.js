@@ -9,14 +9,14 @@ module.exports = function(app) {
         onReplySubmit: '&',
       },
       templateUrl: 'templates/directives/marginDiscussion.html',
-      link: function (scope, element, attrs) {
+      link: function(scope, element, attrs) {
         scope.state = {};
         scope.replyDraft = {};
         scope.auth = authService;
-        scope.replySubmit = function () {
+        scope.replySubmit = function() {
           var promise = scope.onReplySubmit({$reply: scope.replyDraft});
           if (promise && promise.success) {
-            promise.success(function (reply) {
+            promise.success(function(reply) {
               scope.replyDraft = {};
             });
           }
