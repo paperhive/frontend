@@ -1,48 +1,40 @@
-<div ng-if="auth.user" class="panel panel-primary">
-  <div class="panel-heading">
-    <img gravatar-user="auth.user" gravatar-size="30" class="ph-avatar">
-    {{auth.user.displayName}}
-    <span class="pull-right">
-      <a href="#">
-        <i class="fa fa-globe"></i>
-      </a>
-    </span>
+<div class="ph-margin-container">
+  <div ng-if="auth.user" class="ph-margin-row">
+    <!-- avatar -->
+    <div class="ph-margin-avatar-container">
+      <img gravatar-user="auth.user" gravatar-size="30"
+          class="ph-margin-avatar">
+    </div>
+    <div class="ph-margin-row-container">
+      <!-- arrow -->
+      <div class="ph-margin-arrow-container">
+        <div class="ph-arrow ph-arrow-outward-left"></div>
+      </div>
+      <!-- row content -->
+      <div class="ph-margin-row-content">
+        <form ng-submit="commentForm.$valid && onSubmit({$comment: comment})"
+          name="commentForm" novalidate>
+          <input ng-if="comment.body.length > 20" ng-model="comment.title"
+            type="text" class="form-group form-control ph-no-margin ph-margin-textarea ph-sm-margin-bottom"
+            placeholder="Enter title..." required>
+          <textarea ng-model="comment.body"
+            ng-focus="state.textFocused = true"
+            ng-blur="state.textFocused = false"
+            id="textbody" placeholder="Enter comment..."
+            class="form-group form-control ph-comment-body ph-no-margin ph-margin-textarea"
+            rows="2" required></textarea>
+          <div ng-if="state.textFocused || comment.body || comment.title"
+              class="ph-sm-margin-top clearfix">
+            <button ng-disabled="commentForm.$invalid"
+                class="btn btn-sm btn-primary pull-right">
+              Add comment
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
-  <div class="panel-body">
-    <form
-      name="commentForm"
-      ng-submit="commentForm.$valid && onSubmit({$comment: comment})"
-      novalidate
-      >
-      <input
-        type="text"
-        ng-if="comment.body.length > 20"
-        ng-model="comment.title"
-        class="form-group form-control"
-        placeholder="Enter title..."
-        required
-        >
-      <textarea
-        id="textbody"
-        placeholder="Enter comment..."
-        ng-model="comment.body"
-        class="form-group form-control ph-comment-body"
-        rows="2"
-        required
-        ></textarea>
-      <span class="pull-right">
-        <button
-          class="btn btn-sm btn-primary"
-          ng-disabled="commentForm.$invalid"
-          >
-          Add comment
-        </button>
-      </span>
-    </form>
-  </div>
-</div>
-<div ng-if="!auth.user" class="panel panel-default">
-  <div class="panel-body">
+  <div ng-if="!auth.user">
     <a href="{{auth.orcidUrl}}" class="btn btn-primary">
       Sign in with ORCID
     </a> to comment.

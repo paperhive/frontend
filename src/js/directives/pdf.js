@@ -99,24 +99,36 @@ module.exports = function(app) {
             progress.downloading = true;
             PDFJS.getDocument(url).then(function(pdf) {
 
-              // update progress when a page has been rendered
               progress.renderedPages = [];
-              element[0].addEventListener('pagerendered', function(e) {
+              progress.renderedTextPages = [];
+              // set finished = true once all pages have been rendered as
+              // canvas and text
+              var checkFinished = function() {
+                if (progress.renderedPages.length === pdf.numPages &&
+                    progress.renderedTextPages.length === pdf.numPages) {
+                  _.assign(progress, {
+                    rendering: false,
+                    finished: true
+                  });
+                }
+              };
+
+              // update progress when a page has been rendered
+              element[0].addEventListener('textlayerrendered', function(e) {
                 // normalize the DOM subtree of the rendered page
                 // (otherwise serialized ranges may be based on different
                 // DOM states)
                 e.target.normalize();
 
                 scope.$apply(function() {
+                  progress.renderedTextPages.push(e.detail.pageNumber);
+                  checkFinished();
+                });
+              });
+              element[0].addEventListener('pagerendered', function(e) {
+                scope.$apply(function() {
                   progress.renderedPages.push(e.detail.pageNumber);
-
-                  // fire onLoaded if last page has been rendered
-                  if (progress.renderedPages.length === pdf.numPages) {
-                    _.assign(progress, {
-                      rendering: false,
-                      finished: true
-                    });
-                  }
+                  checkFinished();
                 });
               });
 

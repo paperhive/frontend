@@ -45,17 +45,18 @@
       </div>
       <margin-discussion
         ng-repeat="discussion in discussions.stored"
-        ng-if="text.highlightInfos[discussion._id].top"
-        ng-show="text.marginOffsets[discussion._id]"
+        ng-if="text.highlightInfos[discussion._id].top !== undefined"
+        ng-show="text.marginOffsets[discussion._id] !== undefined"
         ng-style="{'top': text.marginOffsets[discussion._id] + 'px'}"
         discussion="discussion"
+        on-reply-submit="addReply(discussion, $reply)"
         ng-mouseenter="text.highlightBorder[discussion._id] = true"
         ng-mouseleave="text.highlightBorder[discussion._id] = false"
         element-size="text.marginDiscussionSizes[discussion._id]"
         >
       </margin-discussion>
       <margin-discussion-draft
-        ng-if="originalComment.draft.target && text.highlightInfos.draft.top"
+        ng-if="originalComment.draft.target && text.highlightInfos.draft.top !== undefined"
         ng-style="{'top': text.highlightInfos.draft.top + 'px'}"
         on-submit="addDiscussion($comment)"
         on-outside-mousedown="!originalComment.draft.body && purgeDraft()"
