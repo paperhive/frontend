@@ -91,7 +91,7 @@
       </div>
     </div>
     <!-- reply form -->
-    <div class="ph-margin-row ph-margin-row-border-top">
+    <div ng-if="auth.user" class="ph-margin-row ph-margin-row-border-top">
       <!-- avatar -->
       <div class="ph-margin-avatar-container">
         <img gravatar-user="auth.user" gravatar-size="30"
@@ -120,6 +120,30 @@
               </button>
             </div>
           </form>
+        </div>
+      </div>
+    </div>
+    <div ng-if="!auth.user" class="ph-margin-row ph-margin-row-border-top">
+      <!-- avatar -->
+      <div class="ph-margin-avatar-container">
+        <!--img gravatar-user="auth.user" gravatar-size="30"
+          class="ph-margin-avatar"-->
+          <div class="ph-margin-unknown-avatar-container">
+            <div class="ph-margin-unknown-avatar">
+              <i class="fa fa-user"></i>
+            </div>
+          </div>
+      </div>
+      <div class="ph-margin-row-container ph-margin-reply">
+        <!-- arrow -->
+        <div class="ph-margin-arrow-container">
+          <div class="ph-arrow ph-arrow-outward-left"></div>
+        </div>
+        <!-- row content -->
+        <div class="ph-margin-row-content">
+          <a href="{{auth.orcidUrl}}" class="btn btn-primary btn-sm">
+            <i class="fa fa-fw fa-sign-in"></i> Sign in
+          </a> to reply.
         </div>
       </div>
     </div>

@@ -34,9 +34,28 @@
       </div>
     </div>
   </div>
-  <div ng-if="!auth.user" class="margin-discussion-replacement">
-    <a href="{{auth.orcidUrl}}" class="btn btn-primary">
-      Sign in with ORCID
-    </a> to comment.
+  <div ng-if="!auth.user" class="ph-margin-row">
+    <!-- avatar -->
+    <div class="ph-margin-avatar-container">
+      <!--img gravatar-user="auth.user" gravatar-size="30"
+        class="ph-margin-avatar"-->
+        <div class="ph-margin-unknown-avatar-container">
+          <div class="ph-margin-unknown-avatar">
+            <i class="fa fa-user"></i>
+          </div>
+        </div>
+    </div>
+    <div class="ph-margin-row-container">
+      <!-- arrow -->
+      <div class="ph-margin-arrow-container">
+        <div class="ph-arrow ph-arrow-outward-left"></div>
+      </div>
+      <!-- row content -->
+      <div class="ph-margin-row-content">
+        <a href="{{auth.orcidUrl}}" class="btn btn-primary btn-sm">
+          <i class="fa fa-fw fa-sign-in"></i> Sign in
+        </a> to comment.
+      </div>
+    </div>
   </div>
 </div>
