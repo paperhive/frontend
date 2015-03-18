@@ -32,7 +32,7 @@
        'ngRoute',
        'route-segment',
        'view-segment',
-       'angularMoment', // https://github.com/urish/angular-moment
+       'angularMoment',
        'templates'
       ]
     )
