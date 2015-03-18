@@ -2,8 +2,8 @@
 module.exports = function(app) {
   app.controller(
     'NavbarCtrl',
-    ['$scope', '$http', 'config',
-      function($scope, $http, config) {
+    ['$scope', '$http', '$location', '$window', '$routeSegment', 'config',
+      function($scope, $http, $location, $window, $routeSegment, config) {
         $scope.collapsed = true;
 
         $scope.search = {};
@@ -14,6 +14,13 @@ module.exports = function(app) {
           .then(function(response) {
             return response.data;
           });
+        };
+
+        $scope.goToArticle = function(item, model, label) {
+          $location.path($routeSegment.getSegmentUrl(
+            'articles', {articleId: item._id}
+          ));
+          $window.location.reload();
         };
       }
     ]

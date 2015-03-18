@@ -40,6 +40,7 @@
               ng-model="search.body"
               typeahead="result.title for result in phSearch($viewValue, 5)"
               typeahead-wait-ms="250"
+              typeahead-on-select="goToArticle($item, $model, $label)"
               required
               >
             <div class="input-group-btn">
