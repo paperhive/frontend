@@ -1,10 +1,10 @@
 <ul class="nav navbar-nav" ng-controller="NavbarUserCtrl">
   <li ng-show="!auth.user && !auth.inProgress">
     <p class="navbar-btn ph-md-margin-left ph-md-margin-right">
-      <a href="{{auth.orcidUrl}}" class="btn btn-default"
-          title="Sign in with your ORCID iD">
-        <i class="fa fa-fw fa-sign-in"></i> Sign in
-      </a>
+    <a href="{{auth.orcidUrl}}" class="btn btn-default"
+      title="Sign in with your ORCID iD">
+      <img src="img/orcid.svg" width="20px" height="20px"> Sign in
+    </a>
     </p>
   </li>
   <li ng-show="!auth.user && auth.inProgress">
