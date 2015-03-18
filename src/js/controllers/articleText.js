@@ -20,10 +20,11 @@ module.exports = function (app) {
       var updateOffsets = function () {
         var draftTop = $scope.originalComment.draft.target &&
           $scope.text.highlightInfos.draft &&
-          $scope.text.highlightInfos.draft.top || 0;
+          $scope.text.highlightInfos.draft.top;
         var draftHeight = draftTop &&
           $scope.text.marginDiscussionSizes.draft &&
           $scope.text.marginDiscussionSizes.draft.height;
+        var showDraft = draftTop !== undefined && draftHeight;
 
         var offsets = _.sortBy(_.compact(_.map(
           $scope.text.highlightInfos,
@@ -50,23 +51,23 @@ module.exports = function (app) {
         var marginOffsets = {};
 
         // place draft
-        if (draftTop && draftHeight) {
+        if (showDraft) {
           marginOffsets.draft = draftTop;
         }
 
-        // treat above and below separately (no draft: draftTop === 0)
+        // treat above and below separately
         var offsetsAbove = _.filter(offsets, function (offset) {
-          return offset.top <= draftTop;
+          return showDraft && offset.top <= draftTop;
         });
         var offsetsBelow = _.filter(offsets, function (offset) {
-          return offset.top > draftTop;
+          return !showDraft || offset.top > draftTop;
         });
 
         // move bottom elements from above to below if there's not enough space
         var getTotalHeight = function (offsets) {
           return _.sum(_.pluck(offsets, 'height')) + offsets.length * padding;
         };
-        while (getTotalHeight(offsetsAbove) > draftTop) {
+        while (showDraft && getTotalHeight(offsetsAbove) > draftTop) {
           // remove last one in above
           var last = offsetsAbove.splice(-1, 1);
           // insert to beginning of below
@@ -87,7 +88,7 @@ module.exports = function (app) {
 
         };
 
-        if (offsetsAbove.length) {
+        if (showDraft) {
           place(offsetsAbove, 0, draftTop);
           place(offsetsBelow, draftTop + draftHeight + padding);
         } else {
