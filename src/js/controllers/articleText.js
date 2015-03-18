@@ -42,7 +42,7 @@ module.exports = function (app) {
           marginOffsets.draft = draftTop;
         }
 
-        var padding = 5;
+        var padding = 8;
 
         // treat above and below separately (no draft: draftTop === 0)
         var offsetsAbove = _.filter(offsets, function (offset) {

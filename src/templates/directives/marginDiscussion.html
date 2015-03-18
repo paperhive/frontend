@@ -1,17 +1,127 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <img gravatar-user="discussion.originalAnnotation.author" gravatar-size="30" >
-    {{discussion.originalAnnotation.author.displayName}}
-    <span class="pull-right">
-      <a href="#">
-        <i class="fa fa-globe"></i>
-      </a>
-    </span>
+<div class="ph-margin-container">
+  <!-- original comment -->
+  <div class="ph-margin-row">
+    <!-- avatar -->
+    <div class="ph-margin-avatar-container">
+      <img gravatar-user="discussion.originalAnnotation.author"
+          gravatar-size="30" class="ph-margin-avatar">
+    </div>
+    <!-- container with arrow + content -->
+    <div class="ph-margin-row-container ph-margin-link-default"
+        ng-click="state.showReplies = !state.showReplies">
+      <!-- arrow -->
+      <div class="ph-margin-arrow-container">
+        <div class="ph-arrow ph-arrow-outward-left"></div>
+      </div>
+      <!-- row content -->
+      <div class="ph-margin-row-content clearfix">
+        <div class="pull-right">
+          <span class="badge ph-margin-badge" ng-if="discussion.replies.length">
+            <i class="fa fa-fw fa-comments"></i>
+            {{discussion.replies.length}}
+          </span>
+          <span class="dropdown" dropdown>
+            <button class="btn btn-link btn-xs dropdown-toggle"
+              dropdown-toggle ng-click="$event.stopPropagation();">
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right ph-margin-dropdown">
+              <li>
+                <a href><i class="fa fa-fw fa-pencil"></i> Edit</a>
+              </li>
+              <li>
+                <a href><i class="fa fa-fw fa-times"></i> Delete</a>
+              </li>
+              <li>
+                <a href><i class="fa fa-fw fa-flag"></i> Flag</a>
+              </li>
+            </ul>
+          </span>
+        </div>
+        <div class="ph-margin-info">
+          <p class="ph-xs-margin-bottom">
+            <a href="#/users/{{discussion.originalAnnotation.author.username}}">
+              {{discussion.originalAnnotation.author.displayName}}</a>
+            · <span am-time-ago="discussion.originalAnnotation.createdAt"></span>
+          </p>
+        </div>
+        <div ng-if="!discussion.originalAnnotation.body">
+          <kramjax body="discussion.originalAnnotation.title"></kramjax>
+        </div>
+        <div ng-if="discussion.originalAnnotation.body">
+          <p class="ph-margin-title ph-no-margin ph-xs-margin-bottom">
+            <kramjax body="discussion.originalAnnotation.title"></kramjax>
+          </p>
+          <kramjax body="discussion.originalAnnotation.body"></kramjax>
+        </div>
+      </div><!-- / row content -->
+    </div>
   </div>
-  <div class="panel-body">
-    <h4 class="ph-no-margin-top">{{discussion.originalAnnotation.title}}</h4>
-    <div ng-if="discussion.originalAnnotation.body">
-      {{discussion.originalAnnotation.body}}
+  <div collapse="!state.showReplies">
+    <div
+        ng-repeat="reply in discussion.replies"
+        class="ph-margin-row ph-margin-row-border-top"
+        >
+      <!-- avatar -->
+      <div class="ph-margin-avatar-container">
+        <img gravatar-user="reply.author" gravatar-size="30"
+            class="ph-margin-avatar">
+      </div>
+      <div class="ph-margin-row-container ph-margin-reply">
+        <!-- arrow -->
+        <div class="ph-margin-arrow-container">
+          <div class="ph-arrow ph-arrow-outward-left"></div>
+        </div>
+        <!-- row content -->
+        <div class="ph-margin-row-content clearfix">
+          <div class="pull-right">
+            <button class="btn btn-link btn-xs">
+              <i class="fa fa-caret-down"></i>
+            </button>
+          </div>
+          <div class="ph-margin-info">
+            <p class="ph-xs-margin-bottom">
+              <a href="#/users/{{reply.author.username}}">
+                {{reply.author.displayName}}</a>
+              · <span am-time-ago="reply.createdAt"></span>
+            </p>
+          </div>
+          <kramjax body="reply.body"></kramjax>
+        </div>
+      </div>
+    </div>
+    <!-- reply form -->
+    <div class="ph-margin-row ph-margin-row-border-top">
+      <!-- avatar -->
+      <div class="ph-margin-avatar-container">
+        <img gravatar-user="auth.user" gravatar-size="30"
+            class="ph-margin-avatar">
+      </div>
+      <div class="ph-margin-row-container ph-margin-reply">
+        <!-- arrow -->
+        <div class="ph-margin-arrow-container">
+          <div class="ph-arrow ph-arrow-outward-left"></div>
+        </div>
+        <!-- row content -->
+        <div class="ph-margin-row-content">
+          <form ng-submit="commentForm.$valid && replySubmit()"
+              name="commentForm" novalidate>
+            <textarea ng-model="replyDraft.body" id="textbody"
+              ng-focus="state.textFocused = true"
+              ng-blur="state.textFocused = false"
+              class="form-group form-control ph-comment-body ph-margin-textarea ph-no-margin"
+              placeholder="Reply..." rows="1" required
+              ></textarea>
+            <div ng-if="state.textFocused || replyDraft.body"
+              class="ph-sm-margin-top clearfix">
+              <button type="submit" class="btn btn-primary btn-sm pull-right"
+                  ng-disabled="commentForm.$invalid || state.submitting">
+                Add reply
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </div>

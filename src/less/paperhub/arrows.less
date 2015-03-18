@@ -1,0 +1,58 @@
+.ph-arrow-container (@size, @bgcolor, @bordercolor) {
+  position: absolute;
+
+  & > .ph-arrow {
+    position: absolute;
+    border: (@size + 1) transparent solid;
+
+    &::after {
+      position: absolute;
+      border: @size transparent solid;
+      content: "";
+    }
+
+    // mixin for an outward arrow pointing on one edge
+    .ph-arrow-outward-direction (@direction, @opposite, @ortho) {
+      &.ph-arrow-outward-@{direction} {
+        @{ortho}: 50%;
+        margin-@{ortho}: (-@size - 1);
+        @{direction}: (-@size - 1);
+        border-@{opposite}-color: @bordercolor;
+        border-@{direction}-width: 0;
+
+        &::after {
+          @{direction}: 1px;
+          @{ortho}: -@size;
+          border-@{opposite}-color: @bgcolor;
+          border-@{direction}-width: 0;
+        }
+      }
+    }
+    .ph-arrow-outward-direction (right, left, top);
+    .ph-arrow-outward-direction (left, right, top);
+    .ph-arrow-outward-direction (top, bottom, left);
+    .ph-arrow-outward-direction (bottom, top, left);
+
+    // mixin for an inward arrow pointing on one edge
+    .ph-arrow-inward-direction (@direction, @opposite, @ortho) {
+      &.ph-arrow-inward-@{direction} {
+        @{ortho}: 50%;
+        margin-@{ortho}: (-@size - 1);
+        @{direction}: -2px;
+        border-@{direction}-color: @bordercolor;
+        border-@{opposite}-width: 0;
+
+        &::after {
+          @{direction}: (-@size - 1);
+          @{ortho}: -@size;
+          border-@{direction}-color: @bgcolor;
+          border-@{opposite}-width: 0;
+        }
+      }
+    }
+    .ph-arrow-inward-direction (right, left, top);
+    .ph-arrow-inward-direction (left, right, top);
+    .ph-arrow-inward-direction (top, bottom, left);
+    .ph-arrow-inward-direction (bottom, top, left);
+  }
+}

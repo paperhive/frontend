@@ -86,6 +86,23 @@ module.exports = function (app) {
         })
           .error(notificationService.httpError('could not add discussion'));
       };
+      
+      $scope.addReply = function (discussion, reply) {
+        reply = _.cloneDeep(_.pick(
+          reply, ['title', 'body']
+        ));
+        return $http.post(
+          config.api_url +
+            '/articles/' + $routeSegment.$routeParams.articleId +
+            '/discussions/' + discussion.index +
+            '/replies',
+          reply
+        )
+        .success(function (reply) {
+          discussion.replies.push(reply);
+        })
+          .error(notificationService.httpError('could not add reply'));
+      };
 
     }]);
 };

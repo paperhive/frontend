@@ -1,23 +1,16 @@
-.ph-margin-discussion {
+margin-discussion, margin-discussion-draft {
   position: absolute;
   width: 100%;
+  left: 0;
 }
 
 margin-discussion {
-  .ph-margin-discussion();
-  box-shadow: 0px 0px 15px #888888;
-  > .panel {
-    .ph-no-margin();
-  }
-  transition: top 0.5s ease;
+  transition: top 0.35s ease;
+  box-shadow: 0px 0px 10px #888888;
 }
 
 margin-discussion-draft {
-  .ph-margin-discussion();
-  box-shadow: 0px 0px 25px #888888;
-  > .panel {
-    .ph-no-margin();
-  }
+  box-shadow: 0px 0px 10px #888888;
   transition: opacity 0.25s 0.25s ease;
   &.ng-enter, &.ng-leave.ng-leave-active {
     opacity: 0;
@@ -28,4 +21,151 @@ margin-discussion-draft {
   &.ng-leave {
     transition-delay: 0;
   }
+}
+
+@ph-margin-basecolor: white;
+@ph-margin-avatar-size: 30px;
+@ph-margin-avatar-padding: 4px;
+@ph-margin-avatar-arrow-padding: 0px;
+@ph-margin-avatar-bgcolor: #e4e4e4;
+@ph-margin-arrow-size: 8px;
+@ph-margin-border-color: @panel-default-border;
+
+.ph-margin-container {
+  border: 1px @ph-margin-border-color solid;
+
+  // smaller line height
+  line-height: 1.2;
+
+  // required for shadows to stay below adjacent elements
+  // WARNING: disabled because it breaks dropdown menus
+  //position: relative;
+  //z-index: 1;
+}
+
+.ph-margin-row {
+  display: table; // required for vertical centering
+  width: 100%;
+}
+
+// everything related to the avatar
+.ph-margin-avatar-container {
+  display: table-cell;
+  top: 0; // required if content doesn't have full height
+  padding: @ph-margin-avatar-padding;
+  padding-right: (@ph-margin-avatar-padding + @ph-margin-arrow-size +
+    @ph-margin-avatar-arrow-padding);
+  border-right: 1px @ph-margin-border-color solid;
+  background-color: @ph-margin-avatar-bgcolor;
+}
+
+.ph-margin-row-container {
+  display: table-cell;
+  width: 100%;
+  vertical-align: middle;
+  background-color: @ph-margin-basecolor;
+}
+
+.ph-margin-arrow-container {
+  .ph-arrow-container(
+    @ph-margin-arrow-size,
+    @ph-margin-basecolor,
+    @ph-margin-border-color
+  );
+  position: absolute;
+  height: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding);
+}
+
+.ph-margin-link-default {
+  cursor: pointer;
+  .button-variant(@btn-default-color; @btn-default-bg; @btn-default-border);
+  > .ph-margin-arrow-container {
+    .ph-arrow-container(
+      @ph-margin-arrow-size,
+      @btn-default-bg,
+      @ph-margin-border-color
+    );
+  }
+  &:hover, &:focus, &.focus, &:active, &.active {
+    background-color: darken(@btn-default-bg, 8%);
+    > .ph-margin-arrow-container {
+      .ph-arrow-container(
+        @ph-margin-arrow-size,
+        darken(@btn-default-bg, 8%),
+        @ph-margin-border-color
+      );
+    }
+  }
+}
+
+.ph-margin-link-primary {
+  cursor: pointer;
+  .button-variant(@btn-default-color; @btn-primary-bg; @btn-default-border);
+  > .ph-margin-arrow-container {
+    .ph-arrow-container(
+      @ph-margin-arrow-size,
+      @btn-primary-bg,
+      @ph-margin-border-color
+    );
+  }
+  &:hover, &:focus, &.focus, &:active, &.active {
+    > .ph-margin-arrow-container {
+      .ph-arrow-container(
+        @ph-margin-arrow-size,
+        darken(@btn-primary-bg, 10%),
+        @ph-margin-border-color
+      );
+    }
+  }
+}
+
+
+@ph-margin-reply-bgcolor: darken(@btn-default-bg, 5%);
+.ph-margin-reply {
+  background-color: @ph-margin-reply-bgcolor;
+  > .ph-margin-arrow-container {
+    .ph-arrow-container(
+      @ph-margin-arrow-size,
+      @ph-margin-reply-bgcolor,
+      @ph-margin-border-color
+    );
+  }
+}
+
+.ph-margin-row-content {
+  padding: 5px 7px;
+  min-height: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding);
+}
+
+.ph-margin-row-border-top {
+  border-top: 1px @ph-margin-border-color solid;
+}
+
+.ph-margin-title {
+  font-weight: bold;
+}
+
+.ph-margin-info {
+  .text-muted();
+  .ph-no-margin();
+  font-size: smaller;
+}
+
+.ph-margin-textarea {
+  padding: 5px 7px;
+}
+
+.ph-margin-badge {
+  font-size: smaller;
+  font-weight: normal;
+  padding: 2px 5px;
+  background-color: #aaa !important;
+}
+
+margin-discussion kramjax p {
+  margin: 0 0 5px;
+}
+
+margin-discussion kramjax .MathJax_Display {
+  margin: 5px 0;
 }
