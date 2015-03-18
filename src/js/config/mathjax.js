@@ -1,5 +1,5 @@
 'use strict';
-module.exports = function (app) {
+module.exports = function(app) {
   // TODO: how to load+configure this beast via broserify/require()?!
   /*
   var MathJax = require('MathJax');
@@ -7,11 +7,11 @@ module.exports = function (app) {
 
   MathJax.Hub.Config({
     skipStartupTypeset: true,
-    messageStyle: "none",
-    "HTML-CSS": {
+    messageStyle: 'none',
+    'HTML-CSS': {
       showMathMenu: false
     },
-    extension: ["Safe.js"]
+    extension: ['Safe.js']
   });
   MathJax.Hub.Configured();
 };

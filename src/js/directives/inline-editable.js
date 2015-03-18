@@ -1,5 +1,5 @@
 'use strict';
-module.exports = function (app) {
+module.exports = function(app) {
 
   app.directive('inlineEditable', function() {
     return {
@@ -9,7 +9,7 @@ module.exports = function (app) {
         onSave: '&'
       },
       templateUrl: 'templates/directives/inline-editable.html',
-      link: function (scope, element, attrs) {
+      link: function(scope, element, attrs) {
         scope.c = {
           isEditMode: false
         };

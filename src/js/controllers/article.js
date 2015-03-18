@@ -1,7 +1,7 @@
 'use strict';
 var _ = require('lodash');
 
-module.exports = function (app) {
+module.exports = function(app) {
 
   app.controller('ArticleCtrl', [
     '$scope', '$route', '$routeSegment', '$document', '$http', 'config',
@@ -17,13 +17,13 @@ module.exports = function (app) {
 
       // fetch article
       $http.get(
-        config.api_url +
+        config.apiUrl +
           '/articles/' + $routeSegment.$routeParams.articleId
       )
-      .success(function (article) {
+      .success(function(article) {
         $scope.article = article;
       })
-      .error(function (data) {
+      .error(function(data) {
         notificationService.notifications.push({
           type: 'error',
           message: data.message ? data.message : 'could not fetch article ' +
@@ -32,17 +32,17 @@ module.exports = function (app) {
       });
 
       $http.get(
-        config.api_url +
+        config.apiUrl +
           '/articles/' + $routeSegment.$routeParams.articleId + '/discussions'
       )
-      .success(function (discussions) {
+      .success(function(discussions) {
         $scope.discussions.stored = discussions;
       })
-      .error(function (data) {
+      .error(function(data) {
         notificationService.notifications.push({
           type: 'error',
-          message: data.message ? data.message : 'could not fetch discussions ' +
-            '(unknown reason)'
+          message: data.message ? data.message :
+            'could not fetch discussions (unknown reason)'
         });
       });
 
@@ -57,7 +57,7 @@ module.exports = function (app) {
         $scope.originalComment.draft = {};
       };
 
-      $scope.addDiscussion = function (comment) {
+      $scope.addDiscussion = function(comment) {
         var originalComment = _.cloneDeep(_.pick(
           comment, ['title', 'body', 'target', 'tags']
         ));
@@ -71,34 +71,34 @@ module.exports = function (app) {
 
         $scope.submitting = true;
         return $http.post(
-          config.api_url +
+          config.apiUrl +
             '/articles/' + $routeSegment.$routeParams.articleId +
             '/discussions',
           {originalAnnotation: originalComment}
         )
-        .success(function (discussion) {
+        .success(function(discussion) {
           $scope.submitting = false;
           $scope.discussions.stored.push(discussion);
           $scope.purgeDraft();
         })
-        .error(function (data) {
+        .error(function(data) {
           $scope.submitting = false;
         })
           .error(notificationService.httpError('could not add discussion'));
       };
-      
-      $scope.addReply = function (discussion, reply) {
+
+      $scope.addReply = function(discussion, reply) {
         reply = _.cloneDeep(_.pick(
           reply, ['title', 'body']
         ));
         return $http.post(
-          config.api_url +
+          config.apiUrl +
             '/articles/' + $routeSegment.$routeParams.articleId +
             '/discussions/' + discussion.index +
             '/replies',
           reply
         )
-        .success(function (reply) {
+        .success(function(reply) {
           discussion.replies.push(reply);
         })
           .error(notificationService.httpError('could not add reply'));

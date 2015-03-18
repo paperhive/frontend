@@ -1,5 +1,5 @@
 'use strict';
-module.exports = function (app) {
+module.exports = function(app) {
   require('./article.js')(app);
   require('./articleText.js')(app);
   require('./articleNew.js')(app);

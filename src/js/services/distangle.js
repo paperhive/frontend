@@ -1,124 +1,126 @@
 'use strict';
-module.exports = function (app) {
-  app.factory('distangleService', [function () {
+module.exports = function(app) {
+  app.factory('distangleService', [function() {
     return {
-      distangle: function (anchors, sizes, lb, ub) {
+      distangle: function(anchors, sizes, lb, ub) {
         // JS port of Robert Luce's distangle_fast in
         // https://github.com/rluce/interval-distangle/blob/master/src/distangle.py
         if (anchors.length !== sizes.length) {
           throw(new Error('arrays must have same length'));
         }
 
-        var
-          n = anchors.length,
-          lsum = new Float64Array(n),
-          asum = new Float64Array(n),
-          span = new Float64Array(n),
-          base = new Float64Array(n),
-          clen = new Int32Array(n),
-          backref = new Int32Array(n),
-          ic_beg = new Int32Array(n),
-          ic_end = new Int32Array(n),
-          pos = 0,
-          ic, i;
+        var n = anchors.length;
+        var lsum = new Float64Array(n);
+        var asum = new Float64Array(n);
+        var span = new Float64Array(n);
+        var base = new Float64Array(n);
+        var clen = new Int32Array(n);
+        var backref = new Int32Array(n);
+        var icBeg = new Int32Array(n);
+        var icEnd = new Int32Array(n);
+        var pos = 0;
+        var ic;
+        var i;
 
         asum.set(anchors);
         span.set(sizes);
         base.set(anchors);
-        for (i=0; i < n; i++) {
+        for (i = 0; i < n; i++) {
           clen[i] = 1;
           backref[i] = i;
-          ic_beg[i] = i;
-          ic_end[i] = i+1;
+          icBeg[i] = i;
+          icEnd[i] = i + 1;
         }
 
         while (pos < n) {
           ic = backref[pos];
 
-          var did_merge = true;
-          while (did_merge) {
-            did_merge = false;
-            var other_ic;
+          var didMerge = true;
+          while (didMerge) {
+            didMerge = false;
+            var otherIc;
 
-            if (ic_beg[ic] > 0) {
+            if (icBeg[ic] > 0) {
               // merge with left IC?
-              other_ic = backref[ic_beg[ic] - 1];
+              otherIc = backref[icBeg[ic] - 1];
 
-              if (base[ic] < base[other_ic] + span[other_ic]) {
-                asum[ic] += asum[other_ic];
-                lsum[ic] += lsum[other_ic] + clen[ic] * span[other_ic];
-                clen[ic] += clen[other_ic];
-                span[ic] += span[other_ic];
+              if (base[ic] < base[otherIc] + span[otherIc]) {
+                asum[ic] += asum[otherIc];
+                lsum[ic] += lsum[otherIc] + clen[ic] * span[otherIc];
+                clen[ic] += clen[otherIc];
+                span[ic] += span[otherIc];
                 base[ic] = (asum[ic] - lsum[ic]) / clen[ic];
 
-                ic_beg[ic] = ic_beg[other_ic];
-                backref[ic_beg[ic]] = ic;
+                icBeg[ic] = icBeg[otherIc];
+                backref[icBeg[ic]] = ic;
 
-                did_merge = true;
+                didMerge = true;
               }
             }
 
-            if (ic_end[ic] < n) {
+            if (icEnd[ic] < n) {
               // merge with right IC?
-              other_ic = backref[ic_end[ic]];
+              otherIc = backref[icEnd[ic]];
 
-              if (base[ic] + span[ic] > base[other_ic]) {
-                asum[ic] += asum[other_ic];
-                lsum[ic] += lsum[other_ic] + clen[other_ic] * span[ic];
-                clen[ic] += clen[other_ic];
-                span[ic] += span[other_ic];
+              if (base[ic] + span[ic] > base[otherIc]) {
+                asum[ic] += asum[otherIc];
+                lsum[ic] += lsum[otherIc] + clen[otherIc] * span[ic];
+                clen[ic] += clen[otherIc];
+                span[ic] += span[otherIc];
                 base[ic] = (asum[ic] - lsum[ic]) / clen[ic];
 
-                ic_end[ic] = ic_end[other_ic];
-                backref[ic_end[ic] - 1] = ic;
+                icEnd[ic] = icEnd[otherIc];
+                backref[icEnd[ic] - 1] = ic;
 
-                did_merge = true;
+                didMerge = true;
               }
             }
           }
 
-          pos = ic_end[ic];
+          pos = icEnd[ic];
         }
 
         // compute optimal base points
-        var opt_anchors = new Float64Array(n);
+        var optAnchors = new Float64Array(n);
         pos = 0;
         var offset;
         while (pos < n) {
           ic = backref[pos];
           offset = 0.0;
-          for (i=ic_beg[ic]; i < ic_end[ic]; i++) {
-            opt_anchors[i] = base[ic] + offset;
+          for (i = icBeg[ic]; i < icEnd[ic]; i++) {
+            optAnchors[i] = base[ic] + offset;
             offset += sizes[i];
           }
-          pos = ic_end[ic];
+          pos = icEnd[ic];
         }
 
         // shift for lower bound
         if (lb !== undefined) {
           offset = lb;
           for (i = 0; i < n; i++) {
-            if (opt_anchors[i] >= offset) break;
-            opt_anchors[i] = offset;
+            if (optAnchors[i] >= offset) {break;}
+            optAnchors[i] = offset;
             offset += sizes[i];
           }
         }
 
         if (ub !== undefined) {
           offset = ub;
-          for (i = n-1; i>= 0; i--) {
-            if (opt_anchors[i] + sizes[i] <= offset) break;
-            opt_anchors[i] = offset - sizes[i];
-            offset = opt_anchors[i];
+          for (i = n - 1; i >= 0; i--) {
+            if (optAnchors[i] + sizes[i] <= offset) {break;}
+            optAnchors[i] = offset - sizes[i];
+            offset = optAnchors[i];
           }
 
           if (lb !== undefined && offset < lb) {
-            throw(new Error('elements do not fit between lower and upper bound'));
+            throw(
+              new Error('elements do not fit between lower and upper bound')
+            );
           }
         }
 
         // shift for upper bound
-        return opt_anchors;
+        return optAnchors;
       }
     };
   }]);

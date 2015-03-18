@@ -2,7 +2,7 @@
 var angular = require('angular');
 var $ = require('jquery');
 
-module.exports = function (app) {
+module.exports = function(app) {
 
   app.directive('subnav', ['$rootScope', '$routeSegment', '$filter',
     function($rootScope, $routeSegment, $filter) {
@@ -11,16 +11,18 @@ module.exports = function (app) {
         templateUrl: 'templates/directives/subnav.html',
         transclude: true,
         scope: {},
-        link: function (scope, element, attrs) {
+        link: function(scope, element, attrs) {
           // collapsed by default
           scope.collapsed = true;
 
           // get ul
           var ul = element.find('ul')[0];
-          if (!ul) return;
+          if (!ul) {
+            return;
+          }
 
-          var collapse = function () {
-            $rootScope.$apply(function () {
+          var collapse = function() {
+            $rootScope.$apply(function() {
               scope.collapsed = true;
             });
           };
@@ -29,13 +31,17 @@ module.exports = function (app) {
           $(element).focusout(collapse);
 
           // iterate over li elements
-          angular.forEach(ul.children, function (li) {
+          angular.forEach(ul.children, function(li) {
             // check li
-            if (li.nodeName != 'LI') return;
+            if (li.nodeName != 'LI') {
+              return;
+            }
 
             // get a
             var a = li.children[0];
-            if (!a || a.nodeName != 'A') return;
+            if (!a || a.nodeName != 'A') {
+              return;
+            }
 
             // target
             var target = angular.element(li).attr('subnav-target');
@@ -50,8 +56,8 @@ module.exports = function (app) {
 
             // set active link class
             $rootScope.$watch(
-              function () {return $routeSegment.name;},
-              function (routeName) {
+              function() {return $routeSegment.name;},
+              function(routeName) {
                 var el = angular.element(li);
                 if ($routeSegment.startsWith(target)) {
                   el.addClass('active');

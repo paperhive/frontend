@@ -1,17 +1,17 @@
 'use strict';
-module.exports = function (app) {
+module.exports = function(app) {
 
-  app.directive('elementSize', ['$parse', function ($parse) {
+  app.directive('elementSize', ['$parse', function($parse) {
     return {
       restrict: 'A',
-      link: function (scope, element, attrs) {
+      link: function(scope, element, attrs) {
         var size = {};
-        var resizeHandler = function (e) {
+        var resizeHandler = function(e) {
           var height = element[0].offsetHeight;
           var width = element[0].offsetWidth;
 
           // return if unchanged
-          if (size.height === height && size.width === width) return;
+          if (size.height === height && size.width === width) {return;}
 
           size.height = height;
           size.width = width;
@@ -32,8 +32,8 @@ module.exports = function (app) {
         // $destroy seems to be emitted multiple times, so we only
         // clean up once
         var destroyed = false;
-        element.on('$destroy', function () {
-          if (!destroyed) element.removeResize(resizeHandler);
+        element.on('$destroy', function() {
+          if (!destroyed) {element.removeResize(resizeHandler);}
           destroyed = true;
         });
 

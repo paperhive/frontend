@@ -2,7 +2,7 @@
 var _ = require('lodash');
 var angular = require('angular');
 
-module.exports = function (app) {
+module.exports = function(app) {
   app.directive('comment', [
     'authService', 'config', '$routeSegment', 'notificationService', '$window',
     function(authService, config, $routeSegment, notificationService, $window) {
@@ -20,12 +20,12 @@ module.exports = function (app) {
         scope.auth = authService;
         scope.editMode = false;
 
-        scope.$watch('content', function (content) {
+        scope.$watch('content', function(content) {
           scope.comment = _.cloneDeep(content);
         });
 
         scope.getUserText = function(item) {
-          //return '<strong><a href="#/users/' + item.userName + '">@' + item.userName + '</a></strong>';
+          //return '<strong><a href='#/users/' + item.userName + ''>@' + item.userName + '</a></strong>';
           return '@' + item.userName;
         };
 
@@ -43,27 +43,27 @@ module.exports = function (app) {
         };
 
         // Needed for access from child scope
-        scope.cancel = function () {
+        scope.cancel = function() {
           scope.editMode = false;
           scope.comment = _.cloneDeep(scope.content);
         };
 
-        scope.update = function () {
+        scope.update = function() {
           scope.submitting = true;
           var promise = scope.onUpdate({$comment: scope.comment});
           if (promise) {
-            promise.finally(function () {
+            promise.finally(function() {
               scope.submitting = false;
               scope.editMode = false;
             });
           }
         };
 
-        scope.delete = function () {
+        scope.delete = function() {
           scope.submitting = true;
           var promise = scope.onDelete({$comment: scope.content});
           if (promise) {
-            promise.finally(function () {
+            promise.finally(function() {
               scope.submitting = false;
               scope.editMode = false;
             });
@@ -74,12 +74,12 @@ module.exports = function (app) {
         //
         // Warn on page close if there still is unsaved text in the reply form.
         scope.$on('$locationChangeStart', function(event) {
-          //console.log("isEditOn", scope.isEditOn);
-          //console.log("tmpBody === anno.body", scope.tmpBody !== scope.annotation.body);
+          //console.log('isEditOn', scope.isEditOn);
+          //console.log('tmpBody === anno.body', scope.tmpBody !== scope.annotation.body);
           if (scope.isEditOn && scope.tmpBody !== scope.annotation.body) {
             var answer = $window.confirm(
-              "There is unsaved content in the reply field. " +
-              "Are you sure you want to leave this page?"
+              'There is unsaved content in the reply field. ' +
+              'Are you sure you want to leave this page?'
             );
             if (!answer) {
               event.preventDefault();

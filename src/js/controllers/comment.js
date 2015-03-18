@@ -1,14 +1,14 @@
 'use strict';
-module.exports = function (app) {
+module.exports = function(app) {
 
   app.controller('CommentCtrl', [
     '$scope', '$location', '$routeSegment',
     function($scope, $location, $routeSegment) {
-      $scope.save = function () {
+      $scope.save = function() {
         $scope.submitting = true;
         var promise = $scope.addDiscussion($scope.comment);
         if (promise) {
-          promise.success(function (data) {
+          promise.success(function(data) {
             $location.path($routeSegment.getSegmentUrl(
               'articles.discussions.thread',
               {
@@ -17,7 +17,7 @@ module.exports = function (app) {
               }
             ));
           })
-          .finally(function () {
+          .finally(function() {
             $scope.submitting = false;
           });
         }

@@ -1,12 +1,12 @@
 'use strict';
-module.exports = function (app) {
+module.exports = function(app) {
   app.factory('notificationService', [
-    function () {
+    function() {
       var service = {
         notifications: []
       };
-      service.httpError = function (msg) {
-        return function (data) {
+      service.httpError = function(msg) {
+        return function(data) {
           service.notifications.push({
             type: 'error',
             message: data.message ? data.message : msg || 'unknown error'

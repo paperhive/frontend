@@ -2,11 +2,11 @@
 var _ = require('lodash');
 var PDFJS = require('pdfjs');
 
-module.exports = function (app) {
-  app.directive('pdf', ['$parse', function ($parse) {
+module.exports = function(app) {
+  app.directive('pdf', ['$parse', function($parse) {
     return {
       restrict: 'E',
-      link: function (scope, element, attrs) {
+      link: function(scope, element, attrs) {
         scope.$watchGroup(['pdfUrl', 'pdfTextOverlay'], renderPdf);
 
         function renderPdf () {
@@ -25,7 +25,7 @@ module.exports = function (app) {
             progressParsed.assign(scope, progress);
           }
 
-          if (!url) return;
+          if (!url) {return;}
 
           // From
           // <https://github.com/mozilla/pdf.js/blob/master/examples/components/simpleviewer.js>.
@@ -34,11 +34,11 @@ module.exports = function (app) {
             // Simple viewer without any overlays.
 
             // Fetch the PDF document from the URL using promises
-            PDFJS.getDocument(url).then(function (pdf) {
+            PDFJS.getDocument(url).then(function(pdf) {
               var wrapperWidth = element[0].offsetWidth;
               if (wrapperWidth === 0) {
                 // TODO make sure this error doesn't get silently intercepted
-                throw Error("Invalid wrapper width");
+                throw Error('Invalid wrapper width');
               }
 
               var showPage = function(page) {
@@ -50,14 +50,14 @@ module.exports = function (app) {
                 viewport = page.getViewport(scale);
 
                 // Prepare canvas using PDF page dimensions
-                var link = document.createElement("a");
+                var link = document.createElement('a');
                 // From <http://stackoverflow.com/a/14717011/353337>
-                // link.setAttribute("href", "#/articles/0af5e13/text?scrollTo=pageContainer".concat(page.pageIndex+1));
+                // link.setAttribute('href', '#/articles/0af5e13/text?scrollTo=pageContainer'.concat(page.pageIndex+1));
                 //
                 // TODO: solve this outside the pdf directive
-                link.setAttribute("href", "#/articles/0af5e13/text");
-                var canvas = document.createElement("canvas");
-                canvas.setAttribute("class", "ph-page");
+                link.setAttribute('href', '#/articles/0af5e13/text');
+                var canvas = document.createElement('canvas');
+                canvas.setAttribute('class', 'ph-page');
                 link.appendChild(canvas);
 
                 var context = canvas.getContext('2d');
@@ -74,7 +74,7 @@ module.exports = function (app) {
                 element.append(link);
               };
 
-              for(var i = 1; i < pdf.numPages; i++){
+              for (var i = 1; i < pdf.numPages; i++) {
                 // Using promise to fetch the page
                 pdf.getPage(i).then(showPage);
               }
@@ -91,20 +91,19 @@ module.exports = function (app) {
             });
 
             // set scale
-            element[0].addEventListener('pagesinit', function () {
+            element[0].addEventListener('pagesinit', function() {
               pdfViewer.currentScaleValue = 'page-width';
             });
 
-
             // load document
             progress.downloading = true;
-            PDFJS.getDocument(url).then(function (pdf) {
+            PDFJS.getDocument(url).then(function(pdf) {
 
               progress.renderedPages = [];
               progress.renderedTextPages = [];
               // set finished = true once all pages have been rendered as
               // canvas and text
-              var checkFinished = function () {
+              var checkFinished = function() {
                 if (progress.renderedPages.length === pdf.numPages &&
                     progress.renderedTextPages.length === pdf.numPages) {
                   _.assign(progress, {
@@ -115,19 +114,19 @@ module.exports = function (app) {
               };
 
               // update progress when a page has been rendered
-              element[0].addEventListener('textlayerrendered', function (e) {
+              element[0].addEventListener('textlayerrendered', function(e) {
                 // normalize the DOM subtree of the rendered page
                 // (otherwise serialized ranges may be based on different
                 // DOM states)
                 e.target.normalize();
 
-                scope.$apply(function () {
+                scope.$apply(function() {
                   progress.renderedTextPages.push(e.detail.pageNumber);
                   checkFinished();
                 });
               });
-              element[0].addEventListener('pagerendered', function (e) {
-                scope.$apply(function () {
+              element[0].addEventListener('pagerendered', function(e) {
+                scope.$apply(function() {
                   progress.renderedPages.push(e.detail.pageNumber);
                   checkFinished();
                 });
@@ -136,7 +135,7 @@ module.exports = function (app) {
               // document loaded, specifying document for the viewer
               pdfViewer.setDocument(pdf);
 
-              scope.$apply(function () {
+              scope.$apply(function() {
                 _.assign(progress, {
                   downloading: false,
                   rendering: true,
@@ -183,7 +182,7 @@ module.exports = function (app) {
             //          var extent = tx[4];
             //          //  tx[0] * content.items[i].width/fontHeight +
             //          //  tx[4];
-            //          console.log("tx[4] = ", extent);
+            //          console.log('tx[4] = ', extent);
             //          var actualWidth = pdfViewer.currentScale * content.items[i].width;
             //        }
             //      })
@@ -193,16 +192,16 @@ module.exports = function (app) {
             // --------------------------------------------------------------------
 
             // --------
-            //var container = document.createElement("div");
-            //container.id = "container";
+            //var container = document.createElement('div');
+            //container.id = 'container';
             //element.append(container);
 
             //// Loading document.
             //var PAGE_TO_VIEW = 1;
             //var SCALE = 1.0;
-            //PDFJS.getDocument(scope.url).then(function (pdfDocument) {
+            //PDFJS.getDocument(scope.url).then(function(pdfDocument) {
             //  // Document loaded, retrieving the page.
-            //  return pdfDocument.getPage(PAGE_TO_VIEW).then(function (pdfPage) {
+            //  return pdfDocument.getPage(PAGE_TO_VIEW).then(function(pdfPage) {
             //    // Creating the page view with default parameters.
             //    var pdfPageView = new PDFJS.PDFPageView({
             //      container: container,
