@@ -9,7 +9,6 @@ module.exports = function(app) {
   require('./marginDiscussionDraft')(app);
   require('./inline-editable')(app);
   require('./kramjax')(app);
-  require('./onKeyDown')(app);
   require('./onOutside')(app);
   require('./onTextSelect')(app);
   require('./pdf')(app);
