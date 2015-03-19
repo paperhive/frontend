@@ -32,16 +32,15 @@ module.exports = function(app) {
           templateUrl: 'templates/main/main.html'
         })
         .segment('articles', {
-          templateUrl: 'templates/articles/index.html'
+          templateUrl: 'templates/articles/index.html',
+          dependencies: ['articleId']
         })
         .within()
           .segment('activity', {
-            templateUrl: 'templates/articles/activity.html',
-            dependencies: ['articleId']
+            templateUrl: 'templates/articles/activity.html'
           })
           .segment('discussions', {
-            templateUrl: 'templates/articles/discussions/index.html',
-            dependencies: ['articleId']
+            templateUrl: 'templates/articles/discussions/index.html'
           })
           .within()
             .segment('list', {
@@ -57,13 +56,11 @@ module.exports = function(app) {
             })
           .up()
           .segment('settings', {
-            templateUrl: 'templates/articles/settings.html',
-            dependencies: ['articleId']
+            templateUrl: 'templates/articles/settings.html'
           })
           .segment('text', {
             default: true,
-            templateUrl: 'templates/articles/text.html',
-            dependencies: ['articleId']
+            templateUrl: 'templates/articles/text.html'
           })
         .up()
         .segment('articles_new', {

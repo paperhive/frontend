@@ -30,8 +30,6 @@ module.exports = function(app) {
           $location.path($routeSegment.getSegmentUrl(
             'articles', {articleId: item._id}
           ));
-          // for some reason, $route.reload() isn't enough here
-          $window.location.reload();
         };
       }
     ]
