@@ -3,7 +3,11 @@ module.exports = function(app) {
 
   app.controller('CommentCtrl', [
     '$scope', '$location', '$routeSegment', '$http', 'config',
-    function($scope, $location, $routeSegment, $http, config) {
+    'notificationService',
+    function(
+      $scope, $location, $routeSegment, $http, config,
+      notificationService
+    ) {
       $scope.save = function() {
         $scope.submitting = true;
         var promise = $scope.addDiscussion($scope.comment);
@@ -24,13 +28,18 @@ module.exports = function(app) {
       };
 
       $scope.searchUsers = function(query, limit) {
-        if (!query) {return;}
+        if (!query) {
+          $scope.foundUsers = [];
+          return;
+        }
         $http.get(config.apiUrl + '/users/', {
           params: {q: query, limit: limit}
         })
-        .then(function(response) {
+        .success(function(response) {
           $scope.foundUsers = response.data;
-        });
+        })
+        .error(notificationService.httpError('could not fetch users'));
+
       };
 
       $scope.getMentioText = function(user) {
