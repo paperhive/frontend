@@ -2,8 +2,8 @@
 module.exports = function(app) {
 
   app.directive('marginDiscussionDraft', [
-    'authService',
-    function(authService) {
+    '$q', 'authService',
+    function($q, authService) {
       return {
         restrict: 'E',
         scope: {
@@ -14,6 +14,13 @@ module.exports = function(app) {
         link: function(scope, element) {
           scope.auth = authService;
           scope.state = {};
+          scope.submit = function() {
+            scope.state.submitting = true;
+            $q.when(scope.onSubmit({$comment: scope.comment}))
+              .finally(function() {
+                scope.state.submitting = false;
+              });
+          };
         }
       };
     }]);

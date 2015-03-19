@@ -12,7 +12,7 @@
       </div>
       <!-- row content -->
       <div class="ph-margin-row-content">
-        <form ng-submit="commentForm.$valid && onSubmit({$comment: comment})"
+        <form ng-submit="commentForm.$valid && submit()"
           name="commentForm" novalidate>
           <input ng-if="comment.body.length > 20" ng-model="comment.title"
             type="text" class="form-group form-control ph-no-margin ph-margin-textarea ph-sm-margin-bottom"
@@ -25,8 +25,10 @@
             rows="2" required></textarea>
           <div ng-if="state.textFocused || comment.body || comment.title"
               class="ph-sm-margin-top clearfix">
-            <button ng-disabled="commentForm.$invalid"
+            <button ng-disabled="commentForm.$invalid || state.submitting"
                 class="btn btn-sm btn-primary pull-right">
+              <i ng-if="!state.submitting" class="fa fa-fw fa-check"></i>
+              <i ng-if="state.submitting" class="fa fa-fw fa-spinner fa-spin"></i>
               Add comment
             </button>
           </div>

@@ -116,6 +116,8 @@
               class="ph-sm-margin-top clearfix">
               <button type="submit" class="btn btn-primary btn-sm pull-right"
                   ng-disabled="commentForm.$invalid || state.submitting">
+                <i ng-if="!state.submitting" class="fa fa-fw fa-check"></i>
+                <i ng-if="state.submitting" class="fa fa-fw fa-spinner fa-spin"></i>
                 Add reply
               </button>
             </div>
