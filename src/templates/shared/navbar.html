@@ -27,7 +27,6 @@
           name="searchForm"
           class="navbar-form"
           role="search"
-          ng-submit="searchForm.$valid && phSearch(search.body, 10)"
           novalidate
           >
           <div class="input-group">
@@ -43,11 +42,11 @@
               typeahead-on-select="goToArticle($item, $model, $label)"
               required
               >
-            <div class="input-group-btn">
+            <!--div class="input-group-btn">
               <button class="btn btn-default" type="submit">
                 <i class="fa fa-search"></i>
               </button>
-            </div>
+            </div-->
           </div>
         </form>
       </div>
