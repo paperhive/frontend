@@ -88,7 +88,7 @@
               <ul class="dropdown-menu dropdown-menu-right ph-margin-dropdown">
                 <li>
                   <a href="#{{'articles.discussions.thread' | routeSegmentUrl:
-                    {discussionIndex: discussion.index} }}?scrollTo={{reply._id}}">
+                    {discussionIndex: discussion.index} }}#{{reply._id}}">
                     <i class="fa fa-fw fa-comments"></i> Show discussion view
                   </a>
                 </li>
@@ -96,7 +96,7 @@
                   <a href><i class="fa fa-fw fa-pencil"></i> Edit</a>
                 </li>
                 <li ng-if="auth.user._id === discussion.originalAnnotation.author._id"
-                    ng-class="{disabled: discussion.replies.length}">
+                    ng-class="{disabled: discussion.replies.length > $index + 1}">
                   <a href><i class="fa fa-fw fa-times"></i> Delete</a>
                 </li>
                 <li ng-if="auth.user._id !== discussion.originalAnnotation.author._id">
