@@ -3,7 +3,11 @@ module.exports = function(app) {
   app.controller(
     'NavbarCtrl',
     ['$scope', '$http', '$location', '$window', '$routeSegment', 'config',
-      function($scope, $http, $location, $window, $routeSegment, config) {
+      'notificationService',
+      function(
+        $scope, $http, $location, $window, $routeSegment, config,
+        notificationService
+      ) {
         $scope.collapsed = true;
 
         $scope.search = {};
@@ -11,9 +15,15 @@ module.exports = function(app) {
           return $http.get(config.apiUrl + '/articles/', {
             params: {q: query, limit: limit}
           })
-          .then(function(response) {
-            return response.data;
-          });
+          .then(
+            function(response) {return response.data;},
+            function(response) {
+              notificationService.notifications.push({
+                type: 'error',
+                message: 'Could not fetch articles'
+              });
+            }
+          );
         };
 
         $scope.goToArticle = function(item, model, label) {
