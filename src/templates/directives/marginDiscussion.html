@@ -81,9 +81,29 @@
         <!-- row content -->
         <div class="ph-margin-row-content clearfix">
           <div class="pull-right">
-            <button class="btn btn-link btn-xs">
-              <i class="fa fa-caret-down"></i>
-            </button>
+            <span ng-click="$event.stopPropagation()" class="dropdown" dropdown>
+              <button class="btn btn-link btn-xs dropdown-toggle" dropdown-toggle>
+                <i class="fa fa-caret-down"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-right ph-margin-dropdown">
+                <li>
+                  <a href="#{{'articles.discussions.thread' | routeSegmentUrl:
+                    {discussionIndex: discussion.index} }}?scrollTo={{reply._id}}">
+                    <i class="fa fa-fw fa-comments"></i> Show discussion view
+                  </a>
+                </li>
+                <li ng-if="auth.user._id === discussion.originalAnnotation.author._id">
+                  <a href><i class="fa fa-fw fa-pencil"></i> Edit</a>
+                </li>
+                <li ng-if="auth.user._id === discussion.originalAnnotation.author._id"
+                    ng-class="{disabled: discussion.replies.length}">
+                  <a href><i class="fa fa-fw fa-times"></i> Delete</a>
+                </li>
+                <li ng-if="auth.user._id !== discussion.originalAnnotation.author._id">
+                  <a href><i class="fa fa-fw fa-flag"></i> Flag</a>
+                </li>
+              </ul>
+            </span>
           </div>
           <div class="ph-margin-info">
             <p class="ph-xs-margin-bottom">
