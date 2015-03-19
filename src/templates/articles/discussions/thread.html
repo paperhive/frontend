@@ -22,9 +22,12 @@
 
   <div ng-if="discussion.originalAnnotation.target.text">
     <hr>
-    <blockquote>
-      {{discussion.originalAnnotation.target.text}}
-    </blockquote>
+    <h4>Referenced text</h4>
+    <div class="well well-lg ph-reference">
+      <blockquote>
+        {{discussion.originalAnnotation.target.text}}
+      </blockquote>
+    </div>
   </div>
 
   <hr>
