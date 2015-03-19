@@ -2,10 +2,10 @@
 module.exports = function(app) {
   app.controller(
     'NavbarCtrl',
-    ['$scope', '$http', '$location', '$window', '$routeSegment', 'config',
+    ['$scope', '$http', '$location', '$routeSegment', 'config',
       'notificationService',
       function(
-        $scope, $http, $location, $window, $routeSegment, config,
+        $scope, $http, $location, $routeSegment, config,
         notificationService
       ) {
         $scope.collapsed = true;
