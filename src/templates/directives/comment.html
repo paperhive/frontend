@@ -58,13 +58,6 @@
           id="textbody"
           class="form-control ph-comment-body"
           ng-model="comment.body"
-          mentio
-          mentio-macros="macros"
-          mentio-search="searchUsers(term)"
-          mentio-items="localItems"
-          mentio-select="getUserText(item)"
-          mentio-template-url="templates/directives/mentio-list.html"
-          mentio-require-leading-space="true"
           rows="6"
           placeholder="Leave a comment..."
           ng-required="requiresBody"
@@ -76,7 +69,12 @@
           <kramjax body="comment.body"></kramjax>
         </div>
         <span class="pull-right">
-          <button type="button" class="btn btn-danger" ng-click="cancel()" ng-disabled="submitting">
+          <button
+            type="button"
+            class="btn btn-danger"
+            ng-click="cancel()"
+            ng-disabled="submitting"
+            >
             <i class="fa fa-fw fa-times"></i>
             Cancel
           </button>
