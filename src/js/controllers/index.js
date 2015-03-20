@@ -6,6 +6,7 @@ module.exports = function(app) {
   require('./comment')(app);
   require('./discussion.js')(app);
   require('./navbar.js')(app);
+  require('./navbarSearch.js')(app);
   require('./navbar_user.js')(app);
   require('./notifications.js')(app);
   require('./oauthOrcid.js')(app);

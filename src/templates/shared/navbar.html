@@ -23,14 +23,30 @@
     <div class="collapse navbar-collapse" collapse="collapsed">
       <!-- left -->
       <div class="navbar-left">
-        <form class="navbar-form" role="search">
+        <form ng-controller="NavbarSearchCtrl"
+          name="searchForm"
+          class="navbar-form"
+          role="search"
+          novalidate
+          >
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search PaperHub" name="srch-term" id="srch-term">
-            <div class="input-group-btn">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search PaperHub"
+              name="srch-term"
+              id="srch-term"
+              ng-model="search.body"
+              typeahead="result.title for result in phSearch($viewValue, 5)"
+              typeahead-wait-ms="250"
+              typeahead-on-select="goToArticle($item, $model, $label)"
+              required
+              >
+            <!--div class="input-group-btn">
               <button class="btn btn-default" type="submit">
                 <i class="fa fa-search"></i>
               </button>
-            </div>
+            </div-->
           </div>
         </form>
       </div>

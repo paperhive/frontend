@@ -44,14 +44,13 @@
                 class="form-control ph-comment-body"
                 ng-model="comment.body"
                 mentio
-                mentio-macros="macros"
-                mentio-search="searchPeople(term)"
-                mentio-items="localItems"
+                mentio-search="searchUsers(term, 5)"
+                mentio-items="foundUsers"
                 mentio-template-url="templates/directives/mentio-list.html"
-                mentio-select="getPeopleText(item)"
+                mentio-select="getMentioText(item)"
                 mentio-require-leading-space="true"
                 rows="6"
-                placeholder="Leave an comment..."
+                placeholder="Leave a comment..."
                 ></textarea>
               <hr>
               <label for="preview">Preview</label>

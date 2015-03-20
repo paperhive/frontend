@@ -6,9 +6,10 @@ module.exports = function(app) {
   app.controller('DiscussionCtrl', [
     '$scope', 'authService', '$routeSegment', '$http', 'config',
     'notificationService',
-    function($scope, authService, $routeSegment, $http, config,
-             notificationService) {
-
+    function(
+      $scope, authService, $routeSegment, $http, config,
+      notificationService
+    ) {
       // fetch discussion
       $http.get(
         config.apiUrl +
@@ -20,14 +21,14 @@ module.exports = function(app) {
       })
       .error(notificationService.httpError('could not fetch discussion'));
 
-        // Problem:
-        //   When updateTitle() is run, the newTitle needs to be populated in
-        //   the scope. This may not necessarily be the case.
-        // Workaround:
-        //   Explicitly set the newTitle in the $scope.
-        // Disadvantage:
-        //   The title is set twice, and this is kind of ugly.
-        // TODO find a better solution
+      // Problem:
+      //   When updateTitle() is run, the newTitle needs to be populated in
+      //   the scope. This may not necessarily be the case.
+      // Workaround:
+      //   Explicitly set the newTitle in the $scope.
+      // Disadvantage:
+      //   The title is set twice, and this is kind of ugly.
+      // TODO find a better solution
       $scope.updateTitle = function(newTitle) {
         $scope.discussion.originalAnnotation.title = newTitle;
         $scope.updateDiscussion($scope.discussion.originalAnnotation);
@@ -106,30 +107,30 @@ module.exports = function(app) {
 
       // currently unused
       /*
-      $scope.subscribers = [
-      ];
-      if('user' in authService) {
-        $scope.isSubscribed = $scope.subscribers.indexOf(authService.user._id) > -1;
+         $scope.subscribers = [
+         ];
+         if('user' in authService) {
+         $scope.isSubscribed = $scope.subscribers.indexOf(authService.user._id) > -1;
+         } else {
+         $scope.isSubscribed = false;
+         }
+         $scope.toggleSubscribe = function() {
+         var k = $scope.subscribers.indexOf(authService.user._id);
+         if (k > -1) {
+      // remove from to subscribers list
+      $scope.subscribers.splice(k, 1);
+      $scope.isSubscribed = false;
       } else {
-        $scope.isSubscribed = false;
+      // add to subscribers list
+      $scope.subscribers.push(authService.user._id);
+      $scope.isSubscribed = true;
       }
-      $scope.toggleSubscribe = function() {
-        var k = $scope.subscribers.indexOf(authService.user._id);
-        if (k > -1) {
-          // remove from to subscribers list
-          $scope.subscribers.splice(k, 1);
-          $scope.isSubscribed = false;
-        } else {
-          // add to subscribers list
-          $scope.subscribers.push(authService.user._id);
-          $scope.isSubscribed = true;
-        }
       };
 
       $scope.isArticleAuthor = function(authorId) {
-        var _ = require('lodash');
-        var k = _.findWhere($scope.article.authors, {_id: authorId});
-        return (k !== undefined);
+      var _ = require('lodash');
+      var k = _.findWhere($scope.article.authors, {_id: authorId});
+      return (k !== undefined);
       };
       */
     }]);
