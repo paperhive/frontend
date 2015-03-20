@@ -18,11 +18,13 @@
   </div>
   <ul class="list-group">
     <li class="list-group-item" ng-repeat="discussion in discussions.stored">
-      <span class="pull-right">
+    <a href="#{{'articles.discussions.thread' | routeSegmentUrl:
+      {discussionIndex: discussion.index} }}">
+      <span class="pull-right ph-discussion-replies-counter">
         <span ng-if="discussion.replies.length > 0">
           <i class="fa fa-comments"></i> {{discussion.replies.length}}
         </span>
-      </span>
+    </span></a>
       <h4>
         <a href="#{{'articles.discussions.thread' | routeSegmentUrl:
             {discussionIndex: discussion.index} }}">
@@ -36,12 +38,14 @@
           </li>
         </ul>
       </h4>
-      #{{discussion.index}} opened
-      <span am-time-ago="discussion.originalAnnotation.createdAt"></span>
-      by
-      <a href="#/users/{{discussion.originalAnnotation.author.username}}">
-        {{discussion.originalAnnotation.author.displayName}}
-      </a>
+      <span class="ph-discussion-subtitle">
+        #{{discussion.index}} opened
+        <span am-time-ago="discussion.originalAnnotation.createdAt"></span>
+        by
+        <a href="#/users/{{discussion.originalAnnotation.author.username}}">
+          {{discussion.originalAnnotation.author.displayName}}
+        </a>
+      </span>
     </li>
   </ul>
 </div>
