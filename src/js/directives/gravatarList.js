@@ -11,6 +11,7 @@ module.exports = function(app) {
       templateUrl: 'templates/directives/gravatarList.html',
       link: function(scope, element, attrs) {
         scope.$watch('discussion', function(discussion) {
+          // TODO $watch doesn't fire on reply update
           if (discussion !== undefined) {
 
             scope.participants = _.map(
