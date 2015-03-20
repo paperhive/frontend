@@ -87,7 +87,8 @@ module.exports = function(app) {
               // use element as container and viewer element
               // (container is only used for size measurements and events)
               container: element[0],
-              viewer: element[0]
+              viewer: element[0],
+              removePageBorders: true
             });
 
             // set scale
