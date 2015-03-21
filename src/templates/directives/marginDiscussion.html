@@ -92,12 +92,16 @@
                     <i class="fa fa-fw fa-comments"></i> Show discussion view
                   </a>
                 </li>
+                <!-- edit reply -->
                 <li ng-if="auth.user._id === discussion.originalAnnotation.author._id">
                   <a href><i class="fa fa-fw fa-pencil"></i> Edit</a>
                 </li>
+                <!-- delete reply -->
                 <li ng-if="auth.user._id === discussion.originalAnnotation.author._id"
-                    ng-class="{disabled: discussion.replies.length > $index + 1}">
-                  <a href><i class="fa fa-fw fa-times"></i> Delete</a>
+                    ng-class="{disabled: state.submitting}">
+                  <a ng-click="replyDelete(reply)" href>
+                    <i class="fa fa-fw fa-times"></i> Delete
+                  </a>
                 </li>
                 <li ng-if="auth.user._id !== discussion.originalAnnotation.author._id">
                   <a href><i class="fa fa-fw fa-flag"></i> Flag</a>
@@ -117,7 +121,7 @@
       </div>
     </div>
     <!-- reply form -->
-    <div ng-if="auth.user" class="ph-margin-row ph-margin-row-border-top">
+    <div ng-if="auth.user && !state.editing" class="ph-margin-row ph-margin-row-border-top">
       <!-- avatar -->
       <div class="ph-margin-avatar-container">
         <img gravatar-user="auth.user" gravatar-size="30"

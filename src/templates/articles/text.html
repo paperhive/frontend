@@ -50,6 +50,7 @@
         ng-style="{'top': text.marginOffsets[discussion._id] + 'px'}"
         discussion="discussion"
         on-reply-submit="addReply(discussion, $reply)"
+        on-reply-delete="deleteReply(discussion, $reply._id)"
         ng-mouseenter="text.highlightBorder[discussion._id] = true"
         ng-mouseleave="text.highlightBorder[discussion._id] = false"
         element-size="text.marginDiscussionSizes[discussion._id]"

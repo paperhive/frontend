@@ -104,5 +104,18 @@ module.exports = function(app) {
           .error(notificationService.httpError('could not add reply'));
       };
 
+      $scope.deleteReply = function(discussion, replyId) {
+        return $http.delete(
+          config.apiUrl +
+            '/articles/' + $routeSegment.$routeParams.articleId +
+            '/discussions/' + discussion.index +
+            '/replies/' + replyId
+        )
+        .success(function(data) {
+          _.remove(discussion.replies, {_id: replyId});
+        })
+        .error(notificationService.httpError('could not delete reply'));
+      };
+
     }]);
 };
