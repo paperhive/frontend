@@ -105,6 +105,18 @@ module.exports = function(app) {
           .error(notificationService.httpError('could not update discussion'));
       };
 
+      $scope.discussionDelete = function(discussion) {
+        return $http.delete(
+          config.apiUrl +
+            '/articles/' + $routeSegment.$routeParams.articleId +
+            '/discussions/' + discussion.index
+        )
+        .success(function() {
+          _.remove($scope.discussions.stored, {index: discussion.index});
+        })
+          .error(notificationService.httpError('could not delete discussion'));
+      };
+
       $scope.replyAdd = function(discussion, reply) {
         reply = _.cloneDeep(_.pick(
           reply, ['body']
