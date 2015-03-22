@@ -1,4 +1,6 @@
 'use strict';
+var angular = require('angular');
+
 module.exports = function(app) {
 
   app.directive('marginDiscussion', [
@@ -9,6 +11,7 @@ module.exports = function(app) {
         scope: {
           discussion: '=',
           onReplySubmit: '&',
+          onReplyUpdate: '&',
           onReplyDelete: '&',
         },
         templateUrl: 'templates/directives/marginDiscussion.html',
@@ -29,14 +32,34 @@ module.exports = function(app) {
               });
           };
 
-          scope.replyDelete = function(reply) {
-            scope.state.submitting = true;
+          scope.replyCtrl = ['$scope', function($scope) {
+            $scope.replyState = {};
 
-            $q.when(scope.onReplyDelete({$reply: reply}))
-              .finally(function() {
-                scope.state.submitting = false;
-              });
-          };
+            scope.replyDelete = function(reply) {
+              $scope.replyState.submitting = true;
+
+              $q.when($scope.onReplyDelete({$reply: reply}))
+                .finally(function() {
+                  $scope.replyState.submitting = false;
+                });
+            };
+          }];
+
+          scope.replyEditCtrl = ['$scope', function($scope) {
+            $scope.copy = angular.copy($scope.reply);
+            $scope.replyUpdate = function() {
+              $scope.replyState.submitting = true;
+              $q.when(scope.onReplyUpdate(
+                {$replyOld: $scope.reply, $replyNew: $scope.copy}
+              ))
+                .then(function() {
+                  $scope.replyState.editing = false;
+                })
+                .finally(function() {
+                  $scope.replyState.submitting = false;
+                });
+            };
+          }];
         }
       };
     }

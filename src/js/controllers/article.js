@@ -1,5 +1,6 @@
 'use strict';
 var _ = require('lodash');
+var angular = require('angular');
 
 module.exports = function(app) {
 
@@ -87,9 +88,9 @@ module.exports = function(app) {
           .error(notificationService.httpError('could not add discussion'));
       };
 
-      $scope.addReply = function(discussion, reply) {
+      $scope.replyAdd = function(discussion, reply) {
         reply = _.cloneDeep(_.pick(
-          reply, ['title', 'body']
+          reply, ['body']
         ));
         return $http.post(
           config.apiUrl +
@@ -104,7 +105,25 @@ module.exports = function(app) {
           .error(notificationService.httpError('could not add reply'));
       };
 
-      $scope.deleteReply = function(discussion, replyId) {
+      $scope.replyUpdate = function(discussion, replyOld, replyNew) {
+        var replyId = replyOld._id;
+        replyNew = _.cloneDeep(_.pick(
+          replyNew, ['body']
+        ));
+        return $http.put(
+          config.apiUrl +
+            '/articles/' + $routeSegment.$routeParams.articleId +
+            '/discussions/' + discussion.index +
+            '/replies/' + replyId,
+          replyNew
+        )
+        .success(function(reply) {
+          angular.copy(reply, replyOld);
+        })
+          .error(notificationService.httpError('could not add reply'));
+      };
+
+      $scope.replyDelete = function(discussion, replyId) {
         return $http.delete(
           config.apiUrl +
             '/articles/' + $routeSegment.$routeParams.articleId +

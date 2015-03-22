@@ -64,10 +64,10 @@
     </div>
   </div>
   <div collapse="!state.showReplies">
-    <div
-        ng-repeat="reply in discussion.replies"
-        class="ph-margin-row ph-margin-row-border-top"
-        >
+    <!-- replies (note that ng-repeat creates a child scope!) -->
+    <div ng-repeat="reply in discussion.replies"
+        ng-controller="replyCtrl"
+        class="ph-margin-row ph-margin-row-border-top">
       <!-- avatar -->
       <div class="ph-margin-avatar-container">
         <img gravatar-user="reply.author" gravatar-size="30"
@@ -80,43 +80,76 @@
         </div>
         <!-- row content -->
         <div class="ph-margin-row-content clearfix">
-          <div class="pull-right">
-            <span ng-click="$event.stopPropagation()" class="dropdown" dropdown>
-              <button class="btn btn-link btn-xs dropdown-toggle" dropdown-toggle>
-                <i class="fa fa-caret-down"></i>
-              </button>
-              <ul class="dropdown-menu dropdown-menu-right ph-margin-dropdown">
-                <li>
-                  <a href="#{{'articles.discussions.thread' | routeSegmentUrl:
-                    {discussionIndex: discussion.index} }}#{{reply._id}}">
-                    <i class="fa fa-fw fa-comments"></i> Show discussion view
-                  </a>
-                </li>
-                <!-- edit reply -->
-                <li ng-if="auth.user._id === discussion.originalAnnotation.author._id">
-                  <a href><i class="fa fa-fw fa-pencil"></i> Edit</a>
-                </li>
-                <!-- delete reply -->
-                <li ng-if="auth.user._id === discussion.originalAnnotation.author._id"
-                    ng-class="{disabled: state.submitting}">
-                  <a ng-click="replyDelete(reply)" href>
-                    <i class="fa fa-fw fa-times"></i> Delete
-                  </a>
-                </li>
-                <li ng-if="auth.user._id !== discussion.originalAnnotation.author._id">
-                  <a href><i class="fa fa-fw fa-flag"></i> Flag</a>
-                </li>
-              </ul>
-            </span>
+          <!-- view reply -->
+          <div ng-if="!replyState.editing">
+            <div class="pull-right">
+              <span ng-click="$event.stopPropagation()" class="dropdown" dropdown>
+                <button class="btn btn-link btn-xs dropdown-toggle" dropdown-toggle>
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right ph-margin-dropdown">
+                  <li>
+                    <a href="#{{'articles.discussions.thread' | routeSegmentUrl:
+                      {discussionIndex: discussion.index} }}#{{reply._id}}">
+                      <i class="fa fa-fw fa-comments"></i> Show discussion view
+                    </a>
+                  </li>
+                  <!-- edit reply -->
+                  <li ng-if="auth.user._id === discussion.originalAnnotation.author._id"
+                      ng-class="{disabled: replyState.submitting}">
+                    <a ng-click="replyState.editing = true" href>
+                      <i class="fa fa-fw fa-pencil"></i> Edit
+                    </a>
+                  </li>
+                  <!-- delete reply -->
+                  <li ng-if="auth.user._id === discussion.originalAnnotation.author._id"
+                      ng-class="{disabled: replyState.submitting}">
+                    <a ng-click="replyDelete(reply)" href>
+                      <i class="fa fa-fw fa-times"></i> Delete
+                    </a>
+                  </li>
+                  <li ng-if="auth.user._id !== discussion.originalAnnotation.author._id">
+                    <a href><i class="fa fa-fw fa-flag"></i> Flag</a>
+                  </li>
+                </ul>
+              </span>
+            </div>
+            <div class="ph-margin-info">
+              <p class="ph-xs-margin-bottom">
+                <a href="#/users/{{reply.author.username}}">
+                  {{reply.author.displayName}}</a>
+                · <span am-time-ago="reply.createdAt"></span>
+              </p>
+            </div>
+            <kramjax body="reply.body"></kramjax>
           </div>
-          <div class="ph-margin-info">
-            <p class="ph-xs-margin-bottom">
-              <a href="#/users/{{reply.author.username}}">
-                {{reply.author.displayName}}</a>
-              · <span am-time-ago="reply.createdAt"></span>
-            </p>
-          </div>
-          <kramjax body="reply.body"></kramjax>
+          <!-- edit reply -->
+          <form ng-if="replyState.editing"
+              ng-controller="replyEditCtrl"
+              ng-submit="commentForm.$valid && replyUpdate()"
+              name="commentForm" novalidate>
+            <textarea ng-model="copy.body"
+              class="form-group form-control ph-comment-body ph-margin-textarea ph-no-margin"
+              placeholder="Enter updated reply..." rows="1" required
+              ></textarea>
+            <div class="ph-sm-margin-top clearfix">
+              <span class="pull-right">
+                <button ng-click="replyState.editing = false"
+                    ng-disabled="replyState.submitting"
+                    type="button" class="btn btn-danger btn-sm">
+                  <i class="fa fa-fw fa-times"></i>
+                  Cancel
+                </button>
+                <button
+                    ng-disabled="commentForm.$invalid || replyState.submitting"
+                    type="submit" class="btn btn-primary btn-sm">
+                  <i ng-if="!replyState.submitting" class="fa fa-fw fa-check"></i>
+                  <i ng-if="replyState.submitting" class="fa fa-fw fa-spinner fa-spin"></i>
+                  Update reply
+                </button>
+              </span>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -136,7 +169,7 @@
         <div class="ph-margin-row-content">
           <form ng-submit="commentForm.$valid && replySubmit()"
               name="commentForm" novalidate>
-            <textarea ng-model="replyDraft.body" id="textbody"
+            <textarea ng-model="replyDraft.body"
               ng-focus="state.textFocused = true"
               ng-blur="state.textFocused = false"
               class="form-group form-control ph-comment-body ph-margin-textarea ph-no-margin"
