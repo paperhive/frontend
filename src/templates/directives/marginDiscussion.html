@@ -41,7 +41,8 @@
                 </li>
                 <li ng-if="auth.user._id === discussion.originalAnnotation.author._id"
                     ng-class="{disabled: originalState.submitting}">
-                  <a ng-click="discussionDelete()" href>
+                    <a ng-confirm-click="Really delete discussion?"
+                        confirmed-click="discussionDelete()" href>
                     <i class="fa fa-fw fa-times"></i> Delete
                   </a>
                 </li>
@@ -146,7 +147,8 @@
                   <!-- delete reply -->
                   <li ng-if="auth.user._id === reply.author._id"
                       ng-class="{disabled: replyState.submitting}">
-                    <a ng-click="replyDelete(reply)" href>
+                      <a ng-confirm-click="Really delete reply?"
+                          confirmed-click="replyDelete(reply)" href>
                       <i class="fa fa-fw fa-times"></i> Delete
                     </a>
                   </li>
