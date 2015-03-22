@@ -10,6 +10,8 @@ module.exports = function(app) {
         restrict: 'E',
         scope: {
           discussion: '=',
+          onOriginalUpdate: '&',
+          onDiscussionDelete: '&',
           onReplySubmit: '&',
           onReplyUpdate: '&',
           onReplyDelete: '&',
@@ -20,6 +22,36 @@ module.exports = function(app) {
           scope.replyDraft = {};
           scope.auth = authService;
 
+          // original comment
+          scope.originalState = {};
+          // update original comment
+          scope.originalEditCtrl = ['$scope', function($scope) {
+            $scope.copy = angular.copy($scope.discussion.originalAnnotation);
+            $scope.originalUpdate = function() {
+              $scope.originalState.submitting = true;
+              $q.when(scope.onOriginalUpdate(
+                {$comment: $scope.copy}
+              ))
+                .then(function() {
+                  $scope.originalState.editing = false;
+                })
+                .finally(function() {
+                  $scope.originalState.submitting = false;
+                });
+            };
+          }];
+
+          // delete original comment (with discussion!)
+          scope.discussionDelete = function() {
+            scope.originalState.submitting = true;
+
+            $q.when(scope.onDiscussionDelete({$discussion: scope.discussion}))
+              .finally(function() {
+                scope.originalState.submitting = false;
+              });
+          };
+
+          // add reply
           scope.replySubmit = function() {
             scope.state.submitting = true;
 
@@ -32,10 +64,11 @@ module.exports = function(app) {
               });
           };
 
+          // reply controller (for deletion)
           scope.replyCtrl = ['$scope', function($scope) {
             $scope.replyState = {};
 
-            scope.replyDelete = function(reply) {
+            $scope.replyDelete = function(reply) {
               $scope.replyState.submitting = true;
 
               $q.when($scope.onReplyDelete({$reply: reply}))
@@ -45,6 +78,7 @@ module.exports = function(app) {
             };
           }];
 
+          // reply controller (for editing)
           scope.replyEditCtrl = ['$scope', function($scope) {
             $scope.copy = angular.copy($scope.reply);
             $scope.replyUpdate = function() {

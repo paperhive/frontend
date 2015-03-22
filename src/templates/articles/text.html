@@ -49,6 +49,8 @@
         ng-show="text.marginOffsets[discussion._id] !== undefined"
         ng-style="{'top': text.marginOffsets[discussion._id] + 'px'}"
         discussion="discussion"
+        on-original-update="originalUpdate(discussion, $comment)"
+        on-discussion-delete="discussionDelete(discussion)"
         on-reply-submit="replyAdd(discussion, $reply)"
         on-reply-update="replyUpdate(discussion, $replyOld, $replyNew)"
         on-reply-delete="replyDelete(discussion, $reply._id)"

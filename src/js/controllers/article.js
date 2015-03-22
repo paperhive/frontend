@@ -88,6 +88,23 @@ module.exports = function(app) {
           .error(notificationService.httpError('could not add discussion'));
       };
 
+      $scope.originalUpdate = function(discussion, comment) {
+        var originalComment = _.cloneDeep(_.pick(
+          comment, ['title', 'body', 'target', 'tags']
+        ));
+
+        return $http.put(
+          config.apiUrl +
+            '/articles/' + $routeSegment.$routeParams.articleId +
+            '/discussions/' + discussion.index,
+          {originalAnnotation: originalComment}
+        )
+        .success(function(newDiscussion) {
+          angular.copy(newDiscussion, discussion);
+        })
+          .error(notificationService.httpError('could not update discussion'));
+      };
+
       $scope.replyAdd = function(discussion, reply) {
         reply = _.cloneDeep(_.pick(
           reply, ['body']
