@@ -63,13 +63,6 @@ module.exports = function(app) {
           comment, ['title', 'body', 'target', 'tags']
         ));
 
-        // We always need a title.
-        // This conditional applies for short inline comments on the PDF.
-        if (!originalComment.title) {
-          originalComment.title = originalComment.body;
-          originalComment.body = undefined;
-        }
-
         $scope.submitting = true;
         return $http.post(
           config.apiUrl +
