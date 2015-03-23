@@ -221,7 +221,7 @@
             <div ng-if="state.textFocused || replyDraft.body"
               class="ph-sm-margin-top clearfix">
               <button type="submit" class="btn btn-primary btn-sm pull-right"
-                  ng-disabled="replyEditForm.$invalid || state.submitting">
+                  ng-disabled="replyForm.$invalid || state.submitting">
                 <i ng-if="!state.submitting" class="fa fa-fw fa-check"></i>
                 <i ng-if="state.submitting" class="fa fa-fw fa-spinner fa-spin"></i>
                 Add reply
