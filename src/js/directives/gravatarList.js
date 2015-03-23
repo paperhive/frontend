@@ -10,20 +10,24 @@ module.exports = function(app) {
       },
       templateUrl: 'templates/directives/gravatarList.html',
       link: function(scope, element, attrs) {
-        scope.$watch('discussion', function(discussion) {
-          // TODO $watch doesn't fire on reply update
-          if (discussion !== undefined) {
+        scope.$watch(
+          'discussion',
+          function(discussion) {
+            if (discussion !== undefined) {
 
-            scope.participants = _.pluck(scope.discussion.replies, 'author');
-            // prepend original annotation author
-            scope.participants.unshift(
-              scope.discussion.originalAnnotation.author
-            );
+              scope.participants = _.pluck(scope.discussion.replies, 'author');
+              // prepend original annotation author
+              scope.participants.unshift(
+                scope.discussion.originalAnnotation.author
+              );
 
-            // make list unique w.r.t. _id
-            scope.participants = _.uniq(scope.participants, '_id');
-          }
-        });
+              // make list unique w.r.t. _id
+              scope.participants = _.uniq(scope.participants, '_id');
+            }
+          },
+          // http://stackoverflow.com/a/19455564/353337
+          true
+        );
       }
     };
   });
