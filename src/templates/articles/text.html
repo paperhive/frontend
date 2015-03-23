@@ -63,7 +63,8 @@
         ng-if="originalComment.draft.target && text.highlightInfos.draft.top !== undefined"
         ng-style="{'top': text.highlightInfos.draft.top + 'px'}"
         on-submit="addDiscussion($comment)"
-        on-outside-mousedown="!originalComment.draft.body && purgeDraft()"
+        on-outside-mousedown="!originalComment.draft.title &&
+          !originalComment.draft.body && purgeDraft()"
         comment="originalComment.draft"
         element-size="text.marginDiscussionSizes.draft"
         >
