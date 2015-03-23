@@ -80,7 +80,7 @@
             <input ng-model="copy.title" name="title"
               ng-click="$event.stopPropagation()"
               class="form-group form-control ph-no-margin ph-margin-textarea"
-              type="text" placeholder="Enter updated title..."
+              type="text" placeholder="Enter title..."
               required ng-maxlength="40">
             <i ng-if="originalForm.title.$dirty && originalForm.title.$invalid"
               class="fa fa-fw fa-times form-control-feedback" aria-hidden="true"></i>
@@ -95,7 +95,7 @@
           </div>
           <textarea ng-model="copy.body"
             ng-click="$event.stopPropagation()"
-            id="textbody" placeholder="Enter updated comment (optional)..."
+            id="textbody" placeholder="Enter comment (optional)..."
             class="form-group form-control ph-comment-body ph-no-margin ph-margin-textarea"
             rows="2"></textarea>
           <div class="ph-sm-margin-top clearfix">
@@ -188,7 +188,7 @@
               name="replyEditForm" novalidate>
             <textarea ng-model="copy.body"
               class="form-group form-control ph-comment-body ph-margin-textarea ph-no-margin"
-              placeholder="Enter updated reply..." rows="1" required
+              placeholder="Enter reply..." rows="1" required
               ></textarea>
             <div class="ph-sm-margin-top clearfix">
               <span class="pull-right">
