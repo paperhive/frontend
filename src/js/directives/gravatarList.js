@@ -14,20 +14,14 @@ module.exports = function(app) {
           // TODO $watch doesn't fire on reply update
           if (discussion !== undefined) {
 
-            scope.participants = _.map(
-              scope.discussion.replies,
-              function(reply) {return reply.author;}
-            );
+            scope.participants = _.pluck(scope.discussion.replies, 'author');
             // prepend original annotation author
             scope.participants.unshift(
               scope.discussion.originalAnnotation.author
             );
 
-            // make list unique
-            scope.participants = _.uniq(
-              scope.participants,
-              function(user) {return user._id;}
-            );
+            // make list unique w.r.t. _id
+            scope.participants = _.uniq(scope.participants, '_id');
           }
         });
       }
