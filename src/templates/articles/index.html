@@ -47,7 +47,10 @@
                   <a><i class="fa fa-fw fa-file-pdf-o"></i> Text</a>
                 </li>
                 <li subnav-target="articles.discussions">
-                  <a><i class="fa fa-fw fa-comments"></i> Discussions</a>
+                  <a><i class="fa fa-fw fa-comments"></i> Discussions
+                    <span class="badge" ng-if="discussions.stored.length > 0">
+                      {{discussions.stored.length}}
+                    </span></a>
                 </li>
                 <li subnav-target="articles.activity">
                   <a><i class="fa fa-fw fa-clock-o"></i> Activity</a>
