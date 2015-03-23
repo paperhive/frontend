@@ -74,10 +74,25 @@
             ng-submit="originalForm.$valid && originalUpdate()"
             ng-controller="originalEditCtrl"
             name="originalForm" novalidate>
-          <input ng-model="copy.title"
-            ng-click="$event.stopPropagation()"
-            type="text" class="form-group form-control ph-no-margin ph-margin-textarea ph-sm-margin-bottom"
-            placeholder="Enter updated title..." required>
+          <div class="form-group ph-no-margin ph-sm-margin-bottom has-feedback"
+            ng-class="{'has-error': originalForm.title.$dirty &&
+              originalForm.title.$invalid}">
+            <input ng-model="copy.title" name="title"
+              ng-click="$event.stopPropagation()"
+              class="form-group form-control ph-no-margin ph-margin-textarea"
+              type="text" placeholder="Enter updated title..."
+              required ng-maxlength="40">
+            <i ng-if="originalForm.title.$dirty && originalForm.title.$invalid"
+              class="fa fa-fw fa-times form-control-feedback" aria-hidden="true"></i>
+            <p class="help-block small"
+                ng-if="originalForm.title.$dirty && originalForm.title.$error.required">
+              A title is required.
+            </p>
+            <p class="help-block small" ng-if="originalForm.title.$error.maxlength">
+              A title is limited to 40 characters (you entered
+              {{originalForm.title.$viewValue.length}} characters).
+            </p>
+          </div>
           <textarea ng-model="copy.body"
             ng-click="$event.stopPropagation()"
             id="textbody" placeholder="Enter updated comment (optional)..."
