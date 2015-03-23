@@ -1,14 +1,14 @@
 <div class="ph-margin-container">
   <!-- original comment -->
-  <div class="ph-margin-row">
+  <div class="ph-margin-row ph-margin-link-default"
+    ng-click="state.showReplies = !state.showReplies">
     <!-- avatar -->
     <div class="ph-margin-avatar-container">
       <img gravatar-user="discussion.originalAnnotation.author"
           gravatar-size="30" class="ph-margin-avatar">
     </div>
     <!-- container with arrow + content -->
-    <div class="ph-margin-row-container ph-margin-link-default"
-        ng-click="state.showReplies = !state.showReplies">
+    <div class="ph-margin-row-container ph-margin-link-default">
       <!-- arrow -->
       <div class="ph-margin-arrow-container">
         <div class="ph-arrow ph-arrow-outward-left"></div>
