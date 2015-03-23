@@ -17,11 +17,13 @@
   <ul class="list-group">
     <li class="list-group-item" ng-repeat="discussion in discussions.stored">
     <a href="#{{'articles.discussions.thread' | routeSegmentUrl:
-      {discussionIndex: discussion.index} }}">
-      <span class="pull-right ph-discussion-replies-counter">
-        <span ng-if="discussion.replies.length > 0">
-          <i class="fa fa-comments"></i> {{discussion.replies.length}}
-        </span>
+      {discussionIndex: discussion.index} }}"
+      >
+      <span
+        ng-if="discussion.replies.length > 0"
+        class="pull-right ph-discussion-replies-counter"
+        >
+        <i class="fa fa-comments"></i> {{discussion.replies.length}}
     </span></a>
       <h4>
         <a href="#{{'articles.discussions.thread' | routeSegmentUrl:
