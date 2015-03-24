@@ -49,7 +49,11 @@
         ng-show="text.marginOffsets[discussion._id] !== undefined"
         ng-style="{'top': text.marginOffsets[discussion._id] + 'px'}"
         discussion="discussion"
-        on-reply-submit="addReply(discussion, $reply)"
+        on-original-update="originalUpdate(discussion, $comment)"
+        on-discussion-delete="discussionDelete(discussion)"
+        on-reply-submit="replyAdd(discussion, $reply)"
+        on-reply-update="replyUpdate(discussion, $replyOld, $replyNew)"
+        on-reply-delete="replyDelete(discussion, $reply._id)"
         ng-mouseenter="text.highlightBorder[discussion._id] = true"
         ng-mouseleave="text.highlightBorder[discussion._id] = false"
         element-size="text.marginDiscussionSizes[discussion._id]"
@@ -59,7 +63,8 @@
         ng-if="originalComment.draft.target && text.highlightInfos.draft.top !== undefined"
         ng-style="{'top': text.highlightInfos.draft.top + 'px'}"
         on-submit="addDiscussion($comment)"
-        on-outside-mousedown="!originalComment.draft.body && purgeDraft()"
+        on-outside-mousedown="!originalComment.draft.title &&
+          !originalComment.draft.body && purgeDraft()"
         comment="originalComment.draft"
         element-size="text.marginDiscussionSizes.draft"
         >

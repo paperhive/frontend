@@ -171,7 +171,9 @@ gulp.task('style', function () {
     .pipe(sourcemaps.init())
     .pipe(less())
     .on('error', handleError)
-    .pipe(debug ? gutil.noop() : minifyCSS())
+    .pipe(debug ? gutil.noop() : minifyCSS({
+      restructuring: false
+    }))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('build'));
 });

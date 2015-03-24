@@ -12,23 +12,44 @@
       </div>
       <!-- row content -->
       <div class="ph-margin-row-content">
-        <form ng-submit="commentForm.$valid && onSubmit({$comment: comment})"
+        <form ng-submit="commentForm.$valid && submit()"
           name="commentForm" novalidate>
-          <input ng-if="comment.body.length > 20" ng-model="comment.title"
-            type="text" class="form-group form-control ph-no-margin ph-margin-textarea ph-sm-margin-bottom"
-            placeholder="Enter title..." required>
-          <textarea ng-model="comment.body"
-            ng-focus="state.textFocused = true"
-            ng-blur="state.textFocused = false"
-            id="textbody" placeholder="Enter comment..."
-            class="form-group form-control ph-comment-body ph-no-margin ph-margin-textarea"
-            rows="2" required></textarea>
-          <div ng-if="state.textFocused || comment.body || comment.title"
-              class="ph-sm-margin-top clearfix">
-            <button ng-disabled="commentForm.$invalid"
-                class="btn btn-sm btn-primary pull-right">
-              Add comment
-            </button>
+          <div class="form-group ph-no-margin has-feedback"
+            ng-class="{'has-error': commentForm.title.$dirty &&
+              commentForm.title.$invalid}">
+            <input ng-model="comment.title" name="title"
+              ng-focus="state.textFocused = true"
+              ng-blur="state.textFocused = false"
+              class="form-group form-control ph-no-margin ph-margin-textarea"
+              type="text" placeholder="Enter comment title..."
+              required ng-maxlength="40">
+            <i ng-if="commentForm.title.$dirty && commentForm.title.$invalid"
+              class="fa fa-fw fa-times form-control-feedback" aria-hidden="true"></i>
+            <p class="help-block small"
+                ng-if="commentForm.title.$dirty && commentForm.title.$error.required">
+              A title is required.
+            </p>
+            <p class="help-block small" ng-if="commentForm.title.$error.maxlength">
+              A title is limited to 40 characters (you entered
+              {{commentForm.title.$viewValue.length}} characters).
+            </p>
+          </div>
+          <div collapse="!state.textFocused && !comment.title && !comment.body"
+              class="ph-sm-margin-top">
+            <textarea ng-model="comment.body"
+              ng-focus="state.textFocused = true"
+              ng-blur="state.textFocused = false"
+              id="textbody" placeholder="Enter comment (optional)..."
+              class="form-group form-control ph-comment-body ph-no-margin ph-margin-textarea"
+              rows="2"></textarea>
+            <div class="ph-sm-margin-top clearfix">
+              <button ng-disabled="commentForm.$invalid || state.submitting"
+                  class="btn btn-sm btn-primary pull-right">
+                <i ng-if="!state.submitting" class="fa fa-fw fa-check"></i>
+                <i ng-if="state.submitting" class="fa fa-fw fa-spinner fa-spin"></i>
+                Add comment
+              </button>
+            </div>
           </div>
         </form>
       </div>

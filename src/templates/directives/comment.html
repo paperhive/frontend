@@ -15,9 +15,10 @@
       <span ng-if="comment.createdAt !== comment.updatedAt">
         <em class="text-muted">(edited <span am-time-ago="comment.updatedAt"></span>)</em>
       </span>
-      <span class="pull-right">
-        <!--span ng-if="auth.user._id === comment.author._id"
-          class="ph-comment-tag">Article author</span-->
+      <span
+        class="pull-right"
+        ng-show="auth.user._id === comment.author._id"
+        >
         <button
           class="btn btn-link ph-no-padding-top ph-no-padding-bottom"
           ng-disabled="submitting"

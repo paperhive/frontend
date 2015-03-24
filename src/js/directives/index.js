@@ -4,6 +4,7 @@ module.exports = function(app) {
   require('./confirmed-click')(app);
   require('./elementSize')(app);
   require('./gravatar')(app);
+  require('./gravatarList')(app);
   require('./highlights')(app);
   require('./marginDiscussion')(app);
   require('./marginDiscussionDraft')(app);

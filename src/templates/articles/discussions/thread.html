@@ -22,9 +22,12 @@
 
   <div ng-if="discussion.originalAnnotation.target.text">
     <hr>
-    <blockquote>
-      {{discussion.originalAnnotation.target.text}}
-    </blockquote>
+    <h4>Referenced text</h4>
+    <div class="well well-lg ph-reference">
+      <blockquote>
+        {{discussion.originalAnnotation.target.text}}
+      </blockquote>
+    </div>
   </div>
 
   <hr>
@@ -41,7 +44,8 @@
           </comment>
         </li>
 
-        <li class="media" ng-repeat="reply in discussion.replies">
+        <li ng-repeat="reply in discussion.replies"
+            class="media" id="reply._id">
           <comment
             content="reply"
             on-delete="deleteReply($comment, $index)"
@@ -126,8 +130,8 @@
             >
             <div class="panel panel-default">
               <div class="panel-body">
-                <a href="{{auth.orcidUrl}}" class="btn btn-primary">
-                  Sign in with ORCID
+                <a href="{{auth.orcidUrl}}" class="btn btn-default">
+                  <img class="ph-orcid-icon" src="img/orcid.svg"> Sign in
                 </a>
                 to join this discussion on PaperHub.
               </div>
@@ -168,7 +172,8 @@
       </span>
       <hr>
       <h5>Participants</h5>
-      List of participants
+      <gravatar-list discussion="discussion">
+      </gravatar-list>
     </div>
 
   </div>

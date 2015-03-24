@@ -14,55 +14,127 @@
         <div class="ph-arrow ph-arrow-outward-left"></div>
       </div>
       <!-- row content -->
-      <div class="ph-margin-row-content clearfix">
-        <div class="pull-right">
-          <span class="badge ph-margin-badge" ng-if="discussion.replies.length">
-            <i class="fa fa-fw fa-comments"></i>
-            {{discussion.replies.length}}
-          </span>
-          <span class="dropdown" dropdown>
-            <button class="btn btn-link btn-xs dropdown-toggle"
-              dropdown-toggle ng-click="$event.stopPropagation();">
-              <i class="fa fa-caret-down"></i>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-right ph-margin-dropdown">
-              <li>
-                <a href><i class="fa fa-fw fa-pencil"></i> Edit</a>
-              </li>
-              <li>
-                <a href><i class="fa fa-fw fa-times"></i> Delete</a>
-              </li>
-              <li>
-                <a href><i class="fa fa-fw fa-flag"></i> Flag</a>
-              </li>
-            </ul>
-          </span>
-        </div>
-        <div class="ph-margin-info">
-          <p class="ph-xs-margin-bottom">
-            <a href="#/users/{{discussion.originalAnnotation.author.username}}"
-              target="_blank">
-              {{discussion.originalAnnotation.author.displayName}}</a>
-            · <span am-time-ago="discussion.originalAnnotation.createdAt"></span>
-          </p>
-        </div>
-        <div ng-if="!discussion.originalAnnotation.body">
-          <kramjax body="discussion.originalAnnotation.title"></kramjax>
-        </div>
-        <div ng-if="discussion.originalAnnotation.body">
-          <p class="ph-margin-title ph-no-margin ph-xs-margin-bottom">
+      <div class="ph-margin-row-content">
+        <!-- view original comment -->
+        <div ng-if="!originalState.editing" class="clearfix">
+          <div class="pull-right">
+            <span class="badge ph-margin-badge" ng-if="discussion.replies.length">
+              <i class="fa fa-fw fa-comments"></i>
+              {{discussion.replies.length}}
+            </span>
+            <span ng-click="$event.stopPropagation()" class="dropdown" dropdown>
+              <button class="btn btn-link btn-xs dropdown-toggle" dropdown-toggle>
+                <i class="fa fa-caret-down"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-right ph-margin-dropdown">
+                <li>
+                  <a href="#{{'articles.discussions.thread' | routeSegmentUrl:
+                      {discussionIndex: discussion.index} }}">
+                    <i class="fa fa-fw fa-comments"></i> Show discussion view
+                  </a>
+                </li>
+                <li ng-if="auth.user._id === discussion.originalAnnotation.author._id"
+                    ng-class="{disabled: originalState.submitting}">
+                  <a ng-click="originalState.editing = true; $event.stopPropagation()" href>
+                    <i class="fa fa-fw fa-pencil"></i> Edit
+                  </a>
+                </li>
+                <li ng-if="auth.user._id === discussion.originalAnnotation.author._id"
+                    ng-class="{disabled: originalState.submitting ||
+                      discussion.replies.length}">
+                  <a ng-if="!discussion.replies.length && !originalState.submitting"
+                      ng-confirm-click="Really delete discussion?"
+                      confirmed-click="discussionDelete()" href>
+                    <i class="fa fa-fw fa-times"></i> Delete
+                  </a>
+                  <a ng-if="!discussion.replies.length && originalState.submitting" href>
+                    <i class="fa fa-fw fa-times"></i> Delete
+                  </a>
+                  <a ng-if="discussion.replies.length" href
+                      tooltip="Discussions with replies cannot be deleted"
+                      tooltip-placement="left">
+                    <i class="fa fa-fw fa-times"></i> Delete
+                  </a>
+                </li>
+                <li ng-if="auth.user._id !== discussion.originalAnnotation.author._id">
+                  <a href><i class="fa fa-fw fa-flag"></i> Flag</a>
+                </li>
+              </ul>
+            </span>
+          </div>
+          <div class="ph-margin-info">
+            <p class="ph-xs-margin-bottom">
+              <a href="#/users/{{discussion.originalAnnotation.author.username}}">
+                {{discussion.originalAnnotation.author.displayName}}</a>
+              · <span am-time-ago="discussion.originalAnnotation.createdAt"></span>
+            </p>
+          </div>
+          <div ng-if="!discussion.originalAnnotation.body">
             <kramjax body="discussion.originalAnnotation.title"></kramjax>
-          </p>
-          <kramjax body="discussion.originalAnnotation.body"></kramjax>
+          </div>
+          <div ng-if="discussion.originalAnnotation.body">
+            <p class="ph-margin-title ph-no-margin ph-xs-margin-bottom">
+              <kramjax body="discussion.originalAnnotation.title"></kramjax>
+            </p>
+            <kramjax body="discussion.originalAnnotation.body"></kramjax>
+          </div>
         </div>
+        <!-- edit original comment -->
+        <form ng-if="originalState.editing"
+            ng-submit="originalForm.$valid && originalUpdate()"
+            ng-controller="originalEditCtrl"
+            name="originalForm" novalidate>
+          <div class="form-group ph-no-margin ph-sm-margin-bottom has-feedback"
+            ng-class="{'has-error': originalForm.title.$dirty &&
+              originalForm.title.$invalid}">
+            <input ng-model="copy.title" name="title"
+              ng-click="$event.stopPropagation()"
+              class="form-group form-control ph-no-margin ph-margin-textarea"
+              type="text" placeholder="Enter title..."
+              required ng-maxlength="40">
+            <i ng-if="originalForm.title.$dirty && originalForm.title.$invalid"
+              class="fa fa-fw fa-times form-control-feedback" aria-hidden="true"></i>
+            <p class="help-block small"
+                ng-if="originalForm.title.$dirty && originalForm.title.$error.required">
+              A title is required.
+            </p>
+            <p class="help-block small" ng-if="originalForm.title.$error.maxlength">
+              A title is limited to 40 characters (you entered
+              {{originalForm.title.$viewValue.length}} characters).
+            </p>
+          </div>
+          <textarea ng-model="copy.body"
+            ng-click="$event.stopPropagation()"
+            id="textbody" placeholder="Enter comment (optional)..."
+            class="form-group form-control ph-comment-body ph-no-margin ph-margin-textarea"
+            rows="2"></textarea>
+          <div class="ph-sm-margin-top clearfix">
+            <span class="pull-right">
+              <button
+                  ng-click="originalState.editing = false; $event.stopPropagation()"
+                  ng-disabled="originalState.submitting"
+                  type="button" class="btn btn-danger btn-sm">
+                <i class="fa fa-fw fa-times"></i>
+                Cancel
+              </button>
+              <button ng-disabled="originalForm.$invalid || originalForm.$pristine || originalState.submitting"
+                  ng-click="$event.stopPropagation()"
+                  class="btn btn-sm btn-primary">
+                <i ng-if="!originalState.submitting" class="fa fa-fw fa-check"></i>
+                <i ng-if="originalState.submitting" class="fa fa-fw fa-spinner fa-spin"></i>
+                Update comment
+              </button>
+            </span>
+          </div>
+        </form>
       </div><!-- / row content -->
     </div>
   </div>
   <div collapse="!state.showReplies">
-    <div
-        ng-repeat="reply in discussion.replies"
-        class="ph-margin-row ph-margin-row-border-top"
-        >
+    <!-- replies (note that ng-repeat creates a child scope!) -->
+    <div ng-repeat="reply in discussion.replies"
+        ng-controller="replyCtrl"
+        class="ph-margin-row ph-margin-row-border-top">
       <!-- avatar -->
       <div class="ph-margin-avatar-container">
         <img gravatar-user="reply.author" gravatar-size="30"
@@ -74,25 +146,83 @@
           <div class="ph-arrow ph-arrow-outward-left"></div>
         </div>
         <!-- row content -->
-        <div class="ph-margin-row-content clearfix">
-          <div class="pull-right">
-            <button class="btn btn-link btn-xs">
-              <i class="fa fa-caret-down"></i>
-            </button>
+        <div class="ph-margin-row-content">
+          <!-- view reply -->
+          <div ng-if="!replyState.editing" class="clearfix">
+            <div class="pull-right">
+              <span ng-click="$event.stopPropagation()" class="dropdown" dropdown>
+                <button class="btn btn-link btn-xs dropdown-toggle" dropdown-toggle>
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right ph-margin-dropdown">
+                  <li>
+                    <a href="#{{'articles.discussions.thread' | routeSegmentUrl:
+                      {discussionIndex: discussion.index} }}#{{reply._id}}">
+                      <i class="fa fa-fw fa-comments"></i> Show discussion view
+                    </a>
+                  </li>
+                  <!-- edit reply -->
+                  <li ng-if="auth.user._id === reply.author._id"
+                      ng-class="{disabled: replyState.submitting}">
+                    <a ng-click="replyState.editing = true" href>
+                      <i class="fa fa-fw fa-pencil"></i> Edit
+                    </a>
+                  </li>
+                  <!-- delete reply -->
+                  <li ng-if="auth.user._id === reply.author._id"
+                      ng-class="{disabled: replyState.submitting}">
+                      <a ng-confirm-click="Really delete reply?"
+                          confirmed-click="replyDelete(reply)" href>
+                      <i class="fa fa-fw fa-times"></i> Delete
+                    </a>
+                  </li>
+                  <li ng-if="auth.user._id !== reply.author._id">
+                    <a href><i class="fa fa-fw fa-flag"></i> Flag</a>
+                  </li>
+                </ul>
+              </span>
+            </div>
+            <div class="ph-margin-info">
+              <p class="ph-xs-margin-bottom">
+                <a href="#/users/{{reply.author.username}}">
+                  {{reply.author.displayName}}</a>
+                · <span am-time-ago="reply.createdAt"></span>
+              </p>
+            </div>
+            <kramjax body="reply.body"></kramjax>
           </div>
-          <div class="ph-margin-info">
-            <p class="ph-xs-margin-bottom">
-              <a href="#/users/{{reply.author.username}}">
-                {{reply.author.displayName}}</a>
-              · <span am-time-ago="reply.createdAt"></span>
-            </p>
-          </div>
-          <kramjax body="reply.body"></kramjax>
+          <!-- edit reply -->
+          <form ng-if="replyState.editing"
+              ng-controller="replyEditCtrl"
+              ng-submit="replyEditForm.$valid && replyUpdate()"
+              name="replyEditForm" novalidate>
+            <textarea ng-model="copy.body"
+              class="form-group form-control ph-comment-body ph-margin-textarea ph-no-margin"
+              placeholder="Enter reply..." rows="1" required
+              ></textarea>
+            <div class="ph-sm-margin-top clearfix">
+              <span class="pull-right">
+                <button ng-click="replyState.editing = false"
+                    ng-disabled="replyState.submitting"
+                    type="button" class="btn btn-danger btn-sm">
+                  <i class="fa fa-fw fa-times"></i>
+                  Cancel
+                </button>
+                <button
+                    ng-disabled="replyEditForm.$invalid || replyEditForm.$pristine || replyState.submitting"
+                    type="submit" class="btn btn-primary btn-sm">
+                  <i ng-if="!replyState.submitting" class="fa fa-fw fa-check"></i>
+                  <i ng-if="replyState.submitting" class="fa fa-fw fa-spinner fa-spin"></i>
+                  Update reply
+                </button>
+              </span>
+            </div>
+          </form>
         </div>
       </div>
     </div>
     <!-- reply form -->
-    <div ng-if="auth.user" class="ph-margin-row ph-margin-row-border-top">
+    <div ng-if="auth.user && !state.editing" class="ph-margin-row ph-margin-row-border-top">
       <!-- avatar -->
       <div class="ph-margin-avatar-container">
         <img gravatar-user="auth.user" gravatar-size="30"
@@ -105,9 +235,9 @@
         </div>
         <!-- row content -->
         <div class="ph-margin-row-content">
-          <form ng-submit="commentForm.$valid && replySubmit()"
-              name="commentForm" novalidate>
-            <textarea ng-model="replyDraft.body" id="textbody"
+          <form ng-submit="replyForm.$valid && replySubmit()"
+              name="replyForm" novalidate>
+            <textarea ng-model="replyDraft.body"
               ng-focus="state.textFocused = true"
               ng-blur="state.textFocused = false"
               class="form-group form-control ph-comment-body ph-margin-textarea ph-no-margin"
@@ -116,7 +246,9 @@
             <div ng-if="state.textFocused || replyDraft.body"
               class="ph-sm-margin-top clearfix">
               <button type="submit" class="btn btn-primary btn-sm pull-right"
-                  ng-disabled="commentForm.$invalid || state.submitting">
+                  ng-disabled="replyForm.$invalid || state.submitting">
+                <i ng-if="!state.submitting" class="fa fa-fw fa-check"></i>
+                <i ng-if="state.submitting" class="fa fa-fw fa-spinner fa-spin"></i>
                 Add reply
               </button>
             </div>

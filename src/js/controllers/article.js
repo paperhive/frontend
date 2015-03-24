@@ -1,5 +1,6 @@
 'use strict';
 var _ = require('lodash');
+var angular = require('angular');
 
 module.exports = function(app) {
 
@@ -62,13 +63,6 @@ module.exports = function(app) {
           comment, ['title', 'body', 'target', 'tags']
         ));
 
-        // We always need a title.
-        // This conditional applies for short inline comments on the PDF.
-        if (!originalComment.title) {
-          originalComment.title = originalComment.body;
-          originalComment.body = undefined;
-        }
-
         $scope.submitting = true;
         return $http.post(
           config.apiUrl +
@@ -87,9 +81,38 @@ module.exports = function(app) {
           .error(notificationService.httpError('could not add discussion'));
       };
 
-      $scope.addReply = function(discussion, reply) {
+      $scope.originalUpdate = function(discussion, comment) {
+        var originalComment = _.cloneDeep(_.pick(
+          comment, ['title', 'body', 'target', 'tags']
+        ));
+
+        return $http.put(
+          config.apiUrl +
+            '/articles/' + $routeSegment.$routeParams.articleId +
+            '/discussions/' + discussion.index,
+          {originalAnnotation: originalComment}
+        )
+        .success(function(newDiscussion) {
+          angular.copy(newDiscussion, discussion);
+        })
+          .error(notificationService.httpError('could not update discussion'));
+      };
+
+      $scope.discussionDelete = function(discussion) {
+        return $http.delete(
+          config.apiUrl +
+            '/articles/' + $routeSegment.$routeParams.articleId +
+            '/discussions/' + discussion.index
+        )
+        .success(function() {
+          _.remove($scope.discussions.stored, {index: discussion.index});
+        })
+          .error(notificationService.httpError('could not delete discussion'));
+      };
+
+      $scope.replyAdd = function(discussion, reply) {
         reply = _.cloneDeep(_.pick(
-          reply, ['title', 'body']
+          reply, ['body']
         ));
         return $http.post(
           config.apiUrl +
@@ -102,6 +125,37 @@ module.exports = function(app) {
           discussion.replies.push(reply);
         })
           .error(notificationService.httpError('could not add reply'));
+      };
+
+      $scope.replyUpdate = function(discussion, replyOld, replyNew) {
+        var replyId = replyOld._id;
+        replyNew = _.cloneDeep(_.pick(
+          replyNew, ['body']
+        ));
+        return $http.put(
+          config.apiUrl +
+            '/articles/' + $routeSegment.$routeParams.articleId +
+            '/discussions/' + discussion.index +
+            '/replies/' + replyId,
+          replyNew
+        )
+        .success(function(reply) {
+          angular.copy(reply, replyOld);
+        })
+          .error(notificationService.httpError('could not add reply'));
+      };
+
+      $scope.replyDelete = function(discussion, replyId) {
+        return $http.delete(
+          config.apiUrl +
+            '/articles/' + $routeSegment.$routeParams.articleId +
+            '/discussions/' + discussion.index +
+            '/replies/' + replyId
+        )
+        .success(function(data) {
+          _.remove(discussion.replies, {_id: replyId});
+        })
+        .error(notificationService.httpError('could not delete reply'));
       };
 
     }]);
