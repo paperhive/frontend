@@ -40,9 +40,19 @@
                   </a>
                 </li>
                 <li ng-if="auth.user._id === discussion.originalAnnotation.author._id"
-                    ng-class="{disabled: originalState.submitting}">
-                    <a ng-confirm-click="Really delete discussion?"
-                        confirmed-click="discussionDelete()" href>
+                    ng-class="{disabled: originalState.submitting ||
+                      discussion.replies.length}">
+                  <a ng-if="!discussion.replies.length && !originalState.submitting"
+                      ng-confirm-click="Really delete discussion?"
+                      confirmed-click="discussionDelete()" href>
+                    <i class="fa fa-fw fa-times"></i> Delete
+                  </a>
+                  <a ng-if="!discussion.replies.length && originalState.submitting" href>
+                    <i class="fa fa-fw fa-times"></i> Delete
+                  </a>
+                  <a ng-if="discussion.replies.length" href
+                      tooltip="Discussions with replies cannot be deleted"
+                      tooltip-placement="left">
                     <i class="fa fa-fw fa-times"></i> Delete
                   </a>
                 </li>
