@@ -72,7 +72,7 @@ module.exports = function(app) {
           templateUrl: 'templates/contact/contact.html'
         })
 
-        .segment('help',{
+        .segment('help', {
           templateUrl: 'templates/help/help.html'
         })
 
