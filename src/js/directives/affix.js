@@ -39,9 +39,11 @@ module.exports = function(app) {
 
           function reposition() {
             // set height of element such that it fits the viewport
+            // note: the 1px prevents scroll bars in certain situations
             var height = _.min([
-              $($window).innerHeight() - params.offsetTop - params.offsetBottom,
-              element[0].scrollHeight
+              $($window).innerHeight() - params.offsetTop -
+                params.offsetBottom - 1,
+              element[0].scrollHeight + 1
             ]);
             element.css({height: height + 'px'});
 
