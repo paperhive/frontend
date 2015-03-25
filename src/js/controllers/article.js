@@ -6,9 +6,9 @@ module.exports = function(app) {
 
   app.controller('ArticleCtrl', [
     '$scope', '$route', '$routeSegment', '$document', '$http', 'config',
-    'authService', 'notificationService',
+    '$rootScope', 'authService', 'notificationService',
     function($scope, $route, $routeSegment, $document, $http, config,
-             authService, notificationService) {
+             $rootScope, authService, notificationService) {
 
       // expose authService
       $scope.auth = authService;
@@ -23,6 +23,7 @@ module.exports = function(app) {
       )
       .success(function(article) {
         $scope.article = article;
+        $rootScope.pageTitle = article.title;
       })
       .error(function(data) {
         notificationService.notifications.push({

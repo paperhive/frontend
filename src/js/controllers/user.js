@@ -1,10 +1,12 @@
 'use strict';
 module.exports = function(app) {
   app.controller('UserCtrl', [
-    '$scope', '$routeSegment', 'config', '$http', 'notificationService',
-    'authService',
-    function($scope, $routeSegment, config, $http, notificationService,
-             authService) {
+    '$scope', '$rootScope', '$routeSegment', 'config', '$http',
+    'notificationService', 'authService',
+    function(
+      $scope, $rootScope, $routeSegment, config, $http,
+      notificationService, authService
+    ) {
       // expose $routeSegment for subnav
       $scope.$routeSegment = $routeSegment;
 
@@ -16,6 +18,7 @@ module.exports = function(app) {
                 $routeSegment.$routeParams.username)
         .success(function(data) {
           $scope.user = data;
+          $rootScope.pageTitle = data.username + ' (' + data.displayName + ')';
         })
         .error(function(data) {
           notificationService.notifications.push({
