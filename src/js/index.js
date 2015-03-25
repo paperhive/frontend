@@ -12,7 +12,6 @@
   require('angular-animate'); // provides 'ngAnimate' module
   require('angular-bootstrap-tpls'); // provides 'ui.bootstrap' module
   require('angular-sanitize'); // provides 'ngSanitize' module
-  require('angular-strap-affix'); // provides 'mgcrea.ngStrap.affix' module
   require('angular-strap-debounce'); // provides 'mgcrea.ngStrap.helpers.debounce' module
   require('angular-strap-dimensions'); // provides 'mgcrea.ngStrap.helpers.dimensions' module
   require('angular-strap-scrollspy'); // provides 'mgcrea.ngStrap.scrollspy' module
@@ -38,7 +37,6 @@
        'view-segment',
        'angularMoment',
        'templates',
-       'mgcrea.ngStrap.affix',
        'mgcrea.ngStrap.scrollspy'
       ]
     )
