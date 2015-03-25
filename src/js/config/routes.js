@@ -16,6 +16,7 @@ module.exports = function(app) {
         .when('/articles/:articleId/settings', 'articles.settings')
         .when('/articles/:articleId/text', 'articles.text')
         .when('/contact', 'contact')
+        .when('/help', 'help')
         .when('/oauth/orcid', 'oauth')
         .when('/settings', 'settings')
         .when('/settings/profile', 'settings.profile')
@@ -69,6 +70,10 @@ module.exports = function(app) {
 
         .segment('contact', {
           templateUrl: 'templates/contact/contact.html'
+        })
+
+        .segment('help', {
+          templateUrl: 'templates/help/help.html'
         })
 
         .segment('oauth', {

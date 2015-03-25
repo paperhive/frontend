@@ -1,0 +1,52 @@
+.ph-sidenav {
+  margin-top: @line-height-computed;
+
+  > li {
+    .ph-md-margin-bottom;
+
+    &.active > a, {
+      border-left-color: @ph-highlight-color;
+      color: @link-hover-color;
+    }
+
+    > a {
+      border-left: @ph-border-height/2 solid transparent;
+      padding: @padding-base-vertical/2 @padding-base-horizontal/2;
+      font-size: 110%;
+      .ph-sm-margin-bottom;
+
+      &:hover, &:focus {
+        border-left-color: @ph-highlight-color;
+        background: none;
+      }
+    }
+  }
+}
+
+.ph-sidenav-sub {
+  margin-left: @line-height-computed;
+
+  > li {
+
+    &.active > a {
+      color: @link-hover-color;
+      .fa {
+        display: inline-block;
+      }
+    }
+
+    > a {
+      padding: @padding-base-vertical/3 0;
+
+      .fa {
+        display: none;
+        font-size: 12px;
+        .ph-sm-margin-left;
+      }
+
+      &:hover, &:focus {
+        background: none;
+      }
+    }
+  }
+}
