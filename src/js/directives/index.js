@@ -1,5 +1,6 @@
 'use strict';
 module.exports = function(app) {
+  require('./affix')(app);
   require('./comment')(app);
   require('./confirmed-click')(app);
   require('./elementSize')(app);
