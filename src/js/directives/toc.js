@@ -12,6 +12,7 @@ module.exports = function(app) {
         restrict: 'A',
         link: function(scope, element, attrs) {
           var parsedToc = $parse(attrs.toc);
+          var parsedOffset = $parse(attrs.tocScrollspyOffset);
           var toc;
 
           function getElements() {
@@ -60,7 +61,7 @@ module.exports = function(app) {
                   offset: rect.top
                 };
               }), 'offset');
-              var offset = 85;
+              var offset = parsedOffset(scope) || 0;
 
               if (!elements.length) {return;}
 
