@@ -29,46 +29,57 @@ module.exports = function(app) {
 
         // Init Main Page
         .segment('main', {
-          templateUrl: 'templates/main/main.html'
+          templateUrl: 'templates/main/main.html',
+          title: 'PaperHub'
         })
         .segment('articles', {
           templateUrl: 'templates/articles/index.html',
-          dependencies: ['articleId']
+          dependencies: ['articleId'],
+          title: 'Article'
         })
         .within()
           .segment('activity', {
-            templateUrl: 'templates/articles/activity.html'
+            templateUrl: 'templates/articles/activity.html',
+            title: 'Article activity'
           })
           .segment('discussions', {
-            templateUrl: 'templates/articles/discussions/index.html'
+            templateUrl: 'templates/articles/discussions/index.html',
+            title: 'Discussions'
           })
           .within()
             .segment('list', {
               default: true,
               templateUrl: 'templates/articles/discussions/list.html',
+              title: 'Discussions'
             })
             .segment('new', {
               templateUrl: 'templates/articles/discussions/new.html',
+              title: 'New discussions'
             })
             .segment('thread', {
               templateUrl: 'templates/articles/discussions/thread.html',
-              dependencies: ['discussionIndex']
+              dependencies: ['discussionIndex'],
+              title: 'Discussion'
             })
           .up()
           .segment('settings', {
-            templateUrl: 'templates/articles/settings.html'
+            templateUrl: 'templates/articles/settings.html',
+            title: 'Article settings'
           })
           .segment('text', {
             default: true,
-            templateUrl: 'templates/articles/text.html'
+            templateUrl: 'templates/articles/text.html',
+            title: 'Article'
           })
         .up()
         .segment('articles_new', {
-          templateUrl: 'templates/articles/new.html'
+          templateUrl: 'templates/articles/new.html',
+          title: 'New article'
         })
 
         .segment('contact', {
-          templateUrl: 'templates/contact/contact.html'
+          templateUrl: 'templates/contact/contact.html',
+          title: 'Contact'
         })
 
         .segment('oauth', {
@@ -77,7 +88,8 @@ module.exports = function(app) {
         })
 
         .segment('settings', {
-          templateUrl: 'templates/settings/index.html'
+          templateUrl: 'templates/settings/index.html',
+          title: 'Settings'
         })
         .within()
           .segment('profile', {
@@ -90,12 +102,14 @@ module.exports = function(app) {
         .up()
 
         .segment('team', {
-          templateUrl: 'templates/team/index.html'
+          templateUrl: 'templates/team/index.html',
+          title: 'PaperHub team'
         })
 
         .segment('users', {
           templateUrl: 'templates/users/index.html',
-          dependencies: ['username']
+          dependencies: ['username'],
+          title: 'User'
         })
         .within()
           .segment('profile', {
@@ -115,7 +129,8 @@ module.exports = function(app) {
 
         .segment('welcome', {
           templateUrl: 'templates/welcome.html',
-          controller: 'WelcomeCtrl'
+          controller: 'WelcomeCtrl',
+          title: 'PaperHub'
         })
         ;
 
