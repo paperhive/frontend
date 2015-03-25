@@ -22,16 +22,18 @@ module.exports = function(app) {
 
           // watch parameters
           scope.$watch(attrs.affixOffsetTop, function(offsetTop) {
-            params.offsetTop = offsetTop || paramsDefault.offsetTop;
+            params.offsetTop = offsetTop !== undefined ? offsetTop :
+              paramsDefault.offsetTop;
             if (!init) {reposition();}
           });
           scope.$watch(attrs.affixOffsetBottom, function(offsetBottom) {
-            params.offsetBottom = offsetBottom || paramsDefault.offsetBottom;
+            params.offsetBottom = offsetBottom !== undefined ? offsetBottom :
+              paramsDefault.offsetBottom;
             if (!init) {reposition();}
           });
           scope.$watch(attrs.affixUseParentHeight, function(useParentHeight) {
-            params.useParentHeight = useParentHeight ||
-              paramsDefault.useParentHeight;
+            params.useParentHeight = useParentHeight !== undefined ?
+              useParentHeight : paramsDefault.useParentHeight;
             if (!init) {reposition();}
           });
 
@@ -54,7 +56,8 @@ module.exports = function(app) {
             // positioned normally
             var top = 0;
             if (parentRect.top <= params.offsetTop) {
-              if (-parentRect.top + params.offsetTop + height >
+              if (params.useParentHeight &&
+                  -parentRect.top + params.offsetTop + height >
                   parentRect.height) {
                 // positioned at bottom of parent element
                 top = parentRect.height - height;
