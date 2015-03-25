@@ -6,7 +6,7 @@ var $ = require('jquery');
 module.exports = function(app) {
 
   app.directive(
-    'affix', ['$window', '$parse', function($window, $parse) {
+    'affix', ['$window', function($window) {
       return {
         restrict: 'A',
         link: function(scope, element, attrs) {
