@@ -6,7 +6,7 @@ var $ = require('jquery');
 module.exports = function(app) {
 
   app.directive(
-    'affix', ['$window', function($window) {
+    'affix', ['$window', '$timeout', function($window, $timeout) {
       return {
         restrict: 'A',
         link: function(scope, element, attrs) {
@@ -43,7 +43,7 @@ module.exports = function(app) {
             var height = _.min([
               $($window).innerHeight() - params.offsetTop -
                 params.offsetBottom - 1,
-              element[0].scrollHeight + 1
+              element[0].scrollHeight
             ]);
             element.css({height: height + 'px'});
 
@@ -71,23 +71,25 @@ module.exports = function(app) {
             element.css({top: top + 'px'});
           }
 
-          // register handler
-          $($window).on('resize scroll', reposition);
-          element.resize(reposition);
+          $timeout(function() {
+            // register handler
+            $($window).on('resize scroll', reposition);
+            element.resize(reposition);
 
-          // unregister handlers
-          // $destroy seems to be emitted multiple times, so we only
-          // clean up once
-          var destroyed = false;
-          element.on('$destroy', function() {
-            $($window).off('resize scroll', reposition);
-            if (!destroyed) {element.removeResize(reposition);}
-            destroyed = true;
+            // unregister handlers
+            // $destroy seems to be emitted multiple times, so we only
+            // clean up once
+            var destroyed = false;
+            element.on('$destroy', function() {
+              $($window).off('resize scroll', reposition);
+              if (!destroyed) {element.removeResize(reposition);}
+              destroyed = true;
+            });
+
+            // run once
+            init = false;
+            reposition();
           });
-
-          // run once
-          init = false;
-          reposition();
         }
       };
     }]
