@@ -73,8 +73,16 @@ module.exports = function(app) {
 
           // register handler
           $($window).on('resize scroll', reposition);
+          element.resize(reposition);
+
+          // unregister handlers
+          // $destroy seems to be emitted multiple times, so we only
+          // clean up once
+          var destroyed = false;
           element.on('$destroy', function() {
             $($window).off('resize scroll', reposition);
+            if (!destroyed) {element.removeResize(reposition);}
+            destroyed = true;
           });
 
           // run once
