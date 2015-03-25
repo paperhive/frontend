@@ -37,11 +37,11 @@
         <!-- sections -->
         <ul ng-if="helpData.toc.length" class="nav ph-sidenav">
           <li ng-repeat="section in helpData.toc">
-            <a href ng-click="gotoAnchor('section01')">{{section.text}}</a>
+            <a href="#/help#{{section.id}}">{{section.text}}</a>
             <!-- subsections -->
             <ul ng-if="section.subToc" class="nav ph-sidenav-sub">
               <li ng-repeat="subsection in section.subToc">
-                <a href ng-click="gotoAnchor('subsection01')">
+                <a href="#/help#{{subsection.id}}">
                   {{subsection.text}}
                   <i class="fa fa-chevron-right fa-fw"></i>
                 </a>
