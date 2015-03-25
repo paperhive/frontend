@@ -12,9 +12,6 @@
   require('angular-animate'); // provides 'ngAnimate' module
   require('angular-bootstrap-tpls'); // provides 'ui.bootstrap' module
   require('angular-sanitize'); // provides 'ngSanitize' module
-  require('angular-strap-debounce'); // provides 'mgcrea.ngStrap.helpers.debounce' module
-  require('angular-strap-dimensions'); // provides 'mgcrea.ngStrap.helpers.dimensions' module
-  require('angular-strap-scrollspy'); // provides 'mgcrea.ngStrap.scrollspy' module
   require('angular-route'); // provides 'ngRoute' module
   require('angular-moment');
   require('detect-element-resize'); // injects resize+removeResize to jquery
@@ -36,8 +33,7 @@
        'route-segment',
        'view-segment',
        'angularMoment',
-       'templates',
-       'mgcrea.ngStrap.scrollspy'
+       'templates'
       ]
     )
     .constant('config', require('../../config.json'))
