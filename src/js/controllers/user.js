@@ -2,10 +2,10 @@
 module.exports = function(app) {
   app.controller('UserCtrl', [
     '$scope', '$rootScope', '$routeSegment', 'config', '$http',
-    'notificationService', 'authService',
+    'notificationService', 'authService', 'metaService',
     function(
       $scope, $rootScope, $routeSegment, config, $http,
-      notificationService, authService
+      notificationService, authService, metaService
     ) {
       // expose $routeSegment for subnav
       $scope.$routeSegment = $routeSegment;
@@ -18,7 +18,10 @@ module.exports = function(app) {
                 $routeSegment.$routeParams.username)
         .success(function(data) {
           $scope.user = data;
-          $rootScope.pageTitle = data.username + ' (' + data.displayName + ')';
+          metaService.title = data.username + ' (' + data.displayName + ')';
+          metaService.author = undefined;
+          metaService.description = undefined;
+          metaService.keywords = undefined;
         })
         .error(function(data) {
           notificationService.notifications.push({

@@ -7,10 +7,10 @@ module.exports = function(app) {
     'DiscussionCtrl',
     [
       '$scope', '$rootScope', 'authService', '$routeSegment', '$http', 'config',
-      'notificationService',
+      'notificationService', 'metaService',
       function(
         $scope, $rootScope, authService, $routeSegment, $http, config,
-        notificationService
+        notificationService, metaService
       ) {
         // fetch discussion
         $http.get(
@@ -20,10 +20,34 @@ module.exports = function(app) {
         )
         .success(function(discussion) {
           $scope.discussion = discussion;
-          $rootScope.pageTitle = discussion.originalAnnotation.title +
+          // Set meta info
+          // TODO get article title
+          metaService.title = discussion.originalAnnotation.title +
              ' · Discussion #' + discussion.index;
+          metaService.author = discussion.originalAnnotation.author.displayName;
+          metaService.description =
+            discussion.originalAnnotation.body.substring(0, 150);
+          if (discussion.originalAnnotation.tags) {
+            metaService.keywords =
+              discussion.originalAnnotation.tags.join(', ');
+          } else {
+            metaService.keywords = undefined;
+          }
         })
         .error(notificationService.httpError('could not fetch discussion'));
+
+        // Problem:
+        //   When updateTitle() is run, the newTitle needs to be populated in
+        //   the scope. This may not necessarily be the case.
+        // Workaround:
+        //   Explicitly set the newTitle in the $scope.
+        // Disadvantage:
+        //   The title is set twice, and this is kind of ugly.
+        // TODO find a better solution
+        $scope.updateTitle = function(newTitle) {
+          $scope.discussion.originalAnnotation.title = newTitle;
+          $scope.updateDiscussion($scope.discussion.originalAnnotation);
+        };
 
         // Problem:
         //   When updateTitle() is run, the newTitle needs to be populated in

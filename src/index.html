@@ -1,9 +1,26 @@
 <!doctype html>
 
 <html lang="en" ng-app="paperHub" ng-strict-di>
-  <head>
+  <head ng-controller="MetaCtrl">
+    <title data-ng-bind="metaService.title"></title>
     <meta charset="utf-8">
-    <title data-ng-bind="$root.pageTitle"></title>
+    <meta
+      ng-if="metaService.author"
+      name="author"
+      content="{{metaService.author}}"
+      >
+    <meta
+      ng-if="metaService.description"
+      name="description"
+      content="{{metaService.description}}"
+      >
+    <meta
+      ng-if="metaService.keywords"
+      name="keywords"
+      content="{{metaService.keywords}}"
+      >
+    <meta name="language" content="en">
+    <meta name="application-name" content="PaperHub">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- TODO: bundle mathjax in index.js -->
     <script src="assets/mathjax/MathJax.js?config=TeX-AMS_HTML-full,Safe">

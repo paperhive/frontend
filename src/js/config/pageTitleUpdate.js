@@ -5,12 +5,23 @@ module.exports = function(app) {
     function(
       $rootScope, $routeSegment
     ) {
-      $rootScope.$on('routeSegmentChange', function() {
-        var title =
-          $routeSegment.chain[$routeSegment.chain.length - 1].params.title;
-        if (title) {
-          $rootScope.pageTitle = title;
+
+      // helper function to set the title
+      $rootScope.page = {
+        setTitle: function(title) {
+          this.title = title;
         }
+      };
+
+      // event listener for title change
+      $rootScope.$on('routeSegmentChange', function(event, current, previous) {
+        event.targetScope.$watch('pageTitle', function(value) {
+          $rootScope.page.setTitle(value);
+        });
+        //$rootScope.page.setTitle(
+        //  $routeSegment.chain[$routeSegment.chain.length - 1].params.title ||
+        //  'PaperHub'
+        //);
       });
     }
   ]);
