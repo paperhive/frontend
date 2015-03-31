@@ -1,6 +1,6 @@
 describe('PaperHub homepage', function() {
   it('Test page title', function() {
-    browser.get('/#/articles/0af5e13/settings');
+    browser.get('/#/');
 
     expect(browser.getTitle()).toEqual('PaperHub');
   });
