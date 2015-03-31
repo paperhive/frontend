@@ -31,7 +31,7 @@
     "lodash": "~3.5.0",
     "MathJax": "~2.5.1",
     "ment.io": "~0.9.23",
-    "pdfjs-dist": "~1.1.9",
+    "pdfjs-dist": "~1.1.24",
     "rangy": "~1.3"
   }
 }
