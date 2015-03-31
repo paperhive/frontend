@@ -8,7 +8,7 @@ before_script:
   - npm install
 script:
   - gulp test
-
+sudo: false
 env:
   global:
     - secure: htpFvFnIWQWt5OE/UempJalrnle2bP3mAv0ZTD/pi9pPWV8lgHcR9pINL6Pzu3udbMFPGiKVJR7iMxNrkhNR5Iw3o00O4DJZl238K1P4A6XRAF0itu2o7tQ+/8eT91oITwsoPj0xAtBIKlZ67nGk5efJGP89YGZTip1Jb7B0P6s=
