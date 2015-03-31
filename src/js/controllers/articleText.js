@@ -5,9 +5,11 @@ module.exports = function(app) {
 
   app.controller('ArticleTextCtrl', [
     '$scope', '$route', '$routeSegment', '$document', '$http', 'config',
-    'authService', 'notificationService', 'distangleService',
-    function($scope, $route, $routeSegment, $document, $http, config,
-             authService, notificationService, distangleService) {
+    'authService', 'notificationService', 'distangleService', 'metaService',
+    function(
+      $scope, $route, $routeSegment, $document, $http, config,
+      authService, notificationService, distangleService, metaService
+    ) {
 
       $scope.text = {
         highlightInfos: {},
@@ -15,6 +17,17 @@ module.exports = function(app) {
         marginDiscussionSizes: {},
         marginOffsets: {}
       };
+
+      // set meta data
+      $scope.$watch('article', function(article) {
+        if (article) {
+          metaService.title = article.title;
+          metaService.author = article.authors.join(', ');
+          metaService.description =
+            article.abstract.replace(/(\r\n|\n|\r)/gm, ' ').substring(0, 150);
+          metaService.keywords = undefined;
+        }
+      });
 
       // compute offsets of margin discussions ('boingidi')
       var updateOffsets = function() {

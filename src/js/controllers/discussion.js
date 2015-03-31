@@ -21,9 +21,12 @@ module.exports = function(app) {
         .success(function(discussion) {
           $scope.discussion = discussion;
           // Set meta info
-          // TODO get article title
           metaService.title = discussion.originalAnnotation.title +
              ' · Discussion #' + discussion.index;
+          if ($scope.article) {
+            metaService.title = metaService.title +
+              ' · ' + $scope.article.title;
+          }
           metaService.author = discussion.originalAnnotation.author.displayName;
           metaService.description =
             discussion.originalAnnotation.body.substring(0, 150);

@@ -75,7 +75,7 @@ module.exports = function(app) {
         .up()
         .segment('articles_new', {
           templateUrl: 'templates/articles/new.html',
-          title: 'New article'
+          title: 'Add a New Article'
         })
 
         .segment('contact', {
@@ -94,7 +94,7 @@ module.exports = function(app) {
 
         .segment('settings', {
           templateUrl: 'templates/settings/index.html',
-          title: 'Settings'
+          title: 'Your profile'
         })
         .within()
           .segment('profile', {
