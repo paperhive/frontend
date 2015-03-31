@@ -1,5 +1,6 @@
 'use strict';
 module.exports = function(app) {
+  require('./affix')(app);
   require('./comment')(app);
   require('./confirmed-click')(app);
   require('./elementSize')(app);
@@ -14,6 +15,7 @@ module.exports = function(app) {
   require('./onTextSelect')(app);
   require('./pdf')(app);
   require('./subnav')(app);
+  require('./toc')(app);
   require('./validateArticleSource')(app);
   require('./validate-username')(app);
 };
