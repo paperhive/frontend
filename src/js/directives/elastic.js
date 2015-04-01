@@ -46,13 +46,13 @@ module.exports = function(app) {
 
           // attach handler
           element.on('change blur keydown keypress keyup', function() {
-            $timeout(update, 0)
+            $timeout(update, 0);
           });
           //element.resize(update);
 
           // remove handler and mirror element
           //var destroyed = false;
-          element.on('$destroy', function () {
+          element.on('$destroy', function() {
             mirror.remove();
 
             //if (!destroyed) {element.removeResize(update);}
