@@ -106,8 +106,8 @@
           <textarea ng-model="copy.body"
             ng-click="$event.stopPropagation()"
             id="textbody" placeholder="Enter comment (optional)..."
-            class="form-group form-control ph-comment-body ph-no-margin ph-margin-textarea"
-            rows="2"></textarea>
+            class="form-group form-control ph-comment-body ph-no-margin ph-margin-textarea ph-textarea-elastic ph-textarea-small"
+            elastic></textarea>
           <div class="ph-sm-margin-top clearfix">
             <span class="pull-right">
               <button
@@ -197,8 +197,8 @@
               ng-submit="replyEditForm.$valid && replyUpdate()"
               name="replyEditForm" novalidate>
             <textarea ng-model="copy.body"
-              class="form-group form-control ph-comment-body ph-margin-textarea ph-no-margin"
-              placeholder="Enter reply..." rows="1" required
+              class="form-group form-control ph-comment-body ph-margin-textarea ph-no-margin ph-textarea-elastic ph-textarea-small"
+              elastic placeholder="Enter reply..." required
               ></textarea>
             <div class="ph-sm-margin-top clearfix">
               <span class="pull-right">
@@ -240,8 +240,8 @@
             <textarea ng-model="replyDraft.body"
               ng-focus="state.textFocused = true"
               ng-blur="state.textFocused = false"
-              class="form-group form-control ph-comment-body ph-margin-textarea ph-no-margin"
-              placeholder="Reply..." rows="1" required
+              class="form-group form-control ph-comment-body ph-margin-textarea ph-no-margin ph-textarea-elastic ph-textarea-small"
+              elastic placeholder="Reply..." required
               ></textarea>
             <div ng-if="state.textFocused || replyDraft.body"
               class="ph-sm-margin-top clearfix">
