@@ -4,6 +4,9 @@ var $ = require('jquery');
 
 module.exports = function(app) {
 
+  // elastic textarea based on a mirror technique similar to
+  // https://github.com/monospaced/angular-elastic/blob/master/elastic.js
+  // (the version here is much shorter)
   app.directive('elastic', [
     '$timeout', '$document',
     function($timeout, $document) {
@@ -45,6 +48,8 @@ module.exports = function(app) {
           };
 
           // attach handler
+          // (uses all key events to be on the safe side... browsers emit
+          // these events in different ways)
           element.on('change blur keydown keypress keyup', function() {
             $timeout(update, 0);
           });
