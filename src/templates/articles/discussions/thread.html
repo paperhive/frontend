@@ -86,7 +86,7 @@
 
                     <textarea
                       id="textbody"
-                      class="form-control ph-comment-body"
+                      class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
                       ng-model="comment.body"
                       mentio
                       mentio-search="searchUsers(term, 5)"
@@ -94,7 +94,7 @@
                       mentio-template-url="templates/directives/mentio-list.html"
                       mentio-select="getMentioText(item)"
                       mentio-require-leading-space="true"
-                      rows="6"
+                      elastic
                       placeholder="Reply..."
                       required
                       ></textarea>

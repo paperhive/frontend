@@ -39,9 +39,11 @@
             <textarea ng-model="comment.body"
               ng-focus="state.textFocused = true"
               ng-blur="state.textFocused = false"
+              elastic
               id="textbody" placeholder="Enter comment (optional)..."
-              class="form-group form-control ph-comment-body ph-no-margin ph-margin-textarea"
-              rows="2"></textarea>
+              class="form-group form-control ph-comment-body ph-no-margin ph-margin-textarea ph-textarea-elastic ph-textarea-small"
+              >
+            </textarea>
             <div class="ph-sm-margin-top clearfix">
               <button ng-disabled="commentForm.$invalid || state.submitting"
                   class="btn btn-sm btn-primary pull-right">
