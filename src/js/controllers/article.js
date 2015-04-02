@@ -24,14 +24,16 @@ module.exports = function(app) {
       .success(function(article) {
         $scope.article = article;
         // Set meta information
-        metaService.author = article.authors.join(', ');
-        metaService.title = article.title;
-        // Cut description down to 150 chars, cf.
-        // <http://moz.com/learn/seo/meta-description>
-        // TODO move linebreak removal to backend?
-        metaService.description =
-          article.abstract.substring(0, 150).replace(/(\r\n|\n|\r)/gm, ' ');
-        metaService.keywords = article.tags.join(', ');
+        metaService.set({
+          author: article.authors.join(', '),
+          title: article.title,
+          // Cut description down to 150 chars, cf.
+          // <http://moz.com/learn/seo/meta-description>
+          // TODO move linebreak removal to backend?
+          description:
+            article.abstract.substring(0, 150).replace(/(\r\n|\n|\r)/gm, ' '),
+          keywords: article.tags.join(', ')
+        });
       })
       .error(function(data) {
         notificationService.notifications.push({

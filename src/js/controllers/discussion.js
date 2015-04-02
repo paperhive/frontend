@@ -20,22 +20,19 @@ module.exports = function(app) {
         )
         .success(function(discussion) {
           $scope.discussion = discussion;
-          // Set meta info
-          metaService.title = discussion.originalAnnotation.title +
-             ' · Discussion #' + discussion.index;
-          if ($scope.article) {
-            metaService.title = metaService.title +
-              ' · ' + $scope.article.title;
-          }
-          metaService.author = discussion.originalAnnotation.author.displayName;
-          metaService.description =
-            discussion.originalAnnotation.body.substring(0, 150);
-          if (discussion.originalAnnotation.tags) {
-            metaService.keywords =
-              discussion.originalAnnotation.tags.join(', ');
-          } else {
-            metaService.keywords = undefined;
-          }
+          metaService.set({
+            title: discussion.originalAnnotation.title +
+             ' · Discussion #' + discussion.index +
+             ($scope.article ? (' · ' + $scope.article.title) : ''),
+            author: discussion.originalAnnotation.author.displayName,
+            // TODO rather use title here?
+            description:
+              discussion.originalAnnotation.body ?
+              discussion.originalAnnotation.body.substring(0, 150) :
+              undefined,
+            keywords: discussion.originalAnnotation.tags ?
+              discussion.originalAnnotation.tags.join(', ') : undefined
+          });
         })
         .error(notificationService.httpError('could not fetch discussion'));
 

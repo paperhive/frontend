@@ -8,12 +8,12 @@ module.exports = function(app) {
       // set meta data
       $scope.$watch('article', function(article) {
         if (article) {
-          metaService.title = 'Settings · ' + article.title;
-          metaService.author =
-            article.authors.join(', ');
-          metaService.description =
-            article.abstract.replace(/(\r\n|\n|\r)/gm, ' ').substring(0, 150);
-          metaService.keywords = undefined;
+          metaService.set({
+            title: 'Settings · ' + article.title,
+            author: article.authors.join(', '),
+            description:
+              article.abstract.replace(/(\r\n|\n|\r)/gm, ' ').substring(0, 150)
+          });
         }
       });
     }

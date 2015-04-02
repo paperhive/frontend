@@ -18,10 +18,9 @@ module.exports = function(app) {
                 $routeSegment.$routeParams.username)
         .success(function(data) {
           $scope.user = data;
-          metaService.title = data.username + ' (' + data.displayName + ')';
-          metaService.author = undefined;
-          metaService.description = undefined;
-          metaService.keywords = undefined;
+          metaService.set({
+            title: data.username + ' (' + data.displayName + ')',
+          });
         })
         .error(function(data) {
           notificationService.notifications.push({
