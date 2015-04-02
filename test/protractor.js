@@ -19,12 +19,12 @@ if (process.env.TRAVIS_JOB_NUMBER) {
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'PaperHub (firefox)'
   },
-  {
-    'browserName': 'iexplore',
-    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'PaperHub (iexplore)'
-  },
+  //{
+  //  'browserName': 'iexplore',
+  //  'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+  //  'build': process.env.TRAVIS_BUILD_NUMBER,
+  //  'name': 'PaperHub (iexplore)'
+  //},
   //{
   //  'browserName': 'ipad',
   //  'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
