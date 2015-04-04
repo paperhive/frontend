@@ -49,19 +49,6 @@ module.exports = function(app) {
           $scope.updateDiscussion($scope.discussion.originalAnnotation);
         };
 
-        // Problem:
-        //   When updateTitle() is run, the newTitle needs to be populated in
-        //   the scope. This may not necessarily be the case.
-        // Workaround:
-        //   Explicitly set the newTitle in the $scope.
-        // Disadvantage:
-        //   The title is set twice, and this is kind of ugly.
-        // TODO find a better solution
-        $scope.updateTitle = function(newTitle) {
-          $scope.discussion.originalAnnotation.title = newTitle;
-          $scope.updateDiscussion($scope.discussion.originalAnnotation);
-        };
-
         $scope.updateDiscussion = function(comment) {
           $scope.submitting = true;
           var newDiscussion = {
