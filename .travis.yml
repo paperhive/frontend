@@ -6,11 +6,9 @@ before_script:
   - npm install -g protractor
   # Install (possibly from cache), update packages according to bower.json,
   # and prune obsolete packages.
-  - bower install
   - bower update
   - bower prune
   # Ditto.
-  - npm install
   - npm update
   - npm prune
 script:
