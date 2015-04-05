@@ -1,10 +1,14 @@
 'use strict';
 module.exports = function(app) {
+  require('./activity.js')(app);
   require('./article.js')(app);
+  require('./articleSettings.js')(app);
   require('./articleText.js')(app);
   require('./articleNew.js')(app);
   require('./comment')(app);
   require('./discussion.js')(app);
+  require('./discussionList.js')(app);
+  require('./meta.js')(app);
   require('./help.js')(app);
   require('./navbar.js')(app);
   require('./navbarSearch.js')(app);

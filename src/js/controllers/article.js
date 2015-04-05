@@ -6,9 +6,9 @@ module.exports = function(app) {
 
   app.controller('ArticleCtrl', [
     '$scope', '$route', '$routeSegment', '$document', '$http', 'config',
-    'authService', 'notificationService',
+    '$rootScope', 'authService', 'notificationService', 'metaService',
     function($scope, $route, $routeSegment, $document, $http, config,
-             authService, notificationService) {
+             $rootScope, authService, notificationService, metaService) {
 
       // expose authService
       $scope.auth = authService;
@@ -23,6 +23,17 @@ module.exports = function(app) {
       )
       .success(function(article) {
         $scope.article = article;
+        // Set meta information
+        metaService.set({
+          author: article.authors.join(', '),
+          title: article.title,
+          // Cut description down to 150 chars, cf.
+          // <http://moz.com/learn/seo/meta-description>
+          // TODO move linebreak removal to backend?
+          description:
+            article.abstract.substring(0, 150).replace(/(\r\n|\n|\r)/gm, ' '),
+          keywords: article.tags.join(', ')
+        });
       })
       .error(function(data) {
         notificationService.notifications.push({
