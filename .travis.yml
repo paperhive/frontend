@@ -6,10 +6,10 @@ before_script:
   - npm install -g protractor
   # Install (possibly from cache), update packages according to bower.json,
   # and prune obsolete packages.
-  - bower update
+  #- bower update
   - bower prune
   # Ditto.
-  - npm update
+  #- npm update
   - npm prune
 script:
   - gulp test
