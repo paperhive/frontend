@@ -1,4 +1,6 @@
 language: node_js
+node_js:
+  - iojs
 before_script:
   - cp config.json.default config.json
   - npm install -g bower
