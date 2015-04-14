@@ -21,9 +21,9 @@
   require('pdfjs');
   require('../../bower_components/pdfjs-dist/web/pdf_viewer.js');
 
-  var paperhub = angular
+  var paperhive = angular
     .module(
-      'paperHub',
+      'paperHive',
       [
        'ui.bootstrap',
        'mentio',
@@ -39,9 +39,9 @@
     .constant('config', require('../../config.json'))
     ;
 
-  require('./config')(paperhub);
-  require('./controllers')(paperhub);
-  require('./directives')(paperhub);
-  require('./services')(paperhub);
-  require('./utils')(paperhub);
+  require('./config')(paperhive);
+  require('./controllers')(paperhive);
+  require('./directives')(paperhive);
+  require('./services')(paperhive);
+  require('./utils')(paperhive);
 })();

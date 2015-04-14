@@ -9,7 +9,7 @@ if (process.env.TRAVIS_JOB_NUMBER) {
     'browserName': 'chrome',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'PaperHub (chrome)'
+    'name': 'PaperHive (chrome)'
   },
   {
     'browserName': 'firefox',
@@ -17,13 +17,13 @@ if (process.env.TRAVIS_JOB_NUMBER) {
     'version': "34",
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'PaperHub (firefox)'
+    'name': 'PaperHive (firefox)'
   },
   //{
   //  'browserName': 'iexplore',
   //  'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
   //  'build': process.env.TRAVIS_BUILD_NUMBER,
-  //  'name': 'PaperHub (iexplore)'
+  //  'name': 'PaperHive (iexplore)'
   //},
   //{
   //  'browserName': 'ipad',
@@ -44,7 +44,7 @@ if (process.env.TRAVIS_JOB_NUMBER) {
     'browserName': 'safari',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'PaperHub (safari)'
+    'name': 'PaperHive (safari)'
   },
   ];
 } else {

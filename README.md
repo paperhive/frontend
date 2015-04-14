@@ -1,8 +1,8 @@
-# PaperHub Frontend
+# PaperHive Frontend
 
 [![Build
-Status](https://travis-ci.org/paperhub/paperhub-frontend.svg?branch=master)](https://travis-ci.org/paperhub/paperhub-frontend)
-[![Dependency Status](https://gemnasium.com/paperhub/paperhub-frontend.svg)](https://gemnasium.com/paperhub/paperhub-frontend)
+Status](https://travis-ci.org/paperhive/paperhive-frontend.svg?branch=master)](https://travis-ci.org/paperhive/paperhive-frontend)
+[![Dependency Status](https://gemnasium.com/paperhive/paperhive-frontend.svg)](https://gemnasium.com/paperhive/paperhive-frontend)
 
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/nschloe.svg)](https://saucelabs.com/u/nschloe)
 
@@ -17,8 +17,8 @@ Status](https://travis-ci.org/paperhub/paperhub-frontend.svg?branch=master)](htt
 
 #### Build
 ```
-git clone git@github.com:paperhub/paperhub-frontend.git
-cd paperhub-frontend
+git clone git@github.com:paperhive/paperhive-frontend.git
+cd paperhive-frontend
 npm install
 bower install
 cp config.json.default config.json
