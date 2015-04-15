@@ -31,7 +31,7 @@ module.exports = function(app) {
         // Init Main Page
         .segment('main', {
           templateUrl: 'templates/main/main.html',
-          title: 'PaperHub'
+          title: 'PaperHive'
         })
         .segment('articles', {
           templateUrl: 'templates/articles/index.html',
@@ -108,7 +108,7 @@ module.exports = function(app) {
 
         .segment('team', {
           templateUrl: 'templates/team/index.html',
-          title: 'PaperHub team'
+          title: 'PaperHive team'
         })
 
         .segment('users', {
@@ -135,7 +135,7 @@ module.exports = function(app) {
         .segment('welcome', {
           templateUrl: 'templates/welcome.html',
           controller: 'WelcomeCtrl',
-          title: 'PaperHub'
+          title: 'PaperHive'
         })
         ;
 
