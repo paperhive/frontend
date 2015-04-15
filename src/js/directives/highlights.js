@@ -66,7 +66,7 @@ module.exports = function(app) {
 
             // wrap each TextNode in a span to measure it
             // See this discussion:
-            // https://github.com/paperhub/paperhub-frontend/pull/68#discussion_r25970589
+            // https://github.com/paperhive/paperhive-frontend/pull/68#discussion_r25970589
             _.forEach(textNodes, function(node) {
               var $node = $(node);
               var $span = $node.wrap('<span/>').parent();

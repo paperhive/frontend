@@ -14,7 +14,7 @@ module.exports = function(app) {
           metaService.set({
             title:
             $routeSegment.chain[$routeSegment.chain.length - 1].params.title ||
-            'PaperHub'
+            'PaperHive'
           });
         }
       });
