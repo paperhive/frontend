@@ -14,7 +14,9 @@ module.exports = function(app) {
       },
       templateUrl: 'templates/directives/attribution.html',
       link: function(scope, element, attr) {
-        var tooltip = $templateCache.get('templates/directives/attributionTooltip.html');
+        var tooltip = $templateCache.get(
+          'templates/directives/attributionTooltip.html'
+        );
         var compiledTooltip = $compile(tooltip);
 
         // watch for changes in input and set body accordingly
