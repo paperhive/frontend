@@ -1,6 +1,7 @@
 'use strict';
 module.exports = function(app) {
   require('./affix')(app);
+  require('./attribution')(app);
   require('./comment')(app);
   require('./confirmed-click')(app);
   require('./elastic')(app);
