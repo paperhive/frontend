@@ -80,6 +80,7 @@ module.exports = function(app) {
 
         .segment('contact', {
           templateUrl: 'templates/contact/contact.html',
+          controller: 'ContactCtrl',
           title: 'Contact'
         })
 

@@ -6,6 +6,7 @@ module.exports = function(app) {
   require('./articleText.js')(app);
   require('./articleNew.js')(app);
   require('./comment')(app);
+  require('./contact')(app);
   require('./discussion.js')(app);
   require('./discussionList.js')(app);
   require('./meta.js')(app);
