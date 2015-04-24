@@ -1,34 +1,33 @@
-#ph-feedback {
-  height: 140px;
-  width: 140px;
+a.ph-feedback {
   position: fixed;
-  top: 40%;
+  left: 0;
+  top: 100%;
+  margin-top: -(@ph-footer-height + 20px);
   z-index: 999;
+  transform-origin: left top 0;
+  -webkit-transform-origin: left top 0;
+  -moz-transform-origin: left top 0;
+  -o-transform-origin: left top 0;
   transform: rotate(-90deg);
   -webkit-transform: rotate(-90deg);
   -moz-transform: rotate(-90deg);
   -o-transform: rotate(-90deg);
-}
 
-#ph-feedback a {
-  display: block;
+  padding: 1px 10px;
+  border-bottom: solid 1px #333;
+  border-left: solid 1px #333;
+  border-right: solid 1px #333;
   background: @ph-base-color;
-  height: 25px;
-  width: 130px;
-  padding: 0px 10px;
   color: #fff;
   font-size: 17px;
   font-weight: bold;
   text-decoration: none;
-  border-bottom: solid 1px #333;
-  border-left: solid 1px #333;
-  border-right: solid 1px #333;
-}
 
-#ph-feedback a:hover {
-  background: @ph-highlight-color;
+  &:hover {
+    background: @ph-highlight-color;
+  }
 }
 
 .ph-icon-margin {
-  margin-right: 10px;
+  margin-right: 5px;
 }
