@@ -26,6 +26,10 @@ body {
   opacity: 0.97;
   .ph-highlight-border-top();
   padding: @ph-navbar-default-padding;
+
+  // flicker fix on chrome http://stackoverflow.com/a/22224884/1219479
+  -webkit-backface-visibility: hidden;
+
   @media (max-width: @screen-xs-max){
     .navbar-collapse, .navbar-form {
       border: none;

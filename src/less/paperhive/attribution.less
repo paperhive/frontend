@@ -1,0 +1,23 @@
+.ph-attribution-container {
+  position: relative;
+  
+  > attribution {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    color: black;
+    text-shadow: white 0 0 5px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover > attribution {
+    opacity: 0.6;
+
+    &:hover, &:focus {
+      color: @link-hover-color;
+      opacity: 1;
+    }
+  }
+}
