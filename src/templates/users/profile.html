@@ -20,9 +20,8 @@
         </table>
       </div>
     </div>
-  </div>
 
-  <div ng-show="user.accounts.length" class="col-sm-5 col-sm-offset-1">
+  <div ng-show="user.accounts.length">
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">{{user.displayName}} on the web</h4>
@@ -46,4 +45,76 @@
       </div>
     </div>
   </div>
+  </div>
+
+<div class="col-sm-7" ng-controller="UserArticlesCtrl" ng-if="user">
+  <div ng-if="auth.user._id === user._id">
+    <p class="text-right">
+      <a href="#/articles/new" class="btn btn-default">Add an article</a>
+    </p>
+  </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">Imported articles</h4>
+      </div>
+      <div class="panel-body">
+        <p ng-if="articles && !articles.length">
+          No imported articles yet.
+        </p>
+        <div ng-repeat="article in articles" class="ph-md-margin-bottom">
+          <div class="media">
+            <div class="media-left">
+              <a href="#/articles/{{article._id}}">
+                <span class="fa-stack ph-icon">
+                  <i class="fa fa-circle fa-stack-2x text-muted"></i>
+                  <i class="fa fa-file-text-o fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading ph-no-margin-bottom">
+                <a href="#/articles/{{article._id}}">{{article.title}}</a>
+              </h4>
+              <div>
+                <span ng-repeat="author in article.authors">
+                  {{author}}{{$last ? '' : ', '}}
+                </span>
+              </div>
+              <div class="text-muted">
+                <i class="fa fa-fw fa-cloud-download"></i> imported
+                from
+                <a href="{{article.source.url}}">
+                  {{article.source.name}}
+                </a>
+                on {{article.createdAt | date:'longDate'}}
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">Authored articles</h4>
+      </div>
+      <div class="panel-body">
+        <div class="alert alert-info">
+          <h5><strong>
+              <i class="fa fa-fw fa-info-circle"></i>
+              Note on arXiv articles
+          </strong></h5>
+          <p>
+            Currently, we cannot determine which arXiv articles are authored by
+            a user due to missing ORCID integration in the arXiv API.
+          </p>
+          <p>
+            In order to allow us to list your articles here, please head over
+            to <a href="http://arxiv.org">arXiv.org</a> and link your arXiv
+            account to your ORCID account.
+          </p>
+        </div>
+      </div>
+    </div>
+</div>
 </div>
