@@ -24,9 +24,7 @@
                 {{article.publishedAt | date:'longDate'}}
               </p>
               <p class="text-muted">
-                <i class="fa fa-fw fa-cloud-download"></i> imported by
-                <a href="#/users/{{article.importedBy.username}}">
-                  {{article.importedBy.displayName}}</a>
+                <i class="fa fa-fw fa-cloud-download"></i> imported
                 from
                 <a href="{{article.source.url}}">
                   {{article.source.name}}</a>
@@ -52,12 +50,12 @@
                       {{discussions.stored.length}}
                     </span></a>
                 </li>
-                <li subnav-target="articles.activity">
+                <!--li subnav-target="articles.activity">
                   <a><i class="fa fa-fw fa-clock-o"></i> Activity</a>
                 </li>
                 <li subnav-target="articles.settings">
                   <a><i class="fa fa-fw fa-cog"></i> Settings</a>
-                </li>
+                </li-->
               </ul>
             </subnav>
           </div>
