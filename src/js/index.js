@@ -19,6 +19,7 @@
   require('angular-route-segment'); // provides 'route-segment' module
   require('../../tmp/templates.js'); // provides 'templates' module
   require('pdfjs');
+  require('pdfjs-compatibility');
   require('../../bower_components/pdfjs-dist/web/pdf_viewer.js');
 
   var paperhive = angular
