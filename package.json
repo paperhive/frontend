@@ -49,6 +49,7 @@
     "detect-element-resize": "./bower_components/javascript-detect-element-resize/jquery.resize.js",
     "highlightjs": "./bower_components/highlightjs/highlight.pack.js",
     "pdfjs": "./bower_components/pdfjs-dist/build/pdf.js",
+    "pdfjs-compatibility": "./bower_components/pdfjs-dist/web/compatibility.js",
     "mentio": "./bower_components/ment.io/dist/mentio.js",
     "jquery": "./bower_components/jquery/dist/jquery.js",
     "kramed": "./bower_components/kramed/lib/kramed.js",
@@ -115,6 +116,11 @@
     },
     "pdfjs": {
       "exports": "PDFJS"
+    },
+    "pdfjs-compatibility": {
+      "depends": [
+        "pdfjs:PDFJS"
+      ]
     },
     "highlightjs": {
       "exports": "hljs"
