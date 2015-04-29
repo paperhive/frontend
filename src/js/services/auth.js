@@ -8,7 +8,7 @@ module.exports = function(app) {
           encodeURIComponent(
             $window.location.origin +
             $window.location.pathname +
-            '#/oauth/orcid'
+            '/oauth/orcid'
           )
       };
 
