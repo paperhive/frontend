@@ -20,6 +20,7 @@ var htmlhint = require("gulp-htmlhint");
 var jscs = require('gulp-jscs');
 var jscsStylish = require('gulp-jscs-stylish');
 var template = require('gulp-template');
+var connectHistory = require('connect-history-api-fallback');
 
 var debug = process.env.DEBUG || false;
 
@@ -209,7 +210,11 @@ gulp.task('serve', ['serve:connect', 'watch', 'serve:watch']);
 gulp.task('serve:connect', ['default:watch'], function () {
   connect.server({
     root: 'build',
-    livereload: true
+    livereload: true,
+    middleware: function(connect, opt) {
+      // default to index.html
+      return [connectHistory()];
+    }
   });
 });
 
