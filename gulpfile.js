@@ -19,13 +19,16 @@ var jshint = require("gulp-jshint");
 var htmlhint = require("gulp-htmlhint");
 var jscs = require('gulp-jscs');
 var jscsStylish = require('gulp-jscs-stylish');
+var template = require('gulp-template');
 
 var debug = process.env.DEBUG || false;
+
+var config = require('./config.json');
 
 var paths = {
   templates: 'src/templates/**/*.html',
   images: 'src/img/**/*',
-  html: 'src/index.html',
+  index: 'src/index.html',
   less: 'src/less/**/*.less',
   build: 'build/**/*'
 };
@@ -105,7 +108,7 @@ gulp.task('jscs', function () {
 });
 
 gulp.task('htmlhint', function() {
-  return gulp.src([paths.html, paths.templates], {base: 'src'})
+  return gulp.src([paths.index, paths.templates], {base: 'src'})
     .pipe(htmlhint(htmlhintOpts))
     .pipe(htmlhint.reporter())
     .pipe(htmlhint.failReporter());
@@ -129,7 +132,8 @@ gulp.task('templates', function () {
 
 // copy static files
 gulp.task('static', function () {
-  var html = gulp.src(paths.html, {base: 'src'})
+  var index = gulp.src(paths.index, {base: 'src'})
+    .pipe(template({config: config}))
     .pipe(debug ? gutil.noop() : htmlmin(htmlminOpts))
     .pipe(gulp.dest('build'));
 
@@ -162,7 +166,7 @@ gulp.task('static', function () {
     .pipe(debug ? gutil.noop() : streamify(uglify()))
     .pipe(gulp.dest('build/assets/pdfjs'));
 
-  return merge(html, images, bootstrap, fontawesome, mathjax, pdfjs);
+  return merge(index, images, bootstrap, fontawesome, mathjax, pdfjs);
 });
 
 // compile less to css
@@ -187,7 +191,7 @@ gulp.task('clean', function(cb) {
 // watch for changes
 gulp.task('watch', ['default:watch'], function () {
   gulp.watch(paths.templates, ['templates']);
-  gulp.watch([paths.images, paths.html], ['static']);
+  gulp.watch([paths.images, paths.index], ['static']);
   gulp.watch(paths.less, ['style']);
 });
 

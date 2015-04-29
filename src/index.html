@@ -2,6 +2,8 @@
 
 <html lang="en" ng-app="paperHive" ng-strict-di>
   <head ng-controller="MetaCtrl">
+    <!-- base href is the entry point of the deployed app -->
+    <base href="<%= config.baseHref %>">
     <title data-ng-bind="metaService.data.title"></title>
     <meta charset="utf-8">
     <meta
