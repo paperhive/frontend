@@ -19,17 +19,6 @@
                   {{author}}{{$last ? '' :', '}}
                 </span>
               </h4>
-              <p class="text-muted">
-                <i class="fa fa-fw fa-clock-o"></i> published on
-                {{article.publishedAt | date:'longDate'}}
-              </p>
-              <p class="text-muted">
-                <i class="fa fa-fw fa-cloud-download"></i> imported
-                from
-                <a href="{{article.source.url}}">
-                  {{article.source.name}}</a>
-                on {{article.createdAt | date:'longDate'}}
-              </p>
             </div>
           </div>
         </div>
@@ -49,6 +38,9 @@
                     <span class="badge" ng-if="discussions.stored.length > 0">
                       {{discussions.stored.length}}
                     </span></a>
+                </li>
+                <li subnav-target="articles.about">
+                  <a><i class="fa fa-fw fa-info"></i> About</a>
                 </li>
                 <!--li subnav-target="articles.activity">
                   <a><i class="fa fa-fw fa-clock-o"></i> Activity</a>

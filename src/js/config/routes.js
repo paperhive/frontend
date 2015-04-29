@@ -15,6 +15,7 @@ module.exports = function(app) {
               'articles.discussions.thread')
         .when('/articles/:articleId/settings', 'articles.settings')
         .when('/articles/:articleId/text', 'articles.text')
+        .when('/articles/:articleId/about', 'articles.about')
         .when('/contact', 'contact')
         .when('/help', 'help')
         .when('/legalnotice', 'legalnotice')
@@ -67,6 +68,10 @@ module.exports = function(app) {
           .segment('settings', {
             templateUrl: 'templates/articles/settings.html',
             title: 'Article settings'
+          })
+          .segment('about', {
+            templateUrl: 'templates/articles/about.html',
+            title: 'About the article'
           })
           .segment('text', {
             default: true,
