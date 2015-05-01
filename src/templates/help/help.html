@@ -38,12 +38,12 @@
         <ul ng-if="helpData.toc.length" class="nav ph-sidenav">
           <li ng-repeat="section in helpData.toc"
               ng-class="{active: section.active}">
-            <a href="/help#{{section.id}}">{{section.text}}</a>
+            <a href="./help#{{section.id}}">{{section.text}}</a>
             <!-- subsections -->
             <ul ng-if="section.subToc" class="nav ph-sidenav-sub">
               <li ng-repeat="subsection in section.subToc"
                   ng-class="{active: subsection.active}">
-                <a href="/help#{{subsection.id}}">
+                <a href="./help#{{subsection.id}}">
                   {{subsection.text}}
                   <i class="fa fa-chevron-right fa-fw"></i>
                 </a>
