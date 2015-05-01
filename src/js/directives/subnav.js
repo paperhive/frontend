@@ -48,7 +48,7 @@ module.exports = function(app) {
 
             // add link
             angular.element(a).attr(
-              'href', $filter('routeSegmentUrl')(target)
+              'href', './' + $filter('routeSegmentUrl')(target)
             );
 
             // add click event
