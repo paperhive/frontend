@@ -7,8 +7,8 @@ module.exports = function(app) {
         orcidUrl: config.apiUrl + '/oauth/orcid?app_callback=' +
           encodeURIComponent(
             $window.location.origin +
-            $window.location.pathname +
-            '#/oauth/orcid'
+            config.baseHref +
+            '/oauth/orcid'
           )
       };
 

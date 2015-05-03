@@ -25,7 +25,7 @@ module.exports = function(app) {
         });
 
         scope.getUserText = function(item) {
-          //return '<strong><a href='#/users/' + item.userName + ''>@' + item.userName + '</a></strong>';
+          //return '<strong><a href='./users/' + item.userName + ''>@' + item.userName + '</a></strong>';
           return '@' + item.userName;
         };
 

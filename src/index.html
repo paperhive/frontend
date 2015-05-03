@@ -2,6 +2,8 @@
 
 <html lang="en" ng-app="paperHive" ng-strict-di>
   <head ng-controller="MetaCtrl">
+    <!-- base href is the entry point of the deployed app -->
+    <base href="<%= config.baseHref %>">
     <title data-ng-bind="metaService.data.title"></title>
     <meta charset="utf-8">
     <meta
@@ -41,7 +43,7 @@
     </footer>
     <ng-include src="'templates/shared/notifications.html'"></ng-include>
 
-    <a href="#/contact" class="ph-feedback hidden-xs hidden-sm">
+    <a href="./contact" class="ph-feedback hidden-xs hidden-sm">
       <i class="fa fa-envelope ph-icon-margin"></i> feedback
     </a>
   </body>

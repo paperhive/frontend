@@ -9,7 +9,7 @@
       #{{discussion.index}}
     </span>
   </h3>
-  <a href="#/users/{{discussion.originalAnnotation.author.username}}">
+  <a href="./users/{{discussion.originalAnnotation.author.username}}">
     {{discussion.originalAnnotation.author.displayName}}</a>
   opened this discussion
   <span am-time-ago="discussion.originalAnnotation.createdAt"></span>
@@ -58,7 +58,7 @@
 
         <li class="media">
           <div ng-if="auth.user">
-            <a class="media-left" href="#/users/{{auth.user.username}}">
+            <a class="media-left" href="./users/{{auth.user.username}}">
               <img
               gravatar-user="auth.user"
               gravatar-size="80"
@@ -80,7 +80,7 @@
                       $$<a href="http://en.wikibooks.org/wiki/LaTeX/Mathematics#Symbols"
                         target="_blank">LaTeX</a>$$,
                       ```<a href="https://highlightjs.org/" target="_blank">code blocks</a>```,
-                      <a href="http://jeff-collins.github.io/ment.io/#/"
+                      <a href="http://jeff-collins.github.io/ment.io/"
                         target="_blank">@mentions</a>
                     </span>
 
