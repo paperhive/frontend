@@ -5,6 +5,7 @@ module.exports = function(app) {
     function($routeSegmentProvider, $routeProvider) {
       $routeSegmentProvider
         .when('/', 'main')
+        .when('/404', '404')
         .when('/articles/new', 'articles_new')
         .when('/articles/:articleId', 'articles')
         .when('/articles/:articleId/activity', 'articles.activity')
@@ -34,6 +35,12 @@ module.exports = function(app) {
         .segment('main', {
           templateUrl: 'templates/main/main.html',
           title: 'PaperHive'
+        })
+        // 404 page not found
+        .segment('404', {
+          templateUrl: 'templates/shared/404.html',
+          title: '404 – page not found',
+          statusCode: 404
         })
         .segment('articles', {
           templateUrl: 'templates/articles/index.html',
@@ -150,7 +157,7 @@ module.exports = function(app) {
         })
         ;
 
-      $routeProvider.otherwise({redirectTo: '/'});
+      $routeProvider.otherwise({redirectTo: '/404'});
     }
   ]);
 };
