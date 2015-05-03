@@ -1,5 +1,5 @@
 <ul class="nav navbar-nav" ng-controller="NavbarUserCtrl">
-  <li ng-show="!auth.user && !auth.inProgress">
+  <li ng-if="!auth.user && !auth.inProgress">
     <p class="navbar-btn ph-md-margin-left ph-md-margin-right">
     <a href="{{auth.orcidUrl}}" class="btn btn-default"
       title="Sign in with your ORCID iD">
@@ -7,14 +7,14 @@
     </a>
     </p>
   </li>
-  <li ng-show="!auth.user && auth.inProgress">
+  <li ng-if="!auth.user && auth.inProgress">
     <p class="navbar-text">
       <progressbar class="progress-striped active ph-no-margin" value="100">
         <span class="ph-lg-padding-left ph-lg-padding-right">Signing in...</span>
       </progressbar>
     </p>
   </li>
-  <li ng-show="auth.user" class="dropdown" is-open="dropdown_open" dropdown>
+  <li ng-if="auth.user" class="dropdown" is-open="dropdown_open" dropdown>
     <a href="" class="dropdown-toggle" dropdown-toggle>
       <img
         gravatar-user="auth.user"
@@ -25,12 +25,12 @@
       <i class="fa fa-fw fa-caret-down"></i>
     </a>
     <ul class="dropdown-menu">
-      <li ng-show="auth.user.username">
+      <li ng-if="auth.user.username">
         <a href="./articles/new">
           <i class="fa fa-fw fa-plus"></i> Add article
         </a>
       </li>
-      <li ng-show="auth.user.username">
+      <li ng-if="auth.user.username">
         <a href="./users/{{auth.user.username}}">
           <i class="fa fa-fw fa-user"></i> Profile
         </a>
