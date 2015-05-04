@@ -55,17 +55,20 @@ You can deploy the branch by following these steps:
 
    ```git clone git@github.com:paperhive/paperhive-frontend-deploy.git```
 
-2. Check out the deployment master:
+2. Check out the current deployment master:
 
-    ```(cd paperhive-frontend-deploy/ && git checkout master)```
+    ```(cd paperhive-frontend-deploy/ && git checkout master && git pull)```
 
-3. Run `rm -rf tmp build&& gulp` (without any options)
+3. Make a clean build
+
+    ```rm -rf tmp build node_modules bower_components && npm install && bower install && gulp```
+
 4. Copy the resulting files: 
 
     ```rsync -a --delete --exclude .git build/ paperhive-frontend-deploy/```
 
 5. Commit and push:
 
-    ```(cd paperhive-frontend-deploy/ && git commit && git push)```
+    ```(cd paperhive-frontend-deploy/ && git add . && git commit && git push)```
 
 6. Change the `revision` in the puppet config (`puppet/manifests/nodes.pp`) to the commit you just made to `paperhive-frontend-deploy`. Commit, push, pull and apply.
