@@ -35,7 +35,10 @@ module.exports = function(app) {
         // Init Main Page
         .segment('main', {
           templateUrl: 'templates/main/main.html',
-          title: 'PaperHive · Papers, alive.'
+          title: 'PaperHive · Papers, alive.',
+          description: 'Review, discuss, and improve research articles – ' +
+            'together, on the spot and for free. Gain insight from the ' +
+            'findings of others.'
         })
         // 404 page not found
         .segment('404', {
@@ -101,17 +104,22 @@ module.exports = function(app) {
         .segment('contact', {
           templateUrl: 'templates/contact/contact.html',
           controller: 'ContactCtrl',
-          title: 'Contact · PaperHive'
+          title: 'Contact · PaperHive',
+          description: 'Contact PaperHive and ask us questions or send us ' +
+            'suggestions.'
         })
 
         .segment('help', {
           templateUrl: 'templates/help/help.html',
-          title: 'Help · PaperHive'
+          title: 'Help · PaperHive',
+          description: 'Learn how to discuss and review research articles ' +
+            'efficiently and collaboratively on PaperHive.'
         })
 
         .segment('legalnotice', {
           templateUrl: 'templates/legalnotice.html',
-          title: 'Legal notice · PaperHive'
+          title: 'Legal notice · PaperHive',
+          description: 'Information about the operators of PaperHive.'
         })
 
         .segment('oauth', {
@@ -136,7 +144,8 @@ module.exports = function(app) {
 
         .segment('team', {
           templateUrl: 'templates/team/index.html',
-          title: 'Team · PaperHive'
+          title: 'Team · PaperHive',
+          description: 'Meet the team who builds PaperHive.'
         })
 
         .segment('users', {
