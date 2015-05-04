@@ -42,3 +42,30 @@ probably want to run
 ```
 DEBUG=true gulp serve
 ```
+
+#### Deployment
+**Always** check the following:
+
+1. Do the [unit tests](https://travis-ci.org/paperhive/paperhive-frontend) of your branch pass?
+2. Have you tested the [deployed branch](https://paperhive.org/dev/frontend/) *manually*?
+
+You can deploy the branch by following these steps:
+
+1. Clone the deployment repo if you haven't cloned it yet:
+
+   ```git clone git@github.com:paperhive/paperhive-frontend-deploy.git```
+
+2. Check out the deployment master:
+
+    ```(cd paperhive-frontend-deploy/ && git checkout master)```
+
+3. Run `rm -rf tmp build&& gulp` (without any options)
+4. Copy the resulting files: 
+
+    ```rsync -a --delete --exclude .git build/ paperhive-frontend-deploy/```
+
+5. Commit and push:
+
+    ```(cd paperhive-frontend-deploy/ && git commit && git push)```
+
+6. Change the `revision` in the puppet config (`puppet/manifests/nodes.pp`) to the commit you just made to `paperhive-frontend-deploy`. Commit, push, pull and apply.
