@@ -34,85 +34,88 @@ module.exports = function(app) {
         // Init Main Page
         .segment('main', {
           templateUrl: 'templates/main/main.html',
-          title: 'PaperHive'
+          title: 'PaperHive · Papers, alive.'
         })
         // 404 page not found
         .segment('404', {
           templateUrl: 'templates/shared/404.html',
-          title: '404 – page not found',
+          title: '404 · page not found · PaperHive',
           statusCode: 404
         })
         .segment('articles', {
           templateUrl: 'templates/articles/index.html',
           dependencies: ['articleId'],
-          title: 'Article'
+          title: 'Article · PaperHive'
         })
         .within()
           .segment('activity', {
             templateUrl: 'templates/articles/activity.html',
-            title: 'Article activity'
+            title: 'Article activity · PaperHive'
           })
           .segment('discussions', {
             templateUrl: 'templates/articles/discussions/index.html',
-            title: 'Discussions'
+            title: 'Discussions · PaperHive'
           })
           .within()
             .segment('list', {
               default: true,
               templateUrl: 'templates/articles/discussions/list.html',
-              title: 'Discussions'
+              title: 'Discussions · PaperHive'
             })
             .segment('new', {
               templateUrl: 'templates/articles/discussions/new.html',
-              title: 'New discussions'
+              title: 'New discussion · PaperHive'
             })
             .segment('thread', {
               templateUrl: 'templates/articles/discussions/thread.html',
               dependencies: ['discussionIndex'],
-              title: 'Discussion'
+              title: 'Discussion · PaperHive'
             })
           .up()
           .segment('settings', {
             templateUrl: 'templates/articles/settings.html',
-            title: 'Article settings'
+            title: 'Article settings · PaperHive'
           })
           .segment('about', {
             templateUrl: 'templates/articles/about.html',
-            title: 'About the article'
+            title: 'About the article · PaperHive'
           })
           .segment('text', {
             default: true,
             templateUrl: 'templates/articles/text.html',
-            title: 'Article'
+            title: 'Article · PaperHive'
           })
         .up()
         .segment('articles_new', {
           templateUrl: 'templates/articles/new.html',
-          title: 'Add a New Article'
+          title: 'Add a New Article · PaperHive'
         })
 
         .segment('contact', {
           templateUrl: 'templates/contact/contact.html',
           controller: 'ContactCtrl',
-          title: 'Contact'
+          title: 'Contact · PaperHive'
         })
 
         .segment('help', {
-          templateUrl: 'templates/help/help.html'
+          templateUrl: 'templates/help/help.html',
+          title: 'Help · PaperHive'
         })
 
         .segment('legalnotice', {
-          templateUrl: 'templates/legalnotice.html'
+          templateUrl: 'templates/legalnotice.html',
+          title: 'Legal notice · PaperHive'
         })
 
         .segment('oauth', {
           templateUrl: 'templates/auth/oauth.html',
-          controller: 'OauthOrcidCtrl'
+          controller: 'OauthOrcidCtrl',
+          title: 'OAuth login · PaperHive'
         })
 
         .segment('settings', {
           templateUrl: 'templates/settings/index.html',
-          title: 'Your profile'
+          title: 'Your profile · PaperHive'
         })
         .within()
           .segment('profile', {
@@ -126,13 +129,13 @@ module.exports = function(app) {
 
         .segment('team', {
           templateUrl: 'templates/team/index.html',
-          title: 'PaperHive team'
+          title: 'Team · PaperHive'
         })
 
         .segment('users', {
           templateUrl: 'templates/users/index.html',
           dependencies: ['username'],
-          title: 'User'
+          title: 'User · PaperHive'
         })
         .within()
           .segment('profile', {
@@ -153,7 +156,7 @@ module.exports = function(app) {
         .segment('welcome', {
           templateUrl: 'templates/welcome.html',
           controller: 'WelcomeCtrl',
-          title: 'PaperHive'
+          title: 'Welcome · PaperHive'
         })
         ;
 

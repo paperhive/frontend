@@ -22,7 +22,7 @@ module.exports = function(app) {
       $scope.$watch('article', function(article) {
         if (article) {
           metaService.set({
-            title: article.title,
+            title: article.title + ' · PaperHive',
             author: article.authors.join(', '),
             description:
               article.abstract.replace(/(\r\n|\n|\r)/gm, ' ').substring(0, 150),

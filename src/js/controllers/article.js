@@ -26,7 +26,7 @@ module.exports = function(app) {
         // Set meta information
         metaService.set({
           author: article.authors.join(', '),
-          title: article.title,
+          title: article.title + ' · PaperHive',
           // Cut description down to 150 chars, cf.
           // <http://moz.com/learn/seo/meta-description>
           // TODO move linebreak removal to backend?

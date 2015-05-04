@@ -19,7 +19,8 @@ module.exports = function(app) {
         .success(function(data) {
           $scope.user = data;
           metaService.set({
-            title: data.username + ' (' + data.displayName + ')',
+            title: data.username + ' (' + data.displayName + ')' +
+              ' · PaperHive',
           });
         })
         .error(function(data) {

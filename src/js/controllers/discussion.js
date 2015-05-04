@@ -22,8 +22,9 @@ module.exports = function(app) {
           $scope.discussion = discussion;
           metaService.set({
             title: discussion.originalAnnotation.title +
-             ' · Discussion #' + discussion.index +
-             ($scope.article ? (' · ' + $scope.article.title) : ''),
+              ' · Discussion #' + discussion.index +
+              ($scope.article ? (' · ' + $scope.article.title) : '') +
+              ' · PaperHive',
             author: discussion.originalAnnotation.author.displayName,
             // TODO rather use title here?
             description:
