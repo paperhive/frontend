@@ -39,7 +39,7 @@ module.exports = function(app) {
         // 404 page not found
         .segment('404', {
           templateUrl: 'templates/shared/404.html',
-          title: '404 – page not found · PaperHive',
+          title: '404 · page not found · PaperHive',
           statusCode: 404
         })
         .segment('articles', {
