@@ -36,15 +36,19 @@ module.exports = function(app) {
         .segment('main', {
           templateUrl: 'templates/main/main.html',
           title: 'PaperHive · Papers, alive.',
-          description: 'Review, discuss, and improve research articles – ' +
-            'together, on the spot and for free. Gain insight from the ' +
-            'findings of others.'
+          meta: {
+            description: 'Review, discuss, and improve research articles – ' +
+              'together, on the spot and for free. Gain insight from the ' +
+              'findings of others.'
+          }
         })
         // 404 page not found
         .segment('404', {
           templateUrl: 'templates/shared/404.html',
           title: '404 · page not found · PaperHive',
-          statusCode: 404
+          meta: {
+            statusCode: 404
+          }
         })
 
         .segment('alpha-warning', {
@@ -105,21 +109,27 @@ module.exports = function(app) {
           templateUrl: 'templates/contact/contact.html',
           controller: 'ContactCtrl',
           title: 'Contact · PaperHive',
-          description: 'Contact PaperHive and ask us questions or send us ' +
-            'suggestions.'
+          meta: {
+            description: 'Contact PaperHive and ask us questions or send us ' +
+              'suggestions.'
+          }
         })
 
         .segment('help', {
           templateUrl: 'templates/help/help.html',
           title: 'Help · PaperHive',
-          description: 'Learn how to discuss and review research articles ' +
-            'efficiently and collaboratively on PaperHive.'
+          meta: {
+            description: 'Learn how to discuss and review research articles ' +
+              'efficiently and collaboratively on PaperHive.'
+          }
         })
 
         .segment('legalnotice', {
           templateUrl: 'templates/legalnotice.html',
           title: 'Legal notice · PaperHive',
-          description: 'Information about the operators of PaperHive.'
+          meta: {
+            description: 'Information about the operators of PaperHive.'
+          }
         })
 
         .segment('oauth', {
@@ -145,7 +155,9 @@ module.exports = function(app) {
         .segment('team', {
           templateUrl: 'templates/team/index.html',
           title: 'Team · PaperHive',
-          description: 'Meet the team who builds PaperHive.'
+          meta: {
+            description: 'Meet the team who builds PaperHive.'
+          }
         })
 
         .segment('users', {

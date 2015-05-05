@@ -6,29 +6,13 @@
     <base href="<%= config.baseHref %>">
     <title data-ng-bind="metaService.data.title"></title>
     <meta charset="utf-8">
-    <meta
-      ng-if="metaService.data.author"
-      name="author"
-      content="{{metaService.data.author}}"
-      >
-    <meta
-      ng-if="metaService.data.description"
-      name="description"
-      content="{{metaService.data.description}}"
-      >
-    <meta
-      ng-if="metaService.data.keywords"
-      name="keywords"
-      content="{{metaService.data.keywords}}"
-      >
-    <meta
-      ng-if="metaService.data.statusCode != 200"
-      name="prerender-status-code"
-      content="{{metaService.data.statusCode}}"
-      >
     <meta name="language" content="en">
     <meta name="application-name" content="PaperHive">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      ng-repeat="(name, content) in metaService.data.meta"
+      name="{{name}}" content="{{content}}"
+      >
     <!-- TODO: bundle mathjax in index.js -->
     <script src="assets/mathjax/MathJax.js?config=TeX-AMS_HTML-full,Safe">
     </script>
