@@ -19,6 +19,7 @@ module.exports = function(app) {
         .when('/articles/:articleId/about', 'articles.about')
         .when('/contact', 'contact')
         .when('/help', 'help')
+        .when('/alpha-warning', 'alpha-warning')
         .when('/legalnotice', 'legalnotice')
         .when('/oauth/orcid', 'oauth')
         .when('/settings', 'settings')
@@ -42,6 +43,12 @@ module.exports = function(app) {
           title: '404 · page not found · PaperHive',
           statusCode: 404
         })
+
+        .segment('alpha-warning', {
+          templateUrl: 'templates/alpha-warning.html',
+          title: 'Alpha warning · PaperHive'
+        })
+
         .segment('articles', {
           templateUrl: 'templates/articles/index.html',
           dependencies: ['articleId'],
