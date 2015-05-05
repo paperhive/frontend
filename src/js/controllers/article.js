@@ -25,14 +25,16 @@ module.exports = function(app) {
         $scope.article = article;
         // Set meta information
         metaService.set({
-          author: article.authors.join(', '),
           title: article.title + ' · PaperHive',
           // Cut description down to 150 chars, cf.
           // <http://moz.com/learn/seo/meta-description>
           // TODO move linebreak removal to backend?
-          description:
-            article.abstract.substring(0, 150).replace(/(\r\n|\n|\r)/gm, ' '),
-          keywords: article.tags.join(', ')
+          meta: {
+            description: article.title + ' by ' + article.authors.join(', ') +
+              '.',
+            author: article.authors.join(', '),
+            keywords: article.tags.join(', ')
+          }
         });
       })
       .error(function(data) {
