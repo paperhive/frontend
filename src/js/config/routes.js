@@ -19,6 +19,7 @@ module.exports = function(app) {
         .when('/articles/:articleId/about', 'articles.about')
         .when('/contact', 'contact')
         .when('/help', 'help')
+        .when('/alpha-warning', 'alpha-warning')
         .when('/legalnotice', 'legalnotice')
         .when('/oauth/orcid', 'oauth')
         .when('/settings', 'settings')
@@ -105,6 +106,11 @@ module.exports = function(app) {
         .segment('legalnotice', {
           templateUrl: 'templates/legalnotice.html',
           title: 'Legal notice · PaperHive'
+        })
+
+        .segment('alpha-warning', {
+          templateUrl: 'templates/alpha-warning.html',
+          title: 'Alpha warning · PaperHive'
         })
 
         .segment('oauth', {
