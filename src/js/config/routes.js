@@ -156,7 +156,7 @@ module.exports = function(app) {
           templateUrl: 'templates/team/index.html',
           title: 'Team · PaperHive',
           meta: {
-            description: 'Meet the team who builds PaperHive.'
+            description: 'Meet the team that builds PaperHive.'
           }
         })
 
