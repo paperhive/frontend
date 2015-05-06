@@ -47,7 +47,7 @@ module.exports = function(app) {
           templateUrl: 'templates/shared/404.html',
           title: '404 · page not found · PaperHive',
           meta: {
-            statusCode: 404
+            'prerender-status-code': 404
           }
         })
 
