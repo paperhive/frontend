@@ -29,12 +29,15 @@ module.exports = function(app) {
           // Cut description down to 150 chars, cf.
           // <http://moz.com/learn/seo/meta-description>
           // TODO move linebreak removal to backend?
-          meta: {
-            description: article.title + ' by ' + article.authors.join(', ') +
-              '.',
-            author: article.authors.join(', '),
-            keywords: article.tags.join(', ')
-          }
+          meta: [
+            {
+              name: 'description',
+              content: article.title + ' by ' + article.authors.join(', ') +
+                '.',
+            },
+            {name: 'author', content: article.authors.join(', ')},
+            {name: 'keywords', content: article.tags.join(', ')}
+          ]
         });
       })
       .error(function(data) {

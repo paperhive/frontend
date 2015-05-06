@@ -37,10 +37,10 @@ module.exports = function(app) {
 
           metaService.set({
             title: article.title + ' · PaperHive',
-            meta: {
-              description: description,
-              author: article.authors.join(', ')
-            }
+            meta: [
+              {name: 'description', content: description},
+              {name: 'author', content: article.authors.join(', ')}
+            ]
           });
         }
       });

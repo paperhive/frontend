@@ -10,8 +10,8 @@
     <meta name="application-name" content="PaperHive">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta
-      ng-repeat="(name, content) in metaService.data.meta"
-      name="{{name}}" content="{{content}}"
+      ng-repeat="meta in metaService.data.meta"
+      name="{{meta.name}}" content="{{meta.content}}"
       >
     <!-- TODO: bundle mathjax in index.js -->
     <script src="assets/mathjax/MathJax.js?config=TeX-AMS_HTML-full,Safe">

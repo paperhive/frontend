@@ -10,11 +10,14 @@ module.exports = function(app) {
         if (article) {
           metaService.set({
             title: 'Activity · ' + article.title + ' · PaperHive',
-            meta: {
-              description: 'Activity for ' + article.title + ' by ' +
-                article.authors.join(', ') + '.',
-              author: article.authors.join(', ')
-            }
+            meta: [
+              {
+                name: 'description',
+                content: 'Activity for ' + article.title + ' by ' +
+                  article.authors.join(', ') + '.',
+              },
+              {name: 'author', content: article.authors.join(', ')}
+            ]
           });
         }
       });

@@ -10,10 +10,13 @@ module.exports = function(app) {
         if (article) {
           metaService.set({
             title: 'Discussions · ' + article.title + ' · PaperHive',
-            meta: {
-              description: 'Discussions overview for ' + article.title +
-                ' by ' + article.authors.join(', ')
-            }
+            meta: [
+              {
+                name: 'description',
+                content: 'Discussions overview for ' + article.title +
+                  ' by ' + article.authors.join(', ')
+              }
+            ]
           });
         }
       });
