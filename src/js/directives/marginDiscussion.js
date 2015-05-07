@@ -4,8 +4,8 @@ var angular = require('angular');
 module.exports = function(app) {
 
   app.directive('marginDiscussion', [
-    '$q', 'authService',
-    function($q, authService) {
+    '$q', '$location', '$filter', 'authService',
+    function($q, $location, $filter, authService) {
       return {
         restrict: 'E',
         scope: {
@@ -21,6 +21,16 @@ module.exports = function(app) {
           scope.state = {};
           scope.replyDraft = {};
           scope.auth = authService;
+
+          // required to work around event.stopPropagation() issue with
+          // html5mode, see http://stackoverflow.com/q/28945975/1219479
+          scope.changePath = function(path) {
+            $location.path(path);
+          };
+
+          scope.filterRouteSegmentUrl = function(segment, args) {
+            return $filter('routeSegmentUrl')(segment, args);
+          };
 
           // original comment
           scope.originalState = {};
