@@ -25,7 +25,7 @@ module.exports = function(app) {
         if (article) {
           var description = 'Article with discussions.';
           if (discussions.length === 1) {
-            description =  'Article with 1 discusssion.';
+            description =  'Article with 1 discussion.';
           }
           if (discussions.length > 1) {
             description = 'Article with ' + discussions.length +
