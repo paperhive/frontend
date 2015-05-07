@@ -28,8 +28,7 @@
               </button>
               <ul class="dropdown-menu dropdown-menu-right ph-margin-dropdown">
                 <li>
-                  <a href="./{{'articles.discussions.thread' | routeSegmentUrl:
-                      {discussionIndex: discussion.index} }}">
+                  <a ng-click="changePath(filterRouteSegmentUrl('articles.discussions.thread', {discussionIndex: discussion.index}))">
                     <i class="fa fa-fw fa-comments"></i> Show discussion view
                   </a>
                 </li>
