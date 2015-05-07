@@ -21,6 +21,14 @@ module.exports = function(app) {
           metaService.set({
             title: data.username + ' (' + data.displayName + ')' +
               ' · PaperHive',
+            meta: [
+              {
+                name: 'description',
+                content: 'Profile of ' + data.username +
+                  ' (' + data.displayName + ')' +
+                  ' on PaperHive.'
+              }
+            ]
           });
         })
         .error(function(data) {

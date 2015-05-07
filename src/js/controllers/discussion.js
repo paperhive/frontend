@@ -25,14 +25,25 @@ module.exports = function(app) {
               ' · Discussion #' + discussion.index +
               ($scope.article ? (' · ' + $scope.article.title) : '') +
               ' · PaperHive',
-            author: discussion.originalAnnotation.author.displayName,
-            // TODO rather use title here?
-            description:
-              discussion.originalAnnotation.body ?
-              discussion.originalAnnotation.body.substring(0, 150) :
-              undefined,
-            keywords: discussion.originalAnnotation.tags ?
-              discussion.originalAnnotation.tags.join(', ') : undefined
+            meta: [
+              {
+                name: 'author',
+                content: discussion.originalAnnotation.author.displayName
+              },
+              // TODO rather use title here?
+              {
+                name: 'description',
+                content: 'Annotation by ' +
+                  discussion.originalAnnotation.author.displayName + ': ' +
+                  (discussion.originalAnnotation.body ?
+                  discussion.originalAnnotation.body.substring(0, 150) : ''),
+              },
+              {
+                name: 'keywords',
+                content: discussion.originalAnnotation.tags ?
+                  discussion.originalAnnotation.tags.join(', ') : undefined
+              }
+            ]
           });
         })
         .error(notificationService.httpError('could not fetch discussion'));

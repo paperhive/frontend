@@ -19,13 +19,28 @@ module.exports = function(app) {
       };
 
       // set meta data
-      $scope.$watch('article', function(article) {
+      $scope.$watchGroup(['article', 'discussions.stored'], function(newVals) {
+        var article = newVals[0];
+        var discussions = newVals[1];
         if (article) {
+          var description = 'Article with discussions.';
+          if (discussions.length === 1) {
+            description =  'Article with 1 discussion.';
+          }
+          if (discussions.length > 1) {
+            description = 'Article with ' + discussions.length +
+              ' discussions.';
+          }
+          description += (article.authors.length === 1 ?
+            ' Author: ' :
+            ' Authors: ') + article.authors.join(', ') + '.';
+
           metaService.set({
             title: article.title + ' · PaperHive',
-            author: article.authors.join(', '),
-            description:
-              article.abstract.replace(/(\r\n|\n|\r)/gm, ' ').substring(0, 150),
+            meta: [
+              {name: 'description', content: description},
+              {name: 'author', content: article.authors.join(', ')}
+            ]
           });
         }
       });
