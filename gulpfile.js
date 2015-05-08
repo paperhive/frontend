@@ -76,7 +76,9 @@ function js (watch) {
       .pipe(source('index.js'))
       .pipe(buffer())
       .pipe(sourcemaps.init({loadMaps: true}))
-        .pipe(debug ? gutil.noop() : streamify(uglify()))
+        .pipe(debug ? gutil.noop() : streamify(uglify({
+          preserveComments: 'some'
+        })))
       .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest('build'));
   }
