@@ -23,22 +23,21 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="row col-md-12">
-      <span class="pull-right btn-toolbar">
-        <a href="./{{'articles.discussions.new' | routeSegmentUrl}}"
-           class="btn btn-default pull-right" ng-disabled="!auth.user">
-          <i class="fa fa-fw fa-plus"></i> Add general comment
-        </a>
-        <a ng-if="pdfSource"
-           type="button"
-           target="_blank"
-           class="btn btn-default pull-right"
-           ng-href="{{pdfSource}}">
-          <i class="fa fa-fw fa-download"></i> Download
-        </a>
-        <div class="clearfix"></div>
-      </span>
+      <div class="row">
+        <div class="col-md-12 text-right">
+          <a ng-if="pdfSource"
+             type="button"
+             target="_blank"
+             class="btn btn-default"
+             ng-href="{{pdfSource}}">
+            <i class="fa fa-fw fa-download"></i> Download
+          </a>
+          <a href="./{{'articles.discussions.new' | routeSegmentUrl}}"
+             class="btn btn-default" ng-disabled="!auth.user">
+            <i class="fa fa-fw fa-plus"></i> Add general comment
+          </a>
+        </div>
+      </div>
     </div>
     <div class="ph-header-submenu-container">
       <div class="container">
