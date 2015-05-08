@@ -10,7 +10,7 @@
                 <i class="fa fa-file-text-o fa-stack-1x"></i>
               </span>
             </div>
-            <div class="media-body">
+            <div class="media-body media-middle">
               <h2 class="media-heading">
                 <a href="./articles/{{article._id}}">{{article.title}}</a>
               </h2>
@@ -21,6 +21,21 @@
               </h4>
             </div>
           </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 text-right">
+          <a ng-if="pdfSource"
+             type="button"
+             target="_blank"
+             class="btn btn-default"
+             ng-href="{{pdfSource}}">
+            <i class="fa fa-fw fa-download"></i> Download
+          </a>
+          <a href="./{{'articles.discussions.new' | routeSegmentUrl}}"
+             class="btn btn-default" ng-disabled="!auth.user">
+            <i class="fa fa-fw fa-plus"></i> Add general comment
+          </a>
         </div>
       </div>
     </div>
