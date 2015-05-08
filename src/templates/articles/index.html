@@ -25,13 +25,20 @@
       </div>
     </div>
     <div class="row col-md-12">
-          <a ng-if="pdfSource"
-             type="button"
-             target="_blank"
-             class="btn btn-default pull-right"
-             ng-href="{{pdfSource}}">
-            Download
-          </a>
+      <span class="pull-right btn-toolbar">
+        <a href="./{{'articles.discussions.new' | routeSegmentUrl}}"
+           class="btn btn-default pull-right" ng-disabled="!auth.user">
+          <i class="fa fa-fw fa-plus"></i> Add general comment
+        </a>
+        <a ng-if="pdfSource"
+           type="button"
+           target="_blank"
+           class="btn btn-default pull-right"
+           ng-href="{{pdfSource}}">
+          Download
+        </a>
+        <div class="clearfix"></div>
+      </span>
     </div>
     <div class="ph-header-submenu-container">
       <div class="container">
