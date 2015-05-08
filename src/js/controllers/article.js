@@ -25,7 +25,8 @@ module.exports = function(app) {
         $scope.article = article;
 
         if (article.source.type === 'arxiv') {
-          $scope.pdfSource = 'http://arxiv.org/pdf/' + article.source.id + '.pdf';
+          $scope.pdfSource =
+            'http://arxiv.org/pdf/' + article.source.id + '.pdf';
         }
 
         // Set meta information
