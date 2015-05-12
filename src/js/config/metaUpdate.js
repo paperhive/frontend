@@ -12,7 +12,7 @@ module.exports = function(app) {
           $routeSegment.chain[$routeSegment.chain.length - 1].params;
         metaService.set({
           title: (params && params.title) || 'PaperHive',
-          meta: params.meta
+          meta: params && params.meta
         });
       });
     }
