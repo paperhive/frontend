@@ -11,7 +11,7 @@ module.exports = function(app) {
           $routeSegment.chain[$routeSegment.chain.length - 1] &&
           $routeSegment.chain[$routeSegment.chain.length - 1].params;
         metaService.set({
-          title: params.title || 'PaperHive',
+          title: (params && params.title) || 'PaperHive',
           meta: params.meta
         });
       });

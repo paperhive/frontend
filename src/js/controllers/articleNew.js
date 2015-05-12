@@ -20,7 +20,8 @@ module.exports = function(app) {
             $scope.submitting = false;
             notificationService.notifications.push({
               type: 'error',
-              message: data.message || 'could not add article (unknown reason)'
+              message: (data && data.message) ||
+                'could not add article (unknown reason)'
             });
           });
 
