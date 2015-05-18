@@ -13,5 +13,6 @@
   "noarg": true,
   "node": true,
   "trailing": true,
-  "undef": true
+  "undef": true,
+  "unused": "vars"
 }
