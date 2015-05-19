@@ -11,7 +11,8 @@ module.exports = function(app) {
           description: 'Review, discuss, and improve research articles – ' +
             'together, on the spot and for free. Gain insight from the ' +
             'findings of others.',
-          url: 'https://paperhive.org'
+          url: 'https://paperhive.org',
+          logo: 'https://paperhive.org/static/img/logo.png'
         }
       };
 
@@ -54,20 +55,14 @@ module.exports = function(app) {
             {property: 'og:type', content: 'website'},
             {property: 'og:title', content: meta.main.title},
             {property: 'og:description', content: meta.main.description},
-            {
-              property: 'og:image',
-              content: 'https://paperhive.org/static/img/logo2.png'
-            },
+            {property: 'og:image', content: meta.main.logo},
             {property: 'og:url', content: meta.main.url},
             // twitter cards
             {name: 'twitter:card', content: 'summary'},
             {name: 'twitter:url', content: meta.main.url},
             {name: 'twitter:title', content: meta.main.title},
             {name: 'twitter:description', content: meta.main.description},
-            {
-              name: 'twitter:image',
-              content: 'https://paperhive.org/static/img/logo2.png'
-            },
+            {name: 'twitter:image', content: meta.main.logo}
           ],
           jsonld: [
             {
@@ -75,6 +70,7 @@ module.exports = function(app) {
               '@type': 'Organization',
               name: 'PaperHive',
               url: meta.main.url,
+              logo: meta.main.logo,
               sameAs: [
                 'https://plus.google.com/114787682678537396870',
                 'https://twitter.com/paper_hive',
