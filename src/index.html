@@ -5,6 +5,8 @@
     <!-- base href is the entry point of the deployed app -->
     <base href="<%= config.baseHref %>">
     <title data-ng-bind="metaService.data.title"></title>
+
+    <!-- meta tags -->
     <meta charset="utf-8">
     <meta name="language" content="en">
     <meta name="application-name" content="PaperHive">
@@ -13,6 +15,14 @@
       ng-repeat="meta in metaService.data.meta"
       name="{{meta.name}}" content="{{meta.content}}"
       >
+
+    <!-- JSON-LD -->
+    <script
+      ng-repeat="jsonld in metaService.data.jsonld"
+      ng-bind="jsonld | json"
+      type="application/ld+json">
+    </script>
+
     <!-- TODO: bundle mathjax in index.js -->
     <script src="assets/mathjax/MathJax.js?config=TeX-AMS_HTML-full,Safe">
     </script>
