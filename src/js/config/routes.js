@@ -43,6 +43,19 @@ module.exports = function(app) {
                 'together, on the spot and for free. Gain insight from the ' +
                 'findings of others.'
             }
+          ],
+          jsonld: [
+            {
+              '@context': 'http://schema.org',
+              '@type': 'Organization',
+              name: 'PaperHive',
+              url: 'https://paperhive.org',
+              sameAs: [
+                'https://plus.google.com/114787682678537396870',
+                'https://twitter.com/paper_hive',
+                'https://github.com/paperhive/',
+              ]
+            }
           ]
         })
         // 404 page not found
