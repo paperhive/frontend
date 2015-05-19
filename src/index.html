@@ -11,10 +11,7 @@
     <meta name="language" content="en">
     <meta name="application-name" content="PaperHive">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta
-      ng-repeat="meta in metaService.data.meta"
-      name="{{meta.name}}" content="{{meta.content}}"
-      >
+    <meta ng-repeat="meta in metaService.data.meta" attributes="meta">
 
     <!-- JSON-LD -->
     <script
