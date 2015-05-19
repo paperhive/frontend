@@ -47,9 +47,6 @@ module.exports = function(app) {
             ]);
             element.css({height: height + 'px'});
 
-            // set top position of element
-            var pageYOffset = $window.pageYOffset;
-
             // get position of parent
             var offsetParent = element[0].offsetParent;
             if (!offsetParent) {return;}

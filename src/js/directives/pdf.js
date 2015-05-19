@@ -7,9 +7,8 @@ module.exports = function(app) {
     return {
       restrict: 'E',
       link: function(scope, element, attrs) {
-        scope.$watchGroup(['pdfUrl', 'pdfTextOverlay'], renderPdf);
 
-        function renderPdf () {
+        var renderPdf = function() {
           var url = scope.$eval(attrs.pdfUrl);
           var textOverlay = scope.$eval(attrs.pdfTextOverlay);
 
@@ -220,7 +219,9 @@ module.exports = function(app) {
             //});
             //// --------
           }
-        }
+        };
+
+        scope.$watchGroup(['pdfUrl', 'pdfTextOverlay'], renderPdf);
       }
     };
   }]);

@@ -33,13 +33,13 @@ module.exports = function(app) {
           // iterate over li elements
           angular.forEach(ul.children, function(li) {
             // check li
-            if (li.nodeName != 'LI') {
+            if (li.nodeName !== 'LI') {
               return;
             }
 
             // get a
             var a = li.children[0];
-            if (!a || a.nodeName != 'A') {
+            if (!a || a.nodeName !== 'A') {
               return;
             }
 
