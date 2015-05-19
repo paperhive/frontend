@@ -69,7 +69,7 @@ You can deploy the branch by following these steps:
 
 5. Commit and push:
 
-    ```(cd paperhive-frontend-deploy/ && git add . && git commit && git push)```
+    ```(cd paperhive-frontend-deploy/ && git add . && git commit -a && git push)```
 
 6. Change the `revision` in the puppet config (`puppet/manifests/nodes.pp`) to the commit you just made to `paperhive-frontend-deploy`. Commit, push, pull and apply.
 
