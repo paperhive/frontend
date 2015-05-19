@@ -9,7 +9,7 @@ module.exports = function(app) {
         return function(data) {
           service.notifications.push({
             type: 'error',
-            message: data.message ? data.message : msg || 'unknown error'
+            message: (data && data.message) || msg || 'unknown error'
           });
         };
       };

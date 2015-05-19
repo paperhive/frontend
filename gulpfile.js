@@ -75,11 +75,11 @@ function js (watch) {
       .on('error', handleError)
       .pipe(source('index.js'))
       .pipe(buffer())
-      .pipe(sourcemaps.init({loadMaps: true}))
+      //.pipe(sourcemaps.init({loadMaps: true}))
         .pipe(debug ? gutil.noop() : streamify(uglify({
           preserveComments: 'some'
         })))
-      .pipe(sourcemaps.write('./'))
+      //.pipe(sourcemaps.write('./'))
       .pipe(gulp.dest('build'));
   }
   bundler.on('update', rebundle);
