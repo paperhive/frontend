@@ -3,6 +3,18 @@ module.exports = function(app) {
   app.config([
     '$routeSegmentProvider', '$routeProvider',
     function($routeSegmentProvider, $routeProvider) {
+
+      // definition of metadata
+      var meta = {
+        main: {
+          title: 'PaperHive · Papers, alive.',
+          description: 'Review, discuss, and improve research articles – ' +
+            'together, on the spot and for free. Gain insight from the ' +
+            'findings of others.',
+          url: 'https://paperhive.org'
+        }
+      };
+
       $routeSegmentProvider
         .when('/', 'main')
         .when('/404', '404')
@@ -35,38 +47,23 @@ module.exports = function(app) {
         // Init Main Page
         .segment('main', {
           templateUrl: 'templates/main/main.html',
-          title: 'PaperHive · Papers, alive.',
+          title: meta.main.title,
           meta: [
-            {
-              name: 'description',
-              content: 'Review, discuss, and improve research articles – ' +
-                'together, on the spot and for free. Gain insight from the ' +
-                'findings of others.'
-            },
+            {name: 'description', content: meta.main.description},
             // open graph
             {property: 'og:type', content: 'website'},
-            {property: 'og:title', content: 'PaperHive · Papers, alive.'},
-            {
-              property: 'og:description',
-              content: 'Review, discuss, and improve research articles – ' +
-                'together, on the spot and for free. Gain insight from the ' +
-                'findings of others.'
-            },
+            {property: 'og:title', content: meta.main.title},
+            {property: 'og:description', content: meta.main.description},
             {
               property: 'og:image',
               content: 'https://paperhive.org/static/img/logo2.png'
             },
-            {property: 'og:url', content: 'https://paperhive.org'},
+            {property: 'og:url', content: meta.main.url},
             // twitter cards
             {name: 'twitter:card', content: 'summary'},
-            {name: 'twitter:url', content: 'https://paperhive.org'},
-            {name: 'twitter:title', content: 'PaperHive · Papers, alive.'},
-            {
-              name: 'twitter:description',
-              content: 'Review, discuss, and improve research articles – ' +
-                'together, on the spot and for free. Gain insight from the ' +
-                'findings of others.'
-            },
+            {name: 'twitter:url', content: meta.main.url},
+            {name: 'twitter:title', content: meta.main.title},
+            {name: 'twitter:description', content: meta.main.description},
             {
               name: 'twitter:image',
               content: 'https://paperhive.org/static/img/logo2.png'
@@ -77,7 +74,7 @@ module.exports = function(app) {
               '@context': 'http://schema.org',
               '@type': 'Organization',
               name: 'PaperHive',
-              url: 'https://paperhive.org',
+              url: meta.main.url,
               sameAs: [
                 'https://plus.google.com/114787682678537396870',
                 'https://twitter.com/paper_hive',
