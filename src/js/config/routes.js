@@ -42,7 +42,35 @@ module.exports = function(app) {
               content: 'Review, discuss, and improve research articles – ' +
                 'together, on the spot and for free. Gain insight from the ' +
                 'findings of others.'
-            }
+            },
+            // open graph
+            {property: 'og:type', content: 'website'},
+            {property: 'og:title', content: 'PaperHive · Papers, alive.'},
+            {
+              property: 'og:description',
+              content: 'Review, discuss, and improve research articles – ' +
+                'together, on the spot and for free. Gain insight from the ' +
+                'findings of others.'
+            },
+            {
+              property: 'og:image',
+              content: 'https://paperhive.org/static/img/logo2.png'
+            },
+            {property: 'og:url', content: 'https://paperhive.org'},
+            // twitter cards
+            {name: 'twitter:card', content: 'summary'},
+            {name: 'twitter:url', content: 'https://paperhive.org'},
+            {name: 'twitter:title', content: 'PaperHive · Papers, alive.'},
+            {
+              name: 'twitter:description',
+              content: 'Review, discuss, and improve research articles – ' +
+                'together, on the spot and for free. Gain insight from the ' +
+                'findings of others.'
+            },
+            {
+              name: 'twitter:image',
+              content: 'https://paperhive.org/static/img/logo2.png'
+            },
           ],
           jsonld: [
             {
