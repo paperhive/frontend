@@ -1,0 +1,134 @@
+<!-- Header Start -->
+<div class="ph-header ph-xl-margin-bottom">
+  <div class="container">
+    <div class="row">
+
+      <div class="col-sm-12">
+        <div class="media">
+
+          <div class="media-left">
+            <!--icon-->
+            <span class="fa-stack ph-icon">
+              <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
+              <i class="fa fa-users fa-stack-1x"></i>
+            </span>
+          </div>
+
+          <div class="media-body ph-vertical-middle">
+            <!--heading-->
+            <h2 class="media-heading ph-no-margin">Jobs</h2>
+            <h4>Join the PaperHive team and help us to make research fun
+              again!</h4>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Header End -->
+
+<!-- Content Start -->
+<div class="container" ng-controller="JobsCtrl">
+  <div class="row ph-equal-height">
+
+    <!-- left-row Start -->
+    <div class="col-sm-3 hidden-xs">
+      <div class="ph-affix" affix affix-offset-top="65">
+        <!-- sections -->
+        <ul ng-if="jobsData.toc.length" class="nav ph-sidenav">
+          <li ng-repeat="section in jobsData.toc"
+              ng-class="{active: section.active}">
+            <a href="./jobs#{{section.id}}">{{section.text}}</a>
+            <!-- subsections -->
+            <ul ng-if="section.subToc" class="nav ph-sidenav-sub">
+              <li ng-repeat="subsection in section.subToc"
+                  ng-class="{active: subsection.active}">
+                <a href="./jobs#{{subsection.id}}">
+                  {{subsection.text}}
+                  <i class="fa fa-chevron-right fa-fw"></i>
+                </a>
+              </li>
+            </ul><!-- /subsections -->
+          </li>
+        </ul><!-- /sections -->
+      </div>
+    </div>
+    <!-- left-row End -->
+
+    <!-- right-row Start -->
+    <div class="col-sm-9" toc="jobsData.toc" toc-scrollspy-offset="85">
+      <div>
+        <h3 id="info" toc-level="1">About PaperHive</h3>
+        <p>
+          PaperHive has been developed for several months now and is fairly close
+          to a preliminary release. We're currently reaching out for the
+          EXIST-Gründerstipendium to ensure basic funding for the next 12 months.
+          The EXIST grant comprises 2500-3000 EUR/month per co-founder (depending
+          on academic degree).
+        </p>
+        <p>
+          <a href="./team">Our founding team</a> is based in Berlin and
+          consists of André and Nico (mathematicians, computer scientists, free
+          software and open access enthusiasts) who developed the current
+          prototype. <a href="./team">Several other people</a> help with web
+          design and server management. We strive for high diversity in our
+          team and encourage you to apply regardless of your (and our)
+          identity.
+        </p>
+
+        <h3 id="cofounder" toc-level="1" class="ph-lg-padding-top">
+          Co-founder, business executive
+        </h3>
+        <h4 class="text-muted">Business relations and management in
+          scientific publishing, development and implementation of market
+          entrance strategy.</h4>
+        <h4 id="cofounder.desc" toc-level="2">Job description</h4>
+        <p>
+          Together with us, you will develop and implement a strategy for
+          PaperHive's market entrance. Furthermore, you will be responsible for
+          the maintenance of customer relations with scientific publishers as
+          well as business administration and management all around PaperHive.
+          This includes sales and marketing but since we're a small team, other
+          interesting tasks may arise along the way. Bringing in your own ideas
+          is most important to us.
+        </p>
+        <h4 id="cofounder.qual" toc-level="2">Qualifications</h4>
+        <p>
+          You have work experience in scientific publishing and maintain good
+          contacts into the business. Since we are situated in the startup
+          ecosystem, it'd be of great value for us if you have experience in
+          this field. At PaperHive, we need
+        </p>
+        <ul>
+          <li>work experience in scientific publishing</li>
+          <li>business experience: sales, marketing, customer relations</li>
+          <li>startup spirit and experience</li>
+          <li>presentation and communication skills</li>
+        </ul>
+        <p>We also welcome</p>
+        <ul>
+          <li>project management experience</li>
+        </ul>
+        <h4 id="cofounder.offer" toc-level="2">Our offer</h4>
+        <ul>
+          <li>work in a small, dynamic, and open-minded team that is driven by enthusiasm for the idea</li>
+          <li>be part of a movement that makes research fun again</li>
+          <li>experience all the ups and downs of a startup endeavor</li>
+          <li>your opinion counts: help steering the ship from day 1 on</li>
+          <li>flexible working time</li>
+          <li>2500-3000 EUR for 1 year (if the EXIST application succeeds)</li>
+        </ul>
+        <h4 id="cofounder.details" toc-level="2">Application details</h4>
+        <p>
+          Please email us your CV and links to projects you've been involved
+          with. We don't need a cover letter.
+        </p>
+      </div>
+    </div>
+    <!-- right-row End -->
+
+  </div>
+</div>
+<!-- Content End -->

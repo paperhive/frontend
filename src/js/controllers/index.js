@@ -11,6 +11,7 @@ module.exports = function(app) {
   require('./discussionList.js')(app);
   require('./meta.js')(app);
   require('./help.js')(app);
+  require('./jobs.js')(app);
   require('./navbar.js')(app);
   require('./navbarSearch.js')(app);
   require('./navbar_user.js')(app);
