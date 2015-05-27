@@ -33,6 +33,7 @@
     "MathJax": "~2.5.3",
     "ment.io": "~0.9.23",
     "pdfjs-dist": "~1.1.109",
-    "rangy": "~1.3"
+    "rangy": "~1.3",
+    "roboto-fontface": "~0.4.2"
   }
 }
