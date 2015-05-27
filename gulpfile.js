@@ -168,7 +168,10 @@ gulp.task('static', function () {
     .pipe(debug ? gutil.noop() : streamify(uglify()))
     .pipe(gulp.dest('build/assets/pdfjs'));
 
-  return merge(index, images, bootstrap, fontawesome, mathjax, pdfjs);
+  var roboto = gulp.src('bower_components/roboto-fontface/fonts/*')
+    .pipe(gulp.dest('build/assets/roboto/fonts'));
+
+  return merge(index, images, bootstrap, fontawesome, mathjax, pdfjs, roboto);
 });
 
 // compile less to css
