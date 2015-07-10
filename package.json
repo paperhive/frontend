@@ -41,12 +41,14 @@
     "angular": "./bower_components/angular/angular.js",
     "angular-animate": "./bower_components/angular-animate/angular-animate.js",
     "angular-bootstrap-tpls": "./bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
+    "angular-leaflet-directive": "./bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.js",
     "angular-moment": "./bower_components/angular-moment/angular-moment.js",
     "angular-route": "./bower_components/angular-route/angular-route.js",
     "angular-route-segment": "./bower_components/angular-route-segment/build/angular-route-segment.js",
     "angular-sanitize": "./bower_components/angular-sanitize/angular-sanitize.js",
     "detect-element-resize": "./bower_components/javascript-detect-element-resize/jquery.resize.js",
     "highlightjs": "./bower_components/highlightjs/highlight.pack.js",
+    "leaflet": "./bower_components/leaflet/dist/leaflet.js",
     "pdfjs": "./bower_components/pdfjs-dist/build/pdf.js",
     "pdfjs-compatibility": "./bower_components/pdfjs-dist/web/compatibility.js",
     "mentio": "./bower_components/ment.io/dist/mentio.js",
@@ -75,6 +77,13 @@
       "exports": null,
       "depends": [
         "angular"
+      ]
+    },
+    "angular-leaflet-directive": {
+      "exports": null,
+      "depends": [
+        "angular",
+        "leaflet:L"
       ]
     },
     "angular-moment": {
@@ -109,6 +118,9 @@
     },
     "jquery": {
       "exports": "$"
+    },
+    "leaflet": {
+      "exports": "L"
     },
     "moment": {
       "exports": "moment"
