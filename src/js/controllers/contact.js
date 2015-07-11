@@ -12,7 +12,7 @@ module.exports = function(app) {
       center: {
         lat: office.lat,
         lng: office.lng,
-        zoom: 17
+        zoom: 12
       },
       markers: {
         officeMarker: {
