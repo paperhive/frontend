@@ -32,53 +32,85 @@
   <div class="row">
 
     <!-- Left Row -->
-    <div class="col-md-4 ph-xl-margin-bottom">
-      <h3 class="ph-sm-margin-bottom">Contact address</h3>
-      <leaflet style="width: 400px; height: 400px;"></leaflet>
-      <address>
-        <h4>PaperHive</h4>
-        Ackerstr. 76<br />
-        13355 Berlin<br />
-        Germany
-      </address>
-      <p>
-        <div>
-          <a href="mailto:info@paperhive.org" class="ph-link-icon"
-              title="Write us.">
-            <i class="fa fa-envelope fa-fw"></i>
+    <div class="col-md-6 ph-xl-margin-bottom">
+      <h3>PaperHive contacts</h3>
+      <div class="row text-center">
+
+        <div class="col-lg-4 col-md-6 col-sm-4 col-xs-6 ph-lg-margin-bottom">
+          <a href="mailto:info@paperhive.org" title="Write us."
+              class="ph-link-icon">
+            <div>
+              <span class="fa-stack fa-3x">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </div>
             info@paperhive.org
           </a>
         </div>
-        <div>
-          <a href="https://twitter.com/paper_hive" class="ph-link-icon"
-              title="Tweet us.">
-            <i class="fa fa-fw fa-twitter"></i>
+
+        <div class="col-lg-4 col-md-6 col-sm-4 col-xs-6 ph-lg-margin-bottom">
+          <a href="https://twitter.com/paper_hive" title="Tweet us."
+              class="ph-link-icon">
+            <div>
+              <span class="fa-stack fa-3x">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+              </span>
+            </div>
             paper_hive
           </a>
         </div>
-        <div>
-          <a href="https://plus.google.com/u/0/b/114787682678537396870/114787682678537396870"
-              class="ph-link-icon" title="Visit us at Google plus.">
-            <i class="fa fa-fw fa-google-plus"></i>
+
+        <div class="col-lg-4 col-md-6 col-sm-4 col-xs-6 ph-lg-margin-bottom">
+          <a href="https://plus.google.com/u/0/b/114787682678537396870/114787682678537396870" title="Visit us at Google plus."
+              class="ph-link-icon">
+            <div>
+              <span class="fa-stack fa-3x">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+              </span>
+            </div>
             PaperHive
           </a>
         </div>
-        <div>
-          <a href="https://github.com/paperhive" class="ph-link-icon"
-              title="Check out our code on github.">
-            <i class="fa fa-fw fa-github"></i>
+
+        <div class="col-lg-4 col-md-6 col-sm-4 col-xs-6 ph-lg-margin-bottom">
+          <a href="https://github.com/paperhive"
+              title="Check out our code on github."
+              class="ph-link-icon">
+            <div>
+              <span class="fa-stack fa-3x">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </div>
             PaperHive
           </a>
         </div>
-      </p>
+      </div>
       <p>
-        Also check out the <a href="legalnotice">legal notice</a>.
+        Also check out our <a href="team">team page</a> and the
+        <a href="legalnotice">legal notice</a>.
       </p>
       <!--p>
       <i class="fa fa-phone fa-fw ph-sm-margin-right"></i> +49 (0) 30 123 45 678 - 0
       <br />
       <i class="fa fa-fax fa-fw ph-sm-margin-right"></i> +49 (0) 30 123 45 678 - 0
       </p-->
+    </div>
+
+    <!-- Right Row -->
+    <div class="col-md-6 col-xs-11 ph-xl-margin-bottom" ng-controller="ContactMapCtrl">
+      <h3>PaperHive Office</h4>
+      <address class="sr-only">
+        PaperHive,
+        Ackerstr. 76,<br />
+        Room ACK390,<br />
+        13355 Berlin,<br />
+        Germany
+      </address>
+      <leaflet center="center" markers="markers" class="ph-contact-map"></leaflet>
     </div>
 
     <!-- Right Row -->
