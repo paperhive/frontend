@@ -149,6 +149,9 @@ gulp.task('static', function () {
   var fontawesome = gulp.src('bower_components/fontawesome/fonts/*')
     .pipe(gulp.dest('build/assets/fontawesome/fonts'));
 
+  var leaflet = gulp.src('bower_components/leaflet/dist/images/*')
+    .pipe(gulp.dest('build/assets/leaflet/images'));
+
   var mathjax_base = 'bower_components/MathJax/';
   var mathjax_src = _.map([
     'MathJax.js',
@@ -171,7 +174,8 @@ gulp.task('static', function () {
   var roboto = gulp.src('bower_components/roboto-fontface/fonts/*')
     .pipe(gulp.dest('build/assets/roboto/fonts'));
 
-  return merge(index, images, bootstrap, fontawesome, mathjax, pdfjs, roboto);
+  return merge(index, images, bootstrap, fontawesome, leaflet,
+               mathjax, pdfjs, roboto);
 });
 
 // compile less to css

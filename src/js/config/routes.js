@@ -12,7 +12,14 @@ module.exports = function(app) {
             'together, on the spot and for free. Gain insight from the ' +
             'findings of others.',
           url: 'https://paperhive.org',
-          logo: 'https://paperhive.org/static/img/logo.png'
+          logo: 'https://paperhive.org/static/img/logo.png',
+          address: {
+            street: 'Ackerstr. 76',
+            postalCode: '13355',
+            city: 'Berlin',
+            country: 'Germany'
+          },
+          phone: '+493031478924'
         }
       };
 
@@ -77,6 +84,19 @@ module.exports = function(app) {
                 'https://twitter.com/paper_hive',
                 'https://github.com/paperhive/',
                 'https://www.youtube.com/channel/UCe4xC7kaff0ySd6yZuT2XYQ'
+              ],
+              address: {
+                streetAddress: meta.main.address.street,
+                postalCode: meta.main.address.postalCode,
+                addressLocality: meta.main.address.city,
+                addressCountry: meta.main.address.country
+              },
+              contactPoint: [
+                {
+                  '@type': 'ContactPoint',
+                  telephone: meta.main.phone,
+                  contactType: 'customer service'
+                }
               ]
             }
           ]
@@ -146,7 +166,6 @@ module.exports = function(app) {
 
         .segment('contact', {
           templateUrl: 'templates/contact/contact.html',
-          controller: 'ContactCtrl',
           title: 'Contact · PaperHive',
           meta: [
             {

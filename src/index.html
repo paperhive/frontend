@@ -27,14 +27,14 @@
     <link href="index.css" rel="stylesheet">
     <script src="index.js"></script>
   </head>
-  <body>
+  <body ng-style="{'padding-bottom': footerSize.height}">
     <header>
       <ng-include src="'templates/shared/navbar.html'"></ng-include>
     </header>
     <main class="ph-lg-padding-bottom">
       <div app-view-segment="0"></div>
     </main>
-    <footer class="container-fluid">
+    <footer class="container-fluid" element-size="footerSize">
       <ng-include src="'templates/shared/footer.html'"></ng-include>
     </footer>
     <ng-include src="'templates/shared/notifications.html'"></ng-include>
