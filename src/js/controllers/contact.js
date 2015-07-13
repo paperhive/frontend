@@ -19,8 +19,9 @@ module.exports = function(app) {
           lat: office.lat,
           lng: office.lng,
           focus: true,
-          message: '<h4 class="ph-no-margin-top">PaperHive office</h4>' +
-            'Ackerstr. 76<br/>Room ACK390<br/>13355 Berlin<br/>Germany',
+          message: '<h4 class="ph-no-margin-top">' +
+            'PaperHive office <small class="ph-newline">Room ACK390, Entrance H</small></h4>' +
+            'Ackerstr. 76<br/>13355 Berlin<br/>Germany',
           draggable: false
         }
       }
