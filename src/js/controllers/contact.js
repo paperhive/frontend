@@ -20,7 +20,9 @@ module.exports = function(app) {
           lng: office.lng,
           focus: true,
           message: '<h4 class="ph-no-margin-top">' +
-            'PaperHive office <small class="ph-newline">Room ACK390, Entrance H</small></h4>' +
+            'PaperHive office ' +
+            '<small class="ph-newline">Room ACK390, Entrance H</small>' +
+            '</h4>' +
             'Ackerstr. 76<br/>13355 Berlin<br/>Germany',
           draggable: false
         }
