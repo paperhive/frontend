@@ -18,7 +18,8 @@ module.exports = function(app) {
             postalCode: '13355',
             city: 'Berlin',
             country: 'Germany'
-          }
+          },
+          phone: '+493031478924'
         }
       };
 
@@ -89,7 +90,14 @@ module.exports = function(app) {
                 postalCode: meta.main.address.postalCode,
                 addressLocality: meta.main.address.city,
                 addressCountry: meta.main.address.country
-              }
+              },
+              contactPoint: [
+                {
+                  '@type': 'ContactPoint',
+                  telephone: meta.main.phone,
+                  contactType: 'customer service'
+                }
+              ]
             }
           ]
         })
