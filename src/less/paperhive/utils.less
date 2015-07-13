@@ -118,7 +118,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-a.ph-link-icon:hover {
+a.ph-link-icon:hover, a.ph-link-icon:focus {
   text-decoration: none;
 }
 
@@ -140,4 +140,10 @@ a.ph-link-icon:hover {
   border-bottom: solid 1px #333;
   border-left: solid 1px #333;
   border-right: solid 1px #333;
+}
+
+ul.ph-ul-md-spacing {
+  > li {
+    padding-bottom: 0.3em;
+  }
 }
