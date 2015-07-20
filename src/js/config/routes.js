@@ -26,6 +26,7 @@ module.exports = function(app) {
       $routeSegmentProvider
         .when('/', 'main')
         .when('/404', '404')
+        .when('/about-us', 'about-us')
         .when('/articles/new', 'articles_new')
         .when('/articles/:articleId', 'articles')
         .when('/articles/:articleId/activity', 'articles.activity')
@@ -46,7 +47,6 @@ module.exports = function(app) {
         .when('/settings', 'settings')
         .when('/settings/profile', 'settings.profile')
         .when('/settings/site', 'settings.site')
-        .when('/team', 'team')
         .when('/users/:username', 'users')
         .when('/users/:username/profile', 'users.profile')
         .when('/users/:username/articles', 'users.articles')
@@ -107,6 +107,19 @@ module.exports = function(app) {
           title: '404 · page not found · PaperHive',
           meta: [
             {name: 'prerender-status-code', content: 404}
+          ]
+        })
+
+        .segment('about-us', {
+          templateUrl: 'templates/about-us.html',
+          title: 'About us · PaperHive',
+          meta: [
+            {
+              name: 'description',
+              content: 'PaperHive is a young startup that revolutionizes ' +
+                'research communication. Our core team is based in Berlin ' +
+                'and consists of Alex, André and Nico.'
+            }
           ]
         })
 
@@ -230,17 +243,6 @@ module.exports = function(app) {
             templateUrl: 'templates/settings/site.html'
           })
         .up()
-
-        .segment('team', {
-          templateUrl: 'templates/team/index.html',
-          title: 'Team · PaperHive',
-          meta: [
-            {
-              name: 'description',
-              content: 'Meet the team that builds PaperHive.'
-            }
-          ]
-        })
 
         .segment('users', {
           templateUrl: 'templates/users/index.html',
