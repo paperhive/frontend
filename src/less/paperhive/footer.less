@@ -12,31 +12,31 @@ body {
   // the footer, see index.html.
   padding-bottom: @ph-footer-height;
   // end sticky footer
-}
 
-footer {
-  // sticky footer
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  min-height: @ph-footer-height;
-  // end sticky footer
-  background-color: @gray;
-  color: @body-bg;
-  padding: @padding-large-horizontal;
-  .ph-highlight-border-bottom();
+  > footer {
+    // sticky footer
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    min-height: @ph-footer-height;
+    // end sticky footer
+    background-color: @gray;
+    color: @body-bg;
+    padding: @padding-large-horizontal;
+    .ph-highlight-border-bottom();
 
-  // copyright
-  .ph-copyright {
-    color: @ph-footer-copyright-color;
-  }
+    // copyright
+    .ph-copyright {
+      color: @ph-footer-copyright-color;
+    }
 
-  // links
-  a {
-    color: @ph-footer-link-color;
-    &:hover {
-      text-decoration: none;
-      color: @ph-footer-link-hover-color;
+    // links
+    a {
+      color: @ph-footer-link-color;
+      &:hover {
+        text-decoration: none;
+        color: @ph-footer-link-hover-color;
+      }
     }
   }
 }
