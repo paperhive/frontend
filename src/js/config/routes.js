@@ -116,9 +116,11 @@ module.exports = function(app) {
           meta: [
             {
               name: 'description',
-              content: 'PaperHive is a young startup that revolutionizes ' +
-                'research communication. Our core team is based in Berlin ' +
-                'and consists of Alex, André and Nico.'
+              content: 'PaperHive is where research is discussed. ' +
+                'We add a discussion layer on top of every research article ' +
+                'and allow you to ask questions, share your knowledge, ' +
+                'correct mistakes, point to further literature, code, or ' +
+                'data.'
             }
           ]
         })
