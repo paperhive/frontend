@@ -98,14 +98,14 @@ gulp.task('js:watch', ['templates'], function () {
 });
 
 gulp.task('jshint', function() {
-  return gulp.src('./src/js/**/*.js')
+  return gulp.src(['./src/js/**/*.js', './test/**/*.js'])
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
     .pipe(jshint.reporter('fail'));
 });
 
 gulp.task('jscs', function () {
-  return gulp.src('./src/js/**/*.js')
+  return gulp.src(['./src/js/**/*.js', './test/**/*.js'])
     .pipe(jscs())
     .pipe(jscsStylish());  // log style errors
 });
@@ -241,7 +241,7 @@ gulp.task('serve:watch', ['default:watch'], function () {
 gulp.task('test', ['serve-nowatch'], function () {
   gulp.src(["./test/*.js"])
   .pipe(protractor({
-    configFile: "test/protractor.js"
+    configFile: "test/e2e/protractor.js"
   }))
   .on('error', handleError)
   .on('end', function(e) {
@@ -255,6 +255,6 @@ gulp.task(
   ['jshint', 'jscs', 'htmlhint', 'js', 'templates', 'static', 'style']
 );
 gulp.task(
-  'default:watch', 
+  'default:watch',
   ['js:watch', 'templates', 'static', 'style']
 );

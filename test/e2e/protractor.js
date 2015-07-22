@@ -1,3 +1,5 @@
+'use strict';
+
 if (process.env.TRAVIS_JOB_NUMBER) {
   var capabilities = [
   //  {
@@ -14,7 +16,7 @@ if (process.env.TRAVIS_JOB_NUMBER) {
   {
     'browserName': 'firefox',
     // http://stackoverflow.com/a/27645817/353337
-    'version': "33",
+    'version': '33',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'PaperHive (firefox)'
