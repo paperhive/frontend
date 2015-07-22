@@ -239,9 +239,9 @@ gulp.task('serve:watch', ['default:watch'], function () {
 
 // test
 gulp.task('test', ['serve-nowatch'], function () {
-  gulp.src(["./test/*.js"])
+  gulp.src(["./test/protractor/*.js"])
   .pipe(protractor({
-    configFile: "test/e2e/protractor.js"
+    configFile: "test/protractor/protractor.js"
   }))
   .on('error', handleError)
   .on('end', function(e) {
