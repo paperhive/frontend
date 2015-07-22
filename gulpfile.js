@@ -205,7 +205,7 @@ gulp.task('watch', ['default:watch'], function () {
 });
 
 // serve without watchin (no livereload)
-gulp.task('serve-nowatch', ['default'], function () {
+gulp.task('serve-nowatch', function () {
   connect.server({
     root: 'build'
   });
