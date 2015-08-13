@@ -2,7 +2,7 @@
 var $ = require('jquery');
 
 module.exports = function(app) {
-  function registerOutsideDirective (eventName, directiveName) {
+  function registerOutsideDirective(eventName, directiveName) {
     app.directive(directiveName, [
       '$parse', '$document',
       function($parse, $document) {

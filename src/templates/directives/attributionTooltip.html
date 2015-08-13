@@ -1,13 +1,11 @@
-<div><!-- wrapper is required for jquery's html() -->
-  <span ng-if="workUrl"><a href="{{workUrl}}">{{workName}}</a>,</span>
-  <span ng-if="!workUrl">{{workName}},</span>
+<span ng-if="workUrl"><a href="{{workUrl}}">{{workName}}</a>,</span>
+<span ng-if="!workUrl">{{workName}},</span>
 
-  <span ng-if="attributionName">
-    by
-    <span ng-if="attributionUrl"><a href="{{attributionUrl}}">{{attributionName}}</a>,</span>
-    <span ng-if="!attributionUrl">{{attributionName}},</span>
-  </span>
+<span ng-if="attributionName">
+  by
+  <span ng-if="attributionUrl"><a href="{{attributionUrl}}">{{attributionName}}</a>,</span>
+  <span ng-if="!attributionUrl">{{attributionName}},</span>
+</span>
 
-  <a ng-if="licenseUrl" href="{{licenseUrl}}">{{licenseName}}</a>
-  <span ng-if="!licenseUrl">{{licenseName}}</span>
-</div>
+<a ng-if="licenseUrl" href="{{licenseUrl}}">{{licenseName}}</a>
+<span ng-if="!licenseUrl">{{licenseName}}</span>
