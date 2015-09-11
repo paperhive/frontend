@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "homepage": "https://github.com/paperhive/paperhive-frontend",
   "authors": [
-    "André Gaul <andre@gaul.io>",
-    "Nico Schlömer <nico.schloemer@gmail.com>"
+    "André Gaul <andre@paperhive.org>",
+    "Nico Schlömer <nico@paperhive.org>"
   ],
   "main": "index.html",
   "license": "GPL-3.0",

@@ -5,7 +5,7 @@
   "scripts": {
     "test": "karma start --single-run"
   },
-  "author": "Nico Schlömer <nico.schloemer@gmail.com>",
+  "author": "Nico Schlömer <nico@paperhive.org>",
   "license": "GPL-3.0",
   "private": true,
   "devDependencies": {
