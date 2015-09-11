@@ -134,7 +134,13 @@ gulp.task('templates', function () {
 });
 
 // copy static files
-gulp.task('static', function () {
+gulp.task(
+  'static',
+  // This task doesn't actually depend on 'js'. However, both 'static' and 'js'
+  // are quite memory-hungry. When executed in parallel, 1-GB-memory machines
+  // bail out. To mitigate, add this dependency.
+  ['js'],
+  function () {
   var index = gulp.src(paths.index, {base: 'src'})
     .pipe(template({config: config}))
     .pipe(debug ? gutil.noop() : htmlmin(htmlminOpts))
