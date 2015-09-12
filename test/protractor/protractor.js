@@ -76,7 +76,7 @@ exports.config = {
 
 if (process.env.SELENIUM_PORT) {
   //exports.config.seleniumPort = process.env.SELENIUM_PORT;
-  exports.config.seleniumAdress =
+  exports.config.seleniumAddress =
     'http://' + process.env.SELENIUM_HOST +
     ':' + process.env.SELENIUM_PORT + '/wd/hub';
 }
