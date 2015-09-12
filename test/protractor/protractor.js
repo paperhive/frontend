@@ -74,8 +74,6 @@ exports.config = {
   baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8080')
 };
 
-//if (process.env.TRAVIS_JOB_NUMBER === undefined) {
-//  // Don't specify seleniumAddress for travis/saucelabs builds, cf.
-//  // <http://stackoverflow.com/a/20889537/353337>.
-//  exports.config.seleniumAddress = 'http://localhost:4444/wd/hub';
-//}
+if (process.env.SELENIUM_PORT) {
+  exports.config.seleniumPort = process.env.SELENIUM_PORT;
+}
