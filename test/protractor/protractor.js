@@ -1,6 +1,10 @@
 'use strict';
 
-if (process.env.TRAVIS_JOB_NUMBER) {
+if (process.env.SAUCE_ONDEMAND_BROWSERS) {
+  // jenkins
+  var capabilities = process.env.SAUCE_ONDEMAND_BROWSERS;
+} else if (process.env.TRAVIS_JOB_NUMBER) {
+  // travis
   var capabilities = [
   //  {
   //  'browserName': 'android',
@@ -59,9 +63,6 @@ if (process.env.TRAVIS_JOB_NUMBER) {
 }
 
 exports.config = {
-  sauceUser: process.env.SAUCE_USERNAME,
-  sauceKey: process.env.SAUCE_ACCESS_KEY,
-
   multiCapabilities: capabilities,
 
   specs: ['spec.js'],
@@ -71,11 +72,15 @@ exports.config = {
     defaultTimeoutInterval: 60000
   },
 
-  baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8080')
+  //baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8080')
 };
 
-// for jenkins (and probably other sources as well)
 if (process.env.SAUCE_USER_NAME) {
+  // jenkins
   exports.config.sauceUser = process.env.SAUCE_USER_NAME;
   exports.config.sauceKey = process.env.SAUCE_API_KEY;
+} else if (process.env.SAUCE_USERNAME) {
+  // travis
+  exports.config.sauceUser = process.env.SAUCE_USERNAME;
+  exports.config.sauceKey = process.env.SAUCE_ACCESS_KEY;
 }
