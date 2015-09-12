@@ -74,11 +74,8 @@ exports.config = {
   baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8080')
 };
 
-if (process.env.SELENIUM_PORT) {
-  exports.config.seleniumPort = process.env.SELENIUM_PORT;
-  //exports.config.seleniumAddress =
-  //  'http://' + process.env.SELENIUM_HOST +
-  //  ':' + process.env.SELENIUM_PORT + '/wd/hub';
+// for jenkins (and probably other sources as well)
+if (process.env.SAUCE_USER_NAME) {
   exports.config.sauceUser = process.env.SAUCE_USER_NAME;
   exports.config.sauceKey = process.env.SAUCE_API_KEY;
 }
