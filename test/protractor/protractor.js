@@ -8,7 +8,7 @@ exports.config = {
     defaultTimeoutInterval: 60000
   },
 
-  //baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8080')
+  baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8080')
 };
 
 if (process.env.SAUCE_ONDEMAND_BROWSERS) {
@@ -26,12 +26,12 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
   // Only test chrome locally
   exports.config.multiCapabilities = [
   {
-    'browserName': 'chrome'
+    'browserName': 'chrome',
   },
   {
     'browserName': 'firefox'
-  }
-  ];
+}
+];
 
 } else if (process.env.TRAVIS_JOB_NUMBER) {
   // travis
