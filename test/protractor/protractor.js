@@ -21,11 +21,11 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
   console.log(process.env);
   console.log(process.env.SAUCE_ONDEMAND_BROWSERS);
   exports.config.multiCapabilities = [];
-  for (var i = 0; i < list.length; i++) {
+  for (var b in process.env.SAUCE_ONDEMAND_BROWSERS) {
     exports.config.multiCapabilities.push({
-      'name': 'PaperHive (' + list[i].browser + ')',
-      'browserName': list[i].browser,
-      'platform': list[i].platform,
+      'name': 'PaperHive (' + b.browser + ')',
+      'browserName': b.browser,
+      'platform': b.platform,
       'build': process.env.BUILD_NUMBER
     });
   }
