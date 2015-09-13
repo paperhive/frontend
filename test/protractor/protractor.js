@@ -30,8 +30,8 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
   },
   {
     'browserName': 'firefox'
-}
-];
+  }
+  ];
 
 } else if (process.env.TRAVIS_JOB_NUMBER) {
   // travis
