@@ -16,6 +16,8 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
 
   // translate SAUCE_ONDEMAND_BROWSERS into a protractor-digestible list
   var list = process.env.SAUCE_ONDEMAND_BROWSERS;
+  console.log(process.env.SAUCE_ONDEMAND_BROWSERS.length);
+  console.log(list.length);
   console.log(process.env);
   console.log(process.env.SAUCE_ONDEMAND_BROWSERS);
   exports.config.multiCapabilities = [];
@@ -23,7 +25,8 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
     exports.config.multiCapabilities.push({
       'name': 'PaperHive (' + list[i].browser + ')',
       'browserName': list[i].browser,
-      'platform': list[i].platform
+      'platform': list[i].platform,
+      'build': process.env.BUILD_NUMBER
     });
   }
 
