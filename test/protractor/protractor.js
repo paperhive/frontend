@@ -28,6 +28,9 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
   {
     'browserName': 'chrome'
   },
+  {
+    'browserName': 'firefox'
+  }
   ];
 
 } else if (process.env.TRAVIS_JOB_NUMBER) {
