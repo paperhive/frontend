@@ -1,11 +1,32 @@
 'use strict';
 
+exports.config = {
+  specs: ['spec.js'],
+
+  jasmineNodeOpts: {
+    showColors: true,
+    defaultTimeoutInterval: 60000
+  },
+
+  //baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8080')
+};
+
 if (process.env.SAUCE_ONDEMAND_BROWSERS) {
   // jenkins
-  var capabilities = process.env.SAUCE_ONDEMAND_BROWSERS;
+
+  // translate SAUCE_ONDEMAND_BROWSERS into a protractor-digestible list
+  var list = process.env.SAUCE_ONDEMAND_BROWSERS;
+  exports.config.multiCapabilities = [];
+  for (var i = 0; i < list.length; i++) {
+    exports.config.multiCapabilities.push({
+      'browserName': list[i].browser,
+      'os': list[i].os
+    });
+  }
+
 } else if (process.env.TRAVIS_JOB_NUMBER) {
   // travis
-  var capabilities = [
+  exports.config.multiCapabilities = [
   //  {
   //  'browserName': 'android',
   //  'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
@@ -55,25 +76,12 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
   ];
 } else {
   // Only test chrome locally
-  var capabilities = [
+  exports.config.multiCapabilities = [
   {
     'browserName': 'chrome'
   },
   ];
 }
-
-exports.config = {
-  multiCapabilities: capabilities,
-
-  specs: ['spec.js'],
-
-  jasmineNodeOpts: {
-    showColors: true,
-    defaultTimeoutInterval: 60000
-  },
-
-  //baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8080')
-};
 
 if (process.env.SAUCE_USER_NAME) {
   // jenkins
