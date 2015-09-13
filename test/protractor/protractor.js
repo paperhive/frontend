@@ -1,7 +1,32 @@
 'use strict';
 
-if (process.env.TRAVIS_JOB_NUMBER) {
-  var capabilities = [
+exports.config = {
+  specs: ['spec.js'],
+
+  jasmineNodeOpts: {
+    showColors: true,
+    defaultTimeoutInterval: 60000
+  },
+
+  baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8080')
+};
+
+if (process.env.SAUCE_ONDEMAND_BROWSERS) {
+  // jenkins
+  // translate SAUCE_ONDEMAND_BROWSERS into a protractor-digestible list
+  exports.config.multiCapabilities = [];
+  JSON.parse(process.env.SAUCE_ONDEMAND_BROWSERS).forEach(function(entry) {
+    exports.config.multiCapabilities.push({
+      'name': 'PaperHive (' + entry.browser + ')',
+      'browserName': entry.browser,
+      'platform': entry.platform,
+      'build': process.env.BUILD_NUMBER
+    });
+  });
+
+} else if (process.env.TRAVIS_JOB_NUMBER) {
+  // travis
+  exports.config.multiCapabilities = [
   //  {
   //  'browserName': 'android',
   //  'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
@@ -51,31 +76,19 @@ if (process.env.TRAVIS_JOB_NUMBER) {
   ];
 } else {
   // Only test chrome locally
-  var capabilities = [
+  exports.config.multiCapabilities = [
   {
     'browserName': 'chrome'
   },
   ];
 }
 
-exports.config = {
-  sauceUser: process.env.SAUCE_USERNAME,
-  sauceKey: process.env.SAUCE_ACCESS_KEY,
-
-  multiCapabilities: capabilities,
-
-  specs: ['spec.js'],
-
-  jasmineNodeOpts: {
-    showColors: true,
-    defaultTimeoutInterval: 60000
-  },
-
-  baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8080')
-};
-
-if (process.env.TRAVIS_JOB_NUMBER === undefined) {
-  // Don't specify seleniumAddress for travis/saucelabs builds, cf.
-  // <http://stackoverflow.com/a/20889537/353337>.
-  exports.config.seleniumAddress = 'http://localhost:4444/wd/hub';
+if (process.env.SAUCE_USER_NAME) {
+  // jenkins
+  exports.config.sauceUser = process.env.SAUCE_USER_NAME;
+  exports.config.sauceKey = process.env.SAUCE_API_KEY;
+} else if (process.env.SAUCE_USERNAME) {
+  // travis
+  exports.config.sauceUser = process.env.SAUCE_USERNAME;
+  exports.config.sauceKey = process.env.SAUCE_ACCESS_KEY;
 }
