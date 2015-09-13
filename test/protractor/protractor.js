@@ -20,7 +20,7 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
   for (var i = 0; i < list.length; i++) {
     exports.config.multiCapabilities.push({
       'browserName': list[i].browser,
-      'os': list[i].os
+      //'os': list[i].os
     });
   }
 
