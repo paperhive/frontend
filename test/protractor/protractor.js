@@ -15,13 +15,12 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
   // jenkins
 
   // translate SAUCE_ONDEMAND_BROWSERS into a protractor-digestible list
-  var list = process.env.SAUCE_ONDEMAND_BROWSERS;
+  //var list = process.env.SAUCE_ONDEMAND_BROWSERS;
   console.log(process.env.SAUCE_ONDEMAND_BROWSERS.length);
-  console.log(list.length);
-  console.log(process.env);
   console.log(process.env.SAUCE_ONDEMAND_BROWSERS);
   exports.config.multiCapabilities = [];
   for (var b in process.env.SAUCE_ONDEMAND_BROWSERS) {
+    console.log(b);
     exports.config.multiCapabilities.push({
       'name': 'PaperHive (' + b.browser + ')',
       'browserName': b.browser,
