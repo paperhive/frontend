@@ -14,24 +14,18 @@ exports.config = {
 if (process.env.SAUCE_ONDEMAND_BROWSERS) {
   // jenkins
 
-  //// translate SAUCE_ONDEMAND_BROWSERS into a protractor-digestible list
-  //var list = process.env.SAUCE_ONDEMAND_BROWSERS;
-  //exports.config.multiCapabilities = [];
-  //for (var i = 0; i < list.length; i++) {
-  //  exports.config.multiCapabilities.push({
-  //    'browserName': list[i].browser,
-  //    //'os': list[i].os
-  //  });
-  //}
-  // Only test chrome locally
-  exports.config.multiCapabilities = [
-  {
-    'browserName': 'chrome',
-  },
-  {
-    'browserName': 'firefox'
+  // translate SAUCE_ONDEMAND_BROWSERS into a protractor-digestible list
+  var list = process.env.SAUCE_ONDEMAND_BROWSERS;
+  exports.config.multiCapabilities = [];
+  for (var i = 0; i < list.length; i++) {
+    exports.config.multiCapabilities.push({
+      'name': 'PaperHive (' + list[i].browser + ')',
+      'browserName': list[i].browser,
+      'platform': list[i].platform
+    });
   }
-  ];
+
+  console.log(exports.config.multiCapabilities);
 
 } else if (process.env.TRAVIS_JOB_NUMBER) {
   // travis
