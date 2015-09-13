@@ -16,6 +16,8 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
 
   // translate SAUCE_ONDEMAND_BROWSERS into a protractor-digestible list
   var list = process.env.SAUCE_ONDEMAND_BROWSERS;
+  console.log(process.env);
+  console.log(process.env.SAUCE_ONDEMAND_BROWSERS);
   exports.config.multiCapabilities = [];
   for (var i = 0; i < list.length; i++) {
     exports.config.multiCapabilities.push({
