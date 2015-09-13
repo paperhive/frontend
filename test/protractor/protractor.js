@@ -16,7 +16,6 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
   // translate SAUCE_ONDEMAND_BROWSERS into a protractor-digestible list
   exports.config.multiCapabilities = [];
   JSON.parse(process.env.SAUCE_ONDEMAND_BROWSERS).forEach(function(entry) {
-    console.log(entry);
     exports.config.multiCapabilities.push({
       'name': 'PaperHive (' + entry.browser + ')',
       'browserName': entry.browser,
@@ -24,8 +23,6 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
       'build': process.env.BUILD_NUMBER
     });
   });
-
-  console.log(exports.config.multiCapabilities);
 
 } else if (process.env.TRAVIS_JOB_NUMBER) {
   // travis
