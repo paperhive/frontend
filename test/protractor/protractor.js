@@ -23,7 +23,7 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
       'build': process.env.BUILD_NUMBER
     });
     // Test against deployed platform
-    exports.config.baseUrl = process.env.DEPLOY_URL;
+    exports.config.baseUrl = process.env.TEST_URL;
   });
 
 } else if (process.env.TRAVIS_JOB_NUMBER) {
