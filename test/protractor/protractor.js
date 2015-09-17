@@ -23,7 +23,6 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
       'build': process.env.BUILD_NUMBER
     });
     // Test against deployed platform
-    console.log(process.env.TEST_URL);
     exports.config.baseUrl = process.env.TEST_URL;
   });
 
