@@ -1,5 +1,6 @@
 # PaperHive Frontend
 
+[![Build Status](https://jenkins.paperhive.org/buildStatus/icon?job=paperhive-frontend-staging)](https://jenkins.paperhive.org/job/paperhive-frontend-staging/)
 [![Dependency Status](https://gemnasium.com/paperhive/paperhive-frontend.svg)](https://gemnasium.com/paperhive/paperhive-frontend)
 
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/nschloe.svg)](https://saucelabs.com/u/nschloe)
@@ -34,8 +35,8 @@ gulp serve
 ```
 continuously builds the project (upon changes of the code) and fires up an HTTP server 
 which can be reached via `http://localhost:8080`. For debugging purposes, gulp can be run with the 
-environment variable `DEBUG=true` which omits all minimizations and includes sourcemaps for
-javascript and css. Note that this substantially speeds up the build process. So for development you 
+environment variable `DEBUG=true` which omits all minimizations and includes source maps for
+JavaScript and CSS. Note that this substantially speeds up the build process. So for development you
 probably want to run
 ```
 DEBUG=true gulp serve
@@ -49,7 +50,7 @@ DEBUG=true gulp serve
 
 You can deploy the branch by following these steps:
 
-1. Clone the deployment repo if you haven't cloned it yet:
+1. Clone the deployment repository if you haven't cloned it yet:
 
    ```git clone git@github.com:paperhive/paperhive-frontend-deploy.git```
 
