@@ -16,7 +16,7 @@
 
 #### Build
 ```
-git clone git@github.com:paperhive/paperhive-frontend.git
+git clone git@github.com:paperhive/paperhive-frontend.git --recursive
 cd paperhive-frontend
 npm install
 bower install

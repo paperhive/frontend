@@ -1,0 +1,3 @@
+[submodule "static"]
+	path = static
+	url = ../paperhive-frontend-static
