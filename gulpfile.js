@@ -1,7 +1,6 @@
 'use strict';
 
 var gulp = require('gulp');
-var gulpif = require('gulp-if');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var less = require('gulp-less');
@@ -28,7 +27,7 @@ var config = require('./config.json');
 
 var paths = {
   templates: 'src/templates/**/*.html',
-  images: 'src/img/**/*',
+  staticFiles: 'static/**/*',
   index: 'src/index.html',
   less: 'src/less/**/*.less',
   build: 'build/**/*'
@@ -146,8 +145,8 @@ gulp.task(
     .pipe(debug ? gutil.noop() : htmlmin(htmlminOpts))
     .pipe(gulp.dest('build'));
 
-  var images = gulp.src(paths.images, {base: 'src'})
-    .pipe(gulp.dest('build'));
+  var staticFiles = gulp.src(paths.staticFiles)
+    .pipe(gulp.dest('build/static'));
 
   var bootstrap = gulp.src('bower_components/bootstrap/fonts/*')
     .pipe(gulp.dest('build/assets/bootstrap/fonts'));
@@ -180,7 +179,7 @@ gulp.task(
   var roboto = gulp.src('bower_components/roboto-fontface/fonts/*')
     .pipe(gulp.dest('build/assets/roboto/fonts'));
 
-  return merge(index, images, bootstrap, fontawesome, leaflet,
+  return merge(index, staticFiles, bootstrap, fontawesome, leaflet,
                mathjax, pdfjs, roboto);
 });
 
@@ -206,7 +205,7 @@ gulp.task('clean', function(cb) {
 // watch for changes
 gulp.task('watch', ['default:watch'], function () {
   gulp.watch(paths.templates, ['templates']);
-  gulp.watch([paths.images, paths.index], ['static']);
+  gulp.watch([paths.staticFiles, paths.index], ['static']);
   gulp.watch(paths.less, ['style']);
 });
 
