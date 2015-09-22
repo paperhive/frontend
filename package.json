@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "description": "PaperHive frontend",
   "scripts": {
-    "test": "karma start --single-run"
+    "build": "gulp",
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:unit": "karma start --single-run",
+    "test:e2e": "gulp test"
   },
   "author": "Nico Schlömer <nico@paperhive.org>",
   "license": "GPL-3.0",
