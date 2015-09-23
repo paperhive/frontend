@@ -20,32 +20,32 @@
     <div class="collapse navbar-collapse" collapse="collapsed">
       <!-- right -->
       <div class="navbar-right">
+        <form ng-controller="NavbarSearchCtrl"
+          name="searchForm"
+          class="navbar-form navbar-left"
+          role="search"
+          novalidate
+          >
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search PaperHive"
+              name="srch-term"
+              id="srch-term"
+              ng-model="search.body"
+              typeahead="result.title for result in phSearch($viewValue, 5)"
+              typeahead-wait-ms="250"
+              typeahead-on-select="goToArticle($item, $model, $label)"
+              required
+              >
+          </div>
+        </form>
         <!--ul class="nav navbar-nav">
           <li><a href="./help" title="help">Help</a></li>
         </ul-->
         <ng-include src="'templates/shared/navbar_user.html'"></ng-include>
       </div>
-      <form ng-controller="NavbarSearchCtrl"
-        name="searchForm"
-        class="navbar-form navbar-right"
-        role="search"
-        novalidate
-        >
-        <div class="form-group">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Search PaperHive"
-            name="srch-term"
-            id="srch-term"
-            ng-model="search.body"
-            typeahead="result.title for result in phSearch($viewValue, 5)"
-            typeahead-wait-ms="250"
-            typeahead-on-select="goToArticle($item, $model, $label)"
-            required
-            >
-        </div>
-      </form>
     </div><!-- collapse -->
   </div><!-- container-fluid -->
 </div><!-- navbar -->
