@@ -11,7 +11,7 @@
           </h4>
         </div>
       </div>
-      <div class="row">
+      <!--div class="row">
         <div class="col-md-12 text-right">
           <a ng-if="pdfSource"
              type="button"
@@ -25,34 +25,32 @@
             <i class="fa fa-fw fa-plus"></i> Add general comment
           </a>
         </div>
-      </div>
+      </div-->
     </div>
-    <div class="ph-header-submenu-container">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-sm-12">
-            <subnav>
-              <ul class="nav nav-tabs ph-header-submenu">
-                <li subnav-target="articles.text">
-                  <a><i class="fa fa-fw fa-file-pdf-o"></i> Text</a>
-                </li>
-                <li subnav-target="articles.discussions">
-                  <a><i class="fa fa-fw fa-comments"></i> Discussions
-                    <span class="badge" ng-if="discussions.stored.length > 0">
-                      {{discussions.stored.length}}
-                    </span></a>
-                </li>
-                <li subnav-target="articles.about">
-                  <a><i class="fa fa-fw fa-info"></i> About</a>
-                </li>
-                <!--li subnav-target="articles.activity">
-                  <a><i class="fa fa-fw fa-clock-o"></i> Activity</a>
-                </li>
-                <li subnav-target="articles.settings">
-                  <a><i class="fa fa-fw fa-cog"></i> Settings</a>
-                </li-->
-              </ul>
-            </subnav>
+    <div class="ph-affix-container">
+      <div class="ph-header-submenu-container ph-affix"
+          affix affix-use-parent-height="false" affix-offset-top="$root.navbarSize.height"
+        >
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-12">
+              <subnav>
+                <ul class="nav nav-tabs ph-header-submenu">
+                  <li subnav-target="articles.text">
+                    <a><i class="fa fa-fw fa-file-pdf-o"></i> Text</a>
+                  </li>
+                  <li subnav-target="articles.discussions">
+                    <a><i class="fa fa-fw fa-comments"></i> Discussions
+                      <span class="badge" ng-if="discussions.stored.length > 0">
+                        {{discussions.stored.length}}
+                      </span></a>
+                  </li>
+                  <li subnav-target="articles.about">
+                    <a><i class="fa fa-fw fa-info"></i> About</a>
+                  </li>
+                </ul>
+              </subnav>
+            </div>
           </div>
         </div>
       </div>
