@@ -1,10 +1,10 @@
 <div ng-controller="ArticleCtrl">
-  <div class="ph-header ph-header-large ph-md-margin-bottom">
+  <div class="ph-header ph-header-large ph-lg-margin-bottom">
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12">
-          <h2>{{article.title}}</h2>
-          <h4>
+          <h2 class="ph-lg-margin-top">{{article.title}}</h2>
+          <h4 class="ph-lg-margin-bottom">
             <span ng-repeat="author in article.authors">
               {{author}}{{$last ? '' :', '}}
             </span>
@@ -29,15 +29,16 @@
     </div>
     <div class="ph-affix-container">
       <div class="ph-header-submenu-container ph-affix"
-          affix affix-use-parent-height="false" affix-offset-top="$root.navbarSize.height"
-        >
+          affix affix-use-parent-height="false"
+          affix-offset-top="$root.navbarSize.height - 1"
+          >
         <div class="container-fluid">
           <div class="row">
             <div class="col-sm-12">
               <subnav>
                 <ul class="nav nav-tabs ph-header-submenu">
                   <li subnav-target="articles.text">
-                    <a><i class="fa fa-fw fa-file-pdf-o"></i> Text</a>
+                    <a><i class="fa fa-fw fa-file-pdf-o"></i> Article</a>
                   </li>
                   <li subnav-target="articles.discussions">
                     <a><i class="fa fa-fw fa-comments"></i> Discussions
