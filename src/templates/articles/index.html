@@ -1,26 +1,14 @@
 <div ng-controller="ArticleCtrl">
   <div class="ph-header ph-header-large ph-md-margin-bottom">
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12">
-          <div class="media">
-            <div class="media-left">
-              <span class="fa-stack ph-icon">
-                <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
-                <i class="fa fa-file-text-o fa-stack-1x"></i>
-              </span>
-            </div>
-            <div class="media-body media-middle">
-              <h2 class="media-heading">
-                <a href="./articles/{{article._id}}">{{article.title}}</a>
-              </h2>
-              <h4>
-                <span ng-repeat="author in article.authors">
-                  {{author}}{{$last ? '' :', '}}
-                </span>
-              </h4>
-            </div>
-          </div>
+          <h2>{{article.title}}</h2>
+          <h4>
+            <span ng-repeat="author in article.authors">
+              {{author}}{{$last ? '' :', '}}
+            </span>
+          </h4>
         </div>
       </div>
       <div class="row">
@@ -40,7 +28,7 @@
       </div>
     </div>
     <div class="ph-header-submenu-container">
-      <div class="container">
+      <div class="container-fluid">
         <div class="row">
           <div class="col-sm-12">
             <subnav>
@@ -70,7 +58,7 @@
       </div>
     </div>
   </div> <!-- ph-header -->
-  <div class="container">
+  <div class="container-fluid">
     <div app-view-segment="1"></div>
   </div>
 </div>
