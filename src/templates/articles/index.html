@@ -28,32 +28,36 @@
       </div-->
     </div>
     <div class="ph-affix-container">
-      <div class="ph-header-submenu-container ph-affix"
+      <div class="ph-affix ph-header-submenu-affix" ng-class="{'ph-affixed': affixed}"
           affix affix-use-parent-height="false"
           affix-offset-top="$root.navbarSize.height - 1"
+          affixed="affixed"
           >
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-sm-12">
-              <subnav>
-                <ul class="nav nav-tabs ph-header-submenu">
-                  <li subnav-target="articles.text">
-                    <a><i class="fa fa-fw fa-file-pdf-o"></i> Article</a>
-                  </li>
-                  <li subnav-target="articles.discussions">
-                    <a><i class="fa fa-fw fa-comments"></i> Discussions
-                      <span class="badge" ng-if="discussions.stored.length > 0">
-                        {{discussions.stored.length}}
-                      </span></a>
-                  </li>
-                  <li subnav-target="articles.about">
-                    <a><i class="fa fa-fw fa-info"></i> About</a>
-                  </li>
-                </ul>
-              </subnav>
+        <div class="ph-header-submenu-container">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-12">
+                <subnav>
+                  <ul class="nav nav-tabs ph-header-submenu">
+                    <li subnav-target="articles.text">
+                      <a><i class="fa fa-fw fa-file-pdf-o"></i> Article</a>
+                    </li>
+                    <li subnav-target="articles.discussions">
+                      <a><i class="fa fa-fw fa-comments"></i> Discussions
+                        <span class="badge" ng-if="discussions.stored.length > 0">
+                          {{discussions.stored.length}}
+                        </span></a>
+                    </li>
+                    <li subnav-target="articles.about">
+                      <a><i class="fa fa-fw fa-info"></i> About</a>
+                    </li>
+                  </ul>
+                </subnav>
+              </div>
             </div>
           </div>
         </div>
+        <div class="ph-header-shadow"></div>
       </div>
     </div>
   </div> <!-- ph-header -->
