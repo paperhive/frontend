@@ -87,7 +87,9 @@
       margin: 0;
       border: none;
       border-top: @ph-border-height solid transparent;
+      transition: background-color ease 0.5s, border-color ease 0.5s;
       &:hover {
+        background-color: rgba(255, 255, 255, 0.5);
         border-top: @ph-border-height solid @ph-highlight-color;
       }
       @media (max-width: @screen-xs-max){
