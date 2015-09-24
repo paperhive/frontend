@@ -81,3 +81,16 @@ body {
   padding: @nav-link-padding;
 }
 */
+
+.ph-navbar-search {
+  // set dropdown to same width as input field
+  position: relative;
+  width: 100%;
+  & > .dropdown-menu {
+    max-width: 100%;
+    // shorten text and add "..."
+    & > li > a {
+      .text-overflow();
+    }
+  }
+}
