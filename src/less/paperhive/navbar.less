@@ -20,9 +20,8 @@ body {
 /* Navigation */
 .navbar {
   border-top: @ph-navbar-border solid @ph-highlight-color;
-  border-bottom: @ph-border-height solid @ph-navbar-border-color;
-  box-shadow: 0 -10px 10px 10px rgba(0, 0, 0, 0.3);
   padding: @ph-navbar-default-padding;
+  border-bottom: 0;
 
   // flicker fix on chrome http://stackoverflow.com/a/22224884/1219479
   -webkit-backface-visibility: hidden;
@@ -32,6 +31,14 @@ body {
       border: none;
     }
   }
+}
+
+.ph-navbar-shadow {
+  border-bottom: 1px solid #bfbfbf;
+  box-shadow: 0 -10px 10px 10px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  position: fixed;
+  top: @navbar-height + @ph-navbar-border;
 }
 
 .navbar-brand {
