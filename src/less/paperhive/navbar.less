@@ -1,6 +1,6 @@
 // fixed navbar margin
 body {
-  padding-top: @navbar-height + @ph-navbar-border;
+  padding-top: @navbar-height + @ph-navbar-border + @ph-border-height;
 }
 
 // larger avatar does not enlarge button/link
@@ -20,7 +20,7 @@ body {
 /* Navigation */
 .navbar {
   border-top: @ph-navbar-border solid @ph-highlight-color;
-  border-bottom: @ph-navbar-border solid @ph-navbar-border-color;
+  border-bottom: @ph-border-height solid @ph-navbar-border-color;
   box-shadow: 0 -10px 10px 10px rgba(0, 0, 0, 0.3);
   padding: @ph-navbar-default-padding;
 
