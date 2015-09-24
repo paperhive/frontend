@@ -57,7 +57,9 @@ module.exports = function(app) {
 
             // positioned normally
             var top = 0;
+            var affixed = false;
             if (parentRect.top <= params.offsetTop) {
+              affixed = true;
               if (params.useParentHeight &&
                   -parentRect.top + params.offsetTop + height >
                   parentRect.height) {
@@ -73,7 +75,7 @@ module.exports = function(app) {
 
             var affixedSetter = $parse(attrs.affixed);
             if (affixedSetter && affixedSetter.assign) {
-              affixedSetter.assign(scope, top);
+              affixedSetter.assign(scope, affixed);
               scope.$apply();
             }
           }
