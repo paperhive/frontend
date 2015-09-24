@@ -19,8 +19,9 @@ body {
 /* HEADER */
 /* Navigation */
 .navbar {
-  border-bottom: @ph-navbar-border solid @ph-highlight-color;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border-top: @ph-navbar-border solid @ph-highlight-color;
+  border-bottom: @ph-navbar-border solid @ph-navbar-border-color;
+  box-shadow: 0 -10px 10px 10px rgba(0, 0, 0, 0.3);
   padding: @ph-navbar-default-padding;
 
   // flicker fix on chrome http://stackoverflow.com/a/22224884/1219479
