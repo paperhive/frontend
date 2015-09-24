@@ -128,11 +128,11 @@
   height: 10px;
   bottom: -1px;
   z-index: -1;
-  border-bottom: 1px solid transparent;
+  border-bottom: @ph-border-height solid transparent;
   transition: box-shadow ease 0.5s, border-color ease 0.5s;
 }
 
 .ph-affixed > .ph-header-shadow {
-  box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.3);
-  border-bottom: 1px solid #29abe2;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border-bottom: @ph-border-height solid @ph-highlight-color;
 }
