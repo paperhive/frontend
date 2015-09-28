@@ -27,11 +27,13 @@
         </div>
       </div-->
     </div>
-    <div class="ph-affix-container">
-      <div class="ph-affix ph-header-submenu-affix" ng-class="{'ph-affixed': affixed}"
-          affix affix-use-parent-height="false"
-          affix-offset-top="$root.navbarSize.height"
-          affixed="affixed"
+    <div class="ph-affix-container"
+        element-position="subnavPosition"
+        ng-style="{'min-height': subnavSize.height + 'px'}">
+      <div class="ph-affix ph-header-submenu-affix"
+          element-size="subnavSize"
+          ng-class="{'ph-header-submenu-affixed': subnavPosition.top <= $root.navbarSize.height}"
+          ng-style="{top: (subnavPosition.top <= $root.navbarSize.height) && ($root.navbarSize.height  + 'px')}"
           >
         <div class="ph-header-submenu-container">
           <div class="container-fluid">
@@ -57,7 +59,7 @@
             </div>
           </div>
         </div>
-        <div class="ph-header-shadow"></div>
+        <div class="ph-header-submenu-shadow"></div>
       </div>
     </div>
   </div> <!-- ph-header -->

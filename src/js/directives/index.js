@@ -6,6 +6,7 @@ module.exports = function(app) {
   require('./comment')(app);
   require('./confirmed-click')(app);
   require('./elastic')(app);
+  require('./elementPosition')(app);
   require('./elementSize')(app);
   require('./gravatar')(app);
   require('./gravatarList')(app);
