@@ -26,6 +26,17 @@ body {
   // flicker fix on chrome http://stackoverflow.com/a/22224884/1219479
   -webkit-backface-visibility: hidden;
 
+  // Changing size of navbar-form
+  &-form {
+    min-width: 370px;
+    .form-control {
+      width: 100%;
+    }
+    @media (max-width: @screen-sm-max){
+      min-width: 300px
+    }
+  }
+
   @media (max-width: @screen-xs-max){
     .navbar-collapse, .navbar-form {
       border: none;
@@ -45,6 +56,18 @@ body {
 .navbar-brand {
   padding-top: 7px;
   padding-bottom: 7px;
+
+  // Change size of PaperHiver logo on XS-Viewport, so it does not breaks up
+  @media (max-width: @screen-xs-max){
+    max-width: 210px;
+    width: auto;
+    height: 60px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    > img {
+
+    }
+  }
 }
 
 
