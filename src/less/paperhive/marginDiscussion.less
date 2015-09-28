@@ -22,18 +22,17 @@ margin-discussion-draft {
 }
 
 @ph-margin-basecolor: white;
-@ph-margin-avatar-size: 30px;
-@ph-margin-avatar-padding: 4px;
-@ph-margin-avatar-arrow-padding: 0px;
+@ph-margin-avatar-size: 38px;
+@ph-margin-avatar-arrow-padding: 4px;
 @ph-margin-avatar-bgcolor: #e4e4e4;
 @ph-margin-arrow-size: 8px;
 @ph-margin-border-color: #bbbbbb; //@panel-default-border;
 
 .ph-margin-container {
-  border: 1px @ph-margin-border-color solid;
-
-  // smaller line height
-  line-height: 1.2;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border: 1px solid @ph-margin-border-color;
+  margin-left: (@ph-margin-avatar-size + @ph-margin-arrow-size +
+    @ph-margin-avatar-arrow-padding);
 
   // required for shadows to stay below adjacent elements
   // WARNING: disabled because it breaks dropdown menus
@@ -42,26 +41,15 @@ margin-discussion-draft {
 }
 
 .ph-margin-row {
-  display: table; // required for vertical centering
-  width: 100%;
+  position: relative; // required for ph-margin-avatar
 }
 
-// everything related to the avatar
-.ph-margin-avatar-container {
-  display: table-cell;
-  top: 0; // required if content doesn't have full height
-  padding: @ph-margin-avatar-padding;
-  padding-right: (@ph-margin-avatar-padding + @ph-margin-arrow-size +
+.ph-margin-avatar {
+  position: absolute;
+  // compensate margin-left of margin-container
+  left: -(@ph-margin-avatar-size + @ph-margin-arrow-size +
     @ph-margin-avatar-arrow-padding);
-  border-right: 1px @ph-margin-border-color solid;
-  background-color: @ph-margin-avatar-bgcolor;
-}
-
-.ph-margin-row-container {
-  display: table-cell;
-  width: 100%;
-  vertical-align: middle;
-  background-color: @ph-margin-basecolor;
+  top: 0;
 }
 
 .ph-margin-arrow-container {
@@ -71,7 +59,7 @@ margin-discussion-draft {
     @ph-margin-border-color
   );
   position: absolute;
-  height: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding);
+  height: @ph-margin-avatar-size;
 }
 
 .ph-margin-link-default {
@@ -131,8 +119,8 @@ margin-discussion-draft {
 }
 
 .ph-margin-row-content {
-  padding: 5px 7px;
-  min-height: (@ph-margin-avatar-size + 2 * @ph-margin-avatar-padding);
+  padding: 8px;
+  min-height: @ph-margin-avatar-size;
 }
 
 .ph-margin-row-border-top {
@@ -156,8 +144,8 @@ margin-discussion-draft {
 .ph-margin-badge {
   font-size: smaller;
   font-weight: normal;
-  padding: 2px 5px;
-  background-color: #aaa !important;
+  padding: 3px 7px;
+  background-color: #29ABE2 !important;
 }
 
 margin-discussion kramjax p {

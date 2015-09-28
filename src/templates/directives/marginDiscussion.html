@@ -1,30 +1,43 @@
 <div class="ph-margin-container">
   <!-- original comment -->
-  <div class="ph-margin-row ph-margin-link-default"
-    ng-click="state.showReplies = !state.showReplies">
+  <div class="ph-margin-row">
     <!-- avatar -->
-    <div class="ph-margin-avatar-container">
-      <img gravatar-user="discussion.originalAnnotation.author"
-          gravatar-size="30" class="ph-margin-avatar img-circle">
-    </div>
-    <!-- container with arrow + content -->
-    <div class="ph-margin-row-container ph-margin-link-default">
+    <img gravatar-user="discussion.originalAnnotation.author"
+        gravatar-size="38" class="ph-margin-avatar img-circle">
+    <div class="ph-margin-link-default"
+        ng-click="state.showReplies = !state.showReplies">
       <!-- arrow -->
       <div class="ph-margin-arrow-container">
         <div class="ph-arrow ph-arrow-outward-left"></div>
       </div>
-      <!-- row content -->
       <div class="ph-margin-row-content">
         <!-- view original comment -->
         <div ng-if="!originalState.editing" class="clearfix">
+          <div class="ph-margin-info">
+            <p class="ph-xs-margin-bottom">
+              <a href="./users/{{discussion.originalAnnotation.author.username}}">
+                {{discussion.originalAnnotation.author.displayName}}</a>
+              · <span am-time-ago="discussion.originalAnnotation.createdAt"></span>
+            </p>
+          </div>
+          <div ng-if="!discussion.originalAnnotation.body">
+            <kramjax body="discussion.originalAnnotation.title"></kramjax>
+          </div>
+          <div ng-if="discussion.originalAnnotation.body">
+            <p class="ph-margin-title ph-no-margin ph-xs-margin-bottom">
+              <kramjax body="discussion.originalAnnotation.title"></kramjax>
+            </p>
+            <kramjax body="discussion.originalAnnotation.body"></kramjax>
+          </div>
+          <span class="badge ph-margin-badge" ng-if="discussion.replies.length">
+            {{discussion.replies.length}}
+            {{discussion.replies.length === 1 ? 'answer' : 'answers'}}
+            <i class="fa fa-fw fa-comments"></i>
+          </span>
           <div class="pull-right">
-            <span class="badge ph-margin-badge" ng-if="discussion.replies.length">
-              <i class="fa fa-fw fa-comments"></i>
-              {{discussion.replies.length}}
-            </span>
             <span ng-click="$event.stopPropagation()" class="dropdown" dropdown>
               <button class="btn btn-link btn-xs dropdown-toggle" dropdown-toggle>
-                <i class="fa fa-caret-down"></i>
+                Options <i class="fa fa-caret-down"></i>
               </button>
               <ul class="dropdown-menu dropdown-menu-right ph-margin-dropdown">
                 <li>
@@ -60,22 +73,6 @@
                 </li>
               </ul>
             </span>
-          </div>
-          <div class="ph-margin-info">
-            <p class="ph-xs-margin-bottom">
-              <a href="./users/{{discussion.originalAnnotation.author.username}}">
-                {{discussion.originalAnnotation.author.displayName}}</a>
-              · <span am-time-ago="discussion.originalAnnotation.createdAt"></span>
-            </p>
-          </div>
-          <div ng-if="!discussion.originalAnnotation.body">
-            <kramjax body="discussion.originalAnnotation.title"></kramjax>
-          </div>
-          <div ng-if="discussion.originalAnnotation.body">
-            <p class="ph-margin-title ph-no-margin ph-xs-margin-bottom">
-              <kramjax body="discussion.originalAnnotation.title"></kramjax>
-            </p>
-            <kramjax body="discussion.originalAnnotation.body"></kramjax>
           </div>
         </div>
         <!-- edit original comment -->
@@ -126,7 +123,7 @@
             </span>
           </div>
         </form>
-      </div><!-- / row content -->
+      </div>
     </div>
   </div>
   <div collapse="!state.showReplies">
