@@ -1,10 +1,8 @@
 <div class="ph-margin-container">
   <div ng-if="auth.user" class="ph-margin-row">
     <!-- avatar -->
-    <div class="ph-margin-avatar-container">
-      <img gravatar-user="auth.user" gravatar-size="30"
-          class="ph-margin-avatar img-circle">
-    </div>
+    <img gravatar-user="auth.user" gravatar-size="38"
+        class="ph-margin-avatar img-circle">
     <div class="ph-margin-row-container">
       <!-- arrow -->
       <div class="ph-margin-arrow-container">
@@ -59,14 +57,11 @@
   </div>
   <div ng-if="!auth.user" class="ph-margin-row">
     <!-- avatar -->
-    <div class="ph-margin-avatar-container">
-      <!--img gravatar-user="auth.user" gravatar-size="30"
-        class="ph-margin-avatar"-->
-        <div class="ph-margin-unknown-avatar-container">
-          <div class="ph-margin-unknown-avatar">
-            <i class="fa fa-user"></i>
-          </div>
-        </div>
+    <div class="ph-margin-unknown-avatar-container ph-margin-avatar">
+      <div class="ph-margin-unknown-avatar">
+        <i class="fa fa-user"></i>
+      </div>
+    </div>
     </div>
     <div class="ph-margin-row-container">
       <!-- arrow -->

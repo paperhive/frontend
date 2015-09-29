@@ -132,10 +132,8 @@
         ng-controller="replyCtrl"
         class="ph-margin-row ph-margin-row-border-top">
       <!-- avatar -->
-      <div class="ph-margin-avatar-container">
-        <img gravatar-user="reply.author" gravatar-size="30"
-            class="ph-margin-avatar img-circle">
-      </div>
+      <img gravatar-user="reply.author" gravatar-size="38"
+          class="ph-margin-avatar img-circle">
       <div class="ph-margin-row-container ph-margin-reply">
         <!-- arrow -->
         <div class="ph-margin-arrow-container">
@@ -145,10 +143,18 @@
         <div class="ph-margin-row-content">
           <!-- view reply -->
           <div ng-if="!replyState.editing" class="clearfix">
+            <div class="ph-margin-info">
+              <p class="ph-xs-margin-bottom">
+                <a href="./users/{{reply.author.username}}">
+                  {{reply.author.displayName}}</a>
+                · <span am-time-ago="reply.createdAt"></span>
+              </p>
+            </div>
+            <kramjax body="reply.body"></kramjax>
             <div class="pull-right">
               <span ng-click="$event.stopPropagation()" class="dropdown" dropdown>
                 <button class="btn btn-link btn-xs dropdown-toggle" dropdown-toggle>
-                  <i class="fa fa-caret-down"></i>
+                  Options <i class="fa fa-caret-down"></i>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right ph-margin-dropdown">
                   <li>
@@ -178,14 +184,6 @@
                 </ul>
               </span>
             </div>
-            <div class="ph-margin-info">
-              <p class="ph-xs-margin-bottom">
-                <a href="./users/{{reply.author.username}}">
-                  {{reply.author.displayName}}</a>
-                · <span am-time-ago="reply.createdAt"></span>
-              </p>
-            </div>
-            <kramjax body="reply.body"></kramjax>
           </div>
           <!-- edit reply -->
           <form ng-if="replyState.editing"
@@ -220,10 +218,8 @@
     <!-- reply form -->
     <div ng-if="auth.user && !state.editing" class="ph-margin-row ph-margin-row-border-top">
       <!-- avatar -->
-      <div class="ph-margin-avatar-container">
-        <img gravatar-user="auth.user" gravatar-size="30"
-            class="ph-margin-avatar">
-      </div>
+      <img gravatar-user="auth.user" gravatar-size="38"
+          class="ph-margin-avatar img-circle">
       <div class="ph-margin-row-container ph-margin-reply">
         <!-- arrow -->
         <div class="ph-margin-arrow-container">
