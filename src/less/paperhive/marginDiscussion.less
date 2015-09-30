@@ -156,6 +156,14 @@ margin-discussion kramjax .MathJax_Display {
   margin: 5px 0;
 }
 
+// includes the avatars in the collapse animation
+.ph-margin-collapse {
+  margin-left: -(@ph-margin-avatar-size + @ph-margin-arrow-size +
+    @ph-margin-avatar-arrow-padding);
+  padding-left: (@ph-margin-avatar-size + @ph-margin-arrow-size +
+    @ph-margin-avatar-arrow-padding);
+}
+
 .ph-margin-unknown-avatar-container {
   display: table;
   width: @ph-margin-avatar-size;

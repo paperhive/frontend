@@ -126,7 +126,7 @@
       </div>
     </div>
   </div>
-  <div collapse="!state.showReplies">
+  <div collapse="!state.showReplies" class="ph-margin-collapse">
     <!-- replies (note that ng-repeat creates a child scope!) -->
     <div ng-repeat="reply in discussion.replies"
         ng-controller="replyCtrl"
@@ -250,14 +250,10 @@
     </div>
     <div ng-if="!auth.user" class="ph-margin-row ph-margin-row-border-top">
       <!-- avatar -->
-      <div class="ph-margin-avatar-container">
-        <!--img gravatar-user="auth.user" gravatar-size="30"
-          class="ph-margin-avatar"-->
-          <div class="ph-margin-unknown-avatar-container">
-            <div class="ph-margin-unknown-avatar">
-              <i class="fa fa-user"></i>
-            </div>
-          </div>
+      <div class="ph-margin-avatar ph-margin-unknown-avatar-container">
+        <div class="ph-margin-unknown-avatar">
+          <i class="fa fa-user"></i>
+        </div>
       </div>
       <div class="ph-margin-row-container ph-margin-reply">
         <!-- arrow -->
