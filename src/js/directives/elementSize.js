@@ -53,7 +53,7 @@ module.exports = function(app) {
           });
 
           // call handler once
-          $timeout(resizeHandler());
+          $timeout(resizeHandler);
         }
       };
     }

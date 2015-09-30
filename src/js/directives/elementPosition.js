@@ -58,7 +58,7 @@ module.exports = function(app) {
           });
 
           // call handler once
-          $timeout(positionHandler());
+          $timeout(positionHandler);
         }
       };
     }
