@@ -24,7 +24,7 @@ cp config.json.default config.json
 ```
 Adapt `config.json` to your needs and finally run:
 ```
-gulp
+npm run build
 ```
 Upon completion, the files for deployment are placed in the directory `build/`.
 
@@ -45,7 +45,7 @@ DEBUG=true gulp serve
 #### Testing locally
 Make sure that the frontend builds without errors,
 ```
-gulp
+npm run build
 ```
 and that the selenium drivers are installed and up-to-date,
 ```
