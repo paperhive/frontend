@@ -42,6 +42,21 @@ probably want to run
 DEBUG=true gulp serve
 ```
 
+#### Testing locally
+Make sure that the frontend builds without errors,
+```
+gulp
+```
+and that the selenium drivers are installed and up-to-date,
+```
+./node_modules/gulp-protractor/node_modules/.bin/webdriver-manager update
+```
+After that,
+```
+npm test
+```
+runs both unit and e2e tests.
+
 #### Deployment
 **Always** check the following:
 
