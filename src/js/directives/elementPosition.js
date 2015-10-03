@@ -8,7 +8,8 @@ module.exports = function(app) {
    *
    * Exposes the position of the element in the scope variable `myPosition`.
    * The position is calculated relative to the current viewport and is
-   * automatically updated on scroll and resize events.
+   * automatically updated on scroll and resize events (resize events are
+   * detected via the javascript-detect-element-resize jquery plugin).
    *
    * The position has the properties `bottom`, `left`, `right, `top`.
    * Additionally, the size of the element is provided by `height` and `width`.

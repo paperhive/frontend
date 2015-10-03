@@ -4,6 +4,14 @@ var angular = require('angular');
 
 module.exports = function(app) {
 
+  /* Usage: <div element-size="mySize">
+   *
+   * Exposes the size of the element in the scope variable `mySize`.
+   * The size is automatically updated on resize events via the
+   * javascript-detect-element-resize jquery plugin.
+   *
+   * The size has the properties `height` and `width`.
+   */
   app.directive('elementSize', [
     '$parse', '$window', '$timeout', function($parse, $window, $timeout) {
       return {
