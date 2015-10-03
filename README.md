@@ -28,6 +28,14 @@ npm run build
 ```
 Upon completion, the files for deployment are placed in the directory `build/`.
 
+#### Static files
+Make sure you passed `--recursive` to the clone command (see above). If you
+switch branches and want to checkout the static files associated with the
+current branch run
+```
+git submodule update
+```
+
 #### Development
 Running
 ```
@@ -56,36 +64,6 @@ After that,
 npm test
 ```
 runs both unit and e2e tests.
-
-#### Deployment
-**Always** check the following:
-
-1. Do the [unit tests](https://travis-ci.org/paperhive/paperhive-frontend) of your branch pass?
-2. Have you tested the [deployed branch](https://paperhive.org/dev/frontend/) *manually*?
-
-You can deploy the branch by following these steps:
-
-1. Clone the deployment repository if you haven't cloned it yet:
-
-   ```git clone git@github.com:paperhive/paperhive-frontend-deploy.git```
-
-2. Check out the current deployment master:
-
-    ```(cd paperhive-frontend-deploy/ && git checkout master && git pull)```
-
-3. Make a clean build
-
-    ```rm -rf tmp build node_modules bower_components && npm install && bower install && gulp```
-
-4. Copy the resulting files: 
-
-    ```rsync -a --delete --exclude .git build/ paperhive-frontend-deploy/```
-
-5. Commit and push:
-
-    ```(cd paperhive-frontend-deploy/ && git add . && git commit -a && git push)```
-
-6. Change the `revision` in the puppet config (`puppet/manifests/nodes.pp`) to the commit you just made to `paperhive-frontend-deploy`. Commit, push, pull and apply.
 
 ## License
 The PaperHive frontend is licensed under the [GPL3](https://www.gnu.org/licenses/gpl.html) license.
