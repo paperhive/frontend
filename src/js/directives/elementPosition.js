@@ -4,6 +4,15 @@ var angular = require('angular');
 
 module.exports = function(app) {
 
+  /* Usage: <div element-position="myPosition">
+   *
+   * Exposes the position of the element in the scope variable `myPosition`.
+   * The position is calculated relative to the current viewport and is
+   * automatically updated on scroll and resize events.
+   *
+   * The position has the properties `bottom`, `left`, `right, `top`.
+   * Additionally, the size of the element is provided by `height` and `width`.
+   */
   app.directive('elementPosition', [
     '$parse', '$window', '$timeout', function($parse, $window, $timeout) {
       return {
