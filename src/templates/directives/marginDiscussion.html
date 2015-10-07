@@ -29,11 +29,6 @@
             </p>
             <kramjax body="discussion.originalAnnotation.body"></kramjax>
           </div>
-          <span class="badge ph-margin-badge" ng-if="discussion.replies.length">
-            {{discussion.replies.length}}
-            {{discussion.replies.length === 1 ? 'answer' : 'answers'}}
-            <i class="fa fa-fw fa-comments"></i>
-          </span>
           <div class="pull-right">
             <span ng-click="$event.stopPropagation()" class="dropdown" dropdown>
               <button class="btn btn-link btn-xs dropdown-toggle" dropdown-toggle>
@@ -74,6 +69,13 @@
               </ul>
             </span>
           </div>
+          <!-- do not move this before the options link (pull-right!) because
+          this creates a newline after inserting the first reply -->
+          <span class="badge ph-margin-badge" ng-if="discussion.replies.length">
+            {{discussion.replies.length}}
+            {{discussion.replies.length === 1 ? 'answer' : 'answers'}}
+            <i class="fa fa-fw fa-comments"></i>
+          </span>
         </div>
         <!-- edit original comment -->
         <form ng-if="originalState.editing"
