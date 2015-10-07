@@ -1,8 +1,7 @@
 .ph-header {
-  background-color: #ffffff;
-  background-image: url(./static/img/exclusive-paper.png);
+  //background-color: #ffffff;
   // bottom border
-  border-bottom: 1px solid @nav-tabs-border-color;
+  //border-bottom: 1px solid @nav-tabs-border-color;
 
   // padding of media element
   .media {
@@ -36,12 +35,13 @@
   }
 
 
+  .ph-header-submenu-affix {
+    z-index: @zindex-navbar-fixed - 1;
+  }
+
   // submenu
-  > .ph-header-submenu-container {
-    > .container {
-      // overlay bottom border from ph-header
-      margin-bottom: -1px;
-    }
+  .ph-header-submenu-container {
+    background-color: #eee;
     .btn.btn-primary {
       padding-top: 7px;
       padding-bottom: 7px;
@@ -68,7 +68,9 @@
 }
 
 .ph-header-submenu {
+  border: none;
   > li {
+    margin-bottom: 0;
     margin-right: 4px;
     border-left: 1px solid transparent;
     border-right: 1px solid transparent;
@@ -80,13 +82,14 @@
     }
 
     > a {
-      background-color: rgba(255, 255, 255, 0.65);
       padding-left: 20px;
       padding-right: 20px;
       margin: 0;
       border: none;
       border-top: @ph-border-height solid transparent;
+      transition: background-color ease 0.5s, border-color ease 0.5s;
       &:hover {
+        background-color: rgba(255, 255, 255, 0.5);
         border-top: @ph-border-height solid @ph-highlight-color;
       }
       @media (max-width: @screen-xs-max){
@@ -99,8 +102,8 @@
       }
     }
     &.active {
-      border-left: 1px solid @nav-tabs-border-color;
-      border-right: 1px solid @nav-tabs-border-color;
+      //border-left: 1px solid @nav-tabs-border-color;
+      //border-right: 1px solid @nav-tabs-border-color;
       > a  {
         &, &:hover, &:focus {
           border: none;
@@ -117,4 +120,24 @@
   @media (max-width: @screen-xs-max) {
     width: 100%;
   }
+}
+
+.ph-header-submenu-shadow {
+  position: absolute;
+  width: 100%;
+  height: 10px;
+  bottom: -1px;
+  z-index: -1;
+  border-bottom: @ph-border-height solid transparent;
+  transition: box-shadow ease 0.5s, border-color ease 0.5s;
+}
+
+.ph-header-submenu-affixed {
+  position: fixed;
+  width: 100%;
+}
+
+.ph-header-submenu-affixed > .ph-header-submenu-shadow {
+  box-shadow: 0 -10px 10px 10px rgba(0, 0, 0, 0.3);
+  border-bottom: @ph-border-height solid @ph-navbar-border-color;
 }

@@ -1,29 +1,17 @@
 <div ng-controller="ArticleCtrl">
-  <div class="ph-header ph-header-large ph-md-margin-bottom">
-    <div class="container">
+  <div class="ph-header ph-header-large ph-lg-margin-bottom">
+    <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12">
-          <div class="media">
-            <div class="media-left">
-              <span class="fa-stack ph-icon">
-                <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
-                <i class="fa fa-file-text-o fa-stack-1x"></i>
-              </span>
-            </div>
-            <div class="media-body media-middle">
-              <h2 class="media-heading">
-                <a href="./articles/{{article._id}}">{{article.title}}</a>
-              </h2>
-              <h4>
-                <span ng-repeat="author in article.authors">
-                  {{author}}{{$last ? '' :', '}}
-                </span>
-              </h4>
-            </div>
-          </div>
+          <h2 class="ph-lg-margin-top">{{article.title}}</h2>
+          <h4 class="ph-lg-margin-bottom">
+            <span ng-repeat="author in article.authors">
+              {{author}}{{$last ? '' :', '}}
+            </span>
+          </h4>
         </div>
       </div>
-      <div class="row">
+      <!--div class="row">
         <div class="col-md-12 text-right">
           <a ng-if="pdfSource"
              type="button"
@@ -37,40 +25,44 @@
             <i class="fa fa-fw fa-plus"></i> Add general comment
           </a>
         </div>
-      </div>
+      </div-->
     </div>
-    <div class="ph-header-submenu-container">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12">
-            <subnav>
-              <ul class="nav nav-tabs ph-header-submenu">
-                <li subnav-target="articles.text">
-                  <a><i class="fa fa-fw fa-file-pdf-o"></i> Text</a>
-                </li>
-                <li subnav-target="articles.discussions">
-                  <a><i class="fa fa-fw fa-comments"></i> Discussions
-                    <span class="badge" ng-if="discussions.stored.length > 0">
-                      {{discussions.stored.length}}
-                    </span></a>
-                </li>
-                <li subnav-target="articles.about">
-                  <a><i class="fa fa-fw fa-info"></i> About</a>
-                </li>
-                <!--li subnav-target="articles.activity">
-                  <a><i class="fa fa-fw fa-clock-o"></i> Activity</a>
-                </li>
-                <li subnav-target="articles.settings">
-                  <a><i class="fa fa-fw fa-cog"></i> Settings</a>
-                </li-->
-              </ul>
-            </subnav>
+    <div class="ph-affix-container"
+        element-position="subnavPosition"
+        ng-style="{'min-height': subnavSize.height + 'px'}">
+      <div class="ph-header-submenu-affix"
+          ng-class="{'ph-header-submenu-affixed': subnavPosition.top <= $root.navbarSize.height}"
+          ng-style="{top: $root.navbarSize.height  + 'px'}"
+          >
+        <div class="ph-header-submenu-container" element-size="subnavSize">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-12">
+                <subnav>
+                  <ul class="nav nav-tabs ph-header-submenu">
+                    <li subnav-target="articles.text">
+                      <a><i class="fa fa-fw fa-file-pdf-o"></i> Article</a>
+                    </li>
+                    <li subnav-target="articles.discussions">
+                      <a><i class="fa fa-fw fa-comments"></i> Discussions
+                        <span class="badge" ng-if="discussions.stored.length > 0">
+                          {{discussions.stored.length}}
+                        </span></a>
+                    </li>
+                    <li subnav-target="articles.about">
+                      <a><i class="fa fa-fw fa-info"></i> About</a>
+                    </li>
+                  </ul>
+                </subnav>
+              </div>
+            </div>
           </div>
         </div>
+        <div class="ph-header-submenu-shadow"></div>
       </div>
     </div>
   </div> <!-- ph-header -->
-  <div class="container">
+  <div class="container-fluid">
     <div app-view-segment="1"></div>
   </div>
 </div>

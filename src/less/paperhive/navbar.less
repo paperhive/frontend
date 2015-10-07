@@ -1,6 +1,6 @@
 // fixed navbar margin
 body {
-  padding-top: @navbar-height + @ph-navbar-border;
+  padding-top: @navbar-height + @ph-navbar-border + @ph-border-height;
 }
 
 // larger avatar does not enlarge button/link
@@ -13,23 +13,59 @@ body {
 }
 
 .ph-title-logo {
-  max-width:35px;
-  max-height:35px;
-  margin-top: -7px;
+  height: 100%;
 }
 
 /* HEADER */
 /* Navigation */
 .navbar {
-  .ph-highlight-border-top();
+  border-top: @ph-navbar-border solid @ph-highlight-color;
   padding: @ph-navbar-default-padding;
+  border-bottom: 0;
 
   // flicker fix on chrome http://stackoverflow.com/a/22224884/1219479
   -webkit-backface-visibility: hidden;
 
+  // Changing size of navbar-form
+  &-form {
+    min-width: 370px;
+    .form-control {
+      width: 100%;
+    }
+    @media (max-width: @screen-sm-max){
+      min-width: 300px
+    }
+  }
+
   @media (max-width: @screen-xs-max){
     .navbar-collapse, .navbar-form {
       border: none;
+    }
+  }
+}
+
+.ph-navbar-shadow {
+  z-index: @zindex-navbar-fixed - 2;
+  border-bottom: 1px solid #bfbfbf;
+  box-shadow: 0 -10px 10px 10px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  position: fixed;
+  top: @navbar-height + @ph-navbar-border;
+}
+
+.navbar-brand {
+  padding-top: 7px;
+  padding-bottom: 7px;
+
+  // Change size of PaperHiver logo on XS-Viewport, so it does not breaks up
+  @media (max-width: @screen-xs-max){
+    max-width: 210px;
+    width: auto;
+    height: 60px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    > img {
+
     }
   }
 }
@@ -69,3 +105,16 @@ body {
   padding: @nav-link-padding;
 }
 */
+
+.ph-navbar-search {
+  // set dropdown to same width as input field
+  position: relative;
+  width: 100%;
+  & > .dropdown-menu {
+    max-width: 100%;
+    // shorten text and add "..."
+    & > li > a {
+      .text-overflow();
+    }
+  }
+}

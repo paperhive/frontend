@@ -6,7 +6,8 @@ var $ = require('jquery');
 module.exports = function(app) {
 
   app.directive(
-    'affix', ['$window', '$timeout', function($window, $timeout) {
+    'affix',
+    ['$window', '$timeout', '$parse', function($window, $timeout, $parse) {
       return {
         restrict: 'A',
         link: function(scope, element, attrs) {
@@ -45,7 +46,9 @@ module.exports = function(app) {
                 params.offsetBottom - 1,
               element[0].scrollHeight
             ]);
+            /* TODO: revisit
             element.css({height: height + 'px'});
+            */
 
             // get position of parent
             var offsetParent = element[0].offsetParent;
@@ -54,7 +57,9 @@ module.exports = function(app) {
 
             // positioned normally
             var top = 0;
+            var affixed = false;
             if (parentRect.top <= params.offsetTop) {
+              affixed = true;
               if (params.useParentHeight &&
                   -parentRect.top + params.offsetTop + height >
                   parentRect.height) {
@@ -65,7 +70,14 @@ module.exports = function(app) {
                 top = -parentRect.top + params.offsetTop;
               }
             }
+
             element.css({top: top + 'px'});
+
+            var affixedSetter = $parse(attrs.affixed);
+            if (affixedSetter && affixedSetter.assign) {
+              affixedSetter.assign(scope, affixed);
+              scope.$apply();
+            }
           }
 
           $timeout(function() {

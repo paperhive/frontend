@@ -1,8 +1,8 @@
 /* Colors */
-@brand-primary: lighten(@ph-highlight-color, 15%);
+@brand-primary: @ph-base-color; // lighten(@ph-highlight-color, 15%);
 
 /* Scaffolding */
-@body-bg: rgba(233,233,233,1);
+@body-bg: @ph-background-color;
 
 /* Typography */
 @font-family-sans-serif: Roboto, sans-serif;
@@ -13,6 +13,7 @@
 /* Components */
 @border-radius-base: 0;
 @border-radius-large: 0;
+@border-radius-small: 0;
 
 /* Tables */
 
@@ -29,12 +30,12 @@
 /* Container sizes */
 
 /* Navbar */
-@navbar-default-bg: fadeout(@ph-base-color, 5%);
+@navbar-default-bg: @ph-white;
 @navbar-default-brand-color: @ph-white;
 @navbar-default-brand-hover-color: darken(@navbar-default-brand-color, 15%);
-@navbar-default-link-color: @ph-white;
+@navbar-default-link-color: @link-color;
 @navbar-default-link-hover-color: @navbar-default-link-color;
-@navbar-default-link-hover-bg: lighten(@navbar-default-bg, 10%);
+@navbar-default-link-hover-bg: darken(@navbar-default-bg, 5%);
 @navbar-default-link-active-color: @navbar-default-link-hover-color;
 @navbar-default-link-active-bg: @navbar-default-link-hover-bg;
 
