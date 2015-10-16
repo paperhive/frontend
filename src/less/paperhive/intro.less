@@ -4,11 +4,16 @@
   background-repeat: no-repeat;
   &-fiber {
     background-image: url(./static/img/fiber.jpg);
+    color: white;
   }
   /* remove jumbotron default background */
   .jumbotron {
     background: none;
   }
+}
+
+.ph-bg-overlay {
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .ph-bg-hexagons {
@@ -26,13 +31,18 @@
   position: relative;
 }
 
-.ph-intro-arrow-down {
+.ph-intro-arrow {
   position: absolute;
-  bottom: 0;
   width: 100%;
   font-size: 50px;
   text-align: center;
-  > a {
+  &-bottom {
+    bottom: 0;
+  }
+  &-bright > a {
     color: white;
+    &:hover {
+      color: #b3b3b3;
+    }
   }
 }
