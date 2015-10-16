@@ -1,13 +1,38 @@
-.ph-intro {
-  background-image: url(./static/img/fiber.jpg);
+.ph-bg-full {
   background-position-y: center;
   background-size: cover;
   background-repeat: no-repeat;
+  &-fiber {
+    background-image: url(./static/img/fiber.jpg);
+  }
+  /* remove jumbotron default background */
+  .jumbotron {
+    background: none;
+  }
 }
 
-.ph-intro .container .jumbotron {
-  background-color: @ph-intro-bg-color;
-  color: @ph-intro-color;
-  padding: 120px 60px;
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+.ph-bg-hexagons {
+  background-image: url('https://dev.paperhive.org/frontend/master/static/img/background_pattern_light.svg');
+  background-color: white;
+}
+
+.ph-intro-content {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 120px 0;
+  position: relative;
+}
+
+.ph-intro-arrow-down {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  font-size: 50px;
+  text-align: center;
+  > a {
+    color: white;
+  }
 }

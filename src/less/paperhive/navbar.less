@@ -1,6 +1,10 @@
-// fixed navbar margin
+// fixed navbar padding
 body {
   padding-top: @navbar-height + @ph-navbar-border + @ph-border-height;
+}
+
+.undo-navbar-padding {
+  margin-top: -(@navbar-height + @ph-navbar-border + @ph-border-height);
 }
 
 // larger avatar does not enlarge button/link
