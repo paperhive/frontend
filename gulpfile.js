@@ -1,6 +1,16 @@
 'use strict';
 
 var gulp = require('gulp');
+
+// TODO: use plain batch when https://github.com/floatdrop/gulp-batch/issues/15
+//       is solved
+var batch = function(task) {
+  var batch = require('gulp-batch');
+  return batch(function(events, done) {
+    gulp.start(task, done);
+  });
+};
+
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var less = require('gulp-less');
@@ -202,9 +212,9 @@ gulp.task('clean', function(cb) {
 
 // watch for changes
 gulp.task('watch', ['default:watch'], function() {
-  gulp.watch(paths.templates, ['templates']);
-  gulp.watch([paths.staticFiles, paths.index], ['static']);
-  gulp.watch(paths.less, ['style']);
+  gulp.watch(paths.templates, batch('templates'));
+  gulp.watch([paths.staticFiles, paths.index], batch('static'));
+  gulp.watch(paths.less, batch('style'));
 });
 
 // serve without watchin (no livereload)
@@ -237,7 +247,7 @@ gulp.task('serve:reload', function() {
 
 // watch built files and initiate live reload
 gulp.task('serve:watch', ['default:watch'], function() {
-  gulp.watch(paths.build, ['serve:reload']);
+  gulp.watch(paths.build, batch('serve:reload'));
 });
 
 // test
