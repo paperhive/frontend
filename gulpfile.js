@@ -49,7 +49,8 @@ var htmlminOpts = {
 };
 
 var htmlhintOpts = {
-  'doctype-first': false
+  'doctype-first': false,
+  'title-require': false
 };
 
 // error handling, simplified version (without level) from
