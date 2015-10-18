@@ -101,9 +101,27 @@
 <div class="ph-bg-full ph-bg-full-endeavour ph-attribution-container">
   <div class="ph-intro-content ph-bg-overlay">
     <div class="container ph-home">
-      <div class="row">
+      <div class="row ph-lg-margin-bottom">
         <div class="col-md-12">
           <h2>Sign up and be the first to get notified when we launch!</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-offset-4 col-md-4">
+          <form novalidate name="subscribeForm" ng-controller="SubscribeCtrl">
+            <div class="form-group has-feedback">
+              <label for="email">Email address</label>
+              <input type="email" class="form-control" id="email" name="email" 
+                ng-model="email"
+                placeholder="you@example.com" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block"
+                ng-click="submit()"
+                ng-class="{disabled: subscribeForm.$invalid}">
+              <i class="fa fa-fw fa-envelope"></i>
+              Subscribe to launch updates
+            </button>
+          </form>
         </div>
       </div>
     </div>
