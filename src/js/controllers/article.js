@@ -7,9 +7,10 @@ module.exports = function(app) {
   app.controller('ArticleCtrl', [
     '$scope', '$route', '$routeSegment', '$document', '$http', 'config',
     '$rootScope', 'authService', 'notificationService', 'metaService',
-    function($scope, $route, $routeSegment, $document, $http, config,
-             $rootScope, authService, notificationService, metaService) {
-
+    function(
+      $scope, $route, $routeSegment, $document, $http, config, $rootScope,
+      authService, notificationService, metaService
+    ) {
       // expose authService
       $scope.auth = authService;
       // Expose the routeSegment to be able to determine the active tab in the
@@ -29,21 +30,23 @@ module.exports = function(app) {
             'http://arxiv.org/pdf/' + article.source.id + '.pdf';
         }
 
-        // Set meta information
+        // Cut description down to 150 chars, cf.
+        // <http://moz.com/learn/seo/meta-description>
+        // TODO move linebreak removal to backend?
+        var metaData = [
+          {
+            name: 'description',
+            content: article.title + ' by ' + article.authors.join(', ') + '.',
+          },
+          {name: 'author', content: article.authors.join(', ')},
+          {name: 'keywords', content: article.tags.join(', ')}
+        ];
+
+        $scope.addMetaData(metaData);
+
         metaService.set({
           title: article.title + ' · PaperHive',
-          // Cut description down to 150 chars, cf.
-          // <http://moz.com/learn/seo/meta-description>
-          // TODO move linebreak removal to backend?
-          meta: [
-            {
-              name: 'description',
-              content: article.title + ' by ' + article.authors.join(', ') +
-                '.',
-            },
-            {name: 'author', content: article.authors.join(', ')},
-            {name: 'keywords', content: article.tags.join(', ')}
-          ]
+          meta: metaData
         });
       })
       .error(function(data) {
@@ -74,6 +77,28 @@ module.exports = function(app) {
       };
       $scope.discussions = {
         stored: []
+      };
+
+      $scope.addArticleMetaData = function(metaData) {
+        // Add some Highwire Press tags, used by Google Scholar, arXiv etc.; cf.
+        // <http://webmasters.stackexchange.com/a/13345/15250>.
+        // TODO add some more, if possible (citation_journal etc)
+        metaData.push({name: 'citation_title', content: $scope.article.title});
+        $scope.article.authors.forEach(function(author) {
+          metaData.push({name: 'citation_author', content: author});
+        });
+        // TODO which date to add here? publication on arxiv? of which version?
+        metaData.push({
+          name: 'citation_date',
+          content: $scope.article.publishedAt
+        });
+        var doi = _.result(_.find($scope.article.links, {type: 'doi'}), 'id');
+        if (doi) {
+          metaData.push({name: 'citation_doi',  content: doi});
+        }
+        if ($scope.pdfSource) {
+          metaData.push({name: 'citation_pdf_url', content: $scope.pdfSource});
+        }
       };
 
       $scope.purgeDraft = function() {
