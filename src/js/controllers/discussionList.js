@@ -1,5 +1,4 @@
 'use strict';
-var _ = require('lodash');
 
 module.exports = function(app) {
 
@@ -8,7 +7,7 @@ module.exports = function(app) {
     function($scope, metaService) {
       // set meta data
       $scope.$watch('article', function(article) {
-        if (!_.isEmpty(article)) {
+        if (article) {
           var meta = [{
                 name: 'description',
                 content: 'Discussions overview for ' + article.title +

@@ -42,7 +42,7 @@ module.exports = function(app) {
           {name: 'keywords', content: article.tags.join(', ')}
         ];
 
-        $scope.addMetaData(metaData);
+        $scope.addArticleMetaData(metaData);
 
         metaService.set({
           title: article.title + ' · PaperHive',

@@ -21,7 +21,7 @@ module.exports = function(app) {
       $scope.$watchGroup(['article', 'discussions.stored'], function(newVals) {
         var article = newVals[0];
         var discussions = newVals[1];
-        if (!_.isEmpty(article)) {
+        if (article) {
           var description;
           if (discussions.length === 1) {
             description =  'Article with 1 discussion.';
