@@ -1,15 +1,17 @@
 'use strict';
 var _ = require('lodash');
 var angular = require('angular');
+var moment = require('moment');
 
 module.exports = function(app) {
 
   app.controller('ArticleCtrl', [
     '$scope', '$route', '$routeSegment', '$document', '$http', 'config',
     '$rootScope', 'authService', 'notificationService', 'metaService',
-    function($scope, $route, $routeSegment, $document, $http, config,
-             $rootScope, authService, notificationService, metaService) {
-
+    function(
+      $scope, $route, $routeSegment, $document, $http, config, $rootScope,
+      authService, notificationService, metaService
+    ) {
       // expose authService
       $scope.auth = authService;
       // Expose the routeSegment to be able to determine the active tab in the
@@ -29,21 +31,23 @@ module.exports = function(app) {
             'http://arxiv.org/pdf/' + article.source.id + '.pdf';
         }
 
-        // Set meta information
+        // Cut description down to 150 chars, cf.
+        // <http://moz.com/learn/seo/meta-description>
+        // TODO move linebreak removal to backend?
+        var metaData = [
+          {
+            name: 'description',
+            content: article.title + ' by ' + article.authors.join(', ') + '.',
+          },
+          {name: 'author', content: article.authors.join(', ')},
+          {name: 'keywords', content: article.tags.join(', ')}
+        ];
+
+        $scope.addArticleMetaData(metaData);
+
         metaService.set({
           title: article.title + ' · PaperHive',
-          // Cut description down to 150 chars, cf.
-          // <http://moz.com/learn/seo/meta-description>
-          // TODO move linebreak removal to backend?
-          meta: [
-            {
-              name: 'description',
-              content: article.title + ' by ' + article.authors.join(', ') +
-                '.',
-            },
-            {name: 'author', content: article.authors.join(', ')},
-            {name: 'keywords', content: article.tags.join(', ')}
-          ]
+          meta: metaData
         });
       })
       .error(function(data) {
@@ -74,6 +78,37 @@ module.exports = function(app) {
       };
       $scope.discussions = {
         stored: []
+      };
+
+      $scope.addArticleMetaData = function(metaData) {
+        if (!$scope.article) {
+          console.warning(
+            'Tried to set article meta data, but data isn\'t present.'
+          );
+          return;
+        }
+        // Add some Highwire Press tags, used by Google Scholar, arXiv etc.; cf.
+        // <http://webmasters.stackexchange.com/a/13345/15250>.
+        // TODO add some more, if possible (citation_journal etc)
+        // Check out
+        // <https://scholar.google.com/intl/en/scholar/inclusion.html#indexing>
+        // for more info.
+        metaData.push({name: 'citation_title', content: $scope.article.title});
+        // Both "John Smith" and "Smith, John" are fine.
+        $scope.article.authors.forEach(function(author) {
+          metaData.push({name: 'citation_author', content: author});
+        });
+        // citation_publication_date: REQUIRED for Google Scholar.
+        metaData.push({
+          name: 'citation_publication_date',
+          content: moment($scope.article.publishedAt).format('YYYY/MM/DD')
+        });
+        // Don't expose the DOI for all versions of the article; it really only
+        // identifies one version, usually not the arXiv one, but an upstream
+        // version.
+        if ($scope.pdfSource) {
+          metaData.push({name: 'citation_pdf_url', content: $scope.pdfSource});
+        }
       };
 
       $scope.purgeDraft = function() {

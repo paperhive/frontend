@@ -10,7 +10,6 @@ module.exports = function(app) {
       $scope, $route, $routeSegment, $document, $http, config,
       authService, notificationService, distangleService, metaService
     ) {
-
       $scope.text = {
         highlightInfos: {},
         highlightBorder: {},
@@ -23,24 +22,28 @@ module.exports = function(app) {
         var article = newVals[0];
         var discussions = newVals[1];
         if (article) {
-          var description = 'Article with discussions.';
+          var description;
           if (discussions.length === 1) {
             description =  'Article with 1 discussion.';
-          }
-          if (discussions.length > 1) {
+          } else if (discussions.length > 1) {
             description = 'Article with ' + discussions.length +
               ' discussions.';
+          } else {
+            description = 'Article with discussions.';
           }
-          description += (article.authors.length === 1 ?
-            ' Author: ' :
-            ' Authors: ') + article.authors.join(', ') + '.';
+          description +=
+              (article.authors.length === 1 ? ' Author: ' : ' Authors: ') +
+              article.authors.join(', ') + '.';
+
+          var meta = [
+            {name: 'description', content: description},
+            {name: 'author', content: article.authors.join(', ')},
+          ];
+          $scope.addArticleMetaData(meta);
 
           metaService.set({
             title: article.title + ' · PaperHive',
-            meta: [
-              {name: 'description', content: description},
-              {name: 'author', content: article.authors.join(', ')}
-            ]
+            meta: meta
           });
         }
       });
