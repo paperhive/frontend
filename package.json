@@ -57,6 +57,7 @@
     "angular-route-segment": "./bower_components/angular-route-segment/build/angular-route-segment.js",
     "angular-sanitize": "./bower_components/angular-sanitize/angular-sanitize.js",
     "angular-simple-logger": "./bower_components/angular-simple-logger/dist/index.js",
+    "angular-smooth-scroll": "./bower_components/angular-smooth-scroll/angular-smooth-scroll.js",
     "detect-element-resize": "./bower_components/javascript-detect-element-resize/jquery.resize.js",
     "highlightjs": "./bower_components/highlightjs/highlight.pack.js",
     "leaflet": "./bower_components/leaflet/dist/leaflet.js",
@@ -118,6 +119,12 @@
       ]
     },
     "angular-sanitize": {
+      "exports": null,
+      "depends": [
+        "angular"
+      ]
+    },
+    "angular-smooth-scroll": {
       "exports": null,
       "depends": [
         "angular"
