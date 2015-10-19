@@ -7,7 +7,8 @@ module.exports = function(app) {
 
       $scope.hasError = function(field) {
         var form = $scope.subscribeForm;
-        return (form.$submitted || form[field].$touched) && form[field].$invalid;
+        return (form.$submitted || form[field].$touched) &&
+          form[field].$invalid;
       };
 
       $scope.$watch('email', function() {
