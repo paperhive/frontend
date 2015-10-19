@@ -1,6 +1,7 @@
 'use strict';
 var _ = require('lodash');
 var angular = require('angular');
+var moment = require('moment');
 
 module.exports = function(app) {
 
@@ -83,14 +84,18 @@ module.exports = function(app) {
         // Add some Highwire Press tags, used by Google Scholar, arXiv etc.; cf.
         // <http://webmasters.stackexchange.com/a/13345/15250>.
         // TODO add some more, if possible (citation_journal etc)
+        // Check out
+        // <https://scholar.google.com/intl/en/scholar/inclusion.html#indexing>
+        // for more info.
         metaData.push({name: 'citation_title', content: $scope.article.title});
+        // Both "John Smith" and "Smith, John" are fine.
         $scope.article.authors.forEach(function(author) {
           metaData.push({name: 'citation_author', content: author});
         });
-        // TODO which date to add here? publication on arxiv? of which version?
+        // citation_publication_date: REQUIRED for Google Scholar.
         metaData.push({
-          name: 'citation_date',
-          content: $scope.article.publishedAt
+          name: 'citation_publication_date',
+          content: moment($scope.article.publishedAt).format('YYYY/MM/DD')
         });
         var doi = _.result(_.find($scope.article.links, {type: 'doi'}), 'id');
         if (doi) {
