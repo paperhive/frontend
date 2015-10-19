@@ -108,21 +108,53 @@
       </div>
       <div class="row">
         <div class="col-md-offset-4 col-md-4">
-          <form novalidate name="subscribeForm" ng-controller="SubscribeCtrl">
-            <div class="form-group has-feedback">
-              <label for="email">Email address</label>
-              <input type="email" class="form-control" id="email" name="email" 
-                ng-model="email"
-                placeholder="you@example.com" required>
+          <div class="panel panel-default ph-intro-panel">
+            <div class="panel-body">
+              <form novalidate name="subscribeForm" ng-controller="SubscribeCtrl">
+                <div class="form-group has-feedback" ng-class="{
+                        'has-error': hasError('email'),
+                        'has-success': subscribeForm.email.$valid
+                      }">
+                  <label for="email">Email address</label>
+                  <input type="email" class="form-control" id="email" name="email"
+                    ng-model="email"
+                    placeholder="you@example.com"
+                    required pattern=".*@.+\..+" ng-disabled="subscribing || subscribed">
+                  <span class="fa form-control-feedback" ng-class="{
+                        'fa-times': hasError('email'),
+                        'fa-check': subscribeForm.email.$valid
+                      }"></span>
+                  <div class="help-block">
+                    <span ng-if="hasError('email')">
+                      <span ng-if="subscribeForm.email.$error.required">
+                        Please enter your email address.
+                      </span>
+                      <span ng-if="subscribeForm.email.$error.email || subscribeForm.email.$error.pattern">
+                        The email address you provided is not valid.
+                      </span>
+                    </span>
+                    <span ng-if="subscribed">
+                      <i class="fa fa-fw fa-check"></i>
+                      Check your emails to confirm your subscription.
+                    </span>
+                    <span ng-if="error" class="text-danger">
+                      <i class="fa fa-fw fa-times"></i>
+                      {{error}}
+                    </span>
+                    &nbsp;
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block"
+                    ng-click="!subscribing && !subscribed && !subscribeForm.$invalid && submit()"
+                    ng-class="{disabled: subscribeForm.$invalid || subscribing || subscribed}"
+                    >
+                  <i ng-if="!subscribing" class="fa fa-fw fa-envelope"></i>
+                  <i ng-if="subscribing" class="fa fa-fw fa-spinner fa-spin"></i>
+                  Subscribe to launch updates
+                </button>
+              </form>
             </div>
-            <button type="submit" class="btn btn-primary btn-block"
-                ng-click="submit()"
-                ng-class="{disabled: subscribeForm.$invalid}">
-              <i ng-if="!submitting" class="fa fa-fw fa-envelope"></i>
-              <i ng-if="submitting" class="fa fa-fw fa-spinner fa-spin"></i>
-              Subscribe to launch updates
-            </button>
-          </form>
+          </div>
         </div>
       </div>
     </div>
