@@ -97,10 +97,9 @@ module.exports = function(app) {
           name: 'citation_publication_date',
           content: moment($scope.article.publishedAt).format('YYYY/MM/DD')
         });
-        var doi = _.result(_.find($scope.article.links, {type: 'doi'}), 'id');
-        if (doi) {
-          metaData.push({name: 'citation_doi',  content: doi});
-        }
+        // Don't expose the DOI for all versions of the article; it really only
+        // identifies one version, usually not the arXiv one, but an upstream
+        // version.
         if ($scope.pdfSource) {
           metaData.push({name: 'citation_pdf_url', content: $scope.pdfSource});
         }
