@@ -164,10 +164,6 @@ module.exports = function(app) {
             templateUrl: 'templates/articles/settings.html',
             title: 'Article settings · PaperHive'
           })
-          .segment('about', {
-            templateUrl: 'templates/articles/about.html',
-            title: 'About the article · PaperHive'
-          })
           .segment('text', {
             default: true,
             templateUrl: 'templates/articles/text.html',
