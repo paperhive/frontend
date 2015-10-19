@@ -81,6 +81,12 @@ module.exports = function(app) {
       };
 
       $scope.addArticleMetaData = function(metaData) {
+        if (!$scope.article) {
+          console.warning(
+            'Tried to set article meta data, but data isn\'t present.'
+          );
+          return;
+        }
         // Add some Highwire Press tags, used by Google Scholar, arXiv etc.; cf.
         // <http://webmasters.stackexchange.com/a/13345/15250>.
         // TODO add some more, if possible (citation_journal etc)
