@@ -118,7 +118,8 @@
             <button type="submit" class="btn btn-primary btn-block"
                 ng-click="submit()"
                 ng-class="{disabled: subscribeForm.$invalid}">
-              <i class="fa fa-fw fa-envelope"></i>
+              <i ng-if="!submitting" class="fa fa-fw fa-envelope"></i>
+              <i ng-if="submitting" class="fa fa-fw fa-spinner fa-spin"></i>
               Subscribe to launch updates
             </button>
           </form>
