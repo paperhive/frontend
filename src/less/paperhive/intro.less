@@ -4,16 +4,27 @@
   background-repeat: no-repeat;
   &-fiber {
     background-image: url(./static/img/fiber.jpg);
-    color: white;
   }
   &-endeavour {
     background-image: url(./static/img/endeavour.jpg);
-    color: white;
   }
   /* remove jumbotron default background */
   .jumbotron {
     background: none;
   }
+  &-dark {
+    color: white;
+  }
+}
+
+
+.ph-bg-rocket {
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 }
 
 .ph-bg-overlay {
