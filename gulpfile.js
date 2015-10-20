@@ -153,7 +153,9 @@ gulp.task('static', [], function() {
 
   var staticFiles = gulp.src(paths.staticFiles)
     .pipe(imagemin({
-      progressive: true,  // jpg: Lossless conversion to progressive.
+      interlaced: true,  // gif
+      multipass: true,  // svg
+      progressive: true,  // jpg
       svgoPlugins: [{removeViewBox: false}]
     }))
     .pipe(gulp.dest('build/static'));
