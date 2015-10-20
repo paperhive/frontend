@@ -6,7 +6,10 @@
     background-image: url(./static/img/fiber.jpg);
   }
   &-endeavour {
-    background-image: url(./static/img/endeavour.jpg);
+    // only show image on mobile
+    @media (max-width: @screen-sm-max) {
+      background-image: url(./static/img/endeavour.jpg);
+    }
   }
   /* remove jumbotron default background */
   .jumbotron {
@@ -17,8 +20,11 @@
   }
 }
 
-
 .ph-bg-rocket {
+  // hide video on mobile
+  @media (max-width: @screen-sm-max) {
+    display: none;
+  }
   z-index: -1;
   position: absolute;
   top: 0;
@@ -59,6 +65,7 @@
   width: 100%;
   font-size: 50px;
   text-align: center;
+  left: 0;
   &-bottom {
     bottom: 20px;
   }
