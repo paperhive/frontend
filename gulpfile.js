@@ -30,6 +30,8 @@ var jscs = require('gulp-jscs');
 var jscsStylish = require('gulp-jscs-stylish');
 var template = require('gulp-template');
 var connectHistory = require('connect-history-api-fallback');
+var imagemin = require('gulp-imagemin');
+var pngquant = require('imagemin-pngquant');
 
 var debug = process.env.DEBUG || false;
 
@@ -37,7 +39,13 @@ var config = require('./config.json');
 
 var paths = {
   templates: 'src/templates/**/*.html',
-  staticFiles: 'static/**/*',
+  staticImages: [
+    'static/**/*.png', 'static/**/*.svg', 'static/**/*.jpg'
+  ],
+  staticNonImages: [
+    'static/**/*',
+    '!static/**/*.png', '!static/**/*.svg', '!static/**/*.jpg'
+  ],
   index: 'src/index.html',
   less: 'src/less/**/*.less',
   build: 'build/**/*'
@@ -63,7 +71,7 @@ function handleError(error) {
 // bundle js files + dependencies with browserify
 // (and continue to do so on updates)
 // see https://github.com/gulpjs/gulp/blob/master/docs/recipes/fast-browserify-builds-with-watchify.md
-function js (watch) {
+function js(watch) {
   var browserify = require('browserify');
   var shim = require('browserify-shim');
   var watchify = require('watchify');
@@ -80,7 +88,7 @@ function js (watch) {
     bundler = watchify(bundler);
   }
 
-  function rebundle () {
+  function rebundle() {
     return bundler.bundle()
       .on('error', handleError)
       .pipe(source('index.js'))
@@ -150,10 +158,18 @@ gulp.task('static', [], function() {
     .pipe(debug ? gutil.noop() : htmlmin(htmlminOpts))
     .pipe(gulp.dest('build'));
 
-  var staticFiles = gulp.src(paths.staticFiles)
+  var staticImages = gulp.src(paths.staticImages)
+    .pipe(imagemin({
+      progressive: true,
+      svgoPlugins: [{removeViewBox: false}],
+      use: [pngquant()]
+    }))
     .pipe(gulp.dest('build/static'));
 
-  return merge(index, staticFiles);
+  var staticNonImages = gulp.src(paths.staticNonImages)
+    .pipe(gulp.dest('build/static'));
+
+  return merge(index, staticImages, staticNonImages);
 });
 
 // copy vendor assets files
