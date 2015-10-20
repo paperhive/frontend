@@ -31,7 +31,6 @@ var jscsStylish = require('gulp-jscs-stylish');
 var template = require('gulp-template');
 var connectHistory = require('connect-history-api-fallback');
 var imagemin = require('gulp-imagemin');
-var pngquant = require('imagemin-pngquant');
 
 var debug = process.env.DEBUG || false;
 
@@ -39,13 +38,7 @@ var config = require('./config.json');
 
 var paths = {
   templates: 'src/templates/**/*.html',
-  staticImages: [
-    'static/**/*.png', 'static/**/*.svg', 'static/**/*.jpg'
-  ],
-  staticNonImages: [
-    'static/**/*',
-    '!static/**/*.png', '!static/**/*.svg', '!static/**/*.jpg'
-  ],
+  staticFiles: 'static/**/*',
   index: 'src/index.html',
   less: 'src/less/**/*.less',
   build: 'build/**/*'
@@ -158,18 +151,14 @@ gulp.task('static', [], function() {
     .pipe(debug ? gutil.noop() : htmlmin(htmlminOpts))
     .pipe(gulp.dest('build'));
 
-  var staticImages = gulp.src(paths.staticImages)
+  var staticFiles = gulp.src(paths.staticFiles)
     .pipe(imagemin({
-      progressive: true,
-      svgoPlugins: [{removeViewBox: false}],
-      use: [pngquant()]
+      progressive: true,  // jpg: Lossless conversion to progressive.
+      svgoPlugins: [{removeViewBox: false}]
     }))
     .pipe(gulp.dest('build/static'));
 
-  var staticNonImages = gulp.src(paths.staticNonImages)
-    .pipe(gulp.dest('build/static'));
-
-  return merge(index, staticImages, staticNonImages);
+  return merge(index, staticFiles);
 });
 
 // copy vendor assets files
