@@ -7,10 +7,10 @@ module.exports = function(app) {
       // definition of metadata
       var meta = {
         main: {
-          title: 'PaperHive · Papers, alive.',
-          description: 'Review, discuss, and improve research articles – ' +
-            'together, on the spot and for free. Gain insight from the ' +
-            'findings of others.',
+          title: 'PaperHive · The coworking hub for researchers',
+          description: 'Greatly simplifying research communication and ' +
+           'introducing new ways of collaboration through in-document ' +
+           'discussions.',
           url: 'https://paperhive.org',
           logo: 'https://paperhive.org/static/img/logo.png',
           address: {
@@ -26,7 +26,7 @@ module.exports = function(app) {
       $routeSegmentProvider
         .when('/', 'main')
         .when('/404', '404')
-        .when('/about-us', 'about-us')
+        .when('/about', 'about')
         .when('/articles/new', 'articles_new')
         .when('/articles/:articleId', 'articles')
         .when('/articles/:articleId/activity', 'articles.activity')
@@ -111,17 +111,14 @@ module.exports = function(app) {
           ]
         })
 
-        .segment('about-us', {
+        .segment('about', {
           templateUrl: 'templates/about-us.html',
-          title: 'About us · PaperHive',
+          title: 'About · PaperHive',
           meta: [
             {
               name: 'description',
-              content: 'PaperHive is where research is discussed. ' +
-                'We add a discussion layer on top of every research article ' +
-                'and allow you to ask questions, share your knowledge, ' +
-                'correct mistakes, point to further literature, code, or ' +
-                'data.'
+              content: 'PaperHive is a Berlin-based startup that enables ' +
+                'seamless discussion of research papers.'
             }
           ]
         })
