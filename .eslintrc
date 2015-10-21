@@ -1,22 +1,13 @@
 {
     "rules": {
         "indent": [2, 2],
-        "quotes": [
-            2,
-            "single"
-        ],
-        "linebreak-style": [
-            2,
-            "unix"
-        ],
-        "semi": [
-            2,
-            "always"
-        ]
+        "quotes": [2, "single"],
+        "linebreak-style": [2, "unix"],
+        "semi": [2, "always"],
+        "no-unused-vars": [0]
     },
     "env": {
-        "node": true,
-        "browser": true
+        "commonjs": true
     },
     "extends": "eslint:recommended"
 }
