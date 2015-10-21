@@ -14,7 +14,7 @@ module.exports = function(app) {
               {
                 name: 'description',
                 content: 'Activity for ' + article.title + ' by ' +
-                  article.authors.join(', ') + '.',
+                  article.authors.join(', ') + '.'
               },
               {name: 'author', content: article.authors.join(', ')}
             ]

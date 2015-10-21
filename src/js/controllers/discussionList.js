@@ -9,10 +9,10 @@ module.exports = function(app) {
       $scope.$watch('article', function(article) {
         if (article) {
           var meta = [{
-                name: 'description',
-                content: 'Discussions overview for ' + article.title +
-                  ' by ' + article.authors.join(', ')
-              }];
+            name: 'description',
+            content: 'Discussions overview for ' + article.title +
+              ' by ' + article.authors.join(', ')
+          }];
 
           $scope.addArticleMetaData(meta);
 

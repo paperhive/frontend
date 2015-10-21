@@ -6,7 +6,7 @@ module.exports = function(app) {
     return {
       restrict: 'E',
       scope: {
-        discussion: '=',
+        discussion: '='
       },
       templateUrl: 'templates/directives/gravatarList.html',
       link: function(scope, element, attrs) {

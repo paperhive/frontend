@@ -139,7 +139,7 @@ module.exports = function(app) {
                 _.assign(progress, {
                   downloading: false,
                   rendering: true,
-                  numPages: pdf.numPages,
+                  numPages: pdf.numPages
                 });
               });
             });

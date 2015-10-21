@@ -14,7 +14,7 @@ module.exports = function(app) {
           onDiscussionDelete: '&',
           onReplySubmit: '&',
           onReplyUpdate: '&',
-          onReplyDelete: '&',
+          onReplyDelete: '&'
         },
         templateUrl: 'templates/directives/marginDiscussion.html',
         link: function(scope, element, attrs) {

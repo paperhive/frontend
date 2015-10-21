@@ -37,7 +37,7 @@ module.exports = function(app) {
 
           var meta = [
             {name: 'description', content: description},
-            {name: 'author', content: article.authors.join(', ')},
+            {name: 'author', content: article.authors.join(', ')}
           ];
           $scope.addArticleMetaData(meta);
 

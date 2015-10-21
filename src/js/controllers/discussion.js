@@ -36,7 +36,7 @@ module.exports = function(app) {
                 content: 'Annotation by ' +
                   discussion.originalAnnotation.author.displayName + ': ' +
                   (discussion.originalAnnotation.body ?
-                  discussion.originalAnnotation.body.substring(0, 150) : ''),
+                  discussion.originalAnnotation.body.substring(0, 150) : '')
               },
               {
                 name: 'keywords',

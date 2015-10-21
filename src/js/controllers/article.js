@@ -37,7 +37,7 @@ module.exports = function(app) {
         var metaData = [
           {
             name: 'description',
-            content: article.title + ' by ' + article.authors.join(', ') + '.',
+            content: article.title + ' by ' + article.authors.join(', ') + '.'
           },
           {name: 'author', content: article.authors.join(', ')},
           {name: 'keywords', content: article.tags.join(', ')}

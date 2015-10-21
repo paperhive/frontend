@@ -31,21 +31,18 @@
   require('../../bower_components/pdfjs-dist/web/pdf_viewer.js');
 
   var paperhive = angular
-    .module(
-      'paperHive',
-      [
-       'ui.bootstrap',
-       'mentio',
-       'ngAnimate',
-       'ngSanitize',
-       'ngRoute',
-       'route-segment',
-       'view-segment',
-       'angularMoment',
-       'leaflet-directive',
-       'templates'
-      ]
-    )
+    .module('paperHive', [
+      'ui.bootstrap',
+      'mentio',
+      'ngAnimate',
+      'ngSanitize',
+      'ngRoute',
+      'route-segment',
+      'view-segment',
+      'angularMoment',
+      'leaflet-directive',
+      'templates'
+    ])
     .constant('config', require('../../config.json'))
     ;
 
