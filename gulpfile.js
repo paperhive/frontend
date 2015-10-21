@@ -28,6 +28,7 @@ var htmlhint = require('gulp-htmlhint');
 var eslint = require('gulp-eslint');
 var template = require('gulp-template');
 var connectHistory = require('connect-history-api-fallback');
+var imagemin = require('gulp-imagemin');
 
 var debug = process.env.DEBUG || false;
 
@@ -61,7 +62,7 @@ function handleError(error) {
 // bundle js files + dependencies with browserify
 // (and continue to do so on updates)
 // see https://github.com/gulpjs/gulp/blob/master/docs/recipes/fast-browserify-builds-with-watchify.md
-function js (watch) {
+function js(watch) {
   var browserify = require('browserify');
   var shim = require('browserify-shim');
   var watchify = require('watchify');
@@ -78,7 +79,7 @@ function js (watch) {
     bundler = watchify(bundler);
   }
 
-  function rebundle () {
+  function rebundle() {
     return bundler.bundle()
       .on('error', handleError)
       .pipe(source('index.js'))
@@ -156,6 +157,12 @@ gulp.task('static', [], function() {
     .pipe(gulp.dest('build'));
 
   var staticFiles = gulp.src(paths.staticFiles)
+    .pipe(imagemin({
+      interlaced: true,  // gif
+      multipass: true,  // svg
+      progressive: true,  // jpg
+      svgoPlugins: [{removeViewBox: false}]
+    }))
     .pipe(gulp.dest('build/static'));
 
   return merge(index, staticFiles);
