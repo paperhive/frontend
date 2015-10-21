@@ -112,7 +112,7 @@ module.exports = function(app) {
         })
 
         .segment('about', {
-          templateUrl: 'templates/about-us.html',
+          templateUrl: 'templates/about.html',
           title: 'About · PaperHive',
           meta: [
             {
