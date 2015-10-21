@@ -6,7 +6,8 @@
         "semi": [2, "always"],
         "no-unused-vars": [0],
         "no-console": [0],
-        "no-process-env": [0]
+        "no-process-env": [0],
+        "camelcase": [2, {"properties": "always"}]
     },
     "env": {
         "browser": true,
