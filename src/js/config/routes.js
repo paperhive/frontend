@@ -47,6 +47,7 @@ module.exports = function(app) {
         .when('/settings', 'settings')
         .when('/settings/profile', 'settings.profile')
         .when('/settings/site', 'settings.site')
+        .when('/subscribed', 'subscribed')
         .when('/users/:username', 'users')
         .when('/users/:username/profile', 'users.profile')
         .when('/users/:username/articles', 'users.articles')
@@ -241,6 +242,11 @@ module.exports = function(app) {
             templateUrl: 'templates/settings/site.html'
           })
         .up()
+
+        .segment('subscribed', {
+          templateUrl: 'templates/subscribed.html',
+          title: 'Successfully subscribed · PaperHive'
+        })
 
         .segment('users', {
           templateUrl: 'templates/users/index.html',
