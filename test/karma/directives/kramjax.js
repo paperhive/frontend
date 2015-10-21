@@ -1,3 +1,4 @@
+/*global inject*/
 'use strict';
 
 describe('KramJax directive', function() {

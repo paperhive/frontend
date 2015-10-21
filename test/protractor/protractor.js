@@ -28,26 +28,11 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
 
 } else if (process.env.TRAVIS_JOB_NUMBER) {
   // travis
-  exports.config.multiCapabilities = [
   //  {
   //  'browserName': 'android',
   //  'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
   //  'build': process.env.TRAVIS_BUILD_NUMBER
   //},
-  {
-    'browserName': 'chrome',
-    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'PaperHive (chrome)'
-  },
-  {
-    'browserName': 'firefox',
-    // http://stackoverflow.com/a/27645817/353337
-    'version': '33',
-    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'PaperHive (firefox)'
-  },
   //{
   //  'browserName': 'iexplore',
   //  'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
@@ -69,20 +54,29 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
   //  'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
   //  'build': process.env.TRAVIS_BUILD_NUMBER
   //},
-  {
+  exports.config.multiCapabilities = [{
+    'browserName': 'chrome',
+    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+    'build': process.env.TRAVIS_BUILD_NUMBER,
+    'name': 'PaperHive (chrome)'
+  }, {
+    'browserName': 'firefox',
+    // http://stackoverflow.com/a/27645817/353337
+    'version': '33',
+    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+    'build': process.env.TRAVIS_BUILD_NUMBER,
+    'name': 'PaperHive (firefox)'
+  }, {
     'browserName': 'safari',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'PaperHive (safari)'
-  },
-  ];
+  }];
 } else {
   // Only test chrome locally
-  exports.config.multiCapabilities = [
-  {
+  exports.config.multiCapabilities = [{
     'browserName': 'chrome'
-  },
-  ];
+  }];
 }
 
 if (process.env.SAUCE_USER_NAME) {

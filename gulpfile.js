@@ -24,10 +24,8 @@ var minifyCSS = require('gulp-minify-css');
 var htmlmin = require('gulp-htmlmin');
 var _ = require('lodash');
 var protractor = require('gulp-protractor').protractor;
-var jshint = require('gulp-jshint');
 var htmlhint = require('gulp-htmlhint');
-var jscs = require('gulp-jscs');
-var jscsStylish = require('gulp-jscs-stylish');
+var eslint = require('gulp-eslint');
 var template = require('gulp-template');
 var connectHistory = require('connect-history-api-fallback');
 
@@ -107,17 +105,24 @@ gulp.task('js:watch', ['templates'], function() {
   return js(true);
 });
 
-gulp.task('jshint', function() {
-  return gulp.src(['./src/js/**/*.js', './test/**/*.js'])
-    .pipe(jshint())
-    .pipe(jshint.reporter('default'))
-    .pipe(jshint.reporter('fail'));
-});
+//gulp.task('jshint', function() {
+//  return gulp.src(['./src/js/**/*.js', './test/**/*.js'])
+//    .pipe(jshint())
+//    .pipe(jshint.reporter('default'))
+//    .pipe(jshint.reporter('fail'));
+//});
+//
+//gulp.task('jscs', function() {
+//  return gulp.src(['./src/js/**/*.js', './test/**/*.js'])
+//    .pipe(jscs())
+//    .pipe(jscsStylish());  // log style errors
+//});
 
-gulp.task('jscs', function() {
+gulp.task('eslint', function () {
   return gulp.src(['./src/js/**/*.js', './test/**/*.js'])
-    .pipe(jscs())
-    .pipe(jscsStylish());  // log style errors
+  .pipe(eslint())
+  .pipe(eslint.format())
+  .pipe(eslint.failAfterError());
 });
 
 gulp.task('htmlhint', function() {
@@ -265,7 +270,7 @@ gulp.task('test', ['serve-nowatch'], function() {
 
 gulp.task(
   'default',
-  ['jshint', 'jscs', 'htmlhint', 'js', 'templates', 'static', 'vendor', 'style']
+  ['eslint', 'htmlhint', 'js', 'templates', 'static', 'vendor', 'style']
 );
 gulp.task(
   'default:watch',
