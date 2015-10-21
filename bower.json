@@ -36,7 +36,7 @@
     "lodash": "3.10.1",
     "MathJax": "2.5.3",
     "ment.io": "0.9.24",
-    "ngSmoothScroll": "1.7.4",
+    "ngSmoothScroll": "2.0.0",
     "pdfjs-dist": "1.1.472",
     "rangy": "1.3.0",
     "roboto-fontface": "0.4.3"
