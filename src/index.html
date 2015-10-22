@@ -52,21 +52,10 @@
     <header>
       <ng-include src="'templates/shared/navbar.html'"></ng-include>
     </header>
-    <main class="ph-lg-padding-bottom">
-      <div app-view-segment="0"></div>
-    </main>
+    <main app-view-segment="0"></main>
     <footer class="container-fluid" element-size="footerSize">
       <ng-include src="'templates/shared/footer.html'"></ng-include>
     </footer>
     <ng-include src="'templates/shared/notifications.html'"></ng-include>
-
-    <a href="./alpha-warning"
-        class="ph-badge-left ph-warning hidden-xs hidden-sm">
-      <i class="fa fa-exclamation-circle ph-icon-margin"></i> alpha
-    </a>
-    <a href="./contact"
-        class="ph-badge-left ph-feedback hidden-xs hidden-sm">
-      <i class="fa fa-envelope ph-icon-margin"></i> feedback
-    </a>
   </body>
 </html>

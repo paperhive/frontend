@@ -25,24 +25,28 @@
   require('detect-element-resize'); // injects resize+removeResize to jquery
   require('mentio');
   require('angular-route-segment'); // provides 'route-segment' module
+  require('ngSmoothScroll'); // provides 'smoothScroll' module
   require('../../tmp/templates.js'); // provides 'templates' module
   require('pdfjs');
   require('pdfjs-compatibility');
   require('../../bower_components/pdfjs-dist/web/pdf_viewer.js');
 
   var paperhive = angular
-    .module('paperHive', [
-      'ui.bootstrap',
-      'mentio',
-      'ngAnimate',
-      'ngSanitize',
-      'ngRoute',
-      'route-segment',
-      'view-segment',
-      'angularMoment',
-      'leaflet-directive',
-      'templates'
-    ])
+    .module(
+      'paperHive', [
+        'ui.bootstrap',
+        'mentio',
+        'ngAnimate',
+        'ngSanitize',
+        'ngRoute',
+        'route-segment',
+        'view-segment',
+        'smoothScroll',
+        'angularMoment',
+        'leaflet-directive',
+        'templates'
+      ]
+    )
     .constant('config', require('../../config.json'))
     ;
 
