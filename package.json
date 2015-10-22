@@ -66,6 +66,7 @@
     "jquery": "./bower_components/jquery/dist/jquery.js",
     "kramed": "./bower_components/kramed/lib/kramed.js",
     "moment": "./bower_components/moment/moment.js",
+    "ngSmoothScroll": "./bower_components/ngSmoothScroll/lib/angular-smooth-scroll.js",
     "rangy": "./bower_components/rangy/rangy-core.js",
     "rangy-classapplier": "./bower_components/rangy/rangy-classapplier.js",
     "rangy-highlighter": "./bower_components/rangy/rangy-highlighter.js",
@@ -136,6 +137,12 @@
     },
     "moment": {
       "exports": "moment"
+    },
+    "ngSmoothScroll": {
+      "exports": null,
+      "depends": [
+        "angular"
+      ]
     },
     "pdfjs": {
       "exports": "PDFJS"

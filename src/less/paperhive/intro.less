@@ -1,13 +1,78 @@
-.ph-intro {
-  background-image: url(./static/img/fiber.jpg);
-  background-position-y: center;
+.ph-bg-full {
+  background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  &-fiber {
+    background-image: url(./static/img/fiber.jpg);
+  }
+  &-endeavour {
+    // only show image on mobile
+    @media (max-width: @screen-sm-max) {
+      background-image: url(./static/img/endeavour.jpg);
+    }
+  }
+  /* remove jumbotron default background */
+  .jumbotron {
+    background: none;
+  }
+  &-dark {
+    color: white;
+  }
 }
 
-.ph-intro .container .jumbotron {
-  background-color: @ph-intro-bg-color;
-  color: @ph-intro-color;
-  padding: 120px 60px;
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+.ph-bg-rocket {
+  // hide video on mobile
+  @media (max-width: @screen-sm-max) {
+    display: none;
+  }
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.ph-bg-overlay {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.ph-bg-hexagons {
+  background-image: url('https://dev.paperhive.org/frontend/master/static/img/background_pattern_light.svg');
+  background-color: white;
+}
+
+.ph-intro-panel {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: @text-color;
+}
+
+.ph-intro-content {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 0;
+  position: relative;
+  @media (min-width: @screen-md-min) {
+    padding: 120px 0;
+  }
+}
+
+.ph-intro-arrow {
+  position: absolute;
+  width: 100%;
+  font-size: 50px;
+  text-align: center;
+  left: 0;
+  &-bottom {
+    bottom: 20px;
+  }
+  &-bright > a {
+    color: white;
+    &:hover {
+      color: #b3b3b3;
+    }
+  }
 }

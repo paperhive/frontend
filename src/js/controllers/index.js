@@ -18,6 +18,7 @@ module.exports = function(app) {
   require('./notifications.js')(app);
   require('./oauthOrcid.js')(app);
   require('./settings.js')(app);
+  require('./subscribe.js')(app);
   require('./user.js')(app);
   require('./userArticles.js')(app);
   require('./welcome.js')(app);

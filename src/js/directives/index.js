@@ -22,4 +22,5 @@ module.exports = function(app) {
   require('./toc')(app);
   require('./validateArticleSource')(app);
   require('./validate-username')(app);
+  require('./viewportHeight')(app);
 };

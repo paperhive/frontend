@@ -1,0 +1,35 @@
+'use strict';
+
+module.exports = function(app) {
+
+  app.controller('SubscribeCtrl', ['$scope', '$http', 'config',
+    function($scope, $http, config) {
+
+      $scope.hasError = function(field) {
+        var form = $scope.subscribeForm;
+        return (form.$submitted || form[field].$touched) &&
+          form[field].$invalid;
+      };
+
+      $scope.$watch('email', function() {
+        $scope.error = undefined;
+      });
+
+      $scope.submit = function() {
+        $scope.subscribing = true;
+        $scope.error = undefined;
+        $http.post(config.apiUrl + '/newsletter/', {email: $scope.email})
+          .then(function(response) {
+            $scope.subscribing = false;
+            $scope.subscribed = true;
+          }, function(response) {
+            $scope.subscribing = false;
+            $scope.error = response.data && response.data.message ||
+              'Unknown error';
+          });
+
+      };
+    }
+  ]);
+
+};
