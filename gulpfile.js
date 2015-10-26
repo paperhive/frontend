@@ -29,6 +29,8 @@ var eslint = require('gulp-eslint');
 var template = require('gulp-template');
 var connectHistory = require('connect-history-api-fallback');
 var imagemin = require('gulp-imagemin');
+var CacheBuster = require('gulp-cachebust');
+var cachebust = new CacheBuster();
 
 var debug = process.env.DEBUG || false;
 
@@ -89,6 +91,7 @@ function js(watch) {
           preserveComments: 'some'
         })))
       //.pipe(sourcemaps.write('./'))
+      .pipe(cachebust.resources())
       .pipe(gulp.dest('build'));
   }
   bundler.on('update', rebundle);
@@ -134,7 +137,9 @@ gulp.task('htmlhint', function() {
 });
 
 // bundle html templates via angular's templateCache
-gulp.task('templates', function() {
+// The templates reference the static files, and since they are cachebusted,
+// depend on them here.
+gulp.task('templates', ['static'], function() {
   var templateCache = require('gulp-angular-templatecache');
 
   return gulp.src(paths.templates, {base: 'src'})
@@ -146,37 +151,46 @@ gulp.task('templates', function() {
         return file.relative;
       }
     }))
+    .pipe(cachebust.references())
     .pipe(gulp.dest('tmp'));
 });
 
 // copy static files
 gulp.task('static', [], function() {
-  var index = gulp.src(paths.index, {base: 'src'})
-    .pipe(template({config: config}))
-    .pipe(debug ? gutil.noop() : htmlmin(htmlminOpts))
-    .pipe(gulp.dest('build'));
-
-  var staticFiles = gulp.src(paths.staticFiles)
+  return gulp.src(paths.staticFiles)
     .pipe(imagemin({
       interlaced: true,  // gif
       multipass: true,  // svg
       progressive: true,  // jpg
       svgoPlugins: [{removeViewBox: false}]
     }))
+    .pipe(cachebust.resources())
     .pipe(gulp.dest('build/static'));
+});
 
-  return merge(index, staticFiles);
+// copy index.html
+// Depend on 'js' and 'style' since file names here are changed by the cache
+// buster and referenced in index.html.
+gulp.task('indexhtml', ['js', 'style'], function() {
+  return gulp.src(paths.index, {base: 'src'})
+    .pipe(template({config: config}))
+    .pipe(cachebust.references())
+    .pipe(debug ? gutil.noop() : htmlmin(htmlminOpts))
+    .pipe(gulp.dest('build'));
 });
 
 // copy vendor assets files
 gulp.task('vendor', [], function() {
   var bootstrap = gulp.src('bower_components/bootstrap/fonts/*')
+    .pipe(cachebust.resources())
     .pipe(gulp.dest('build/assets/bootstrap/fonts'));
 
   var fontawesome = gulp.src('bower_components/fontawesome/fonts/*')
+    .pipe(cachebust.resources())
     .pipe(gulp.dest('build/assets/fontawesome/fonts'));
 
   var leaflet = gulp.src('bower_components/leaflet/dist/images/*')
+    .pipe(cachebust.resources())
     .pipe(gulp.dest('build/assets/leaflet/images'));
 
   var mathjaxBase = 'bower_components/MathJax/';
@@ -196,16 +210,20 @@ gulp.task('vendor', [], function() {
 
   var pdfjs = gulp.src('bower_components/pdfjs-dist/build/pdf.worker.js')
     .pipe(debug ? gutil.noop() : streamify(uglify()))
+    .pipe(cachebust.resources())
     .pipe(gulp.dest('build/assets/pdfjs'));
 
   var roboto = gulp.src('bower_components/roboto-fontface/fonts/*')
+    .pipe(cachebust.resources())
     .pipe(gulp.dest('build/assets/roboto/fonts'));
 
   return merge(bootstrap, fontawesome, leaflet, mathjax, pdfjs, roboto);
 });
 
 // compile less to css
-gulp.task('style', function() {
+// Depend on static, vendor since cachebusted fonts, images are referenced in
+// the css.
+gulp.task('style', ['static', 'vendor'], function() {
   return gulp.src('src/less/index.less')
     .pipe(sourcemaps.init())
     .pipe(less())
@@ -213,6 +231,8 @@ gulp.task('style', function() {
     .pipe(debug ? gutil.noop() : minifyCSS({
       restructuring: false
     }))
+    .pipe(cachebust.references())
+    .pipe(cachebust.resources())
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('build'));
 });
@@ -277,9 +297,10 @@ gulp.task('test', ['serve-nowatch'], function() {
 
 gulp.task(
   'default',
-  ['eslint', 'htmlhint', 'js', 'templates', 'static', 'vendor', 'style']
+  ['eslint', 'htmlhint', 'js', 'templates', 'indexhtml', 'static', 'vendor',
+   'style']
 );
 gulp.task(
   'default:watch',
-  ['js:watch', 'templates', 'static', 'vendor', 'style']
+  ['js:watch', 'templates', 'indexhtml', 'static', 'vendor', 'style']
 );
