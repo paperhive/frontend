@@ -90,8 +90,9 @@ function js(watch) {
         .pipe(debug ? gutil.noop() : streamify(uglify({
           preserveComments: 'some'
         })))
-      //.pipe(sourcemaps.write('./'))
+      .pipe(cachebust.references())
       .pipe(cachebust.resources())
+      //.pipe(sourcemaps.write('./'))
       .pipe(gulp.dest('build'));
   }
   bundler.on('update', rebundle);
@@ -100,12 +101,12 @@ function js(watch) {
 }
 
 // bundle once
-gulp.task('js', ['templates'], function() {
+gulp.task('js', ['templates', 'vendor'], function() {
   return js(false);
 });
 
 // bundle with watch
-gulp.task('js:watch', ['templates'], function() {
+gulp.task('js:watch', ['templates', 'vendor'], function() {
   return js(true);
 });
 
