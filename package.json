@@ -17,6 +17,7 @@
     "browserify-shim": "3.8.10",
     "connect-history-api-fallback": "1.1.0",
     "del": "2.0.2",
+    "fs": "0.0.2",
     "gulp": "3.9.0",
     "gulp-angular-templatecache": "1.8.0",
     "gulp-batch": "1.0.5",

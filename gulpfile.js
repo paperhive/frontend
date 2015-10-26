@@ -31,6 +31,7 @@ var connectHistory = require('connect-history-api-fallback');
 var imagemin = require('gulp-imagemin');
 var CacheBuster = require('gulp-cachebust');
 var cachebust = new CacheBuster();
+var fs = require('fs');
 
 var debug = process.env.DEBUG || false;
 
@@ -101,12 +102,12 @@ function js(watch) {
 }
 
 // bundle once
-gulp.task('js', ['templates', 'vendor'], function() {
+gulp.task('js', ['templates', 'vendorCacheBust'], function() {
   return js(false);
 });
 
 // bundle with watch
-gulp.task('js:watch', ['templates', 'vendor'], function() {
+gulp.task('js:watch', ['templates', 'vendorCacheBust'], function() {
   return js(true);
 });
 
@@ -169,15 +170,32 @@ gulp.task('static', [], function() {
     .pipe(gulp.dest('build/static'));
 });
 
-// copy index.html
-// Depend on 'js' and 'style' since file names here are changed by the cache
-// buster and referenced in index.html.
-gulp.task('indexhtml', ['js', 'style'], function() {
-  return gulp.src(paths.index, {base: 'src'})
-    .pipe(template({config: config}))
-    .pipe(cachebust.references())
-    .pipe(debug ? gutil.noop() : htmlmin(htmlminOpts))
-    .pipe(gulp.dest('build'));
+// store the shasum-appended directory name globally so we can use it as a
+// template parameter for indexhtml.
+var mathjaxDirSha;
+
+var exec = require('child_process').exec;
+gulp.task('vendorCacheBust', ['vendor'], function(cb) {
+  // The reason for the existence of this task is that cache busting cannot be
+  // applied to MathJax, i.e., every single file therein. The problem is that
+  // we don't know where in the jungle of MathJax we need to replace
+  // references.
+  // As a workaround, we hash the entire MathJax directory, and append the hash
+  // to the directory name.
+  exec(
+    // This abomination computes a sha sum of a directory.
+    'find build/assets/mathjax/ -type f -print0 | sort -z |' +
+    ' xargs -0 sha1sum | sha1sum | sed \'s/ *-//\' | xargs echo -n',
+    function(err, stdout, stderr) {
+      var sha = stdout;
+      mathjaxDirSha = 'assets/mathjax.' + sha.substring(0,8);
+      // rename folder
+      fs.rename(
+        'build/assets/mathjax/',
+        'build/' + mathjaxDirSha
+      );
+      cb(err);
+    });
 });
 
 // copy vendor assets files
@@ -218,13 +236,28 @@ gulp.task('vendor', [], function() {
     .pipe(cachebust.resources())
     .pipe(gulp.dest('build/assets/roboto/fonts'));
 
-  return merge(bootstrap, fontawesome, leaflet, mathjax, pdfjs, roboto);
+  return merge(bootstrap, fontawesome, leaflet,
+               mathjax, pdfjs, roboto);
+});
+
+// copy index.html
+// Depend on 'js' and 'style' since file names here are changed by the cache
+// buster and referenced in index.html.
+gulp.task('indexhtml', ['js', 'style'], function() {
+  return gulp.src(paths.index, {base: 'src'})
+    .pipe(template({
+      config: config,
+      mathjaxDir: mathjaxDirSha
+    }))
+    .pipe(cachebust.references())
+    .pipe(debug ? gutil.noop() : htmlmin(htmlminOpts))
+    .pipe(gulp.dest('build'));
 });
 
 // compile less to css
 // Depend on static, vendor since cachebusted fonts, images are referenced in
 // the css.
-gulp.task('style', ['static', 'vendor'], function() {
+gulp.task('style', ['static', 'vendorCacheBust'], function() {
   return gulp.src('src/less/index.less')
     .pipe(sourcemaps.init())
     .pipe(less())
@@ -298,10 +331,10 @@ gulp.task('test', ['serve-nowatch'], function() {
 
 gulp.task(
   'default',
-  ['eslint', 'htmlhint', 'js', 'templates', 'indexhtml', 'static', 'vendor',
-   'style']
+  ['eslint', 'htmlhint', 'js', 'templates', 'indexhtml', 'static',
+   'vendorCacheBust', 'style']
 );
 gulp.task(
   'default:watch',
-  ['js:watch', 'templates', 'indexhtml', 'static', 'vendor', 'style']
+  ['js:watch', 'templates', 'indexhtml', 'static', 'vendorCacheBust', 'style']
 );
