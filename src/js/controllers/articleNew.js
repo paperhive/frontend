@@ -10,7 +10,7 @@ module.exports = function(app) {
       $scope.submitApproved = function() {
         $scope.submitting = true;
         $http.post(config.apiUrl + '/articles/sources', undefined, {
-          params: {handle: $scope.handle},
+          params: {handle: $scope.handle}
         })
           .success(function(article) {
             $scope.submitting = false;

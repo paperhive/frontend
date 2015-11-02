@@ -1,3 +1,4 @@
+/*global MathJax*/
 'use strict';
 module.exports = function(app) {
   // TODO: how to load+configure this beast via broserify/require()?!

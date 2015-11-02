@@ -23,32 +23,32 @@ module.exports = function(app) {
         var deferred = $q.defer();
         authService.inProgress = true;
         $http
-          .post(
-            config.apiUrl + '/signin',
-            null,
-            {
-              headers: {'X-Auth-Token': token},
-              timeout: 10000
-            }
-          )
-          .success(function(data, status) {
-            authService.inProgress = false;
-            authService.user = data.user;
-            authService.token = token;
+        .post(
+          config.apiUrl + '/signin',
+          null,
+          {
+            headers: {'X-Auth-Token': token},
+            timeout: 10000
+          }
+        )
+        .success(function(data, status) {
+          authService.inProgress = false;
+          authService.user = data.user;
+          authService.token = token;
 
-            // store token in session storage
-            $window.sessionStorage.token = data.token;
+          // store token in session storage
+          $window.sessionStorage.token = data.token;
 
-            // use token for all subsequent HTTP requests to API
-            $http.defaults.headers.common['X-Auth-Token'] = data.token;
+          // use token for all subsequent HTTP requests to API
+          $http.defaults.headers.common['X-Auth-Token'] = data.token;
 
-            deferred.resolve(data);
-          })
-          .error(function(data) {
-            authService.inProgress = false;
-            signout();
-            deferred.reject('signing in failed');
-          });
+          deferred.resolve(data);
+        })
+        .error(function(data) {
+          authService.inProgress = false;
+          signout();
+          deferred.reject('signing in failed');
+        });
 
         return deferred.promise;
       }

@@ -37,7 +37,7 @@ module.exports = function(app) {
               var el = $(elements[0]);
               var newTocElement = {
                 id: el.attr('id'),
-                text: el.attr('toc-text') || el.text(),
+                text: el.attr('toc-text') || el.text()
               };
               // kick out first element
               elements.shift();

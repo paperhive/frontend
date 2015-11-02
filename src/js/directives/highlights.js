@@ -92,7 +92,7 @@ module.exports = function(app) {
 
           return rects;
         };
-      },
+      }
     };
   });
 

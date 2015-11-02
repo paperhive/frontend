@@ -1,3 +1,4 @@
+/*global MathJax*/
 'use strict';
 
 var kramed = require('kramed');

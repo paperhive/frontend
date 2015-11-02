@@ -33,19 +33,18 @@
 
   var paperhive = angular
     .module(
-      'paperHive',
-      [
-       'ui.bootstrap',
-       'mentio',
-       'ngAnimate',
-       'ngSanitize',
-       'ngRoute',
-       'route-segment',
-       'view-segment',
-       'smoothScroll',
-       'angularMoment',
-       'leaflet-directive',
-       'templates'
+      'paperHive', [
+        'ui.bootstrap',
+        'mentio',
+        'ngAnimate',
+        'ngSanitize',
+        'ngRoute',
+        'route-segment',
+        'view-segment',
+        'smoothScroll',
+        'angularMoment',
+        'leaflet-directive',
+        'templates'
       ]
     )
     .constant('config', require('../../config.json'))

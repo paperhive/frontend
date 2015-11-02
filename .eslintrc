@@ -1,0 +1,20 @@
+{
+    "rules": {
+        "indent": [2, 2],
+        "quotes": [2, "single"],
+        "linebreak-style": [2, "unix"],
+        "semi": [2, "always"],
+        "no-unused-vars": [0],
+        "no-console": [0],
+        "no-process-env": [0],
+        "camelcase": [2, {"properties": "always"}]
+    },
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "jasmine": true,
+        "node": true,
+        "protractor": true
+    },
+    "extends": "eslint:recommended"
+}
