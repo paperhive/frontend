@@ -29,6 +29,9 @@ var eslint = require('gulp-eslint');
 var template = require('gulp-template');
 var connectHistory = require('connect-history-api-fallback');
 var imagemin = require('gulp-imagemin');
+var CacheBuster = require('gulp-cachebust');
+var cachebust = new CacheBuster();
+var fs = require('fs');
 
 var debug = process.env.DEBUG || false;
 
@@ -88,6 +91,8 @@ function js(watch) {
         .pipe(debug ? gutil.noop() : streamify(uglify({
           preserveComments: 'some'
         })))
+      .pipe(cachebust.references())
+      .pipe(cachebust.resources())
       //.pipe(sourcemaps.write('./'))
       .pipe(gulp.dest('build'));
   }
@@ -97,12 +102,12 @@ function js(watch) {
 }
 
 // bundle once
-gulp.task('js', ['templates'], function() {
+gulp.task('js', ['templates', 'vendorCacheBust'], function() {
   return js(false);
 });
 
 // bundle with watch
-gulp.task('js:watch', ['templates'], function() {
+gulp.task('js:watch', ['templates', 'vendorCacheBust'], function() {
   return js(true);
 });
 
@@ -134,7 +139,9 @@ gulp.task('htmlhint', function() {
 });
 
 // bundle html templates via angular's templateCache
-gulp.task('templates', function() {
+// The templates reference the static files, and since they are cachebusted,
+// depend on them here.
+gulp.task('templates', ['static'], function() {
   var templateCache = require('gulp-angular-templatecache');
 
   return gulp.src(paths.templates, {base: 'src'})
@@ -146,37 +153,63 @@ gulp.task('templates', function() {
         return file.relative;
       }
     }))
+    .pipe(cachebust.references())
     .pipe(gulp.dest('tmp'));
 });
 
 // copy static files
 gulp.task('static', [], function() {
-  var index = gulp.src(paths.index, {base: 'src'})
-    .pipe(template({config: config}))
-    .pipe(debug ? gutil.noop() : htmlmin(htmlminOpts))
-    .pipe(gulp.dest('build'));
-
-  var staticFiles = gulp.src(paths.staticFiles)
+  return gulp.src(paths.staticFiles)
     .pipe(imagemin({
       interlaced: true,  // gif
       multipass: true,  // svg
       progressive: true,  // jpg
       svgoPlugins: [{removeViewBox: false}]
     }))
+    .pipe(cachebust.resources())
     .pipe(gulp.dest('build/static'));
+});
 
-  return merge(index, staticFiles);
+// store the shasum-appended directory name globally so we can use it as a
+// template parameter for indexhtml.
+var mathjaxDirSha;
+
+var exec = require('child_process').exec;
+gulp.task('vendorCacheBust', ['vendor'], function(cb) {
+  // The reason for the existence of this task is that cache busting cannot be
+  // applied to MathJax, i.e., every single file therein. The problem is that
+  // we don't know where in the jungle of MathJax we need to replace
+  // references.
+  // As a workaround, we hash the entire MathJax directory, and append the hash
+  // to the directory name.
+  exec(
+    // This abomination computes a sha sum of a directory.
+    'find build/assets/mathjax/ -type f -print0 | sort -z |' +
+    ' xargs -0 sha1sum | sha1sum | sed \'s/ *-//\' | xargs echo -n',
+    function(err, stdout, stderr) {
+      var sha = stdout;
+      mathjaxDirSha = 'assets/mathjax.' + sha.substring(0,8);
+      // rename folder
+      fs.rename(
+        'build/assets/mathjax/',
+        'build/' + mathjaxDirSha
+      );
+      cb(err);
+    });
 });
 
 // copy vendor assets files
 gulp.task('vendor', [], function() {
   var bootstrap = gulp.src('bower_components/bootstrap/fonts/*')
+    .pipe(cachebust.resources())
     .pipe(gulp.dest('build/assets/bootstrap/fonts'));
 
   var fontawesome = gulp.src('bower_components/fontawesome/fonts/*')
+    .pipe(cachebust.resources())
     .pipe(gulp.dest('build/assets/fontawesome/fonts'));
 
   var leaflet = gulp.src('bower_components/leaflet/dist/images/*')
+    .pipe(cachebust.resources())
     .pipe(gulp.dest('build/assets/leaflet/images'));
 
   var mathjaxBase = 'bower_components/MathJax/';
@@ -196,16 +229,35 @@ gulp.task('vendor', [], function() {
 
   var pdfjs = gulp.src('bower_components/pdfjs-dist/build/pdf.worker.js')
     .pipe(debug ? gutil.noop() : streamify(uglify()))
+    .pipe(cachebust.resources())
     .pipe(gulp.dest('build/assets/pdfjs'));
 
   var roboto = gulp.src('bower_components/roboto-fontface/fonts/*')
+    .pipe(cachebust.resources())
     .pipe(gulp.dest('build/assets/roboto/fonts'));
 
-  return merge(bootstrap, fontawesome, leaflet, mathjax, pdfjs, roboto);
+  return merge(bootstrap, fontawesome, leaflet,
+               mathjax, pdfjs, roboto);
+});
+
+// copy index.html
+// Depend on 'js' and 'style' since file names here are changed by the cache
+// buster and referenced in index.html.
+gulp.task('indexhtml', ['js', 'style'], function() {
+  return gulp.src(paths.index, {base: 'src'})
+    .pipe(template({
+      config: config,
+      mathjaxDir: mathjaxDirSha
+    }))
+    .pipe(cachebust.references())
+    .pipe(debug ? gutil.noop() : htmlmin(htmlminOpts))
+    .pipe(gulp.dest('build'));
 });
 
 // compile less to css
-gulp.task('style', function() {
+// Depend on static, vendor since cachebusted fonts, images are referenced in
+// the css.
+gulp.task('style', ['static', 'vendorCacheBust'], function() {
   return gulp.src('src/less/index.less')
     .pipe(sourcemaps.init())
     .pipe(less())
@@ -213,6 +265,8 @@ gulp.task('style', function() {
     .pipe(debug ? gutil.noop() : minifyCSS({
       restructuring: false
     }))
+    .pipe(cachebust.references())
+    .pipe(cachebust.resources())
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('build'));
 });
@@ -277,9 +331,10 @@ gulp.task('test', ['serve-nowatch'], function() {
 
 gulp.task(
   'default',
-  ['eslint', 'htmlhint', 'js', 'templates', 'static', 'vendor', 'style']
+  ['eslint', 'htmlhint', 'js', 'templates', 'indexhtml', 'static',
+   'vendorCacheBust', 'style']
 );
 gulp.task(
   'default:watch',
-  ['js:watch', 'templates', 'static', 'vendor', 'style']
+  ['js:watch', 'templates', 'indexhtml', 'static', 'vendorCacheBust', 'style']
 );
