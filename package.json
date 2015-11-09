@@ -147,11 +147,6 @@
     "pdfjs": {
       "exports": "PDFJS"
     },
-    "pdfjs-compatibility": {
-      "depends": [
-        "pdfjs:PDFJS"
-      ]
-    },
     "highlightjs": {
       "exports": "hljs"
     }
