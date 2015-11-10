@@ -172,7 +172,7 @@ gulp.task('static', [], function() {
 
 // store the shasum-appended directory name globally so we can use it as a
 // template parameter for indexhtml.
-var mathjaxDirSha;
+var mathjaxDirSha = 'assets/mathjax';
 
 var exec = require('child_process').exec;
 gulp.task('vendorCacheBust', ['vendor'], function(cb) {
@@ -182,6 +182,9 @@ gulp.task('vendorCacheBust', ['vendor'], function(cb) {
   // references.
   // As a workaround, we hash the entire MathJax directory, and append the hash
   // to the directory name.
+  if (debug) {
+    return cb();
+  }
   exec(
     // This abomination computes a sha sum of a directory.
     'find build/assets/mathjax/ -type f -print0 | sort -z |' +
