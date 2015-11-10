@@ -91,8 +91,8 @@ function js(watch) {
         .pipe(debug ? gutil.noop() : streamify(uglify({
           preserveComments: 'some'
         })))
-      .pipe(cachebust.references())
-      .pipe(cachebust.resources())
+      .pipe(debug ? gutil.noop() : cachebust.references())
+      .pipe(debug ? gutil.noop() : cachebust.resources())
       //.pipe(sourcemaps.write('./'))
       .pipe(gulp.dest('build'));
   }
@@ -153,7 +153,7 @@ gulp.task('templates', ['static'], function() {
         return file.relative;
       }
     }))
-    .pipe(cachebust.references())
+    .pipe(debug ? gutil.noop() : cachebust.references())
     .pipe(gulp.dest('tmp'));
 });
 
@@ -166,7 +166,7 @@ gulp.task('static', [], function() {
       progressive: true,  // jpg
       svgoPlugins: [{removeViewBox: false}]
     }))
-    .pipe(cachebust.resources())
+    .pipe(debug ? gutil.noop() : cachebust.resources())
     .pipe(gulp.dest('build/static'));
 });
 
@@ -201,15 +201,15 @@ gulp.task('vendorCacheBust', ['vendor'], function(cb) {
 // copy vendor assets files
 gulp.task('vendor', [], function() {
   var bootstrap = gulp.src('bower_components/bootstrap/fonts/*')
-    .pipe(cachebust.resources())
+    .pipe(debug ? gutil.noop() : cachebust.resources())
     .pipe(gulp.dest('build/assets/bootstrap/fonts'));
 
   var fontawesome = gulp.src('bower_components/fontawesome/fonts/*')
-    .pipe(cachebust.resources())
+    .pipe(debug ? gutil.noop() : cachebust.resources())
     .pipe(gulp.dest('build/assets/fontawesome/fonts'));
 
   var leaflet = gulp.src('bower_components/leaflet/dist/images/*')
-    .pipe(cachebust.resources())
+    .pipe(debug ? gutil.noop() : cachebust.resources())
     .pipe(gulp.dest('build/assets/leaflet/images'));
 
   var mathjaxBase = 'bower_components/MathJax/';
@@ -229,11 +229,11 @@ gulp.task('vendor', [], function() {
 
   var pdfjs = gulp.src('bower_components/pdfjs-dist/build/pdf.worker.js')
     .pipe(debug ? gutil.noop() : streamify(uglify()))
-    .pipe(cachebust.resources())
+    .pipe(debug ? gutil.noop() : cachebust.resources())
     .pipe(gulp.dest('build/assets/pdfjs'));
 
   var roboto = gulp.src('bower_components/roboto-fontface/fonts/*')
-    .pipe(cachebust.resources())
+    .pipe(debug ? gutil.noop() : cachebust.resources())
     .pipe(gulp.dest('build/assets/roboto/fonts'));
 
   return merge(bootstrap, fontawesome, leaflet,
@@ -249,7 +249,7 @@ gulp.task('indexhtml', ['js', 'style'], function() {
       config: config,
       mathjaxDir: mathjaxDirSha
     }))
-    .pipe(cachebust.references())
+    .pipe(debug ? gutil.noop() : cachebust.references())
     .pipe(debug ? gutil.noop() : htmlmin(htmlminOpts))
     .pipe(gulp.dest('build'));
 });
@@ -265,8 +265,8 @@ gulp.task('style', ['static', 'vendorCacheBust'], function() {
     .pipe(debug ? gutil.noop() : minifyCSS({
       restructuring: false
     }))
-    .pipe(cachebust.references())
-    .pipe(cachebust.resources())
+    .pipe(debug ? gutil.noop() : cachebust.references())
+    .pipe(debug ? gutil.noop() : cachebust.resources())
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('build'));
 });
