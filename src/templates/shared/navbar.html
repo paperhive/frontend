@@ -18,7 +18,7 @@
     </div>
 
     <!-- collect everything in this div for responsive collapsing -->
-    <div class="collapse navbar-collapse" collapse="collapsed">
+    <div class="collapse navbar-collapse" uib-collapse="collapsed">
       <!-- right -->
       <div class="navbar-right">
         <form ng-controller="NavbarSearchCtrl"
@@ -35,7 +35,7 @@
               name="srch-term"
               id="srch-term"
               ng-model="search.body"
-              typeahead="result.title for result in phSearch($viewValue, 5)"
+              uib-typeahead="result.title for result in phSearch($viewValue, 5)"
               typeahead-wait-ms="250"
               typeahead-on-select="goToArticle($item, $model, $label)"
               required
