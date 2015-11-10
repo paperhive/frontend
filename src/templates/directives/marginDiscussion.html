@@ -30,8 +30,8 @@
             <kramjax body="discussion.originalAnnotation.body"></kramjax>
           </div>
           <div class="pull-right">
-            <span ng-click="$event.stopPropagation()" class="dropdown" dropdown>
-              <button class="btn btn-link btn-xs dropdown-toggle" dropdown-toggle>
+            <span ng-click="$event.stopPropagation()" class="dropdown" uib-dropdown>
+              <button class="btn btn-link btn-xs dropdown-toggle" uib-dropdown-toggle>
                 Options <i class="fa fa-caret-down"></i>
               </button>
               <ul class="dropdown-menu dropdown-menu-right ph-margin-dropdown">
@@ -58,7 +58,7 @@
                     <i class="fa fa-fw fa-times"></i> Delete
                   </a>
                   <a ng-if="discussion.replies.length" href
-                      tooltip="Discussions with replies cannot be deleted"
+                      uib-tooltip="Discussions with replies cannot be deleted"
                       tooltip-placement="left">
                     <i class="fa fa-fw fa-times"></i> Delete
                   </a>
@@ -128,7 +128,7 @@
       </div>
     </div>
   </div>
-  <div collapse="!state.showReplies" class="ph-margin-collapse">
+  <div uib-collapse="!state.showReplies" class="ph-margin-collapse">
     <!-- replies (note that ng-repeat creates a child scope!) -->
     <div ng-repeat="reply in discussion.replies"
         ng-controller="replyCtrl"
@@ -154,8 +154,8 @@
             </div>
             <kramjax body="reply.body"></kramjax>
             <div class="pull-right">
-              <span ng-click="$event.stopPropagation()" class="dropdown" dropdown>
-                <button class="btn btn-link btn-xs dropdown-toggle" dropdown-toggle>
+              <span ng-click="$event.stopPropagation()" class="dropdown" uib-dropdown>
+                <button class="btn btn-link btn-xs dropdown-toggle" uib-dropdown-toggle>
                   Options <i class="fa fa-caret-down"></i>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right ph-margin-dropdown">

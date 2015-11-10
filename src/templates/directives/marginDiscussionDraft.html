@@ -32,7 +32,7 @@
               {{commentForm.title.$viewValue.length}} characters).
             </p>
           </div>
-          <div collapse="!state.textFocused && !comment.title && !comment.body"
+          <div uib-collapse="!state.textFocused && !comment.title && !comment.body"
               class="ph-sm-margin-top">
             <textarea ng-model="comment.body"
               ng-focus="state.textFocused = true"

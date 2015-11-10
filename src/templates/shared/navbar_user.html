@@ -9,13 +9,13 @@
   </li>
   <li ng-if="!auth.user && auth.inProgress">
     <p class="navbar-text">
-      <progressbar class="progress-striped active ph-no-margin" value="100">
+      <uib-progressbar class="progress-striped active ph-no-margin" value="100">
         <span class="ph-lg-padding-left ph-lg-padding-right">Signing in...</span>
-      </progressbar>
+      </uib-progressbar>
     </p>
   </li>
-  <li ng-if="auth.user" class="dropdown" is-open="dropdown_open" dropdown>
-    <a href="" class="dropdown-toggle" dropdown-toggle>
+  <li ng-if="auth.user" class="dropdown" is-open="dropdown_open" uib-dropdown>
+    <a href="" class="dropdown-toggle" uib-dropdown-toggle>
       <img
         gravatar-user="auth.user"
         gravatar-size="38"
