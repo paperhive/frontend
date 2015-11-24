@@ -32,6 +32,7 @@ var imagemin = require('gulp-imagemin');
 var CacheBuster = require('gulp-cachebust');
 var cachebust = new CacheBuster();
 var fs = require('fs');
+var del = require('del');
 
 var debug = process.env.DEBUG || false;
 
@@ -192,10 +193,16 @@ gulp.task('vendorCacheBust', ['vendor'], function(cb) {
     function(err, stdout, stderr) {
       var sha = stdout;
       mathjaxDirSha = 'assets/mathjax.' + sha.substring(0,8);
-      // rename folder
-      fs.rename(
-        'build/assets/mathjax/',
-        'build/' + mathjaxDirSha
+
+      del(
+        'build/' + mathjaxDirSha,
+        function () {
+          // rename folder
+          fs.rename(
+            'build/assets/mathjax/',
+            'build/' + mathjaxDirSha
+          )
+        }
       );
       cb(err);
     });
@@ -275,8 +282,6 @@ gulp.task('style', ['static', 'vendorCacheBust'], function() {
 });
 
 gulp.task('clean', function(cb) {
-  var del = require('del');
-
   del(['build/*', 'tmp/*'], cb);
 });
 
