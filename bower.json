@@ -16,19 +16,19 @@
     "tests"
   ],
   "devDependencies": {
-    "angular-mocks": "1.4.7"
+    "angular-mocks": "1.4.8"
   },
   "dependencies": {
-    "angular": "1.4.7",
-    "angular-animate": "1.4.7",
+    "angular": "1.4.8",
+    "angular-animate": "1.4.8",
     "angular-bootstrap": "0.14.3",
     "angular-leaflet-directive": "0.8.8",
     "angular-moment": "0.10.3",
-    "angular-route": "1.4.7",
+    "angular-route": "1.4.8",
     "angular-route-segment": "1.5.0",
-    "angular-sanitize": "1.4.7",
+    "angular-sanitize": "1.4.8",
     "bootstrap": "3.3.5",
-    "fontawesome": "4.4.0",
+    "fontawesome": "4.5.0",
     "highlightjs": "8.9.1",
     "javascript-detect-element-resize": "0.5.3",
     "jquery": "2.1.4",
@@ -37,7 +37,7 @@
     "MathJax": "2.5.3",
     "ment.io": "0.9.24",
     "ngSmoothScroll": "2.0.0",
-    "pdfjs-dist": "1.2.83",
+    "pdfjs-dist": "1.3.24",
     "rangy": "1.3.0",
     "roboto-fontface": "0.4.3"
   }
