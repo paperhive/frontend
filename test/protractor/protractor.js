@@ -11,6 +11,8 @@ exports.config = {
   baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8080')
 };
 
+console.log('logging HTTP_PORT', process.env.HTTP_PORT, exports.config.baseUrl);
+
 if (process.env.SAUCE_ONDEMAND_BROWSERS) {
   // jenkins
   // translate SAUCE_ONDEMAND_BROWSERS into a protractor-digestible list
