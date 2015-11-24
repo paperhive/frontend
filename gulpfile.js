@@ -192,15 +192,18 @@ gulp.task('vendorCacheBust', ['vendor'], function(cb) {
     ' xargs -0 sha1sum | sha1sum | sed \'s/ *-//\' | xargs echo -n',
     function(err, stdout, stderr) {
       var sha = stdout;
-      mathjaxDirSha = 'build/assets/mathjax.' + sha.substring(0,8);
 
-      del(mathjaxDirSha).then(function () {
-          // rename folder
-          fs.rename(
-            'build/assets/mathjax/',
-            mathjaxDirSha
-          )
-        }
+      // override from parent scope
+      mathjaxDirSha = 'assets/mathjax.' + sha.substring(0,8);
+
+
+      del('build/' + mathjaxDirSha).then(function () {
+        // rename folder
+        fs.rename(
+          'build/assets/mathjax/',
+          'build/' + mathjaxDirSha
+        );
+      }
       );
       cb(err);
     });
