@@ -57,7 +57,7 @@ npm run build
 ```
 and that the selenium drivers are installed and up-to-date,
 ```
-./node_modules/gulp-protractor/node_modules/.bin/webdriver-manager update
+`npm bin`/webdriver-manager update
 ```
 After that,
 ```
