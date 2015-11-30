@@ -30,7 +30,7 @@
     "gulp-imagemin": "^2.4.0",
     "gulp-less": "^3.0.3",
     "gulp-minify-css": "^1.2.1",
-    "gulp-protractor": "^1.0.0",
+    "gulp-protractor": "^2.0.0",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-streamify": "^1.0.2",
     "gulp-template": "^3.0.0",
