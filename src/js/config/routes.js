@@ -82,7 +82,7 @@ module.exports = function(app) {
               logo: meta.main.logo,
               sameAs: [
                 'https://plus.google.com/114787682678537396870',
-                'https://twitter.com/paper_hive',
+                'https://twitter.com/paperhive',
                 'https://github.com/paperhive/',
                 'https://www.youtube.com/channel/UCe4xC7kaff0ySd6yZuT2XYQ'
               ],
