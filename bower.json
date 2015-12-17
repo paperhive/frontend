@@ -32,7 +32,7 @@
     "highlightjs": "8.9.1",
     "javascript-detect-element-resize": "0.5.3",
     "jquery": "2.1.4",
-    "kramed": "https://github.com/GitbookIO/kramed.git",
+    "kramed": "0.5.5",
     "lodash": "3.10.1",
     "MathJax": "2.5.3",
     "ment.io": "0.9.24",
