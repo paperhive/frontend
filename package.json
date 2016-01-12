@@ -13,7 +13,7 @@
   "private": true,
   "devDependencies": {
     "bower": "^1.6.5",
-    "browserify": "^12.0.1",
+    "browserify": "^13.0.0",
     "browserify-shim": "^3.8.11",
     "connect-history-api-fallback": "^1.1.0",
     "del": "^2.0.2",
