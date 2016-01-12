@@ -20,23 +20,44 @@ body {
     width: 100%;
     min-height: @ph-footer-height;
     // end sticky footer
-    background-color: @gray;
-    color: @body-bg;
-    padding: @padding-large-horizontal;
     .ph-highlight-border-bottom();
+  }
+}
 
-    // copyright
-    .ph-copyright {
-      color: @ph-footer-copyright-color;
+.ph-footer {
+  background-color: @gray;
+  color: @body-bg;
+  padding-top: @padding-large-horizontal;
+  padding-bottom: @padding-large-horizontal;
+
+  // copyright
+  .ph-copyright {
+    color: @ph-footer-copyright-color;
+  }
+
+  // links
+  a {
+    color: @ph-footer-link-color;
+    &:hover {
+      text-decoration: none;
+      color: @ph-footer-link-hover-color;
     }
+  }
+}
 
-    // links
-    a {
-      color: @ph-footer-link-color;
-      &:hover {
-        text-decoration: none;
-        color: @ph-footer-link-hover-color;
-      }
+.ph-footer-supporters {
+  padding-top: @padding-large-horizontal;
+  padding-bottom: @padding-large-horizontal;
+
+  .ph-footer-supporter {
+    // the BMWI logo has a larger height than all others... :-/
+    min-height: 140px;
+  }
+
+  a > img {
+    transition: background-color 0.5s ease;
+    &:hover {
+      background-color: #eee;
     }
   }
 }
