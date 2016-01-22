@@ -17,10 +17,10 @@ module.exports = function(app) {
       $scope.syncFromOrcid = function() {
         $scope.busy = 'sync';
 
-        var account = _.find($scope.user.accounts, {type: 'orcid'});
+        var account = _.findLast($scope.user.externalIds, {type: 'orcid'});
 
         $http.put(config.apiUrl +
-                  '/users/' + $scope.user.id + '/syncFromOrcid/' + account.id).
+                  '/people/' + $scope.user.id + '/syncFromOrcid').
           success(function(data) {
             $scope.busy = false;
             authService.user = data;

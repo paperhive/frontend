@@ -127,17 +127,17 @@
               Email
             </label>
             <div class="col-sm-9">
-              <input ng-model="user.email" type="email" class="form-control"
+              <input ng-model="user.user.email" type="email" class="form-control"
                 id="email" readonly>
-              <i ng-show="!user.externalIds.email"
+              <i ng-show="!user.user.email"
                 class="fa fa-times form-control-feedback" aria-hidden="true"></i>
-              <p class="help-block" ng-show="!user.externalIds.email">
+              <p class="help-block" ng-show="!user.user.email">
                 <i class="fa fa-fw fa-warning"></i>
                 No email address set!
               </p>
               <p class="text-muted help-block">
-                Set up and verify an email address with <em>limited</em> or
-                <em>public</em> privacy setting in your
+                Set up and verify an email address with <em>public</em>
+                privacy setting in your
                 <a href="https://orcid.org/my-orcid" target="_blank">
                   ORCID profile
                 </a>
