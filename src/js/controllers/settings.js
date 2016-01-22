@@ -20,7 +20,7 @@ module.exports = function(app) {
         var account = _.find($scope.user.accounts, {type: 'orcid'});
 
         $http.put(config.apiUrl +
-                  '/users/' + $scope.user._id + '/syncFromOrcid/' + account.id).
+                  '/users/' + $scope.user.id + '/syncFromOrcid/' + account.id).
           success(function(data) {
             $scope.busy = false;
             authService.user = data;
@@ -38,13 +38,14 @@ module.exports = function(app) {
 
         var obj = _.cloneDeep($scope.user);
 
+        // TODO revisit. whitelist?
         // remove all keys which we are not allowed to set
-        var deleteKeys = ['_id', 'accounts', 'email', 'gravatarMd5',
-          'firstSignin', 'createdAt', 'updatedAt'];
+        var deleteKeys = ['id', 'gravatarMd5', 'firstSignin',
+          'createdAt', 'updatedAt', 'externalIds'];
         _.forEach(deleteKeys, function(key) { delete obj[key]; });
 
         // save
-        $http.put(config.apiUrl + '/users/' + $scope.user._id, obj).
+        $http.put(config.apiUrl + '/people/' + $scope.user.id, obj).
           success(function(data) {
             $scope.busy = false;
             authService.user = data;
@@ -52,7 +53,6 @@ module.exports = function(app) {
           error(function(data) {
             $scope.busy = false;
             // TODO
-            //console.log(data);
           });
       };
     }

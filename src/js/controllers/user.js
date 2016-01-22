@@ -14,17 +14,17 @@ module.exports = function(app) {
       $scope.auth = authService;
 
       // fetch user
-      $http.get(config.apiUrl + '/users/byUsername/' +
+      $http.get(config.apiUrl + '/people/username/' +
                 $routeSegment.$routeParams.username)
         .success(function(data) {
           $scope.user = data;
           metaService.set({
-            title: data.username + ' (' + data.displayName + ')' +
+            title: data.user.username + ' (' + data.displayName + ')' +
               ' · PaperHive',
             meta: [
               {
                 name: 'description',
-                content: 'Profile of ' + data.username +
+                content: 'Profile of ' + data.user.username +
                   ' (' + data.displayName + ')' +
                   ' on PaperHive.'
               }

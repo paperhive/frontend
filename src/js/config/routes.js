@@ -43,7 +43,7 @@ module.exports = function(app) {
         .when('/jobs', 'jobs')
         .when('/alpha-warning', 'alpha-warning')
         .when('/legalnotice', 'legalnotice')
-        .when('/oauth/orcid', 'oauth')
+        .when('/return', 'oauth')
         .when('/settings', 'settings')
         .when('/settings/profile', 'settings.profile')
         .when('/settings/site', 'settings.site')

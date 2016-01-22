@@ -10,7 +10,7 @@
               Username
             </label>
             <div class="col-sm-6">
-              <input ng-model="user.username"
+              <input ng-model="user.user.username"
                 ng-model-options="{ debounce: 250 }"
                 name="username" type="text"
                 class="form-control" id="username"
@@ -129,9 +129,9 @@
             <div class="col-sm-9">
               <input ng-model="user.email" type="email" class="form-control"
                 id="email" readonly>
-              <i ng-show="!user.email"
+              <i ng-show="!user.externalIds.email"
                 class="fa fa-times form-control-feedback" aria-hidden="true"></i>
-              <p class="help-block" ng-show="!user.email">
+              <p class="help-block" ng-show="!user.externalIds.email">
                 <i class="fa fa-fw fa-warning"></i>
                 No email address set!
               </p>

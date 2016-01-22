@@ -20,7 +20,7 @@ module.exports = function(app) {
             }
             var defer = $q.defer();
 
-            $http.head(config.apiUrl + '/users/byUsername/' + modelValue)
+            $http.get(config.apiUrl + '/people/username/' + modelValue)
               .success(function(data) {
                 defer.reject('The username is already taken.');
               })
