@@ -126,16 +126,16 @@ module.exports = function(app) {
       };
 
       $scope.addDiscussion = function(comment) {
-        var originalComment = _.cloneDeep(_.pick(
+        var disc = _.cloneDeep(_.pick(
           comment, ['title', 'body', 'target', 'tags']
         ));
 
+        console.log(disc);
+
         $scope.submitting = true;
         return $http.post(
-          config.apiUrl +
-            '/documents/' + $routeSegment.$routeParams.articleId +
-            '/discussions',
-          {originalAnnotation: originalComment}
+          config.apiUrl + '/discussions',
+          disc
         )
         .success(function(discussion) {
           $scope.submitting = false;
@@ -149,15 +149,13 @@ module.exports = function(app) {
       };
 
       $scope.originalUpdate = function(discussion, comment) {
-        var originalComment = _.cloneDeep(_.pick(
+        var disc = _.cloneDeep(_.pick(
           comment, ['title', 'body', 'target', 'tags']
         ));
 
         return $http.put(
-          config.apiUrl +
-            '/documents/' + $routeSegment.$routeParams.articleId +
-            '/discussions/' + discussion.index,
-          {originalAnnotation: originalComment}
+          config.apiUrl + '/discussions/' + discussion.id,
+          disc
         )
         .success(function(newDiscussion) {
           angular.copy(newDiscussion, discussion);
@@ -168,7 +166,6 @@ module.exports = function(app) {
       $scope.discussionDelete = function(discussion) {
         return $http.delete(
           config.apiUrl +
-            '/documents/' + $routeSegment.$routeParams.articleId +
             '/discussions/' + discussion.index
         )
         .success(function() {
@@ -183,7 +180,6 @@ module.exports = function(app) {
         ));
         return $http.post(
           config.apiUrl +
-            '/documents/' + $routeSegment.$routeParams.articleId +
             '/discussions/' + discussion.index +
             '/replies',
           reply
@@ -201,7 +197,6 @@ module.exports = function(app) {
         ));
         return $http.put(
           config.apiUrl +
-            '/documents/' + $routeSegment.$routeParams.articleId +
             '/discussions/' + discussion.index +
             '/replies/' + replyId,
           replyNew
@@ -215,7 +210,6 @@ module.exports = function(app) {
       $scope.replyDelete = function(discussion, replyId) {
         return $http.delete(
           config.apiUrl +
-            '/documents/' + $routeSegment.$routeParams.articleId +
             '/discussions/' + discussion.index +
             '/replies/' + replyId
         )

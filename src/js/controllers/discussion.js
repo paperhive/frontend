@@ -15,33 +15,31 @@ module.exports = function(app) {
         // fetch discussion
         $http.get(
           config.apiUrl +
-            '/documents/' + $routeSegment.$routeParams.articleId +
             '/discussions/' + $routeSegment.$routeParams.discussionIndex
         )
         .success(function(discussion) {
           $scope.discussion = discussion;
           metaService.set({
-            title: discussion.originalAnnotation.title +
-              ' · Discussion #' + discussion.index +
+            title: discussion.title +
               ($scope.article ? (' · ' + $scope.article.title) : '') +
               ' · PaperHive',
             meta: [
               {
                 name: 'author',
-                content: discussion.originalAnnotation.author.displayName
+                content: discussion.author.displayName
               },
               // TODO rather use title here?
               {
                 name: 'description',
                 content: 'Annotation by ' +
-                  discussion.originalAnnotation.author.displayName + ': ' +
-                  (discussion.originalAnnotation.body ?
-                  discussion.originalAnnotation.body.substring(0, 150) : '')
+                  discussion.author.displayName + ': ' +
+                  (discussion.body ?
+                  discussion.body.substring(0, 150) : '')
               },
               {
                 name: 'keywords',
-                content: discussion.originalAnnotation.tags ?
-                  discussion.originalAnnotation.tags.join(', ') : undefined
+                content: discussion.tags ?
+                  discussion.tags.join(', ') : undefined
               }
             ]
           });
@@ -57,29 +55,25 @@ module.exports = function(app) {
         //   The title is set twice, and this is kind of ugly.
         // TODO find a better solution
         $scope.updateTitle = function(newTitle) {
-          $scope.discussion.originalAnnotation.title = newTitle;
-          $scope.updateDiscussion($scope.discussion.originalAnnotation);
+          $scope.discussion.title = newTitle;
+          $scope.updateDiscussion($scope.discussion);
         };
 
         $scope.updateDiscussion = function(comment) {
           $scope.submitting = true;
-          var newDiscussion = {
-            originalAnnotation: _.pick(
-              comment,
-              ['title', 'body', 'target', 'tags']
-            )
-          };
+          var newDiscussion = _.pick(
+            comment,
+            ['title', 'body', 'target', 'tags']
+          );
 
           return $http.put(
             config.apiUrl +
-              '/documents/' + $routeSegment.$routeParams.articleId +
               '/discussions/' + $routeSegment.$routeParams.discussionIndex,
             newDiscussion
           )
           .success(function(discussion) {
             $scope.submitting = false;
-            $scope.discussion.originalAnnotation =
-              discussion.originalAnnotation;
+            $scope.discussion = discussion;
           })
           .error(function(data) {
             $scope.submitting = false;
@@ -91,7 +85,6 @@ module.exports = function(app) {
           $scope.submitting = true;
           $http.post(
             config.apiUrl +
-              '/documents/' + $routeSegment.$routeParams.articleId +
               '/discussions/' + $routeSegment.$routeParams.discussionIndex +
               '/replies/',
             {body: body}
@@ -109,7 +102,6 @@ module.exports = function(app) {
         $scope.updateReply = function(comment, index) {
           return $http.put(
             config.apiUrl +
-              '/documents/' + $routeSegment.$routeParams.articleId +
               '/discussions/' + $routeSegment.$routeParams.discussionIndex +
               '/replies/' + comment._id,
             {body: comment.body}
@@ -123,7 +115,6 @@ module.exports = function(app) {
         $scope.deleteReply = function(comment, index) {
           return $http.delete(
             config.apiUrl +
-              '/documents/' + $routeSegment.$routeParams.articleId +
               '/discussions/' + $routeSegment.$routeParams.discussionIndex +
               '/replies/' + comment._id
           )

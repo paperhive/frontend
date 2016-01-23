@@ -1,7 +1,7 @@
 <div ng-controller="DiscussionCtrl">
   <h3 class="ph-no-margin-top">
     <inline-editable
-      ng-model="discussion.originalAnnotation.title"
+      ng-model="discussion.title"
       on-save="updateTitle($content)"
       >
     </inline-editable>
@@ -9,10 +9,10 @@
       #{{discussion.index}}
     </span>
   </h3>
-  <a href="./users/{{discussion.originalAnnotation.author.username}}">
-    {{discussion.originalAnnotation.author.displayName}}</a>
+  <a href="./users/{{discussion.author.username}}">
+    {{discussion.author.displayName}}</a>
   opened this discussion
-  <span am-time-ago="discussion.originalAnnotation.createdAt"></span>
+  <span am-time-ago="discussion.createdAt"></span>
   <span ng-if="discussion.replies.length == 1">
     &middot; {{discussion.replies.length}} reply
   </span>
@@ -20,12 +20,12 @@
     &middot; {{discussion.replies.length}} replies
   </span>
 
-  <div ng-if="discussion.originalAnnotation.target.text">
+  <div ng-if="discussion.target.text">
     <hr>
     <h4>Referenced text</h4>
     <div class="well well-lg ph-reference">
       <blockquote>
-        {{discussion.originalAnnotation.target.text}}
+        {{discussion.target.text}}
       </blockquote>
     </div>
   </div>
@@ -36,7 +36,7 @@
       <ul class="media-list">
         <li class="media">
           <comment
-            content="discussion.originalAnnotation"
+            content="discussion"
             on-update="updateDiscussion($comment)"
             requires-body="false"
             deletable="false"
@@ -148,7 +148,7 @@
         </h5>
       </a-->
       <!--ul class="ph-tags">
-        <li ng-repeat="label in discussion.originalAnnotation.labels">
+        <li ng-repeat="label in discussion.tags">
         <a href="#" class="btn btn-default {{label}}">{{label}}</a>
         </li>
       </ul>
