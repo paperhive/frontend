@@ -6,7 +6,7 @@
           <h2 class="ph-lg-margin-top">{{article.title}}</h2>
           <h4 class="ph-lg-margin-bottom">
             <span ng-repeat="author in article.authors">
-              {{author}}{{$last ? '' :', '}}
+              {{author.name}}
             </span>
           </h4>
         </div>

@@ -26,10 +26,20 @@ module.exports = function(app) {
       .success(function(article) {
         $scope.article = article;
 
-        if (article.source.type === 'arxiv') {
-          $scope.pdfSource =
-            'http://arxiv.org/pdf/' + article.source.id + '.pdf';
-        }
+        $http.get(
+          config.apiUrl +
+            '/documents/' + $routeSegment.$routeParams.articleId + '/pdf'
+        )
+        .success(function(url) {
+          $scope.pdfSource = url;
+        })
+        .error(function(data) {
+          notificationService.notifications.push({
+            type: 'error',
+            message: data.message ? data.message : 'could not fetch PDF of article ' +
+              '(unknown reason)'
+          });
+        });
 
         // Cut description down to 150 chars, cf.
         // <http://moz.com/learn/seo/meta-description>

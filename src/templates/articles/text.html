@@ -1,8 +1,8 @@
 <div ng-controller="ArticleTextCtrl">
-  <div class="row" ng-if="article.file.url">
+  <div class="row" ng-if="pdfSource">
     <div highlight-container class="col-md-9">
       <pdf
-        pdf-url="article.file.url"
+        pdf-url="pdfSource"
         pdf-text-overlay="true"
         pdf-progress="article.pdfProgress"
         on-text-select="$target && (originalComment.draft.target = $target)"
