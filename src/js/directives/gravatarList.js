@@ -15,7 +15,7 @@ module.exports = function(app) {
           function(discussion) {
             if (discussion !== undefined) {
 
-              scope.participants = _.map(scope.discussion.replies, 'author');
+              scope.participants = _.pluck(scope.discussion.replies, 'author');
               // prepend original annotation author
               scope.participants.unshift(
                 scope.discussion.originalAnnotation.author
