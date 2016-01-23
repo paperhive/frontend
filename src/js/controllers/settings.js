@@ -3,8 +3,9 @@ var _ = require('lodash');
 
 module.exports = function(app) {
 
-  app.controller('SettingsCtrl', ['$scope', '$http', 'config', 'authService',
-    function($scope, $http, config, authService) {
+  app.controller('SettingsCtrl', [
+    '$scope', '$http', 'config', 'authService', 'notificationService',
+    function($scope, $http, config, authService, notificationService) {
       $scope.tab = 'profile';
       $scope.auth = authService;
 
@@ -27,8 +28,7 @@ module.exports = function(app) {
           }).
           error(function(data) {
             $scope.busy = false;
-            // TODO
-            //console.log(data);
+            notificationService.httpError('could not sync data');
           });
       };
 
@@ -52,7 +52,7 @@ module.exports = function(app) {
           }).
           error(function(data) {
             $scope.busy = false;
-            // TODO
+            notificationService.httpError('could not save data');
           });
       };
     }

@@ -20,7 +20,7 @@ module.exports = function(app) {
           scope.$watch(
             'gravatarUser',
             function(user) {
-              if (!user) {
+              if (!user || !user.user || !user.user.avatar || user.user.avatar.type !== 'gravatar') {
                 return;
               }
               element.attr('width', scope.gravatarSize + 'px');
@@ -28,7 +28,7 @@ module.exports = function(app) {
               element.attr(
                 'src',
                 'https://secure.gravatar.com/avatar/' +
-                user.gravatarMd5 +
+                user.user.avatar.value +
                   '?s=' + scope.gravatarSize +
                     '&d=identicon'
               );
