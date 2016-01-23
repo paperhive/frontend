@@ -3,7 +3,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <alert ng-repeat="notification in notifications"
+        <uib-alert ng-repeat="notification in notifications"
             type="{{types[notification.type]}}" close="close($index)">
           <h3>
             <span ng-show="notification.type == 'error'">
@@ -20,7 +20,7 @@
             </span>
             <small>{{notification.message}}</small>
           </h3>
-        </alert>
+        </uib-alert>
       </div>
     </div>
   </div>

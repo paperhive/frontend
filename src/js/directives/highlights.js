@@ -119,11 +119,11 @@ module.exports = function(app) {
 
             // gather bbox information and expose it on the scope
             var info = {
-              left: _.min(_.pluck(scope.rects, 'left')),
+              left: _.min(_.map(scope.rects, 'left')),
               right: _.max(_.map(scope.rects, function(rect) {
                 return rect.left + rect.width;
               })),
-              top: _.min(_.pluck(scope.rects, 'top')),
+              top: _.min(_.map(scope.rects, 'top')),
               bottom: _.max(_.map(scope.rects, function(rect) {
                 return rect.top + rect.height;
               }))

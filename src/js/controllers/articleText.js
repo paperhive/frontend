@@ -70,9 +70,9 @@ module.exports = function(app) {
 
         // padding between elements
         var padding = 8;
-        //var ids = _.pluck(offsets, 'id');
-        //var anchors = _.pluck(offsets, 'top');
-        //var heights = _.map(_.pluck(offsets, 'height'), function(height) {
+        //var ids = _.map(offsets, 'id');
+        //var anchors = _.map(offsets, 'top');
+        //var heights = _.map(_.map(offsets, 'height'), function(height) {
         //  return height + padding;
         //});
         //var optOffsets = distangleService.distangle(
@@ -97,7 +97,7 @@ module.exports = function(app) {
 
         // move bottom elements from above to below if there's not enough space
         var getTotalHeight = function(offsets) {
-          return _.sum(_.pluck(offsets, 'height')) + offsets.length * padding;
+          return _.sum(_.map(offsets, 'height')) + offsets.length * padding;
         };
         while (showDraft && getTotalHeight(offsetsAbove) > draftTop) {
           // remove last one in above
@@ -107,9 +107,9 @@ module.exports = function(app) {
         }
 
         var place = function(offsets, lb, ub) {
-          var ids = _.pluck(offsets, 'id');
-          var anchors = _.pluck(offsets, 'top');
-          var heights = _.map(_.pluck(offsets, 'height'), function(height) {
+          var ids = _.map(offsets, 'id');
+          var anchors = _.map(offsets, 'top');
+          var heights = _.map(_.map(offsets, 'height'), function(height) {
             return height + padding;
           });
           var optOffsets = distangleService.distangle(anchors, heights, lb, ub);
