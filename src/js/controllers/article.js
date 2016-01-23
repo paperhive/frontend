@@ -21,7 +21,7 @@ module.exports = function(app) {
       // fetch article
       $http.get(
         config.apiUrl +
-          '/articles/' + $routeSegment.$routeParams.articleId
+          '/documents/' + $routeSegment.$routeParams.articleId
       )
       .success(function(article) {
         $scope.article = article;
@@ -60,7 +60,7 @@ module.exports = function(app) {
 
       $http.get(
         config.apiUrl +
-          '/articles/' + $routeSegment.$routeParams.articleId + '/discussions'
+          '/documents/' + $routeSegment.$routeParams.articleId + '/discussions'
       )
       .success(function(discussions) {
         $scope.discussions.stored = discussions;
@@ -123,7 +123,7 @@ module.exports = function(app) {
         $scope.submitting = true;
         return $http.post(
           config.apiUrl +
-            '/articles/' + $routeSegment.$routeParams.articleId +
+            '/documents/' + $routeSegment.$routeParams.articleId +
             '/discussions',
           {originalAnnotation: originalComment}
         )
@@ -145,7 +145,7 @@ module.exports = function(app) {
 
         return $http.put(
           config.apiUrl +
-            '/articles/' + $routeSegment.$routeParams.articleId +
+            '/documents/' + $routeSegment.$routeParams.articleId +
             '/discussions/' + discussion.index,
           {originalAnnotation: originalComment}
         )
@@ -158,7 +158,7 @@ module.exports = function(app) {
       $scope.discussionDelete = function(discussion) {
         return $http.delete(
           config.apiUrl +
-            '/articles/' + $routeSegment.$routeParams.articleId +
+            '/documents/' + $routeSegment.$routeParams.articleId +
             '/discussions/' + discussion.index
         )
         .success(function() {
@@ -173,7 +173,7 @@ module.exports = function(app) {
         ));
         return $http.post(
           config.apiUrl +
-            '/articles/' + $routeSegment.$routeParams.articleId +
+            '/documents/' + $routeSegment.$routeParams.articleId +
             '/discussions/' + discussion.index +
             '/replies',
           reply
@@ -191,7 +191,7 @@ module.exports = function(app) {
         ));
         return $http.put(
           config.apiUrl +
-            '/articles/' + $routeSegment.$routeParams.articleId +
+            '/documents/' + $routeSegment.$routeParams.articleId +
             '/discussions/' + discussion.index +
             '/replies/' + replyId,
           replyNew
@@ -205,7 +205,7 @@ module.exports = function(app) {
       $scope.replyDelete = function(discussion, replyId) {
         return $http.delete(
           config.apiUrl +
-            '/articles/' + $routeSegment.$routeParams.articleId +
+            '/documents/' + $routeSegment.$routeParams.articleId +
             '/discussions/' + discussion.index +
             '/replies/' + replyId
         )

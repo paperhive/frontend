@@ -10,7 +10,7 @@ module.exports = function(app) {
       ) {
         $scope.search = {};
         $scope.phSearch = function(query, limit) {
-          return $http.get(config.apiUrl + '/articles/', {
+          return $http.get(config.apiUrl + '/documents/', {
             params: {q: query, limit: limit}
           })
           .then(
