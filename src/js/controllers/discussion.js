@@ -103,8 +103,7 @@ module.exports = function(app) {
 
         $scope.updateReply = function(comment, index) {
           return $http.put(
-            config.apiUrl +
-              '/replies/' + comment._id,
+            config.apiUrl + '/replies/' + comment.id,
             {body: comment.body}
           )
           .success(function(data) {
@@ -130,26 +129,26 @@ module.exports = function(app) {
            $scope.subscribers = [
            ];
            if('user' in authService) {
-           $scope.isSubscribed = $scope.subscribers.indexOf(authService.user._id) > -1;
+           $scope.isSubscribed = $scope.subscribers.indexOf(authService.user.id) > -1;
            } else {
            $scope.isSubscribed = false;
            }
            $scope.toggleSubscribe = function() {
-           var k = $scope.subscribers.indexOf(authService.user._id);
+           var k = $scope.subscribers.indexOf(authService.user.id);
            if (k > -1) {
         // remove from to subscribers list
         $scope.subscribers.splice(k, 1);
         $scope.isSubscribed = false;
         } else {
         // add to subscribers list
-        $scope.subscribers.push(authService.user._id);
+        $scope.subscribers.push(authService.user.id);
         $scope.isSubscribed = true;
         }
         };
 
         $scope.isArticleAuthor = function(authorId) {
         var _ = require('lodash');
-        var k = _.findWhere($scope.article.authors, {_id: authorId});
+        var k = _.findWhere($scope.article.authors, {id: authorId});
         return (k !== undefined);
         };
         */

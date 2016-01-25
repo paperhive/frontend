@@ -14,7 +14,7 @@ module.exports = function(app) {
         })
           .success(function(article) {
             $scope.submitting = false;
-            $location.path('/documents/' + article._id);
+            $location.path('/documents/' + article.id);
           })
           .error(function(data) {
             $scope.submitting = false;

@@ -41,7 +41,7 @@
         <div ng-repeat="article in articles" class="ph-md-margin-bottom">
           <div class="media">
             <div class="media-left">
-              <a href="./articles/{{article._id}}">
+              <a href="./articles/{{article.id}}">
                 <span class="fa-stack ph-icon">
                   <i class="fa fa-circle fa-stack-2x text-muted"></i>
                   <i class="fa fa-file-text-o fa-stack-1x fa-inverse"></i>
@@ -50,7 +50,7 @@
             </div>
             <div class="media-body">
               <h4 class="media-heading ph-no-margin-bottom">
-                <a href="./articles/{{article._id}}">{{article.title}}</a>
+                <a href="./articles/{{article.id}}">{{article.title}}</a>
               </h4>
               <div>
                 <span ng-repeat="author in article.authors">

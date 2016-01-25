@@ -190,7 +190,7 @@ module.exports = function(app) {
       };
 
       $scope.replyUpdate = function(discussion, replyOld, replyNew) {
-        var replyId = replyOld._id;
+        var replyId = replyOld.id;
         replyNew = _.cloneDeep(_.pick(
           replyNew, ['body']
         ));
@@ -211,7 +211,7 @@ module.exports = function(app) {
             '/replies/' + replyId
         )
         .success(function(data) {
-          _.remove(discussion.replies, {_id: replyId});
+          _.remove(discussion.replies, {id: replyId});
         })
         .error(notificationService.httpError('could not delete reply'));
       };
