@@ -72,8 +72,8 @@ module.exports = function(app) {
         config.apiUrl +
           '/documents/' + $routeSegment.$routeParams.articleId + '/discussions'
       )
-      .success(function(discussions) {
-        $scope.discussions.stored = discussions;
+      .success(function(ret) {
+        $scope.discussions.stored = ret.discussions;
       })
       .error(function(data) {
         notificationService.notifications.push({
@@ -130,7 +130,8 @@ module.exports = function(app) {
           comment, ['title', 'body', 'target', 'tags']
         ));
 
-        console.log(disc);
+        disc.target.document = $routeSegment.$routeParams.articleId;
+        disc.target.documentRevision = $scope.article.revision;
 
         $scope.submitting = true;
         return $http.post(

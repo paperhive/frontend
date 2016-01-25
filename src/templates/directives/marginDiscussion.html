@@ -15,7 +15,7 @@
         <div ng-if="!originalState.editing" class="clearfix">
           <div class="ph-margin-info">
             <p class="ph-xs-margin-bottom">
-              <a href="./users/{{discussion.author.username}}">
+              <a href="./users/{{discussion.author.user.username}}">
                 {{discussion.author.displayName}}</a>
               · <span am-time-ago="discussion.createdAt"></span>
             </p>
