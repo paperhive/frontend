@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "description": "PaperHive frontend",
   "scripts": {
+    "ci": "npm run install-deps && npm run build && npm test",
     "build": "gulp",
+    "install-deps": "npm install && bower install",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "karma start --single-run",
     "test:e2e": "gulp test"
