@@ -1,3 +1,7 @@
-*
-!package.json
-!bower.json
+.*.swp
+.git
+static/.git
+build
+tmp
+node_modules
+bower_components
