@@ -12,6 +12,9 @@ ENV NPM_CONFIG_LOGLEVEL="warn"
 # http://bower.io/docs/api/#allow-root
 ENV BOWER_ALLOW_ROOT="true"
 
+# grab phantomjs from CDN (instead of rate-limited bitbucket)
+ENV PHANTOMJS_CDNURL="http://cnpmjs.org/downloads"
+
 # copy dependency definitions and install them (may be cached!)
 COPY package.json /paperhive-frontend/
 COPY bower.json /paperhive-frontend/
