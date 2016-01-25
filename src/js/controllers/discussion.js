@@ -88,7 +88,7 @@ module.exports = function(app) {
               '/replies/',
             {
               body: body,
-              discussion: $routeSegment.$routeParams.discussionId,
+              discussion: $routeSegment.$routeParams.discussionId
             }
           )
           .success(function(reply) {
@@ -114,10 +114,11 @@ module.exports = function(app) {
         };
 
         $scope.deleteReply = function(comment, index) {
-          return $http.delete(
-            config.apiUrl +
-              '/replies/' + comment._id
-          )
+          return $http({
+            url: config.apiUrl + '/replies/' + comment.id,
+            method: 'DELETE',
+            headers: {'If-Match': '"' + comment.revision + '"'}
+          })
           .success(function(data) {
             $scope.discussion.replies.splice(index, 1);
           })
