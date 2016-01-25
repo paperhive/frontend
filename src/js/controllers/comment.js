@@ -32,8 +32,8 @@ module.exports = function(app) {
           $scope.foundUsers = [];
           return;
         }
-        $http.get(config.apiUrl + '/users/', {
-          params: {q: query, limit: limit}
+        $http.get(config.apiUrl + '/people/', {
+          params: {q: query, limit: limit, onlyUsers: true}
         })
         .success(function(response) {
           $scope.foundUsers = response.data;
