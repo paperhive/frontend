@@ -14,21 +14,40 @@ module.exports = function(app) {
       $scope.auth = authService;
 
       // fetch user
-      $http.get(config.apiUrl + '/people/username/' +
-                $routeSegment.$routeParams.username)
+      console.log(1211);
+      console.log($routeSegment.$routeParams.username);
+      $http.get(
+        config.apiUrl + '/people/username/' +
+                $routeSegment.$routeParams.username
+      )
         .success(function(data) {
-          $scope.user = data;
-          metaService.set({
-            title: data.user.username + ' (' + data.displayName + ')' +
-              ' · PaperHive',
-            meta: [
-              {
-                name: 'description',
-                content: 'Profile of ' + data.user.username +
-                  ' (' + data.displayName + ')' +
-                  ' on PaperHive.'
-              }
-            ]
+          // Yikes! normally, we'd want to get the data for the user
+          // immediately. Restrictions in the backend however only make it
+          // possible to return the person ID in the body, so we're bound to
+          // make another request... :(
+          console.log('data1', data);
+          $http.get(config.apiUrl + '/people/' + data.personId)
+          .success(function(data) {
+            console.log('data2', data);
+            $scope.user = data;
+            metaService.set({
+              title: data.user.username + ' (' + data.displayName + ')' +
+                ' · PaperHive',
+                meta: [
+                  {
+                    name: 'description',
+                    content: 'Profile of ' + data.user.username +
+                      ' (' + data.displayName + ')' +
+                        ' on PaperHive.'
+                  }
+                ]
+            });
+          })
+          .error(function(data) {
+            notificationService.notifications.push({
+              type: 'error',
+              message: data.message
+            });
           });
         })
         .error(function(data) {

@@ -39,10 +39,9 @@
         </ul>
       </h4>
       <span class="ph-discussion-subtitle">
-        #{{discussion.index}} opened
-        <span am-time-ago="discussion.createdAt"></span>
+        opened <span am-time-ago="discussion.createdAt"></span>
         by
-        <a href="./users/{{discussion.author.username}}">
+        <a href="./users/{{discussion.author.user.username}}">
           {{discussion.author.displayName}}
         </a>
       </span>

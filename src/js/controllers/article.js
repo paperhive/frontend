@@ -167,10 +167,10 @@ module.exports = function(app) {
       $scope.discussionDelete = function(discussion) {
         return $http.delete(
           config.apiUrl +
-            '/discussions/' + discussion.index
+            '/discussions/' + discussion.id
         )
         .success(function() {
-          _.remove($scope.discussions.stored, {index: discussion.index});
+          _.remove($scope.discussions.stored, {id: discussion.id});
         })
           .error(notificationService.httpError('could not delete discussion'));
       };
@@ -181,7 +181,7 @@ module.exports = function(app) {
         ));
         return $http.post(
           config.apiUrl +
-            '/discussions/' + discussion.index +
+            '/discussions/' + discussion.id +
             '/replies',
           reply
         )
@@ -198,7 +198,7 @@ module.exports = function(app) {
         ));
         return $http.put(
           config.apiUrl +
-            '/discussions/' + discussion.index +
+            '/discussions/' + discussion.id +
             '/replies/' + replyId,
           replyNew
         )
@@ -211,7 +211,7 @@ module.exports = function(app) {
       $scope.replyDelete = function(discussion, replyId) {
         return $http.delete(
           config.apiUrl +
-            '/discussions/' + discussion.index +
+            '/discussions/' + discussion.id +
             '/replies/' + replyId
         )
         .success(function(data) {

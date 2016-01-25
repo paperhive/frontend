@@ -20,6 +20,5 @@ module.exports = function(app) {
   require('./settings.js')(app);
   require('./subscribe.js')(app);
   require('./user.js')(app);
-  require('./userArticles.js')(app);
   require('./welcome.js')(app);
 };
