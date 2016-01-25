@@ -36,7 +36,7 @@
               </button>
               <ul class="dropdown-menu dropdown-menu-right ph-margin-dropdown">
                 <li>
-                  <a ng-click="changePath(filterRouteSegmentUrl('articles.discussions.thread', {discussionIndex: discussion.index}))">
+                  <a ng-click="changePath(filterRouteSegmentUrl('articles.discussions.thread', {discussionId: discussion.id}))">
                     <i class="fa fa-fw fa-comments"></i> Show discussion view
                   </a>
                 </li>
@@ -161,7 +161,7 @@
                 <ul class="dropdown-menu dropdown-menu-right ph-margin-dropdown">
                   <li>
                     <a href="./{{'articles.discussions.thread' | routeSegmentUrl:
-                      {discussionIndex: discussion.index} }}#{{reply._id}}">
+                      {discussionId: discussion.id} }}#{{reply._id}}">
                       <i class="fa fa-fw fa-comments"></i> Show discussion view
                     </a>
                   </li>

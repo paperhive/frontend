@@ -17,7 +17,7 @@
   <ul class="list-group">
     <li class="list-group-item" ng-repeat="discussion in discussions.stored">
     <a href="./{{'articles.discussions.thread' | routeSegmentUrl:
-      {discussionIndex: discussion.index} }}"
+      {discussionId: discussion.id} }}"
       >
       <span
         ng-if="discussion.replies.length > 0"
@@ -27,7 +27,7 @@
     </span></a>
       <h4>
         <a href="./{{'articles.discussions.thread' | routeSegmentUrl:
-            {discussionIndex: discussion.index} }}">
+            {discussionId: discussion.id} }}">
           {{discussion.title}}</a>
         <ul
           ng-if="discussion.tags.length > 0"

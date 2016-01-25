@@ -33,7 +33,7 @@ module.exports = function(app) {
         .when('/articles/:articleId/discussions', 'articles.discussions')
         .when('/articles/:articleId/discussions/new',
               'articles.discussions.new')
-        .when('/articles/:articleId/discussions/:discussionIndex',
+        .when('/articles/:articleId/discussions/:discussionId',
               'articles.discussions.thread')
         .when('/articles/:articleId/settings', 'articles.settings')
         .when('/articles/:articleId/text', 'articles.text')
@@ -154,7 +154,7 @@ module.exports = function(app) {
             })
             .segment('thread', {
               templateUrl: 'templates/articles/discussions/thread.html',
-              dependencies: ['discussionIndex'],
+              dependencies: ['discussionId'],
               title: 'Discussion · PaperHive'
             })
           .up()

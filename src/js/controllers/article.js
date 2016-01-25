@@ -180,9 +180,7 @@ module.exports = function(app) {
           reply, ['body']
         ));
         return $http.post(
-          config.apiUrl +
-            '/discussions/' + discussion.id +
-            '/replies',
+          config.apiUrl + '/replies',
           reply
         )
         .success(function(reply) {
@@ -198,7 +196,6 @@ module.exports = function(app) {
         ));
         return $http.put(
           config.apiUrl +
-            '/discussions/' + discussion.id +
             '/replies/' + replyId,
           replyNew
         )
@@ -211,7 +208,6 @@ module.exports = function(app) {
       $scope.replyDelete = function(discussion, replyId) {
         return $http.delete(
           config.apiUrl +
-            '/discussions/' + discussion.id +
             '/replies/' + replyId
         )
         .success(function(data) {

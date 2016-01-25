@@ -15,7 +15,7 @@ module.exports = function(app) {
         // fetch discussion
         $http.get(
           config.apiUrl +
-            '/discussions/' + $routeSegment.$routeParams.discussionIndex
+            '/discussions/' + $routeSegment.$routeParams.discussionId
         )
         .success(function(discussion) {
           $scope.discussion = discussion;
@@ -68,7 +68,7 @@ module.exports = function(app) {
 
           return $http.put(
             config.apiUrl +
-              '/discussions/' + $routeSegment.$routeParams.discussionIndex,
+              '/discussions/' + $routeSegment.$routeParams.discussionId,
             newDiscussion
           )
           .success(function(discussion) {
@@ -85,9 +85,11 @@ module.exports = function(app) {
           $scope.submitting = true;
           $http.post(
             config.apiUrl +
-              '/discussions/' + $routeSegment.$routeParams.discussionIndex +
               '/replies/',
-            {body: body}
+            {
+              body: body,
+              discussion: $routeSegment.$routeParams.discussionId,
+            }
           )
           .success(function(reply) {
             $scope.submitting = false;
@@ -102,7 +104,6 @@ module.exports = function(app) {
         $scope.updateReply = function(comment, index) {
           return $http.put(
             config.apiUrl +
-              '/discussions/' + $routeSegment.$routeParams.discussionIndex +
               '/replies/' + comment._id,
             {body: comment.body}
           )
@@ -115,7 +116,6 @@ module.exports = function(app) {
         $scope.deleteReply = function(comment, index) {
           return $http.delete(
             config.apiUrl +
-              '/discussions/' + $routeSegment.$routeParams.discussionIndex +
               '/replies/' + comment._id
           )
           .success(function(data) {

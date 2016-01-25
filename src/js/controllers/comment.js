@@ -17,7 +17,7 @@ module.exports = function(app) {
               'articles.discussions.thread',
               {
                 articleId: $routeSegment.$routeParams.articleId,
-                discussionIndex: data.index
+                discussionId: data.id
               }
             ));
           })
