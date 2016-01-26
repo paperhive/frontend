@@ -13,10 +13,10 @@ module.exports = function(app) {
         notificationService, metaService
       ) {
         // fetch discussion
-        $http.get(
-          config.apiUrl +
-            '/discussions/' + $routeSegment.$routeParams.discussionId
-        )
+        $http({
+          url: config.apiUrl + '/discussions/' + $routeSegment.$routeParams.discussionId,
+          method: 'GET'
+        })
         .success(function(discussion) {
           $scope.discussion = discussion;
           metaService.set({

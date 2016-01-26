@@ -165,10 +165,11 @@ module.exports = function(app) {
       };
 
       $scope.discussionDelete = function(discussion) {
-        return $http.delete(
-          config.apiUrl +
-            '/discussions/' + discussion.id
-        )
+        return $http({
+          url: config.apiUrl +  '/discussions/' + discussion.id,
+          method: 'DELETE',
+          headers: {'If-Match': '"' + discussion.revision + '"'}
+        })
         .success(function() {
           _.remove($scope.discussions.stored, {id: discussion.id});
         })
@@ -179,6 +180,7 @@ module.exports = function(app) {
         reply = _.cloneDeep(_.pick(
           reply, ['body']
         ));
+        reply.discussion = discussion.id;
         return $http.post(
           config.apiUrl + '/replies',
           reply
@@ -191,13 +193,11 @@ module.exports = function(app) {
 
       $scope.replyUpdate = function(discussion, replyOld, replyNew) {
         var replyId = replyOld.id;
-        replyNew = _.cloneDeep(_.pick(
-          replyNew, ['body']
-        ));
         return $http({
           url: config.apiUrl + '/replies/' + replyId,
           method: 'PUT',
-          body: replyNew,
+          data: {body: replyNew.body},
+          headers: {'If-Match': '"' + replyOld.revision + '"'}
         })
         .success(function(reply) {
           angular.copy(reply, replyOld);
@@ -205,13 +205,14 @@ module.exports = function(app) {
           .error(notificationService.httpError('could not add reply'));
       };
 
-      $scope.replyDelete = function(discussion, replyId) {
-        return $http.delete(
-          config.apiUrl +
-            '/replies/' + replyId
-        )
+      $scope.replyDelete = function(discussion, reply) {
+        return $http({
+          url: config.apiUrl + '/replies/' + reply.id,
+          method: 'DELETE',
+          headers: {'If-Match': '"' + reply.revision + '"'}
+        })
         .success(function(data) {
-          _.remove(discussion.replies, {id: replyId});
+          _.remove(discussion.replies, {id: reply.id});
         })
         .error(notificationService.httpError('could not delete reply'));
       };

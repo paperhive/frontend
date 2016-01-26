@@ -44,7 +44,7 @@
         on-discussion-delete="discussionDelete(discussion)"
         on-reply-submit="replyAdd(discussion, $reply)"
         on-reply-update="replyUpdate(discussion, $replyOld, $replyNew)"
-        on-reply-delete="replyDelete(discussion, $reply.id)"
+        on-reply-delete="replyDelete(discussion, $reply)"
         ng-mouseenter="text.highlightBorder[discussion.id] = true"
         ng-mouseleave="text.highlightBorder[discussion.id] = false"
         element-size="text.marginDiscussionSizes[discussion.id]"
