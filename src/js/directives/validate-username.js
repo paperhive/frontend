@@ -15,7 +15,7 @@ module.exports = function(app) {
             // own username
             if (ctrl.$isEmpty(modelValue) ||
                 (authService.user &&
-                 authService.user.username === modelValue)) {
+                 authService.user.user.username === modelValue)) {
               return $q.when();
             }
             var defer = $q.defer();
