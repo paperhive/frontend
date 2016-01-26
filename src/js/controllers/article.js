@@ -194,11 +194,11 @@ module.exports = function(app) {
         replyNew = _.cloneDeep(_.pick(
           replyNew, ['body']
         ));
-        return $http.put(
-          config.apiUrl +
-            '/replies/' + replyId,
-          replyNew
-        )
+        return $http({
+          url: config.apiUrl + '/replies/' + replyId,
+          method: 'PUT',
+          body: replyNew,
+        })
         .success(function(reply) {
           angular.copy(reply, replyOld);
         })
