@@ -1,6 +1,6 @@
 <div class="row">
-  <div class="col-md-2" ng-if="article.file.url">
-    <pdf pdf-url="article.file.url" pdf-text-overlay="false"></pdf>
+  <div class="col-md-2" ng-if="pdfSource">
+    <pdf pdf-url="pdfSource" pdf-text-overlay="false"></pdf>
   </div>
   <div class="col-md-10">
     <div app-view-segment="2"></div>
