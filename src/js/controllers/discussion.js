@@ -88,7 +88,7 @@ module.exports = function(app) {
             config.apiUrl +
               '/replies/',
             {
-              data: body,
+              body: body,
               discussion: $routeSegment.$routeParams.discussionId
             }
           )
@@ -107,7 +107,7 @@ module.exports = function(app) {
             url: config.apiUrl + '/replies/' + comment.id,
             method: 'PUT',
             headers: {'If-Match': '"' + comment.revision + '"'},
-            data: comment.body
+            body: comment.body
           })
           .success(function(data) {
             $scope.discussion.replies[index] = data;
