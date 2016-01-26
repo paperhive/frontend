@@ -68,8 +68,9 @@ module.exports = function(app) {
 
           return $http({
             url: config.apiUrl + '/discussions/' + $routeSegment.$routeParams.discussionId,
+            method: 'PUT',
             headers: {'If-Match': '"' + $scope.discussion.revision + '"'},
-            body: newDiscussion
+            data: newDiscussion
           })
           .success(function(discussion) {
             $scope.submitting = false;
@@ -87,7 +88,7 @@ module.exports = function(app) {
             config.apiUrl +
               '/replies/',
             {
-              body: body,
+              data: body,
               discussion: $routeSegment.$routeParams.discussionId
             }
           )
@@ -106,7 +107,7 @@ module.exports = function(app) {
             url: config.apiUrl + '/replies/' + comment.id,
             method: 'PUT',
             headers: {'If-Match': '"' + comment.revision + '"'},
-            body: comment.body
+            data: comment.body
           })
           .success(function(data) {
             $scope.discussion.replies[index] = data;
