@@ -44,6 +44,8 @@ module.exports = function(app) {
           'createdAt', 'updatedAt', 'externalIds'];
         _.forEach(deleteKeys, function(key) { delete obj[key]; });
 
+        delete obj.user.createdAt;
+
         // save
         $http.put(config.apiUrl + '/people/' + $scope.user.id, obj).
           success(function(data) {
