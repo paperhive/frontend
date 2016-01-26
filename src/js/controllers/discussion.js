@@ -66,11 +66,11 @@ module.exports = function(app) {
             ['title', 'body', 'target', 'tags']
           );
 
-          return $http.put(
-            config.apiUrl +
-              '/discussions/' + $routeSegment.$routeParams.discussionId,
-            newDiscussion
-          )
+          return $http({
+            url: config.apiUrl + '/discussions/' + $routeSegment.$routeParams.discussionId,
+            headers: {'If-Match': '"' + $scope.discussion.revision + '"'},
+            body: newDiscussion
+          })
           .success(function(discussion) {
             $scope.submitting = false;
             $scope.discussion = discussion;
@@ -102,10 +102,12 @@ module.exports = function(app) {
         };
 
         $scope.updateReply = function(comment, index) {
-          return $http.put(
-            config.apiUrl + '/replies/' + comment.id,
-            {body: comment.body}
-          )
+          return $http({
+            url: config.apiUrl + '/replies/' + comment.id,
+            method: 'PUT',
+            headers: {'If-Match': '"' + comment.revision + '"'},
+            body: comment.body
+          })
           .success(function(data) {
             $scope.discussion.replies[index] = data;
           })
