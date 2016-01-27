@@ -2,6 +2,8 @@
 var _ = require('lodash');
 var angular = require('angular');
 var moment = require('moment');
+var paperhiveSources = require('paperhive-sources');
+var url = require('url');
 
 module.exports = function(app) {
 
@@ -26,20 +28,26 @@ module.exports = function(app) {
       .success(function(article) {
         $scope.article = article;
 
-        $http.get(
-          config.apiUrl +
-            '/documents/' + $routeSegment.$routeParams.articleId + '/pdf'
-        )
-        .success(function(url) {
-          $scope.pdfSource = url;
-        })
-        .error(function(data) {
-          notificationService.notifications.push({
-            type: 'error',
-            message: data.message ? data.message : 'could not fetch PDF of article ' +
-              '(unknown reason)'
-          });
-        });
+        function getPdfSource() {
+          var pdfUrl = paperhiveSources.getPdfUrl(article);
+
+          if (!pdfUrl) {
+            notificationService.notifications.push({
+              type: 'error',
+              message: 'Article has no associated PDF'
+            });
+            return;
+          }
+
+          if (!pdfUrl.hasCors || url.parse(pdfUrl.url).protocol === 'http') {
+            return config.apiUrl + '/proxy?url=' +
+              encodeURIComponent(pdfUrl.url);
+          }
+
+          return pdfUrl.url;
+        }
+
+        $scope.pdfSource = getPdfSource();
 
         // Cut description down to 150 chars, cf.
         // <http://moz.com/learn/seo/meta-description>
