@@ -13,7 +13,7 @@ ENV NPM_CONFIG_LOGLEVEL="warn"
 ENV BOWER_ALLOW_ROOT="true"
 
 # grab phantomjs from CDN (instead of rate-limited bitbucket)
-ENV PHANTOMJS_CDNURL="http://cnpmjs.org/downloads"
+#ENV PHANTOMJS_CDNURL="http://cnpmjs.org/downloads"
 
 # copy dependency definitions and install them (may be cached!)
 COPY package.json /paperhive-frontend/
