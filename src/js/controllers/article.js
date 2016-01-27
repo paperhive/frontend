@@ -3,7 +3,6 @@ var _ = require('lodash');
 var angular = require('angular');
 var moment = require('moment');
 var paperhiveSources = require('paperhive-sources');
-var url = require('url');
 
 module.exports = function(app) {
 
@@ -28,12 +27,14 @@ module.exports = function(app) {
       .success(function(article) {
         $scope.article = article;
 
+        // get pdf url
         try {
-          $scope.pdfSource = paperhiveSources.getAccessiblePdfUrl(article);
-        } catch (e) {
+          $scope.pdfSource = paperhiveSources({apiUrl: config.apiUrl})
+            .getAccessiblePdfUrl(article);
+        } catch(e) {
           notificationService.notifications.push({
             type: 'error',
-            message: e.message
+            message: 'PDF cannot be displayed: ' + e.message
           });
         }
 
