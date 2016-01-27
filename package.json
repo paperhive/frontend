@@ -44,7 +44,7 @@
     "karma-phantomjs-launcher": "^0.2.1",
     "lodash": "^3.10.1",
     "merge-stream": "^1.0.0",
-    "paperhive-sources": "^2.1.0",
+    "paperhive-sources": "^3.0.0",
     "phantomjs": "^1.9.19",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",

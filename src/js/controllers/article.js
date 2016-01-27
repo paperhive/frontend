@@ -28,26 +28,14 @@ module.exports = function(app) {
       .success(function(article) {
         $scope.article = article;
 
-        function getPdfSource() {
-          var pdfUrl = paperhiveSources.getPdfUrl(article);
-
-          if (!pdfUrl) {
-            notificationService.notifications.push({
-              type: 'error',
-              message: 'Article has no associated PDF'
-            });
-            return;
-          }
-
-          if (!pdfUrl.hasCors || url.parse(pdfUrl.url).protocol === 'http') {
-            return config.apiUrl + '/proxy?url=' +
-              encodeURIComponent(pdfUrl.url);
-          }
-
-          return pdfUrl.url;
+        try {
+          $scope.pdfSource = paperhiveSources.getAccessiblePdfUrl(article);
+        } catch (e) {
+          notificationService.notifications.push({
+            type: 'error',
+            message: e.message
+          });
         }
-
-        $scope.pdfSource = getPdfSource();
 
         // Cut description down to 150 chars, cf.
         // <http://moz.com/learn/seo/meta-description>
