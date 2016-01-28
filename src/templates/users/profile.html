@@ -46,35 +46,4 @@
       </div>
     </div>
   </div>
-
-  <div class="col-sm-7" ng-controller="UserArticlesCtrl" ng-if="user">
-    <div ng-if="auth.user._id === user._id">
-      <p class="text-right">
-      <a href="./articles/new" class="btn btn-default">Add an article</a>
-      </p>
-    </div>
-
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">Authored articles</h4>
-      </div>
-      <div class="panel-body">
-        <div class="alert alert-info">
-          <h5><strong>
-              <i class="fa fa-fw fa-info-circle"></i>
-              Note on arXiv articles
-            </strong></h5>
-            <p>
-            Currently, we cannot determine which arXiv articles are authored by
-            a user due to missing ORCID integration in the arXiv API.
-            </p>
-            <p>
-            In order to allow us to list your articles here, please head over
-            to <a href="http://arxiv.org">arXiv.org</a> and link your arXiv
-            account to your ORCID account.
-            </p>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
