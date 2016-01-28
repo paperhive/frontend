@@ -56,8 +56,7 @@ module.exports = function(app) {
 
       // store/remove token in local storage (if requested by user)
       $rootScope.$watch(function() {
-        return authService.user && authService.user.settings &&
-            authService.user.settings.remember && authService.token;
+        return authService.token;
       }, function(token) {
         if (token) {
           $window.localStorage.token = token;
