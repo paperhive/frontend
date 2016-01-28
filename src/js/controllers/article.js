@@ -2,6 +2,7 @@
 var _ = require('lodash');
 var angular = require('angular');
 var moment = require('moment');
+var paperhiveSources = require('paperhive-sources');
 
 module.exports = function(app) {
 
@@ -21,14 +22,20 @@ module.exports = function(app) {
       // fetch article
       $http.get(
         config.apiUrl +
-          '/articles/' + $routeSegment.$routeParams.articleId
+          '/documents/' + $routeSegment.$routeParams.articleId
       )
       .success(function(article) {
         $scope.article = article;
 
-        if (article.source.type === 'arxiv') {
-          $scope.pdfSource =
-            'http://arxiv.org/pdf/' + article.source.id + '.pdf';
+        // get pdf url
+        try {
+          $scope.pdfSource = paperhiveSources({apiUrl: config.apiUrl})
+            .getAccessiblePdfUrl(article);
+        } catch(e) {
+          notificationService.notifications.push({
+            type: 'error',
+            message: 'PDF cannot be displayed: ' + e.message
+          });
         }
 
         // Cut description down to 150 chars, cf.
@@ -60,10 +67,10 @@ module.exports = function(app) {
 
       $http.get(
         config.apiUrl +
-          '/articles/' + $routeSegment.$routeParams.articleId + '/discussions'
+          '/documents/' + $routeSegment.$routeParams.articleId + '/discussions'
       )
-      .success(function(discussions) {
-        $scope.discussions.stored = discussions;
+      .success(function(ret) {
+        $scope.discussions.stored = ret.discussions;
       })
       .error(function(data) {
         notificationService.notifications.push({
@@ -116,16 +123,17 @@ module.exports = function(app) {
       };
 
       $scope.addDiscussion = function(comment) {
-        var originalComment = _.cloneDeep(_.pick(
+        var disc = _.cloneDeep(_.pick(
           comment, ['title', 'body', 'target', 'tags']
         ));
 
+        disc.target.document = $routeSegment.$routeParams.articleId;
+        disc.target.documentRevision = $scope.article.revision;
+
         $scope.submitting = true;
         return $http.post(
-          config.apiUrl +
-            '/articles/' + $routeSegment.$routeParams.articleId +
-            '/discussions',
-          {originalAnnotation: originalComment}
+          config.apiUrl + '/discussions',
+          disc
         )
         .success(function(discussion) {
           $scope.submitting = false;
@@ -139,15 +147,13 @@ module.exports = function(app) {
       };
 
       $scope.originalUpdate = function(discussion, comment) {
-        var originalComment = _.cloneDeep(_.pick(
+        var disc = _.cloneDeep(_.pick(
           comment, ['title', 'body', 'target', 'tags']
         ));
 
         return $http.put(
-          config.apiUrl +
-            '/articles/' + $routeSegment.$routeParams.articleId +
-            '/discussions/' + discussion.index,
-          {originalAnnotation: originalComment}
+          config.apiUrl + '/discussions/' + discussion.id,
+          disc
         )
         .success(function(newDiscussion) {
           angular.copy(newDiscussion, discussion);
@@ -156,13 +162,13 @@ module.exports = function(app) {
       };
 
       $scope.discussionDelete = function(discussion) {
-        return $http.delete(
-          config.apiUrl +
-            '/articles/' + $routeSegment.$routeParams.articleId +
-            '/discussions/' + discussion.index
-        )
+        return $http({
+          url: config.apiUrl +  '/discussions/' + discussion.id,
+          method: 'DELETE',
+          headers: {'If-Match': '"' + discussion.revision + '"'}
+        })
         .success(function() {
-          _.remove($scope.discussions.stored, {index: discussion.index});
+          _.remove($scope.discussions.stored, {id: discussion.id});
         })
           .error(notificationService.httpError('could not delete discussion'));
       };
@@ -171,11 +177,9 @@ module.exports = function(app) {
         reply = _.cloneDeep(_.pick(
           reply, ['body']
         ));
+        reply.discussion = discussion.id;
         return $http.post(
-          config.apiUrl +
-            '/articles/' + $routeSegment.$routeParams.articleId +
-            '/discussions/' + discussion.index +
-            '/replies',
+          config.apiUrl + '/replies',
           reply
         )
         .success(function(reply) {
@@ -185,32 +189,27 @@ module.exports = function(app) {
       };
 
       $scope.replyUpdate = function(discussion, replyOld, replyNew) {
-        var replyId = replyOld._id;
-        replyNew = _.cloneDeep(_.pick(
-          replyNew, ['body']
-        ));
-        return $http.put(
-          config.apiUrl +
-            '/articles/' + $routeSegment.$routeParams.articleId +
-            '/discussions/' + discussion.index +
-            '/replies/' + replyId,
-          replyNew
-        )
+        var replyId = replyOld.id;
+        return $http({
+          url: config.apiUrl + '/replies/' + replyId,
+          method: 'PUT',
+          data: {body: replyNew.body},
+          headers: {'If-Match': '"' + replyOld.revision + '"'}
+        })
         .success(function(reply) {
           angular.copy(reply, replyOld);
         })
           .error(notificationService.httpError('could not add reply'));
       };
 
-      $scope.replyDelete = function(discussion, replyId) {
-        return $http.delete(
-          config.apiUrl +
-            '/articles/' + $routeSegment.$routeParams.articleId +
-            '/discussions/' + discussion.index +
-            '/replies/' + replyId
-        )
+      $scope.replyDelete = function(discussion, reply) {
+        return $http({
+          url: config.apiUrl + '/replies/' + reply.id,
+          method: 'DELETE',
+          headers: {'If-Match': '"' + reply.revision + '"'}
+        })
         .success(function(data) {
-          _.remove(discussion.replies, {_id: replyId});
+          _.remove(discussion.replies, {id: reply.id});
         })
         .error(notificationService.httpError('could not delete reply'));
       };

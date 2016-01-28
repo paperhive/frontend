@@ -36,7 +36,7 @@ module.exports = function(app) {
           scope.originalState = {};
           // update original comment
           scope.originalEditCtrl = ['$scope', function($scope) {
-            $scope.copy = angular.copy($scope.discussion.originalAnnotation);
+            $scope.copy = angular.copy($scope.discussion);
             $scope.originalUpdate = function() {
               $scope.originalState.submitting = true;
               $q.when(scope.onOriginalUpdate(

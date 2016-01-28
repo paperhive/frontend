@@ -9,12 +9,12 @@ module.exports = function(app) {
 
       $scope.submitApproved = function() {
         $scope.submitting = true;
-        $http.post(config.apiUrl + '/articles/sources', undefined, {
-          params: {handle: $scope.handle}
+        $http.post(config.apiUrl + '/documents/', undefined, {
+          params: {url: $scope.handle}
         })
           .success(function(article) {
             $scope.submitting = false;
-            $location.path('/articles/' + article._id);
+            $location.path('/articles/' + article.id);
           })
           .error(function(data) {
             $scope.submitting = false;

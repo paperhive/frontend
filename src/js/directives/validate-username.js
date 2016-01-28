@@ -15,12 +15,12 @@ module.exports = function(app) {
             // own username
             if (ctrl.$isEmpty(modelValue) ||
                 (authService.user &&
-                 authService.user.username === modelValue)) {
+                 authService.user.user.username === modelValue)) {
               return $q.when();
             }
             var defer = $q.defer();
 
-            $http.head(config.apiUrl + '/users/byUsername/' + modelValue)
+            $http.get(config.apiUrl + '/people/username/' + modelValue)
               .success(function(data) {
                 defer.reject('The username is already taken.');
               })

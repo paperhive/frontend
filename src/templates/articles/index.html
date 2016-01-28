@@ -6,26 +6,11 @@
           <h2 class="ph-lg-margin-top">{{article.title}}</h2>
           <h4 class="ph-lg-margin-bottom">
             <span ng-repeat="author in article.authors">
-              {{author}}{{$last ? '' :', '}}
+              {{author.name}}{{$last ? '' :', '}}
             </span>
           </h4>
         </div>
       </div>
-      <!--div class="row">
-        <div class="col-md-12 text-right">
-          <a ng-if="pdfSource"
-             type="button"
-             target="_blank"
-             class="btn btn-default"
-             ng-href="{{pdfSource}}">
-            <i class="fa fa-fw fa-download"></i> Download
-          </a>
-          <a href="./{{'articles.discussions.new' | routeSegmentUrl}}"
-             class="btn btn-default" ng-disabled="!auth.user">
-            <i class="fa fa-fw fa-plus"></i> Add general comment
-          </a>
-        </div>
-      </div-->
     </div>
     <div class="ph-affix-container"
         element-position="subnavPosition"

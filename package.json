@@ -1,9 +1,10 @@
 {
   "name": "paperhive-frontend",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "PaperHive frontend",
   "scripts": {
     "build": "gulp",
+    "install-deps": "npm install && bower install",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "karma start --single-run",
     "test:e2e": "gulp test"
@@ -23,7 +24,7 @@
     "gulp-batch": "^1.0.5",
     "gulp-cachebust": "^0.0.6",
     "gulp-connect": "^2.2.0",
-    "gulp-eslint": "^1.0.0",
+    "gulp-eslint": "^1.1.0",
     "gulp-htmlhint": "^0.3.0",
     "gulp-htmlmin": "^1.2.0",
     "gulp-if": "^2.0.0",
@@ -43,6 +44,7 @@
     "karma-phantomjs-launcher": "^0.2.1",
     "lodash": "^3.10.1",
     "merge-stream": "^1.0.0",
+    "paperhive-sources": "^4.0.1",
     "phantomjs": "^1.9.19",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",

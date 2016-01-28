@@ -2,7 +2,7 @@
   <!-- original comment -->
   <div class="ph-margin-row">
     <!-- avatar -->
-    <img gravatar-user="discussion.originalAnnotation.author"
+    <img gravatar-user="discussion.author"
         gravatar-size="38" class="ph-margin-avatar img-circle">
     <div class="ph-margin-link-default"
         ng-click="state.showReplies = !state.showReplies">
@@ -15,19 +15,19 @@
         <div ng-if="!originalState.editing" class="clearfix">
           <div class="ph-margin-info">
             <p class="ph-xs-margin-bottom">
-              <a href="./users/{{discussion.originalAnnotation.author.username}}">
-                {{discussion.originalAnnotation.author.displayName}}</a>
-              · <span am-time-ago="discussion.originalAnnotation.createdAt"></span>
+              <a href="./users/{{discussion.author.user.username}}">
+                {{discussion.author.displayName}}</a>
+              · <span am-time-ago="discussion.createdAt"></span>
             </p>
           </div>
-          <div ng-if="!discussion.originalAnnotation.body">
-            <kramjax body="discussion.originalAnnotation.title"></kramjax>
+          <div ng-if="!discussion.body">
+            <kramjax body="discussion.title"></kramjax>
           </div>
-          <div ng-if="discussion.originalAnnotation.body">
+          <div ng-if="discussion.body">
             <p class="ph-margin-title ph-no-margin ph-xs-margin-bottom">
-              <kramjax body="discussion.originalAnnotation.title"></kramjax>
+              <kramjax body="discussion.title"></kramjax>
             </p>
-            <kramjax body="discussion.originalAnnotation.body"></kramjax>
+            <kramjax body="discussion.body"></kramjax>
           </div>
           <div class="pull-right">
             <span ng-click="$event.stopPropagation()" class="dropdown" uib-dropdown>
@@ -36,17 +36,17 @@
               </button>
               <ul class="dropdown-menu dropdown-menu-right ph-margin-dropdown">
                 <li>
-                  <a ng-click="changePath(filterRouteSegmentUrl('articles.discussions.thread', {discussionIndex: discussion.index}))">
+                  <a ng-click="changePath(filterRouteSegmentUrl('articles.discussions.thread', {discussionId: discussion.id}))">
                     <i class="fa fa-fw fa-comments"></i> Show discussion view
                   </a>
                 </li>
-                <li ng-if="auth.user._id === discussion.originalAnnotation.author._id"
+                <li ng-if="auth.user.id === discussion.author.id"
                     ng-class="{disabled: originalState.submitting}">
                   <a ng-click="originalState.editing = true; $event.stopPropagation()" href>
                     <i class="fa fa-fw fa-pencil"></i> Edit
                   </a>
                 </li>
-                <li ng-if="auth.user._id === discussion.originalAnnotation.author._id"
+                <li ng-if="auth.user.id === discussion.author.id"
                     ng-class="{disabled: originalState.submitting ||
                       discussion.replies.length}">
                   <a ng-if="!discussion.replies.length && !originalState.submitting"
@@ -63,7 +63,7 @@
                     <i class="fa fa-fw fa-times"></i> Delete
                   </a>
                 </li>
-                <li ng-if="auth.user._id !== discussion.originalAnnotation.author._id">
+                <li ng-if="auth.user.id !== discussion.author.id">
                   <a href><i class="fa fa-fw fa-flag"></i> Flag</a>
                 </li>
               </ul>
@@ -161,7 +161,7 @@
                 <ul class="dropdown-menu dropdown-menu-right ph-margin-dropdown">
                   <li>
                     <a href="./{{'articles.discussions.thread' | routeSegmentUrl:
-                      {discussionIndex: discussion.index} }}#{{reply._id}}">
+                      {discussionId: discussion.id} }}#{{reply._id}}">
                       <i class="fa fa-fw fa-comments"></i> Show discussion view
                     </a>
                   </li>

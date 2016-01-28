@@ -4,11 +4,11 @@ module.exports = function(app) {
     function(config, $http, $q, $rootScope, $window) {
       var authService = {
         inProgress: false,
-        orcidUrl: config.apiUrl + '/oauth/orcid?app_callback=' +
+        orcidUrl: config.apiUrl + '/auth/orcid/initiate?returnUrl=' +
           encodeURIComponent(
             $window.location.origin +
             config.baseHref +
-            '/oauth/orcid'
+            'return'
           )
       };
 
@@ -24,23 +24,23 @@ module.exports = function(app) {
         authService.inProgress = true;
         $http
         .post(
-          config.apiUrl + '/signin',
+          config.apiUrl + '/auth/signin',
           null,
           {
-            headers: {'X-Auth-Token': token},
+            headers: {'Authorization': 'token ' + token},
             timeout: 10000
           }
         )
         .success(function(data, status) {
           authService.inProgress = false;
-          authService.user = data.user;
+          authService.user = data.person;
           authService.token = token;
 
           // store token in session storage
           $window.sessionStorage.token = data.token;
 
           // use token for all subsequent HTTP requests to API
-          $http.defaults.headers.common['X-Auth-Token'] = data.token;
+          $http.defaults.headers.common['Authorization'] = 'token ' + data.token;
 
           deferred.resolve(data);
         })
@@ -56,8 +56,7 @@ module.exports = function(app) {
 
       // store/remove token in local storage (if requested by user)
       $rootScope.$watch(function() {
-        return authService.user && authService.user.settings &&
-            authService.user.settings.remember && authService.token;
+        return authService.token;
       }, function(token) {
         if (token) {
           $window.localStorage.token = token;

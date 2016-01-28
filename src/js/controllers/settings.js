@@ -3,8 +3,9 @@ var _ = require('lodash');
 
 module.exports = function(app) {
 
-  app.controller('SettingsCtrl', ['$scope', '$http', 'config', 'authService',
-    function($scope, $http, config, authService) {
+  app.controller('SettingsCtrl', [
+    '$scope', '$http', 'config', 'authService', 'notificationService',
+    function($scope, $http, config, authService, notificationService) {
       $scope.tab = 'profile';
       $scope.auth = authService;
 
@@ -17,18 +18,17 @@ module.exports = function(app) {
       $scope.syncFromOrcid = function() {
         $scope.busy = 'sync';
 
-        var account = _.find($scope.user.accounts, {type: 'orcid'});
+        var account = _.findLast($scope.user.externalIds, {type: 'orcid'});
 
         $http.put(config.apiUrl +
-                  '/users/' + $scope.user._id + '/syncFromOrcid/' + account.id).
+                  '/people/' + $scope.user.id + '/syncFromOrcid').
           success(function(data) {
             $scope.busy = false;
             authService.user = data;
           }).
           error(function(data) {
             $scope.busy = false;
-            // TODO
-            //console.log(data);
+            notificationService.httpError('could not sync data');
           });
       };
 
@@ -38,21 +38,23 @@ module.exports = function(app) {
 
         var obj = _.cloneDeep($scope.user);
 
+        // TODO revisit. whitelist?
         // remove all keys which we are not allowed to set
-        var deleteKeys = ['_id', 'accounts', 'email', 'gravatarMd5',
-          'firstSignin', 'createdAt', 'updatedAt'];
+        var deleteKeys = ['id', 'gravatarMd5', 'firstSignin',
+          'createdAt', 'updatedAt', 'externalIds'];
         _.forEach(deleteKeys, function(key) { delete obj[key]; });
 
+        delete obj.user.createdAt;
+
         // save
-        $http.put(config.apiUrl + '/users/' + $scope.user._id, obj).
+        $http.put(config.apiUrl + '/people/' + $scope.user.id, obj).
           success(function(data) {
             $scope.busy = false;
             authService.user = data;
           }).
           error(function(data) {
             $scope.busy = false;
-            // TODO
-            //console.log(data);
+            notificationService.httpError('could not save data');
           });
       };
     }

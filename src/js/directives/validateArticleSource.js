@@ -43,8 +43,9 @@ module.exports = function(app) {
                 if (status === 404) {
                   defer.reject('Article source is not recognized');
                 }
-                defer.reject('An error occured while checking the article' +
-                             'source');
+                defer.reject(
+                  'An error occured while checking the article source'
+                );
               });
               return defer.promise;
             };

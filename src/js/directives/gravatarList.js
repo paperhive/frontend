@@ -18,7 +18,7 @@ module.exports = function(app) {
               scope.participants = _.pluck(scope.discussion.replies, 'author');
               // prepend original annotation author
               scope.participants.unshift(
-                scope.discussion.originalAnnotation.author
+                scope.discussion.author
               );
 
               // make list unique w.r.t. _id

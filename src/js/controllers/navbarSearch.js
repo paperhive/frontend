@@ -10,11 +10,13 @@ module.exports = function(app) {
       ) {
         $scope.search = {};
         $scope.phSearch = function(query, limit) {
-          return $http.get(config.apiUrl + '/articles/', {
-            params: {q: query, limit: limit}
+          return $http.get(config.apiUrl + '/documents/', {
+            params: {q: query, limit: limit, restrictToLatest: true}
           })
           .then(
-            function(response) {return response.data;},
+            function(response) {
+              return response.data.documents;
+            },
             function(response) {
               notificationService.notifications.push({
                 type: 'error',
@@ -26,7 +28,7 @@ module.exports = function(app) {
 
         $scope.goToArticle = function(item, model, label) {
           $location.path($routeSegment.getSegmentUrl(
-            'articles', {articleId: item._id}
+            'articles', {articleId: item.id}
           ));
         };
       }

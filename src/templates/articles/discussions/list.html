@@ -17,7 +17,7 @@
   <ul class="list-group">
     <li class="list-group-item" ng-repeat="discussion in discussions.stored">
     <a href="./{{'articles.discussions.thread' | routeSegmentUrl:
-      {discussionIndex: discussion.index} }}"
+      {discussionId: discussion.id} }}"
       >
       <span
         ng-if="discussion.replies.length > 0"
@@ -27,23 +27,22 @@
     </span></a>
       <h4>
         <a href="./{{'articles.discussions.thread' | routeSegmentUrl:
-            {discussionIndex: discussion.index} }}">
-          {{discussion.originalAnnotation.title}}</a>
+            {discussionId: discussion.id} }}">
+          {{discussion.title}}</a>
         <ul
-          ng-if="discussion.originalAnnotation.tags.length > 0"
+          ng-if="discussion.tags.length > 0"
           class="ph-tags list-inline"
           >
-          <li ng-repeat="tag in discussion.originalAnnotation.tags">
+          <li ng-repeat="tag in discussion.tags">
             <a href="#" class="btn btn-default">{{tag}}</a>
           </li>
         </ul>
       </h4>
       <span class="ph-discussion-subtitle">
-        #{{discussion.index}} opened
-        <span am-time-ago="discussion.originalAnnotation.createdAt"></span>
+        opened <span am-time-ago="discussion.createdAt"></span>
         by
-        <a href="./users/{{discussion.originalAnnotation.author.username}}">
-          {{discussion.originalAnnotation.author.displayName}}
+        <a href="./users/{{discussion.author.user.username}}">
+          {{discussion.author.displayName}}
         </a>
       </span>
     </li>
