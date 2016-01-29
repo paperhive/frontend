@@ -2,6 +2,7 @@
   "ambientDependencies": {
     "angular": "github:DefinitelyTyped/DefinitelyTyped/angularjs/angular.d.ts#3bebbe1baee04846cc46ed7249e8117e4cd7c7ff",
     "jquery": "github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#cf2a968f0edd7d30773f7d23fe3708fa029d5ab7",
+    "lodash": "github:DefinitelyTyped/DefinitelyTyped/lodash/lodash.d.ts#df712b17fa4737fdb3eb52118b1465cd3be81a1d",
     "pdf": "github:DefinitelyTyped/DefinitelyTyped/pdf/pdf.d.ts#de5a50a5f319931dcc8c43b215945eabe17189dc",
     "rangy": "github:DefinitelyTyped/DefinitelyTyped/rangy/rangy.d.ts#e57adf88d6d06b417320e65f0db7d279effa932e"
   }
