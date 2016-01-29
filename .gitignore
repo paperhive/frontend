@@ -5,3 +5,5 @@ tmp
 build
 config.json
 paperhive-frontend-deploy
+out
+typings
