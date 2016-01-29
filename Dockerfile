@@ -16,8 +16,7 @@ ENV BOWER_ALLOW_ROOT="true"
 #ENV PHANTOMJS_CDNURL="http://cnpmjs.org/downloads"
 
 # copy dependency definitions and install them (may be cached!)
-COPY package.json /paperhive-frontend/
-COPY bower.json /paperhive-frontend/
+COPY package.json bower.json typings.json /paperhive-frontend/
 RUN npm run install-deps
 
 # copy and build src
