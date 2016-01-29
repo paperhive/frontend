@@ -6,6 +6,8 @@
  * (https://github.com/paperhive/paperhive-frontend/blob/master/LICENSE)
  */
 
+// import jquery before angular (so angular can use it instead of jqlite)
+import 'jquery';
 import * as angular from 'angular';
 
 import config from './config';

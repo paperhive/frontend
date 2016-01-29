@@ -14,7 +14,6 @@
   "license": "GPL-3.0",
   "private": true,
   "devDependencies": {
-    "angular": "^1.4.9",
     "bower": "^1.6.5",
     "browserify": "^13.0.0",
     "browserify-shim": "^3.8.11",
@@ -152,6 +151,7 @@
     }
   },
   "dependencies": {
+    "angular": "^1.4.9",
     "jquery": "^2.2.0"
   }
 }
