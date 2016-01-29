@@ -1,7 +1,7 @@
 'use strict';
 
-var _ = require('lodash');
-var $ = require('jquery');
+const _ = require('lodash');
+const $ = require('jquery');
 
 module.exports = function(app) {
 
@@ -11,9 +11,9 @@ module.exports = function(app) {
       return {
         restrict: 'A',
         link: function(scope, element, attrs) {
-          var parsedToc = $parse(attrs.toc);
-          var parsedOffset = $parse(attrs.tocScrollspyOffset);
-          var toc;
+          const parsedToc = $parse(attrs.toc);
+          const parsedOffset = $parse(attrs.tocScrollspyOffset);
+          let toc;
 
           function getElements() {
             return element.find('[id]').filter(function(index, el) {
@@ -28,14 +28,14 @@ module.exports = function(app) {
             }
             if (!elements.length) {return [];}
 
-            var toc = [];
-            var currentLevel;
+            const toc = [];
+            let currentLevel;
             while (elements.length &&
                    (currentLevel = parseInt($(elements[0]).attr('toc-level'))) >
                    parentLevel
                   ) {
-              var el = $(elements[0]);
-              var newTocElement = {
+              const el = $(elements[0]);
+              const newTocElement = {
                 id: el.attr('id'),
                 text: el.attr('toc-text') || el.text()
               };
@@ -54,18 +54,18 @@ module.exports = function(app) {
 
           function updateScrollspy() {
             function getScrollspyId() {
-              var elements = _.sortBy(_.map(getElements(), function(element) {
-                var rect = element.getBoundingClientRect();
+              const elements = _.sortBy(_.map(getElements(), function(element) {
+                const rect = element.getBoundingClientRect();
                 return {
                   id: $(element).attr('id'),
                   offset: rect.top
                 };
               }), 'offset');
-              var offset = parsedOffset(scope) || 0;
+              const offset = parsedOffset(scope) || 0;
 
               if (!elements.length) {return;}
 
-              var id = elements[0].id;
+              let id = elements[0].id;
               _.forEach(elements, function(element) {
                 if (element.offset < offset) {
                   id = element.id;
@@ -77,7 +77,7 @@ module.exports = function(app) {
 
             function applyScrollspyId(toc, id) {
               if (!toc) {return;}
-              var contained = false;
+              let contained = false;
               _.forEach(toc, function(entry) {
                 entry.active = false;
                 if (applyScrollspyId(entry.subToc, id) || entry.id === id) {
@@ -89,7 +89,7 @@ module.exports = function(app) {
             }
 
             scope.$apply(function() {
-              var id = getScrollspyId();
+              const id = getScrollspyId();
               applyScrollspyId(toc, id);
             });
           }

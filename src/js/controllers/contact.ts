@@ -1,10 +1,10 @@
 'use strict';
 
-var angular = require('angular');
+const angular = require('angular');
 
 module.exports = function(app) {
   app.controller('ContactMapCtrl', ['$scope', function($scope) {
-    var office = {
+    const office = {
       lat: 52.53849,
       lng: 13.38520
     };

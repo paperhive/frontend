@@ -6,7 +6,7 @@ module.exports = function(app) {
     function($scope, $http, config) {
 
       $scope.hasError = function(field) {
-        var form = $scope.subscribeForm;
+        const form = $scope.subscribeForm;
         return (form.$submitted || form[field].$touched) &&
           form[field].$invalid;
       };

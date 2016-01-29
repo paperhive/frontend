@@ -2,7 +2,7 @@
 module.exports = function(app) {
   app.factory('notificationService', [
     function() {
-      var service = {
+      const service = {
         notifications: []
       };
       service.httpError = function(msg) {

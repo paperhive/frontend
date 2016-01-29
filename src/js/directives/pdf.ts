@@ -1,6 +1,6 @@
 'use strict';
-var _ = require('lodash');
-var PDFJS = require('pdfjs');
+const _ = require('lodash');
+const PDFJS = require('pdfjs');
 
 module.exports = function(app) {
   app.directive('pdf', ['$parse', function($parse) {
@@ -8,18 +8,18 @@ module.exports = function(app) {
       restrict: 'E',
       link: function(scope, element, attrs) {
 
-        var renderPdf = function() {
-          var url = scope.$eval(attrs.pdfUrl);
-          var textOverlay = scope.$eval(attrs.pdfTextOverlay);
+        const renderPdf = function() {
+          const url = scope.$eval(attrs.pdfUrl);
+          const textOverlay = scope.$eval(attrs.pdfTextOverlay);
 
-          var progress = {
+          const progress = {
             downloading: false,
             rendering: false,
             finished: false,
             numPages: undefined,
             numRenderedPages: undefined
           };
-          var progressParsed = $parse(attrs.pdfProgress);
+          const progressParsed = $parse(attrs.pdfProgress);
           if (progressParsed && progressParsed.assign) {
             progressParsed.assign(scope, progress);
           }
@@ -34,37 +34,37 @@ module.exports = function(app) {
 
             // Fetch the PDF document from the URL using promises
             PDFJS.getDocument(url).then(function(pdf) {
-              var wrapperWidth = element[0].offsetWidth;
+              const wrapperWidth = element[0].offsetWidth;
               if (wrapperWidth === 0) {
                 // TODO make sure this error doesn't get silently intercepted
                 throw Error('Invalid wrapper width');
               }
 
-              var showPage = function(page) {
+              const showPage = function(page) {
                 // Scale such that the width of the viewport is the fills the
                 // wrapper.
-                var scale = 1.0;
-                var viewport = page.getViewport(scale);
+                let scale = 1.0;
+                let viewport = page.getViewport(scale);
                 scale = wrapperWidth / viewport.width;
                 viewport = page.getViewport(scale);
 
                 // Prepare canvas using PDF page dimensions
-                var link = document.createElement('a');
+                const link = document.createElement('a');
                 // From <http://stackoverflow.com/a/14717011/353337>
                 // link.setAttribute('href', './articles/0af5e13/text?scrollTo=pageContainer'.concat(page.pageIndex+1));
                 //
                 // TODO: solve this outside the pdf directive
                 link.setAttribute('href', './articles/0af5e13/text');
-                var canvas = document.createElement('canvas');
+                const canvas = document.createElement('canvas');
                 canvas.setAttribute('class', 'ph-page');
                 link.appendChild(canvas);
 
-                var context = canvas.getContext('2d');
+                const context = canvas.getContext('2d');
                 canvas.height = viewport.height;
                 canvas.width = viewport.width;
 
                 // Render PDF page into canvas context
-                var renderContext = {
+                const renderContext = {
                   canvasContext: context,
                   viewport: viewport
                 };
@@ -73,7 +73,7 @@ module.exports = function(app) {
                 element.append(link);
               };
 
-              for (var i = 1; i < pdf.numPages; i++) {
+              for (let i = 1; i < pdf.numPages; i++) {
                 // Using promise to fetch the page
                 pdf.getPage(i).then(showPage);
               }
@@ -82,7 +82,7 @@ module.exports = function(app) {
             });
           } else {
             // Complex viewer with bells & whistles
-            var pdfViewer = new PDFJS.PDFViewer({
+            const pdfViewer = new PDFJS.PDFViewer({
               // use element as container and viewer element
               // (container is only used for size measurements and events)
               container: element[0],
@@ -103,7 +103,7 @@ module.exports = function(app) {
               progress.renderedTextPages = [];
               // set finished = true once all pages have been rendered as
               // canvas and text
-              var checkFinished = function() {
+              const checkFinished = function() {
                 if (progress.renderedPages.length === pdf.numPages &&
                     progress.renderedTextPages.length === pdf.numPages) {
                   _.assign(progress, {
@@ -147,15 +147,15 @@ module.exports = function(app) {
             // --------------------------------------------------------------------
             //// Get text width
             //pdf.then(function(pdf) {
-            //  var maxPages = pdf.pdfInfo.numPages;
+            //  const maxPages = pdf.pdfInfo.numPages;
             //  maxPages = 1;
-            //  for (var j = 1; j <= maxPages; j++) {
-            //    var page = pdf.getPage(j);
+            //  for (const j = 1; j <= maxPages; j++) {
+            //    const page = pdf.getPage(j);
             //    page.then(function(page) {
-            //      var textContent = page.getTextContent();
-            //      var viewport = page.getViewport(pdfViewer.currentScale);
+            //      const textContent = page.getTextContent();
+            //      const viewport = page.getViewport(pdfViewer.currentScale);
             //      textContent.then(function(content) {
-            //        for (var i = 0; i < content.items.length; i++) {
+            //        for (const i = 0; i < content.items.length; i++) {
             //          // Well...
 
             //          // Check out the discussion at
@@ -170,7 +170,7 @@ module.exports = function(app) {
             //            viewport.transform,
             //            content.items[i].transform
             //          );
-            //          var fontHeight = Math.sqrt((tx[2] * tx[2]) + (tx[3] * tx[3]));
+            //          const fontHeight = Math.sqrt((tx[2] * tx[2]) + (tx[3] * tx[3]));
             //          //console.log(tx[2]);
             //          //console.log(tx[3]);
             //          //console.log(fontHeight);
@@ -179,11 +179,11 @@ module.exports = function(app) {
             //          // <https://dev.opera.com/articles/understanding-the-css-transforms-matrix/>.
             //          console.log(content.items[i]);
             //          // x-position of the top-right point
-            //          var extent = tx[4];
+            //          const extent = tx[4];
             //          //  tx[0] * content.items[i].width/fontHeight +
             //          //  tx[4];
             //          console.log('tx[4] = ', extent);
-            //          var actualWidth = pdfViewer.currentScale * content.items[i].width;
+            //          const actualWidth = pdfViewer.currentScale * content.items[i].width;
             //        }
             //      })
             //    })
@@ -192,18 +192,18 @@ module.exports = function(app) {
             // --------------------------------------------------------------------
 
             // --------
-            //var container = document.createElement('div');
+            //const container = document.createElement('div');
             //container.id = 'container';
             //element.append(container);
 
             //// Loading document.
-            //var PAGE_TO_VIEW = 1;
-            //var SCALE = 1.0;
+            //const PAGE_TO_VIEW = 1;
+            //const SCALE = 1.0;
             //PDFJS.getDocument(scope.url).then(function(pdfDocument) {
             //  // Document loaded, retrieving the page.
             //  return pdfDocument.getPage(PAGE_TO_VIEW).then(function(pdfPage) {
             //    // Creating the page view with default parameters.
-            //    var pdfPageView = new PDFJS.PDFPageView({
+            //    const pdfPageView = new PDFJS.PDFPageView({
             //      container: container,
             //      id: PAGE_TO_VIEW,
             //      scale: SCALE,

@@ -1,6 +1,6 @@
 'use strict';
 
-var angular = require('angular');
+const angular = require('angular');
 
 module.exports = function(app) {
 
@@ -19,20 +19,20 @@ module.exports = function(app) {
       return {
         restrict: 'A',
         link: function(scope, element, attrs) {
-          var position = {};
-          var setter = $parse(attrs.elementPosition);
+          const position = {};
+          const setter = $parse(attrs.elementPosition);
           if (setter && setter.assign) {
             setter.assign(scope, position);
           } else {
             console.warn('Cannot assign position');
           }
 
-          var positionHandler = function(e) {
-            var rect = element[0].getBoundingClientRect();
+          const positionHandler = function(e) {
+            const rect = element[0].getBoundingClientRect();
             // angular.copy and _.clone do *not* work here -> copy manually
-            var properties =
+            const properties =
               ['bottom', 'height', 'left', 'right', 'top', 'width'];
-            var newPosition = {};
+            const newPosition = {};
             angular.forEach(properties, function(property) {
               newPosition[property] = rect[property];
             });
@@ -58,7 +58,7 @@ module.exports = function(app) {
           // detach event handler upon destruction of element
           // $destroy seems to be emitted multiple times, so we only
           // clean up once
-          var destroyed = false;
+          let destroyed = false;
           element.on('$destroy', function() {
             if (!destroyed) {
               element.removeResize(positionHandler);

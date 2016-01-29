@@ -3,7 +3,7 @@
 module.exports = function(app) {
   // TODO: how to load+configure this beast via broserify/require()?!
   /*
-  var MathJax = require('MathJax');
+  const MathJax = require('MathJax');
   */
 
   MathJax.Hub.Config({

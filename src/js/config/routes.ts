@@ -5,7 +5,7 @@ module.exports = function(app) {
     function($routeSegmentProvider, $routeProvider) {
 
       // definition of metadata
-      var meta = {
+      const meta = {
         main: {
           title: 'PaperHive · The coworking hub for researchers',
           description: 'Greatly simplifying research communication and ' +

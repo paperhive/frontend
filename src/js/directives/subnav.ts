@@ -1,6 +1,6 @@
 'use strict';
-var angular = require('angular');
-var $ = require('jquery');
+const angular = require('angular');
+const $ = require('jquery');
 
 module.exports = function(app) {
 
@@ -16,12 +16,12 @@ module.exports = function(app) {
           scope.collapsed = true;
 
           // get ul
-          var ul = element.find('ul')[0];
+          const ul = element.find('ul')[0];
           if (!ul) {
             return;
           }
 
-          var collapse = function() {
+          const collapse = function() {
             $rootScope.$apply(function() {
               scope.collapsed = true;
             });
@@ -38,13 +38,13 @@ module.exports = function(app) {
             }
 
             // get a
-            var a = li.children[0];
+            const a = li.children[0];
             if (!a || a.nodeName !== 'A') {
               return;
             }
 
             // target
-            var target = angular.element(li).attr('subnav-target');
+            const target = angular.element(li).attr('subnav-target');
 
             // add link
             angular.element(a).attr(
@@ -58,7 +58,7 @@ module.exports = function(app) {
             $rootScope.$watch(
               function() {return $routeSegment.name;},
               function(routeName) {
-                var el = angular.element(li);
+                const el = angular.element(li);
                 if ($routeSegment.startsWith(target)) {
                   el.addClass('active');
                 } else {

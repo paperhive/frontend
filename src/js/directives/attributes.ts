@@ -1,6 +1,6 @@
 'use strict';
 
-var angular = require('angular');
+const angular = require('angular');
 
 module.exports = function(app) {
   app.directive('attributes', [function() {

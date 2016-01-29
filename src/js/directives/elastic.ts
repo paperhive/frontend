@@ -1,6 +1,6 @@
 'use strict';
 
-var $ = require('jquery');
+const $ = require('jquery');
 
 module.exports = function(app) {
 
@@ -14,7 +14,7 @@ module.exports = function(app) {
         restrict: 'A',
         link: function($scope, element) {
 
-          var mirror = $('<textarea></textarea>');
+          const mirror = $('<textarea></textarea>');
           mirror.attr('class', element.attr('class'));
           mirror.css({
             position: 'absolute',
@@ -25,7 +25,7 @@ module.exports = function(app) {
 
           $($document[0].body).append(mirror);
 
-          var update = function() {
+          const update = function() {
             // set to block temporarily
             mirror.css('display', 'block');
 
@@ -36,7 +36,7 @@ module.exports = function(app) {
             mirror[0].value = element[0].value + '\n';
 
             // measure and set height
-            var newHeight = mirror[0].scrollHeight;
+            const newHeight = mirror[0].scrollHeight;
             if (newHeight) {
               element[0].style.height = newHeight + 'px';
             } else {
@@ -56,7 +56,7 @@ module.exports = function(app) {
           //element.resize(update);
 
           // remove handler and mirror element
-          //var destroyed = false;
+          //const destroyed = false;
           element.on('$destroy', function() {
             mirror.remove();
 

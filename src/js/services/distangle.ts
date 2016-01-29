@@ -9,18 +9,18 @@ module.exports = function(app) {
           throw(new Error('arrays must have same length'));
         }
 
-        var n = anchors.length;
-        var lsum = new Float64Array(n);
-        var asum = new Float64Array(n);
-        var span = new Float64Array(n);
-        var base = new Float64Array(n);
-        var clen = new Int32Array(n);
-        var backref = new Int32Array(n);
-        var icBeg = new Int32Array(n);
-        var icEnd = new Int32Array(n);
-        var pos = 0;
-        var ic;
-        var i;
+        const n = anchors.length;
+        const lsum = new Float64Array(n);
+        const asum = new Float64Array(n);
+        const span = new Float64Array(n);
+        const base = new Float64Array(n);
+        const clen = new Int32Array(n);
+        const backref = new Int32Array(n);
+        const icBeg = new Int32Array(n);
+        const icEnd = new Int32Array(n);
+        let pos = 0;
+        let ic;
+        let i;
 
         asum.set(anchors);
         span.set(sizes);
@@ -35,10 +35,10 @@ module.exports = function(app) {
         while (pos < n) {
           ic = backref[pos];
 
-          var didMerge = true;
+          let didMerge = true;
           while (didMerge) {
             didMerge = false;
-            var otherIc;
+            let otherIc;
 
             if (icBeg[ic] > 0) {
               // merge with left IC?
@@ -81,9 +81,9 @@ module.exports = function(app) {
         }
 
         // compute optimal base points
-        var optAnchors = new Float64Array(n);
+        const optAnchors = new Float64Array(n);
         pos = 0;
-        var offset;
+        let offset;
         while (pos < n) {
           ic = backref[pos];
           offset = 0.0;

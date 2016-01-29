@@ -2,7 +2,7 @@
 module.exports = function(app) {
   app.factory('authService', ['config', '$http', '$q', '$rootScope', '$window',
     function(config, $http, $q, $rootScope, $window) {
-      var authService = {
+      const authService = {
         inProgress: false,
         orcidUrl: config.apiUrl + '/auth/orcid/initiate?returnUrl=' +
           encodeURIComponent(
@@ -20,7 +20,7 @@ module.exports = function(app) {
         if (authService.inProgress) {
           return $q.reject('Already signing in.');
         }
-        var deferred = $q.defer();
+        const deferred = $q.defer();
         authService.inProgress = true;
         $http
         .post(
@@ -76,7 +76,7 @@ module.exports = function(app) {
       authService.signout = signout;
 
       // grab token from session or local storage
-      var token = $window.sessionStorage.token || $window.localStorage.token;
+      const token = $window.sessionStorage.token || $window.localStorage.token;
 
       // sign in if token is present
       if (token) {

@@ -6,7 +6,7 @@ export = function(app) {
     'metaService',
     [
       function() {
-        var service = {
+        const service = {
           data: {}
         };
         service.set = function(newData) {

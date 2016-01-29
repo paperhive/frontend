@@ -1,6 +1,6 @@
 'use strict';
 
-var angular = require('angular');
+const angular = require('angular');
 
 module.exports = function(app) {
 
@@ -17,16 +17,16 @@ module.exports = function(app) {
       return {
         restrict: 'A',
         link: function(scope, element, attrs) {
-          var size = {};
-          var setter = $parse(attrs.elementSize);
+          const size = {};
+          const setter = $parse(attrs.elementSize);
           if (setter && setter.assign) {
             setter.assign(scope, size);
           } else {
             console.warn('Cannot assign size');
           }
 
-          var resizeHandler = function(e) {
-            var newSize = {
+          const resizeHandler = function(e) {
+            const newSize = {
               height: element[0].offsetHeight,
               width: element[0].offsetWidth
             };
@@ -52,7 +52,7 @@ module.exports = function(app) {
           // detach event handler upon destruction of element
           // $destroy seems to be emitted multiple times, so we only
           // clean up once
-          var destroyed = false;
+          let destroyed = false;
           element.on('$destroy', function() {
             if (!destroyed) {
               element.removeResize(resizeHandler);

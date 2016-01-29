@@ -1,6 +1,6 @@
 'use strict';
-var _ = require('lodash');
-var angular = require('angular');
+const _ = require('lodash');
+const angular = require('angular');
 
 module.exports = function(app) {
   app.directive('comment', [
@@ -33,7 +33,7 @@ module.exports = function(app) {
           // <https://github.com/jeff-collins/ment.io/blob/master/ment.io/scripts.js>.
           scope.searchUsers = function(term) {
             // Fill localItems, used as mentio-items in the respective directive.
-            var results = [];
+            const results = [];
             angular.forEach(scope.users, function(item) {
               if (item.userName.toUpperCase().indexOf(term.toUpperCase()) >= 0) {
                 results.push(item);
@@ -50,7 +50,7 @@ module.exports = function(app) {
 
           scope.update = function() {
             scope.submitting = true;
-            var promise = scope.onUpdate({$comment: scope.comment});
+            const promise = scope.onUpdate({$comment: scope.comment});
             if (promise) {
               promise.finally(function() {
                 scope.submitting = false;
@@ -61,7 +61,7 @@ module.exports = function(app) {
 
           scope.delete = function() {
             scope.submitting = true;
-            var promise = scope.onDelete({$comment: scope.content});
+            const promise = scope.onDelete({$comment: scope.content});
             if (promise) {
               promise.finally(function() {
                 scope.submitting = false;
@@ -77,7 +77,7 @@ module.exports = function(app) {
             //console.log('isEditOn', scope.isEditOn);
             //console.log('tmpBody === anno.body', scope.tmpBody !== scope.annotation.body);
             if (scope.isEditOn && scope.tmpBody !== scope.annotation.body) {
-              var answer = $window.confirm(
+              const answer = $window.confirm(
                 'There is unsaved content in the reply field. ' +
                   'Are you sure you want to leave this page?'
               );

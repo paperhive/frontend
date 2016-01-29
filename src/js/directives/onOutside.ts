@@ -1,5 +1,5 @@
 'use strict';
-var $ = require('jquery');
+const $ = require('jquery');
 
 module.exports = function(app) {
   function registerOutsideDirective(eventName, directiveName) {
@@ -9,14 +9,14 @@ module.exports = function(app) {
         return {
           restrict: 'A',
           link: function(scope, element, attrs) {
-            var handler = function(event) {
+            const handler = function(event) {
               // determine if clicked inside the element
-              var clickedInside = $.contains(element[0], event.target);
+              const clickedInside = $.contains(element[0], event.target);
 
               // check if event has to be fired
               if (!clickedInside) {
                 // get callback that was specified in attribute
-                var callback = $parse(attrs[directiveName]);
+                const callback = $parse(attrs[directiveName]);
 
                 // wrap the call in a scope.$apply to make sure Angular
                 // updates the scope on changes

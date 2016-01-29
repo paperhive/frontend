@@ -1,5 +1,5 @@
 'use strict';
-var _ = require('lodash');
+const _ = require('lodash');
 
 module.exports = function(app) {
 
@@ -61,7 +61,7 @@ module.exports = function(app) {
 
         $scope.updateDiscussion = function(comment) {
           $scope.submitting = true;
-          var newDiscussion = _.pick(
+          const newDiscussion = _.pick(
             comment,
             ['title', 'body', 'target', 'tags']
           );
@@ -137,7 +137,7 @@ module.exports = function(app) {
            $scope.isSubscribed = false;
            }
            $scope.toggleSubscribe = function() {
-           var k = $scope.subscribers.indexOf(authService.user.id);
+           const k = $scope.subscribers.indexOf(authService.user.id);
            if (k > -1) {
         // remove from to subscribers list
         $scope.subscribers.splice(k, 1);
@@ -150,8 +150,8 @@ module.exports = function(app) {
         };
 
         $scope.isArticleAuthor = function(authorId) {
-        var _ = require('lodash');
-        var k = _.findWhere($scope.article.authors, {id: authorId});
+        const _ = require('lodash');
+        const k = _.findWhere($scope.article.authors, {id: authorId});
         return (k !== undefined);
         };
         */

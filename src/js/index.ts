@@ -15,7 +15,7 @@
   require('rangy');
   require('rangy-serializer');
 
-  var angular = require('angular');
+  const angular = require('angular');
   require('angular-animate'); // provides 'ngAnimate' module
   require('angular-bootstrap-tpls'); // provides 'ui.bootstrap' module
   require('angular-sanitize'); // provides 'ngSanitize' module
@@ -31,7 +31,7 @@
   require('pdfjs');
   require('../../bower_components/pdfjs-dist/web/pdf_viewer.js');
 
-  var paperhive = angular
+  const paperhive = angular
     .module(
       'paperHive', [
         'ui.bootstrap',

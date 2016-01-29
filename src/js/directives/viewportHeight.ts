@@ -1,6 +1,6 @@
 'use strict';
 
-var angular = require('angular');
+const angular = require('angular');
 
 module.exports = function(app) {
 
@@ -17,7 +17,7 @@ module.exports = function(app) {
       return {
         restrict: 'A',
         link: function(scope, element, attrs) {
-          var height = angular.element($window).height();
+          const height = angular.element($window).height();
           element.css('min-height', height + 'px');
         }
       };

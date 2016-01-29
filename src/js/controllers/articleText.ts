@@ -1,5 +1,5 @@
 'use strict';
-var _ = require('lodash');
+const _ = require('lodash');
 
 module.exports = function(app) {
 
@@ -19,10 +19,10 @@ module.exports = function(app) {
 
       // set meta data
       $scope.$watchGroup(['article', 'discussions.stored'], function(newVals) {
-        var article = newVals[0];
-        var discussions = newVals[1];
+        const article = newVals[0];
+        const discussions = newVals[1];
         if (article) {
-          var description;
+          let description;
           if (discussions.length === 1) {
             description =  'Article with 1 discussion.';
           } else if (discussions.length > 1) {
@@ -35,7 +35,7 @@ module.exports = function(app) {
               (article.authors.length === 1 ? ' Author: ' : ' Authors: ') +
               article.authors.join(', ') + '.';
 
-          var meta = [
+          const meta = [
             {name: 'description', content: description},
             {name: 'author', content: article.authors.join(', ')}
           ];
@@ -49,19 +49,19 @@ module.exports = function(app) {
       });
 
       // compute offsets of margin discussions ('boingidi')
-      var updateOffsets = function() {
-        var draftTop = $scope.originalComment.draft.target &&
+      const updateOffsets = function() {
+        const draftTop = $scope.originalComment.draft.target &&
           $scope.text.highlightInfos.draft &&
           $scope.text.highlightInfos.draft.top;
-        var draftHeight = draftTop &&
+        const draftHeight = draftTop &&
           $scope.text.marginDiscussionSizes.draft &&
           $scope.text.marginDiscussionSizes.draft.height;
-        var showDraft = draftTop !== undefined && draftHeight;
+        const showDraft = draftTop !== undefined && draftHeight;
 
-        var offsets = _.sortBy(_.compact(_.map(
+        const offsets = _.sortBy(_.compact(_.map(
           $scope.text.highlightInfos,
           function(val, key) {
-            var height = $scope.text.marginDiscussionSizes[key] &&
+            const height = $scope.text.marginDiscussionSizes[key] &&
               $scope.text.marginDiscussionSizes[key].height;
             return (key !== 'draft' && val.top !== undefined &&
                     height !==  undefined) ?
@@ -69,18 +69,18 @@ module.exports = function(app) {
           })), 'top');
 
         // padding between elements
-        var padding = 8;
-        //var ids = _.pluck(offsets, 'id');
-        //var anchors = _.pluck(offsets, 'top');
-        //var heights = _.map(_.pluck(offsets, 'height'), function(height) {
+        const padding = 8;
+        //const ids = _.pluck(offsets, 'id');
+        //const anchors = _.pluck(offsets, 'top');
+        //const heights = _.map(_.pluck(offsets, 'height'), function(height) {
         //  return height + padding;
         //});
-        //var optOffsets = distangleService.distangle(
+        //const optOffsets = distangleService.distangle(
         //  anchors, heights, 0
         //);
 
         // result
-        var marginOffsets = {};
+        const marginOffsets = {};
 
         // place draft
         if (showDraft) {
@@ -88,32 +88,32 @@ module.exports = function(app) {
         }
 
         // treat above and below separately
-        var offsetsAbove = _.filter(offsets, function(offset) {
+        const offsetsAbove = _.filter(offsets, function(offset) {
           return showDraft && offset.top <= draftTop;
         });
-        var offsetsBelow = _.filter(offsets, function(offset) {
+        const offsetsBelow = _.filter(offsets, function(offset) {
           return !showDraft || offset.top > draftTop;
         });
 
         // move bottom elements from above to below if there's not enough space
-        var getTotalHeight = function(offsets) {
+        const getTotalHeight = function(offsets) {
           return _.sum(_.pluck(offsets, 'height')) + offsets.length * padding;
         };
         while (showDraft && getTotalHeight(offsetsAbove) > draftTop) {
           // remove last one in above
-          var last = offsetsAbove.splice(-1, 1);
+          const last = offsetsAbove.splice(-1, 1);
           // insert to beginning of below
           offsetsBelow.unshift(last[0]);
         }
 
-        var place = function(offsets, lb, ub) {
-          var ids = _.pluck(offsets, 'id');
-          var anchors = _.pluck(offsets, 'top');
-          var heights = _.map(_.pluck(offsets, 'height'), function(height) {
+        const place = function(offsets, lb, ub) {
+          const ids = _.pluck(offsets, 'id');
+          const anchors = _.pluck(offsets, 'top');
+          const heights = _.map(_.pluck(offsets, 'height'), function(height) {
             return height + padding;
           });
-          var optOffsets = distangleService.distangle(anchors, heights, lb, ub);
-          var i;
+          const optOffsets = distangleService.distangle(anchors, heights, lb, ub);
+          let i;
           for (i = 0; i < anchors.length; i++) {
             marginOffsets[ids[i]] = optOffsets[i];
           }

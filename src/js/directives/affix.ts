@@ -1,7 +1,7 @@
 'use strict';
 
-var _ = require('lodash');
-var $ = require('jquery');
+const _ = require('lodash');
+const $ = require('jquery');
 
 module.exports = function(app) {
 
@@ -11,15 +11,15 @@ module.exports = function(app) {
       return {
         restrict: 'A',
         link: function(scope, element, attrs) {
-          var paramsDefault = {
+          const paramsDefault = {
             offsetTop: 0,
             offsetBottom: 0,
             useParentHeight: true
           };
-          var params = _.clone(paramsDefault);
+          const params = _.clone(paramsDefault);
 
           // do not call reposition() for each parameter
-          var init = true;
+          let init = true;
 
           // watch parameters
           scope.$watch(attrs.affixOffsetTop, function(offsetTop) {
@@ -41,7 +41,7 @@ module.exports = function(app) {
           function reposition() {
             // set height of element such that it fits the viewport
             // note: the 1px prevents scroll bars in certain situations
-            var height = _.min([
+            const height = _.min([
               $($window).innerHeight() - params.offsetTop -
                 params.offsetBottom - 1,
               element[0].scrollHeight
@@ -51,13 +51,13 @@ module.exports = function(app) {
             */
 
             // get position of parent
-            var offsetParent = element[0].offsetParent;
+            const offsetParent = element[0].offsetParent;
             if (!offsetParent) {return;}
-            var parentRect = offsetParent.getBoundingClientRect();
+            const parentRect = offsetParent.getBoundingClientRect();
 
             // positioned normally
-            var top = 0;
-            var affixed = false;
+            let top = 0;
+            let affixed = false;
             if (parentRect.top <= params.offsetTop) {
               affixed = true;
               if (params.useParentHeight &&
@@ -73,7 +73,7 @@ module.exports = function(app) {
 
             element.css({top: top + 'px'});
 
-            var affixedSetter = $parse(attrs.affixed);
+            const affixedSetter = $parse(attrs.affixed);
             if (affixedSetter && affixedSetter.assign) {
               affixedSetter.assign(scope, affixed);
               scope.$apply();
@@ -88,7 +88,7 @@ module.exports = function(app) {
             // unregister handlers
             // $destroy seems to be emitted multiple times, so we only
             // clean up once
-            var destroyed = false;
+            let destroyed = false;
             element.on('$destroy', function() {
               $($window).off('resize scroll', reposition);
               if (!destroyed) {element.removeResize(reposition);}

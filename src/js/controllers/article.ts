@@ -1,8 +1,8 @@
 'use strict';
-var _ = require('lodash');
-var angular = require('angular');
-var moment = require('moment');
-var paperhiveSources = require('paperhive-sources');
+const _ = require('lodash');
+const angular = require('angular');
+const moment = require('moment');
+const paperhiveSources = require('paperhive-sources');
 
 module.exports = function(app) {
 
@@ -41,7 +41,7 @@ module.exports = function(app) {
         // Cut description down to 150 chars, cf.
         // <http://moz.com/learn/seo/meta-description>
         // TODO move linebreak removal to backend?
-        var metaData = [
+        const metaData = [
           {
             name: 'description',
             content: article.title + ' by ' + article.authors.join(', ') + '.'
@@ -123,7 +123,7 @@ module.exports = function(app) {
       };
 
       $scope.addDiscussion = function(comment) {
-        var disc = _.cloneDeep(_.pick(
+        const disc = _.cloneDeep(_.pick(
           comment, ['title', 'body', 'target', 'tags']
         ));
 
@@ -147,7 +147,7 @@ module.exports = function(app) {
       };
 
       $scope.originalUpdate = function(discussion, comment) {
-        var disc = _.cloneDeep(_.pick(
+        const disc = _.cloneDeep(_.pick(
           comment, ['title', 'body', 'target', 'tags']
         ));
 
@@ -189,7 +189,7 @@ module.exports = function(app) {
       };
 
       $scope.replyUpdate = function(discussion, replyOld, replyNew) {
-        var replyId = replyOld.id;
+        const replyId = replyOld.id;
         return $http({
           url: config.apiUrl + '/replies/' + replyId,
           method: 'PUT',

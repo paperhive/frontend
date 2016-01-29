@@ -10,7 +10,7 @@ module.exports = function(app) {
     ) {
       $scope.save = function() {
         $scope.submitting = true;
-        var promise = $scope.addDiscussion($scope.comment);
+        const promise = $scope.addDiscussion($scope.comment);
         if (promise) {
           promise.success(function(data) {
             $location.path($routeSegment.getSegmentUrl(

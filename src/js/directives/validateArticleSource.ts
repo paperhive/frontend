@@ -12,7 +12,7 @@ module.exports = function(app) {
         },
         link: function(scope, elm, attrs, ctrl) {
           // allows to cancel pending requests
-          var canceler;
+          let canceler;
 
           ctrl.$asyncValidators.articleSource =
             function(modelValue, viewValue) {
@@ -29,7 +29,7 @@ module.exports = function(app) {
               }
 
               canceler = $q.defer();
-              var defer = $q.defer();
+              const defer = $q.defer();
               $http.get(config.apiUrl + '/articles/sources', {
                 params: {handle: modelValue},
                 timeout: canceler.promise

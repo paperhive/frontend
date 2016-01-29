@@ -1,6 +1,6 @@
 'use strict';
-var rangy = require('rangy');
-var _ = require('lodash');
+const rangy = require('rangy');
+const _ = require('lodash');
 
 module.exports = function(app) {
 
@@ -9,16 +9,16 @@ module.exports = function(app) {
       return {
         restrict: 'A',
         link: function(scope, element, attrs) {
-          var lastSerializedRanges;
+          let lastSerializedRanges;
 
           // define event handler
-          var handler = function() {
+          const handler = function() {
             scope.$apply(function() {
 
               // result function
-              var onTextSelect = function(selection) {
+              const onTextSelect = function(selection) {
 
-                var serializedRanges;
+                let serializedRanges;
 
                 // serialize ALL the ranges (if a selection is given)
                 if (selection) {
@@ -35,7 +35,7 @@ module.exports = function(app) {
                 if (!_.isEqual(serializedRanges, lastSerializedRanges)) {
                   lastSerializedRanges = serializedRanges;
 
-                  var target;
+                  let target;
                   // construct target object if valid ranges are given
                   if (serializedRanges && serializedRanges.length &&
                       selection) {
@@ -50,7 +50,7 @@ module.exports = function(app) {
               };
 
               // get current selection
-              var selection = rangy.getSelection();
+              const selection = rangy.getSelection();
 
               // no selection object or no anchor/focus
               if (!selection || !selection.anchorNode || !selection.focusNode) {
@@ -58,8 +58,8 @@ module.exports = function(app) {
               }
 
               // check if current selection starts or ends in element
-              var anchor = selection.anchorNode;
-              var focus = selection.focusNode;
+              const anchor = selection.anchorNode;
+              const focus = selection.focusNode;
 
               // selection not contained in element?
               if (!rangy.dom.isAncestorOf(element[0], anchor) ||

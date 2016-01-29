@@ -1,17 +1,17 @@
 'use strict';
 import rangy = require('rangy');
-var _ = require('lodash');
-var $ = require('jquery');
+const _ = require('lodash');
+const $ = require('jquery');
 
 module.exports = function(app) {
 
   // returns all leaf text nodes that are descendants of node or are node
-  var getTextNodes = function(node) {
+  const getTextNodes = function(node) {
     if (!node) {return [];}
     if (node.nodeType === Node.TEXT_NODE) {return [node];}
 
     // process childs
-    var nodes = [];
+    let nodes = [];
     $(node).contents().each(function(index, el) {
       nodes = nodes.concat(getTextNodes(el));
     });
@@ -35,10 +35,10 @@ module.exports = function(app) {
         containerCtrl.getRangesRects = function(serializedRanges) {
           if (!serializedRanges || !serializedRanges.length) {return [];}
 
-          var containerRect = element[0].getBoundingClientRect();
+          const containerRect = element[0].getBoundingClientRect();
 
           // deserialize range
-          var ranges = _.map(serializedRanges, function(range) {
+          const ranges = _.map(serializedRanges, function(range) {
             return rangy.deserializeRange(range, element[0]);
           });
 
@@ -46,19 +46,19 @@ module.exports = function(app) {
           // in a changed selection
           // see https://github.com/timdown/rangy/issues/93
           // and https://github.com/timdown/rangy/issues/282
-          var currentSelection = rangy.serializeSelection(
+          const currentSelection = rangy.serializeSelection(
             rangy.getSelection(), true
           );
 
           // assumes that the DOM subtree is normalized
           // (see pdf directive)
-          var rects = [];
+          const rects = [];
           _.forEach(ranges, function(range) {
             // split start container if necessary
             range.splitBoundaries();
 
             // get TextNodes inside the range
-            var textNodes = _.filter(
+            const textNodes = _.filter(
               getTextNodes(range.commonAncestorContainer),
               range.containsNodeText,
               range
@@ -68,9 +68,9 @@ module.exports = function(app) {
             // See this discussion:
             // https://github.com/paperhive/paperhive-frontend/pull/68#discussion_r25970589
             _.forEach(textNodes, function(node) {
-              var $node = $(node);
-              var $span = $node.wrap('<span/>').parent();
-              var rect = $span.get(0).getBoundingClientRect();
+              const $node = $(node);
+              const $span = $node.wrap('<span/>').parent();
+              const rect = $span.get(0).getBoundingClientRect();
               $node.unwrap();
 
               rects.push({
@@ -118,7 +118,7 @@ module.exports = function(app) {
             scope.rects = containerCtrl.getRangesRects(target.ranges);
 
             // gather bbox information and expose it on the scope
-            var info = {
+            const info = {
               left: _.min(_.pluck(scope.rects, 'left')),
               right: _.max(_.map(scope.rects, function(rect) {
                 return rect.left + rect.width;

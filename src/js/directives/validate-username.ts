@@ -18,7 +18,7 @@ module.exports = function(app) {
                  authService.user.user.username === modelValue)) {
               return $q.when();
             }
-            var defer = $q.defer();
+            const defer = $q.defer();
 
             $http.get(config.apiUrl + '/people/username/' + modelValue)
               .success(function(data) {

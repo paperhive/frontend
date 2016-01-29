@@ -1,9 +1,9 @@
 /*global MathJax*/
 'use strict';
 
-var kramed = require('kramed');
-var $ = require('jquery');
-// TODO: var MathJax = require('MathJax');
+const kramed = require('kramed');
+const $ = require('jquery');
+// TODO: const MathJax = require('MathJax');
 
 module.exports = function(app) {
 
@@ -19,8 +19,8 @@ module.exports = function(app) {
     function($sanitize, notificationService) {
       // modify the kramed renderer such that math items are wrapped in
       // div and span groups
-      var renderer = new kramed.Renderer();
-      var origRenderer = renderer.math;
+      const renderer = new kramed.Renderer();
+      const origRenderer = renderer.math;
       renderer.math = function(content, language, display) {
         if (display) {
           return '<div class="mathjax">' + content + '</div>';
