@@ -5,6 +5,7 @@
   "scripts": {
     "build": "gulp",
     "install-deps": "npm install && bower install",
+    "lint": "find src/js/ -name *.ts | xargs ./node_modules/.bin/tslint",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "karma start --single-run",
     "test:e2e": "gulp test"
@@ -47,6 +48,7 @@
     "merge-stream": "^1.0.0",
     "paperhive-sources": "^4.0.1",
     "phantomjs": "^1.9.19",
+    "tslint": "^3.3.0",
     "typescript": "^1.7.5",
     "typings": "^0.6.3",
     "vinyl-buffer": "^1.0.0",
