@@ -8,8 +8,7 @@
     "target": "es5"
   },
   "exclude": [
-    "bower_components",
-    "typings"
+    "bower_components"
   ],
   "files": [
     "src/js/index.ts",

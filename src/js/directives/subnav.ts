@@ -1,5 +1,5 @@
 'use strict';
-const angular = require('angular');
+import * as angular from 'angular';
 const $ = require('jquery');
 
 export default function(app) {

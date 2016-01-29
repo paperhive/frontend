@@ -1,6 +1,6 @@
 'use strict';
 const _ = require('lodash');
-const angular = require('angular');
+import * as angular from 'angular';
 const moment = require('moment');
 const paperhiveSources = require('paperhive-sources');
 

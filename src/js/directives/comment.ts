@@ -1,6 +1,6 @@
 'use strict';
 const _ = require('lodash');
-const angular = require('angular');
+import * as angular from 'angular';
 
 export default function(app) {
   app.directive('comment', [
