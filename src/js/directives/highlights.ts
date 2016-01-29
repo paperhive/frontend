@@ -1,6 +1,6 @@
 import rangy = require('rangy');
 import * as _ from 'lodash';
-const $ = require('jquery');
+import * as jquery from 'jquery';
 
 export default function(app) {
 
@@ -11,7 +11,7 @@ export default function(app) {
 
     // process childs
     let nodes = [];
-    $(node).contents().each(function(index, el) {
+    jquery(node).contents().each(function(index, el) {
       nodes = nodes.concat(getTextNodes(el));
     });
     return nodes;
@@ -67,7 +67,7 @@ export default function(app) {
             // See this discussion:
             // https://github.com/paperhive/paperhive-frontend/pull/68#discussion_r25970589
             _.forEach(textNodes, function(node) {
-              const $node = $(node);
+              const $node = jquery(node);
               const $span = $node.wrap('<span/>').parent();
               const rect = $span.get(0).getBoundingClientRect();
               $node.unwrap();

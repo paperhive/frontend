@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-const $ = require('jquery');
+import * as jquery from 'jquery';
 
 export default function(app) {
   app.directive(
@@ -39,7 +39,7 @@ export default function(app) {
             // set height of element such that it fits the viewport
             // note: the 1px prevents scroll bars in certain situations
             const height = _.min([
-              $($window).innerHeight() - params.offsetTop -
+              jquery($window).innerHeight() - params.offsetTop -
                 params.offsetBottom - 1,
               element[0].scrollHeight
             ]);
@@ -79,7 +79,7 @@ export default function(app) {
 
           $timeout(function() {
             // register handler
-            $($window).on('resize scroll', reposition);
+            jquery($window).on('resize scroll', reposition);
             element.resize(reposition);
 
             // unregister handlers
@@ -87,7 +87,7 @@ export default function(app) {
             // clean up once
             let destroyed = false;
             element.on('$destroy', function() {
-              $($window).off('resize scroll', reposition);
+              jquery($window).off('resize scroll', reposition);
               if (!destroyed) { element.removeResize(reposition); }
               destroyed = true;
             });

@@ -1,6 +1,6 @@
 'use strict';
 
-const $ = require('jquery');
+import * as jquery from 'jquery';
 
 export default function(app) {
 
@@ -14,7 +14,7 @@ export default function(app) {
         restrict: 'A',
         link: function($scope, element) {
 
-          const mirror = $('<textarea></textarea>');
+          const mirror = jquery('<textarea></textarea>');
           mirror.attr('class', element.attr('class'));
           mirror.css({
             position: 'absolute',
@@ -23,7 +23,7 @@ export default function(app) {
             visibility: 'hidden'
           });
 
-          $($document[0].body).append(mirror);
+          jquery($document[0].body).append(mirror);
 
           const update = function() {
             // set to block temporarily

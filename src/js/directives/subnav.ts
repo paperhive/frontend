@@ -1,6 +1,6 @@
 'use strict';
 import * as angular from 'angular';
-const $ = require('jquery');
+import * as jquery from 'jquery';
 
 export default function(app) {
 
@@ -28,7 +28,7 @@ export default function(app) {
           };
 
           // collapse when focus is lost
-          $(element).focusout(collapse);
+          jquery(element).focusout(collapse);
 
           // iterate over li elements
           angular.forEach(ul.children, function(li) {
@@ -52,7 +52,7 @@ export default function(app) {
             );
 
             // add click event
-            $(a).click(collapse);
+            jquery(a).click(collapse);
 
             // set active link class
             $rootScope.$watch(

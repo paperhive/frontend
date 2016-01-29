@@ -7,10 +7,10 @@
  */
 
 // import jquery before angular (so angular can use it instead of jqlite)
-import * as jquery from 'jquery';
-// use imported modules so the typescript doesn't remove them
-// NOTE: the array trick doesn't work!
+// and use it so the typescript doesn't remove it from the equation
+// NOTE: the array trick doesn't work:
 // http://www.davidkudera.com/2015/02/28/typescript-gulp-bower-browserify/
+import * as jquery from 'jquery';
 window['jQuery'] = window['$'] = jquery;
 
 import * as angular from 'angular';

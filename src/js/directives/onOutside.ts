@@ -1,5 +1,5 @@
 'use strict';
-const $ = require('jquery');
+import * as jquery from 'jquery';
 
 export default function(app) {
   function registerOutsideDirective(eventName, directiveName) {
@@ -11,7 +11,7 @@ export default function(app) {
           link: function(scope, element, attrs) {
             const handler = function(event) {
               // determine if clicked inside the element
-              const clickedInside = $.contains(element[0], event.target);
+              const clickedInside = jquery.contains(element[0], event.target);
 
               // check if event has to be fired
               if (!clickedInside) {

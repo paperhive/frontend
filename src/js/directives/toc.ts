@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-const $ = require('jquery');
+import * as jquery from 'jquery';
 
 export default function(app) {
 
@@ -15,7 +15,7 @@ export default function(app) {
 
           function getElements() {
             return element.find('[id]').filter(function(index, el) {
-              return parseInt($(el).attr('toc-level'));
+              return parseInt(jquery(el).attr('toc-level'));
             }).toArray();
           }
 
@@ -29,10 +29,10 @@ export default function(app) {
             const toc = [];
             let currentLevel;
             while (elements.length &&
-                   (currentLevel = parseInt($(elements[0]).attr('toc-level'))) >
+                   (currentLevel = parseInt(jquery(elements[0]).attr('toc-level'))) >
                    parentLevel
                   ) {
-              const el = $(elements[0]);
+              const el = jquery(elements[0]);
               const newTocElement = {
                 id: el.attr('id'),
                 text: el.attr('toc-text') || el.text(),
@@ -56,7 +56,7 @@ export default function(app) {
               const elements = _.sortBy(_.map(getElements(), function(element) {
                 const rect = element.getBoundingClientRect();
                 return {
-                  id: $(element).attr('id'),
+                  id: jquery(element).attr('id'),
                   offset: rect.top
                 };
               }), 'offset');
@@ -98,9 +98,9 @@ export default function(app) {
             toc = getToc(undefined, undefined);
 
             // register handler
-            $($window).on('scroll resize', updateScrollspy);
+            jquery($window).on('scroll resize', updateScrollspy);
             element.on('$destroy', function() {
-              $($window).off('scroll resize', updateScrollspy);
+              jquery($window).off('scroll resize', updateScrollspy);
             });
             updateScrollspy();
 

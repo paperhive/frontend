@@ -2,7 +2,7 @@
 'use strict';
 
 const kramed = require('kramed');
-const $ = require('jquery');
+import * as jquery from 'jquery';
 // TODO: const MathJax = require('MathJax');
 
 export default function(app) {
@@ -39,9 +39,9 @@ export default function(app) {
                 $sanitize(kramed(newValue || '', {renderer: renderer}))
               );
               // replace span/div tags with script tags
-              $(element[0]).find('.mathjax').each(function(index, el) {
-                $(el).replaceWith(origRenderer(
-                  $(el).text(), 'math/tex', $(el).prop('tagName') === 'DIV'
+              jquery(element[0]).find('.mathjax').each(function(index, el) {
+                jquery(el).replaceWith(origRenderer(
+                  jquery(el).text(), 'math/tex', jquery(el).prop('tagName') === 'DIV'
                 ));
               });
               MathJax.Hub.Queue(['Typeset', MathJax.Hub, element[0]]);
