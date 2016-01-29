@@ -69,7 +69,6 @@
     "pdfjs": "./bower_components/pdfjs-dist/build/pdf.js",
     "pdfjs-compatibility": "./bower_components/pdfjs-dist/web/compatibility.js",
     "mentio": "./bower_components/ment.io/dist/mentio.js",
-    "jquery": "./bower_components/jquery/dist/jquery.js",
     "kramed": "./bower_components/kramed/lib/kramed.js",
     "moment": "./bower_components/moment/moment.js",
     "ngSmoothScroll": "./bower_components/ngSmoothScroll/lib/angular-smooth-scroll.js",
