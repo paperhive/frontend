@@ -126,7 +126,9 @@ export default function(app) {
               top: _.min(_.pluck(scope.rects, 'top')),
               bottom: _.max(_.map(scope.rects, function(rect) {
                 return rect.top + rect.height;
-              }))
+              })),
+              width: undefined,
+              height: undefined,
             };
             info.width = info.right - info.left;
             info.height = info.bottom - info.top;

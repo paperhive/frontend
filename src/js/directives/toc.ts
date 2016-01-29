@@ -37,7 +37,8 @@ export default function(app) {
               const el = $(elements[0]);
               const newTocElement = {
                 id: el.attr('id'),
-                text: el.attr('toc-text') || el.text()
+                text: el.attr('toc-text') || el.text(),
+                subToc: undefined
               };
               // kick out first element
               elements.shift();
@@ -96,7 +97,7 @@ export default function(app) {
 
           $timeout(function() {
             // set toc
-            toc = getToc();
+            toc = getToc(undefined, undefined);
 
             // register handler
             $($window).on('scroll resize', updateScrollspy);
@@ -111,5 +112,4 @@ export default function(app) {
       };
     }]
   );
-
 };

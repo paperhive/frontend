@@ -80,7 +80,9 @@ export default function(app) {
         // );
 
         // result
-        const marginOffsets = {};
+        const marginOffsets = {
+          draft: undefined,
+        };
 
         // place draft
         if (showDraft) {
@@ -122,9 +124,9 @@ export default function(app) {
 
         if (showDraft) {
           place(offsetsAbove, 0, draftTop);
-          place(offsetsBelow, draftTop + draftHeight + padding);
+          place(offsetsBelow, draftTop + draftHeight + padding, undefined);
         } else {
-          place(offsetsBelow, 0);
+          place(offsetsBelow, 0, undefined);
         }
 
         $scope.text.marginOffsets = marginOffsets;

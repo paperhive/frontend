@@ -3,7 +3,8 @@ export default function(app) {
   app.factory('notificationService', [
     function() {
       const service = {
-        notifications: []
+        notifications: [],
+        httpError: undefined,
       };
       service.httpError = function(msg) {
         return function(data) {

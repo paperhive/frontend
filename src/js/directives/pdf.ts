@@ -17,7 +17,9 @@ export default function(app) {
             rendering: false,
             finished: false,
             numPages: undefined,
-            numRenderedPages: undefined
+            numRenderedPages: undefined,
+            renderedPages: [],
+            renderedTextPages: [],
           };
           const progressParsed = $parse(attrs.pdfProgress);
           if (progressParsed && progressParsed.assign) {

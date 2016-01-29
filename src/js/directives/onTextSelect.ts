@@ -54,7 +54,7 @@ export default function(app) {
 
               // no selection object or no anchor/focus
               if (!selection || !selection.anchorNode || !selection.focusNode) {
-                return onTextSelect();
+                return onTextSelect(undefined);
               }
 
               // check if current selection starts or ends in element
@@ -64,18 +64,18 @@ export default function(app) {
               // selection not contained in element?
               if (!rangy.dom.isAncestorOf(element[0], anchor) ||
                   !rangy.dom.isAncestorOf(element[0], focus)) {
-                return onTextSelect();
+                return onTextSelect(undefined);
               }
 
               // do not allow collapsed / empty selections
               if (!selection.toString()) {
-                return onTextSelect();
+                return onTextSelect(undefined);
               }
 
               // do not allow selections without a range
               // (André: I guess that's possible in crazy browsers)
               if (!selection.rangeCount) {
-                return onTextSelect();
+                return onTextSelect(undefined);
               }
 
               return onTextSelect(selection);

@@ -1,13 +1,12 @@
-'use strict';
-import angular = require('angular');
-// export default function(app) {
+import * as angular from 'angular';
 export default function(app) {
   app.factory(
     'metaService',
     [
       function() {
         const service = {
-          data: {}
+          data: {},
+          set: undefined,
         };
         service.set = function(newData) {
           angular.copy(newData, service.data);

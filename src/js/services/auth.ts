@@ -9,7 +9,11 @@ export default function(app) {
             $window.location.origin +
             config.baseHref +
             'return'
-          )
+          ),
+        user: undefined,
+        token: undefined,
+        signinToken: undefined,
+        signout: undefined,
       };
 
       // sign in with a token
