@@ -1,5 +1,5 @@
-'use strict';
-const _ = require('lodash');
+import * as _ from 'lodash';
+
 export default function(app) {
 
   app.directive('gravatarList', function() {

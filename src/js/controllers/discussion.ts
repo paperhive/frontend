@@ -1,5 +1,4 @@
-'use strict';
-const _ = require('lodash');
+import * as _ from 'lodash';
 
 export default function(app) {
 
@@ -150,7 +149,6 @@ export default function(app) {
         };
 
         $scope.isArticleAuthor = function(authorId) {
-        const _ = require('lodash');
         const k = _.findWhere($scope.article.authors, {id: authorId});
         return (k !== undefined);
         };

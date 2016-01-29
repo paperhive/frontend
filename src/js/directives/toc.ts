@@ -1,6 +1,4 @@
-'use strict';
-
-const _ = require('lodash');
+import * as _ from 'lodash';
 const $ = require('jquery');
 
 export default function(app) {
