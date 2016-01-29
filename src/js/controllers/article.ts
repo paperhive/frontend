@@ -89,7 +89,7 @@ export default function(app) {
 
       $scope.addArticleMetaData = function(metaData) {
         if (!$scope.article) {
-          console.warning(
+          console.warn(
             'Tried to set article meta data, but data isn\'t present.'
           );
           return;
