@@ -1,6 +1,6 @@
 'use strict';
 
-export = function(app) {
+export default function(app) {
   function PhError(message) {
     this.name = 'PhError';
     this.message = message;
