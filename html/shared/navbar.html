@@ -35,9 +35,10 @@
               name="srch-term"
               id="srch-term"
               ng-model="search.body"
-              uib-typeahead="result.title for result in phSearch($viewValue, 5)"
+              uib-typeahead="result as result.title for result in phSearch($viewValue, 5)"
               typeahead-wait-ms="250"
               typeahead-on-select="goToArticle($item, $model, $label)"
+              typeahead-template-url="templates/shared/uib/searchItem.html"
               required
               >
           </div>
