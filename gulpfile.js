@@ -105,8 +105,9 @@ function js(watch) {
 
 // convert typescript to js
 gulp.task('ts', function () {
+  var tsProject = ts.createProject('tsconfig.json');
   return gulp.src('src/js/**/*.ts')
-  .pipe(ts({}))
+  .pipe(ts(tsProject))
   .pipe(gulp.dest('build-ts/'));
 });
 
