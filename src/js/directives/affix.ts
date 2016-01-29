@@ -25,17 +25,17 @@ module.exports = function(app) {
           scope.$watch(attrs.affixOffsetTop, function(offsetTop) {
             params.offsetTop = offsetTop !== undefined ? offsetTop :
               paramsDefault.offsetTop;
-            if (!init) {reposition();}
+            if (!init) { reposition(); }
           });
           scope.$watch(attrs.affixOffsetBottom, function(offsetBottom) {
             params.offsetBottom = offsetBottom !== undefined ? offsetBottom :
               paramsDefault.offsetBottom;
-            if (!init) {reposition();}
+            if (!init) { reposition(); }
           });
           scope.$watch(attrs.affixUseParentHeight, function(useParentHeight) {
             params.useParentHeight = useParentHeight !== undefined ?
               useParentHeight : paramsDefault.useParentHeight;
-            if (!init) {reposition();}
+            if (!init) { reposition(); }
           });
 
           function reposition() {
@@ -52,7 +52,7 @@ module.exports = function(app) {
 
             // get position of parent
             const offsetParent = element[0].offsetParent;
-            if (!offsetParent) {return;}
+            if (!offsetParent) { return; }
             const parentRect = offsetParent.getBoundingClientRect();
 
             // positioned normally
@@ -71,7 +71,7 @@ module.exports = function(app) {
               }
             }
 
-            element.css({top: top + 'px'});
+            element.css({ top: top + 'px' });
 
             const affixedSetter = $parse(attrs.affixed);
             if (affixedSetter && affixedSetter.assign) {
@@ -91,7 +91,7 @@ module.exports = function(app) {
             let destroyed = false;
             element.on('$destroy', function() {
               $($window).off('resize scroll', reposition);
-              if (!destroyed) {element.removeResize(reposition);}
+              if (!destroyed) { element.removeResize(reposition); }
               destroyed = true;
             });
 

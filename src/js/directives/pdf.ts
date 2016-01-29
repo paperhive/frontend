@@ -24,7 +24,7 @@ module.exports = function(app) {
             progressParsed.assign(scope, progress);
           }
 
-          if (!url) {return;}
+          if (!url) { return; }
 
           // From
           // <https://github.com/mozilla/pdf.js/blob/master/examples/components/simpleviewer.js>.
@@ -145,79 +145,79 @@ module.exports = function(app) {
             });
 
             // --------------------------------------------------------------------
-            //// Get text width
-            //pdf.then(function(pdf) {
-            //  const maxPages = pdf.pdfInfo.numPages;
-            //  maxPages = 1;
-            //  for (const j = 1; j <= maxPages; j++) {
-            //    const page = pdf.getPage(j);
-            //    page.then(function(page) {
-            //      const textContent = page.getTextContent();
-            //      const viewport = page.getViewport(pdfViewer.currentScale);
-            //      textContent.then(function(content) {
-            //        for (const i = 0; i < content.items.length; i++) {
-            //          // Well...
+            // // Get text width
+            // pdf.then(function(pdf) {
+            //   const maxPages = pdf.pdfInfo.numPages;
+            //   maxPages = 1;
+            //   for (const j = 1; j <= maxPages; j++) {
+            //     const page = pdf.getPage(j);
+            //     page.then(function(page) {
+            //       const textContent = page.getTextContent();
+            //       const viewport = page.getViewport(pdfViewer.currentScale);
+            //       textContent.then(function(content) {
+            //         for (const i = 0; i < content.items.length; i++) {
+            //           // Well...
 
-            //          // Check out the discussion at
-            //          // https://github.com/mozilla/pdf.js/issues/5643#issuecomment-69969258
-            //          // for more details.
-            //          console.log('');
-            //          // Translate PDF transform into the screen presentation
-            //          // transform
-            //          //console.log(viewport.transform);
-            //          //console.log(content.items[i].transform);
-            //          tx = PDFJS.Util.transform(
-            //            viewport.transform,
-            //            content.items[i].transform
-            //          );
-            //          const fontHeight = Math.sqrt((tx[2] * tx[2]) + (tx[3] * tx[3]));
-            //          //console.log(tx[2]);
-            //          //console.log(tx[3]);
-            //          //console.log(fontHeight);
-            //          // The transformation matrix is specified as an array of
-            //          // length 6 just like CSS3 transforms, cf.
-            //          // <https://dev.opera.com/articles/understanding-the-css-transforms-matrix/>.
-            //          console.log(content.items[i]);
-            //          // x-position of the top-right point
-            //          const extent = tx[4];
-            //          //  tx[0] * content.items[i].width/fontHeight +
-            //          //  tx[4];
-            //          console.log('tx[4] = ', extent);
-            //          const actualWidth = pdfViewer.currentScale * content.items[i].width;
-            //        }
-            //      })
-            //    })
-            //  }
-            //});
+            //           // Check out the discussion at
+            //           // https://github.com/mozilla/pdf.js/issues/5643#issuecomment-69969258
+            //           // for more details.
+            //           console.log('');
+            //           // Translate PDF transform into the screen presentation
+            //           // transform
+            //           //console.log(viewport.transform);
+            //           //console.log(content.items[i].transform);
+            //           tx = PDFJS.Util.transform(
+            //             viewport.transform,
+            //             content.items[i].transform
+            //           );
+            //           const fontHeight = Math.sqrt((tx[2] * tx[2]) + (tx[3] * tx[3]));
+            //           //console.log(tx[2]);
+            //           //console.log(tx[3]);
+            //           //console.log(fontHeight);
+            //           // The transformation matrix is specified as an array of
+            //           // length 6 just like CSS3 transforms, cf.
+            //           // <https://dev.opera.com/articles/understanding-the-css-transforms-matrix/>.
+            //           console.log(content.items[i]);
+            //           // x-position of the top-right point
+            //           const extent = tx[4];
+            //           //  tx[0] * content.items[i].width/fontHeight +
+            //           //  tx[4];
+            //           console.log('tx[4] = ', extent);
+            //           const actualWidth = pdfViewer.currentScale * content.items[i].width;
+            //         }
+            //       })
+            //     })
+            //   }
+            // });
             // --------------------------------------------------------------------
 
             // --------
-            //const container = document.createElement('div');
-            //container.id = 'container';
-            //element.append(container);
+            // const container = document.createElement('div');
+            // container.id = 'container';
+            // element.append(container);
 
-            //// Loading document.
-            //const PAGE_TO_VIEW = 1;
-            //const SCALE = 1.0;
-            //PDFJS.getDocument(scope.url).then(function(pdfDocument) {
-            //  // Document loaded, retrieving the page.
-            //  return pdfDocument.getPage(PAGE_TO_VIEW).then(function(pdfPage) {
-            //    // Creating the page view with default parameters.
-            //    const pdfPageView = new PDFJS.PDFPageView({
-            //      container: container,
-            //      id: PAGE_TO_VIEW,
-            //      scale: SCALE,
-            //      defaultViewport: pdfPage.getViewport(SCALE),
-            //      // We can enable text/annotations layers, if needed
-            //      textLayerFactory: new PDFJS.DefaultTextLayerFactory(),
-            //      annotationsLayerFactory: new PDFJS.DefaultAnnotationsLayerFactory()
-            //    });
-            //    // Associates the actual page with the view, and drawing it
-            //    pdfPageView.setPdfPage(pdfPage);
-            //    return pdfPageView.draw();
-            //  });
-            //});
-            //// --------
+            // // Loading document.
+            // const PAGE_TO_VIEW = 1;
+            // const SCALE = 1.0;
+            // PDFJS.getDocument(scope.url).then(function(pdfDocument) {
+            //   // Document loaded, retrieving the page.
+            //   return pdfDocument.getPage(PAGE_TO_VIEW).then(function(pdfPage) {
+            //     // Creating the page view with default parameters.
+            //     const pdfPageView = new PDFJS.PDFPageView({
+            //       container: container,
+            //       id: PAGE_TO_VIEW,
+            //       scale: SCALE,
+            //       defaultViewport: pdfPage.getViewport(SCALE),
+            //       // We can enable text/annotations layers, if needed
+            //       textLayerFactory: new PDFJS.DefaultTextLayerFactory(),
+            //       annotationsLayerFactory: new PDFJS.DefaultAnnotationsLayerFactory()
+            //     });
+            //     // Associates the actual page with the view, and drawing it
+            //     pdfPageView.setPdfPage(pdfPage);
+            //     return pdfPageView.draw();
+            //   });
+            // });
+            // // --------
           }
         };
 

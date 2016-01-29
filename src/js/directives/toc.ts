@@ -26,7 +26,7 @@ module.exports = function(app) {
               elements = getElements();
               parentLevel = Number.NEGATIVE_INFINITY;
             }
-            if (!elements.length) {return [];}
+            if (!elements.length) { return []; }
 
             const toc = [];
             let currentLevel;
@@ -63,7 +63,7 @@ module.exports = function(app) {
               }), 'offset');
               const offset = parsedOffset(scope) || 0;
 
-              if (!elements.length) {return;}
+              if (!elements.length) { return; }
 
               let id = elements[0].id;
               _.forEach(elements, function(element) {
@@ -76,7 +76,7 @@ module.exports = function(app) {
             }
 
             function applyScrollspyId(toc, id) {
-              if (!toc) {return;}
+              if (!toc) { return; }
               let contained = false;
               _.forEach(toc, function(entry) {
                 entry.active = false;

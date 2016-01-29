@@ -25,7 +25,7 @@ module.exports = function(app) {
           });
 
           scope.getUserText = function(item) {
-            //return '<strong><a href='./users/' + item.userName + ''>@' + item.userName + '</a></strong>';
+            // return '<strong><a href='./users/' + item.userName + ''>@' + item.userName + '</a></strong>';
             return '@' + item.userName;
           };
 
@@ -69,13 +69,11 @@ module.exports = function(app) {
               });
             }
           };
-          //scope.annotationBody = null;
-          //scope.isEditMode = false;
+          // scope.annotationBody = null;
+          // scope.isEditMode = false;
           //
           // Warn on page close if there still is unsaved text in the reply form.
           scope.$on('$locationChangeStart', function(event) {
-            //console.log('isEditOn', scope.isEditOn);
-            //console.log('tmpBody === anno.body', scope.tmpBody !== scope.annotation.body);
             if (scope.isEditOn && scope.tmpBody !== scope.annotation.body) {
               const answer = $window.confirm(
                 'There is unsaved content in the reply field. ' +

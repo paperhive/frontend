@@ -70,14 +70,14 @@ module.exports = function(app) {
 
         // padding between elements
         const padding = 8;
-        //const ids = _.pluck(offsets, 'id');
-        //const anchors = _.pluck(offsets, 'top');
-        //const heights = _.map(_.pluck(offsets, 'height'), function(height) {
-        //  return height + padding;
-        //});
-        //const optOffsets = distangleService.distangle(
-        //  anchors, heights, 0
-        //);
+        // const ids = _.pluck(offsets, 'id');
+        // const anchors = _.pluck(offsets, 'top');
+        // const heights = _.map(_.pluck(offsets, 'height'), function(height) {
+        //   return height + padding;
+        // });
+        // const optOffsets = distangleService.distangle(
+        //   anchors, heights, 0
+        // );
 
         // result
         const marginOffsets = {};

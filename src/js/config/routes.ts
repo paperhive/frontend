@@ -39,7 +39,7 @@ module.exports = function(app) {
         .when('/articles/:articleId/text', 'articles.text')
         .when('/articles/:articleId/about', 'articles.about')
         .when('/contact', 'contact')
-        //.when('/help', 'help')
+        // .when('/help', 'help')
         .when('/jobs', 'jobs')
         .when('/alpha-warning', 'alpha-warning')
         .when('/legalnotice', 'legalnotice')

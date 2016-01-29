@@ -7,8 +7,8 @@ module.exports = function(app) {
 
   // returns all leaf text nodes that are descendants of node or are node
   const getTextNodes = function(node) {
-    if (!node) {return [];}
-    if (node.nodeType === Node.TEXT_NODE) {return [node];}
+    if (!node) { return []; }
+    if (node.nodeType === Node.TEXT_NODE) { return [node]; }
 
     // process childs
     let nodes = [];
@@ -33,7 +33,7 @@ module.exports = function(app) {
       require: '^^highlightContainer',
       link: function(scope, element, attrs, containerCtrl) {
         containerCtrl.getRangesRects = function(serializedRanges) {
-          if (!serializedRanges || !serializedRanges.length) {return [];}
+          if (!serializedRanges || !serializedRanges.length) { return []; }
 
           const containerRect = element[0].getBoundingClientRect();
 

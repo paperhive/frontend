@@ -98,7 +98,7 @@ module.exports = function(app) {
         if (lb !== undefined) {
           offset = lb;
           for (i = 0; i < n; i++) {
-            if (optAnchors[i] >= offset) {break;}
+            if (optAnchors[i] >= offset) { break; }
             optAnchors[i] = offset;
             offset += sizes[i];
           }
@@ -107,7 +107,7 @@ module.exports = function(app) {
         if (ub !== undefined) {
           offset = ub;
           for (i = n - 1; i >= 0; i--) {
-            if (optAnchors[i] + sizes[i] <= offset) {break;}
+            if (optAnchors[i] + sizes[i] <= offset) { break; }
             optAnchors[i] = offset - sizes[i];
             offset = optAnchors[i];
           }

@@ -56,7 +56,7 @@ module.exports = function(app) {
 
             // set active link class
             $rootScope.$watch(
-              function() {return $routeSegment.name;},
+              function() { return $routeSegment.name; },
               function(routeName) {
                 const el = angular.element(li);
                 if ($routeSegment.startsWith(target)) {

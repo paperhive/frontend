@@ -29,9 +29,9 @@ module.exports = function(app) {
 
         // get pdf url
         try {
-          $scope.pdfSource = paperhiveSources({apiUrl: config.apiUrl})
+          $scope.pdfSource = paperhiveSources({ apiUrl: config.apiUrl })
             .getAccessiblePdfUrl(article);
-        } catch(e) {
+        } catch (e) {
           notificationService.notifications.push({
             type: 'error',
             message: 'PDF cannot be displayed: ' + e.message
