@@ -1,10 +1,14 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "noImplicitAny": true,
-    "outDir": "./out/js/",
+    "noImplicitAny": false,
+    "outDir": "./build-ts/",
     "removeComments": true,
     "sourceMap": false,
     "target": "es5"
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "bower_components"
+  ]
 }

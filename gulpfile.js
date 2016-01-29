@@ -73,7 +73,7 @@ function js(watch) {
   var watchify = require('watchify');
 
   var browserifyArgs = _.extend(watchify.args, {debug: true});
-  var bundler = browserify('./out/js/index.js', browserifyArgs);
+  var bundler = browserify('./build-ts/index.js', browserifyArgs);
 
   // use shims defined in package.json via 'browser' and 'browserify-shim'
   // properties
@@ -105,9 +105,9 @@ function js(watch) {
 
 // convert typescript to js
 gulp.task('ts', function () {
-  return gulp.src('src/**/*.ts')
+  return gulp.src('src/js/**/*.ts')
   .pipe(ts({}))
-  .pipe(gulp.dest('out/'));
+  .pipe(gulp.dest('build-ts/'));
 });
 
 // bundle once
