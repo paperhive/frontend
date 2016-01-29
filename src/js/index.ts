@@ -7,13 +7,30 @@
  */
 
 // import jquery before angular (so angular can use it instead of jqlite)
-// and use it so the typescript doesn't remove it from the equation
-// NOTE: the array trick doesn't work:
-// http://www.davidkudera.com/2015/02/28/typescript-gulp-bower-browserify/
 import * as jquery from 'jquery';
+// attach jquery to window because of crappy "modules"
 window['jQuery'] = window['$'] = jquery;
 
+// Rangy needs to be included after the initial DOM
+// and, importantly, BEFORE angular. This is because rangy needs to call
+// `rangy.init()` for the core rangy object to work (which is used
+// in some controllers, i.e., by angular).
+require('rangy');
+require('rangy-serializer');
+
 import * as angular from 'angular';
+import * as angularAnimate from 'angular-animate';   // ngAnimate module
+import * as angularRoute from 'angular-route';       // ngRoute module
+import * as angularSanitize from 'angular-sanitize'; // ngSanitize module
+
+// use imported modules so the typescript doesn't remove them
+// NOTE: the array trick doesn't work:
+// http://www.davidkudera.com/2015/02/28/typescript-gulp-bower-browserify/
+window['_dirty_modules'] = [
+  angularAnimate,
+  angularRoute,
+  angularSanitize
+];
 
 import config from './config';
 import controllers from './controllers';
@@ -23,17 +40,8 @@ import utils from './utils';
 
 'use strict';
 (function() {
-  // Rangy needs to be included after the initial DOM
-  // and, importantly, BEFORE angular. This is because rangy needs to call
-  // `rangy.init()` for the core rangy object to work (which is used
-  // in some controllers, i.e., by angular).
-  require('rangy');
-  require('rangy-serializer');
 
-  require('angular-animate'); // provides 'ngAnimate' module
   require('angular-bootstrap-tpls'); // provides 'ui.bootstrap' module
-  require('angular-sanitize'); // provides 'ngSanitize' module
-  require('angular-route'); // provides 'ngRoute' module
   require('angular-moment');
   require('angular-leaflet-directive'); // provides 'leaflet-directive' module
   require('detect-element-resize'); // injects resize+removeResize to jquery

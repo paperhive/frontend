@@ -54,13 +54,10 @@
     "watchify": "^3.6.0"
   },
   "browser": {
-    "angular-animate": "./bower_components/angular-animate/angular-animate.js",
     "angular-bootstrap-tpls": "./bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
     "angular-leaflet-directive": "./bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.js",
     "angular-moment": "./bower_components/angular-moment/angular-moment.js",
-    "angular-route": "./bower_components/angular-route/angular-route.js",
     "angular-route-segment": "./bower_components/angular-route-segment/build/angular-route-segment.js",
-    "angular-sanitize": "./bower_components/angular-sanitize/angular-sanitize.js",
     "detect-element-resize": "./bower_components/javascript-detect-element-resize/jquery.resize.js",
     "highlightjs": "./bower_components/highlightjs/highlight.pack.js",
     "leaflet": "./bower_components/leaflet/dist/leaflet.js",
@@ -76,12 +73,6 @@
     "rangy-serializer": "./bower_components/rangy/rangy-serializer.js"
   },
   "browserify-shim": {
-    "angular-animate": {
-      "exports": null,
-      "depends": [
-        "angular"
-      ]
-    },
     "angular-bootstrap-tpls": {
       "exports": null,
       "depends": [
@@ -102,19 +93,7 @@
         "moment"
       ]
     },
-    "angular-route": {
-      "exports": null,
-      "depends": [
-        "angular"
-      ]
-    },
     "angular-route-segment": {
-      "exports": null,
-      "depends": [
-        "angular"
-      ]
-    },
-    "angular-sanitize": {
       "exports": null,
       "depends": [
         "angular"
@@ -146,6 +125,9 @@
   },
   "dependencies": {
     "angular": "^1.4.9",
+    "angular-animate": "^1.4.9",
+    "angular-route": "^1.4.9",
+    "angular-sanitize": "^1.4.9",
     "jquery": "^2.2.0",
     "lodash": "^3.10.1",
     "paperhive-sources": "^4.0.1"
