@@ -1,7 +1,7 @@
 'use strict';
 import angular = require('angular');
 // export default function(app) {
-export = function(app) {
+export default function(app) {
   app.factory(
     'metaService',
     [
