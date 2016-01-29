@@ -1,5 +1,4 @@
-'use strict';
-module.exports = function(app) {
+export default function(app) {
   app.run([
     '$rootScope', '$routeSegment', 'metaService',
     function(
@@ -18,4 +17,4 @@ module.exports = function(app) {
       });
     }
   ]);
-};
+}

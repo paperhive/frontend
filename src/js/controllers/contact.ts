@@ -2,7 +2,7 @@
 
 const angular = require('angular');
 
-module.exports = function(app) {
+export default function(app) {
   app.controller('ContactMapCtrl', ['$scope', function($scope) {
     const office = {
       lat: 52.53849,

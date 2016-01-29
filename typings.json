@@ -1,6 +1,7 @@
 {
   "ambientDependencies": {
     "angular": "github:DefinitelyTyped/DefinitelyTyped/angularjs/angular.d.ts#3bebbe1baee04846cc46ed7249e8117e4cd7c7ff",
+    "pdf": "github:DefinitelyTyped/DefinitelyTyped/pdf/pdf.d.ts#de5a50a5f319931dcc8c43b215945eabe17189dc",
     "rangy": "github:DefinitelyTyped/DefinitelyTyped/rangy/rangy.d.ts#e57adf88d6d06b417320e65f0db7d279effa932e"
   }
 }

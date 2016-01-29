@@ -1,7 +1,7 @@
 'use strict';
 const _ = require('lodash');
 
-module.exports = function(app) {
+export default function(app) {
 
   app.controller('ArticleTextCtrl', [
     '$scope', '$route', '$routeSegment', '$document', '$http', 'config',

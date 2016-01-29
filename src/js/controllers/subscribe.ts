@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(app) {
+export default function(app) {
 
   app.controller('SubscribeCtrl', ['$scope', '$http', 'config',
     function($scope, $http, config) {

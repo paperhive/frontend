@@ -1,5 +1,5 @@
 'use strict';
-module.exports = function(app) {
+export default function(app) {
   app.factory('distangleService', [function() {
     return {
       distangle: function(anchors, sizes, lb, ub) {

@@ -1,5 +1,5 @@
 'use strict';
-module.exports = function(app) {
+export default function(app) {
   app.factory('authService', ['config', '$http', '$q', '$rootScope', '$window',
     function(config, $http, $q, $rootScope, $window) {
       const authService = {

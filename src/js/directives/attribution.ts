@@ -1,5 +1,5 @@
 'use strict';
-module.exports = function(app) {
+export default function(app) {
 
   app.directive('attribution', [
     '$templateCache', '$compile', '$timeout',

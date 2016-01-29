@@ -1,5 +1,5 @@
 'use strict';
-module.exports = function(app) {
+export default function(app) {
   app.controller('NotificationsCtrl', ['$scope', 'notificationService',
     function($scope, notificationService) {
       $scope.notifications = notificationService.notifications;

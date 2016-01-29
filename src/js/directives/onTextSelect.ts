@@ -2,7 +2,7 @@
 const rangy = require('rangy');
 const _ = require('lodash');
 
-module.exports = function(app) {
+export default function(app) {
 
   app.directive('onTextSelect', ['$document', '$parse',
     function($document, $parse) {

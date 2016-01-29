@@ -1,5 +1,5 @@
 'use strict';
-module.exports = function(app) {
+export default function(app) {
   app.controller('UserCtrl', [
     '$scope', '$rootScope', '$routeSegment', 'config', '$http',
     'notificationService', 'authService', 'metaService',

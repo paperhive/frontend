@@ -1,5 +1,5 @@
 'use strict';
-module.exports = function(app) {
+export default function(app) {
   app.controller('OauthOrcidCtrl', [
     '$scope', '$routeParams', '$location', 'authService',
     function($scope, $routeParams, $location, authService) {

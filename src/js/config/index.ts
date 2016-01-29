@@ -1,10 +1,17 @@
 'use strict';
-module.exports = function(app) {
-  require('./animate')(app);
-  require('./html5Mode')(app);
-  require('./mathjax.js')(app);
-  require('./metaUpdate.js')(app);
-  require('./pdf.js')(app);
-  require('./routes.js')(app);
-  require('./scroll.js')(app);
+
+import animate from './animate';
+import html5Mode from './html5Mode';
+import metaUpdate from './metaUpdate';
+import pdf from './pdf';
+import routes from './routes';
+import scroll from './scroll';
+
+export default function(app) {
+  animate(app);
+  html5Mode(app);
+  metaUpdate(app);
+  pdf(app);
+  routes(app);
+  scroll(app);
 };

@@ -5,9 +5,15 @@
  * Licensed under GPL3
  * (https://github.com/paperhive/paperhive-frontend/blob/master/LICENSE)
  */
+
+ import config from './config';
+ import controllers from './controllers';
+ import directives from './directives';
+ import services from './services';
+ import utils from './utils';
+
 'use strict';
 (function() {
-
   // Rangy needs to be included after the initial DOM
   // and, importantly, BEFORE angular. This is because rangy needs to call
   // `rangy.init()` for the core rangy object to work (which is used
@@ -26,10 +32,10 @@
   require('mentio');
   require('angular-route-segment'); // provides 'route-segment' module
   require('ngSmoothScroll'); // provides 'smoothScroll' module
-  require('../../tmp/templates.js'); // provides 'templates' module
+  require('../tmp/templates.js'); // provides 'templates' module
   require('pdfjs-compatibility');
   require('pdfjs');
-  require('../../bower_components/pdfjs-dist/web/pdf_viewer.js');
+  require('../bower_components/pdfjs-dist/web/pdf_viewer.js');
 
   const paperhive = angular
     .module(
@@ -47,12 +53,12 @@
         'templates'
       ]
     )
-    .constant('config', require('../../config.json'))
+    .constant('config', require('../config.json'))
     ;
 
-  require('./config')(paperhive);
-  require('./controllers')(paperhive);
-  require('./directives')(paperhive);
-  require('./services')(paperhive);
-  require('./utils')(paperhive);
+  config(paperhive);
+  controllers(paperhive);
+  directives(paperhive);
+  services(paperhive);
+  utils(paperhive);
 })();

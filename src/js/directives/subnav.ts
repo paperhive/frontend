@@ -2,7 +2,7 @@
 const angular = require('angular');
 const $ = require('jquery');
 
-module.exports = function(app) {
+export default function(app) {
 
   app.directive('subnav', ['$rootScope', '$routeSegment', '$filter',
     function($rootScope, $routeSegment, $filter) {

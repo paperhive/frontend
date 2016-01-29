@@ -1,5 +1,5 @@
 'use strict';
-module.exports = function(app) {
+export default function(app) {
   app.controller(
     'NavbarSearchCtrl',
     ['$scope', '$http', '$location', '$routeSegment', 'config',

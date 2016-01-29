@@ -1,5 +1,4 @@
-'use strict';
-module.exports = function(app) {
+export default function(app) {
   app.run([
     '$rootScope', '$location', '$anchorScroll', '$routeParams',
     function($rootScope, $location, $anchorScroll, $routeParams) {

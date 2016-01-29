@@ -1,5 +1,5 @@
 'use strict';
-module.exports = function(app) {
+export default function(app) {
   // see https://docs.angularjs.org/guide/forms
   app.directive('validateUsername', [
     '$q', '$http', 'config', 'authService',

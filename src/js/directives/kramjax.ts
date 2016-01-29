@@ -5,7 +5,7 @@ const kramed = require('kramed');
 const $ = require('jquery');
 // TODO: const MathJax = require('MathJax');
 
-module.exports = function(app) {
+export default function(app) {
 
   // syntax highlighting with highlight.js
   kramed.setOptions({

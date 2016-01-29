@@ -3,7 +3,7 @@
 const _ = require('lodash');
 const $ = require('jquery');
 
-module.exports = function(app) {
+export default function(app) {
 
   app.directive(
     'toc',

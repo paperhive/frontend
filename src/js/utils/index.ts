@@ -1,4 +1,6 @@
 'use strict';
-module.exports = function(app) {
-  require('./exceptions.js')(app);
+import exceptions from './exceptions';
+
+export default function(app) {
+  exceptions(app);
 };

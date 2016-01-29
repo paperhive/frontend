@@ -3,7 +3,7 @@ import rangy = require('rangy');
 const _ = require('lodash');
 const $ = require('jquery');
 
-module.exports = function(app) {
+export default function(app) {
 
   // returns all leaf text nodes that are descendants of node or are node
   const getTextNodes = function(node) {

@@ -2,7 +2,7 @@
 const _ = require('lodash');
 const PDFJS = require('pdfjs');
 
-module.exports = function(app) {
+export default function(app) {
   app.directive('pdf', ['$parse', function($parse) {
     return {
       restrict: 'E',

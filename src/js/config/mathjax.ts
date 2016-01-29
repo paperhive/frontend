@@ -1,11 +1,8 @@
-/*global MathJax*/
-'use strict';
-module.exports = function(app) {
-  // TODO: how to load+configure this beast via broserify/require()?!
-  /*
-  const MathJax = require('MathJax');
-  */
+// MathJax comes from outer space
+// TODO: how to load+configure this beast via typescript?!
+declare const MathJax: any;
 
+export default function(app) {
   MathJax.Hub.Config({
     skipStartupTypeset: true,
     messageStyle: 'none',
@@ -15,4 +12,4 @@ module.exports = function(app) {
     extension: ['Safe.js']
   });
   MathJax.Hub.Configured();
-};
+}

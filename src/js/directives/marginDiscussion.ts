@@ -1,7 +1,7 @@
 'use strict';
 const angular = require('angular');
 
-module.exports = function(app) {
+export default function(app) {
 
   app.directive('marginDiscussion', [
     '$q', '$location', '$filter', 'authService',

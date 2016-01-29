@@ -2,7 +2,7 @@
 
 const $ = require('jquery');
 
-module.exports = function(app) {
+export default function(app) {
 
   // elastic textarea based on a mirror technique similar to
   // https://github.com/monospaced/angular-elastic/blob/master/elastic.js

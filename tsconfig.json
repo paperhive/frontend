@@ -8,7 +8,8 @@
     "target": "es5"
   },
   "exclude": [
+    "bower_components",
     "node_modules",
-    "bower_components"
+    "typings"
   ]
 }

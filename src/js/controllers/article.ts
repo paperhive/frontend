@@ -4,7 +4,7 @@ const angular = require('angular');
 const moment = require('moment');
 const paperhiveSources = require('paperhive-sources');
 
-module.exports = function(app) {
+export default function(app) {
 
   app.controller('ArticleCtrl', [
     '$scope', '$route', '$routeSegment', '$document', '$http', 'config',

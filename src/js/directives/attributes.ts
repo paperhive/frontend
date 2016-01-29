@@ -2,7 +2,7 @@
 
 const angular = require('angular');
 
-module.exports = function(app) {
+export default function(app) {
   app.directive('attributes', [function() {
     return {
       restrict: 'A',
