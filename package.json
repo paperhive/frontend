@@ -4,7 +4,7 @@
   "description": "PaperHive frontend",
   "scripts": {
     "build": "gulp",
-    "install-deps": "npm install && bower install",
+    "install-deps": "npm install && bower install && typings install",
     "lint": "find src/js/ -name *.ts | xargs ./node_modules/.bin/tslint",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "karma start --single-run",
