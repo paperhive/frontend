@@ -19,7 +19,6 @@
     "angular-mocks": "1.4.8"
   },
   "dependencies": {
-    "angular": "1.4.8",
     "angular-animate": "1.4.8",
     "angular-bootstrap": "1.1.0",
     "angular-leaflet-directive": "0.10.0",

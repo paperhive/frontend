@@ -9,7 +9,10 @@
   },
   "exclude": [
     "bower_components",
-    "node_modules",
     "typings"
+  ],
+  "files": [
+    "src/js/index.ts",
+    "typings/main.d.ts"
   ]
 }

@@ -6,11 +6,13 @@
  * (https://github.com/paperhive/paperhive-frontend/blob/master/LICENSE)
  */
 
- import config from './config';
- import controllers from './controllers';
- import directives from './directives';
- import services from './services';
- import utils from './utils';
+import * as angular from 'angular';
+
+import config from './config';
+import controllers from './controllers';
+import directives from './directives';
+import services from './services';
+import utils from './utils';
 
 'use strict';
 (function() {
@@ -21,7 +23,6 @@
   require('rangy');
   require('rangy-serializer');
 
-  const angular = require('angular');
   require('angular-animate'); // provides 'ngAnimate' module
   require('angular-bootstrap-tpls'); // provides 'ui.bootstrap' module
   require('angular-sanitize'); // provides 'ngSanitize' module
