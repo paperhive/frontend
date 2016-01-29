@@ -1,6 +1,7 @@
 'use strict';
-var angular = require('angular');
-module.exports = function(app) {
+import angular = require('angular');
+// module.exports = function(app) {
+export = function(app) {
   app.factory(
     'metaService',
     [

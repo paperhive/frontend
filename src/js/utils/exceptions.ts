@@ -1,9 +1,10 @@
 'use strict';
-module.exports = function(app) {
+
+export = function(app) {
   function PhError(message) {
     this.name = 'PhError';
     this.message = message;
   }
   PhError.prototype = new Error();
   PhError.prototype.constructor = PhError;
-};
+  };

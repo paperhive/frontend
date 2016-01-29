@@ -33,6 +33,7 @@ var CacheBuster = require('gulp-cachebust');
 var cachebust = new CacheBuster();
 var fs = require('fs');
 var del = require('del');
+var ts = require('gulp-typescript');
 
 var debug = process.env.DEBUG || false;
 
@@ -72,7 +73,7 @@ function js(watch) {
   var watchify = require('watchify');
 
   var browserifyArgs = _.extend(watchify.args, {debug: true});
-  var bundler = browserify('./src/js/index.js', browserifyArgs);
+  var bundler = browserify('./out/js/index.js', browserifyArgs);
 
   // use shims defined in package.json via 'browser' and 'browserify-shim'
   // properties
@@ -101,6 +102,13 @@ function js(watch) {
 
   return rebundle();
 }
+
+// convert typescript to js
+gulp.task('ts', function () {
+  return gulp.src('src/**/*.ts')
+  .pipe(ts({}))
+  .pipe(gulp.dest('out/'));
+});
 
 // bundle once
 gulp.task('js', ['templates', 'vendorCacheBust'], function() {
@@ -340,7 +348,7 @@ gulp.task('test', ['serve-nowatch'], function() {
 
 gulp.task(
   'default',
-  ['eslint', 'htmlhint', 'js', 'templates', 'indexhtml', 'static',
+  ['htmlhint', 'ts', 'js', 'templates', 'indexhtml', 'static',
    'vendorCacheBust', 'style']
 );
 gulp.task(
