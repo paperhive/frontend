@@ -1,7 +1,6 @@
-'use strict';
 import * as _ from 'lodash';
 import * as angular from 'angular';
-const moment = require('moment');
+import * as moment from 'moment';
 const paperhiveSources = require('paperhive-sources');
 
 export default function(app) {

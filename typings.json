@@ -8,5 +8,8 @@
     "lodash": "github:DefinitelyTyped/DefinitelyTyped/lodash/lodash.d.ts#df712b17fa4737fdb3eb52118b1465cd3be81a1d",
     "pdf": "github:DefinitelyTyped/DefinitelyTyped/pdf/pdf.d.ts#de5a50a5f319931dcc8c43b215945eabe17189dc",
     "rangy": "github:DefinitelyTyped/DefinitelyTyped/rangy/rangy.d.ts#e57adf88d6d06b417320e65f0db7d279effa932e"
+  },
+  "dependencies": {
+    "moment": "github:typings/typed-moment#a4075cd50e63efbedd850f654594f293ab81a385"
   }
 }
