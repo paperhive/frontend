@@ -5,7 +5,16 @@
     </div>
     <div class="media-body">
       <div ng-bind-html="match.model.title | uibTypeaheadHighlight:query"></div>
-      <span ng-repeat="author in match.model.authors">{{author.name}}{{$last ? '' : ', '}}</span>
+      <small>
+        <span ng-repeat="author in match.model.authors">
+          {{author.name}}{{$last ? '' : ', '}}
+        </span>
+      </small>
+      <small>
+        <div>
+          {{match.model.publishedAt | date: 'yyyy'}}
+        </div>
+      </small>
     </div>
   </div>
 </a>
