@@ -1,9 +1,11 @@
 <a>
-  <div>
-    <span>
-      <i class="fa fa-file"></i>
-    </span>
-    <span ng-bind-html="match.label | uibTypeaheadHighlight:query">
-    </span>
+  <div class="media">
+    <div class="media-left media-middle">
+      <i class="fa fa-file-o fa-2x"></i>
+    </div>
+    <div class="media-body">
+      <div ng-bind-html="match.model.title | uibTypeaheadHighlight:query"></div>
+      <span ng-repeat="author in match.model.authors">{{author.name}}{{$last ? '' : ', '}}</span>
+    </div>
   </div>
 </a>
