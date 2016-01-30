@@ -129,7 +129,7 @@
     "angular-route": "^1.4.9",
     "angular-sanitize": "^1.4.9",
     "jquery": "^2.2.0",
-    "lodash": "^3.10.1",
+    "lodash": "^4.1.0",
     "paperhive-sources": "^4.0.1"
   }
 }

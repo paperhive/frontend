@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import { map, uniqBy } from 'lodash';
 
 export default function(app) {
 
@@ -15,14 +15,16 @@ export default function(app) {
           function(discussion) {
             if (discussion !== undefined) {
 
-              scope.participants = _.pluck(scope.discussion.replies, 'author');
+              scope.participants = map(scope.discussion.replies, 'author');
               // prepend original annotation author
               scope.participants.unshift(
                 scope.discussion.author
               );
 
-              // make list unique w.r.t. _id
-              scope.participants = _.uniq(scope.participants, '_id');
+              // make list unique w.r.t. id
+              console.log(scope.particpants);
+              scope.participants = uniqBy(scope.participants, 'id');
+              console.log(scope.particpants);
             }
           },
           // http://stackoverflow.com/a/19455564/353337
