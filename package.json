@@ -59,12 +59,14 @@
   },
   "jspm": {
     "dependencies": {
+      "leaflet": "github:Leaflet/Leaflet@^0.7.7",
       "angular": "github:angular/bower-angular@^1.4.9",
       "angular-animate": "github:angular/bower-angular-animate@^1.4.9",
+      "angular-bootstrap": "github:angular-ui/bootstrap-bower@^1.1.2",
+      "angular-leaflet-directive": "github:tombatossals/angular-leaflet-directive@^0.10.0",
       "angular-moment": "npm:angular-moment@^1.0.0-beta.3",
       "angular-route": "github:angular/bower-angular-route@^1.4.9",
       "angular-sanitize": "github:angular/bower-angular-sanitize@^1.4.9",
-      "angular-ui-bootstrap": "npm:angular-ui-bootstrap@^1.1.2",
       "jquery": "npm:jquery@^2.2.0",
       "rangy": "github:timdown/rangy-release@^1.3.0",
       "ts": "github:frankwallis/plugin-typescript@^2.5.9"

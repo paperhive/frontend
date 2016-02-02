@@ -20,9 +20,9 @@ import * as angular from 'angular';
 import 'angular-animate';                             // ngAnimate module
 import 'angular-route';                               // ngRoute module
 import 'angular-sanitize';                            // ngSanitize module
-import 'angular-ui-bootstrap/dist/ui-bootstrap-tpls'; // ui.bootstrap
+import 'angular-bootstrap';                           // ui.bootstrap
 import 'angular-moment';                              // angularMoment
-
+import 'angular-leaflet-directive';                   // leaflet-directive
 import config from './config/index';
 import controllers from './controllers/index';
 import directives from './directives/index';
@@ -32,7 +32,6 @@ import utils from './utils/index';
 'use strict';
 (function() {
 
-  require('angular-leaflet-directive'); // provides 'leaflet-directive' module
   require('detect-element-resize'); // injects resize+removeResize to jquery
   require('mentio');
   require('angular-route-segment'); // provides 'route-segment' module
