@@ -21,6 +21,7 @@ import 'angular-animate';                             // ngAnimate module
 import 'angular-route';                               // ngRoute module
 import 'angular-sanitize';                            // ngSanitize module
 import 'angular-ui-bootstrap/dist/ui-bootstrap-tpls'; // ui.bootstrap
+import 'angular-moment';                              // angularMoment
 
 import config from './config/index';
 import controllers from './controllers/index';
@@ -31,7 +32,6 @@ import utils from './utils/index';
 'use strict';
 (function() {
 
-  require('angular-moment');
   require('angular-leaflet-directive'); // provides 'leaflet-directive' module
   require('detect-element-resize'); // injects resize+removeResize to jquery
   require('mentio');

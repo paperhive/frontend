@@ -14,6 +14,7 @@ SystemJS.config({
   map: {
     "angular": "github:angular/bower-angular@1.4.9",
     "angular-animate": "github:angular/bower-angular-animate@1.4.9",
+    "angular-moment": "npm:angular-moment@1.0.0-beta.3",
     "angular-route": "github:angular/bower-angular-route@1.4.9",
     "angular-sanitize": "github:angular/bower-angular-sanitize@1.4.9",
     "angular-ui-bootstrap": "npm:angular-ui-bootstrap@1.1.2",
@@ -59,6 +60,11 @@ SystemJS.config({
     "github:twbs/bootstrap@3.3.6": {
       "map": {
         "jquery": "github:components/jquery@2.2.0"
+      }
+    },
+    "npm:angular-moment@1.0.0-beta.3": {
+      "map": {
+        "moment": "npm:moment@2.10.6"
       }
     }
   }
