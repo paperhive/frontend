@@ -25,6 +25,7 @@ SystemJS.config({
     "jquery": "npm:jquery@2.2.0",
     "json": "github:systemjs/plugin-json@0.1.0",
     "leaflet": "github:Leaflet/Leaflet@0.7.7",
+    "lodash": "npm:lodash@4.2.0",
     "ment.io": "github:jeff-collins/ment.io@0.9.24",
     "ngSmoothScroll": "github:d-oliveros/ngSmoothScroll@2.0.0",
     "pdfjs-dist": "github:mozilla/pdfjs-dist@1.4.37",
