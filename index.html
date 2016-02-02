@@ -1,9 +1,9 @@
 <!doctype html>
 
-<html lang="en" ng-app="paperHive" ng-strict-di>
+<html lang="en" ng-strict-di>
   <head ng-controller="MetaCtrl">
     <!-- base href is the entry point of the deployed app -->
-    <base href="<%= config.baseHref %>">
+    <base href="/">
     <title data-ng-bind="metaService.data.title"></title>
 
     <!-- meta tags -->
@@ -46,7 +46,6 @@
     </script>
 
     <link href="index.css" rel="stylesheet">
-    <script src="index.js"></script>
   </head>
   <body ng-style="{'padding-bottom': footerSize.height}">
     <header>
@@ -57,5 +56,12 @@
       <ng-include src="'templates/shared/footer.html'"></ng-include>
     </footer>
     <ng-include src="'templates/shared/notifications.html'"></ng-include>
+
+    <script src="jspm_packages/system.js"></script>
+    <script src="jspm.browser.js"></script>
+    <script src="jspm.config.js"></script>
+    <script>
+      System.import('app/index.ts').then(undefined, console.error.bind(console));
+    </script>
   </body>
 </html>
