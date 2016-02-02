@@ -9,43 +9,17 @@
 // import jquery before angular (so angular can use it instead of jqlite)
 import 'jquery';
 
-import {num, sleep} from './test';
-
-const name: string = 'schlömi';
-
-console.log('lol', name, num);
-
-(async function() {
-  console.log('before');
-  await sleep(3000);
-  console.log('after');
-})();
-
-console.log('lol', name, num);
-
-/*
 // Rangy needs to be included after the initial DOM
 // and, importantly, BEFORE angular. This is because rangy needs to call
 // `rangy.init()` for the core rangy object to work (which is used
 // in some controllers, i.e., by angular).
 import 'rangy';
 import 'rangy/rangy-serializer';
-// require('rangy');
-// require('rangy-serializer');
 
 import * as angular from 'angular';
-import * as angularAnimate from 'angular-animate';   // ngAnimate module
-import * as angularRoute from 'angular-route';       // ngRoute module
-import * as angularSanitize from 'angular-sanitize'; // ngSanitize module
-
-// use imported modules so the typescript doesn't remove them
-// NOTE: the array trick doesn't work:
-// http://www.davidkudera.com/2015/02/28/typescript-gulp-bower-browserify/
-window['_dirty_modules'] = [
-  angularAnimate,
-  angularRoute,
-  angularSanitize
-];
+import 'angular-animate';  // ngAnimate module
+import 'angular-route';    // ngRoute module
+import 'angular-sanitize'; // ngSanitize module
 
 import config from './config/index';
 import controllers from './controllers/index';
@@ -93,4 +67,3 @@ import utils from './utils/index';
   services(paperhive);
   utils(paperhive);
 })();
-*/
