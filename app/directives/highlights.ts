@@ -1,6 +1,7 @@
-import * as rangy from 'rangy';
+import rangy from 'rangy';
 import * as _ from 'lodash';
-import * as jquery from 'jquery';
+// TODO: ts complains about missing default export but this works!
+import jquery from 'jquery';
 
 export default function(app) {
 
@@ -59,8 +60,7 @@ export default function(app) {
             // get TextNodes inside the range
             const textNodes = _.filter(
               getTextNodes(range.commonAncestorContainer),
-              range.containsNodeText,
-              range
+              range.containsNodeText.bind(range)
             );
 
             // wrap each TextNode in a span to measure it

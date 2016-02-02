@@ -76,6 +76,11 @@ SystemJS.config({
         "url-browserify": "npm:url@0.11.0"
       }
     },
+    "github:tombatossals/angular-leaflet-directive@0.10.0": {
+      "map": {
+        "leaflet": "github:Leaflet/Leaflet@0.7.7"
+      }
+    },
     "github:twbs/bootstrap@3.3.6": {
       "map": {
         "jquery": "github:components/jquery@2.2.0"

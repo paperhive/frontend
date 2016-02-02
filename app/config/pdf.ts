@@ -1,5 +1,5 @@
-import * as pdfjs from 'pdfjs-dist';
+import {PDFJS} from 'pdfjs-dist';
 
 export default function(app) {
-  pdfjs.workerSrc = 'assets/pdfjs/pdf.worker.js';
+  PDFJS.workerSrc = 'assets/pdfjs/pdf.worker.js';
 }

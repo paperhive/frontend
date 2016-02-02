@@ -1,8 +1,9 @@
 /*global MathJax*/
 'use strict';
 
+// TODO: ts complains about missing default export but this works!
+import jquery from 'jquery';
 import * as kramed from 'kramed';
-import * as jquery from 'jquery';
 import * as highlightjs from 'highlightjs';
 // TODO: const MathJax = require('MathJax');
 

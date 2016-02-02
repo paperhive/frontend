@@ -27,8 +27,8 @@ import 'angular-leaflet-directive';                   // leaflet-directive
 import 'javascript-detect-element-resize'; // injects resize+removeResize to jquery
 import 'ment.io';
 import 'ngSmoothScroll';                              // smoothScroll
-import 'pdfjs-dist';
 import 'pdfjs-dist/web/compatibility';
+import 'pdfjs-dist';
 import 'pdfjs-dist/web/pdf_viewer';
 
 import config from './config/index';

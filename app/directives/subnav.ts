@@ -1,6 +1,7 @@
 'use strict';
 import * as angular from 'angular';
-import * as jquery from 'jquery';
+// TODO: ts complains about missing default export but this works!
+import jquery from 'jquery';
 
 export default function(app) {
 

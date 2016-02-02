@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import * as angular from 'angular';
-import * as paperhiveSources from 'paperhive-sources';
+import paperhiveSources from 'paperhive-sources';
 
 export default function(app) {
 
