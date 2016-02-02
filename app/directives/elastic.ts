@@ -14,7 +14,8 @@ export default function(app) {
         restrict: 'A',
         link: function($scope, element) {
 
-          const mirror = jquery('<textarea></textarea>');
+          // TODO: determine proper type
+          const mirror: any = jquery('<textarea></textarea>');
           mirror.attr('class', element.attr('class'));
           mirror.css({
             position: 'absolute',
