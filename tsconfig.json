@@ -9,5 +9,6 @@
   "files": [
     "src/app/index.ts",
     "typings/main.d.ts"
-  ]
+  ],
+  "compileOnSave": false
 }

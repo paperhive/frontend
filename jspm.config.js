@@ -12,8 +12,11 @@ SystemJS.config({
   },
 
   map: {
+    "jquery": "npm:jquery@2.2.0",
     "plugin-babel": "npm:systemjs-plugin-babel@0.0.2",
     "plugin-typescript": "github:frankwallis/plugin-typescript@2.5.9",
+    "process": "github:jspm/nodelibs-process@0.2.0-alpha",
+    "rangy": "github:timdown/rangy-release@1.3.0",
     "ts": "github:frankwallis/plugin-typescript@2.5.9"
   },
 

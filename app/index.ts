@@ -9,12 +9,29 @@
 // import jquery before angular (so angular can use it instead of jqlite)
 import 'jquery';
 
+import {num, sleep} from './test';
+
+const name: string = 'schlömi';
+
+console.log('lol', name, num);
+
+(async function() {
+  console.log('before');
+  await sleep(3000);
+  console.log('after');
+})();
+
+console.log('lol', name, num);
+
+/*
 // Rangy needs to be included after the initial DOM
 // and, importantly, BEFORE angular. This is because rangy needs to call
 // `rangy.init()` for the core rangy object to work (which is used
 // in some controllers, i.e., by angular).
-require('rangy');
-require('rangy-serializer');
+import 'rangy';
+import 'rangy/rangy-serializer';
+// require('rangy');
+// require('rangy-serializer');
 
 import * as angular from 'angular';
 import * as angularAnimate from 'angular-animate';   // ngAnimate module
@@ -76,3 +93,4 @@ import utils from './utils/index';
   services(paperhive);
   utils(paperhive);
 })();
+*/
