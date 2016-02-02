@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-const PDFJS = require('pdfjs');
+import * as PDFJS from 'pdfjs-dist';
 
 export default function(app) {
   app.directive('pdf', ['$parse', function($parse) {

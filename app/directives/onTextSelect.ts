@@ -1,4 +1,4 @@
-const rangy = require('rangy');
+import * as rangy from 'rangy';
 import * as _ from 'lodash';
 
 export default function(app) {
