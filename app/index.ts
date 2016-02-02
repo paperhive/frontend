@@ -23,6 +23,9 @@ import 'angular-sanitize';                            // ngSanitize module
 import 'angular-bootstrap';                           // ui.bootstrap
 import 'angular-moment';                              // angularMoment
 import 'angular-leaflet-directive';                   // leaflet-directive
+import 'javascript-detect-element-resize'; // injects resize+removeResize to jquery
+import 'ment.io';
+
 import config from './config/index';
 import controllers from './controllers/index';
 import directives from './directives/index';
@@ -32,8 +35,6 @@ import utils from './utils/index';
 'use strict';
 (function() {
 
-  require('detect-element-resize'); // injects resize+removeResize to jquery
-  require('mentio');
   require('angular-route-segment'); // provides 'route-segment' module
   require('ngSmoothScroll'); // provides 'smoothScroll' module
   require('../tmp/templates.js'); // provides 'templates' module

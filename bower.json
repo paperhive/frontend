@@ -19,8 +19,6 @@
     "angular-mocks": "1.4.8"
   },
   "dependencies": {
-    "angular-leaflet-directive": "0.10.0",
-    "angular-moment": "0.10.3",
     "angular-route-segment": "1.5.0",
     "bootstrap": "^3.3.6",
     "fontawesome": "^4.5.0",
@@ -28,7 +26,6 @@
     "javascript-detect-element-resize": "0.5.3",
     "kramed": "0.5.5",
     "MathJax": "^2.6.0",
-    "ment.io": "0.9.24",
     "ngSmoothScroll": "2.0.0",
     "pdfjs-dist": "1.4.13",
     "roboto-fontface": "^0.4.3"
