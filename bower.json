@@ -19,14 +19,11 @@
     "angular-mocks": "1.4.8"
   },
   "dependencies": {
-    "angular-route-segment": "1.5.0",
     "bootstrap": "^3.3.6",
     "fontawesome": "^4.5.0",
     "highlightjs": "9.1.0",
-    "javascript-detect-element-resize": "0.5.3",
     "kramed": "0.5.5",
     "MathJax": "^2.6.0",
-    "ngSmoothScroll": "2.0.0",
     "pdfjs-dist": "1.4.13",
     "roboto-fontface": "^0.4.3"
   }

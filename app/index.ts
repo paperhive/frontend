@@ -19,12 +19,17 @@ import 'rangy/rangy-serializer';
 import * as angular from 'angular';
 import 'angular-animate';                             // ngAnimate module
 import 'angular-route';                               // ngRoute module
+import 'angular-route-segment';                       // route-segment
 import 'angular-sanitize';                            // ngSanitize module
 import 'angular-bootstrap';                           // ui.bootstrap
 import 'angular-moment';                              // angularMoment
 import 'angular-leaflet-directive';                   // leaflet-directive
 import 'javascript-detect-element-resize'; // injects resize+removeResize to jquery
 import 'ment.io';
+import 'ngSmoothScroll';                              // smoothScroll
+import 'pdfjs-dist';
+import 'pdfjs-dist/web/compatibility';
+import 'pdfjs-dist/web/pdf_viewer';
 
 import config from './config/index';
 import controllers from './controllers/index';
@@ -32,15 +37,11 @@ import directives from './directives/index';
 import services from './services/index';
 import utils from './utils/index';
 
-'use strict';
-(function() {
+import '../tmp/templates.js';
 
-  require('angular-route-segment'); // provides 'route-segment' module
-  require('ngSmoothScroll'); // provides 'smoothScroll' module
-  require('../tmp/templates.js'); // provides 'templates' module
-  require('pdfjs-compatibility');
-  require('pdfjs');
-  require('../bower_components/pdfjs-dist/web/pdf_viewer.js');
+
+System.import('./config.json!json').then(function(configJson) {
+  console.log(configJson);
 
   const paperhive = angular
     .module(
@@ -58,7 +59,7 @@ import utils from './utils/index';
         'templates'
       ]
     )
-    .constant('config', require('../config.json'))
+    .constant('config', configJson)
     ;
 
   config(paperhive);
@@ -66,4 +67,5 @@ import utils from './utils/index';
   directives(paperhive);
   services(paperhive);
   utils(paperhive);
-})();
+  console.log(config);
+});
