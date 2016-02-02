@@ -4,8 +4,9 @@
   "description": "PaperHive frontend",
   "scripts": {
     "build": "gulp",
-    "install-deps": "npm install && bower install && typings install",
+    "install-deps": "npm install && bower install && jspm install && typings install",
     "lint": "find src/js/ -name *.ts | xargs ./node_modules/.bin/tslint",
+    "serve": "live-server --no-browser --mount=/:src --wait=250",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "karma start --single-run",
     "test:e2e": "gulp test"
@@ -65,7 +66,10 @@
     "paperhive-sources": "^4.0.1"
   },
   "jspm": {
-    "dependencies": {},
+    "dependencies": {
+      "plugin-babel": "npm:systemjs-plugin-babel@^0.0.2",
+      "ts": "github:frankwallis/plugin-typescript@^2.5.9"
+    },
     "devDependencies": {
       "plugin-typescript": "github:frankwallis/plugin-typescript@^2.5.9"
     },

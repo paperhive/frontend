@@ -1,17 +1,13 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "noImplicitAny": false,
-    "outDir": "./build-ts/",
-    "removeComments": true,
+    "module": "es6",
+    "noImplicitAny": true,
+    "noEmit": true,
     "sourceMap": false,
-    "target": "es5"
+    "target": "es6"
   },
-  "exclude": [
-    "bower_components"
-  ],
   "files": [
-    "src/js/index.ts",
+    "src/app/index.ts",
     "typings/main.d.ts"
   ]
 }

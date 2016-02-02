@@ -7,9 +7,7 @@
  */
 
 // import jquery before angular (so angular can use it instead of jqlite)
-import * as jquery from 'jquery';
-// attach jquery to window because of crappy "modules"
-window['jQuery'] = window['$'] = jquery;
+import 'jquery';
 
 // Rangy needs to be included after the initial DOM
 // and, importantly, BEFORE angular. This is because rangy needs to call
@@ -32,11 +30,11 @@ window['_dirty_modules'] = [
   angularSanitize
 ];
 
-import config from './config';
-import controllers from './controllers';
-import directives from './directives';
-import services from './services';
-import utils from './utils';
+import config from './config/index';
+import controllers from './controllers/index';
+import directives from './directives/index';
+import services from './services/index';
+import utils from './utils/index';
 
 'use strict';
 (function() {
