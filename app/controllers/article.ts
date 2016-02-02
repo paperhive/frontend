@@ -1,16 +1,16 @@
 import * as _ from 'lodash';
 import * as angular from 'angular';
-import * as moment from 'moment';
-const paperhiveSources = require('paperhive-sources');
+import * as paperhiveSources from 'paperhive-sources';
 
 export default function(app) {
 
   app.controller('ArticleCtrl', [
     '$scope', '$route', '$routeSegment', '$document', '$http', 'config',
-    '$rootScope', 'authService', 'notificationService', 'metaService',
+    '$rootScope', '$filter', 'authService', 'notificationService',
+    'metaService',
     function(
       $scope, $route, $routeSegment, $document, $http, config, $rootScope,
-      authService, notificationService, metaService
+      $filter, authService, notificationService, metaService
     ) {
       // expose authService
       $scope.auth = authService;
@@ -107,7 +107,7 @@ export default function(app) {
         // citation_publication_date: REQUIRED for Google Scholar.
         metaData.push({
           name: 'citation_publication_date',
-          content: moment($scope.article.publishedAt).format('YYYY/MM/DD')
+          content: $filter('date')($scope.article.publishedAt, 'yyyy/MM/dd')
         });
         // Don't expose the DOI for all versions of the article; it really only
         // identifies one version, usually not the arXiv one, but an upstream

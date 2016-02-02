@@ -1,8 +1,9 @@
 /*global MathJax*/
 'use strict';
 
-const kramed = require('kramed');
+import * as kramed from 'kramed';
 import * as jquery from 'jquery';
+import * as highlightjs from 'highlightjs';
 // TODO: const MathJax = require('MathJax');
 
 export default function(app) {
@@ -10,7 +11,7 @@ export default function(app) {
   // syntax highlighting with highlight.js
   kramed.setOptions({
     highlight: function(code) {
-      return require('highlightjs').highlightAuto(code).value;
+      return highlightjs.highlightAuto(code).value;
     }
   });
 

@@ -1,4 +1,4 @@
-import rangy = require('rangy');
+import * as rangy from 'rangy';
 import * as _ from 'lodash';
 import * as jquery from 'jquery';
 
