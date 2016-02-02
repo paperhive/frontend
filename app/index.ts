@@ -17,9 +17,10 @@ import 'rangy';
 import 'rangy/rangy-serializer';
 
 import * as angular from 'angular';
-import 'angular-animate';  // ngAnimate module
-import 'angular-route';    // ngRoute module
-import 'angular-sanitize'; // ngSanitize module
+import 'angular-animate';                             // ngAnimate module
+import 'angular-route';                               // ngRoute module
+import 'angular-sanitize';                            // ngSanitize module
+import 'angular-ui-bootstrap/dist/ui-bootstrap-tpls'; // ui.bootstrap
 
 import config from './config/index';
 import controllers from './controllers/index';
@@ -30,7 +31,6 @@ import utils from './utils/index';
 'use strict';
 (function() {
 
-  require('angular-bootstrap-tpls'); // provides 'ui.bootstrap' module
   require('angular-moment');
   require('angular-leaflet-directive'); // provides 'leaflet-directive' module
   require('detect-element-resize'); // injects resize+removeResize to jquery
