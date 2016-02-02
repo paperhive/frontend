@@ -2,6 +2,7 @@
 
 import animate from './animate';
 import html5Mode from './html5Mode';
+import mathjax from './mathjax';
 import metaUpdate from './metaUpdate';
 import pdf from './pdf';
 import routes from './routes';
@@ -10,6 +11,7 @@ import scroll from './scroll';
 export default function(app) {
   animate(app);
   html5Mode(app);
+  mathjax(app);
   metaUpdate(app);
   pdf(app);
   routes(app);

@@ -3,8 +3,8 @@
 
 // TODO: ts complains about missing default export but this works!
 import jquery from 'jquery';
-import * as kramed from 'kramed';
-import * as highlightjs from 'highlightjs';
+import kramed from 'kramed';
+import {highlightAuto} from 'highlightjs';
 // TODO: const MathJax = require('MathJax');
 
 export default function(app) {
@@ -12,7 +12,7 @@ export default function(app) {
   // syntax highlighting with highlight.js
   kramed.setOptions({
     highlight: function(code) {
-      return highlightjs.highlightAuto(code).value;
+      return highlightAuto(code).value;
     }
   });
 
@@ -50,7 +50,7 @@ export default function(app) {
             } catch (e) {
               notificationService.notifications.push({
                 type: 'error',
-                message: e
+                message: e.message
               });
             }
           });
