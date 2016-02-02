@@ -13,7 +13,7 @@ import 'jquery';
 // and, importantly, BEFORE angular. This is because rangy needs to call
 // `rangy.init()` for the core rangy object to work (which is used
 // in some controllers, i.e., by angular).
-import * as rangy from 'rangy';
+import 'rangy';
 import 'rangy/rangy-serializer';
 
 import * as angular from 'angular';
@@ -39,9 +39,7 @@ import utils from './utils/index';
 
 import '../tmp/templates.js';
 
-
 System.import('./config.json!json').then(function(configJson) {
-
   const paperhive = angular
     .module(
       'paperhive', [

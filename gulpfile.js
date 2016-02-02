@@ -33,7 +33,6 @@ var CacheBuster = require('gulp-cachebust');
 var cachebust = new CacheBuster();
 var fs = require('fs');
 var del = require('del');
-var ts = require('gulp-typescript');
 
 var debug = process.env.DEBUG || false;
 
@@ -103,13 +102,6 @@ function js(watch) {
   return rebundle();
 }
 
-// convert typescript to js
-gulp.task('ts', function () {
-  var tsProject = ts.createProject('tsconfig.json');
-  return gulp.src(['src/js/**/*.ts', 'typings/main.d.ts'])
-  .pipe(ts(tsProject))
-  .pipe(gulp.dest('build-ts/'));
-});
 
 // bundle once
 gulp.task('js', ['templates', 'vendorCacheBust'], function() {
@@ -151,7 +143,7 @@ gulp.task('htmlhint', function() {
 // bundle html templates via angular's templateCache
 // The templates reference the static files, and since they are cachebusted,
 // depend on them here.
-gulp.task('templates', ['static'], function() {
+gulp.task('templates', function() {
   var templateCache = require('gulp-angular-templatecache');
 
   return gulp.src(paths.templates, {base: 'src'})
@@ -346,13 +338,3 @@ gulp.task('test', ['serve-nowatch'], function() {
     connect.serverClose();
   });
 });
-
-gulp.task(
-  'default',
-  ['htmlhint', 'ts', 'js', 'templates', 'indexhtml', 'static',
-   'vendorCacheBust', 'style']
-);
-gulp.task(
-  'default:watch',
-  ['js:watch', 'templates', 'indexhtml', 'static', 'vendorCacheBust', 'style']
-);
