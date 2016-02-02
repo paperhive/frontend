@@ -1,5 +1,5 @@
 {
-  "name": "paperhive-frontend",
+  "name": "app",
   "version": "1.0.0",
   "description": "PaperHive frontend",
   "scripts": {
@@ -41,9 +41,11 @@
     "gulp-util": "^3.0.7",
     "jasmine": "^2.4.0",
     "jasmine-core": "^2.3.4",
+    "jspm": "^0.17.0-beta.5",
     "karma": "^0.13.15",
     "karma-jasmine": "^0.3.6",
     "karma-phantomjs-launcher": "^0.2.1",
+    "live-server": "^0.9.1",
     "merge-stream": "^1.0.0",
     "phantomjs": "^1.9.19",
     "tslint": "^3.3.0",
@@ -61,5 +63,25 @@
     "jquery": "^2.2.0",
     "lodash": "^4.1.0",
     "paperhive-sources": "^4.0.1"
+  },
+  "jspm": {
+    "dependencies": {},
+    "devDependencies": {
+      "plugin-typescript": "github:frankwallis/plugin-typescript@^2.5.9"
+    },
+    "overrides": {
+      "npm:typescript@1.7.5": {
+        "browser": {},
+        "map": {
+          "buffer": "@empty",
+          "child_process": "@empty",
+          "fs": "@empty",
+          "os": "@empty",
+          "path": "@empty",
+          "process": "@empty",
+          "readline": "@empty"
+        }
+      }
+    }
   }
 }
