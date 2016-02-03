@@ -41,7 +41,7 @@
       type="application/ld+json">
     </script>
 
-    <!-- TODO: bundle mathjax in index.js -->
+    <!-- TODO: bundle mathjax in index.js / bundle.js -->
     <script src="<%= mathjaxDir %>/MathJax.js?config=TeX-AMS_HTML-full,Safe">
     </script>
 
@@ -60,6 +60,9 @@
     <script src="jspm_packages/system.js"></script>
     <script src="jspm.browser.js"></script>
     <script src="jspm.config.js"></script>
+    <% if (environment === 'production') { %>
+      <script src="bundle.js"></script>
+    <% } %>
     <script>
       System.import('app/index.ts').then(undefined, console.error.bind(console));
     </script>

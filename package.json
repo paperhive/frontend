@@ -3,11 +3,13 @@
   "version": "1.0.0",
   "description": "PaperHive frontend",
   "scripts": {
-    "build": "rm -rf build/* && npm run build:vendor && npm-run-all -s build:prod:*",
-    "build:vendor": "gulp vendor",
+    "build": "rm -rf build/* && mkdir -p build && npm-run-all -s build:prod:*",
     "build:prod:css": "lessc --clean-css=\"--skip-restructuring\" less/index.less build/index.css",
-    "build:prod:js": "gulp templates && jspm build app/index.ts build/index.js --minify --skip-source-maps",
+    "build:prod:index": "gulp index",
+    "build:prod:js": "gulp templates && jspm bundle app/index.ts build-tmp/bundle.js --skip-source-maps && uglifyjs build-tmp/bundle.js -m -c -o build/bundle.js",
+    "build:prod:jspm": "gulp jspm",
     "build:prod:static": "gulp static",
+    "build:prod:vendor": "gulp vendor",
     "build:dev:css": "lessc less/index.less build/index.css",
     "build:dev:html": "ENV=DEV gulp templates",
     "install-deps": "npm install && bower install && jspm install && typings install",
@@ -63,6 +65,7 @@
     "tslint": "^3.3.0",
     "typescript": "^1.7.5",
     "typings": "^0.6.3",
+    "uglify-js": "^2.6.1",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.6.0"
@@ -164,7 +167,7 @@
         }
       },
       "github:timdown/rangy-release@1.3.0": {
-        "format": "cjs",
+        "format": "global",
         "main": "rangy-core",
         "meta": {
           "rangy-core.js": {

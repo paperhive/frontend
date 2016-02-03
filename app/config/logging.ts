@@ -1,5 +1,5 @@
 export default function (app) {
-  app.config(function($logProvider){
+  app.config(['$logProvider', function($logProvider){
     $logProvider.debugEnabled(false);
-  });
+  }]);
 }

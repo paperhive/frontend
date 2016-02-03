@@ -11,6 +11,7 @@ var batch = function(task) {
   });
 };
 
+var rename = require('gulp-rename');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var less = require('gulp-less');
@@ -34,6 +35,9 @@ var cachebust = new CacheBuster();
 var fs = require('fs');
 var del = require('del');
 
+// dev environment is false by default
+var dev = process.env.DEV || false;
+
 var debug = process.env.DEBUG || false;
 
 var config = require('./config.json');
@@ -41,7 +45,11 @@ var config = require('./config.json');
 var paths = {
   templates: 'src/templates/**/*.html',
   staticFiles: 'static/**/*',
-  index: 'src/index.html',
+  index: 'index.template.html',
+  // TODO: remove when self-executing bundle works
+  jspmFiles: [
+    'config.json','jspm.browser.js', 'jspm.config.js',
+    'jspm_packages/system.js','jspm_packages/github/systemjs/**/*'],
   less: 'src/less/**/*.less',
   build: 'build/**/*'
 };
@@ -147,7 +155,7 @@ gulp.task('templates', function() {
   var templateCache = require('gulp-angular-templatecache');
 
   return gulp.src(paths.templates, {base: 'src'})
-    .pipe(debug ? gutil.noop() : htmlmin(htmlminOpts))
+    .pipe(dev ? gutil.noop() : htmlmin(htmlminOpts))
     .pipe(templateCache({
       moduleSystem: 'Browserify',
       standalone: true,
@@ -170,6 +178,13 @@ gulp.task('static', [], function() {
     }))
     //.pipe(debug ? gutil.noop() : cachebust.resources())
     .pipe(gulp.dest('build/static'));
+});
+
+// copy jspm files
+// TODO: remove when the self-executing bundle works
+gulp.task('jspm', function() {
+  return gulp.src(paths.jspmFiles, {base: './'})
+    .pipe(gulp.dest('build'));
 });
 
 // store the shasum-appended directory name globally so we can use it as a
@@ -255,15 +270,15 @@ gulp.task('vendor', [], function() {
 // copy index.html
 // Depend on 'js' and 'style' since file names here are changed by the cache
 // buster and referenced in index.html.
-gulp.task('indexhtml', ['js', 'style'], function() {
+gulp.task('index', function() {
   return gulp.src(paths.index, {base: 'src'})
     .pipe(template({
       config: config,
-      mathjaxDir: mathjaxDirSha
+      dev: dev
     }))
-    .pipe(debug ? gutil.noop() : cachebust.references())
-    .pipe(debug ? gutil.noop() : htmlmin(htmlminOpts))
-    .pipe(gulp.dest('build'));
+    .pipe(dev ? gutil.noop() : htmlmin(htmlminOpts))
+    .pipe(rename('index.html'))
+    .pipe(gulp.dest(dev ? 'build-dev' : 'build'));
 });
 
 // compile less to css

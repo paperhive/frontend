@@ -3,7 +3,7 @@
 <html lang="en" ng-strict-di>
   <head ng-controller="MetaCtrl">
     <!-- base href is the entry point of the deployed app -->
-    <base href="/">
+    <base href="<%= config.baseHref %>">
     <title data-ng-bind="metaService.data.title"></title>
 
     <!-- meta tags -->
@@ -60,6 +60,10 @@
     <script src="jspm_packages/system.js"></script>
     <script src="jspm.browser.js"></script>
     <script src="jspm.config.js"></script>
+    <% if (!dev) { %>
+      <!-- insert bundle in production -->
+      <script src="bundle.js"></script>
+    <% } %>
     <script>
       System.import('app/index.ts').then(undefined, console.error.bind(console));
     </script>
