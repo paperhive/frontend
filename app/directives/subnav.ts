@@ -9,7 +9,7 @@ export default function(app) {
     function($rootScope, $routeSegment, $filter) {
       return {
         restrict: 'E',
-        templateUrl: 'templates/directives/subnav.html',
+        templateUrl: 'html/directives/subnav.html',
         transclude: true,
         scope: {},
         link: function(scope, element, attrs) {

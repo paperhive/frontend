@@ -8,7 +8,7 @@ export default function(app) {
       scope: {
         discussion: '='
       },
-      templateUrl: 'templates/directives/gravatarList.html',
+      templateUrl: 'html/directives/gravatarList.html',
       link: function(scope, element, attrs) {
         scope.$watch(
           'discussion',

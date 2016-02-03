@@ -37,7 +37,7 @@ import directives from './directives/index';
 import services from './services/index';
 import utils from './utils/index';
 
-import '../tmp/templates.js';
+import '../build-tmp/html.js';
 
 System.import('./config.json!json').then(function(configJson) {
   const paperhive = angular

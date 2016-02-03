@@ -14,7 +14,7 @@ export default function(app) {
           requiresBody: '=',
           deletable: '='
         },
-        templateUrl: 'templates/directives/comment.html',
+        templateUrl: 'html/directives/comment.html',
         link: function(scope, element, attrs) {
           scope.auth = authService;
           scope.editMode = false;

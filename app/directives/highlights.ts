@@ -104,7 +104,7 @@ export default function(app) {
         highlightInfo: '=',
         highlightBorder: '='
       },
-      templateUrl: 'templates/directives/highlightTarget.html',
+      templateUrl: 'html/directives/highlightTarget.html',
       link: function(scope, element, attrs, containerCtrl) {
         scope.$watch('highlightTarget', function(target) {
           if (!target) {

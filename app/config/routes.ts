@@ -55,7 +55,7 @@ export default function(app) {
 
         // Init Main Page
         .segment('main', {
-          templateUrl: 'templates/main/main.html',
+          templateUrl: 'html/main/main.html',
           title: meta.main.title,
           meta: [
             {name: 'description', content: meta.main.description},
@@ -103,7 +103,7 @@ export default function(app) {
         })
         // 404 page not found
         .segment('404', {
-          templateUrl: 'templates/shared/404.html',
+          templateUrl: 'html/shared/404.html',
           title: '404 · page not found · PaperHive',
           meta: [
             {name: 'prerender-status-code', content: 404}
@@ -111,7 +111,7 @@ export default function(app) {
         })
 
         .segment('about', {
-          templateUrl: 'templates/about.html',
+          templateUrl: 'html/about.html',
           title: 'About · PaperHive',
           meta: [
             {
@@ -123,57 +123,57 @@ export default function(app) {
         })
 
         .segment('alpha-warning', {
-          templateUrl: 'templates/alpha-warning.html',
+          templateUrl: 'html/alpha-warning.html',
           title: 'Alpha warning · PaperHive'
         })
 
         .segment('articles', {
-          templateUrl: 'templates/articles/index.html',
+          templateUrl: 'html/articles/index.html',
           dependencies: ['articleId'],
           title: 'Article · PaperHive'
         })
         .within()
           .segment('activity', {
-            templateUrl: 'templates/articles/activity.html',
+            templateUrl: 'html/articles/activity.html',
             title: 'Article activity · PaperHive'
           })
           .segment('discussions', {
-            templateUrl: 'templates/articles/discussions/index.html',
+            templateUrl: 'html/articles/discussions/index.html',
             title: 'Discussions · PaperHive'
           })
           .within()
             .segment('list', {
               default: true,
-              templateUrl: 'templates/articles/discussions/list.html',
+              templateUrl: 'html/articles/discussions/list.html',
               title: 'Discussions · PaperHive'
             })
             .segment('new', {
-              templateUrl: 'templates/articles/discussions/new.html',
+              templateUrl: 'html/articles/discussions/new.html',
               title: 'New discussion · PaperHive'
             })
             .segment('thread', {
-              templateUrl: 'templates/articles/discussions/thread.html',
+              templateUrl: 'html/articles/discussions/thread.html',
               dependencies: ['discussionId'],
               title: 'Discussion · PaperHive'
             })
           .up()
           .segment('settings', {
-            templateUrl: 'templates/articles/settings.html',
+            templateUrl: 'html/articles/settings.html',
             title: 'Article settings · PaperHive'
           })
           .segment('text', {
             default: true,
-            templateUrl: 'templates/articles/text.html',
+            templateUrl: 'html/articles/text.html',
             title: 'Article · PaperHive'
           })
         .up()
         .segment('articles_new', {
-          templateUrl: 'templates/articles/new.html',
+          templateUrl: 'html/articles/new.html',
           title: 'Add a New Article · PaperHive'
         })
 
         .segment('contact', {
-          templateUrl: 'templates/contact/contact.html',
+          templateUrl: 'html/contact/contact.html',
           title: 'Contact · PaperHive',
           meta: [
             {
@@ -185,7 +185,7 @@ export default function(app) {
         })
 
         .segment('help', {
-          templateUrl: 'templates/help/help.html',
+          templateUrl: 'html/help/help.html',
           title: 'Help · PaperHive',
           meta: [
             {
@@ -197,7 +197,7 @@ export default function(app) {
         })
 
         .segment('jobs', {
-          templateUrl: 'templates/jobs.html',
+          templateUrl: 'html/jobs.html',
           title: 'Jobs · PaperHive',
           meta: [
             {
@@ -209,7 +209,7 @@ export default function(app) {
         })
 
         .segment('legalnotice', {
-          templateUrl: 'templates/legalnotice.html',
+          templateUrl: 'html/legalnotice.html',
           title: 'Legal notice · PaperHive',
           meta: [
             {
@@ -220,53 +220,53 @@ export default function(app) {
         })
 
         .segment('oauth', {
-          templateUrl: 'templates/auth/oauth.html',
+          templateUrl: 'html/auth/oauth.html',
           controller: 'OauthOrcidCtrl',
           title: 'OAuth login · PaperHive'
         })
 
         .segment('settings', {
-          templateUrl: 'templates/settings/index.html',
+          templateUrl: 'html/settings/index.html',
           title: 'Your profile · PaperHive'
         })
         .within()
           .segment('profile', {
             default: true,
-            templateUrl: 'templates/settings/profile.html'
+            templateUrl: 'html/settings/profile.html'
           })
           .segment('site', {
-            templateUrl: 'templates/settings/site.html'
+            templateUrl: 'html/settings/site.html'
           })
         .up()
 
         .segment('subscribed', {
-          templateUrl: 'templates/subscribed.html',
+          templateUrl: 'html/subscribed.html',
           title: 'Successfully subscribed · PaperHive'
         })
 
         .segment('users', {
-          templateUrl: 'templates/users/index.html',
+          templateUrl: 'html/users/index.html',
           dependencies: ['username'],
           title: 'User · PaperHive'
         })
         .within()
           .segment('profile', {
             default: true,
-            templateUrl: 'templates/users/profile.html',
+            templateUrl: 'html/users/profile.html',
             dependencies: ['username']
           })
           .segment('articles', {
-            templateUrl: 'templates/users/articles.html',
+            templateUrl: 'html/users/articles.html',
             dependencies: ['username']
           })
           .segment('activity', {
-            templateUrl: 'templates/users/activity.html',
+            templateUrl: 'html/users/activity.html',
             dependencies: ['username']
           })
         .up()
 
         .segment('welcome', {
-          templateUrl: 'templates/welcome.html',
+          templateUrl: 'html/welcome.html',
           controller: 'WelcomeCtrl',
           title: 'Welcome · PaperHive'
         })

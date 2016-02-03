@@ -10,7 +10,7 @@ export default function(app) {
           onSubmit: '&',
           comment: '='
         },
-        templateUrl: 'templates/directives/marginDiscussionDraft.html',
+        templateUrl: 'html/directives/marginDiscussionDraft.html',
         link: function(scope, element) {
           scope.auth = authService;
           scope.state = {};

@@ -44,7 +44,7 @@ var debug = process.env.DEBUG || false;
 var config = require('./config.json');
 
 var paths = {
-  templates: 'src/templates/**/*.html',
+  html: 'html/**/*.html',
   staticFiles: 'static/**/*',
   index: 'index.template.html',
   // TODO: remove when self-executing bundle works
@@ -152,10 +152,10 @@ gulp.task('htmlhint', function() {
 // bundle html templates via angular's templateCache
 // The templates reference the static files, and since they are cachebusted,
 // depend on them here.
-gulp.task('templates', function() {
+gulp.task('html', function() {
   var templateCache = require('gulp-angular-templatecache');
 
-  return gulp.src(paths.templates, {base: 'src'})
+  return gulp.src(paths.html, {base: './'})
     .pipe(dev ? gutil.noop() : htmlmin(htmlminOpts))
     .pipe(templateCache({
       moduleSystem: 'Browserify',
@@ -164,8 +164,9 @@ gulp.task('templates', function() {
         return file.relative;
       }
     }))
-    .pipe(debug ? gutil.noop() : cachebust.references())
-    .pipe(gulp.dest('tmp'));
+    .pipe(rename('html.js'))
+    //.pipe(debug ? gutil.noop() : cachebust.references())
+    .pipe(gulp.dest('build-tmp'));
 });
 
 // copy static files
@@ -183,7 +184,7 @@ gulp.task('static', [], function() {
 
 // copy jspm files
 // TODO: remove when the self-executing bundle works
-gulp.task('jspm', function() {
+gulp.task('jspm-files', function() {
   return gulp.src(paths.jspmFiles, {base: './'})
     .pipe(gulp.dest('build'));
 });
@@ -300,7 +301,7 @@ gulp.task('style', ['static', 'vendorCacheBust'], function() {
 });
 
 gulp.task('clean', function(cb) {
-  del(['build/*', 'tmp/*'], cb);
+  del(['build*/*'], cb);
 });
 
 // watch for changes

@@ -10,7 +10,7 @@ export default function(app) {
           ngModel: '=',
           onSave: '&'
         },
-        templateUrl: 'templates/directives/inline-editable.html',
+        templateUrl: 'html/directives/inline-editable.html',
         link: function(scope, element, attrs) {
           scope.auth = authService;
 

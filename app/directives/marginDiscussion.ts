@@ -16,7 +16,7 @@ export default function(app) {
           onReplyUpdate: '&',
           onReplyDelete: '&'
         },
-        templateUrl: 'templates/directives/marginDiscussion.html',
+        templateUrl: 'html/directives/marginDiscussion.html',
         link: function(scope, element, attrs) {
           scope.state = {};
           scope.replyDraft = {};

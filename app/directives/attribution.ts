@@ -13,7 +13,7 @@ export default function(app) {
           workName: '@',
           workUrl: '@'
         },
-        templateUrl: 'templates/directives/attribution.html'
+        templateUrl: 'html/directives/attribution.html'
       };
     }]);
 };
