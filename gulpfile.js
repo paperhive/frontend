@@ -37,6 +37,7 @@ var del = require('del');
 
 // dev environment is false by default
 var dev = process.env.DEV || false;
+var buildDir = dev ? 'build-dev' : 'build';
 
 var debug = process.env.DEBUG || false;
 
@@ -177,7 +178,7 @@ gulp.task('static', [], function() {
       svgoPlugins: [{removeViewBox: false}]
     }))
     //.pipe(debug ? gutil.noop() : cachebust.resources())
-    .pipe(gulp.dest('build/static'));
+    .pipe(gulp.dest(buildDir + '/static'));
 });
 
 // copy jspm files
@@ -229,15 +230,15 @@ gulp.task('vendorCacheBust', ['vendor'], function(cb) {
 gulp.task('vendor', [], function() {
   var bootstrap = gulp.src('bower_components/bootstrap/fonts/*')
     //.pipe(debug ? gutil.noop() : cachebust.resources())
-    .pipe(gulp.dest('build/assets/bootstrap/fonts'));
+    .pipe(gulp.dest(buildDir + '/assets/bootstrap/fonts'));
 
   var fontawesome = gulp.src('bower_components/fontawesome/fonts/*')
     //.pipe(debug ? gutil.noop() : cachebust.resources())
-    .pipe(gulp.dest('build/assets/fontawesome/fonts'));
+    .pipe(gulp.dest(buildDir + '/assets/fontawesome/fonts'));
 
   var leaflet = gulp.src('bower_components/leaflet/dist/images/*')
     //.pipe(debug ? gutil.noop() : cachebust.resources())
-    .pipe(gulp.dest('build/assets/leaflet/images'));
+    .pipe(gulp.dest(buildDir + '/assets/leaflet/images'));
 
   var mathjaxBase = 'bower_components/MathJax/';
   var mathjaxSrc = _.map([
@@ -252,16 +253,16 @@ gulp.task('vendor', [], function() {
     return mathjaxBase + path;
   });
   var mathjax = gulp.src(mathjaxSrc, {base: mathjaxBase})
-    .pipe(gulp.dest('build/assets/mathjax'));
+    .pipe(gulp.dest(buildDir + '/assets/mathjax'));
 
   var pdfjs = gulp.src('bower_components/pdfjs-dist/build/pdf.worker.js')
     .pipe(debug ? gutil.noop() : streamify(uglify()))
     //.pipe(debug ? gutil.noop() : cachebust.resources())
-    .pipe(gulp.dest('build/assets/pdfjs'));
+    .pipe(gulp.dest(buildDir + '/assets/pdfjs'));
 
   var roboto = gulp.src('bower_components/roboto-fontface/fonts/*')
     //.pipe(debug ? gutil.noop() : cachebust.resources())
-    .pipe(gulp.dest('build/assets/roboto/fonts'));
+    .pipe(gulp.dest(buildDir + '/assets/roboto/fonts'));
 
   return merge(bootstrap, fontawesome, leaflet,
                mathjax, pdfjs, roboto);
