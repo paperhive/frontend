@@ -10,16 +10,15 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['jspm', 'jasmine'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      'build/assets/mathjax*/MathJax.js',
-      'build/bundle*.js',
+      'jspm.browser.js',
+      'build-dev/assets/mathjax*/MathJax.js'
+      // 'build/bundle*.js',
       // 'build/index*.js',
-      'bower_components/angular-mocks/angular-mocks.js',
-      'test/karma/**/*.js'
     ],
 
 
@@ -27,6 +26,22 @@ module.exports = function(config) {
     exclude: [
     ],
 
+    jspm: {
+      config: 'jspm.config.js',
+      loadFiles: [
+        'app/index.ts',
+        'bower_components/angular-mocks/angular-mocks.js'
+      ],
+      serveFile: [
+        'test/karma/**/*.js'
+      ]
+    },
+
+    proxies: {
+      '/app/': '/base/app/',
+      '/test/': '/base/test/',
+      '/jspm_packages/': '/base/jspm_packages/'
+    },
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
