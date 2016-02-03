@@ -1,45 +1,25 @@
 'use strict';
 
-var gulp = require('gulp');
-
-// TODO: use plain batch when https://github.com/floatdrop/gulp-batch/issues/15
-//       is solved
-var batch = function(task) {
-  var batch = require('gulp-batch');
-  return batch(function(events, done) {
-    gulp.start(task, done);
-  });
-};
-
-var rename = require('gulp-rename');
-var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
-var less = require('gulp-less');
-var merge = require('merge-stream');
-var connect = require('gulp-connect');
-var sourcemaps = require('gulp-sourcemaps');
-var gutil = require('gulp-util');
-var uglify = require('gulp-uglify');
-var streamify = require('gulp-streamify');
-var minifyCSS = require('gulp-minify-css');
-var htmlmin = require('gulp-htmlmin');
 var _ = require('lodash');
-var protractor = require('gulp-protractor').protractor;
-var htmlhint = require('gulp-htmlhint');
-var eslint = require('gulp-eslint');
-var template = require('gulp-template');
-var connectHistory = require('connect-history-api-fallback');
-var imagemin = require('gulp-imagemin');
 var CacheBuster = require('gulp-cachebust');
 var cachebust = new CacheBuster();
-var fs = require('fs');
+var connect = require('gulp-connect');
 var del = require('del');
+var fs = require('fs');
+var gulp = require('gulp');
+var gutil = require('gulp-util');
+var htmlmin = require('gulp-htmlmin');
+var imagemin = require('gulp-imagemin');
+var merge = require('merge-stream');
+var protractor = require('gulp-protractor').protractor;
+var rename = require('gulp-rename');
+var streamify = require('gulp-streamify');
+var template = require('gulp-template');
+var uglify = require('gulp-uglify');
 
 // dev environment is false by default
 var dev = process.env.DEV || false;
 var buildDir = dev ? 'build-dev' : 'build';
-
-var debug = process.env.DEBUG || false;
 
 var config = require('./config.json');
 
@@ -95,7 +75,7 @@ gulp.task('html', function() {
       }
     }))
     .pipe(rename('html.js'))
-    //.pipe(debug ? gutil.noop() : cachebust.references())
+    //.pipe(dev ? gutil.noop() : cachebust.references())
     .pipe(gulp.dest('build-tmp'));
 });
 
@@ -108,7 +88,7 @@ gulp.task('static', [], function() {
       progressive: true,  // jpg
       svgoPlugins: [{removeViewBox: false}]
     }))
-    //.pipe(debug ? gutil.noop() : cachebust.resources())
+    //.pipe(dev ? gutil.noop() : cachebust.resources())
     .pipe(gulp.dest(buildDir + '/static'));
 });
 
@@ -131,7 +111,7 @@ gulp.task('vendorCacheBust', ['vendor'], function(cb) {
   // references.
   // As a workaround, we hash the entire MathJax directory, and append the hash
   // to the directory name.
-  if (debug) {
+  if (dev) {
     return cb();
   }
   exec(
@@ -160,15 +140,15 @@ gulp.task('vendorCacheBust', ['vendor'], function(cb) {
 // copy vendor assets files
 gulp.task('vendor', [], function() {
   var bootstrap = gulp.src('bower_components/bootstrap/fonts/*')
-    //.pipe(debug ? gutil.noop() : cachebust.resources())
+    //.pipe(dev ? gutil.noop() : cachebust.resources())
     .pipe(gulp.dest(buildDir + '/assets/bootstrap/fonts'));
 
   var fontawesome = gulp.src('bower_components/fontawesome/fonts/*')
-    //.pipe(debug ? gutil.noop() : cachebust.resources())
+    //.pipe(dev ? gutil.noop() : cachebust.resources())
     .pipe(gulp.dest(buildDir + '/assets/fontawesome/fonts'));
 
   var leaflet = gulp.src('bower_components/leaflet/dist/images/*')
-    //.pipe(debug ? gutil.noop() : cachebust.resources())
+    //.pipe(dev ? gutil.noop() : cachebust.resources())
     .pipe(gulp.dest(buildDir + '/assets/leaflet/images'));
 
   var mathjaxBase = 'bower_components/MathJax/';
@@ -187,12 +167,12 @@ gulp.task('vendor', [], function() {
     .pipe(gulp.dest(buildDir + '/assets/mathjax'));
 
   var pdfjs = gulp.src('bower_components/pdfjs-dist/build/pdf.worker.js')
-    .pipe(debug ? gutil.noop() : streamify(uglify()))
-    //.pipe(debug ? gutil.noop() : cachebust.resources())
+    .pipe(dev ? gutil.noop() : streamify(uglify()))
+    //.pipe(dev ? gutil.noop() : cachebust.resources())
     .pipe(gulp.dest(buildDir + '/assets/pdfjs'));
 
   var roboto = gulp.src('bower_components/roboto-fontface/fonts/*')
-    //.pipe(debug ? gutil.noop() : cachebust.resources())
+    //.pipe(dev ? gutil.noop() : cachebust.resources())
     .pipe(gulp.dest(buildDir + '/assets/roboto/fonts'));
 
   return merge(bootstrap, fontawesome, leaflet,
@@ -211,6 +191,13 @@ gulp.task('index', function() {
     .pipe(dev ? gutil.noop() : htmlmin(htmlminOpts))
     .pipe(rename('index.html'))
     .pipe(gulp.dest(dev ? 'build-dev' : 'build'));
+});
+
+// serve without watchin (no livereload)
+gulp.task('serve-nowatch', function() {
+  connect.server({
+    root: 'build'
+  });
 });
 
 // test
