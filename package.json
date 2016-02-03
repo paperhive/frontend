@@ -170,7 +170,7 @@
         }
       },
       "github:timdown/rangy-release@1.3.0": {
-        "format": "cjs",
+        "format": "global",
         "main": "rangy-core",
         "meta": {
           "rangy-core.js": {
