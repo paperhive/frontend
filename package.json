@@ -64,6 +64,7 @@
     "live-server": "^0.9.1",
     "lodash": "^3.10.1",
     "merge-stream": "^1.0.0",
+    "npm-run-all": "^1.5.1",
     "phantomjs": "^1.9.19",
     "tslint": "^3.3.0",
     "typescript": "^1.7.5",
