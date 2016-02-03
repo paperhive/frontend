@@ -15,8 +15,9 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'build/assets/mathjax.*/MathJax.js',
-      'build/index*.js',
+      'build/assets/mathjax*/MathJax.js',
+      'build/bundle*.js',
+      // 'build/index*.js',
       'bower_components/angular-mocks/angular-mocks.js',
       'test/karma/**/*.js'
     ],
