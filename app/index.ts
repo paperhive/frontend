@@ -65,5 +65,4 @@ directives(paperhive);
 services(paperhive);
 utils(paperhive);
 
-console.log('Registered all modules. Bootstrapping angular...')
 angular.bootstrap(document, ['paperhive']);
