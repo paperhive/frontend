@@ -166,7 +166,7 @@ gulp.task('vendor', [], function() {
   var mathjax = gulp.src(mathjaxSrc, {base: mathjaxBase})
     .pipe(gulp.dest(buildDir + '/assets/mathjax'));
 
-  var pdfjs = gulp.src('bower_components/pdfjs-dist/build/pdf.worker.js')
+  var pdfjs = gulp.src('jspm_packages/github/mozilla/pdfjs-dist@1.4.37/build/pdf.worker.js')
     .pipe(dev ? gutil.noop() : streamify(uglify()))
     //.pipe(dev ? gutil.noop() : cachebust.resources())
     .pipe(gulp.dest(buildDir + '/assets/pdfjs'));
