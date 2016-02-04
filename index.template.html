@@ -1,5 +1,9 @@
 <!doctype html>
 
+<!--
+NOTE: ng-app is removed because angular is loaded asynchronously via
+      SystemJS. Bootstrapping is now initiated in app/index.ts
+-->
 <html lang="en" ng-strict-di>
   <head ng-controller="MetaCtrl">
     <!-- base href is the entry point of the deployed app -->
