@@ -1,0 +1,54 @@
+<!-- Header bar -->
+<div ng-controller="NavbarCtrl" class="navbar navbar-default navbar-fixed-top"
+    element-size="$root.navbarSize"
+    role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <!-- toggle nav -->
+      <button ng-click="collapsed=!collapsed" type="button" class="navbar-toggle">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <!-- brand -->
+      <a class="navbar-brand" rel="home" href="./" title="PaperHive">
+        <img class="ph-title-logo" src="./static/img/logo.svg">
+      </a>
+    </div>
+
+    <!-- collect everything in this div for responsive collapsing -->
+    <div class="collapse navbar-collapse" uib-collapse="collapsed">
+      <!-- right -->
+      <div class="navbar-right">
+        <form ng-controller="NavbarSearchCtrl"
+          name="searchForm"
+          class="navbar-form navbar-left"
+          role="search"
+          novalidate
+          >
+          <div class="form-group ph-navbar-search">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search PaperHive"
+              name="srch-term"
+              id="srch-term"
+              ng-model="search.body"
+              uib-typeahead="result.title for result in phSearch($viewValue, 5)"
+              typeahead-wait-ms="250"
+              typeahead-on-select="goToArticle($item, $model, $label)"
+              required
+              >
+          </div>
+        </form>
+        <!--ul class="nav navbar-nav">
+          <li><a href="./help" title="help">Help</a></li>
+        </ul-->
+        <ng-include src="'html/shared/navbar_user.html'"></ng-include>
+      </div>
+    </div><!-- collapse -->
+  </div><!-- container-fluid -->
+</div><!-- navbar -->
+<div class="ph-navbar-shadow"><!-- #uglyhack: shadow z-index < subnav z-index -->
+</div>

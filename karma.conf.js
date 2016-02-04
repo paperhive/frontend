@@ -5,27 +5,28 @@ module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
-
+    basePath: '.',
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jasmine'],
 
-
     // list of files / patterns to load in the browser
     files: [
-      'build/assets/mathjax.*/MathJax.js',
-      'build/index*.js',
+      {pattern: 'jspm_packages/**/*', included: false},
+      'build-dev/assets/mathjax*/MathJax.js',
+      'jspm_packages/system.js',
+      'jspm.browser.js',
+      'jspm.config.js',
+      'build/bundle*.js',
       'bower_components/angular-mocks/angular-mocks.js',
       'test/karma/**/*.js'
+      // 'build/index*.js',
     ],
-
 
     // list of files to exclude
     exclude: [
     ],
-
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
