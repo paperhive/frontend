@@ -38,33 +38,32 @@ import services from './services/index';
 import utils from './utils/index';
 
 import '../build-tmp/html.js';
+import configJson from '../config.json!json';
 
-System.import('./config.json!json').then(function(configJson) {
-  const paperhive = angular
-    .module(
-      'paperhive', [
-        'ui.bootstrap',
-        'mentio',
-        'ngAnimate',
-        'ngSanitize',
-        'ngRoute',
-        'route-segment',
-        'view-segment',
-        'smoothScroll',
-        'angularMoment',
-        'leaflet-directive',
-        'templates'
-      ]
-    )
-    .constant('config', configJson)
-    ;
+const paperhive = angular
+  .module(
+    'paperhive', [
+      'ui.bootstrap',
+      'mentio',
+      'ngAnimate',
+      'ngSanitize',
+      'ngRoute',
+      'route-segment',
+      'view-segment',
+      'smoothScroll',
+      'angularMoment',
+      'leaflet-directive',
+      'templates'
+    ]
+  )
+  .constant('config', configJson)
+  ;
 
-  config(paperhive);
-  controllers(paperhive);
-  directives(paperhive);
-  services(paperhive);
-  utils(paperhive);
+config(paperhive);
+controllers(paperhive);
+directives(paperhive);
+services(paperhive);
+utils(paperhive);
 
-  console.log('Registered all modules. Bootstrapping angular...')
-  angular.bootstrap(document, ['paperhive']);
-});
+console.log('Registered all modules. Bootstrapping angular...')
+angular.bootstrap(document, ['paperhive']);
