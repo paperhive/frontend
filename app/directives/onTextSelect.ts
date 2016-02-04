@@ -1,4 +1,4 @@
-import * as rangy from 'rangy';
+import rangy from 'rangy';
 import * as _ from 'lodash';
 
 export default function(app) {
