@@ -22,9 +22,7 @@ export default function(app) {
               );
 
               // make list unique w.r.t. id
-              console.log(scope.particpants);
               scope.participants = uniqBy(scope.participants, 'id');
-              console.log(scope.particpants);
             }
           },
           // http://stackoverflow.com/a/19455564/353337
