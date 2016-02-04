@@ -5,7 +5,7 @@ describe('KramJax directive', function() {
   var $compile;
   var $rootScope;
 
-  beforeEach(module('paperHive'));
+  beforeEach(module('paperhive'));
 
   beforeEach(inject(function(_$compile_, _$rootScope_) {
     $compile = _$compile_;
