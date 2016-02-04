@@ -167,7 +167,12 @@ gulp.task('vendor', [], function() {
     .pipe(gulp.dest(buildDir + '/assets/mathjax'));
 
   var pdfjs = gulp.src('jspm_packages/github/mozilla/pdfjs-dist@1.4.37/build/pdf.worker.js')
-    .pipe(dev ? gutil.noop() : streamify(uglify()))
+    .pipe(dev ? gutil.noop() : streamify(uglify({
+      // disable compression, otherwise pdf rendering fails!
+      // see https://github.com/mozilla/pdf.js/wiki/Frequently-Asked-Questions#minified
+      compress: false,
+      preserveComments: 'license'
+    })))
     //.pipe(dev ? gutil.noop() : cachebust.resources())
     .pipe(gulp.dest(buildDir + '/assets/pdfjs'));
 
