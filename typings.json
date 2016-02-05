@@ -1,0 +1,15 @@
+{
+  "ambientDependencies": {
+    "angular": "github:DefinitelyTyped/DefinitelyTyped/angularjs/angular.d.ts#3bebbe1baee04846cc46ed7249e8117e4cd7c7ff",
+    "angular-animate": "github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-animate.d.ts#3c26c6546fab58b39d04d6ae40bacfa9a25dd196",
+    "angular-route": "github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-route.d.ts#cf172aab99c3139a718aa8e65398a22c53dd7ead",
+    "angular-sanitize": "github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-sanitize.d.ts#32194eaa6f9fd91364a8a18bc5591055e61f4bc5",
+    "jquery": "github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#cf2a968f0edd7d30773f7d23fe3708fa029d5ab7",
+    "lodash": "github:DefinitelyTyped/DefinitelyTyped/lodash/lodash.d.ts#df712b17fa4737fdb3eb52118b1465cd3be81a1d",
+    "pdf": "github:DefinitelyTyped/DefinitelyTyped/pdf/pdf.d.ts#de5a50a5f319931dcc8c43b215945eabe17189dc",
+    "rangy": "github:DefinitelyTyped/DefinitelyTyped/rangy/rangy.d.ts#e57adf88d6d06b417320e65f0db7d279effa932e"
+  },
+  "dependencies": {
+    "moment": "github:typings/typed-moment#a4075cd50e63efbedd850f654594f293ab81a385"
+  }
+}

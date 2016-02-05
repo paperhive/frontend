@@ -1,0 +1,16 @@
+// include upstream bootstrap
+@import "../../bower_components/bootstrap/less/bootstrap.less";
+
+// overwrite bootstrap variables
+// see http://stackoverflow.com/a/19514889/1219479
+@import "type.less";
+@import "variables.less";
+
+// set font path
+@icon-font-path: "assets/bootstrap/fonts/";
+
+// fix an issue with form-control-feedback and fontawesome
+// see https://github.com/FortAwesome/Font-Awesome/issues/4313
+.form-control + .form-control-feedback {
+  .form-control-feedback;
+}

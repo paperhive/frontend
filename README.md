@@ -9,17 +9,14 @@
 
 ### Setup
 #### Requirements
-* nodejs
-* npm
-* bower
-* gulp
+* nodejs and npm (included in nodejs): the easies way to install nodejs is via
+  [nvm](https://github.com/creationix/nvm)
 
 #### Build
 ```
 git clone git@github.com:paperhive/paperhive-frontend.git --recursive
 cd paperhive-frontend
-npm install
-bower install
+npm run install-deps
 cp config.json.default config.json
 ```
 Adapt `config.json` to your needs and finally run:
@@ -39,16 +36,10 @@ git submodule update
 #### Development
 Running
 ```
-gulp serve
+npm run watch
 ```
 continuously builds the project (upon changes of the code) and fires up an HTTP server 
-which can be reached via `http://localhost:8080`. For debugging purposes, gulp can be run with the 
-environment variable `DEBUG=true` which omits all minimizations and includes source maps for
-JavaScript and CSS. Note that this substantially speeds up the build process. So for development you
-probably want to run
-```
-DEBUG=true gulp serve
-```
+which can be reached via `http://localhost:8080`.
 
 #### Testing locally
 Make sure that the frontend builds without errors,

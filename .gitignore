@@ -1,7 +1,11 @@
 .*.swp
+jspm_packages
 node_modules
+npm-debug.log
 bower_components
 tmp
-build
+build*
 config.json
 paperhive-frontend-deploy
+out
+typings
