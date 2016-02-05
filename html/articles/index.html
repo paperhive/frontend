@@ -11,13 +11,19 @@
           </h4>
         </div>
         <div class="col-sm-2">
+          {{auth.user}}
           <h2 class="ph-lg-margin-top">
             <div class="btn-group" role="group">
-              <button type="button" class="btn btn-default">
+              <button ng-if="doesUserStar(auth.user.id)" type="button" class="btn
+                btn-default" ng-click="unstar(auth.user)">
+                <i class="fa fa-star"></i> Unstar
+              </button>
+              <button ng-if="!doesUserStar(auth.user.id)" type="button" class="btn
+                btn-default" ng-click="star(auth.user)">
                 <i class="fa fa-star"></i> Star
               </button>
               <button type="button" class="btn btn-default disabled">
-                25
+                {{stars.length}}
               </button>
             </div>
           </h2>

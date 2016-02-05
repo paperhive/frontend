@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 import * as angular from 'angular';
 import paperhiveSources from 'paperhive-sources';
+import {findIndex, some} from 'lodash';
 
 export default function(app) {
 
@@ -79,12 +80,65 @@ export default function(app) {
         });
       });
 
+      $http.get(
+        config.apiUrl +
+          '/documents/' + $routeSegment.$routeParams.articleId + '/stars'
+      )
+      .success(function(ret) {
+        $scope.stars = ret.stars;
+        console.log(ret.stars);
+      })
+      .error(function(data) {
+        notificationService.notifications.push({
+          type: 'error',
+          message: data.message ? data.message :
+            'could not fetch stars (unknown reason)'
+        });
+      });
+
       $scope.originalComment = {
         draft: {}
       };
       $scope.discussions = {
         stored: []
       };
+
+      $scope.star = function(user) {
+        $scope.submitting = true;
+        return $http.post(
+          config.apiUrl +
+            '/documents/' + $routeSegment.$routeParams.articleId + '/star'
+        )
+        .success(function() {
+          $scope.submitting = false;
+          $scope.stars.push = user; // TODO
+        })
+        .error(function(data) {
+          $scope.submitting = false;
+        })
+          .error(notificationService.httpError('could not star document'));
+      };
+
+      $scope.unstar = function(user) {
+        $scope.submitting = true;
+        return $http.delete(
+          config.apiUrl +
+            '/documents/' + $routeSegment.$routeParams.articleId + '/star'
+        )
+        .success(function() {
+          $scope.submitting = false;
+          const idx = findIndex($scope.stars, {id: user.id});
+          if (idx > -1) {$scope.stars.splice(idx, 1);}
+        })
+        .error(function(data) {
+          $scope.submitting = false;
+        })
+          .error(notificationService.httpError('could not star document'));
+      };
+
+      $scope.doesUserStar = function(id) {
+        return some($scope.stars, {'id': id});
+      }
 
       $scope.addArticleMetaData = function(metaData) {
         if (!$scope.article) {
