@@ -2,13 +2,25 @@
   <div class="ph-header ph-header-large ph-lg-margin-bottom">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-10">
           <h2 class="ph-lg-margin-top">{{article.title}}</h2>
           <h4 class="ph-lg-margin-bottom">
             <span ng-repeat="author in article.authors">
               {{author.name}}{{$last ? '' :', '}}
             </span>
           </h4>
+        </div>
+        <div class="col-sm-2">
+          <h2 class="ph-lg-margin-top">
+            <div class="btn-group" role="group">
+              <button type="button" class="btn btn-default">
+                <i class="fa fa-star"></i> Star
+              </button>
+              <button type="button" class="btn btn-default disabled">
+                25
+              </button>
+            </div>
+          </h2>
         </div>
       </div>
     </div>
