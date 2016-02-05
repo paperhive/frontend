@@ -12,14 +12,14 @@ SystemJS.config({
   },
 
   map: {
-    "angular": "github:angular/bower-angular@1.4.9",
-    "angular-animate": "github:angular/bower-angular-animate@1.4.9",
+    "angular": "github:angular/bower-angular@1.5.0",
+    "angular-animate": "github:angular/bower-angular-animate@1.5.0",
     "angular-bootstrap": "github:angular-ui/bootstrap-bower@1.1.2",
     "angular-leaflet-directive": "github:tombatossals/angular-leaflet-directive@0.10.0",
     "angular-moment": "npm:angular-moment@1.0.0-beta.3",
-    "angular-route": "github:angular/bower-angular-route@1.4.9",
+    "angular-route": "github:angular/bower-angular-route@1.5.0",
     "angular-route-segment": "github:artch/angular-route-segment@1.5.0",
-    "angular-sanitize": "github:angular/bower-angular-sanitize@1.4.9",
+    "angular-sanitize": "github:angular/bower-angular-sanitize@1.5.0",
     "assert": "github:jspm/nodelibs-assert@0.2.0-alpha",
     "bootstrap": "github:twbs/bootstrap@3.3.6",
     "highlightjs": "github:components/highlightjs@9.1.0",
@@ -51,19 +51,19 @@ SystemJS.config({
         }
       }
     },
-    "github:angular/bower-angular-animate@1.4.9": {
+    "github:angular/bower-angular-animate@1.5.0": {
       "map": {
-        "angular": "github:angular/bower-angular@1.4.9"
+        "angular": "github:angular/bower-angular@1.5.0"
       }
     },
-    "github:angular/bower-angular-route@1.4.9": {
+    "github:angular/bower-angular-route@1.5.0": {
       "map": {
-        "angular": "github:angular/bower-angular@1.4.9"
+        "angular": "github:angular/bower-angular@1.5.0"
       }
     },
-    "github:angular/bower-angular-sanitize@1.4.9": {
+    "github:angular/bower-angular-sanitize@1.5.0": {
       "map": {
-        "angular": "github:angular/bower-angular@1.4.9"
+        "angular": "github:angular/bower-angular@1.5.0"
       }
     },
     "github:frankwallis/plugin-typescript@2.5.9": {

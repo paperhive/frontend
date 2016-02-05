@@ -70,13 +70,13 @@
       "json": "github:systemjs/plugin-json@^0.1.0",
       "kramed": "npm:kramed@^0.5.5",
       "leaflet": "github:Leaflet/Leaflet@^0.7.7",
-      "angular": "github:angular/bower-angular@^1.4.9",
-      "angular-animate": "github:angular/bower-angular-animate@^1.4.9",
+      "angular": "github:angular/bower-angular@^1.5.0",
+      "angular-animate": "github:angular/bower-angular-animate@^1.5.0",
       "angular-bootstrap": "github:angular-ui/bootstrap-bower@^1.1.2",
       "angular-leaflet-directive": "github:tombatossals/angular-leaflet-directive@^0.10.0",
       "angular-moment": "npm:angular-moment@^1.0.0-beta.3",
-      "angular-route": "github:angular/bower-angular-route@^1.4.9",
-      "angular-sanitize": "github:angular/bower-angular-sanitize@^1.4.9",
+      "angular-route": "github:angular/bower-angular-route@^1.5.0",
+      "angular-sanitize": "github:angular/bower-angular-sanitize@^1.5.0",
       "jquery": "npm:jquery@^2.2.0",
       "lodash": "npm:lodash@^4.2.0",
       "ment.io": "github:jeff-collins/ment.io@^0.9.24",
@@ -109,7 +109,7 @@
           }
         }
       },
-      "github:angular/bower-angular-animate@1.4.9": {
+      "github:angular/bower-angular-animate@1.5.0": {
         "main": "angular-animate",
         "registry": "jspm",
         "dependencies": {
@@ -123,7 +123,7 @@
           }
         }
       },
-      "github:angular/bower-angular-route@1.4.9": {
+      "github:angular/bower-angular-route@1.5.0": {
         "main": "angular-route",
         "registry": "jspm",
         "dependencies": {
@@ -137,7 +137,7 @@
           }
         }
       },
-      "github:angular/bower-angular-sanitize@1.4.9": {
+      "github:angular/bower-angular-sanitize@1.5.0": {
         "main": "angular-sanitize",
         "registry": "jspm",
         "dependencies": {
@@ -151,7 +151,7 @@
           }
         }
       },
-      "github:angular/bower-angular@1.4.9": {
+      "github:angular/bower-angular@1.5.0": {
         "main": "angular",
         "meta": {
           "angular.js": {
