@@ -86,7 +86,11 @@ export default function(app) {
       )
       .success(function(ret) {
         $scope.stars = ret.stars;
-        console.log(ret.stars);
+        $scope.$watch('auth.user', function(user) {
+          if (user && user.id) {
+            $scope.doesUserStar = some($scope.stars, {'id': user.id});
+          }
+        });
       })
       .error(function(data) {
         notificationService.notifications.push({
@@ -103,7 +107,7 @@ export default function(app) {
         stored: []
       };
 
-      $scope.star = function(user) {
+      $scope.star = function() {
         $scope.submitting = true;
         return $http.post(
           config.apiUrl +
@@ -111,7 +115,8 @@ export default function(app) {
         )
         .success(function() {
           $scope.submitting = false;
-          $scope.stars.push = user; // TODO
+          $scope.stars.push($scope.auth.user);
+          $scope.doesUserStar = true;
         })
         .error(function(data) {
           $scope.submitting = false;
@@ -119,7 +124,7 @@ export default function(app) {
           .error(notificationService.httpError('could not star document'));
       };
 
-      $scope.unstar = function(user) {
+      $scope.unstar = function() {
         $scope.submitting = true;
         return $http.delete(
           config.apiUrl +
@@ -127,18 +132,15 @@ export default function(app) {
         )
         .success(function() {
           $scope.submitting = false;
-          const idx = findIndex($scope.stars, {id: user.id});
+          const idx = findIndex($scope.stars, {id: $scope.auth.user.id});
           if (idx > -1) {$scope.stars.splice(idx, 1);}
+          $scope.doesUserStar = false;
         })
         .error(function(data) {
           $scope.submitting = false;
         })
           .error(notificationService.httpError('could not star document'));
       };
-
-      $scope.doesUserStar = function(id) {
-        return some($scope.stars, {'id': id});
-      }
 
       $scope.addArticleMetaData = function(metaData) {
         if (!$scope.article) {
