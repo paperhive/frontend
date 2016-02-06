@@ -1,10 +1,16 @@
 <ul class="nav navbar-nav" ng-controller="NavbarUserCtrl">
   <li ng-if="!auth.user && !auth.inProgress">
     <p class="navbar-btn ph-md-margin-left ph-md-margin-right">
-    <a href="{{auth.orcidUrl}}" target="_self" class="btn btn-default"
-      title="Sign in with your ORCID iD">
-      <img class="ph-orcid-icon" src="./static/img/orcid.svg"> Sign in
-    </a>
+      <!--a href="{{auth.orcidUrl}}" target="_self" class="btn btn-default"
+        title="Sign in with your ORCID iD">
+        <img class="ph-orcid-icon" src="./static/img/orcid.svg"> Sign in
+      </a-->
+      <a class="btn btn-primary">
+        Sign up
+      </a>
+      <a class="btn btn-default">
+        Log in
+      </a>
     </p>
   </li>
   <li ng-if="!auth.user && auth.inProgress">
@@ -42,7 +48,7 @@
       </li>
       <li>
         <a href ng-click="auth.signout()">
-          <i class="fa fa-fw fa-sign-out"></i> Sign out
+          <i class="fa fa-fw fa-sign-out"></i> Log out
         </a>
       </li>
     </ul>
