@@ -28,7 +28,8 @@
         class="ph-avatar img-circle"
         >
       {{auth.user.displayName}}
-      <i class="fa fa-fw fa-caret-down"></i>
+      <i ng-if="!dropdown_open" class="fa fa-fw fa-caret-down"></i>
+      <i ng-if="dropdown_open" class="fa fa-fw fa-caret-up"></i>
     </a>
     <ul class="dropdown-menu">
       <li ng-if="auth.user.username">
