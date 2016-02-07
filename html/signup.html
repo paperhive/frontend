@@ -4,39 +4,32 @@
 
   <h4 class="ph-heading-light">Already have an account at PaperHive? <a href="./login">Log in</a></h4>
 
-  <div class="row ph-lg-margin-top">
-    <div class="col-md-1">
+  <div class="ph-flex-container">
+
+    <div class="ph-flex-item-1">
     </div>
 
-    <div class="col-md-4">
-      <div class="ph-xl-margin-top">
-        <a href="" class="btn btn-default btn-lg btn-block"
-          title="Sign in with your Google account">
-          <img class="ph-login-icon" src="./static/img/google.svg"> Sign up with Google
-        </a>
-      </div>
-      <div class="ph-lg-margin-top">
-        <a href="{{auth.orcidUrl}}" class="btn btn-default btn-lg btn-block"
-          title="Sign up with your ORCID iD">
-          <img class="ph-login-icon" src="./static/img/orcid.svg"> Sign up with ORCID
-        </a>
-      </div>
+    <div class="ph-flex-item">
+      <a href="" class="btn btn-default btn-lg btn-block ph-md-margin-bottom"
+        title="Sign in with your Google account">
+        <img class="ph-login-icon" src="./static/img/google.svg"> Sign up with Google
+      </a>
+      <a href="{{auth.orcidUrl}}" class="btn btn-default btn-lg btn-block"
+        title="Sign up with your ORCID iD">
+        <img class="ph-login-icon" src="./static/img/orcid.svg"> Sign up with ORCID
+      </a>
     </div>
 
-    <div class="col-md-2" style="padding-left: 5.6em;">
-      <div style="width: 1px; background-color: #E0E0E0; height: 200px; margin-left: 0.5em;">
-      </div>
-      <small class="ph-md-margin-top ph-md-margin-bottom ph-login-separator">OR</small>
-      <div style="width: 1px; background-color: #E0E0E0; height: 200px; margin-left: 0.5em;">
+    <div class="ph-flex-item-1">
+      <div class="ph-inner-flex-container">
+        <div class="ph-inner-flex-item ph-login-line-separator"></div>
+        <small class="ph-inner-flex-item ph-login-separator">OR</small>
+        <div class="ph-inner-flex-item ph-login-line-separator"></div>
       </div>
     </div>
 
-    <div class="col-md-4">
-      <form style="margin-top: 3em;">
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input type="text" class="form-control" id="username">
-        </div>
+    <div class="ph-flex-item">
+      <form>
         <div class="form-group">
           <label for="email">Email</label>
           <input type="text" class="form-control" id="email">
@@ -53,8 +46,9 @@
       </form>
     </div>
 
-    <div class="col-md-1">
+    <div class="ph-flex-item-1">
     </div>
+
   </div>
 
 </div>
