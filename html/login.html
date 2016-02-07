@@ -1,5 +1,5 @@
 <!-- Content Start -->
-<div class="container ph-xl-margin-bottom">
+<div ng-controller="LoginCtrl" class="container ph-xl-margin-bottom">
   <h2 id="login">Log in</h2>
 
   <h4 class="ph-heading-light ph-md-margin-bottom">New to Paperhive? <a href="./signup">Sign up</a></h4>
@@ -10,11 +10,11 @@
     </div>
 
     <div class="ph-flex-item">
-      <a href="" class="btn btn-default btn-lg btn-block ph-md-margin-bottom"
+      <a href="" class="btn btn-default btn-block ph-md-margin-bottom"
         title="Sign in with your Google account">
         <img class="ph-login-icon" src="./static/img/google.svg"> Log in with Google
       </a>
-      <a href="{{auth.orcidUrl}}" class="btn btn-default btn-lg btn-block"
+      <a href="{{auth.orcidUrl}}" class="btn btn-default btn-block"
         title="Sign up with your ORCID iD">
         <img class="ph-login-icon" src="./static/img/orcid.svg"> Log in with ORCID
       </a>
@@ -32,17 +32,17 @@
       <form>
         <div class="form-group">
           <label for="email">Email or Username</label>
-          <input type="text" class="form-control" id="email">
+          <input type="text" class="form-control" id="email" ng-model="login.email" required>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
-          <input type="password" class="form-control" id="password">
-          <a class="ph-forgot-password" href="" title="Forgot password?">Forgot?</a>
+          <input type="password" class="form-control" id="password" ng-model="login.password" required>
+          <a class="ph-forgot-password" href="" title="Forgot password?" tabindex="-1">Forgot?</a>
         </div>
         <div class="ph-lg-padding-top">
-          <a class="btn btn-primary btn-block btn-lg">
+          <button class="btn btn-primary btn-block" ng-click="sumbit()">
             Log in
-          </a>
+          </button>
         </div>
       </form>
     </div>
