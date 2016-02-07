@@ -29,14 +29,14 @@
     </div>
 
     <div class="ph-flex-item">
-      <form name="form">
-        <div class="form-group" ng-class="{ 'has-error' : form.signup.email.$invalid && !form.signup.email.$pristine }">
+      <form name="signupForm">
+        <div class="form-group" ng-class="{ 'has-error' : signupForm.email.$invalid && !signupForm.email.$pristine }">
           <label for="email">Email</label>
-          <input type="text" class="form-control" id="email" ng-model="signup.email" required>
+          <input type="email" class="form-control" id="email" name="email" ng-model="signup.email" required>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
-          <input type="password" class="form-control" id="password" ng-model="signup.password" required>
+          <input type="password" class="form-control" id="password" name="password" ng-model="signup.password" required>
         </div>
         <div class="ph-lg-padding-top">
           <button class="btn btn-primary btn-block" ng-click="submit()">
