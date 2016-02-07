@@ -48,3 +48,20 @@
   -webkit-flex: 1;
   flex: 1;
 }
+
+/* mobile */
+@media screen and (max-width: 600px) {
+  .ph-flex-container {
+    flex-direction: column;
+  }
+  .ph-inner-flex-container {
+    -webkit-flex-direction: row;
+  }
+  .ph-login-line-separator {
+    height: 1px;
+    width: 7em;
+  }
+  .ph-login-separator {
+    text-align: center;
+  }
+}
