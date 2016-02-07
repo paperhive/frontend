@@ -1,7 +1,54 @@
 <!-- Content Start -->
-<div class="container">
+<div class="container ph-xl-margin-bottom">
   <h2 id="login">Log in</h2>
 
-  <h4 class="ph-heading-light">New to Paperhive? <a href="./signup">Sign up</a></h4>
+  <h4 class="ph-heading-light ph-md-margin-bottom">New to Paperhive? <a href="./signup">Sign up</a></h4>
+
+  <div class="ph-flex-container">
+
+    <div class="ph-flex-item-1">
+    </div>
+
+    <div class="ph-flex-item">
+      <a href="" class="btn btn-default btn-lg btn-block ph-md-margin-bottom"
+        title="Sign in with your Google account">
+        <img class="ph-login-icon" src="./static/img/google.svg"> Log in with Google
+      </a>
+      <a href="{{auth.orcidUrl}}" class="btn btn-default btn-lg btn-block"
+        title="Sign up with your ORCID iD">
+        <img class="ph-login-icon" src="./static/img/orcid.svg"> Log in with ORCID
+      </a>
+    </div>
+
+    <div class="ph-flex-item-1">
+      <div class="ph-inner-flex-container">
+        <div class="ph-inner-flex-item ph-login-line-separator"></div>
+        <small class="ph-inner-flex-item ph-login-separator">OR</small>
+        <div class="ph-inner-flex-item ph-login-line-separator"></div>
+      </div>
+    </div>
+
+    <div class="ph-flex-item">
+      <form>
+        <div class="form-group">
+          <label for="email">Email or Username</label>
+          <input type="text" class="form-control" id="email">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password">
+        </div>
+        <div class="ph-lg-padding-top">
+          <a class="btn btn-primary btn-block btn-lg">
+            Log in
+          </a>
+        </div>
+      </form>
+    </div>
+
+    <div class="ph-flex-item-1">
+    </div>
+
+  </div>
 
 </div>
