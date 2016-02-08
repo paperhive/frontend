@@ -6,7 +6,6 @@ import confirmedClick from './confirmed-click';
 import elastic from './elastic';
 import elementPosition from './elementPosition';
 import elementSize from './elementSize';
-import gravatar from './gravatar';
 import gravatarList from './gravatarList';
 import highlights from './highlights';
 import marginDiscussion from './marginDiscussion';
@@ -31,7 +30,6 @@ export default function(app) {
   elastic(app);
   elementPosition(app);
   elementSize(app);
-  gravatar(app);
   gravatarList(app);
   highlights(app);
   marginDiscussion(app);
