@@ -2,8 +2,8 @@
   <!-- original comment -->
   <div class="ph-margin-row">
     <!-- avatar -->
-    <img gravatar-user="discussion.author"
-        gravatar-size="38" class="ph-margin-avatar img-circle">
+    <gravatar user="discussion.author" size="38"
+      class="ph-margin-avatar img-circle"/>
     <div class="ph-margin-link-default"
         ng-click="state.showReplies = !state.showReplies">
       <!-- arrow -->
@@ -134,8 +134,8 @@
         ng-controller="replyCtrl"
         class="ph-margin-row ph-margin-row-border-top">
       <!-- avatar -->
-      <img gravatar-user="reply.author" gravatar-size="38"
-          class="ph-margin-avatar img-circle">
+      <gravatar user="reply.author" size="38"
+          class="ph-margin-avatar img-circle"/>
       <div class="ph-margin-row-container ph-margin-reply">
         <!-- arrow -->
         <div class="ph-margin-arrow-container">
@@ -220,8 +220,8 @@
     <!-- reply form -->
     <div ng-if="auth.user && !state.editing" class="ph-margin-row ph-margin-row-border-top">
       <!-- avatar -->
-      <img gravatar-user="auth.user" gravatar-size="38"
-          class="ph-margin-avatar img-circle">
+      <gravatar user="auth.user" size="38"
+          class="ph-margin-avatar img-circle"/>
       <div class="ph-margin-row-container ph-margin-reply">
         <!-- arrow -->
         <div class="ph-margin-arrow-container">

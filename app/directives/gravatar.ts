@@ -1,41 +1,16 @@
 'use strict';
 export default function(app) {
 
-  app.directive('gravatarUser', [
-    'notificationService',
-    function(notificationService) {
+  app.directive('gravatar', [
+    function() {
       return {
-        restrict: 'A',
+        restrict: 'E',
         scope: {
-          gravatarUser: '=',
-          gravatarSize: '='
+          user: '=',
+          size: '='
         },
-        link: function(scope, element, attrs) {
-          if (!scope.gravatarSize) {
-            notificationService.notifications.push({
-              type: 'error',
-              message: 'Directive needs gravatarSize.'
-            });
-          }
-          scope.$watch(
-            'gravatarUser',
-            function(user) {
-              if (!user || !user.user || !user.user.avatar || user.user.avatar.type !== 'gravatar') {
-                return;
-              }
-              element.attr('width', scope.gravatarSize + 'px');
-              element.attr('height', scope.gravatarSize + 'px');
-              element.attr(
-                'src',
-                'https://secure.gravatar.com/avatar/' +
-                user.user.avatar.value +
-                  '?s=' + scope.gravatarSize +
-                    '&d=identicon'
-              );
-              element.attr('alt', user.displayName + ' avatar');
-            }
-          );
-        }
+        replace: true,
+        template: '<img width={{size}} height={{size}} ng-src="https://secure.gravatar.com/avatar/{{user.user.avatar.value}}?={{size}}&d=identicon" alt="{{user.displayName}} avatar">',
       };
     }]);
 };
