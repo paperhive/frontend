@@ -4,12 +4,10 @@ export default function(app) {
     function(config, $http, $q, $rootScope, $window) {
       const authService = {
         inProgress: false,
-        orcidUrl: config.apiUrl + '/auth/orcid/initiate?returnUrl=' +
-          encodeURIComponent(
-            $window.location.origin +
-            config.baseHref +
-            'return'
-          ),
+        getAuthUrl: (provider, returnPath) => {
+          const returnUrl = `${$window.location.origin}${config.baseHref}return?returnPath=${encodeURIComponent(returnPath)}`;
+          return `${config.apiUrl}/auth/${provider}/initiate?returnUrl=${encodeURIComponent(returnUrl)}`;
+        },
         user: undefined,
         token: undefined,
         signinToken: undefined,

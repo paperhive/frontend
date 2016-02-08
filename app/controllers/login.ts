@@ -1,8 +1,9 @@
 'use strict';
 export default function(app) {
-  app.controller('LoginCtrl', ['$scope', '$location', 'returnPathService',
-    function($scope, $location, returnPathService) {
+  app.controller('LoginCtrl', ['$scope', '$location', 'authService', 'returnPathService',
+    function($scope, $location, authService, returnPathService) {
 
+      $scope.auth = authService;
       $scope.returnPath = returnPathService;
 
       $scope.login = {
