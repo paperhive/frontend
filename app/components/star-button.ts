@@ -39,41 +39,37 @@ export default function(app) {
             });
           });
 
-          ctrl.star = function() {
+          ctrl.star = async function() {
             ctrl.submitting = true;
-            return $http.post(
-              config.apiUrl +
-                '/documents/' + ctrl.documentId + '/star'
-            )
-            .success(function() {
+            try {
+              await $http.post(
+                config.apiUrl +
+                  '/documents/' + ctrl.documentId + '/star'
+              )
+            } catch (err) {
               ctrl.submitting = false;
-              ctrl.stars.push(ctrl.user);
-              ctrl.doesUserStar = true;
-            })
-            .error(function(data) {
-              ctrl.submitting = false;
-            })
-            .error(notificationService.httpError('could not star document'));
+              notificationService.httpError('could not star document');
+            }
+            ctrl.submitting = false;
+            ctrl.stars.push(ctrl.user);
+            ctrl.doesUserStar = true;
           };
 
-          ctrl.unstar = function() {
+          ctrl.unstar = async function() {
             ctrl.submitting = true;
-            return $http.delete(
-              config.apiUrl +
-                '/documents/' + ctrl.documentId + '/star'
-            )
-            .success(function() {
+            try {
+              await $http.delete(
+                config.apiUrl +
+                  '/documents/' + ctrl.documentId + '/star'
+              )
+            } catch(err) {
               ctrl.submitting = false;
-              const idx = findIndex(ctrl.stars, {id: ctrl.user.id});
-              if (idx > -1) {
-                ctrl.stars.splice(idx, 1);
-              }
-              ctrl.doesUserStar = false;
-            })
-            .error(function(data) {
-              ctrl.submitting = false;
-            })
-            .error(notificationService.httpError('could not star document'));
+              notificationService.httpError('could not star document');
+            }
+            ctrl.submitting = false;
+            const idx = findIndex(ctrl.stars, {id: ctrl.user.id});
+            if (idx > -1) { ctrl.stars.splice(idx, 1); }
+            ctrl.doesUserStar = false;
           };
         }],
         template: ([
