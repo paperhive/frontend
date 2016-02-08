@@ -29,7 +29,7 @@
     </div>
 
     <div class="ph-flex-item">
-      <form name="signupForm">
+      <form name="signupForm" novalidate>
         <div class="form-group" ng-class="{ 'has-error' : signupForm.email.$invalid && !signupForm.email.$pristine }">
           <label for="email">Email</label>
           <input type="email" class="form-control" id="email" name="email" ng-model="signup.email" required>
