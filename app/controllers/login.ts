@@ -11,6 +11,20 @@ export default function(app) {
         password: ''
       };
 
+      $scope.hasError = function(field) {
+        const form = $scope.loginForm;
+        return (form.$submitted || form[field].$touched) &&
+          form[field].$invalid;
+      };
+
+      $scope.$watch('email', function() {
+        $scope.emailError = undefined;
+      });
+
+      $scope.$watch('password', function() {
+        $scope.passwordError = undefined;
+      });
+
       $scope.login = function() {
         console.log($scope.login.email);
         console.log($scope.login.password);
