@@ -133,7 +133,9 @@ export default function(app) {
         .success(function() {
           $scope.submitting = false;
           const idx = findIndex($scope.stars, {id: $scope.auth.user.id});
-          if (idx > -1) {$scope.stars.splice(idx, 1);}
+          if (idx > -1) {
+            $scope.stars.splice(idx, 1);
+          }
           $scope.doesUserStar = false;
         })
         .error(function(data) {
