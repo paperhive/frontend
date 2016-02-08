@@ -11,7 +11,7 @@ export default function(app) {
         password: ''
       };
 
-      $scope.submit = function() {
+      $scope.login = function() {
         console.log($scope.login.email);
         console.log($scope.login.password);
         $location.path($scope.returnPath.returnPath);
