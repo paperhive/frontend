@@ -26,17 +26,15 @@ export default function(app) {
       });
 
       $scope.signup = function() {
+        // do we need subscribing ? TODO
         $scope.subscribing = true;
         $scope.passwordError = undefined;
         $scope.emailError = undefined;
 
-        $scope.subscribed = true;
-
-        /*$http.post(config.apiUrl + '/auth/email/initiate/', {
+        $http.post(config.apiUrl + '/auth/email/initiate/', {
           email: $scope.signup.email,
           password: $scope.signup.password,
-          returnUrl: $scope.returnPath.returnPath
-          }).then(function(response) {
+          returnUrl: $scope.returnPath.returnPath}).then(function(response) {
             $scope.subscribing = false;
             $scope.subscribed = true;
           }, function(response) {
@@ -47,7 +45,6 @@ export default function(app) {
             $scope.emailError = response.data && response.data.message ||
               'Unknown error';
           });
-*/
       };
 
     }
