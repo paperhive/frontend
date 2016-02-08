@@ -72,20 +72,19 @@ export default function(app) {
             ctrl.doesUserStar = false;
           };
         }],
-        template: ([
-          '<div class="btn-group" role="group">',
-          '  <button ng-if="$ctrl.doesUserStar" type="button" class="btn btn-default"',
-          '    ng-disabled="!$ctrl.user" ng-click="$ctrl.unstar()">',
-          '    <i class="fa fa-star"></i> Unstar',
-          '  </button>',
-          '  <button ng-if="!$ctrl.doesUserStar" type="button" class="btn btn-default"',
-          '    ng-disabled="!$ctrl.user" ng-click="$ctrl.star()">',
-          '    <i class="fa fa-star"></i> Star',
-          '  </button>',
-          '  <button type="button" class="btn btn-default" disabled>',
-          '    {{$ctrl.stars.length}}',
-          '  </button>',
-          '</div>',
-        ]).join(' '),
+        template:
+          `<div class="btn-group" role="group">
+            <button ng-if="$ctrl.doesUserStar" type="button" class="btn btn-default"
+              ng-disabled="!$ctrl.user" ng-click="$ctrl.unstar()">
+              <i class="fa fa-star"></i> Unstar
+            </button>
+            <button ng-if="!$ctrl.doesUserStar" type="button" class="btn btn-default"
+              ng-disabled="!$ctrl.user" ng-click="$ctrl.star()">
+              <i class="fa fa-star"></i> Star
+            </button>
+            <button type="button" class="btn btn-default" disabled>
+              {{$ctrl.stars.length}}
+            </button>
+          </div>`
     });
 };
