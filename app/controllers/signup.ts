@@ -1,7 +1,9 @@
 'use strict';
 export default function(app) {
-  app.controller('SignupCtrl', ['$scope', '$location',
-    function($scope, $location) {
+  app.controller('SignupCtrl', ['$scope', '$location', 'returnPathService',
+    function($scope, $location, returnPathService) {
+
+      $scope.returnPath = returnPathService;
 
       $scope.signup = {
         email: '',
@@ -11,6 +13,7 @@ export default function(app) {
       $scope.submit = function() {
         console.log($scope.signup.email);
         console.log($scope.signup.password);
+        $location.path('/');
       };
 
     }

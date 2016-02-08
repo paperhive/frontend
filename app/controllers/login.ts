@@ -1,7 +1,9 @@
 'use strict';
 export default function(app) {
-  app.controller('LoginCtrl', ['$scope', '$location',
-    function($scope, $location) {
+  app.controller('LoginCtrl', ['$scope', '$location', 'returnPathService',
+    function($scope, $location, returnPathService) {
+
+      $scope.returnPath = returnPathService;
 
       $scope.login = {
         email: '',
