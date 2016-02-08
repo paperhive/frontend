@@ -20,7 +20,6 @@ import settings from './settings';
 import signup from './signup'
 import subscribe from './subscribe';
 import user from './user';
-import welcome from './welcome';
 
 export default function(app) {
   activity(app);
@@ -45,5 +44,4 @@ export default function(app) {
   signup(app);
   subscribe(app);
   user(app);
-  welcome(app);
 };

@@ -53,7 +53,6 @@ export default function(app) {
         .when('/users/:username/profile', 'users.profile')
         .when('/users/:username/articles', 'users.articles')
         .when('/users/:username/activity', 'users.activity')
-        .when('/welcome', 'welcome')
 
         // Init Main Page
         .segment('main', {
@@ -276,12 +275,6 @@ export default function(app) {
             dependencies: ['username']
           })
         .up()
-
-        .segment('welcome', {
-          templateUrl: 'html/welcome.html',
-          controller: 'WelcomeCtrl',
-          title: 'Welcome · PaperHive'
-        })
         ;
 
       $routeProvider.otherwise({redirectTo: '/404'});

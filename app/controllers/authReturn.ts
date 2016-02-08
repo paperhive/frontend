@@ -7,7 +7,7 @@ export default function(app) {
         .signinToken($routeParams.token)
         .then(
           function success(data) {
-            $location.path('/welcome').search({});
+            $location.path($routeParams.returnPath).search({});
           },
           function fail(reason) {
             $scope.error = reason;
