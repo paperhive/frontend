@@ -25,8 +25,11 @@ export default function(app) {
         $scope.passwordError = undefined;
       });
 
+      $scope.$watch('password', function() {
+        $scope.responseError = undefined;
+      });
+
       $scope.signup = function() {
-        // do we need subscribing ? TODO
         $scope.subscribing = true;
         $scope.passwordError = undefined;
         $scope.emailError = undefined;
@@ -34,17 +37,16 @@ export default function(app) {
         $http.post(config.apiUrl + '/auth/email/initiate/', {
           email: $scope.signup.email,
           password: $scope.signup.password,
-          returnUrl: $scope.returnPath.returnPath}).then(function(response) {
+          returnUrl: authService.getReturnUrl(returnPathService.returnPath)
+        }).then(function(response) {
             $scope.subscribing = false;
             $scope.subscribed = true;
           }, function(response) {
             $scope.subscribing = false;
-            // TODO check
-            $scope.passwordError = response.data && response.data.message ||
-              'Unknown error';
-            $scope.emailError = response.data && response.data.message ||
+            $scope.responseError = response.data && response.data.message ||
               'Unknown error';
           });
+
       };
 
     }

@@ -4,14 +4,17 @@ export default function(app) {
     function(config, $http, $q, $rootScope, $window) {
       const authService = {
         inProgress: false,
-        getAuthUrl: (provider, returnPath) => {
-          const returnUrl = `${$window.location.origin}${config.baseHref}authReturn?returnPath=${encodeURIComponent(returnPath)}`;
-          return `${config.apiUrl}/auth/${provider}/initiate?returnUrl=${encodeURIComponent(returnUrl)}`;
-        },
         user: undefined,
         token: undefined,
         signinToken: undefined,
         signout: undefined,
+      };
+      authService.getAuthUrl = (provider, returnPath) => {
+        const returnUrl = authService.getReturnUrl(returnPath);
+        return `${config.apiUrl}/auth/${provider}/initiate?returnUrl=${encodeURIComponent(returnUrl)}`;
+      };
+      authService.getReturnUrl = (returnPath) => {
+        return `${$window.location.origin}${config.baseHref}authReturn?returnPath=${encodeURIComponent(returnPath)}`;
       };
 
       // sign in with a token

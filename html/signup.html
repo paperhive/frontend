@@ -90,11 +90,17 @@
           </div>
         </div>
 
-        <div ng-class="{'has-success': signupForm.$valid}">
+        <div ng-class="{
+          'has-success': signupForm.$valid}"
+        >
           <span class="help-block">
             <span ng-if="subscribed">
               <i class="fa fa-fw fa-check"></i>
               Check your emails to confirm your sign-up.
+            </span>
+            <span ng-if="responseError" class="text-danger">
+              <i class="fa fa-fw fa-times"></i>
+              {{responseError}}
             </span>
           </span>
         </div>
@@ -104,6 +110,7 @@
             ng-click="!subscribing && !subscribed && !signupForm.$invalid && signup()"
             ng-class="{disabled: signupForm.$invalid || subscribing || subscribed}"
           >
+            <i ng-if="subscribing" class="fa fa-fw fa-spinner fa-spin"></i>
             Sign up
           </button>
         </div>
