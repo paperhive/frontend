@@ -15,26 +15,27 @@ export default function(app) {
           this.doesUserStar = false;
 
           // $watch on this?
-          $scope.$watch('$ctrl.documentId', function(id) {
+          $scope.$watch('$ctrl.documentId', async function(id) {
             if (!id) { return; }
-            $http.get(
-              config.apiUrl +
-                '/documents/' + id + '/stars'
-            )
-            .success(function(ret) {
-              ctrl.stars = ret.stars;
-              $scope.$watch('$ctrl.user', function(user) {
-                if (user && user.id) {
-                  ctrl.doesUserStar = some(ctrl.stars, {'id': user.id});
-                }
-              });
-            })
-            .error(function(data) {
+            let ret;
+            try {
+              ret = await $http.get(
+                config.apiUrl +
+                  '/documents/' + id + '/stars'
+              );
+            } catch (err) {
+              console.log(err);
               notificationService.notifications.push({
                 type: 'error',
-                message: data.message ? data.message :
+                message: err.data.message ? err.data.message :
                   'could not fetch stars (unknown reason)'
               });
+            }
+            ctrl.stars = ret.data.stars;
+            $scope.$watch('$ctrl.user', function(user) {
+              if (user && user.id) {
+                ctrl.doesUserStar = some(ctrl.stars, {'id': user.id});
+              }
             });
           });
 
