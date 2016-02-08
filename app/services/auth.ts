@@ -5,7 +5,7 @@ export default function(app) {
       const authService = {
         inProgress: false,
         getAuthUrl: (provider, returnPath) => {
-          const returnUrl = `${$window.location.origin}${config.baseHref}return?returnPath=${encodeURIComponent(returnPath)}`;
+          const returnUrl = `${$window.location.origin}${config.baseHref}authReturn?returnPath=${encodeURIComponent(returnPath)}`;
           return `${config.apiUrl}/auth/${provider}/initiate?returnUrl=${encodeURIComponent(returnUrl)}`;
         },
         user: undefined,

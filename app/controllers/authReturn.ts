@@ -1,6 +1,6 @@
 'use strict';
 export default function(app) {
-  app.controller('OauthOrcidCtrl', [
+  app.controller('AuthReturnCtrl', [
     '$scope', '$routeParams', '$location', 'authService',
     function($scope, $routeParams, $location, authService) {
       authService

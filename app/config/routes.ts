@@ -43,7 +43,7 @@ export default function(app) {
         .when('/alpha-warning', 'alpha-warning')
         .when('/legalnotice', 'legalnotice')
         .when('/login', 'login')
-        .when('/return', 'oauth')
+        .when('/authReturn', 'authReturn')
         .when('/settings', 'settings')
         .when('/settings/profile', 'settings.profile')
         .when('/settings/site', 'settings.site')
@@ -226,10 +226,10 @@ export default function(app) {
           title: 'Log in to · Paperhive'
         })
 
-        .segment('oauth', {
-          templateUrl: 'html/auth/oauth.html',
-          controller: 'OauthOrcidCtrl',
-          title: 'OAuth login · PaperHive'
+        .segment('authReturn', {
+          templateUrl: 'html/auth/return.html',
+          controller: 'AuthReturnCtrl',
+          title: 'PaperHive'
         })
 
         .segment('settings', {
