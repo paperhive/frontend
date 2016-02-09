@@ -1,13 +1,13 @@
 'use strict';
 export default function(app) {
-  app.controller('LoginCtrl', ['$scope', '$location', 'authService', 'returnPathService',
-    function($scope, $location, authService, returnPathService) {
+  app.controller('LoginCtrl', ['$scope', '$location', 'authService', 'returnPathService', '$http', 'config',
+    function($scope, $location, authService, returnPathService, $http, config) {
 
       $scope.auth = authService;
       $scope.returnPath = returnPathService;
 
       $scope.login = {
-        email: '',
+        emailOrUsername: '',
         password: ''
       };
 
@@ -17,7 +17,7 @@ export default function(app) {
           form[field].$invalid;
       };
 
-      $scope.$watch('email', function() {
+      $scope.$watch('emailOrUsername', function() {
         $scope.emailError = undefined;
       });
 
@@ -26,9 +26,26 @@ export default function(app) {
       });
 
       $scope.login = function() {
-        console.log($scope.login.email);
-        console.log($scope.login.password);
-        $location.path($scope.returnPath.returnPath);
+        $scope.subscribing = true;
+        $scope.passwordError = undefined;
+        $scope.emailError = undefined;
+        $scope.responseError = undefined;
+
+        $http.post(config.apiUrl + '/auth/signin/email', {
+          emailOrUsername: $scope.login.emailOrUsername,
+          password: $scope.login.password
+        }).then(function(response) {
+            $scope.subscribing = false;
+            $scope.subscribed = true;
+            $location.path($scope.returnPath.returnPath);
+          }, function(response) {
+            $scope.subscribing = false;
+            $scope.responseError = response.data && response.data.message ||
+              'Unknown error';
+          });
+      };
+
+      $scope.getNewPasswd = function() {
       };
 
     }

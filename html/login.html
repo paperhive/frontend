@@ -32,16 +32,16 @@
       <form name="loginForm" novalidate>
 
         <div class="form-group" ng-class="{
-          'has-error': hasError('email')
+          'has-error': hasError('emailOrUsername')
         }">
-          <label for="email">Email or Username</label>
-          <input type="text" class="form-control" id="email" name="email" ng-model="login.email" required>
+          <label for="emailOrUsername">Email or Username</label>
+          <input type="text" class="form-control" id="emailOrUsername" name="emailOrUsername" ng-model="login.emailOrUsername" required>
           <span class="fa form-control-feedback" ng-class="{
-                'fa-times': hasError('email')
+                'fa-times': hasError('emailOrUsername')
               }"></span>
           <div class="help-block">
-            <span ng-if="hasError('email')">
-              <span ng-if="loginForm.email.$error.required">
+            <span ng-if="hasError('emailOrUsername')">
+              <span ng-if="loginForm.emailOrUsername.$error.required">
                 Please enter your email address.
               </span>
             </span>
@@ -53,7 +53,7 @@
         }">
           <label for="password">Password</label>
           <input type="password" class="form-control" id="password" name="password" ng-model="login.password" required>
-          <a class="ph-forgot-password" href="" title="Forgot password?" tabindex="-1">Forgot?</a>
+          <a class="ph-forgot-password" href="" title="Forgot password?" tabindex="-1" ng-click="getNewPasswd()">Forgot?</a>
           <span class="fa form-control-feedback" ng-class="{
                 'fa-times': hasError('password')
               }"></span>
