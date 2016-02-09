@@ -25,7 +25,11 @@
             <ul class="dropdown-menu">
               <li ng-repeat="revision in revisions.slice().reverse()"
                   ng-class="{'disabled': !revision.openAccess}">
-                <a href="https://paperhive.org" class="disabled">
+                <a ng-if="revision.openAccess"
+                  href="./articles/{{revision.id}}/revisions/{{revision.revision}}">
+                  <i class="fa fa-unlock-alt"></i> {{getShortDescription(revision)}}
+                </a>
+                <a ng-if="!revision.openAccess">
                   {{getShortDescription(revision)}}
                 </a>
               </li>

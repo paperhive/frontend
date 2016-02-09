@@ -25,7 +25,7 @@ export default function(app) {
         let activeRevisionIdx;
         if (revisionId) {
           activeRevisionIdx = _.findIndex(revisions, {revision: revisionId});
-          if (!activeRevisionIdx) {
+          if (activeRevisionIdx === -1) {
             notificationService.notifications.push({
               type: 'error',
               message: `Unknown revision ID ${revisionId}.`
