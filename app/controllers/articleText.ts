@@ -4,10 +4,11 @@ import paperhiveSources from 'paperhive-sources';
 export default function(app) {
 
   app.controller('ArticleTextCtrl', [
-    '$scope', '$route', '$routeSegment', '$document', '$http', 'config',
-    'authService', 'notificationService', 'distangleService', 'metaService',
+    '$scope', '$route', '$routeSegment', '$document', '$http', '$filter',
+    'config', 'authService', 'notificationService', 'distangleService',
+    'metaService',
     function(
-      $scope, $route, $routeSegment, $document, $http, config,
+      $scope, $route, $routeSegment, $document, $http, $filter, config,
       authService, notificationService, distangleService, metaService
     ) {
       $scope.text = {
@@ -21,23 +22,26 @@ export default function(app) {
 
       $scope.$watch('revisions', function(revisions) {
         if (!revisions) { return; }
-        let activeRevision;
+        let activeRevisionIdx;
         if (revisionId) {
-          activeRevision = _.find(revisions, {revision: revisionId});
-          if (!activeRevision) {
+          activeRevisionIdx = _.findIndex(revisions, {revision: revisionId});
+          if (!activeRevisionIdx) {
             notificationService.notifications.push({
               type: 'error',
               message: `Unknown revision ID ${revisionId}.`
             });
           }
         } else {
-          // default to the latest revision
-          activeRevision = revisions[revisions.length - 1];
+          // default to the latest OA revision
+          activeRevisionIdx = $scope.latestOAIdx;
         }
+        // Expose in scope
+        $scope.activeRevisionIdx = activeRevisionIdx;
+        // Construct strings for display in revision selection dropdown.
         // get pdf url
         try {
           $scope.pdfSource = paperhiveSources({ apiUrl: config.apiUrl })
-            .getAccessiblePdfUrl(activeRevision);
+            .getAccessiblePdfUrl(revisions[activeRevisionIdx]);
         } catch (e) {
           notificationService.notifications.push({
             type: 'error',
@@ -45,6 +49,26 @@ export default function(app) {
           });
         }
       });
+
+      $scope.getShortDescription = (revision) => {
+        const desc = [];
+        if (revision.journal && revision.journal.nameShort) {
+          desc.push(revision.journal.nameShort);
+        } else if (revision.journal && revision.journal.nameLong) {
+          desc.push(revision.journal.nameLong.substring(0, 20));
+        } else {
+          if (revision.remote.type === 'arxiv') {
+            desc.push('arXiv');
+          } else {
+            desc.push(revision.remote.type);
+          }
+          desc.push(revision.remote.revision);
+        }
+        if (revision.publishedAt) {
+          desc.push($filter('date')(revision.publishedAt, 'MMM yyyy'))
+        }
+        return desc.join(', ');
+      };
 
       // set meta data
       $scope.$watchGroup(['article', 'discussions.stored'], function(newVals) {

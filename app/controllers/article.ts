@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import * as angular from 'angular';
-import {findIndex, some} from 'lodash';
+import {findLastIndex, some} from 'lodash';
 
 export default function(app) {
 
@@ -28,24 +28,25 @@ export default function(app) {
       .success(function(ret) {
         console.log('ret', ret);
         $scope.revisions = ret.revisions;
-        $scope.latestRevision = ret.revisions[ret.revisions.length - 1];
+        $scope.latestOAIdx = findLastIndex(ret.revisions, {openAccess: true});
 
+        const latestOARevision = $scope.revisions[$scope.latestOAIdx];
         // Cut description down to 150 chars, cf.
         // <http://moz.com/learn/seo/meta-description>
         // TODO move linebreak removal to backend?
         const metaData = [
           {
             name: 'description',
-            content: article.title + ' by ' + article.authors.join(', ') + '.'
+            content: latestOARevision.title + ' by ' + latestOARevision.authors.join(', ') + '.'
           },
-          {name: 'author', content: article.authors.join(', ')},
-          {name: 'keywords', content: article.tags.join(', ')}
+          {name: 'author', content: latestOARevision.authors.join(', ')},
+          {name: 'keywords', content: latestOARevision.tags.join(', ')}
         ];
 
         $scope.addArticleMetaData(metaData);
 
         metaService.set({
-          title: article.title + ' · PaperHive',
+          title: latestOARevision.title + ' · PaperHive',
           meta: metaData
         });
       })
