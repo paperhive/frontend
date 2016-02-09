@@ -31,7 +31,7 @@
     <div class="ph-flex-item">
       <form name="signupForm" novalidate>
 
-        <div class="form-group has-feedback" ng-class="{
+        <div class="form-group" ng-class="{
           'has-error': hasError('email'),
           'has-success': signupForm.email.$valid
         }">
@@ -55,11 +55,10 @@
               <i class="fa fa-fw fa-times"></i>
               {{emailError}}
             </span>
-            &nbsp;
           </div>
         </div>
 
-        <div class="form-group has-feedback" ng-class="{
+        <div class="form-group" ng-class="{
           'has-error': hasError('password'),
           'has-success': signupForm.password.$valid
         }">
@@ -86,7 +85,6 @@
               <i class="fa fa-fw fa-times"></i>
               {{passwordError}}
             </span>
-            &nbsp;
           </div>
         </div>
 
@@ -105,7 +103,7 @@
           </span>
         </div>
 
-        <div class="ph-md-padding-top">
+        <div class="ph-lg-padding-top">
           <button class="btn btn-primary btn-block"
             ng-click="!subscribing && !subscribed && !signupForm.$invalid && signup()"
             ng-class="{disabled: signupForm.$invalid || subscribing || subscribed}"
