@@ -6,7 +6,7 @@ export default function(app) {
         inProgress: false,
         user: undefined,
         token: undefined,
-        signinToken: undefined,
+        loginToken: undefined,
         signout: undefined,
       };
       authService.getAuthUrl = (provider, returnPath) => {
@@ -17,47 +17,67 @@ export default function(app) {
         return `${$window.location.origin}${config.baseHref}authReturn?returnPath=${encodeURIComponent(returnPath)}`;
       };
 
+      function _loginToken(token) {
+        return function() {
+          return $http.post(
+            config.apiUrl + '/auth/token/login',
+            null,
+            {
+              headers: {'Authorization': 'token ' + token},
+              timeout: 10000
+            }
+          );
+        };
+      }
+
+      function _loginEmail(emailOrUsername, password) {
+        return function () {
+          return $http.post(config.apiUrl + '/auth/email/login', {
+            emailOrUsername,
+            password,
+          });
+        };
+      }
+
       // sign in with a token
-      function signinToken(token) {
+      function login(loginFun) {
         if (authService.user) {
-          return $q.reject('Already signed in.');
+          return $q.reject('Already logging in.');
         }
         if (authService.inProgress) {
-          return $q.reject('Already signing in.');
+          return $q.reject('Already logging in.');
         }
         const deferred = $q.defer();
         authService.inProgress = true;
-        $http
-        .post(
-          config.apiUrl + '/auth/signin',
-          null,
-          {
-            headers: {'Authorization': 'token ' + token},
-            timeout: 10000
-          }
-        )
-        .success(function(data, status) {
-          authService.inProgress = false;
-          authService.user = data.person;
-          authService.token = token;
+        const loginPromise = loginFun();
+        loginPromise
+          .success(function(data, status) {
+            authService.inProgress = false;
+            authService.user = data.person;
+            authService.token = token;
 
-          // store token in session storage
-          $window.sessionStorage.token = data.token;
+            // store token in session storage
+            $window.sessionStorage.token = data.token;
 
-          // use token for all subsequent HTTP requests to API
-          $http.defaults.headers.common['Authorization'] = 'token ' + data.token;
+            // use token for all subsequent HTTP requests to API
+            $http.defaults.headers.common['Authorization'] = 'token ' + data.token;
 
-          deferred.resolve(data);
-        })
-        .error(function(data) {
-          authService.inProgress = false;
-          signout();
-          deferred.reject('signing in failed');
-        });
+            deferred.resolve(data);
+          })
+          .error(function(data) {
+            authService.inProgress = false;
+            signout();
+            deferred.reject(data);
+          });
 
         return deferred.promise;
       }
-      authService.signinToken = signinToken;
+      authService.loginToken = (token) => {
+        return login(_loginToken(token));
+      };
+      authService.loginEmail = (emailOrUsername, password) => {
+        return login(_loginEmail(emailOrUsername, password));
+      };
 
       // store/remove token in local storage (if requested by user)
       $rootScope.$watch(function() {
@@ -85,7 +105,7 @@ export default function(app) {
 
       // sign in if token is present
       if (token) {
-        authService.signinToken(token);
+        authService.loginToken(token);
       }
 
       return authService;

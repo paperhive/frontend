@@ -19,10 +19,12 @@ export default function(app) {
 
       $scope.$watch('emailOrUsername', function() {
         $scope.emailError = undefined;
+        $scope.responseError = undefined;
       });
 
       $scope.$watch('password', function() {
         $scope.passwordError = undefined;
+        $scope.responseError = undefined;
       });
 
       $scope.login = function() {
@@ -31,17 +33,17 @@ export default function(app) {
         $scope.emailError = undefined;
         $scope.responseError = undefined;
 
-        $http.post(config.apiUrl + '/auth/signin/email', {
-          emailOrUsername: $scope.login.emailOrUsername,
-          password: $scope.login.password
-        }).then(function(response) {
+        authService
+          .loginEmail(
+            $scope.login.emailOrUsername, $scope.login.password
+          )
+          .then(function(data) {
             $scope.subscribing = false;
             $scope.subscribed = true;
             $location.path($scope.returnPath.returnPath);
-          }, function(response) {
+          }, function(data) {
             $scope.subscribing = false;
-            $scope.responseError = response.data && response.data.message ||
-              'Unknown error';
+            $scope.responseError = data && data.message || 'Unknown error';
           });
       };
 

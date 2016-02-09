@@ -19,13 +19,11 @@ export default function(app) {
 
       $scope.$watch('email', function() {
         $scope.emailError = undefined;
+        $scope.responseError = undefined;
       });
 
       $scope.$watch('password', function() {
         $scope.passwordError = undefined;
-      });
-
-      $scope.$watch('password', function() {
         $scope.responseError = undefined;
       });
 

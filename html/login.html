@@ -66,6 +66,17 @@
           </div>
         </div>
 
+        <div ng-class="{
+          'has-success': loginForm.$valid
+        }">
+          <span class="help-block">
+            <span ng-if="responseError" class="text-danger">
+              <i class="fa fa-fw fa-times"></i>
+              {{responseError}}
+            </span>
+          </span>
+        </div>
+
         <div class="ph-lg-padding-top">
           <button class="btn btn-primary btn-block"
             ng-click="!subscribing && !subscribed && !loginForm.$invalid && login()"
