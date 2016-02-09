@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import paperhiveSources from 'paperhive-sources';
 
 export default function(app) {
 
@@ -15,6 +16,35 @@ export default function(app) {
         marginDiscussionSizes: {},
         marginOffsets: {}
       };
+
+      const revisionId = $routeSegment.$routeParams.revisionId;
+
+      $scope.$watch('revisions', function(revisions) {
+        if (!revisions) { return; }
+        let activeRevision;
+        if (revisionId) {
+          activeRevision = _.find(revisions, {revision: revisionId});
+          if (!activeRevision) {
+            notificationService.notifications.push({
+              type: 'error',
+              message: `Unknown revision ID ${revisionId}.`
+            });
+          }
+        } else {
+          // default to the latest revision
+          activeRevision = revisions[revisions.length - 1];
+        }
+        // get pdf url
+        try {
+          $scope.pdfSource = paperhiveSources({ apiUrl: config.apiUrl })
+            .getAccessiblePdfUrl($scope.latestRevision);
+        } catch (e) {
+          notificationService.notifications.push({
+            type: 'error',
+            message: 'PDF cannot be displayed: ' + e.message
+          });
+        }
+      });
 
       // set meta data
       $scope.$watchGroup(['article', 'discussions.stored'], function(newVals) {

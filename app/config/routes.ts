@@ -36,6 +36,7 @@ export default function(app) {
               'articles.discussions.thread')
         .when('/articles/:articleId/settings', 'articles.settings')
         .when('/articles/:articleId/text', 'articles.text')
+        .when('/articles/:articleId/revisions/:revisionId', 'articles.revisions')
         .when('/articles/:articleId/about', 'articles.about')
         .when('/contact', 'contact')
         // .when('/help', 'help')
@@ -165,6 +166,11 @@ export default function(app) {
             default: true,
             templateUrl: 'html/articles/text.html',
             title: 'Article · PaperHive'
+          })
+          .segment('revisions', {
+            templateUrl: 'html/articles/text.html',
+            dependencies: ['revisionId'],
+            title: 'Article at revision · PaperHive'
           })
         .up()
         .segment('articles_new', {

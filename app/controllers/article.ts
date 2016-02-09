@@ -1,6 +1,5 @@
 import * as _ from 'lodash';
 import * as angular from 'angular';
-import paperhiveSources from 'paperhive-sources';
 import {findIndex, some} from 'lodash';
 
 export default function(app) {
@@ -19,24 +18,17 @@ export default function(app) {
       // template.
       $scope.$routeSegment = $routeSegment;
 
+      const articleId = $routeSegment.$routeParams.articleId;
+
       // fetch article
       $http.get(
         config.apiUrl +
-          '/documents/' + $routeSegment.$routeParams.articleId
+          `/documents/${articleId}/revisions/`
       )
-      .success(function(article) {
-        $scope.article = article;
-
-        // get pdf url
-        try {
-          $scope.pdfSource = paperhiveSources({ apiUrl: config.apiUrl })
-            .getAccessiblePdfUrl(article);
-        } catch (e) {
-          notificationService.notifications.push({
-            type: 'error',
-            message: 'PDF cannot be displayed: ' + e.message
-          });
-        }
+      .success(function(ret) {
+        console.log('ret', ret);
+        $scope.revisions = ret.revisions;
+        $scope.latestRevision = ret.revisions[ret.revisions.length - 1];
 
         // Cut description down to 150 chars, cf.
         // <http://moz.com/learn/seo/meta-description>
@@ -67,7 +59,7 @@ export default function(app) {
 
       $http.get(
         config.apiUrl +
-          '/documents/' + $routeSegment.$routeParams.articleId + '/discussions'
+          `/documents/${articleId}/discussions`
       )
       .success(function(ret) {
         $scope.discussions.stored = ret.discussions;
@@ -113,9 +105,9 @@ export default function(app) {
         // Don't expose the DOI for all versions of the article; it really only
         // identifies one version, usually not the arXiv one, but an upstream
         // version.
-        if ($scope.pdfSource) {
-          metaData.push({name: 'citation_pdf_url', content: $scope.pdfSource});
-        }
+        // if ($scope.pdfSource) {
+        //   metaData.push({name: 'citation_pdf_url', content: $scope.pdfSource});
+        // }
       };
 
       $scope.purgeDraft = function() {
@@ -127,7 +119,7 @@ export default function(app) {
           comment, ['title', 'body', 'target', 'tags']
         ));
 
-        disc.target.document = $routeSegment.$routeParams.articleId;
+        disc.target.document = articleId;
         disc.target.documentRevision = $scope.article.revision;
 
         $scope.submitting = true;
