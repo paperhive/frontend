@@ -80,66 +80,11 @@ export default function(app) {
         });
       });
 
-      $http.get(
-        config.apiUrl +
-          '/documents/' + $routeSegment.$routeParams.articleId + '/stars'
-      )
-      .success(function(ret) {
-        $scope.stars = ret.stars;
-        $scope.$watch('auth.user', function(user) {
-          if (user && user.id) {
-            $scope.doesUserStar = some($scope.stars, {'id': user.id});
-          }
-        });
-      })
-      .error(function(data) {
-        notificationService.notifications.push({
-          type: 'error',
-          message: data.message ? data.message :
-            'could not fetch stars (unknown reason)'
-        });
-      });
-
       $scope.originalComment = {
         draft: {}
       };
       $scope.discussions = {
         stored: []
-      };
-
-      $scope.star = function() {
-        $scope.submitting = true;
-        return $http.post(
-          config.apiUrl +
-            '/documents/' + $routeSegment.$routeParams.articleId + '/star'
-        )
-        .success(function() {
-          $scope.submitting = false;
-          $scope.stars.push($scope.auth.user);
-          $scope.doesUserStar = true;
-        })
-        .error(function(data) {
-          $scope.submitting = false;
-        })
-          .error(notificationService.httpError('could not star document'));
-      };
-
-      $scope.unstar = function() {
-        $scope.submitting = true;
-        return $http.delete(
-          config.apiUrl +
-            '/documents/' + $routeSegment.$routeParams.articleId + '/star'
-        )
-        .success(function() {
-          $scope.submitting = false;
-          const idx = findIndex($scope.stars, {id: $scope.auth.user.id});
-          if (idx > -1) {$scope.stars.splice(idx, 1);}
-          $scope.doesUserStar = false;
-        })
-        .error(function(data) {
-          $scope.submitting = false;
-        })
-          .error(notificationService.httpError('could not star document'));
       };
 
       $scope.addArticleMetaData = function(metaData) {

@@ -10,21 +10,9 @@
             </span>
           </h4>
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-2 text-right">
           <h2 class="ph-lg-margin-top">
-            <div class="btn-group" role="group">
-              <button ng-if="doesUserStar" type="button" class="btn
-                btn-default" ng-disabled="!auth.user" ng-click="unstar()">
-                <i class="fa fa-star"></i> Unstar
-              </button>
-              <button ng-if="!doesUserStar" type="button" class="btn
-                btn-default" ng-disabled="!auth.user" ng-click="star()">
-                <i class="fa fa-star"></i> Star
-              </button>
-              <button type="button" class="btn btn-default" disabled>
-                {{stars.length}}
-              </button>
-            </div>
+            <star-button document-id="article.id" user="auth.user"></star-button>
           </h2>
         </div>
       </div>

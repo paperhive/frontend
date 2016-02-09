@@ -18,18 +18,15 @@
   </li>
   <li ng-if="auth.user" class="dropdown" is-open="dropdown_open" uib-dropdown>
     <a href="" class="dropdown-toggle" uib-dropdown-toggle>
-      <img
-        gravatar-user="auth.user"
-        gravatar-size="38"
-        class="ph-avatar img-circle"
-        >
+      <gravatar user="auth.user" size="38" classes="ph-avatar
+      img-circle"></gravatar>
       {{auth.user.displayName}}
       <i ng-if="!dropdown_open" class="fa fa-fw fa-caret-down"></i>
       <i ng-if="dropdown_open" class="fa fa-fw fa-caret-up"></i>
     </a>
     <ul class="dropdown-menu">
-      <li ng-if="auth.user.username">
-        <a href="./users/{{auth.user.username}}">
+      <li>
+        <a href="./users/{{auth.user.user.username}}">
           <i class="fa fa-fw fa-user"></i> Profile
         </a>
       </li>
