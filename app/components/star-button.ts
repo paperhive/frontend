@@ -73,7 +73,7 @@ export default function(app) {
           };
         }],
         template:
-          `<div class="btn-group" role="group">
+          `<span class="btn-group" role="group">
             <button ng-if="$ctrl.doesUserStar" type="button" class="btn btn-default"
               ng-disabled="!$ctrl.user" ng-click="$ctrl.unstar()">
               <i class="fa fa-star"></i> Unstar
@@ -86,6 +86,6 @@ export default function(app) {
               <span ng-if="$ctrl.stars">{{$ctrl.stars.length}}</span>
               <span ng-if="!$ctrl.stars">&nbsp;</span>
             </button>
-          </div>`
+          </span>`
     });
 };
