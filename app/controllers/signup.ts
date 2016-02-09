@@ -35,7 +35,7 @@ export default function(app) {
         $scope.emailError = undefined;
         $scope.responseError = undefined;
 
-        $http.post(config.apiUrl + '/auth/email/initiate/', {
+        $http.post(config.apiUrl + '/auth/email/initiate', {
           email: $scope.signup.email,
           password: $scope.signup.password,
           returnUrl: authService.getReturnUrl(returnPathService.returnPath)
