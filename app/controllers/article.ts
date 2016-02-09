@@ -26,7 +26,6 @@ export default function(app) {
           `/documents/${articleId}/revisions/`
       )
       .success(function(ret) {
-        console.log('ret', ret);
         $scope.revisions = ret.revisions;
         $scope.latestOAIdx = findLastIndex(ret.revisions, {openAccess: true});
 

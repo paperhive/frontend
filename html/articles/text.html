@@ -1,10 +1,11 @@
 <div ng-controller="ArticleTextCtrl">
   <div class="row" ng-if="pdfSource">
     <div highlight-container class="col-md-9">
-      <div class="row">
-        <div class="col-md-12 ph-md-margin-bottom" style="z-index: 1010;">
+      <div class="row ph-md-margin-bottom" >
 
-          <span class="dropdown" is-open="dropdown_open" uib-dropdown>
+        <div class="col-md-3">
+          <span class="dropdown" is-open="dropdown_open" uib-dropdown
+            style="z-index: 1010;">
             <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
               <span style="color:gray;">Revision:</span>
               <strong>{{getShortDescription(revisions[activeRevisionIdx])}}</strong> <i class="fa fa-fw fa-caret-down"></i>
@@ -26,7 +27,25 @@
               </li>
             </ul>
           </span>
+        </div>
 
+        <div class="col-md-6">
+          <div ng-if="article.pdfProgress.downloading">
+            <uib-progressbar class="progress-striped active" value="100">
+              Downloading...
+            </uib-progressbar>
+          </div>
+          <div ng-if="article.pdfProgress.numPages && !article.pdfProgress.finished">
+            <uib-progressbar class="progress-striped active"
+                             value="article.pdfProgress.renderedPages.length"
+                             max="article.pdfProgress.numPages">
+              {{article.pdfProgress.renderedPages.length}} /
+              {{article.pdfProgress.numPages}} pages
+            </uib-progressbar>
+          </div>
+        </div>
+
+        <div class="col-md-3">
           <span class="pull-right">
             <a class="btn btn-default" ng-href="{{pdfSource}}"
               download="paperhive.pdf">
@@ -55,19 +74,6 @@
     </div>
     <!--column for margin notes-->
     <div class="col-md-3">
-      <div ng-if="article.pdfProgress.downloading">
-        <uib-progressbar class="progress-striped active" value="100">
-          Downloading...
-        </uib-progressbar>
-      </div>
-      <div ng-if="article.pdfProgress.numPages && !article.pdfProgress.finished">
-        <uib-progressbar class="progress-striped active"
-          value="article.pdfProgress.renderedPages.length"
-          max="article.pdfProgress.numPages">
-          {{article.pdfProgress.renderedPages.length}} /
-          {{article.pdfProgress.numPages}} pages
-        </uib-progressbar>
-      </div>
       <margin-discussion
         ng-repeat="discussion in discussions.stored"
         ng-if="text.highlightInfos[discussion.id].top !== undefined"
