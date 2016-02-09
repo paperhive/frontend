@@ -37,7 +37,7 @@ export default function(app) {
         // get pdf url
         try {
           $scope.pdfSource = paperhiveSources({ apiUrl: config.apiUrl })
-            .getAccessiblePdfUrl($scope.latestRevision);
+            .getAccessiblePdfUrl(activeRevision);
         } catch (e) {
           notificationService.notifications.push({
             type: 'error',
