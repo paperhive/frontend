@@ -52,8 +52,8 @@ export default function(app) {
       .error(function(data) {
         notificationService.notifications.push({
           type: 'error',
-          message: data.message ? data.message : 'could not fetch article ' +
-            '(unknown reason)'
+          message: data.message ? data.message :
+            'could not fetch article (unknown reason)'
         });
       });
 
