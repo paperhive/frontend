@@ -1,105 +1,103 @@
 <div ng-controller="ArticleTextCtrl">
-  <div class="row" ng-if="pdfSource">
-    <div highlight-container class="col-md-9">
-      <div class="row ph-md-margin-bottom" >
+  <div ng-if="pdfSource">
+    <div class="row ph-md-margin-bottom" >
+      <div class="col-md-2">
+        <span class="dropdown" is-open="dropdown_open" uib-dropdown style="z-index: 1010;">
+          <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
+            <span style="color:gray;">Version:</span>
+            <strong>{{getShortDescription(revisions[activeRevisionIdx])}}</strong> <i class="fa fa-fw fa-caret-down"></i>
+          </button>
+          <ul class="dropdown-menu">
+            <li ng-repeat="revision in revisions.slice().reverse()"
+                ng-class="{'disabled': !revision.openAccess}">
+              <a ng-if="revision.openAccess"
+                 href="./articles/{{revision.id}}/revisions/{{revision.revision}}">
+                <i class="fa fa-unlock-alt"></i>
+                <strong ng-if="revision.revision ===
+                revisions[activeRevisionIdx].revision">{{getShortDescription(revision)}}</strong>
+                <span ng-if="revision.revision !==
+                revisions[activeRevisionIdx].revision">{{getShortDescription(revision)}}</span>
+              </a>
+              <a ng-if="!revision.openAccess">
+                {{getShortDescription(revision)}}
+              </a>
+            </li>
+          </ul>
+        </span>
+      </div>
 
-        <div class="col-md-3">
-          <span class="dropdown" is-open="dropdown_open" uib-dropdown
-            style="z-index: 1010;">
-            <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
-              <span style="color:gray;">Version:</span>
-              <strong>{{getShortDescription(revisions[activeRevisionIdx])}}</strong> <i class="fa fa-fw fa-caret-down"></i>
-            </button>
-            <ul class="dropdown-menu">
-              <li ng-repeat="revision in revisions.slice().reverse()"
-                  ng-class="{'disabled': !revision.openAccess}">
-                <a ng-if="revision.openAccess"
-                  href="./articles/{{revision.id}}/revisions/{{revision.revision}}">
-                  <i class="fa fa-unlock-alt"></i>
-                  <strong ng-if="revision.revision ===
-                    revisions[activeRevisionIdx].revision">{{getShortDescription(revision)}}</strong>
-                  <span ng-if="revision.revision !==
-                    revisions[activeRevisionIdx].revision">{{getShortDescription(revision)}}</span>
-                </a>
-                <a ng-if="!revision.openAccess">
-                  {{getShortDescription(revision)}}
-                </a>
-              </li>
-            </ul>
-          </span>
+      <div class="col-md-5">
+        <div ng-if="article.pdfProgress.downloading">
+          <uib-progressbar class="progress-striped active" value="100">
+            Downloading...
+          </uib-progressbar>
         </div>
-
-        <div class="col-md-6">
-          <div ng-if="article.pdfProgress.downloading">
-            <uib-progressbar class="progress-striped active" value="100">
-              Downloading...
-            </uib-progressbar>
-          </div>
-          <div ng-if="article.pdfProgress.numPages && !article.pdfProgress.finished">
-            <uib-progressbar class="progress-striped active"
-                             value="article.pdfProgress.renderedPages.length"
-                             max="article.pdfProgress.numPages">
-              {{article.pdfProgress.renderedPages.length}} /
-              {{article.pdfProgress.numPages}} pages
-            </uib-progressbar>
-          </div>
-        </div>
-
-        <div class="col-md-3">
-          <span class="pull-right">
-            <a class="btn btn-default" ng-href="{{pdfSource}}"
-              download="paperhive.pdf">
-              Download PDF
-            </a>
-          </span>
+        <div ng-if="article.pdfProgress.numPages && !article.pdfProgress.finished">
+          <uib-progressbar class="progress-striped active"
+                           value="article.pdfProgress.renderedPages.length"
+                           max="article.pdfProgress.numPages">
+            {{article.pdfProgress.renderedPages.length}} /
+            {{article.pdfProgress.numPages}} pages
+          </uib-progressbar>
         </div>
       </div>
+
+      <div class="col-md-2">
+        <span class="pull-right">
+          <a class="btn btn-default" ng-href="{{pdfSource}}"
+                                     download="paperhive.pdf">
+            Download PDF
+          </a>
+        </span>
+      </div>
+    </div>
+    <div highlight-container class="col-md-9">
       <pdf
-        pdf-url="pdfSource"
-        pdf-text-overlay="true"
-        pdf-progress="article.pdfProgress"
-        on-text-select="$target && (originalComment.draft.target = $target)"
-        highlight-root
-        ></pdf>
+                             pdf-url="pdfSource"
+                             pdf-text-overlay="true"
+                             pdf-progress="article.pdfProgress"
+                             on-text-select="$target && (originalComment.draft.target = $target)"
+                             highlight-root
+                             ></pdf>
       <div class="ph-highlight-layer" ng-if="article.pdfProgress.finished">
         <div
-          highlight-target="originalComment.draft.target"
-          highlight-info="text.highlightInfos.draft"></div>
+                                      highlight-target="originalComment.draft.target"
+                                      highlight-info="text.highlightInfos.draft"></div>
         <div ng-repeat="discussion in discussions.stored"
-          highlight-target="discussion.target"
-          highlight-info="text.highlightInfos[discussion.id]"
-          highlight-border="text.highlightBorder[discussion.id]"
-          ></div>
+             highlight-target="discussion.target"
+             highlight-info="text.highlightInfos[discussion.id]"
+             highlight-border="text.highlightBorder[discussion.id]"
+             ></div>
       </div>
     </div>
     <!--column for margin notes-->
     <div class="col-md-3">
       <margin-discussion
-        ng-repeat="discussion in discussions.stored"
-        ng-if="text.highlightInfos[discussion.id].top !== undefined"
-        ng-show="text.marginOffsets[discussion.id] !== undefined"
-        ng-style="{'top': text.marginOffsets[discussion.id] + 'px'}"
-        discussion="discussion"
-        on-original-update="originalUpdate(discussion, $comment)"
-        on-discussion-delete="discussionDelete(discussion)"
-        on-reply-submit="replyAdd(discussion, $reply)"
-        on-reply-update="replyUpdate(discussion, $replyOld, $replyNew)"
-        on-reply-delete="replyDelete(discussion, $reply)"
-        ng-mouseenter="text.highlightBorder[discussion.id] = true"
-        ng-mouseleave="text.highlightBorder[discussion.id] = false"
-        element-size="text.marginDiscussionSizes[discussion.id]"
-        >
+         ng-repeat="discussion in discussions.stored"
+         ng-if="text.highlightInfos[discussion.id].top !== undefined"
+         ng-show="text.marginOffsets[discussion.id] !== undefined"
+         ng-style="{'top': text.marginOffsets[discussion.id] + 'px'}"
+         discussion="discussion"
+         on-original-update="originalUpdate(discussion, $comment)"
+         on-discussion-delete="discussionDelete(discussion)"
+         on-reply-submit="replyAdd(discussion, $reply)"
+         on-reply-update="replyUpdate(discussion, $replyOld, $replyNew)"
+         on-reply-delete="replyDelete(discussion, $reply)"
+         ng-mouseenter="text.highlightBorder[discussion.id] = true"
+         ng-mouseleave="text.highlightBorder[discussion.id] = false"
+         element-size="text.marginDiscussionSizes[discussion.id]"
+         >
       </margin-discussion>
-      <margin-discussion-draft
-        ng-if="originalComment.draft.target && text.highlightInfos.draft.top !== undefined"
-        ng-style="{'top': text.highlightInfos.draft.top + 'px'}"
-        on-submit="addDiscussion($comment)"
-        on-outside-mousedown="!originalComment.draft.title &&
-          !originalComment.draft.body && purgeDraft()"
-        comment="originalComment.draft"
-        element-size="text.marginDiscussionSizes.draft"
-        >
-      </margin-discussion-draft>
+        <margin-discussion-draft
+         ng-if="originalComment.draft.target && text.highlightInfos.draft.top !== undefined"
+         ng-style="{'top': text.highlightInfos.draft.top + 'px'}"
+         on-submit="addDiscussion($comment)"
+         on-outside-mousedown="!originalComment.draft.title &&
+         !originalComment.draft.body && purgeDraft()"
+         comment="originalComment.draft"
+         element-size="text.marginDiscussionSizes.draft"
+         >
+        </margin-discussion-draft>
     </div>
   </div>
 </div>
