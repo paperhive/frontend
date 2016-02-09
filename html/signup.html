@@ -2,7 +2,12 @@
 <div ng-controller="SignupCtrl" class="container ph-xl-margin-bottom">
   <h2 id="signup">Sign up</h2>
 
-  <h4 class="ph-heading-light ph-md-margin-bottom">Already have an account at PaperHive? <a href="./login?returnPath={{returnPath.returnPath}}">Log in</a></h4>
+  <h4 class="ph-heading-light ph-md-margin-bottom">
+    Already have an account at PaperHive?
+    <a href="./login?returnPath={{returnPath.returnPath}}">
+      Log in
+    </a>
+  </h4>
 
   <div class="ph-flex-container">
 
@@ -10,12 +15,13 @@
     </div>
 
     <div class="ph-flex-item">
-      <a href="{{auth.getAuthUrl('google', returnPath.returnPath)}}" class="btn btn-default btn-block ph-lg-margin-bottom"
+      <a href="{{auth.getAuthUrl('google', returnPath.returnPath)}}"
+        class="btn btn-default btn-block ph-lg-margin-bottom"
         title="Sign in with your Google account">
         <img class="ph-login-icon" src="./static/img/google.svg"> Sign up with Google
       </a>
-      <a href="{{auth.getAuthUrl('orcid', returnPath.returnPath)}}" class="btn btn-default btn-block"
-        title="Sign up with your ORCID iD">
+      <a href="{{auth.getAuthUrl('orcid', returnPath.returnPath)}}"
+        class="btn btn-default btn-block" title="Sign up with your ORCID iD">
         <img class="ph-login-icon" src="./static/img/orcid.svg"> Sign up with ORCID
       </a>
     </div>
@@ -36,12 +42,9 @@
           'has-success': signupForm.email.$valid
         }">
           <label for="email">Email</label>
-          <input type="email" class="form-control" id="email" name="email" ng-model="signup.email"
-            required pattern=".*@.+\..+" ng-disabled="subscribing || subscribed" required>
-          <span class="fa form-control-feedback" ng-class="{
-                'fa-times': hasError('email'),
-                'fa-check': signupForm.email.$valid
-              }"></span>
+          <input type="email" class="form-control" id="email" name="email"
+            ng-model="signup.email" required pattern=".*@.+\..+"
+            ng-disabled="subscribing || subscribed" required>
           <div class="help-block">
             <span ng-if="hasError('email')">
               <span ng-if="signupForm.email.$error.required">
@@ -63,12 +66,9 @@
           'has-success': signupForm.password.$valid
         }">
           <label for="password">Password</label>
-          <input type="password" class="form-control" id="password" name="password" ng-model="signup.password"
-            ng-minlength="8" ng-disabled="subscribing || subscribed" required>
-          <span class="fa form-control-feedback" ng-class="{
-                'fa-times': hasError('password'),
-                'fa-check': signupForm.password.$valid
-              }"></span>
+          <input type="password" class="form-control" id="password"
+            name="password" ng-model="signup.password" ng-minlength="8"
+            ng-disabled="subscribing || subscribed" required>
           <div class="help-block">
             <span ng-if="hasError('password')">
               <span ng-if="signupForm.password.$error.required">

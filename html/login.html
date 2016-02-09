@@ -2,7 +2,12 @@
 <div ng-controller="LoginCtrl" class="container ph-xl-margin-bottom">
   <h2 id="login">Log in</h2>
 
-  <h4 class="ph-heading-light ph-md-margin-bottom">New to Paperhive? <a href="./signup?returnPath={{returnPath.returnPath}}">Sign up</a></h4>
+  <h4 class="ph-heading-light ph-md-margin-bottom">
+    New to Paperhive?
+    <a href="./signup?returnPath={{returnPath.returnPath}}">
+      Sign up
+    </a>
+  </h4>
 
   <div class="ph-flex-container">
 
@@ -10,12 +15,13 @@
     </div>
 
     <div class="ph-flex-item">
-      <a href="{{auth.getAuthUrl('google', returnPath.returnPath)}}" class="btn btn-default btn-block ph-lg-margin-bottom"
+      <a href="{{auth.getAuthUrl('google', returnPath.returnPath)}}"
+        class="btn btn-default btn-block ph-lg-margin-bottom"
         title="Sign in with your Google account">
         <img class="ph-login-icon" src="./static/img/google.svg"> Log in with Google
       </a>
-      <a href="{{auth.getAuthUrl('orcid', returnPath.returnPath)}}" class="btn btn-default btn-block"
-        title="Sign up with your ORCID iD">
+      <a href="{{auth.getAuthUrl('orcid', returnPath.returnPath)}}"
+        class="btn btn-default btn-block" title="Sign up with your ORCID iD">
         <img class="ph-login-icon" src="./static/img/orcid.svg"> Log in with ORCID
       </a>
     </div>
@@ -35,10 +41,8 @@
           'has-error': hasError('emailOrUsername')
         }">
           <label for="emailOrUsername">Email or Username</label>
-          <input type="text" class="form-control" id="emailOrUsername" name="emailOrUsername" ng-model="login.emailOrUsername" required>
-          <span class="fa form-control-feedback" ng-class="{
-                'fa-times': hasError('emailOrUsername')
-              }"></span>
+          <input type="text" class="form-control" id="emailOrUsername"
+            name="emailOrUsername" ng-model="login.emailOrUsername" required>
           <div class="help-block">
             <span ng-if="hasError('emailOrUsername')">
               <span ng-if="loginForm.emailOrUsername.$error.required">
@@ -52,11 +56,12 @@
           'has-error': hasError('password')
         }">
           <label for="password">Password</label>
-          <input type="password" class="form-control" id="password" name="password" ng-model="login.password" required>
-          <a class="ph-forgot-password" href="" title="Forgot password?" tabindex="-1" ng-click="getNewPasswd()">Forgot?</a>
-          <span class="fa form-control-feedback" ng-class="{
-                'fa-times': hasError('password')
-              }"></span>
+          <input type="password" class="form-control" id="password"
+            name="password" ng-model="login.password" required>
+          <a class="ph-forgot-password" href="" title="Forgot password?"
+            tabindex="-1" ng-click="getNewPasswd()">
+            Forgot?
+          </a>
           <div class="help-block">
             <span ng-if="hasError('password')">
               <span ng-if="loginForm.password.$error.required">
