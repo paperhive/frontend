@@ -34,9 +34,9 @@ export default function(app) {
         $scope.responseError = undefined;
 
         authService
-          .loginEmail(
+          .signupEmail(
             $scope.signup.email, $scope.signup.password,
-            authService.getReturnUrl(returnPathService.returnPath
+            authService.getReturnUrl(returnPathService.returnPath)
           )
           .then(function(response) {
             $scope.subscribing = false;

@@ -39,16 +39,6 @@ export default function(app) {
         };
       }
 
-      function _signupEmail(email, password, returnUrl) {
-        return function() {
-          return $http.post(config.apiUrl + '/auth/email/initiate', {
-            email,
-            password,
-            returnUrl,
-          });
-        };
-      }
-
       // sign in with a token
       function login(loginFun) {
         if (authService.user) {
@@ -88,8 +78,12 @@ export default function(app) {
       authService.loginEmail = (emailOrUsername, password) => {
         return login(_loginEmail(emailOrUsername, password));
       };
+
       authService.signupEmail = (email, password, returnUrl) => {
-        return login(_signupEmail(email, password, returnUrl));
+        return $http.post(
+          config.apiUrl + '/auth/email/initiate',
+          {email, password, returnUrl}
+        );
       };
 
       // store/remove token in local storage (if requested by user)
