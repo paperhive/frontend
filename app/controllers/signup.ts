@@ -1,10 +1,9 @@
 'use strict';
 export default function(app) {
-  app.controller('SignupCtrl', ['$scope', '$location', 'authService', 'returnPathService', '$http', 'config',
-    function($scope, $location, authService, returnPathService, $http, config) {
+  app.controller('SignupCtrl', ['$scope', '$location', 'authService', '$http', 'config',
+    function($scope, $location, authService, $http, config) {
 
       $scope.auth = authService;
-      $scope.returnPath = returnPathService;
 
       $scope.signup = {
         email: '',
@@ -42,7 +41,7 @@ export default function(app) {
         authService
           .signupEmail(
             $scope.signup.email, $scope.signup.password,
-            authService.getReturnUrl(returnPathService.returnPath)
+            authService.getReturnUrl()
           )
           .then(function(response) {
             $scope.subscribing = false;

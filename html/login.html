@@ -4,7 +4,7 @@
 
   <h4 class="ph-heading-light ph-md-margin-bottom">
     New to Paperhive?
-    <a href="./signup?returnPath={{returnPath.returnPath}}">
+    <a href="./signup?returnPath={{auth.returnPath}}">
       Sign up
     </a>
   </h4>
@@ -15,12 +15,12 @@
     </div>
 
     <div class="ph-flex-item">
-      <a href="{{auth.getAuthUrl('google', returnPath.returnPath)}}"
+      <a href="{{auth.getAuthUrl('google')}}"
         class="btn btn-default btn-block ph-lg-margin-bottom"
         title="Sign in with your Google account">
         <img class="ph-login-icon" src="./static/img/google.svg"> Log in with Google
       </a>
-      <a href="{{auth.getAuthUrl('orcid', returnPath.returnPath)}}"
+      <a href="{{auth.getAuthUrl('orcid')}}"
         class="btn btn-default btn-block" title="Sign up with your ORCID iD">
         <img class="ph-login-icon" src="./static/img/orcid.svg"> Log in with ORCID
       </a>

@@ -1,7 +1,7 @@
 'use strict';
 export default function(app) {
-  app.factory('authService', ['config', '$http', '$q', '$rootScope', '$window',
-    function(config, $http, $q, $rootScope, $window) {
+  app.factory('authService', ['config', '$http', '$q', '$rootScope', '$window', '$location',
+    function(config, $http, $q, $rootScope, $window, $location) {
       const authService = {
         inProgress: false,
         user: undefined,
@@ -9,14 +9,31 @@ export default function(app) {
         loginToken: undefined,
         signout: undefined,
       };
-      authService.getAuthUrl = (provider, returnPath) => {
-        const returnUrl = authService.getReturnUrl(returnPath);
-        return `${config.apiUrl}/auth/${provider}/initiate?returnUrl=${encodeURIComponent(returnUrl)}`;
-      };
-      authService.getReturnUrl = (returnPath) => {
-        return `${$window.location.origin}${config.baseHref}authReturn?returnPath=${encodeURIComponent(returnPath)}`;
+
+      // authService.returnPath
+      function setReturnPath() {
+        if ($location.path() !== '/signup' && $location.path() !== '/login') {
+          authService.returnPath = $location.path();
+        }
+        if (!authService.returnPath) {
+          authService.returnPath = $location.search().returnPath || '/';
+        }
+      }
+      setReturnPath();
+      $rootScope.$on('$locationChangeSuccess', setReturnPath);
+
+      // get returnUrl (includes returnPath)
+      authService.getReturnUrl = () => {
+        return `${$window.location.origin}${config.baseHref}authReturn?returnPath=${encodeURIComponent(authService.returnPath)}`;
       };
 
+      // get url for initiating an auth dance
+      authService.getAuthUrl = (provider) => {
+        const returnUrl = authService.getReturnUrl();
+        return `${config.apiUrl}/auth/${provider}/initiate?returnUrl=${encodeURIComponent(returnUrl)}`;
+      };
+
+      // log in with a token
       function _loginToken(token) {
         return function() {
           return $http.post(
@@ -30,6 +47,7 @@ export default function(app) {
         };
       }
 
+      // log in with email/username and password
       function _loginEmail(emailOrUsername, password) {
         return function() {
           return $http.post(config.apiUrl + '/auth/email/login', {
@@ -39,7 +57,7 @@ export default function(app) {
         };
       }
 
-      // sign in with a token
+      // log in wrapper
       function login(loginFun) {
         if (authService.user) {
           return $q.reject('Already logging in.');

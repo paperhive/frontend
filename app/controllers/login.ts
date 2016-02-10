@@ -1,10 +1,9 @@
 'use strict';
 export default function(app) {
-  app.controller('LoginCtrl', ['$scope', '$location', 'authService', 'returnPathService', '$http', 'config',
-    function($scope, $location, authService, returnPathService, $http, config) {
+  app.controller('LoginCtrl', ['$scope', '$location', 'authService', '$http', 'config',
+    function($scope, $location, authService, $http, config) {
 
       $scope.auth = authService;
-      $scope.returnPath = returnPathService;
 
       $scope.login = {
         emailOrUsername: '',
@@ -40,7 +39,7 @@ export default function(app) {
           .then(function(data) {
             $scope.subscribing = false;
             $scope.subscribed = true;
-            $location.path($scope.returnPath.returnPath);
+            $location.path(authService.returnPath);
           }, function(data) {
             $scope.subscribing = false;
             $scope.responseError = data && data.message || 'Unknown error';
