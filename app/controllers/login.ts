@@ -39,7 +39,7 @@ export default function(app) {
           .then(function(data) {
             $scope.subscribing = false;
             $scope.subscribed = true;
-            $location.path(authService.returnPath);
+            $location.path(authService.returnPath).search({});
           }, function(data) {
             $scope.subscribing = false;
             $scope.responseError = data && data.message || 'Unknown error';
