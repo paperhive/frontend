@@ -62,20 +62,21 @@
         </div>
 
         <div class="form-group" ng-class="{
-          'has-error': hasError('password'),
+          'has-error': hasErrorPassword(),
           'has-success': signupForm.password.$valid
         }">
           <label for="password">Password</label>
           <input type="password" class="form-control" id="password"
             name="password" ng-model="signup.password" ng-minlength="8"
-            ng-disabled="subscribing || subscribed" required>
+            ng-disabled="subscribing || subscribed"
+            ng-model-options="{updateOn: 'default blur', debounce: { 'default': 800, 'blur': 0 }}"
+            required>
           <div class="help-block">
-            <span ng-if="hasError('password')">
+            <span ng-if="hasErrorPassword()">
               <span ng-if="signupForm.password.$error.required">
                 Please enter a password.
               </span>
               <span ng-if="signupForm.password.$error.password
-                || signupForm.password.$error.maxlength
                 || signupForm.password.$error.minlength"
               >
                 Please enter a password with at least 8 characters.

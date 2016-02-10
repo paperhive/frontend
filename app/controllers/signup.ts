@@ -17,6 +17,12 @@ export default function(app) {
           form[field].$invalid;
       };
 
+      $scope.hasErrorPassword = function() {
+        const form = $scope.signupForm;
+        return (form.$submitted || form['password'].$touched
+          || !form['password'].$pristine) && form['password'].$invalid;
+      };
+
       $scope.$watch('email', function() {
         $scope.emailError = undefined;
         $scope.responseError = undefined;
