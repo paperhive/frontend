@@ -5,10 +5,7 @@ export default function(app) {
 
       $scope.auth = authService;
 
-      $scope.signup = {
-        email: '',
-        password: ''
-      };
+      $scope.signup = {};
 
       $scope.hasError = function(field) {
         const form = $scope.signupForm;
@@ -22,21 +19,9 @@ export default function(app) {
           || !form['password'].$pristine) && form['password'].$invalid;
       };
 
-      $scope.$watch('email', function() {
-        $scope.emailError = undefined;
-        $scope.responseError = undefined;
-      });
-
-      $scope.$watch('password', function() {
-        $scope.passwordError = undefined;
-        $scope.responseError = undefined;
-      });
-
-      $scope.signup = function() {
-        $scope.subscribing = true;
-        $scope.passwordError = undefined;
-        $scope.emailError = undefined;
-        $scope.responseError = undefined;
+      $scope.sendSignup = function() {
+        $scope.signup.inProgress = true;
+        $scope.signup.error = undefined;
 
         authService
           .signupEmail(
@@ -44,11 +29,11 @@ export default function(app) {
             authService.getReturnUrl()
           )
           .then(function(response) {
-            $scope.subscribing = false;
-            $scope.subscribed = true;
+            $scope.signup.inProgress = false;
+            $scope.signup.succeeded = true;
           }, function(response) {
-            $scope.subscribing = false;
-            $scope.responseError = response.data && response.data.message ||
+            $scope.signup.inProgress = false;
+            $scope.signup.error = response.data && response.data.message ||
               'Unknown error';
           });
       };

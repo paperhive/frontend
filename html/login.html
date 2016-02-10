@@ -75,19 +75,19 @@
           'has-success': loginForm.$valid
         }">
           <span class="help-block">
-            <span ng-if="responseError" class="text-danger">
+            <span ng-if="login.error" class="text-danger">
               <i class="fa fa-fw fa-times"></i>
-              {{responseError}}
+              {{login.error}}
             </span>
           </span>
         </div>
 
         <div class="ph-lg-padding-top">
           <button class="btn btn-primary btn-block"
-            ng-click="!subscribing && !subscribed && !loginForm.$invalid && login()"
-            ng-class="{disabled: loginForm.$invalid || subscribing || subscribed}"
+            ng-click="!login.inProgress && !login.succeeded && !loginForm.$invalid && sendLogin()"
+            ng-class="{disabled: loginForm.$invalid || login.inProgress || login.succeeded}"
           >
-            <i ng-if="subscribing" class="fa fa-fw fa-spinner fa-spin"></i>
+            <i ng-if="login.inProgress" class="fa fa-fw fa-spinner fa-spin"></i>
             Log in
           </button>
         </div>
