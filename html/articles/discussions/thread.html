@@ -56,8 +56,9 @@
         <li class="media">
           <div ng-if="auth.user">
             <a class="media-left" href="./users/{{auth.user.username}}">
-              <img gravatar-user="auth.user" gravatar-size="80"
-                  class="img-circle">
+              <gravatar user="auth.user" size="80"
+                  classes="img-circle"
+                  ></gravatar>
             </a>
             <div class="media-body">
               <div class="panel panel-default">
@@ -168,8 +169,7 @@
       </span>
       <hr-->
       <h5>Participants</h5>
-      <gravatar-list discussion="discussion">
-      </gravatar-list>
+      <gravatar-list discussion="discussion"/>
     </div>
 
   </div>

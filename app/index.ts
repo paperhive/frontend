@@ -32,6 +32,7 @@ import 'pdfjs-dist';
 import 'pdfjs-dist/web/pdf_viewer';
 
 import config from './config/index';
+import components from './components/index';
 import controllers from './controllers/index';
 import directives from './directives/index';
 import services from './services/index';
@@ -60,6 +61,7 @@ const paperhive = angular
   ;
 
 config(paperhive);
+components(paperhive);
 controllers(paperhive);
 directives(paperhive);
 services(paperhive);
