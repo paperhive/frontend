@@ -3,6 +3,7 @@ import article from './article';
 import articleSettings from './articleSettings';
 import articleText from './articleText';
 import articleNew from './articleNew';
+import authReturn from './authReturn';
 import comment from './comment';
 import contact from './contact';
 import discussion from './discussion';
@@ -10,15 +11,15 @@ import discussionList from './discussionList';
 import meta from './meta';
 import help from './help';
 import jobs from './jobs';
+import login from './login';
 import navbar from './navbar';
 import navbarSearch from './navbarSearch';
 import navbar_user from './navbar_user';
 import notifications from './notifications';
-import oauthOrcid from './oauthOrcid';
 import settings from './settings';
+import signup from './signup'
 import subscribe from './subscribe';
 import user from './user';
-import welcome from './welcome';
 
 export default function(app) {
   activity(app);
@@ -26,6 +27,7 @@ export default function(app) {
   articleSettings(app);
   articleText(app);
   articleNew(app);
+  authReturn(app);
   comment(app);
   contact(app);
   discussion(app);
@@ -33,13 +35,13 @@ export default function(app) {
   meta(app);
   help(app);
   jobs(app);
+  login(app);
   navbar(app);
   navbarSearch(app);
   navbar_user(app);
   notifications(app);
-  oauthOrcid(app);
   settings(app);
+  signup(app);
   subscribe(app);
   user(app);
-  welcome(app);
 };

@@ -70,10 +70,10 @@
       </div>
       <!-- row content -->
       <div class="ph-margin-row-content">
-        <a href="{{auth.orcidUrl}}" target="_self"
-            class="btn btn-primary btn-sm">
-          <img src="./static/img/orcid.svg" class="ph-orcid-icon"> Sign in
-        </a> to comment.
+        <a href="./signup?returnPath={{auth.returnPath}}">Sign up</a>
+        or
+        <a href="./login?returnPath={{auth.returnPath}}">log in</a>
+        to comment.
       </div>
     </div>
   </div>

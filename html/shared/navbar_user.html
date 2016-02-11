@@ -1,16 +1,18 @@
 <ul class="nav navbar-nav" ng-controller="NavbarUserCtrl">
   <li ng-if="!auth.user && !auth.inProgress">
     <p class="navbar-btn ph-md-margin-left ph-md-margin-right">
-    <a href="{{auth.orcidUrl}}" target="_self" class="btn btn-default"
-      title="Sign in with your ORCID iD">
-      <img class="ph-orcid-icon" src="./static/img/orcid.svg"> Sign in
-    </a>
+      <a href="./signup?returnPath={{auth.returnPath}}" class="btn btn-primary">
+        Sign up
+      </a>
+      <a href="./login?returnPath={{auth.returnPath}}" class="btn btn-default">
+        Log in
+      </a>
     </p>
   </li>
   <li ng-if="!auth.user && auth.inProgress">
     <p class="navbar-text">
       <uib-progressbar class="progress-striped active ph-no-margin" value="100">
-        <span class="ph-lg-padding-left ph-lg-padding-right">Signing in...</span>
+        <span class="ph-lg-padding-left ph-lg-padding-right">Logging in...</span>
       </uib-progressbar>
     </p>
   </li>
@@ -19,7 +21,8 @@
       <gravatar user="auth.user" size="38" classes="ph-avatar
       img-circle"></gravatar>
       {{auth.user.displayName}}
-      <i class="fa fa-fw fa-caret-down"></i>
+      <i ng-if="!dropdown_open" class="fa fa-fw fa-caret-down"></i>
+      <i ng-if="dropdown_open" class="fa fa-fw fa-caret-up"></i>
     </a>
     <ul class="dropdown-menu">
       <li>
@@ -39,7 +42,7 @@
       </li>
       <li>
         <a href ng-click="auth.signout()">
-          <i class="fa fa-fw fa-sign-out"></i> Sign out
+          <i class="fa fa-fw fa-sign-out"></i> Log out
         </a>
       </li>
     </ul>
