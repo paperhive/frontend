@@ -58,11 +58,13 @@ export default function(app) {
           desc.push(revision.journal.nameLong.substring(0, 20));
         } else {
           if (revision.remote.type === 'arxiv') {
-            desc.push('arXiv');
+            // For arXiv, concatenate the remote name and the version
+            // without comma.
+            desc.push('arXiv ' + revision.remote.revision);
           } else {
             desc.push(revision.remote.type);
+            desc.push(revision.remote.revision);
           }
-          desc.push(revision.remote.revision);
         }
         if (revision.publishedAt) {
           desc.push($filter('date')(revision.publishedAt, 'MMM yyyy'));
