@@ -9,17 +9,19 @@
           </button>
           <ul class="dropdown-menu">
             <li ng-repeat="revision in revisions.slice().reverse()"
-                ng-class="{'disabled': !revision.openAccess}">
+                ng-class="{'disabled': !revision.openAccess}"
+                class="text-right">
               <a ng-if="revision.openAccess"
                  href="./articles/{{revision.id}}/revisions/{{revision.revision}}">
-                <i class="fa fa-unlock-alt"></i>
                 <strong ng-if="revision.revision ===
                 revisions[activeRevisionIdx].revision">{{getShortDescription(revision)}}</strong>
                 <span ng-if="revision.revision !==
                 revisions[activeRevisionIdx].revision">{{getShortDescription(revision)}}</span>
+                <i class="fa fa-fw fa-unlock-alt"></i>
               </a>
               <a ng-if="!revision.openAccess">
                 {{getShortDescription(revision)}}
+                <i class="fa fa-fw"></i>
               </a>
             </li>
           </ul>
