@@ -65,7 +65,7 @@ export default function(app) {
           desc.push(revision.remote.revision);
         }
         if (revision.publishedAt) {
-          desc.push($filter('date')(revision.publishedAt, 'MMM yyyy'))
+          desc.push($filter('date')(revision.publishedAt, 'MMM yyyy'));
         }
         return desc.join(', ');
       };

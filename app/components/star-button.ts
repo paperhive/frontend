@@ -45,7 +45,7 @@ export default function(app) {
               await $http.post(
                 config.apiUrl +
                   '/documents/' + ctrl.documentId + '/star'
-              )
+              );
             } catch (err) {
               ctrl.submitting = false;
               notificationService.httpError('could not star document');
@@ -61,8 +61,8 @@ export default function(app) {
               await $http.delete(
                 config.apiUrl +
                   '/documents/' + ctrl.documentId + '/star'
-              )
-            } catch(err) {
+              );
+            } catch (err) {
               ctrl.submitting = false;
               notificationService.httpError('could not star document');
             }
