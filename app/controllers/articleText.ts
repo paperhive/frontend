@@ -70,6 +70,31 @@ export default function(app) {
         return desc.join(', ');
       };
 
+      $scope.addDiscussion = function(comment) {
+        const disc = _.cloneDeep(_.pick(
+          comment, ['title', 'body', 'target', 'tags']
+        ));
+
+        const activeRevision = $scope.revisions[$scope.activeRevisionIdx];
+        disc.target.document = activeRevision.id;
+        disc.target.documentRevision = activeRevision.revision;
+
+        $scope.submitting = true;
+        return $http.post(
+          config.apiUrl + '/discussions',
+          disc
+        )
+        .success(function(discussion) {
+          $scope.submitting = false;
+          $scope.discussions.stored.push(discussion);
+          $scope.purgeDraft();
+        })
+        .error(function(data) {
+          $scope.submitting = false;
+        })
+          .error(notificationService.httpError('could not add discussion'));
+      };
+
       // set meta data
       $scope.$watchGroup(['article', 'discussions.stored'], function(newVals) {
         const article = newVals[0];

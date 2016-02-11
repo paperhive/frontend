@@ -114,30 +114,6 @@ export default function(app) {
         $scope.originalComment.draft = {};
       };
 
-      $scope.addDiscussion = function(comment) {
-        const disc = _.cloneDeep(_.pick(
-          comment, ['title', 'body', 'target', 'tags']
-        ));
-
-        disc.target.document = articleId;
-        disc.target.documentRevision = $scope.article.revision;
-
-        $scope.submitting = true;
-        return $http.post(
-          config.apiUrl + '/discussions',
-          disc
-        )
-        .success(function(discussion) {
-          $scope.submitting = false;
-          $scope.discussions.stored.push(discussion);
-          $scope.purgeDraft();
-        })
-        .error(function(data) {
-          $scope.submitting = false;
-        })
-          .error(notificationService.httpError('could not add discussion'));
-      };
-
       $scope.originalUpdate = function(discussion, comment) {
         const disc = _.cloneDeep(_.pick(
           comment, ['title', 'body', 'target', 'tags']
