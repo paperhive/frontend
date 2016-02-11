@@ -2,26 +2,25 @@
   <div ng-if="pdfSource">
     <div class="row ph-md-margin-bottom" >
       <div class="col-md-2">
+        <span style="color:gray;">Version:</span>
         <span class="dropdown" is-open="dropdown_open" uib-dropdown style="z-index: 1010;">
           <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
-            <span style="color:gray;">Version:</span>
             {{getShortDescription(revisions[activeRevisionIdx])}} <i class="fa fa-fw fa-caret-down"></i>
           </button>
           <ul class="dropdown-menu">
             <li ng-repeat="revision in revisions.slice().reverse()"
-                ng-class="{'disabled': !revision.openAccess}"
-                class="text-right">
+                ng-class="{'disabled': !revision.openAccess}">
               <a ng-if="revision.openAccess"
                  href="./articles/{{revision.id}}/revisions/{{revision.revision}}">
                 <strong ng-if="revision.revision ===
                 revisions[activeRevisionIdx].revision">{{getShortDescription(revision)}}</strong>
                 <span ng-if="revision.revision !==
                 revisions[activeRevisionIdx].revision">{{getShortDescription(revision)}}</span>
-                <i class="fa fa-fw fa-unlock-alt"></i>
-              </a>
-              <a ng-if="!revision.openAccess">
-                {{getShortDescription(revision)}}
                 <i class="fa fa-fw"></i>
+              </a>
+              <a ng-if="!revision.openAccess" title="This article is not open-access and cannot be displayed.">
+                {{getShortDescription(revision)}}
+                <i class="fa fa-fw fa-lock"></i>
               </a>
             </li>
           </ul>
