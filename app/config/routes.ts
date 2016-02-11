@@ -43,16 +43,17 @@ export default function(app) {
         .when('/jobs', 'jobs')
         .when('/alpha-warning', 'alpha-warning')
         .when('/legalnotice', 'legalnotice')
-        .when('/return', 'oauth')
+        .when('/login', 'login')
+        .when('/authReturn', 'authReturn')
         .when('/settings', 'settings')
         .when('/settings/profile', 'settings.profile')
         .when('/settings/site', 'settings.site')
+        .when('/signup', 'signup')
         .when('/subscribed', 'subscribed')
         .when('/users/:username', 'users')
         .when('/users/:username/profile', 'users.profile')
         .when('/users/:username/articles', 'users.articles')
         .when('/users/:username/activity', 'users.activity')
-        .when('/welcome', 'welcome')
 
         // Init Main Page
         .segment('main', {
@@ -225,10 +226,15 @@ export default function(app) {
           ]
         })
 
-        .segment('oauth', {
-          templateUrl: 'html/auth/oauth.html',
-          controller: 'OauthOrcidCtrl',
-          title: 'OAuth login · PaperHive'
+        .segment('login', {
+          templateUrl: 'html/login.html',
+          title: 'Log in to · Paperhive'
+        })
+
+        .segment('authReturn', {
+          templateUrl: 'html/auth/return.html',
+          controller: 'AuthReturnCtrl',
+          title: 'PaperHive'
         })
 
         .segment('settings', {
@@ -244,6 +250,11 @@ export default function(app) {
             templateUrl: 'html/settings/site.html'
           })
         .up()
+
+        .segment('signup', {
+          templateUrl: 'html/signup.html',
+          title: 'Sign up with · Paperhive'
+        })
 
         .segment('subscribed', {
           templateUrl: 'html/subscribed.html',
@@ -270,12 +281,6 @@ export default function(app) {
             dependencies: ['username']
           })
         .up()
-
-        .segment('welcome', {
-          templateUrl: 'html/welcome.html',
-          controller: 'WelcomeCtrl',
-          title: 'Welcome · PaperHive'
-        })
         ;
 
       $routeProvider.otherwise({redirectTo: '/404'});

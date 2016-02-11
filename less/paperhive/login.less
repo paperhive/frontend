@@ -1,0 +1,82 @@
+.ph-login-icon {
+  width: 18px;
+  height: 18px;
+  vertical-align: baseline;
+}
+
+.ph-login-separator {
+  color: #E0E0E0;
+}
+
+.ph-login-line-separator {
+  width: 1px;
+  background-color: #E0E0E0;
+  height: 12em;
+}
+
+.ph-flex-container {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+.ph-flex-item {
+  -webkit-align-self: center;
+  align-self: center;
+  -webkit-flex: 3;
+  flex: 3;
+}
+
+.ph-flex-item-1 {
+  -webkit-align-self: center;
+  align-self: center;
+  -webkit-flex: 1;
+  flex: 1;
+}
+
+.ph-inner-flex-container {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
+
+.ph-inner-flex-item {
+  -webkit-align-self: center;
+  align-self: center;
+  -webkit-flex: 1;
+  flex: 1;
+}
+
+/* mobile */
+@media (max-width: @screen-xs-max) {
+  .ph-flex-container {
+    flex-direction: column;
+    margin-top: 2em;
+  }
+  .ph-inner-flex-container {
+    -webkit-flex-direction: row;
+    margin-top: 2em;
+    margin-bottom: 2em;
+  }
+  .ph-login-line-separator {
+    height: 1px;
+    width: 8em;
+    -webkit-flex: 2;
+  }
+  .ph-login-separator {
+    text-align: center;
+    -webkit-flex: 1;
+  }
+}
+
+.ph-forgot-password {
+  position: relative;
+  top: -28px;
+  float: right;
+  margin-right: 12px;
+  color: #9E9E9E;
+  cursor: pointer;
+  text-decoration: none !important;
+}

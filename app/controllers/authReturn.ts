@@ -1,13 +1,13 @@
 'use strict';
 export default function(app) {
-  app.controller('OauthOrcidCtrl', [
+  app.controller('AuthReturnCtrl', [
     '$scope', '$routeParams', '$location', 'authService',
     function($scope, $routeParams, $location, authService) {
       authService
-        .signinToken($routeParams.token)
+        .loginToken($routeParams.token)
         .then(
           function success(data) {
-            $location.path('/welcome').search({});
+            $location.path($routeParams.returnPath).search({});
           },
           function fail(reason) {
             $scope.error = reason;

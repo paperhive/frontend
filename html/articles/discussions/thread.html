@@ -126,10 +126,9 @@
             >
             <div class="panel panel-default">
               <div class="panel-body">
-                <a href="{{auth.orcidUrl}}" target="_self"
-                    class="btn btn-default">
-                  <img class="ph-orcid-icon" src="./static/img/orcid.svg"> Sign in
-                </a>
+                <a href="./signup?returnPath={{auth.returnPath}}">Sign up</a>
+                or
+                <a href="./login?returnPath={{auth.returnPath}}">log in</a>
                 to join this discussion on PaperHive.
               </div>
             </div>
