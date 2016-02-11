@@ -30,8 +30,8 @@ export default function(app) {
         .when('/articles/:articleId', 'articles')
         .when('/articles/:articleId/activity', 'articles.activity')
         .when('/articles/:articleId/discussions', 'articles.discussions')
-        .when('/articles/:articleId/discussions/new',
-              'articles.discussions.new')
+        // .when('/articles/:articleId/discussions/new',
+        //       'articles.discussions.new')
         .when('/articles/:articleId/discussions/:discussionId',
               'articles.discussions.thread')
         .when('/articles/:articleId/settings', 'articles.settings')
@@ -149,10 +149,10 @@ export default function(app) {
               templateUrl: 'html/articles/discussions/list.html',
               title: 'Discussions · PaperHive'
             })
-            .segment('new', {
-              templateUrl: 'html/articles/discussions/new.html',
-              title: 'New discussion · PaperHive'
-            })
+            // .segment('new', {
+            //   templateUrl: 'html/articles/discussions/new.html',
+            //   title: 'New discussion · PaperHive'
+            // })
             .segment('thread', {
               templateUrl: 'html/articles/discussions/thread.html',
               dependencies: ['discussionId'],
