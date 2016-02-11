@@ -21,6 +21,7 @@ RUN npm run install-deps
 
 # copy and build src
 COPY . /paperhive-frontend
+RUN npm run lint
 RUN npm run build
 
 # test when launching container with this image
