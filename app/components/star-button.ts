@@ -37,6 +37,9 @@ export default function(app) {
                 ctrl.doesUserStar = some(ctrl.stars, {'id': user.id});
               }
             });
+            // This is an async function, so unless we $apply, angular won't
+            // know that values have changed.
+            $scope.$apply();
           });
 
           ctrl.star = async function() {
@@ -53,6 +56,9 @@ export default function(app) {
             ctrl.submitting = false;
             ctrl.stars.push(ctrl.user);
             ctrl.doesUserStar = true;
+            // This is an async function, so unless we $apply, angular won't
+            // know that values have changed.
+            $scope.$apply();
           };
 
           ctrl.unstar = async function() {
@@ -70,6 +76,9 @@ export default function(app) {
             const idx = findIndex(ctrl.stars, {id: ctrl.user.id});
             if (idx > -1) { ctrl.stars.splice(idx, 1); }
             ctrl.doesUserStar = false;
+            // This is an async function, so unless we $apply, angular won't
+            // know that values have changed.
+            $scope.$apply();
           };
         }],
         template:
