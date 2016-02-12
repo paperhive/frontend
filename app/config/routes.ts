@@ -30,12 +30,13 @@ export default function(app) {
         .when('/articles/:articleId', 'articles')
         .when('/articles/:articleId/activity', 'articles.activity')
         .when('/articles/:articleId/discussions', 'articles.discussions')
-        .when('/articles/:articleId/discussions/new',
-              'articles.discussions.new')
+        // .when('/articles/:articleId/discussions/new',
+        //       'articles.discussions.new')
         .when('/articles/:articleId/discussions/:discussionId',
               'articles.discussions.thread')
         .when('/articles/:articleId/settings', 'articles.settings')
         .when('/articles/:articleId/text', 'articles.text')
+        .when('/articles/:articleId/revisions/:revisionId', 'articles.revisions')
         .when('/articles/:articleId/about', 'articles.about')
         .when('/contact', 'contact')
         // .when('/help', 'help')
@@ -148,10 +149,10 @@ export default function(app) {
               templateUrl: 'html/articles/discussions/list.html',
               title: 'Discussions · PaperHive'
             })
-            .segment('new', {
-              templateUrl: 'html/articles/discussions/new.html',
-              title: 'New discussion · PaperHive'
-            })
+            // .segment('new', {
+            //   templateUrl: 'html/articles/discussions/new.html',
+            //   title: 'New discussion · PaperHive'
+            // })
             .segment('thread', {
               templateUrl: 'html/articles/discussions/thread.html',
               dependencies: ['discussionId'],
@@ -166,6 +167,11 @@ export default function(app) {
             default: true,
             templateUrl: 'html/articles/text.html',
             title: 'Article · PaperHive'
+          })
+          .segment('revisions', {
+            templateUrl: 'html/articles/text.html',
+            dependencies: ['revisionId'],
+            title: 'Article at revision · PaperHive'
           })
         .up()
         .segment('articles_new', {

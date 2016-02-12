@@ -1,7 +1,6 @@
 import * as _ from 'lodash';
 import * as angular from 'angular';
-import paperhiveSources from 'paperhive-sources';
-import {findIndex, some} from 'lodash';
+import {findLastIndex, some} from 'lodash';
 
 export default function(app) {
 
@@ -19,55 +18,48 @@ export default function(app) {
       // template.
       $scope.$routeSegment = $routeSegment;
 
+      const articleId = $routeSegment.$routeParams.articleId;
+
       // fetch article
       $http.get(
         config.apiUrl +
-          '/documents/' + $routeSegment.$routeParams.articleId
+          `/documents/${articleId}/revisions/`
       )
-      .success(function(article) {
-        $scope.article = article;
+      .success(function(ret) {
+        $scope.revisions = ret.revisions;
+        $scope.latestOAIdx = findLastIndex(ret.revisions, {openAccess: true});
 
-        // get pdf url
-        try {
-          $scope.pdfSource = paperhiveSources({ apiUrl: config.apiUrl })
-            .getAccessiblePdfUrl(article);
-        } catch (e) {
-          notificationService.notifications.push({
-            type: 'error',
-            message: 'PDF cannot be displayed: ' + e.message
-          });
-        }
-
+        const latestOARevision = $scope.revisions[$scope.latestOAIdx];
         // Cut description down to 150 chars, cf.
         // <http://moz.com/learn/seo/meta-description>
         // TODO move linebreak removal to backend?
         const metaData = [
           {
             name: 'description',
-            content: article.title + ' by ' + article.authors.join(', ') + '.'
+            content: latestOARevision.title + ' by ' + latestOARevision.authors.join(', ') + '.'
           },
-          {name: 'author', content: article.authors.join(', ')},
-          {name: 'keywords', content: article.tags.join(', ')}
+          {name: 'author', content: latestOARevision.authors.join(', ')},
+          {name: 'keywords', content: latestOARevision.tags.join(', ')}
         ];
 
         $scope.addArticleMetaData(metaData);
 
         metaService.set({
-          title: article.title + ' · PaperHive',
+          title: latestOARevision.title + ' · PaperHive',
           meta: metaData
         });
       })
       .error(function(data) {
         notificationService.notifications.push({
           type: 'error',
-          message: data.message ? data.message : 'could not fetch article ' +
-            '(unknown reason)'
+          message: data.message ? data.message :
+            'could not fetch article (unknown reason)'
         });
       });
 
       $http.get(
         config.apiUrl +
-          '/documents/' + $routeSegment.$routeParams.articleId + '/discussions'
+          `/documents/${articleId}/discussions`
       )
       .success(function(ret) {
         $scope.discussions.stored = ret.discussions;
@@ -113,37 +105,13 @@ export default function(app) {
         // Don't expose the DOI for all versions of the article; it really only
         // identifies one version, usually not the arXiv one, but an upstream
         // version.
-        if ($scope.pdfSource) {
-          metaData.push({name: 'citation_pdf_url', content: $scope.pdfSource});
-        }
+        // if ($scope.pdfSource) {
+        //   metaData.push({name: 'citation_pdf_url', content: $scope.pdfSource});
+        // }
       };
 
       $scope.purgeDraft = function() {
         $scope.originalComment.draft = {};
-      };
-
-      $scope.addDiscussion = function(comment) {
-        const disc = _.cloneDeep(_.pick(
-          comment, ['title', 'body', 'target', 'tags']
-        ));
-
-        disc.target.document = $routeSegment.$routeParams.articleId;
-        disc.target.documentRevision = $scope.article.revision;
-
-        $scope.submitting = true;
-        return $http.post(
-          config.apiUrl + '/discussions',
-          disc
-        )
-        .success(function(discussion) {
-          $scope.submitting = false;
-          $scope.discussions.stored.push(discussion);
-          $scope.purgeDraft();
-        })
-        .error(function(data) {
-          $scope.submitting = false;
-        })
-          .error(notificationService.httpError('could not add discussion'));
       };
 
       $scope.originalUpdate = function(discussion, comment) {
