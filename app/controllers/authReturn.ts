@@ -1,8 +1,8 @@
 'use strict';
 export default function(app) {
   app.controller('AuthReturnCtrl', [
-    '$scope', '$routeParams', '$location', 'authService',
-    function($scope, $routeParams, $location, authService) {
+    '$scope', '$routeParams', '$location', 'authService', 'notificationService',
+    function($scope, $routeParams, $location, authService, notificationService) {
       authService
         .loginToken($routeParams.token)
         .then(
