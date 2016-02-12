@@ -52,10 +52,10 @@ export default function(app) {
                 // Prepare canvas using PDF page dimensions
                 const link = document.createElement('a');
                 // From <http://stackoverflow.com/a/14717011/353337>
-                // link.setAttribute('href', './articles/0af5e13/text?scrollTo=pageContainer'.concat(page.pageIndex+1));
+                // link.setAttribute('href', './documents/0af5e13/text?scrollTo=pageContainer'.concat(page.pageIndex+1));
                 //
                 // TODO: solve this outside the pdf directive
-                link.setAttribute('href', './articles/0af5e13/text');
+                link.setAttribute('href', './documents/0af5e13/text');
                 const canvas = document.createElement('canvas');
                 canvas.setAttribute('class', 'ph-page');
                 link.appendChild(canvas);
@@ -177,7 +177,7 @@ export default function(app) {
             //           //console.log(fontHeight);
             //           // The transformation matrix is specified as an array of
             //           // length 6 just like CSS3 transforms, cf.
-            //           // <https://dev.opera.com/articles/understanding-the-css-transforms-matrix/>.
+            //           // <https://dev.opera.com/documents/understanding-the-css-transforms-matrix/>.
             //           console.log(content.items[i]);
             //           // x-position of the top-right point
             //           const extent = tx[4];

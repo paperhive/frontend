@@ -1,12 +1,14 @@
 import * as _ from 'lodash';
+import paperhiveSources from 'paperhive-sources';
 
 export default function(app) {
 
-  app.controller('ArticleTextCtrl', [
-    '$scope', '$route', '$routeSegment', '$document', '$http', 'config',
-    'authService', 'notificationService', 'distangleService', 'metaService',
+  app.controller('DocumentTextCtrl', [
+    '$scope', '$route', '$routeSegment', '$document', '$http', '$filter',
+    'config', 'authService', 'notificationService', 'distangleService',
+    'metaService',
     function(
-      $scope, $route, $routeSegment, $document, $http, config,
+      $scope, $route, $routeSegment, $document, $http, $filter, config,
       authService, notificationService, distangleService, metaService
     ) {
       $scope.text = {
@@ -16,32 +18,111 @@ export default function(app) {
         marginOffsets: {}
       };
 
+      const revisionId = $routeSegment.$routeParams.revisionId;
+
+      $scope.$watch('revisions', function(revisions) {
+        if (!revisions) { return; }
+        let activeRevisionIdx;
+        if (revisionId) {
+          activeRevisionIdx = _.findIndex(revisions, {revision: revisionId});
+          if (activeRevisionIdx === -1) {
+            notificationService.notifications.push({
+              type: 'error',
+              message: `Unknown revision ID ${revisionId}.`
+            });
+          }
+        } else {
+          // default to the latest OA revision
+          activeRevisionIdx = $scope.latestOAIdx;
+        }
+        // Expose in scope
+        $scope.activeRevisionIdx = activeRevisionIdx;
+        // Construct strings for display in revision selection dropdown.
+        // get pdf url
+        try {
+          $scope.pdfSource = paperhiveSources({ apiUrl: config.apiUrl })
+            .getAccessiblePdfUrl(revisions[activeRevisionIdx]);
+        } catch (e) {
+          notificationService.notifications.push({
+            type: 'error',
+            message: 'PDF cannot be displayed: ' + e.message
+          });
+        }
+      });
+
+      $scope.getShortDescription = (revision) => {
+        const desc = [];
+        if (revision.journal && revision.journal.nameShort) {
+          desc.push(revision.journal.nameShort);
+        } else if (revision.journal && revision.journal.nameLong) {
+          desc.push(revision.journal.nameLong.substring(0, 20));
+        } else {
+          if (revision.remote.type === 'arxiv') {
+            // For arXiv, concatenate the remote name and the version
+            // without comma.
+            desc.push('arXiv ' + revision.remote.revision);
+          } else {
+            desc.push(revision.remote.type);
+            desc.push(revision.remote.revision);
+          }
+        }
+        if (revision.publishedAt) {
+          desc.push($filter('date')(revision.publishedAt, 'MMM yyyy'));
+        }
+        return desc.join(', ');
+      };
+
+      $scope.addDiscussion = function(comment) {
+        const disc = _.cloneDeep(_.pick(
+          comment, ['title', 'body', 'target', 'tags']
+        ));
+
+        const activeRevision = $scope.revisions[$scope.activeRevisionIdx];
+        disc.target.document = activeRevision.id;
+        disc.target.documentRevision = activeRevision.revision;
+
+        $scope.submitting = true;
+        return $http.post(
+          config.apiUrl + '/discussions',
+          disc
+        )
+        .success(function(discussion) {
+          $scope.submitting = false;
+          $scope.discussions.stored.push(discussion);
+          $scope.purgeDraft();
+        })
+        .error(function(data) {
+          $scope.submitting = false;
+        })
+          .error(notificationService.httpError('could not add discussion'));
+      };
+
       // set meta data
-      $scope.$watchGroup(['article', 'discussions.stored'], function(newVals) {
-        const article = newVals[0];
+      $scope.$watchGroup(['document', 'discussions.stored'], function(newVals) {
+        const document = newVals[0];
         const discussions = newVals[1];
-        if (article) {
+        if (document) {
           let description;
           if (discussions.length === 1) {
-            description =  'Article with 1 discussion.';
+            description =  'Document with 1 discussion.';
           } else if (discussions.length > 1) {
-            description = 'Article with ' + discussions.length +
+            description = 'Document with ' + discussions.length +
               ' discussions.';
           } else {
-            description = 'Article with discussions.';
+            description = 'Document with discussions.';
           }
           description +=
-              (article.authors.length === 1 ? ' Author: ' : ' Authors: ') +
-              article.authors.join(', ') + '.';
+              (document.authors.length === 1 ? ' Author: ' : ' Authors: ') +
+              document.authors.join(', ') + '.';
 
           const meta = [
             {name: 'description', content: description},
-            {name: 'author', content: article.authors.join(', ')}
+            {name: 'author', content: document.authors.join(', ')}
           ];
-          $scope.addArticleMetaData(meta);
+          $scope.addDocumentMetaData(meta);
 
           metaService.set({
-            title: article.title + ' · PaperHive',
+            title: document.title + ' · PaperHive',
             meta: meta
           });
         }

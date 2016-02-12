@@ -1,8 +1,8 @@
 import activity from './activity';
-import article from './article';
-import articleSettings from './articleSettings';
-import articleText from './articleText';
-import articleNew from './articleNew';
+import document from './document';
+import documentSettings from './documentSettings';
+import documentText from './documentText';
+import documentNew from './documentNew';
 import authReturn from './authReturn';
 import comment from './comment';
 import contact from './contact';
@@ -17,16 +17,16 @@ import navbarSearch from './navbarSearch';
 import navbar_user from './navbar_user';
 import notifications from './notifications';
 import settings from './settings';
-import signup from './signup'
+import signup from './signup';
 import subscribe from './subscribe';
 import user from './user';
 
 export default function(app) {
   activity(app);
-  article(app);
-  articleSettings(app);
-  articleText(app);
-  articleNew(app);
+  document(app);
+  documentSettings(app);
+  documentText(app);
+  documentNew(app);
   authReturn(app);
   comment(app);
   contact(app);

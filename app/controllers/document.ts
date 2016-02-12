@@ -1,11 +1,10 @@
 import * as _ from 'lodash';
 import * as angular from 'angular';
-import paperhiveSources from 'paperhive-sources';
-import {findIndex, some} from 'lodash';
+import {findLastIndex, some} from 'lodash';
 
 export default function(app) {
 
-  app.controller('ArticleCtrl', [
+  app.controller('DocumentCtrl', [
     '$scope', '$route', '$routeSegment', '$document', '$http', 'config',
     '$rootScope', '$filter', 'authService', 'notificationService',
     'metaService',
@@ -19,55 +18,48 @@ export default function(app) {
       // template.
       $scope.$routeSegment = $routeSegment;
 
-      // fetch article
+      const documentId = $routeSegment.$routeParams.documentId;
+
+      // fetch document
       $http.get(
         config.apiUrl +
-          '/documents/' + $routeSegment.$routeParams.articleId
+          `/documents/${documentId}/revisions/`
       )
-      .success(function(article) {
-        $scope.article = article;
+      .success(function(ret) {
+        $scope.revisions = ret.revisions;
+        $scope.latestOAIdx = findLastIndex(ret.revisions, {openAccess: true});
 
-        // get pdf url
-        try {
-          $scope.pdfSource = paperhiveSources({ apiUrl: config.apiUrl })
-            .getAccessiblePdfUrl(article);
-        } catch (e) {
-          notificationService.notifications.push({
-            type: 'error',
-            message: 'PDF cannot be displayed: ' + e.message
-          });
-        }
-
+        const latestOARevision = $scope.revisions[$scope.latestOAIdx];
         // Cut description down to 150 chars, cf.
         // <http://moz.com/learn/seo/meta-description>
         // TODO move linebreak removal to backend?
         const metaData = [
           {
             name: 'description',
-            content: article.title + ' by ' + article.authors.join(', ') + '.'
+            content: latestOARevision.title + ' by ' + latestOARevision.authors.join(', ') + '.'
           },
-          {name: 'author', content: article.authors.join(', ')},
-          {name: 'keywords', content: article.tags.join(', ')}
+          {name: 'author', content: latestOARevision.authors.join(', ')},
+          {name: 'keywords', content: latestOARevision.tags.join(', ')}
         ];
 
-        $scope.addArticleMetaData(metaData);
+        $scope.addDocumentMetaData(metaData);
 
         metaService.set({
-          title: article.title + ' · PaperHive',
+          title: latestOARevision.title + ' · PaperHive',
           meta: metaData
         });
       })
       .error(function(data) {
         notificationService.notifications.push({
           type: 'error',
-          message: data.message ? data.message : 'could not fetch article ' +
-            '(unknown reason)'
+          message: data.message ? data.message :
+            'could not fetch document (unknown reason)'
         });
       });
 
       $http.get(
         config.apiUrl +
-          '/documents/' + $routeSegment.$routeParams.articleId + '/discussions'
+          `/documents/${documentId}/discussions`
       )
       .success(function(ret) {
         $scope.discussions.stored = ret.discussions;
@@ -87,10 +79,10 @@ export default function(app) {
         stored: []
       };
 
-      $scope.addArticleMetaData = function(metaData) {
-        if (!$scope.article) {
+      $scope.addDocumentMetaData = function(metaData) {
+        if (!$scope.document) {
           console.warn(
-            'Tried to set article meta data, but data isn\'t present.'
+            'Tried to set document meta data, but data isn\'t present.'
           );
           return;
         }
@@ -100,50 +92,26 @@ export default function(app) {
         // Check out
         // <https://scholar.google.com/intl/en/scholar/inclusion.html#indexing>
         // for more info.
-        metaData.push({name: 'citation_title', content: $scope.article.title});
+        metaData.push({name: 'citation_title', content: $scope.document.title});
         // Both "John Smith" and "Smith, John" are fine.
-        $scope.article.authors.forEach(function(author) {
+        $scope.document.authors.forEach(function(author) {
           metaData.push({name: 'citation_author', content: author});
         });
         // citation_publication_date: REQUIRED for Google Scholar.
         metaData.push({
           name: 'citation_publication_date',
-          content: $filter('date')($scope.article.publishedAt, 'yyyy/MM/dd')
+          content: $filter('date')($scope.document.publishedAt, 'yyyy/MM/dd')
         });
-        // Don't expose the DOI for all versions of the article; it really only
+        // Don't expose the DOI for all versions of the document; it really only
         // identifies one version, usually not the arXiv one, but an upstream
         // version.
-        if ($scope.pdfSource) {
-          metaData.push({name: 'citation_pdf_url', content: $scope.pdfSource});
-        }
+        // if ($scope.pdfSource) {
+        //   metaData.push({name: 'citation_pdf_url', content: $scope.pdfSource});
+        // }
       };
 
       $scope.purgeDraft = function() {
         $scope.originalComment.draft = {};
-      };
-
-      $scope.addDiscussion = function(comment) {
-        const disc = _.cloneDeep(_.pick(
-          comment, ['title', 'body', 'target', 'tags']
-        ));
-
-        disc.target.document = $routeSegment.$routeParams.articleId;
-        disc.target.documentRevision = $scope.article.revision;
-
-        $scope.submitting = true;
-        return $http.post(
-          config.apiUrl + '/discussions',
-          disc
-        )
-        .success(function(discussion) {
-          $scope.submitting = false;
-          $scope.discussions.stored.push(discussion);
-          $scope.purgeDraft();
-        })
-        .error(function(data) {
-          $scope.submitting = false;
-        })
-          .error(notificationService.httpError('could not add discussion'));
       };
 
       $scope.originalUpdate = function(discussion, comment) {
