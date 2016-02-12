@@ -119,7 +119,7 @@ export default function(app) {
       function signout() {
         delete $window.sessionStorage.token;
         delete $window.localStorage.token;
-        delete $http.defaults.headers['X-Auth-Token'];
+        delete $http.defaults.headers['Authorization'];
         delete authService.user;
         delete authService.token;
       }
