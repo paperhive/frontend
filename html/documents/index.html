@@ -1,4 +1,4 @@
-<div ng-controller="ArticleCtrl">
+<div ng-controller="DocumentCtrl">
   <div class="ph-header ph-header-large ph-lg-margin-bottom">
     <div class="container-fluid">
       <div class="row">
@@ -30,10 +30,10 @@
               <div class="col-sm-12">
                 <subnav>
                   <ul class="nav nav-tabs ph-header-submenu">
-                    <li subnav-target="articles.text">
-                      <a><i class="fa fa-fw fa-file-pdf-o"></i> Article</a>
+                    <li subnav-target="documents.text">
+                      <a><i class="fa fa-fw fa-file-pdf-o"></i> Document</a>
                     </li>
-                    <li subnav-target="articles.discussions">
+                    <li subnav-target="documents.discussions">
                       <a><i class="fa fa-fw fa-comments"></i> Discussions
                         <span class="badge" ng-if="discussions.stored.length > 0">
                           {{discussions.stored.length}}

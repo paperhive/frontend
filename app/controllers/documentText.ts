@@ -3,7 +3,7 @@ import paperhiveSources from 'paperhive-sources';
 
 export default function(app) {
 
-  app.controller('ArticleTextCtrl', [
+  app.controller('DocumentTextCtrl', [
     '$scope', '$route', '$routeSegment', '$document', '$http', '$filter',
     'config', 'authService', 'notificationService', 'distangleService',
     'metaService',
@@ -98,31 +98,31 @@ export default function(app) {
       };
 
       // set meta data
-      $scope.$watchGroup(['article', 'discussions.stored'], function(newVals) {
-        const article = newVals[0];
+      $scope.$watchGroup(['document', 'discussions.stored'], function(newVals) {
+        const document = newVals[0];
         const discussions = newVals[1];
-        if (article) {
+        if (document) {
           let description;
           if (discussions.length === 1) {
-            description =  'Article with 1 discussion.';
+            description =  'Document with 1 discussion.';
           } else if (discussions.length > 1) {
-            description = 'Article with ' + discussions.length +
+            description = 'Document with ' + discussions.length +
               ' discussions.';
           } else {
-            description = 'Article with discussions.';
+            description = 'Document with discussions.';
           }
           description +=
-              (article.authors.length === 1 ? ' Author: ' : ' Authors: ') +
-              article.authors.join(', ') + '.';
+              (document.authors.length === 1 ? ' Author: ' : ' Authors: ') +
+              document.authors.join(', ') + '.';
 
           const meta = [
             {name: 'description', content: description},
-            {name: 'author', content: article.authors.join(', ')}
+            {name: 'author', content: document.authors.join(', ')}
           ];
-          $scope.addArticleMetaData(meta);
+          $scope.addDocumentMetaData(meta);
 
           metaService.set({
-            title: article.title + ' · PaperHive',
+            title: document.title + ' · PaperHive',
             meta: meta
           });
         }

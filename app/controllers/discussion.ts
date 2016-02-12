@@ -151,7 +151,7 @@ export default function(app) {
         }
         };
 
-        $scope.isArticleAuthor = function(authorId) {
+        $scope.isDocumentAuthor = function(authorId) {
         const k = _.findWhere(latestRevision.authors, {id: authorId});
         return (k !== undefined);
         };

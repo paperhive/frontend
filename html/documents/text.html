@@ -1,4 +1,4 @@
-<div ng-controller="ArticleTextCtrl">
+<div ng-controller="DocumentTextCtrl">
   <div ng-if="pdfSource">
     <div class="row ph-md-margin-bottom" >
       <div class="col-md-2">
@@ -11,14 +11,14 @@
             <li ng-repeat="revision in revisions.slice().reverse()"
                 ng-class="{'disabled': !revision.openAccess}">
               <a ng-if="revision.openAccess"
-                 href="./articles/{{revision.id}}/revisions/{{revision.revision}}">
+                 href="./documents/{{revision.id}}/revisions/{{revision.revision}}">
                 <strong ng-if="revision.revision ===
                 revisions[activeRevisionIdx].revision">{{getShortDescription(revision)}}</strong>
                 <span ng-if="revision.revision !==
                 revisions[activeRevisionIdx].revision">{{getShortDescription(revision)}}</span>
                 <i class="fa fa-fw"></i>
               </a>
-              <a ng-if="!revision.openAccess" title="This article is not open-access and cannot be displayed.">
+              <a ng-if="!revision.openAccess" title="This document is not open-access and cannot be displayed.">
                 {{getShortDescription(revision)}}
                 <i class="fa fa-fw fa-lock"></i>
               </a>
@@ -28,17 +28,17 @@
       </div>
 
       <div class="col-md-5">
-        <div ng-if="article.pdfProgress.downloading">
+        <div ng-if="document.pdfProgress.downloading">
           <uib-progressbar class="progress-striped active" value="100">
             Downloading...
           </uib-progressbar>
         </div>
-        <div ng-if="article.pdfProgress.numPages && !article.pdfProgress.finished">
+        <div ng-if="document.pdfProgress.numPages && !document.pdfProgress.finished">
           <uib-progressbar class="progress-striped active"
-                           value="article.pdfProgress.renderedPages.length"
-                           max="article.pdfProgress.numPages">
-            {{article.pdfProgress.renderedPages.length}} /
-            {{article.pdfProgress.numPages}} pages
+                           value="document.pdfProgress.renderedPages.length"
+                           max="document.pdfProgress.numPages">
+            {{document.pdfProgress.renderedPages.length}} /
+            {{document.pdfProgress.numPages}} pages
           </uib-progressbar>
         </div>
       </div>
@@ -57,11 +57,11 @@
         <pdf
                                pdf-url="pdfSource"
                                pdf-text-overlay="true"
-                               pdf-progress="article.pdfProgress"
+                               pdf-progress="document.pdfProgress"
                                on-text-select="$target && (originalComment.draft.target = $target)"
                                highlight-root
                                ></pdf>
-        <div class="ph-highlight-layer" ng-if="article.pdfProgress.finished">
+        <div class="ph-highlight-layer" ng-if="document.pdfProgress.finished">
           <div
                                         highlight-target="originalComment.draft.target"
                                         highlight-info="text.highlightInfos.draft"></div>

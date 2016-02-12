@@ -4,7 +4,7 @@ import {findLastIndex, some} from 'lodash';
 
 export default function(app) {
 
-  app.controller('ArticleCtrl', [
+  app.controller('DocumentCtrl', [
     '$scope', '$route', '$routeSegment', '$document', '$http', 'config',
     '$rootScope', '$filter', 'authService', 'notificationService',
     'metaService',
@@ -18,12 +18,12 @@ export default function(app) {
       // template.
       $scope.$routeSegment = $routeSegment;
 
-      const articleId = $routeSegment.$routeParams.articleId;
+      const documentId = $routeSegment.$routeParams.documentId;
 
-      // fetch article
+      // fetch document
       $http.get(
         config.apiUrl +
-          `/documents/${articleId}/revisions/`
+          `/documents/${documentId}/revisions/`
       )
       .success(function(ret) {
         $scope.revisions = ret.revisions;
@@ -42,7 +42,7 @@ export default function(app) {
           {name: 'keywords', content: latestOARevision.tags.join(', ')}
         ];
 
-        $scope.addArticleMetaData(metaData);
+        $scope.addDocumentMetaData(metaData);
 
         metaService.set({
           title: latestOARevision.title + ' · PaperHive',
@@ -53,13 +53,13 @@ export default function(app) {
         notificationService.notifications.push({
           type: 'error',
           message: data.message ? data.message :
-            'could not fetch article (unknown reason)'
+            'could not fetch document (unknown reason)'
         });
       });
 
       $http.get(
         config.apiUrl +
-          `/documents/${articleId}/discussions`
+          `/documents/${documentId}/discussions`
       )
       .success(function(ret) {
         $scope.discussions.stored = ret.discussions;
@@ -79,10 +79,10 @@ export default function(app) {
         stored: []
       };
 
-      $scope.addArticleMetaData = function(metaData) {
-        if (!$scope.article) {
+      $scope.addDocumentMetaData = function(metaData) {
+        if (!$scope.document) {
           console.warn(
-            'Tried to set article meta data, but data isn\'t present.'
+            'Tried to set document meta data, but data isn\'t present.'
           );
           return;
         }
@@ -92,17 +92,17 @@ export default function(app) {
         // Check out
         // <https://scholar.google.com/intl/en/scholar/inclusion.html#indexing>
         // for more info.
-        metaData.push({name: 'citation_title', content: $scope.article.title});
+        metaData.push({name: 'citation_title', content: $scope.document.title});
         // Both "John Smith" and "Smith, John" are fine.
-        $scope.article.authors.forEach(function(author) {
+        $scope.document.authors.forEach(function(author) {
           metaData.push({name: 'citation_author', content: author});
         });
         // citation_publication_date: REQUIRED for Google Scholar.
         metaData.push({
           name: 'citation_publication_date',
-          content: $filter('date')($scope.article.publishedAt, 'yyyy/MM/dd')
+          content: $filter('date')($scope.document.publishedAt, 'yyyy/MM/dd')
         });
-        // Don't expose the DOI for all versions of the article; it really only
+        // Don't expose the DOI for all versions of the document; it really only
         // identifies one version, usually not the arXiv one, but an upstream
         // version.
         // if ($scope.pdfSource) {
