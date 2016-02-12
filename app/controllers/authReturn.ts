@@ -8,7 +8,7 @@ export default function(app) {
         .then(
           function success(data) {
             $location.path($routeParams.returnPath).search({});
-            if ($routeParams.personCreated === "true") {
+            if ($routeParams.personCreated === 'true') {
               notificationService.notifications.push({
                 type: 'info',
                 message: 'Welcome to PaperHive! You can set your username ' +
