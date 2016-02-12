@@ -3,6 +3,13 @@ export default function(app) {
   app.controller('AuthReturnCtrl', [
     '$scope', '$routeParams', '$location', 'authService', 'notificationService',
     function($scope, $routeParams, $location, authService, notificationService) {
+
+      notificationService.notifications.push({
+        type: 'info',
+        message: 'Welcome at PaperHive! Change your settings ' +
+          '<a href="./settings" class="alert-link">here</a>'
+      });
+
       authService
         .loginToken($routeParams.token)
         .then(
@@ -11,7 +18,8 @@ export default function(app) {
             if ($routeParams.personCreated === "true") {
               notificationService.notifications.push({
                 type: 'info',
-                message: 'Welcome at PaperHive! Change your settings here'
+                message: 'Welcome at PaperHive! Change your settings ' +
+                  '<a href="./settings" class="alert-link">here</a>'
               });
             }
           },
