@@ -17,7 +17,7 @@ import onTextSelect from './onTextSelect';
 import pdf from './pdf';
 import subnav from './subnav';
 import toc from './toc';
-import validateArticleSource from './validateArticleSource';
+import validateDocumentSource from './validateDocumentSource';
 import validateUsername from './validate-username';
 import viewportHeight from './viewportHeight';
 
@@ -41,7 +41,7 @@ export default function(app) {
   pdf(app);
   subnav(app);
   toc(app);
-  validateArticleSource(app);
+  validateDocumentSource(app);
   validateUsername(app);
   viewportHeight(app);
 };

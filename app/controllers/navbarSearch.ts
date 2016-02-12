@@ -20,15 +20,15 @@ export default function(app) {
             function(response) {
               notificationService.notifications.push({
                 type: 'error',
-                message: 'Could not fetch articles'
+                message: 'Could not fetch documents'
               });
             }
           );
         };
 
-        $scope.goToArticle = function(item, model, label) {
+        $scope.goToDocument = function(item, model, label) {
           $location.path($routeSegment.getSegmentUrl(
-            'articles', {articleId: item.id}
+            'documents', {documentId: item.id}
           ));
         };
       }

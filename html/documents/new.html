@@ -1,4 +1,4 @@
-<div ng-controller="ArticleNewCtrl">
+<div ng-controller="DocumentNewCtrl">
   <div class="ph-header ph-lg-margin-bottom">
     <div class="container">
       <div class="row">
@@ -13,7 +13,7 @@
             </div>
             <div class="media-body ph-vertical-middle">
               <!--heading-->
-              <h2 class="media-heading">Add an article</h2>
+              <h2 class="media-heading">Add an document</h2>
             </div>
           </div>
         </div>
@@ -22,9 +22,9 @@
 
   </div>
   <div class="container">
-    <form name="articleNewForm" role="form" novalidate>
+    <form name="documentNewForm" role="form" novalidate>
 
-      <!-- article source -->
+      <!-- document source -->
       <div class="row">
 
         <!-- approved source -->
@@ -36,51 +36,51 @@
             <div class="panel-body">
               <div class="form-horizontal">
                 <div class="form-group has-feedback" ng-class="{
-                    'has-success': articleNewForm.handle.$valid,
-                    'has-error': articleNewForm.handle.$invalid &&
-                      articleNewForm.handle.$dirty
+                    'has-success': documentNewForm.handle.$valid,
+                    'has-error': documentNewForm.handle.$invalid &&
+                      documentNewForm.handle.$dirty
                   }">
                   <label for="handle" class="control-label col-sm-3">
-                    Article URL
+                    Document URL
                   </label>
                   <div class="col-sm-9">
                     <input ng-model="handle" ng-disabled="submitting"
                       name="handle" type="text"
                       class="form-control" id="handle"
-                      placeholder="Provide article URL or identifier"
+                      placeholder="Provide document URL or identifier"
                       required>
-                    <i ng-if="articleNewForm.handle.$valid"
+                    <i ng-if="documentNewForm.handle.$valid"
                       class="fa fa-fw fa-check form-control-feedback"
                       aria-hidden="true"></i>
-                    <i ng-if="articleNewForm.handle.$pending"
+                    <i ng-if="documentNewForm.handle.$pending"
                       class="fa fa-fw fa-spinner fa-spin form-control-feedback"
                       aria-hidden="true"></i>
-                    <i ng-if="articleNewForm.handle.$invalid &&
-                      articleNewForm.handle.$dirty"
+                    <i ng-if="documentNewForm.handle.$invalid &&
+                      documentNewForm.handle.$dirty"
                       class="fa fa-fw fa-times form-control-feedback"
                       aria-hidden="true"></i>
                   </div>
                 </div>
-                <div ng-show="check.article._id">
+                <div ng-show="check.document._id">
                   <div class="row">
                     <div class="col-sm-offset-3 col-sm-9">
                       <p>
-                        This article has already been added to PaperHive.
+                        This document has already been added to PaperHive.
                       </p>
                       <p class="text-right">
-                        <a href="./articles/{{check.article._id}}" class="btn btn-primary">
+                        <a href="./documents/{{check.document._id}}" class="btn btn-primary">
                           <i class="fa fa-fw fa-file-pdf-o"></i>
-                          Show article
+                          Show document
                         </a>
                       </p>
                     </div>
                   </div>
                 </div>
-                <div ng-show="!check.article._id">
+                <div ng-show="!check.document._id">
                   <div class="row">
                     <div class="col-sm-offset-3 col-sm-9">
                       <p class="text-right">
-                        <button type="submit" ng-disabled="!articleNewForm.$valid || submitting"
+                        <button type="submit" ng-disabled="!documentNewForm.$valid || submitting"
                             ng-click="submitApproved()"
                             class="btn btn-primary">
                           <i class="fa fa-fw fa-plus" ng-show="!submitting"></i>
@@ -90,7 +90,7 @@
                       </p>
                     </div>
                   </div>
-                  <div uib-collapse="!check.article || check.article._id">
+                  <div uib-collapse="!check.document || check.document._id">
                     <div class="panel panel-default">
                       <div class="panel-body">
                         <div class="form-group">
@@ -99,7 +99,7 @@
                           </label>
                           <div class="col-sm-9">
                             <p class="form-control-static">
-                              {{check.article.title}}
+                              {{check.document.title}}
                             </p>
                           </div>
                         </div>
@@ -109,7 +109,7 @@
                           </label>
                           <div class="col-sm-9">
                             <p class="form-control-static">
-                              <span ng-repeat="author in check.article.authors">
+                              <span ng-repeat="author in check.document.authors">
                                 {{author}}{{$last ? '' : ', '}}
                               </span>
                             </p>
@@ -121,17 +121,17 @@
                           </label>
                           <div class="col-sm-9">
                             <p class="form-control-static">
-                              {{check.article.publishedAt | date:'longDate'}}
+                              {{check.document.publishedAt | date:'longDate'}}
                             </p>
                           </div>
                         </div>
-                        <div class="form-group" ng-if="check.article.tags.length">
+                        <div class="form-group" ng-if="check.document.tags.length">
                           <label class="control-label col-sm-3">
                             Tags
                           </label>
                           <div class="col-sm-9">
                             <p class="form-control-static">
-                              <span ng-repeat="tag in check.article.tags">
+                              <span ng-repeat="tag in check.document.tags">
                                 {{tag}}{{$last ? '' : ', '}}
                               </span>
                             </p>
@@ -148,12 +148,12 @@
                     What are approved sources?
                 </strong></h5>
                 <p>
-                  Currently approved article sources are:
+                  Currently approved document sources are:
                   <ul>
                     <li><a href="http://arxiv.org/">arXiv</a></li>
                   </ul>
                   Please <a href="./contact">contact us</a> to suggest further
-                  article sources.
+                  document sources.
                 </p>
               </div>
             </div>
