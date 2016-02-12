@@ -11,8 +11,8 @@ export default function(app) {
             if ($routeParams.personCreated === "true") {
               notificationService.notifications.push({
                 type: 'info',
-                message: 'Welcome at PaperHive! Change your settings ' +
-                  '<a href="./settings" class="alert-link">here</a>'
+                message: 'Welcome to PaperHive! You can set your username ' +
+                  '<a href="./settings" class="alert-link">here</a>.'
               });
             }
           },

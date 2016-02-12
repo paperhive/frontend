@@ -1,5 +1,5 @@
 <div ng-controller="NotificationsCtrl" ng-class="{hidden: !notifications.length}">
-  <uib-alert ng-repeat="notification in notifications"
+  <uib-alert class="ph-navbar-alert" ng-repeat="notification in notifications"
     type="{{types[notification.type]}}" close="close($index)">
     <span ng-show="notification.type == 'error'">
       <i class="fa fa-fw fa-warning"></i>
