@@ -17,7 +17,7 @@ import navbarSearch from './navbarSearch';
 import navbar_user from './navbar_user';
 import notifications from './notifications';
 import settings from './settings';
-import signup from './signup'
+import signup from './signup';
 import subscribe from './subscribe';
 import user from './user';
 

@@ -3,16 +3,16 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-10">
-          <h2 class="ph-lg-margin-top">{{article.title}}</h2>
+          <h2 class="ph-lg-margin-top">{{revisions[latestOAIdx].title}}</h2>
           <h4 class="ph-lg-margin-bottom">
-            <span ng-repeat="author in article.authors">
+            <span ng-repeat="author in revisions[latestOAIdx].authors">
               {{author.name}}{{$last ? '' :', '}}
             </span>
           </h4>
         </div>
         <div class="col-sm-2 text-right">
           <h2 class="ph-lg-margin-top">
-            <star-button document-id="article.id" user="auth.user"></star-button>
+            <star-button document-id="revisions[0].id" user="auth.user"></star-button>
           </h2>
         </div>
       </div>
