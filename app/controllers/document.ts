@@ -12,10 +12,6 @@ export default function(app) {
       $scope, $route, $routeSegment, $document, $http, config, $rootScope,
       $filter, authService, notificationService, metaService, websocketService
     ) {
-
-      // TODO use id of document
-      websocketService.join('documents', '0xACAB');
-
       // expose authService
       $scope.auth = authService;
       // Expose the routeSegment to be able to determine the active tab in the
@@ -23,6 +19,11 @@ export default function(app) {
       $scope.$routeSegment = $routeSegment;
 
       const documentId = $routeSegment.$routeParams.documentId;
+
+
+      const documentUpdates = websocketService.join('documents', documentId);
+      documentUpdates.subscribe((update) => console.log(update));
+
 
       // fetch document
       $http.get(
