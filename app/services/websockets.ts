@@ -10,8 +10,13 @@ export default function(app) {
       constructor(apiUrl) {
         // parse url for socketio
         this.parsedUrl = url.parse(config.apiUrl);
-        // TODO check if path ends with slash oder not
-        this.path = this.parsedUrl.path + 'socket.io';
+
+        // set socketio path
+        this.path = this.parsedUrl.path;
+        if (this.path[this.path.length - 1] !== '/') {
+          this.path += '/';
+        }
+        this.path += 'socket.io';
       }
 
       getNamespaceUrl(namespace) {
