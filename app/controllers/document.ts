@@ -7,11 +7,14 @@ export default function(app) {
   app.controller('DocumentCtrl', [
     '$scope', '$route', '$routeSegment', '$document', '$http', 'config',
     '$rootScope', '$filter', 'authService', 'notificationService',
-    'metaService',
+    'metaService', 'websocketService',
     function(
       $scope, $route, $routeSegment, $document, $http, config, $rootScope,
-      $filter, authService, notificationService, metaService
+      $filter, authService, notificationService, metaService, websocketService
     ) {
+
+      websocketService.join('documents', '0xACAB');
+
       // expose authService
       $scope.auth = authService;
       // Expose the routeSegment to be able to determine the active tab in the
