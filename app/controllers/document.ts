@@ -13,6 +13,7 @@ export default function(app) {
       $filter, authService, notificationService, metaService, websocketService
     ) {
 
+      // TODO use id of document
       websocketService.join('documents', '0xACAB');
 
       // expose authService

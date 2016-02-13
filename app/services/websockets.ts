@@ -30,7 +30,7 @@ export default function(app) {
           }
         );
 
-        socket.emit('join', {id: '0xACAB'});
+        socket.emit('join', {id: room});
       }
 
     }
