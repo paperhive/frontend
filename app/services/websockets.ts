@@ -6,11 +6,11 @@ import url from 'url';
 
 export default function(app) {
   app.factory('websocketService', ['config', function(config) {
-    console.log(Observable);
     class WebsocketService {
       constructor(apiUrl) {
         // parse url for socketio
         this.parsedUrl = url.parse(config.apiUrl);
+        // TODO check if path ends with slash oder not
         this.path = this.parsedUrl.path + 'socket.io';
       }
 

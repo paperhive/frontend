@@ -20,10 +20,12 @@ export default function(app) {
 
       const documentId = $routeSegment.$routeParams.documentId;
 
-
       const documentUpdates = websocketService.join('documents', documentId);
-      documentUpdates.subscribe((update) => console.log(update));
-
+      documentUpdates.subscribe((update) => {
+        $scope.discussions.stored.push(update);
+        $scope.$apply();
+        console.log($scope.discussions.stored);
+      });
 
       // fetch document
       $http.get(
