@@ -21,7 +21,7 @@ export default function(app) {
 
       getNamespaceUrl(namespace) {
         const parsedUrl = clone(this.parsedUrl);
-        parsedUrl.pathname = '/documents';
+        parsedUrl.pathname = '/' + namespace;
         return url.format(parsedUrl);
       }
 
