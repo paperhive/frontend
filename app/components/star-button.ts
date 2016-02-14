@@ -91,10 +91,10 @@ export default function(app) {
               ng-disabled="!$ctrl.user" ng-click="$ctrl.star()">
               <i class="fa fa-star"></i> Star
             </button>
-            <button type="button" class="btn btn-default" disabled>
+            <a href="./documents/{{$ctrl.documentId}}/stars" class="btn btn-default">
               <span ng-if="$ctrl.stars">{{$ctrl.stars.length}}</span>
               <span ng-if="!$ctrl.stars">&nbsp;</span>
-            </button>
+            </a>
           </span>`
     });
 };
