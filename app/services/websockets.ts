@@ -39,8 +39,7 @@ export default function(app) {
 
           socket.emit('join', {id: room});
 
-          // TODO catch other events
-          socket.on('newDiscussion', observable.onNext.bind(observable));
+          socket.on('update', observable.onNext.bind(observable));
 
           socket.on('error', observable.onError.bind(observable));
           socket.on('reconnect_failed', observable.onError.bind(observable));

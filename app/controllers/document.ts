@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import * as angular from 'angular';
-import {findLastIndex, some} from 'lodash';
+import { find, findLastIndex, some } from 'lodash';
 
 export default function(app) {
 
@@ -22,9 +22,39 @@ export default function(app) {
 
       const documentUpdates = websocketService.join('documents', documentId);
       documentUpdates.subscribe((update) => {
-        $scope.discussions.stored.push(update);
-        $scope.$apply();
-        console.log($scope.discussions.stored);
+        switch (update.method) {
+          case 'post':
+            if (find($scope.discussions.stored, {id: update.data.id})) {
+              return;S
+            }
+            $scope.discussions.stored.push(update.data);
+            $scope.$apply();
+            break;
+          case 'put':
+            const discussion = find($scope.discussions.stored, {id: update.data.id});
+            if (!discussion) {
+              notificationService.notifications.push({
+                type: 'error',
+                message: 'could not find discussion for update'
+              });
+              return;
+            }
+            angular.copy(update.data, discussion);
+            $scope.$apply();
+            break;
+          case 'delete':
+            const len = $scope.discussions.stored.length;
+            _.remove($scope.discussions.stored, {id: update.data.id});
+            if (len === $scope.discussions.stored.length) {
+              notificationService.notifications.push({
+                type: 'error',
+                message: 'could not find discussion for removal'
+              });
+              return;
+            }
+            $scope.$apply();
+            break;
+        }
       });
 
       // fetch document
