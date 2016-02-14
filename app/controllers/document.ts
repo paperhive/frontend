@@ -230,6 +230,9 @@ export default function(app) {
           reply
         )
         .success(function(reply) {
+          if (find(discussion.replies, {id: reply.id})) {
+            return;
+          }
           discussion.replies.push(reply);
         })
           .error(notificationService.httpError('could not add reply'));
