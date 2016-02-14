@@ -1,27 +1,9 @@
 <div class="row">
-  <div class="col-sm-5">
-
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">Starred documents</h4>
-      </div>
-      <div class="panel-body">
-        <starred-docs person-id="user.id"></starred-docs>
-        <!--table class="table ph-table-no-border-top">
-          <tbody>
-            <tr>
-              <th scope="row">Given Names</th>
-              <td>{{user.givenNames}}</td>
-            </tr>
-            <tr ng-show="user.familyName">
-              <th scope="row">Family Name</th>
-              <td>{{user.familyName}}</td>
-            </tr>
-          </tbody>
-        </table-->
-      </div>
-    </div>
-
+  <div class="col-sm-6">
+    <h4>Starred documents</h4>
+    <starred-docs person-id="user.id"></starred-docs>
+  </div>
+  <div class="col-sm-6">
     <div ng-show="user.accounts.length">
       <div class="panel panel-default">
         <div class="panel-heading">
