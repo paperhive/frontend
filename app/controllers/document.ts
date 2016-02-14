@@ -66,11 +66,10 @@ export default function(app) {
             }
             switch (update.method) {
               case 'post':
-                  if (find(discussion.replies, {id: update.data.id})) {
-                    return;
-                  }
-                  discussion.replies.push(update.data);
-                  break;
+                if (find(discussion.replies, {id: update.data.id})) {
+                  return;
+                }
+                discussion.replies.push(update.data);
                 break;
               case 'put':
                 const reply = find(discussion.replies, {id: update.data.id});
