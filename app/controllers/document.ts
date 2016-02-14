@@ -21,7 +21,7 @@ export default function(app) {
       const documentId = $routeSegment.$routeParams.documentId;
 
       const documentUpdates = websocketService.join('documents', documentId);
-      documentUpdates.subscribe((update) => {
+      const documentUpdatesSubscriber = documentUpdates.subscribe((update) => {
         $scope.$apply(() => {
           if (update.resource === 'discussion') {
             switch (update.method) {
@@ -96,6 +96,10 @@ export default function(app) {
             }
           }
         });
+      });
+
+      $scope.$on('$destroy', function() {
+        documentUpdatesSubscriber.dispose();
       });
 
       // fetch document
