@@ -1,4 +1,22 @@
 <div ng-controller="StarsCtrl">
-  LULZ
-  {{stars}}
+  <row><h4>Stars</h4></row>
+  <row>
+    <span class="list-group">
+      <a
+        ng-repeat="user in stars"
+        ng-href="./users/{{user.user.username}}"
+        class="col-sm-3 list-group-item"
+        >
+          <span class="media">
+            <div class="media-left">
+              <gravatar user="user" size="60" classes="img-circle"></gravatar>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">{{user.displayName}}</h4>
+              @{{user.user.username}}
+            </div>
+          </span>
+      </a>
+    </span>
+  </row>
 </div>
