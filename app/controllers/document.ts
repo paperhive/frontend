@@ -25,7 +25,7 @@ export default function(app) {
         switch (update.method) {
           case 'post':
             if (find($scope.discussions.stored, {id: update.data.id})) {
-              return;S
+              return;
             }
             $scope.discussions.stored.push(update.data);
             $scope.$apply();
