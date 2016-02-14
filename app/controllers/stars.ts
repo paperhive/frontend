@@ -7,9 +7,7 @@ export default function(app) {
       $scope, $rootScope, $routeSegment, config, $http,
       notificationService, authService
     ) {
-      console.log('StarsCtrl');
       const documentId = $routeSegment.$routeParams.documentId;
-      console.log(documentId);
 
       if (!documentId) { return; }
 
@@ -17,7 +15,6 @@ export default function(app) {
         config.apiUrl + '/documents/' + documentId + '/stars'
       )
       .success(function(data) {
-        console.log(data);
         $scope.stars = data.stars;
       })
       .error(function(err) {
