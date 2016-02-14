@@ -22,85 +22,81 @@ export default function(app) {
 
       const documentUpdates = websocketService.join('documents', documentId);
       documentUpdates.subscribe((update) => {
-        if (update.resource === 'discussion') {
-          switch (update.method) {
-            case 'post':
-              if (find($scope.discussions.stored, {id: update.data.id})) {
-                return;
-              }
-              $scope.discussions.stored.push(update.data);
-              $scope.$apply();
-              break;
-            case 'put':
-              const discussion = find($scope.discussions.stored, {id: update.data.id});
-              if (!discussion) {
-                notificationService.notifications.push({
-                  type: 'error',
-                  message: 'could not find discussion for update'
-                });
-                return;
-              }
-              angular.copy(update.data, discussion);
-              $scope.$apply();
-              break;
-            case 'delete':
-              const len = $scope.discussions.stored.length;
-              _.remove($scope.discussions.stored, {id: update.data.id});
-              if (len === $scope.discussions.stored.length) {
-                notificationService.notifications.push({
-                  type: 'error',
-                  message: 'could not find discussion for removal'
-                });
-                return;
-              }
-              $scope.$apply();
-              break;
-          }
-        }
-        if (update.resource === 'reply') {
-          const discussion = find($scope.discussions.stored, {id: update.data.discussion});
-          if (!discussion) {
-            notificationService.notifications.push({
-              type: 'error',
-              message: 'could not find discussion'
-            });
-            return;
-          }
-          switch (update.method) {
-            case 'post':
-                if (find(discussion.replies, {id: update.data.id})) {
+        $scope.$apply(() => {
+          if (update.resource === 'discussion') {
+            switch (update.method) {
+              case 'post':
+                if (find($scope.discussions.stored, {id: update.data.id})) {
                   return;
                 }
-                discussion.replies.push(update.data);
-                $scope.$apply();
+                $scope.discussions.stored.push(update.data);
                 break;
-              break;
-            case 'put':
-              const reply = find(discussion.replies, {id: update.data.id});
-              if (!reply) {
-                notificationService.notifications.push({
-                  type: 'error',
-                  message: 'could not find reply for update'
-                });
-                return;
-              }
-              angular.copy(update.data, reply);
-              $scope.$apply();
-              break;
-            case 'delete':
-              const len = discussion.replies.length;
-              _.remove(discussion.replies, {id: update.data.id});
-              if (len === discussion.replies.length) {
-                notificationService.notifications.push({
-                  type: 'error',
-                  message: 'could not find discussion for removal'
-                });
-                return;
-              }
-              $scope.$apply();
-              break;
+              case 'put':
+                const discussion = find($scope.discussions.stored, {id: update.data.id});
+                if (!discussion) {
+                  notificationService.notifications.push({
+                    type: 'error',
+                    message: 'could not find discussion for update'
+                  });
+                  return;
+                }
+                angular.copy(update.data, discussion);
+                break;
+              case 'delete':
+                const len = $scope.discussions.stored.length;
+                _.remove($scope.discussions.stored, {id: update.data.id});
+                if (len === $scope.discussions.stored.length) {
+                  notificationService.notifications.push({
+                    type: 'error',
+                    message: 'could not find discussion for removal'
+                  });
+                  return;
+                }
+                break;
+            }
           }
-        }
+          if (update.resource === 'reply') {
+            const discussion = find($scope.discussions.stored, {id: update.data.discussion});
+            if (!discussion) {
+              notificationService.notifications.push({
+                type: 'error',
+                message: 'could not find discussion'
+              });
+              return;
+            }
+            switch (update.method) {
+              case 'post':
+                  if (find(discussion.replies, {id: update.data.id})) {
+                    return;
+                  }
+                  discussion.replies.push(update.data);
+                  break;
+                break;
+              case 'put':
+                const reply = find(discussion.replies, {id: update.data.id});
+                if (!reply) {
+                  notificationService.notifications.push({
+                    type: 'error',
+                    message: 'could not find reply for update'
+                  });
+                  return;
+                }
+                angular.copy(update.data, reply);
+                break;
+              case 'delete':
+                const len = discussion.replies.length;
+                _.remove(discussion.replies, {id: update.data.id});
+                if (len === discussion.replies.length) {
+                  notificationService.notifications.push({
+                    type: 'error',
+                    message: 'could not find discussion for removal'
+                  });
+                  return;
+                }
+                break;
+            }
+          }
+        });
       });
 
       // fetch document
