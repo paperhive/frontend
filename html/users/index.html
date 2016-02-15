@@ -14,10 +14,10 @@
             <div class="media-body">
               <!--heading-->
               <h2 class="media-heading">{{user.displayName}}</h2>
-              <h4><a href="./users/{{user.user.username}}">@{{user.user.username}}</a></h4>
+              <h4><a href="./users/{{user.account.username}}">@{{user.account.username}}</a></h4>
               <p class="text-muted">
                 <i class="fa fa-fw fa-clock-o"></i>
-                Joined on {{user.user.createdAt | date:'longDate'}}
+                Joined on {{user.account.createdAt | date:'longDate'}}
               </p>
               <a
                 ng-show="auth.user.username === user.username"
