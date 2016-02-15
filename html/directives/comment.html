@@ -15,7 +15,7 @@
       </span>
       <span
         class="pull-right"
-        ng-show="auth.user._id === comment.author._id"
+        ng-show="auth.user.id === comment.author.id"
         >
         <button
           class="btn btn-link ph-no-padding-top ph-no-padding-bottom"
@@ -25,7 +25,7 @@
           <i class="fa fa-pencil"></i>
         </button>
         <button
-          ng-if="deletable && auth.user._id === comment.author._id"
+          ng-if="deletable && auth.user.id === comment.author.id"
           class="btn btn-link ph-no-padding-top ph-no-padding-bottom"
           confirmed-click="delete()"
           ng-disabled="submitting"

@@ -61,14 +61,14 @@
                       aria-hidden="true"></i>
                   </div>
                 </div>
-                <div ng-show="check.document._id">
+                <div ng-show="check.document.id">
                   <div class="row">
                     <div class="col-sm-offset-3 col-sm-9">
                       <p>
                         This document has already been added to PaperHive.
                       </p>
                       <p class="text-right">
-                        <a href="./documents/{{check.document._id}}" class="btn btn-primary">
+                        <a href="./documents/{{check.document.id}}" class="btn btn-primary">
                           <i class="fa fa-fw fa-file-pdf-o"></i>
                           Show document
                         </a>
@@ -76,7 +76,7 @@
                     </div>
                   </div>
                 </div>
-                <div ng-show="!check.document._id">
+                <div ng-show="!check.document.id">
                   <div class="row">
                     <div class="col-sm-offset-3 col-sm-9">
                       <p class="text-right">
@@ -90,7 +90,7 @@
                       </p>
                     </div>
                   </div>
-                  <div uib-collapse="!check.document || check.document._id">
+                  <div uib-collapse="!check.document || check.document.id">
                     <div class="panel panel-default">
                       <div class="panel-body">
                         <div class="form-group">

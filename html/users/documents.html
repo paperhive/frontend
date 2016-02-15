@@ -1,7 +1,7 @@
 <div class="row" ng-controller="UserDocumentsCtrl" ng-if="user">
-  <div class="col-md-12" ng-if="auth.user._id === user._id">
+  <div class="col-md-12" ng-if="auth.user.id === user.id">
     <p class="text-right">
-      <a href="./documents/new" class="btn btn-default">Add an document</a>
+      <a href="./documents/new" class="btn btn-default">Add a document</a>
     </p>
   </div>
   <div class="col-sm-6">

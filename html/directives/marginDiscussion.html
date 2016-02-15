@@ -163,26 +163,26 @@
                 <ul class="dropdown-menu dropdown-menu-right ph-margin-dropdown">
                   <li>
                     <a href="./{{'documents.discussions.thread' | routeSegmentUrl:
-                      {discussionId: discussion.id} }}#{{reply._id}}">
+                      {discussionId: discussion.id} }}#{{reply.id}}">
                       <i class="fa fa-fw fa-comments"></i> Show discussion view
                     </a>
                   </li>
                   <!-- edit reply -->
-                  <li ng-if="auth.user._id === reply.author._id"
+                  <li ng-if="auth.user.id === reply.author.id"
                       ng-class="{disabled: replyState.submitting}">
                     <a ng-click="replyState.editing = true" href>
                       <i class="fa fa-fw fa-pencil"></i> Edit
                     </a>
                   </li>
                   <!-- delete reply -->
-                  <li ng-if="auth.user._id === reply.author._id"
+                  <li ng-if="auth.user.id === reply.author.id"
                       ng-class="{disabled: replyState.submitting}">
                       <a ng-confirm-click="Really delete reply?"
                           confirmed-click="replyDelete(reply)" href>
                       <i class="fa fa-fw fa-times"></i> Delete
                     </a>
                   </li>
-                  <li ng-if="auth.user._id !== reply.author._id">
+                  <li ng-if="auth.user.id !== reply.author.id">
                     <a href><i class="fa fa-fw fa-flag"></i> Flag</a>
                   </li>
                 </ul>
