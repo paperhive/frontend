@@ -29,7 +29,6 @@ SystemJS.config({
     "kramed": "npm:kramed@0.5.5",
     "leaflet": "github:Leaflet/Leaflet@0.7.7",
     "lodash": "npm:lodash@4.2.0",
-    "ment.io": "github:jeff-collins/ment.io@0.9.24",
     "ngSmoothScroll": "github:d-oliveros/ngSmoothScroll@2.0.0",
     "paperhive-sources": "npm:paperhive-sources@4.0.2",
     "pdfjs-dist": "github:mozilla/pdfjs-dist@1.4.37",
