@@ -12,12 +12,12 @@ export default function(app) {
 
           $scope.$watch('$ctrl.personId', async function(id) {
             if (!id) { return; }
-            let ret;
             try {
-              ret = await $http.get(
+              const ret = await $http.get(
                 config.apiUrl +
                   '/people/' + id + '/stars'
               );
+              ctrl.starredDocuments = ret.data.documents;
             } catch (err) {
               notificationService.notifications.push({
                 type: 'error',
@@ -25,7 +25,6 @@ export default function(app) {
                   'could not fetch starred documents (unknown reason)'
               });
             }
-            ctrl.starredDocuments = ret.data.documents;
             // This is an async function, so unless we $apply, angular won't
             // know that values have changed.
             $scope.$apply();
