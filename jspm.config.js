@@ -37,6 +37,8 @@ SystemJS.config({
     "plugin-typescript": "github:frankwallis/plugin-typescript@2.5.9",
     "process": "github:jspm/nodelibs-process@0.2.0-alpha",
     "rangy": "github:timdown/rangy-release@1.3.0",
+    "rx": "npm:rx@4.0.7",
+    "socket.io-client": "github:socketio/socket.io-client@1.4.5",
     "ts": "github:frankwallis/plugin-typescript@2.5.9",
     "url": "github:jspm/nodelibs-url@0.2.0-alpha"
   },

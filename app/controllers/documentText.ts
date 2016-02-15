@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import { find } from 'lodash';
 import paperhiveSources from 'paperhive-sources';
 
 export default function(app) {
@@ -88,7 +89,9 @@ export default function(app) {
         )
         .success(function(discussion) {
           $scope.submitting = false;
-          $scope.discussions.stored.push(discussion);
+          if (!find($scope.discussions.stored, {id: discussion.id})) {
+            $scope.discussions.stored.push(discussion);
+          }
           $scope.purgeDraft();
         })
         .error(function(data) {
