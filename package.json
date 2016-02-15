@@ -66,6 +66,8 @@
   "jspm": {
     "dependencies": {
       "angular-route-segment": "github:artch/angular-route-segment@^1.5.0",
+      "angulartics": "npm:angulartics@^1.0.3",
+      "angulartics-google-analytics": "npm:angulartics-google-analytics@^0.1.4",
       "highlightjs": "github:components/highlightjs@^9.1.0",
       "javascript-detect-element-resize": "github:sdecima/javascript-detect-element-resize@^0.5.3",
       "json": "github:systemjs/plugin-json@^0.1.0",
