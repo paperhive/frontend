@@ -1,11 +1,12 @@
 <div ng-controller="StarsCtrl">
-  <row><h4>Stars</h4></row>
-  <row>
-    <span class="list-group">
-      <a
+  <h4>Stars</h4>
+  <span class="list-group">
+    <span class="col-sm-3 ph-sm-padding"
         ng-repeat="user in stars"
+        >
+      <a
         ng-href="./users/{{user.user.username}}"
-        class="col-sm-3 list-group-item"
+        class="list-group-item"
         >
           <span class="media">
             <div class="media-left">
@@ -18,5 +19,5 @@
           </span>
       </a>
     </span>
-  </row>
+  </span>
 </div>
