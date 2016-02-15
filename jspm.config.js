@@ -31,7 +31,7 @@ SystemJS.config({
     "lodash": "npm:lodash@4.2.0",
     "ment.io": "github:jeff-collins/ment.io@0.9.24",
     "ngSmoothScroll": "github:d-oliveros/ngSmoothScroll@2.0.0",
-    "paperhive-sources": "npm:paperhive-sources@4.0.1",
+    "paperhive-sources": "npm:paperhive-sources@4.0.2",
     "pdfjs-dist": "github:mozilla/pdfjs-dist@1.4.37",
     "plugin-babel": "npm:systemjs-plugin-babel@0.0.2",
     "plugin-typescript": "github:frankwallis/plugin-typescript@2.5.9",
