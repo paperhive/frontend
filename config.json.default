@@ -1,6 +1,5 @@
 {
   "apiUrl": "https://dev.paperhive.org/backend/master",
   "apiVersion": "1.0.0",
-  "baseHref": "/",
-  "gaTrackingId": "UA-62775822-1"
+  "baseHref": "/"
 }
