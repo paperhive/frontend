@@ -7,7 +7,7 @@ import url from 'url';
 export default function(app) {
   app.factory('websocketService', ['config', function(config) {
     class WebsocketService {
-      constructor() {
+      constructor(apiUrl) {
         // parse url for socketio
         this.parsedUrl = url.parse(apiUrl);
 
@@ -53,7 +53,7 @@ export default function(app) {
 
     }
 
-    return new WebsocketService(apiUrl);
+    return new WebsocketService(config.apiUrl);
 
   }]);
 };
