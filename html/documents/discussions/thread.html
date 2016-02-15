@@ -6,7 +6,7 @@
       >
     </inline-editable>
   </h3>
-  <a href="./users/{{discussion.author.user.username}}">
+  <a href="./users/{{discussion.author.account.username}}">
     {{discussion.author.displayName}}</a>
   opened this discussion
   <span am-time-ago="discussion.createdAt"></span>
@@ -42,7 +42,7 @@
         </li>
 
         <li ng-repeat="reply in discussion.replies"
-            class="media" id="reply._id">
+            class="media" id="reply.id">
           <comment
             content="reply"
             on-delete="deleteReply($comment, $index)"
@@ -55,7 +55,7 @@
 
         <li class="media">
           <div ng-if="auth.user">
-            <a class="media-left" href="./users/{{auth.user.username}}">
+            <a class="media-left" href="./users/{{auth.user.account.username}}">
               <gravatar user="auth.user" size="80"
                   classes="img-circle"
                   ></gravatar>

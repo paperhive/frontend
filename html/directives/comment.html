@@ -1,4 +1,4 @@
-<a class="media-left" href="./users/{{comment.author.user.username}}">
+<a class="media-left" href="./users/{{comment.author.account.username}}">
   <gravatar user="comment.author" size="80"
     classes="img-circle"
     ></gravatar>
@@ -6,7 +6,7 @@
 <div class="media-body">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <a href="./users/{{comment.author.user.username}}">
+      <a href="./users/{{comment.author.account.username}}">
         {{comment.author.displayName}}</a>
       commented
       <span am-time-ago="comment.createdAt"></span>
@@ -15,7 +15,7 @@
       </span>
       <span
         class="pull-right"
-        ng-show="auth.user._id === comment.author._id"
+        ng-show="auth.user.id === comment.author.id"
         >
         <button
           class="btn btn-link ph-no-padding-top ph-no-padding-bottom"
@@ -25,7 +25,7 @@
           <i class="fa fa-pencil"></i>
         </button>
         <button
-          ng-if="deletable && auth.user._id === comment.author._id"
+          ng-if="deletable && auth.user.id === comment.author.id"
           class="btn btn-link ph-no-padding-top ph-no-padding-bottom"
           confirmed-click="delete()"
           ng-disabled="submitting"

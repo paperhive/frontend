@@ -43,7 +43,7 @@ export default function(app) {
       };
 
       $scope.getMentioText = function(user) {
-        return '@' + user.username;
+        return '@' + account.username;
       };
 
     }]);
