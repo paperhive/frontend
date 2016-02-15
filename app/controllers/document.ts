@@ -1,16 +1,16 @@
 import * as _ from 'lodash';
 import * as angular from 'angular';
-import {findLastIndex, some} from 'lodash';
+import { find, findLastIndex, some } from 'lodash';
 
 export default function(app) {
 
   app.controller('DocumentCtrl', [
     '$scope', '$route', '$routeSegment', '$document', '$http', 'config',
     '$rootScope', '$filter', 'authService', 'notificationService',
-    'metaService',
+    'metaService', 'websocketService',
     function(
       $scope, $route, $routeSegment, $document, $http, config, $rootScope,
-      $filter, authService, notificationService, metaService
+      $filter, authService, notificationService, metaService, websocketService
     ) {
       // expose authService
       $scope.auth = authService;
@@ -19,6 +19,88 @@ export default function(app) {
       $scope.$routeSegment = $routeSegment;
 
       const documentId = $routeSegment.$routeParams.documentId;
+
+      const documentUpdates = websocketService.join('documents', documentId);
+      const documentUpdatesSubscriber = documentUpdates.subscribe((update) => {
+        $scope.$apply(() => {
+          if (update.resource === 'discussion') {
+            switch (update.method) {
+              case 'post':
+                if (find($scope.discussions.stored, {id: update.data.id})) {
+                  return;
+                }
+                $scope.discussions.stored.push(update.data);
+                break;
+              case 'put':
+                const discussion = find($scope.discussions.stored, {id: update.data.id});
+                if (!discussion) {
+                  notificationService.notifications.push({
+                    type: 'error',
+                    message: 'could not find discussion for update'
+                  });
+                  return;
+                }
+                angular.copy(update.data, discussion);
+                break;
+              case 'delete':
+                const len = $scope.discussions.stored.length;
+                _.remove($scope.discussions.stored, {id: update.data.id});
+                if (len === $scope.discussions.stored.length) {
+                  notificationService.notifications.push({
+                    type: 'error',
+                    message: 'could not find discussion for removal'
+                  });
+                  return;
+                }
+                break;
+            }
+          }
+          if (update.resource === 'reply') {
+            const discussion = find($scope.discussions.stored, {id: update.data.discussion});
+            if (!discussion) {
+              notificationService.notifications.push({
+                type: 'error',
+                message: 'could not find discussion'
+              });
+              return;
+            }
+            switch (update.method) {
+              case 'post':
+                if (find(discussion.replies, {id: update.data.id})) {
+                  return;
+                }
+                discussion.replies.push(update.data);
+                break;
+              case 'put':
+                const reply = find(discussion.replies, {id: update.data.id});
+                if (!reply) {
+                  notificationService.notifications.push({
+                    type: 'error',
+                    message: 'could not find reply for update'
+                  });
+                  return;
+                }
+                angular.copy(update.data, reply);
+                break;
+              case 'delete':
+                const len = discussion.replies.length;
+                _.remove(discussion.replies, {id: update.data.id});
+                if (len === discussion.replies.length) {
+                  notificationService.notifications.push({
+                    type: 'error',
+                    message: 'could not find discussion for removal'
+                  });
+                  return;
+                }
+                break;
+            }
+          }
+        });
+      });
+
+      $scope.$on('$destroy', function() {
+        documentUpdatesSubscriber.dispose();
+      });
 
       // fetch document
       $http.get(
@@ -151,6 +233,9 @@ export default function(app) {
           reply
         )
         .success(function(reply) {
+          if (find(discussion.replies, {id: reply.id})) {
+            return;
+          }
           discussion.replies.push(reply);
         })
           .error(notificationService.httpError('could not add reply'));
