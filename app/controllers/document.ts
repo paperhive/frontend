@@ -109,7 +109,7 @@ export default function(app) {
       )
       .success(function(ret) {
         $scope.revisions = ret.revisions;
-        $scope.latestOAIdx = findLastIndex(ret.revisions, {openAccess: true});
+        $scope.latestOAIdx = findLastIndex(ret.revisions, {isOpenAccess: true});
 
         const latestOARevision = $scope.revisions[$scope.latestOAIdx];
         // Cut description down to 150 chars, cf.
