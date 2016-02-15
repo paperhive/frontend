@@ -18,6 +18,7 @@ import navbar_user from './navbar_user';
 import notifications from './notifications';
 import settings from './settings';
 import signup from './signup';
+import stars from './stars';
 import subscribe from './subscribe';
 import user from './user';
 
@@ -42,6 +43,7 @@ export default function(app) {
   notifications(app);
   settings(app);
   signup(app);
+  stars(app);
   subscribe(app);
   user(app);
 };

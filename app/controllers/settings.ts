@@ -43,7 +43,7 @@ export default function(app) {
           'createdAt', 'updatedAt', 'externalIds'];
         _.forEach(deleteKeys, function(key) { delete obj[key]; });
 
-        delete obj.user.createdAt;
+        delete obj.account.createdAt;
 
         // save
         $http.put(config.apiUrl + '/people/' + $scope.user.id, obj).

@@ -9,8 +9,8 @@
           </button>
           <ul class="dropdown-menu">
             <li ng-repeat="revision in revisions.slice().reverse()"
-                ng-class="{'disabled': !revision.openAccess}">
-              <a ng-if="revision.openAccess"
+                ng-class="{'disabled': !revision.isOpenAccess}">
+              <a ng-if="revision.isOpenAccess"
                  href="./documents/{{revision.id}}/revisions/{{revision.revision}}">
                 <strong ng-if="revision.revision ===
                 revisions[activeRevisionIdx].revision">{{getShortDescription(revision)}}</strong>
@@ -18,7 +18,7 @@
                 revisions[activeRevisionIdx].revision">{{getShortDescription(revision)}}</span>
                 <i class="fa fa-fw"></i>
               </a>
-              <a ng-if="!revision.openAccess" title="This document is not open-access and cannot be displayed yet.">
+              <a ng-if="!revision.isOpenAccess" title="This document is not open-access and cannot be displayed yet.">
                 {{getShortDescription(revision)}}
                 <i class="fa fa-fw fa-lock"></i>
               </a>

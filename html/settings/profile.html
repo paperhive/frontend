@@ -10,7 +10,7 @@
               Username
             </label>
             <div class="col-sm-8">
-              <input ng-model="user.user.username"
+              <input ng-model="user.account.username"
                 ng-model-options="{ debounce: 250 }"
                 name="username" type="text"
                 class="form-control" id="username"
@@ -64,17 +64,17 @@
             </div>
           </div>
           <!--email-->
-          <div ng-if="user.user.email" class="form-group has-feedback"
-              ng-class="{'has-error': !user.user.email}">
+          <div ng-if="user.account.email" class="form-group has-feedback"
+              ng-class="{'has-error': !user.account.email}">
             <label for="email" class="col-sm-3 control-label">
               Email
             </label>
             <div class="col-sm-8">
-              <input ng-model="user.user.email" type="email" class="form-control"
+              <input ng-model="user.account.email" type="email" class="form-control"
                 id="email" readonly>
-              <i ng-show="!user.user.email"
+              <i ng-show="!user.account.email"
                 class="fa fa-times form-control-feedback" aria-hidden="true"></i>
-              <p class="help-block" ng-show="!user.user.email">
+              <p class="help-block" ng-show="!user.account.email">
                 <i class="fa fa-fw fa-warning"></i>
                 No email address set!
               </p>
@@ -135,16 +135,16 @@
             </div>
           </div>
           <div class="form-group has-feedback"
-              ng-class="{'has-error': !user.user.email}">
+              ng-class="{'has-error': !user.account.email}">
             <label for="email" class="col-sm-3 control-label">
               Email
             </label>
             <div class="col-sm-9">
-              <input ng-model="user.user.email" type="email" class="form-control"
+              <input ng-model="user.account.email" type="email" class="form-control"
                 id="email" readonly>
-              <i ng-show="!user.user.email"
+              <i ng-show="!user.account.email"
                 class="fa fa-times form-control-feedback" aria-hidden="true"></i>
-              <p class="help-block" ng-show="!user.user.email">
+              <p class="help-block" ng-show="!user.account.email">
                 <i class="fa fa-fw fa-warning"></i>
                 No email address set!
               </p>
