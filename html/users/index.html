@@ -20,7 +20,7 @@
                 Joined on {{user.account.createdAt | date:'longDate'}}
               </p>
               <a
-                ng-show="auth.user.username === user.username"
+                ng-show="auth.user.account.username === user.account.username"
                 href="./settings"
                 class="btn btn-default"
                 >
