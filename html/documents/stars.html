@@ -5,7 +5,7 @@
         ng-repeat="user in stars"
         >
       <a
-        ng-href="./users/{{user.user.username}}"
+        ng-href="./users/{{user.account.username}}"
         class="list-group-item"
         >
           <span class="media">
@@ -14,7 +14,7 @@
             </div>
             <div class="media-body">
               <h4 class="media-heading">{{user.displayName}}</h4>
-              @{{user.user.username}}
+              @{{user.account.username}}
             </div>
           </span>
       </a>
