@@ -29,13 +29,15 @@
       <div class="col-md-8">
         <uib-pagination
           boundary-links="true"
-          total-items="totalItems"
-          ng-model="currentPage"
+          total-items="pagination.total"
+          ng-model="pagination.page"
+          max-size="pagination.maxSize"
           class="pagination-sm"
           previous-text="&lsaquo;"
           next-text="&rsaquo;"
           first-text="&laquo;"
           last-text="&raquo;"
+          rotate="false"
         ></uib-pagination>
       </div>
     </div>

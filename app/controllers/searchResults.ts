@@ -4,7 +4,20 @@ export default function(app) {
   app.controller('SearchResultsCtrl', ['$scope', '$location', '$routeParams', '$http', 'config', '$routeSegment',
     function($scope, $location, $routeParams, $http, config, $routeSegment) {
 
-      $scope.limit = 10;
+      $scope.pagination = {
+        page: 1,
+        maxPerPage: 10,
+        total: undefined,
+        maxSize: 7,
+        skip: 0
+      };
+
+      // TODO get total
+      $scope.pagination.total = 100;
+
+      function countSkip(page, maxPerPage) {
+        return $scope.pagination.skip = (page - 1) * maxPerPage;
+      };
 
       $scope.query = $location.search().param;
       $scope.$on('$locationChangeSuccess', function() {
@@ -12,9 +25,9 @@ export default function(app) {
         $scope.documents = undefined;
       });
 
-      function getSearchResults(query, limit) {
+      function getSearchResults(query, maxPerPage, skip) {
         return $http.get(config.apiUrl + '/documents/', {
-          params: {q: query, limit: limit, restrictToLatest: true}
+          params: {q: query, limit: maxPerPage, skip: skip, restrictToLatest: true}
         })
         .then(
           function(response) {
@@ -29,12 +42,13 @@ export default function(app) {
         );
       };
 
-      $scope.$watchGroup(['query', 'limit'], (newValues) =>
-        getSearchResults(newValues[0], newValues[1])
+      $scope.$watchGroup(['query', 'pagination.maxPerPage', 'pagination.skip'], (newValues) =>
+        getSearchResults(newValues[0], newValues[1], newValues[2])
       );
 
-      $scope.totalItems = 64;
-      $scope.currentPage = 4;
+      $scope.$watchGroup(['pagination.page', 'pagination.maxPerPage'], (newValues) =>
+        countSkip(newValues[0], newValues[1])
+      );
 
     }
   ]);
