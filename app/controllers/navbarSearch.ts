@@ -10,7 +10,7 @@ export default function(app) {
       ) {
 
         $scope.showAllResults = function(input) {
-          console.log(input);
+          $location.path('/searchResults/').search({param: input});
         };
 
         $scope.search = {};
