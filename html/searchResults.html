@@ -1,6 +1,6 @@
 <div ng-controller="SearchResultsCtrl">
-  <div class="container ph-xl-margin-bottom">
-    <div class="row">
+  <div class="container">
+    <div class="row ph-lg-margin-bottom">
       <div class="col-md-8">
         <div class="ph-lg-margin-bottom">
           <h3>
@@ -26,16 +26,21 @@
 
       </div>
     </div>
-    <!--uib-pagination
-      boundary-links="true"
-      total-items="totalItems"
-      ng-model="currentPage"
-      class="pagination-sm"
-      previous-text="&lsaquo;"
-      next-text="&rsaquo;"
-      first-text="&laquo;"
-      last-text="&raquo;"
-    ></uib-pagination-->
+
+    <div class="row ph-lg-margin-bottom">
+      <div class="col-md-8">
+        <uib-pagination
+          boundary-links="true"
+          total-items="totalItems"
+          ng-model="currentPage"
+          class="pagination-sm"
+          previous-text="&lsaquo;"
+          next-text="&rsaquo;"
+          first-text="&laquo;"
+          last-text="&raquo;"
+        ></uib-pagination>
+      </div>
+    </div>
 
   </div>
 </div>

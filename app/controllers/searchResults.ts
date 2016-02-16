@@ -29,6 +29,9 @@ export default function(app) {
 
       $scope.search($scope.input, 10);
 
+      $scope.totalItems = 64;
+      $scope.currentPage = 4;
+
     }
   ]);
 };
