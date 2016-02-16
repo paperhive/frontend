@@ -12,9 +12,6 @@ export default function(app) {
         skip: 0
       };
 
-      // TODO get total
-      $scope.pagination.total = 100;
-
       function countSkip(page, maxPerPage) {
         return $scope.pagination.skip = (page - 1) * maxPerPage;
       };
@@ -31,7 +28,8 @@ export default function(app) {
         })
         .then(
           function(response) {
-            return $scope.documents = response.data.documents;
+            $scope.pagination.total = response.data.total;
+            $scope.documents = response.data.documents;
           },
           function(response) {
             notificationService.notifications.push({

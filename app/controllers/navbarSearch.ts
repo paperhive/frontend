@@ -36,6 +36,7 @@ export default function(app) {
             'documents', {documentId: item.id}
           ));
         };
+
       }
     ]
   );

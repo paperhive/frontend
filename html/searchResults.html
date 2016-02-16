@@ -1,7 +1,8 @@
 <div ng-controller="SearchResultsCtrl">
   <div class="container">
 
-    <h2>All results for "{{query}}"</h2>
+    <h2 ng-if="documents.length">All results for "{{query}}"</h2>
+    <h2 ng-if="!documents.length">No results for "{{query}}"</h2>
 
     <div class="row ph-lg-margin-bottom row ph-lg-margin-top">
       <div class="col-md-8">
@@ -25,7 +26,7 @@
       </div>
     </div>
 
-    <div class="row ph-lg-margin-bottom">
+    <div ng-if="documents.length" class="row ph-lg-margin-bottom">
       <div class="col-md-8">
         <uib-pagination
           boundary-links="true"
@@ -39,6 +40,7 @@
           last-text="&raquo;"
           rotate="false"
           ng-click="scrollToTop()"
+          boundary-link-numbers="true"
         ></uib-pagination>
       </div>
     </div>
