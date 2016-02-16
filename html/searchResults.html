@@ -1,16 +1,14 @@
 <div ng-controller="SearchResultsCtrl">
   <div class="container">
-    <div class="row ph-lg-margin-bottom">
+
+    <h2>All results for "{{input}}"</h2>
+
+    <div class="row ph-lg-margin-bottom row ph-lg-margin-top">
       <div class="col-md-8">
-        <div class="ph-lg-margin-bottom">
-          <h3>
-            All results for "{{input}}"
-          </h3>
-        </div>
 
         <div class="ph-lg-margin-top media" ng-repeat="document in documents">
           <h4>
-            <a href="" title="{{document.title}}">
+            <a href="" title="{{document.title}}" ng-click="goToDocument(document.id)">
               {{document.title}}
             </a>
           </h4>

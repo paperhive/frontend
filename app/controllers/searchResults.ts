@@ -1,8 +1,8 @@
 'use strict';
 
 export default function(app) {
-  app.controller('SearchResultsCtrl', ['$scope', '$location', '$routeParams', '$http', 'config',
-    function($scope, $location, $routeParams, $http, config) {
+  app.controller('SearchResultsCtrl', ['$scope', '$location', '$routeParams', '$http', 'config', '$routeSegment',
+    function($scope, $location, $routeParams, $http, config, $routeSegment) {
 
       if ($routeParams.param.title) {
         $scope.input = $routeParams.param.title;
@@ -28,6 +28,12 @@ export default function(app) {
       };
 
       $scope.search($scope.input, 10);
+
+      $scope.goToDocument = function(id) {
+        $location.path($routeSegment.getSegmentUrl(
+          'documents', {documentId: id}
+        ));
+      };
 
       $scope.totalItems = 64;
       $scope.currentPage = 4;
