@@ -7,7 +7,7 @@ export default function(app) {
       const meta = {
         main: {
           title: 'PaperHive · The coworking hub for researchers',
-          description: 'Greatly simplifying research communication and ' +
+          description: 'Simplifying research communication and ' +
            'introducing new ways of collaboration through in-document ' +
            'discussions.',
           url: 'https://paperhive.org',
