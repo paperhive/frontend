@@ -4,15 +4,17 @@ export default function(app) {
   app.controller('SearchResultsCtrl', ['$scope', '$location', '$routeParams', '$http', 'config', '$routeSegment',
     function($scope, $location, $routeParams, $http, config, $routeSegment) {
 
-      if ($routeParams.param.title) {
-        $scope.input = $routeParams.param.title;
-      } else {
-        $scope.input = $routeParams.param;
-      }
+      $scope.limit = 10;
 
-      $scope.search = function(input, limit) {
+      $scope.query = $location.search().param;
+      $scope.$on('$locationChangeSuccess', function() {
+        $scope.query = $location.search().param;
+        $scope.documents = undefined;
+      });
+
+      function getSearchResults(query, limit) {
         return $http.get(config.apiUrl + '/documents/', {
-          params: {q: input, limit: limit, restrictToLatest: true}
+          params: {q: query, limit: limit, restrictToLatest: true}
         })
         .then(
           function(response) {
@@ -27,13 +29,9 @@ export default function(app) {
         );
       };
 
-      $scope.search($scope.input, 10);
-
-      $scope.goToDocument = function(id) {
-        $location.path($routeSegment.getSegmentUrl(
-          'documents', {documentId: id}
-        ));
-      };
+      $scope.$watchGroup(['query', 'limit'], (newValues) =>
+        getSearchResults(newValues[0], newValues[1])
+      );
 
       $scope.totalItems = 64;
       $scope.currentPage = 4;
