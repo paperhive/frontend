@@ -50,6 +50,10 @@ export default function(app) {
         countSkip(newValues[0], newValues[1])
       );
 
+      $scope.scrollToTop = function() {
+        window.scrollTo(0, 0);
+      };
+
     }
   ]);
 };
