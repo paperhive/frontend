@@ -8,6 +8,11 @@ export default function(app) {
         $scope, $http, $location, $routeSegment, config,
         notificationService
       ) {
+
+        $scope.showAllResults = function(input) {
+          console.log(input);
+        };
+
         $scope.search = {};
         $scope.phSearch = function(query, limit) {
           return $http.get(config.apiUrl + '/documents/', {

@@ -39,6 +39,7 @@
               typeahead-wait-ms="250"
               typeahead-on-select="goToDocument($item, $model, $label)"
               typeahead-template-url="html/shared/navbarSearchItem.html"
+              ng-keypress="($event.which === 13) && showAllResults(search.body)"
               required
               >
           </div>
