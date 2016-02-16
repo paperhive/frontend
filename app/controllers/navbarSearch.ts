@@ -10,7 +10,10 @@ export default function(app) {
       ) {
 
         $scope.showAllResults = function(input) {
-          $location.path('/searchResults/').search({param: input});
+          // TODO 
+          if (input != $location.search().param) {
+            $location.path('/searchResults/').search({param: input});
+          }
         };
 
         $scope.search = {};
