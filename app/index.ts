@@ -25,7 +25,7 @@ import 'angular-bootstrap';                           // ui.bootstrap
 import 'angular-moment';                              // angularMoment
 import 'angular-leaflet-directive';                   // leaflet-directive
 import 'angulartics';
-import angularGoogleAnalytics from 'angulartics-google-analytics';
+import 'angulartics-google-analytics';
 import 'javascript-detect-element-resize'; // injects resize+removeResize to jquery
 import 'ment.io';
 import 'ngSmoothScroll';                              // smoothScroll
@@ -48,7 +48,7 @@ const paperhive = angular
   .module(
     'paperhive', [
       'angulartics',
-      angularGoogleAnalytics,
+      'angulartics.google.analytics',
       'ui.bootstrap',
       'mentio',
       'ngAnimate',
