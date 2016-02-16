@@ -1,8 +1,8 @@
 'use strict';
 
 export default function(app) {
-  app.controller('SearchResultsCtrl', ['$scope', '$location', '$routeParams', '$http', 'config', '$routeSegment',
-    function($scope, $location, $routeParams, $http, config, $routeSegment) {
+  app.controller('SearchResultsCtrl', ['config', '$http', '$location', '$scope',
+    function(config, $http, $location, $scope) {
 
       $scope.pagination = {
         page: 1,
