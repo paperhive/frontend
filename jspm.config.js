@@ -20,6 +20,8 @@ SystemJS.config({
     "angular-route": "github:angular/bower-angular-route@1.5.0",
     "angular-route-segment": "github:artch/angular-route-segment@1.5.0",
     "angular-sanitize": "github:angular/bower-angular-sanitize@1.5.0",
+    "angulartics": "npm:angulartics@1.0.3",
+    "angulartics-google-analytics": "npm:angulartics-google-analytics@0.1.4",
     "assert": "github:jspm/nodelibs-assert@0.2.0-alpha",
     "bootstrap": "github:twbs/bootstrap@3.3.6",
     "highlightjs": "github:components/highlightjs@9.1.0",
