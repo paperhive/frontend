@@ -21,16 +21,26 @@ export default function(app) {
 
       const documentId = $routeSegment.$routeParams.documentId;
 
-      // ask local storage if flag 'visited' is already set
-      if (!$window.localStorage.getItem('visited')) {
+      // ask local storage if flag 'documentVisited' is already set
+      if (!$window.localStorage.documentVisited) {
         // set flag at first usage
-        $window.localStorage.setItem('visited', 'true');
+        $window.localStorage.documentVisited = true;
         // and trigger notification
         notificationService.notifications.push({
           type: 'info',
-          message: 'Just select some text of interest and ask the research '
-            + 'community a question. Save time, help others in real time by '
-            + 'replying to their comment, enrich papers with references to other useful research!'
+          message:
+            `Hints:
+            <ul>
+              <li>
+                Select text of interest and ask the research community a question
+              </li>
+              <li>
+                Save time, help others in real time by replying to their comment
+              </li>
+              <li>
+                Enrich papers with references to other useful research
+              </li>
+            </ul>`
         });
       }
 
