@@ -13,7 +13,7 @@ export default function(app) {
       // authService.returnPath
       function setReturnPath() {
         if ($location.path() !== '/signup' && $location.path() !== '/login') {
-          authService.returnPath = $location.path();
+          authService.returnPath = $location.url();
         }
         if (!authService.returnPath) {
           authService.returnPath = $location.search().returnPath || '/';
