@@ -14,7 +14,6 @@ export default function(app) {
       function updateFromLocation() {
         $scope.search.query = $location.search().query;
         $scope.search.page = $location.search().page || 1;
-        console.log($scope.search.query);
       }
       updateFromLocation();
       $scope.$on('$locationChangeSuccess', updateFromLocation);
