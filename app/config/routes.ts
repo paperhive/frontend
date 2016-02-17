@@ -46,6 +46,7 @@ export default function(app) {
         .when('/legalnotice', 'legalnotice')
         .when('/login', 'login')
         .when('/authReturn', 'authReturn')
+        .when('/searchResults', 'searchResults')
         .when('/settings', 'settings')
         .when('/settings/profile', 'settings.profile')
         .when('/settings/site', 'settings.site')
@@ -240,6 +241,12 @@ export default function(app) {
           templateUrl: 'html/auth/return.html',
           controller: 'AuthReturnCtrl',
           title: 'PaperHive'
+        })
+
+        .segment('searchResults', {
+          templateUrl: 'html/searchResults.html',
+          controller: 'SearchResultsCtrl',
+          title: 'Search results',
         })
 
         .segment('settings', {
