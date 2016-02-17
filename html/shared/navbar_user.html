@@ -18,8 +18,8 @@
   </li>
   <li ng-if="auth.user" class="dropdown" is-open="dropdown_open" uib-dropdown>
     <a href="" class="dropdown-toggle" uib-dropdown-toggle>
-      <avatar user="auth.user" size="38" classes="ph-avatar
-      img-circle"></avatar>
+      <avatar user="auth.user" size="38" classes="ph-avatar img-circle">
+      </avatar>
       {{auth.user.displayName}}
       <i ng-if="!dropdown_open" class="fa fa-fw fa-caret-down"></i>
       <i ng-if="dropdown_open" class="fa fa-fw fa-caret-up"></i>
