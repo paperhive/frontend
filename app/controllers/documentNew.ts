@@ -10,7 +10,7 @@ export default function(app) {
       $scope.submitApproved = function() {
         $scope.submitting = true;
         $http.post(config.apiUrl + '/documents/', undefined, {
-          params: {url: $scope.handle}
+          params: {url: $scope.url}
         })
           .success(function(document) {
             $scope.submitting = false;
@@ -20,8 +20,9 @@ export default function(app) {
             $scope.submitting = false;
             notificationService.notifications.push({
               type: 'error',
-              message: (data && data.message) ||
-                'could not add document (unknown reason)'
+              message: 'Could not add document: ' +
+                ((data && data.message) ||
+                 'could not add document (unknown reason)')
             });
           });
 
