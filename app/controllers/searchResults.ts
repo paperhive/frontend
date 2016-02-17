@@ -1,35 +1,45 @@
 'use strict';
 
 export default function(app) {
-  app.controller('SearchResultsCtrl', ['config', '$http', '$location', '$scope',
-    function(config, $http, $location, $scope) {
+  app.controller('SearchResultsCtrl', ['config', '$http', '$location', '$scope', 'notificationService',
+    function(config, $http, $location, $scope, notificationService) {
+      const maxPerPage = 10;
 
-      $scope.pagination = {
+      $scope.search = {
         page: 1,
-        maxPerPage: 10,
-        total: undefined,
         maxSize: 7,
-        skip: 0
       };
 
-      function countSkip(page, maxPerPage) {
-        return $scope.pagination.skip = (page - 1) * maxPerPage;
-      };
+      // update scope variables from location
+      function updateFromLocation() {
+        $scope.search.query = $location.search().query;
+        $scope.search.page = $location.search().page || 1;
+        console.log($scope.search.query);
+      }
+      updateFromLocation();
+      $scope.$on('$locationChangeSuccess', updateFromLocation);
 
-      $scope.query = $location.search().param;
-      $scope.$on('$locationChangeSuccess', function() {
-        $scope.query = $location.search().param;
-        $scope.documents = undefined;
-      });
+      // update location from scope variables
+      function updateFromScope(page) {
+        $location.search({query: $scope.search.query, page: page});
+      }
+      $scope.$watch('search.page', updateFromScope);
 
-      function getSearchResults(query, maxPerPage, skip) {
+      function getSearchResults(query, page) {
+        $scope.search.total = undefined;
+        $scope.search.documents = undefined;
         return $http.get(config.apiUrl + '/documents/', {
-          params: {q: query, limit: maxPerPage, skip: skip, restrictToLatest: true}
+          params: {
+            q: query,
+            limit: maxPerPage,
+            skip: (page - 1) * maxPerPage,
+            restrictToLatest: true,
+          }
         })
         .then(
           function(response) {
-            $scope.pagination.total = response.data.total;
-            $scope.documents = response.data.documents;
+            $scope.search.total = response.data.total;
+            $scope.search.documents = response.data.documents;
           },
           function(response) {
             notificationService.notifications.push({
@@ -40,12 +50,8 @@ export default function(app) {
         );
       };
 
-      $scope.$watchGroup(['query', 'pagination.maxPerPage', 'pagination.skip'], (newValues) =>
-        getSearchResults(newValues[0], newValues[1], newValues[2])
-      );
-
-      $scope.$watchGroup(['pagination.page', 'pagination.maxPerPage'], (newValues) =>
-        countSkip(newValues[0], newValues[1])
+      $scope.$watchGroup(['search.query', 'search.page'], (newValues) =>
+        getSearchResults(newValues[0], newValues[1])
       );
 
       $scope.scrollToTop = function() {
