@@ -56,9 +56,9 @@
         <li class="media">
           <div ng-if="auth.user">
             <a class="media-left" href="./users/{{auth.user.account.username}}">
-              <gravatar user="auth.user" size="80"
+              <avatar user="auth.user" size="80"
                   classes="img-circle"
-                  ></gravatar>
+                  ></avatar>
             </a>
             <div class="media-body">
               <div class="panel panel-default">
@@ -75,21 +75,13 @@
                       <a href="http://kramdown.gettalong.org/syntax.html" target="_blank">Markdown</a>,
                       $$<a href="http://en.wikibooks.org/wiki/LaTeX/Mathematics#Symbols"
                         target="_blank">LaTeX</a>$$,
-                      ```<a href="https://highlightjs.org/" target="_blank">code blocks</a>```,
-                      <a href="http://jeff-collins.github.io/ment.io/"
-                        target="_blank">@mentions</a>
+                      ```<a href="https://highlightjs.org/" target="_blank">code blocks</a>```
                     </span>
 
                     <textarea
                       id="textbody"
                       class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
                       ng-model="comment.body"
-                      mentio
-                      mentio-search="searchUsers(term, 5)"
-                      mentio-items="foundUsers"
-                      mentio-template-url="html/directives/mentio-list.html"
-                      mentio-select="getMentioText(item)"
-                      mentio-require-leading-space="true"
                       elastic
                       placeholder="Reply..."
                       required
@@ -168,7 +160,7 @@
       </span>
       <hr-->
       <h5>Participants</h5>
-      <gravatar-list discussion="discussion"></gravatar-list>
+      <avatar-list discussion="discussion"></avatar-list>
     </div>
 
   </div>

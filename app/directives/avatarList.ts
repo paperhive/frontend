@@ -2,13 +2,13 @@ import { map, uniqBy } from 'lodash';
 
 export default function(app) {
 
-  app.directive('gravatarList', function() {
+  app.directive('avatarList', function() {
     return {
       restrict: 'E',
       scope: {
         discussion: '='
       },
-      templateUrl: 'html/directives/gravatarList.html',
+      templateUrl: 'html/directives/avatarList.html',
       link: function(scope, element, attrs) {
         scope.$watch(
           'discussion',
