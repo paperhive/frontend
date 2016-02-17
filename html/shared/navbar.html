@@ -36,7 +36,6 @@
               id="srch-term"
               ng-model="search.body"
               uib-typeahead="result as result.title for result in phSearch($viewValue, 5)"
-              typeahead-wait-ms="250"
               typeahead-on-select="goToDocument($item, $model, $label)"
               typeahead-template-url="html/shared/navbarSearchItem.html"
               ng-keypress="($event.which === 13) && showAllResults(search.body)"
