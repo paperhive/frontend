@@ -37,6 +37,9 @@ export default function(app) {
                 ctrl.doesUserStar = some(ctrl.stars, {'id': user.id});
               }
             });
+            // This is an async function, so unless we $apply, angular won't
+            // know that values have changed.
+            $scope.$apply();
           });
 
           ctrl.star = async function() {
@@ -45,7 +48,7 @@ export default function(app) {
               await $http.post(
                 config.apiUrl +
                   '/documents/' + ctrl.documentId + '/star'
-              )
+              );
             } catch (err) {
               ctrl.submitting = false;
               notificationService.httpError('could not star document');
@@ -53,6 +56,9 @@ export default function(app) {
             ctrl.submitting = false;
             ctrl.stars.push(ctrl.user);
             ctrl.doesUserStar = true;
+            // This is an async function, so unless we $apply, angular won't
+            // know that values have changed.
+            $scope.$apply();
           };
 
           ctrl.unstar = async function() {
@@ -61,8 +67,8 @@ export default function(app) {
               await $http.delete(
                 config.apiUrl +
                   '/documents/' + ctrl.documentId + '/star'
-              )
-            } catch(err) {
+              );
+            } catch (err) {
               ctrl.submitting = false;
               notificationService.httpError('could not star document');
             }
@@ -70,10 +76,13 @@ export default function(app) {
             const idx = findIndex(ctrl.stars, {id: ctrl.user.id});
             if (idx > -1) { ctrl.stars.splice(idx, 1); }
             ctrl.doesUserStar = false;
+            // This is an async function, so unless we $apply, angular won't
+            // know that values have changed.
+            $scope.$apply();
           };
         }],
         template:
-          `<div class="btn-group" role="group">
+          `<span class="btn-group" role="group">
             <button ng-if="$ctrl.doesUserStar" type="button" class="btn btn-default"
               ng-disabled="!$ctrl.user" ng-click="$ctrl.unstar()">
               <i class="fa fa-star"></i> Unstar
@@ -82,10 +91,10 @@ export default function(app) {
               ng-disabled="!$ctrl.user" ng-click="$ctrl.star()">
               <i class="fa fa-star"></i> Star
             </button>
-            <button type="button" class="btn btn-default" disabled>
+            <a href="./documents/{{$ctrl.documentId}}/stars" class="btn btn-default">
               <span ng-if="$ctrl.stars">{{$ctrl.stars.length}}</span>
               <span ng-if="!$ctrl.stars">&nbsp;</span>
-            </button>
-          </div>`
+            </a>
+          </span>`
     });
 };

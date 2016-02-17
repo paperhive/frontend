@@ -8,6 +8,11 @@ export default function(app) {
         $scope, $http, $location, $routeSegment, config,
         notificationService
       ) {
+
+        $scope.showAllResults = function(input) {
+          $location.path('/searchResults/').search({query: input, page: 1});
+        };
+
         $scope.search = {};
         $scope.phSearch = function(query, limit) {
           return $http.get(config.apiUrl + '/documents/', {
@@ -20,17 +25,19 @@ export default function(app) {
             function(response) {
               notificationService.notifications.push({
                 type: 'error',
-                message: 'Could not fetch articles'
+                message: 'Could not fetch documents'
               });
             }
           );
         };
 
-        $scope.goToArticle = function(item, model, label) {
+        $scope.goToDocument = function(item, model, label) {
           $location.path($routeSegment.getSegmentUrl(
-            'articles', {articleId: item.id}
+            'documents', {documentId: item.id}
           ));
+          $scope.search.body = '';
         };
+
       }
     ]
   );

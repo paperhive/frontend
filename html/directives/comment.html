@@ -1,12 +1,12 @@
-<a class="media-left" href="./users/{{comment.author.user.username}}">
-  <gravatar user="comment.author" size="80"
+<a class="media-left" href="./users/{{comment.author.account.username}}">
+  <avatar user="comment.author" size="80"
     classes="img-circle"
-    ></gravatar>
+    ></avatar>
 </a>
 <div class="media-body">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <a href="./users/{{comment.author.username}}">
+      <a href="./users/{{comment.author.account.username}}">
         {{comment.author.displayName}}</a>
       commented
       <span am-time-ago="comment.createdAt"></span>
@@ -15,7 +15,7 @@
       </span>
       <span
         class="pull-right"
-        ng-show="auth.user._id === comment.author._id"
+        ng-show="auth.user.id === comment.author.id"
         >
         <button
           class="btn btn-link ph-no-padding-top ph-no-padding-bottom"
@@ -25,7 +25,7 @@
           <i class="fa fa-pencil"></i>
         </button>
         <button
-          ng-if="deletable && auth.user._id === comment.author._id"
+          ng-if="deletable && auth.user.id === comment.author.id"
           class="btn btn-link ph-no-padding-top ph-no-padding-bottom"
           confirmed-click="delete()"
           ng-disabled="submitting"
@@ -49,9 +49,7 @@
           <a href="http://kramdown.gettalong.org/syntax.html" target="_blank">Markdown</a>,
           $$<a href="http://en.wikibooks.org/wiki/LaTeX/Mathematics#Symbols"
             target="_blank">LaTeX</a>$$,
-          ```<a href="https://highlightjs.org/" target="_blank">code blocks</a>```,
-          <a href="http://jeff-collins.github.io/ment.io/"
-            target="_blank">@mentions</a>
+          ```<a href="https://highlightjs.org/" target="_blank">code blocks</a>```
         </span>
         <textarea
           id="textbody"

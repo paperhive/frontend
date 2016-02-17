@@ -36,9 +36,10 @@
               id="srch-term"
               ng-model="search.body"
               uib-typeahead="result as result.title for result in phSearch($viewValue, 5)"
-              typeahead-wait-ms="250"
-              typeahead-on-select="goToArticle($item, $model, $label)"
+              typeahead-on-select="goToDocument($item, $model, $label)"
               typeahead-template-url="html/shared/navbarSearchItem.html"
+              ng-keypress="($event.which === 13) && showAllResults(search.body)"
+              typeahead-focus-first="false"
               required
               >
           </div>
@@ -50,6 +51,9 @@
       </div>
     </div><!-- collapse -->
   </div><!-- container-fluid -->
+  <div>
+    <ng-include src="'html/shared/notifications.html'"></ng-include>
+  </div>
 </div><!-- navbar -->
 <div class="ph-navbar-shadow"><!-- #uglyhack: shadow z-index < subnav z-index -->
 </div>

@@ -7,7 +7,7 @@ export default function(app) {
       const meta = {
         main: {
           title: 'PaperHive · The coworking hub for researchers',
-          description: 'Greatly simplifying research communication and ' +
+          description: 'Simplifying research communication and ' +
            'introducing new ways of collaboration through in-document ' +
            'discussions.',
           url: 'https://paperhive.org',
@@ -26,25 +26,27 @@ export default function(app) {
         .when('/', 'main')
         .when('/404', '404')
         .when('/about', 'about')
-        .when('/articles/new', 'articles_new')
-        .when('/articles/:articleId', 'articles')
-        .when('/articles/:articleId/activity', 'articles.activity')
-        .when('/articles/:articleId/discussions', 'articles.discussions')
-        .when('/articles/:articleId/discussions/new',
-              'articles.discussions.new')
-        .when('/articles/:articleId/discussions/:discussionId',
-              'articles.discussions.thread')
-        .when('/articles/:articleId/settings', 'articles.settings')
-        .when('/articles/:articleId/text', 'articles.text')
-        .when('/articles/:articleId/about', 'articles.about')
+        .when('/documents/new', 'documents_new')
+        .when('/documents/:documentId', 'documents')
+        .when('/documents/:documentId/activity', 'documents.activity')
+        .when('/documents/:documentId/discussions', 'documents.discussions')
+        .when('/documents/:documentId/stars', 'documents.stars')
+        // .when('/documents/:documentId/discussions/new',
+        //       'documents.discussions.new')
+        .when('/documents/:documentId/discussions/:discussionId',
+              'documents.discussions.thread')
+        .when('/documents/:documentId/settings', 'documents.settings')
+        .when('/documents/:documentId/text', 'documents.text')
+        .when('/documents/:documentId/revisions/:revisionId', 'documents.revisions')
+        .when('/documents/:documentId/about', 'documents.about')
         .when('/contact', 'contact')
         .when('/terms', 'terms')
         // .when('/help', 'help')
         .when('/jobs', 'jobs')
-        .when('/alpha-warning', 'alpha-warning')
         .when('/legalnotice', 'legalnotice')
         .when('/login', 'login')
         .when('/authReturn', 'authReturn')
+        .when('/searchResults', 'searchResults')
         .when('/settings', 'settings')
         .when('/settings/profile', 'settings.profile')
         .when('/settings/site', 'settings.site')
@@ -52,7 +54,7 @@ export default function(app) {
         .when('/subscribed', 'subscribed')
         .when('/users/:username', 'users')
         .when('/users/:username/profile', 'users.profile')
-        .when('/users/:username/articles', 'users.articles')
+        .when('/users/:username/documents', 'users.documents')
         .when('/users/:username/activity', 'users.activity')
 
         // Init Main Page
@@ -124,54 +126,58 @@ export default function(app) {
           ]
         })
 
-        .segment('alpha-warning', {
-          templateUrl: 'html/alpha-warning.html',
-          title: 'Alpha warning · PaperHive'
-        })
-
-        .segment('articles', {
-          templateUrl: 'html/articles/index.html',
-          dependencies: ['articleId'],
-          title: 'Article · PaperHive'
+        .segment('documents', {
+          templateUrl: 'html/documents/index.html',
+          dependencies: ['documentId'],
+          title: 'Document · PaperHive'
         })
         .within()
           .segment('activity', {
-            templateUrl: 'html/articles/activity.html',
-            title: 'Article activity · PaperHive'
+            templateUrl: 'html/documents/activity.html',
+            title: 'Document activity · PaperHive'
+          })
+          .segment('stars', {
+            templateUrl: 'html/documents/stars.html',
+            title: 'Stars · PaperHive'
           })
           .segment('discussions', {
-            templateUrl: 'html/articles/discussions/index.html',
+            templateUrl: 'html/documents/discussions/index.html',
             title: 'Discussions · PaperHive'
           })
           .within()
             .segment('list', {
               default: true,
-              templateUrl: 'html/articles/discussions/list.html',
+              templateUrl: 'html/documents/discussions/list.html',
               title: 'Discussions · PaperHive'
             })
-            .segment('new', {
-              templateUrl: 'html/articles/discussions/new.html',
-              title: 'New discussion · PaperHive'
-            })
+            // .segment('new', {
+            //   templateUrl: 'html/documents/discussions/new.html',
+            //   title: 'New discussion · PaperHive'
+            // })
             .segment('thread', {
-              templateUrl: 'html/articles/discussions/thread.html',
+              templateUrl: 'html/documents/discussions/thread.html',
               dependencies: ['discussionId'],
               title: 'Discussion · PaperHive'
             })
           .up()
           .segment('settings', {
-            templateUrl: 'html/articles/settings.html',
-            title: 'Article settings · PaperHive'
+            templateUrl: 'html/documents/settings.html',
+            title: 'Document settings · PaperHive'
           })
           .segment('text', {
             default: true,
-            templateUrl: 'html/articles/text.html',
-            title: 'Article · PaperHive'
+            templateUrl: 'html/documents/text.html',
+            title: 'Document · PaperHive'
+          })
+          .segment('revisions', {
+            templateUrl: 'html/documents/text.html',
+            dependencies: ['revisionId'],
+            title: 'Document at revision · PaperHive'
           })
         .up()
-        .segment('articles_new', {
-          templateUrl: 'html/articles/new.html',
-          title: 'Add a New Article · PaperHive'
+        .segment('documents_new', {
+          templateUrl: 'html/documents/new.html',
+          title: 'Add a New Document · PaperHive'
         })
 
         .segment('contact', {
@@ -203,7 +209,7 @@ export default function(app) {
           meta: [
             {
               name: 'description',
-              content: 'Learn how to discuss and review research articles ' +
+              content: 'Learn how to discuss and review research documents ' +
                 'efficiently and collaboratively on PaperHive.'
             }
           ]
@@ -243,6 +249,12 @@ export default function(app) {
           title: 'PaperHive'
         })
 
+        .segment('searchResults', {
+          templateUrl: 'html/searchResults.html',
+          controller: 'SearchResultsCtrl',
+          title: 'Search results',
+        })
+
         .segment('settings', {
           templateUrl: 'html/settings/index.html',
           title: 'Your profile · PaperHive'
@@ -278,8 +290,8 @@ export default function(app) {
             templateUrl: 'html/users/profile.html',
             dependencies: ['username']
           })
-          .segment('articles', {
-            templateUrl: 'html/users/articles.html',
+          .segment('documents', {
+            templateUrl: 'html/users/documents.html',
             dependencies: ['username']
           })
           .segment('activity', {

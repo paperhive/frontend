@@ -20,7 +20,10 @@ export default function(app) {
           $scope.discussion = discussion;
           metaService.set({
             title: discussion.title +
-              ($scope.article ? (' · ' + $scope.article.title) : '') +
+              ($scope.revisions && $scope.latestOAIdx ?
+               (' · ' + $scope.revisions[$scope.latestOAIdx].title) :
+               ''
+              ) +
               ' · PaperHive',
             meta: [
               {
@@ -148,8 +151,8 @@ export default function(app) {
         }
         };
 
-        $scope.isArticleAuthor = function(authorId) {
-        const k = _.findWhere($scope.article.authors, {id: authorId});
+        $scope.isDocumentAuthor = function(authorId) {
+        const k = _.findWhere(latestRevision.authors, {id: authorId});
         return (k !== undefined);
         };
         */

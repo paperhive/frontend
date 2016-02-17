@@ -21,11 +21,11 @@ export default function(app) {
         .success(function(data) {
           $scope.user = data;
           metaService.set({
-            title: data.user.username + ' (' + data.displayName + ')' +
+            title: data.account.username + ' (' + data.displayName + ')' +
               ' · PaperHive',
             meta: [{
               name: 'description',
-              content: 'Profile of ' + data.user.username +
+              content: 'Profile of ' + data.account.username +
                 ' (' + data.displayName + ')' +
                   ' on PaperHive.'
             }]

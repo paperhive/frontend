@@ -7,13 +7,13 @@ export default function(app) {
         user: undefined,
         token: undefined,
         loginToken: undefined,
-        signout: undefined,
+        logout: undefined,
       };
 
       // authService.returnPath
       function setReturnPath() {
         if ($location.path() !== '/signup' && $location.path() !== '/login') {
-          authService.returnPath = $location.path();
+          authService.returnPath = $location.url();
         }
         if (!authService.returnPath) {
           authService.returnPath = $location.search().returnPath || '/';
@@ -72,10 +72,10 @@ export default function(app) {
           .success(function(data, status) {
             authService.inProgress = false;
             authService.user = data.person;
-            authService.token = token;
+            authService.token = data.token;
 
-            // store token in session storage
-            $window.sessionStorage.token = data.token;
+            // fires 'storage' event in other tabs
+            $window.localStorage.token = data.token;
 
             // use token for all subsequent HTTP requests to API
             $http.defaults.headers.common['Authorization'] = 'token ' + data.token;
@@ -84,7 +84,7 @@ export default function(app) {
           })
           .error(function(data) {
             authService.inProgress = false;
-            signout();
+            authService.logout();
             deferred.reject(data);
           });
 
@@ -104,33 +104,32 @@ export default function(app) {
         );
       };
 
-      // store/remove token in local storage (if requested by user)
-      $rootScope.$watch(function() {
-        return authService.token;
-      }, function(token) {
-        if (token) {
-          $window.localStorage.token = token;
-        } else {
-          delete $window.localStorage.token;
-        }
-      }, true);
-
       // sign out and forget token
-      function signout() {
-        delete $window.sessionStorage.token;
+      authService.logout = function() {
         delete $window.localStorage.token;
-        delete $http.defaults.headers['X-Auth-Token'];
+        delete $http.defaults.headers['Authorization'];
         delete authService.user;
         delete authService.token;
-      }
-      authService.signout = signout;
+      };
 
-      // grab token from session or local storage
-      const token = $window.sessionStorage.token || $window.localStorage.token;
+      // sync token from local storage to authService
+      $window.addEventListener('storage', (event) => {
+        // we're only interested in a token
+        if (event.key !== 'token') return;
 
-      // sign in if token is present
-      if (token) {
-        authService.loginToken(token);
+        if (!authService.token && event.newValue) {
+          // we don't have a token but got one from local storage
+          authService.loginToken(event.newValue);
+        } else if (authService.token && !event.newValue) {
+          // we have a token but the token has been removed from local storage
+          authService.logout();
+        }
+        $rootScope.$apply();
+      });
+
+      // set token from local storage when initializing (if available)
+      if ($window.localStorage.token) {
+        authService.loginToken($window.localStorage.token);
       }
 
       return authService;
