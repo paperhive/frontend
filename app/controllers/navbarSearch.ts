@@ -35,6 +35,7 @@ export default function(app) {
           $location.path($routeSegment.getSegmentUrl(
             'documents', {documentId: item.id}
           ));
+          $scope.search.body = '';
         };
 
       }
