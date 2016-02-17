@@ -27,7 +27,6 @@ import 'angular-leaflet-directive';                   // leaflet-directive
 import 'angulartics';
 import 'angulartics-google-analytics';
 import 'javascript-detect-element-resize'; // injects resize+removeResize to jquery
-import 'ment.io';
 import 'ngSmoothScroll';                              // smoothScroll
 import 'pdfjs-dist/web/compatibility';
 import 'pdfjs-dist';
@@ -50,7 +49,6 @@ const paperhive = angular
       'angulartics',
       'angulartics.google.analytics',
       'ui.bootstrap',
-      'mentio',
       'ngAnimate',
       'ngSanitize',
       'ngRoute',
