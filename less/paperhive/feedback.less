@@ -1,11 +1,19 @@
 a.ph-feedback {
-  margin-top: -(@ph-footer-height + 20px);
+  position: fixed;
+  bottom: 0;
+  right: 5%;
+  z-index: 999;
 
+  padding: 1px 5px;
+  border-top: solid 1px #333;
+  border-left: solid 1px #333;
+  border-right: solid 1px #333;
   background: @ph-base-color;
   color: #fff;
   font-size: 17px;
   font-weight: bold;
   text-decoration: none;
+
 
   &:hover {
     background: @ph-highlight-color;
