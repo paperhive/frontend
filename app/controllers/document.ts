@@ -7,10 +7,11 @@ export default function(app) {
   app.controller('DocumentCtrl', [
     '$scope', '$route', '$routeSegment', '$document', '$http', 'config',
     '$rootScope', '$filter', 'authService', 'notificationService',
-    'metaService', 'websocketService',
+    'metaService', 'websocketService', '$window',
     function(
       $scope, $route, $routeSegment, $document, $http, config, $rootScope,
-      $filter, authService, notificationService, metaService, websocketService
+      $filter, authService, notificationService, metaService, websocketService,
+      $window
     ) {
       // expose authService
       $scope.auth = authService;
@@ -19,6 +20,29 @@ export default function(app) {
       $scope.$routeSegment = $routeSegment;
 
       const documentId = $routeSegment.$routeParams.documentId;
+
+      // ask local storage if flag 'documentVisited' is already set
+      if (!$window.localStorage.documentVisited) {
+        // set flag at first usage
+        $window.localStorage.documentVisited = true;
+        // and trigger notification
+        notificationService.notifications.push({
+          type: 'info',
+          message:
+            `Hints:
+            <ul>
+              <li>
+                Select text of interest and ask the research community a question
+              </li>
+              <li>
+                Save time, help others in real time by replying to their comment
+              </li>
+              <li>
+                Enrich papers with references to other useful research
+              </li>
+            </ul>`
+        });
+      }
 
       const documentUpdates = websocketService.join('documents', documentId);
       const documentUpdatesSubscriber = documentUpdates.subscribe((update) => {
