@@ -1,12 +1,12 @@
 import affix from './affix';
 import attributes from './attributes';
 import attribution from './attribution';
+import avatarList from './avatarList';
 import comment from './comment';
 import confirmedClick from './confirmed-click';
 import elastic from './elastic';
 import elementPosition from './elementPosition';
 import elementSize from './elementSize';
-import gravatarList from './gravatarList';
 import highlights from './highlights';
 import marginDiscussion from './marginDiscussion';
 import marginDiscussionDraft from './marginDiscussionDraft';
@@ -25,12 +25,12 @@ export default function(app) {
   affix(app);
   attributes(app);
   attribution(app);
+  avatarList(app);
   comment(app);
   confirmedClick(app);
   elastic(app);
   elementPosition(app);
   elementSize(app);
-  gravatarList(app);
   highlights(app);
   marginDiscussion(app);
   marginDiscussionDraft(app);
