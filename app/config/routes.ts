@@ -42,7 +42,6 @@ export default function(app) {
         .when('/contact', 'contact')
         // .when('/help', 'help')
         .when('/jobs', 'jobs')
-        .when('/alpha-warning', 'alpha-warning')
         .when('/legalnotice', 'legalnotice')
         .when('/login', 'login')
         .when('/authReturn', 'authReturn')
@@ -124,11 +123,6 @@ export default function(app) {
                 'seamless discussion of research papers.'
             }
           ]
-        })
-
-        .segment('alpha-warning', {
-          templateUrl: 'html/alpha-warning.html',
-          title: 'Alpha warning · PaperHive'
         })
 
         .segment('documents', {
