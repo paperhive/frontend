@@ -16,6 +16,7 @@ import navbar from './navbar';
 import navbarSearch from './navbarSearch';
 import navbar_user from './navbar_user';
 import notifications from './notifications';
+import searchResults from './searchResults';
 import settings from './settings';
 import signup from './signup';
 import stars from './stars';
@@ -41,6 +42,7 @@ export default function(app) {
   navbarSearch(app);
   navbar_user(app);
   notifications(app);
+  searchResults(app);
   settings(app);
   signup(app);
   stars(app);
