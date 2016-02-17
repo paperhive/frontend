@@ -7,7 +7,7 @@ export default function(app) {
         .loginToken($routeParams.token)
         .then(
           function success(data) {
-            $location.path($routeParams.returnPath).search({});
+            $location.url($routeParams.returnPath);
             if ($routeParams.personCreated === 'true') {
               notificationService.notifications.push({
                 type: 'info',

@@ -8,6 +8,11 @@ export default function(app) {
         $scope, $http, $location, $routeSegment, config,
         notificationService
       ) {
+
+        $scope.showAllResults = function(input) {
+          $location.path('/searchResults/').search({query: input, page: 1});
+        };
+
         $scope.search = {};
         $scope.phSearch = function(query, limit) {
           return $http.get(config.apiUrl + '/documents/', {
@@ -30,7 +35,9 @@ export default function(app) {
           $location.path($routeSegment.getSegmentUrl(
             'documents', {documentId: item.id}
           ));
+          $scope.search.body = '';
         };
+
       }
     ]
   );
