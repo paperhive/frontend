@@ -40,6 +40,7 @@ export default function(app) {
         .when('/documents/:documentId/revisions/:revisionId', 'documents.revisions')
         .when('/documents/:documentId/about', 'documents.about')
         .when('/contact', 'contact')
+        .when('/terms', 'terms')
         // .when('/help', 'help')
         .when('/jobs', 'jobs')
         .when('/legalnotice', 'legalnotice')
@@ -187,6 +188,17 @@ export default function(app) {
               name: 'description',
               content: 'Contact PaperHive and ask us questions or send us ' +
                 'suggestions.'
+            }
+          ]
+        })
+
+        .segment('terms', {
+          templateUrl: 'html/terms.html',
+          title: 'Terms and Privacy Policy · PaperHive',
+          meta: [
+            {
+              name: 'description',
+              content: 'Terms and Privacy Policy'
             }
           ]
         })
