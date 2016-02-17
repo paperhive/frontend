@@ -41,8 +41,10 @@ export default function(app) {
         // Construct strings for display in revision selection dropdown.
         // get pdf url
         try {
-          $scope.pdfSource = paperhiveSources({ apiUrl: config.apiUrl })
-            .getAccessiblePdfUrl(revisions[activeRevisionIdx]);
+          const sources = paperhiveSources({ apiUrl: config.apiUrl });
+          const revision = revisions[activeRevisionIdx];
+          $scope.origPdfSource = sources.getPdfConnection(revision);
+          $scope.pdfSource = sources.getAccessiblePdfUrl(revision);
         } catch (e) {
           notificationService.notifications.push({
             type: 'error',
