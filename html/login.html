@@ -61,7 +61,7 @@
           <input type="password" class="form-control" id="password"
             name="password" ng-model="login.password" required>
           <a class="ph-forgot-password" href="" title="Forgot password?"
-            tabindex="-1" ng-click="getNewPasswd()">
+            tabindex="-1" ng-click="getNewPasswd(login.emailOrUsername)">
             Forgot?
           </a>
           <div class="help-block">
