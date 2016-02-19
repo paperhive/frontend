@@ -95,6 +95,52 @@
       </div>
     </div>
   </div>
+
+
+  <div class="row ph-lg-margin-bottom">
+    <div class="col-sm-offset-1 col-sm-8">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <h3>
+            Associated account
+          </h3>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Sign-up with</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="account in user.externalIds">
+                <td>
+                  <span ng-show="{{account.type == 'google'}}">
+                    <img class="ph-login-icon" src="./static/img/google.svg" title="Google">
+                  </span>
+                  <span ng-show="{{account.type == 'orcid'}}">
+                    <img class="ph-login-icon" src="./static/img/orcid.svg">
+                  </span>
+                </td>
+                <td ng-show="{{account.type == 'google'}}">
+                  <a ng-href="https://plus.google.com/{{account.id}}" target="_blank">
+                    Link to your Google+ account
+                  </a>
+                </td>
+                <td ng-show="{{account.type == 'orcid'}}">
+                  <a ng-href="http://orcid.org/{{account.id}}" target="_blank">
+                    Link to your Orcid account
+                  </a>
+                </td>
+                <td ng-show="!{{account.type == 'google'}} && !{{account.type == 'orcid'}}">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!--div class="row">
     <div class="col-sm-offset-1 col-sm-8">
       <div class="panel panel-default">
