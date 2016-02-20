@@ -7,7 +7,7 @@ export default function(app) {
       },
       controller: ['$scope', function($scope) {
         $scope.$watch('$ctrl.discussion', function(discussion) {
-            if (!discussion) {return;}
+            if (!discussion) { return; }
 
             $scope.participants = map(discussion.replies, 'author');
             // prepend original annotation author
