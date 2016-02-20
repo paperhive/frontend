@@ -1,4 +1,3 @@
-import activity from './activity';
 import document from './document';
 import documentSettings from './documentSettings';
 import documentText from './documentText';
@@ -22,7 +21,6 @@ import subscribe from './subscribe';
 import user from './user';
 
 export default function(app) {
-  activity(app);
   document(app);
   documentSettings(app);
   documentText(app);
