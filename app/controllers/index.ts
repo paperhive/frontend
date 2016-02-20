@@ -14,7 +14,6 @@ import jobs from './jobs';
 import login from './login';
 import navbar from './navbar';
 import navbarSearch from './navbarSearch';
-import navbar_user from './navbar_user';
 import notifications from './notifications';
 import searchResults from './searchResults';
 import settings from './settings';
@@ -40,7 +39,6 @@ export default function(app) {
   login(app);
   navbar(app);
   navbarSearch(app);
-  navbar_user(app);
   notifications(app);
   searchResults(app);
   settings(app);
