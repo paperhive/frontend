@@ -1,7 +1,6 @@
 import affix from './affix';
 import attributes from './attributes';
 import attribution from './attribution';
-import avatarList from './avatarList';
 import comment from './comment';
 import confirmedClick from './confirmed-click';
 import elastic from './elastic';
@@ -25,7 +24,6 @@ export default function(app) {
   affix(app);
   attributes(app);
   attribution(app);
-  avatarList(app);
   comment(app);
   confirmedClick(app);
   elastic(app);
