@@ -6,7 +6,6 @@ export default function(app) {
         discussion: '<'
       },
       controller: ['$scope', function($scope) {
-        console.log('controller');
         $scope.$watch('$ctrl.discussion', function(discussion) {
             if (!discussion) {return;}
 
@@ -16,7 +15,6 @@ export default function(app) {
 
             // make list unique w.r.t. id
             $scope.participants = uniqBy($scope.participants, 'id');
-            console.log('$scope.participants', $scope.participants);
           },
           // http://stackoverflow.com/a/19455564/353337
           true
