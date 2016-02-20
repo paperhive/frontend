@@ -6,6 +6,6 @@ export default function(app) {
         function($scope, authService) {
           $scope.auth = authService;
         }],
-      templateUrl: 'app/components/navbar-user/navbar-user.html',
+      templateUrl: 'html/shared/navbar-user.html',
     });
 };

@@ -13,7 +13,6 @@ import help from './help';
 import jobs from './jobs';
 import login from './login';
 import navbar from './navbar';
-import navbarSearch from './navbarSearch';
 import notifications from './notifications';
 import searchResults from './searchResults';
 import settings from './settings';
@@ -38,7 +37,6 @@ export default function(app) {
   jobs(app);
   login(app);
   navbar(app);
-  navbarSearch(app);
   notifications(app);
   searchResults(app);
   settings(app);
