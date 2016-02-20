@@ -34,7 +34,6 @@ export default function(app) {
         //       'documents.discussions.new')
         .when('/documents/:documentId/discussions/:discussionId',
               'documents.discussions.thread')
-        .when('/documents/:documentId/settings', 'documents.settings')
         .when('/documents/:documentId/text', 'documents.text')
         .when('/documents/:documentId/revisions/:revisionId', 'documents.revisions')
         .when('/documents/:documentId/about', 'documents.about')
@@ -155,10 +154,6 @@ export default function(app) {
               title: 'Discussion · PaperHive'
             })
           .up()
-          .segment('settings', {
-            templateUrl: 'html/documents/settings.html',
-            title: 'Document settings · PaperHive'
-          })
           .segment('text', {
             default: true,
             templateUrl: 'html/documents/text.html',

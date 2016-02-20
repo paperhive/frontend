@@ -1,5 +1,4 @@
 import document from './document';
-import documentSettings from './documentSettings';
 import documentText from './documentText';
 import documentNew from './documentNew';
 import authReturn from './authReturn';
@@ -22,7 +21,6 @@ import user from './user';
 
 export default function(app) {
   document(app);
-  documentSettings(app);
   documentText(app);
   documentNew(app);
   authReturn(app);
