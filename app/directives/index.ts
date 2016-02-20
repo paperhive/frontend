@@ -1,7 +1,6 @@
 import affix from './affix';
 import attributes from './attributes';
 import attribution from './attribution';
-import comment from './comment';
 import confirmedClick from './confirmed-click';
 import elastic from './elastic';
 import elementPosition from './elementPosition';
@@ -24,7 +23,6 @@ export default function(app) {
   affix(app);
   attributes(app);
   attribution(app);
-  comment(app);
   confirmedClick(app);
   elastic(app);
   elementPosition(app);
