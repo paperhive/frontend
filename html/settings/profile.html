@@ -144,7 +144,7 @@
                   </a>
                 </span>
                 <span class="col-sm-3">
-                  <a href="" style="float: right">
+                  <a href="">
                     Disconnect
                   </a>
                 </span>
@@ -161,18 +161,26 @@
           <h4>
             Associated email addresses
           </h4>
-          <div ng-show="user.account.email">
-            {{user.account.email}}
-            <span class="label label-default" style="float: right">
-              Default
+          <div class="row" ng-show="user.account.email">
+            <span class="col-sm-8">
+              {{user.account.email}}
+            </span>
+            <span class="col-sm-3">
+              <span class="label label-default">
+                Default
+              </span>
             </span>
           </div>
-          <div ng-repeat="account in user.externalIds">
+          <div class="row" ng-repeat="account in user.externalIds">
             <div ng-show="{{account.type == 'email' && user.account.email != account.id}}">
-              {{account.id}}
-              <a href="" style="float: right">
-                Set as default
-              </a>
+              <span class="col-sm-8">
+                {{account.id}}
+              </span>
+              <span class="col-sm-3">
+                <a href="">
+                  Set as default
+                </a>
+              </span>
             </div>
           </div>
           <div class="ph-lg-margin-top">
