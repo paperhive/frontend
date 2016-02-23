@@ -15,7 +15,7 @@ export default function(app) {
             // own username
             if (ctrl.$isEmpty(modelValue) ||
                 (authService.user &&
-                 authService.user.user.username === modelValue)) {
+                 authService.user.account.username === modelValue)) {
               return $q.when();
             }
             const defer = $q.defer();

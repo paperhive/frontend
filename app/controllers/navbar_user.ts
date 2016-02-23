@@ -1,9 +1,8 @@
 'use strict';
 export default function(app) {
-  app.controller('NavbarUserCtrl', ['$scope', 'authService', 'returnPathService',
-    function($scope, authService, returnPathService) {
+  app.controller('NavbarUserCtrl', ['$scope', 'authService',
+    function($scope, authService) {
       $scope.auth = authService;
-      $scope.returnPath = returnPathService;
     }
   ]);
 };

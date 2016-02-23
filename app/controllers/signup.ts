@@ -1,15 +1,11 @@
 'use strict';
 export default function(app) {
-  app.controller('SignupCtrl', ['$scope', '$location', 'authService', 'returnPathService', '$http', 'config',
-    function($scope, $location, authService, returnPathService, $http, config) {
+  app.controller('SignupCtrl', ['$scope', '$location', 'authService', '$http', 'config',
+    function($scope, $location, authService, $http, config) {
 
       $scope.auth = authService;
-      $scope.returnPath = returnPathService;
 
-      $scope.signup = {
-        email: '',
-        password: ''
-      };
+      $scope.signup = {};
 
       $scope.hasError = function(field) {
         const form = $scope.signupForm;
@@ -17,37 +13,29 @@ export default function(app) {
           form[field].$invalid;
       };
 
-      $scope.$watch('email', function() {
-        $scope.emailError = undefined;
-      });
+      $scope.hasErrorPassword = function() {
+        const form = $scope.signupForm;
+        return (form.$submitted || form['password'].$touched
+          || !form['password'].$pristine) && form['password'].$invalid;
+      };
 
-      $scope.$watch('password', function() {
-        $scope.passwordError = undefined;
-      });
+      $scope.sendSignup = function() {
+        $scope.signup.inProgress = true;
+        $scope.signup.error = undefined;
 
-      $scope.$watch('password', function() {
-        $scope.responseError = undefined;
-      });
-
-      $scope.signup = function() {
-        $scope.subscribing = true;
-        $scope.passwordError = undefined;
-        $scope.emailError = undefined;
-        $scope.responseError = undefined;
-
-        $http.post(config.apiUrl + '/auth/email/initiate', {
-          email: $scope.signup.email,
-          password: $scope.signup.password,
-          returnUrl: authService.getReturnUrl(returnPathService.returnPath)
-        }).then(function(response) {
-            $scope.subscribing = false;
-            $scope.subscribed = true;
+        authService
+          .signupEmail(
+            $scope.signup.email, $scope.signup.password,
+            authService.getReturnUrl()
+          )
+          .then(function(response) {
+            $scope.signup.inProgress = false;
+            $scope.signup.succeeded = true;
           }, function(response) {
-            $scope.subscribing = false;
-            $scope.responseError = response.data && response.data.message ||
+            $scope.signup.inProgress = false;
+            $scope.signup.error = response.data && response.data.message ||
               'Unknown error';
           });
-
       };
 
     }

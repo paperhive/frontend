@@ -24,14 +24,16 @@ import 'angular-sanitize';                            // ngSanitize module
 import 'angular-bootstrap';                           // ui.bootstrap
 import 'angular-moment';                              // angularMoment
 import 'angular-leaflet-directive';                   // leaflet-directive
+import 'angulartics';
+import 'angulartics-google-analytics';
 import 'javascript-detect-element-resize'; // injects resize+removeResize to jquery
-import 'ment.io';
 import 'ngSmoothScroll';                              // smoothScroll
 import 'pdfjs-dist/web/compatibility';
 import 'pdfjs-dist';
 import 'pdfjs-dist/web/pdf_viewer';
 
 import config from './config/index';
+import components from './components/index';
 import controllers from './controllers/index';
 import directives from './directives/index';
 import services from './services/index';
@@ -40,11 +42,13 @@ import utils from './utils/index';
 import '../build-tmp/html.js';
 import configJson from '../config.json!json';
 
+
 const paperhive = angular
   .module(
     'paperhive', [
+      'angulartics',
+      'angulartics.google.analytics',
       'ui.bootstrap',
-      'mentio',
       'ngAnimate',
       'ngSanitize',
       'ngRoute',
@@ -60,6 +64,7 @@ const paperhive = angular
   ;
 
 config(paperhive);
+components(paperhive);
 controllers(paperhive);
 directives(paperhive);
 services(paperhive);

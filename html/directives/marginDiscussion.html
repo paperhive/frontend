@@ -2,8 +2,9 @@
   <!-- original comment -->
   <div class="ph-margin-row">
     <!-- avatar -->
-    <img gravatar-user="discussion.author"
-        gravatar-size="38" class="ph-margin-avatar img-circle">
+    <avatar user="discussion.author" size="38"
+      classes="ph-margin-avatar img-circle"
+      ></avatar>
     <div class="ph-margin-link-default"
         ng-click="state.showReplies = !state.showReplies">
       <!-- arrow -->
@@ -15,7 +16,7 @@
         <div ng-if="!originalState.editing" class="clearfix">
           <div class="ph-margin-info">
             <p class="ph-xs-margin-bottom">
-              <a href="./users/{{discussion.author.user.username}}">
+              <a href="./users/{{discussion.author.account.username}}">
                 {{discussion.author.displayName}}</a>
               · <span am-time-ago="discussion.createdAt"></span>
             </p>
@@ -36,7 +37,7 @@
               </button>
               <ul class="dropdown-menu dropdown-menu-right ph-margin-dropdown">
                 <li>
-                  <a ng-click="changePath(filterRouteSegmentUrl('articles.discussions.thread', {discussionId: discussion.id}))">
+                  <a ng-click="changePath(filterRouteSegmentUrl('documents.discussions.thread', {discussionId: discussion.id}))">
                     <i class="fa fa-fw fa-comments"></i> Show discussion view
                   </a>
                 </li>
@@ -63,9 +64,9 @@
                     <i class="fa fa-fw fa-times"></i> Delete
                   </a>
                 </li>
-                <li ng-if="auth.user.id !== discussion.author.id">
+                <!--li ng-if="auth.user.id !== discussion.author.id">
                   <a href><i class="fa fa-fw fa-flag"></i> Flag</a>
-                </li>
+                </li-->
               </ul>
             </span>
           </div>
@@ -134,8 +135,9 @@
         ng-controller="replyCtrl"
         class="ph-margin-row ph-margin-row-border-top">
       <!-- avatar -->
-      <img gravatar-user="reply.author" gravatar-size="38"
-          class="ph-margin-avatar img-circle">
+      <avatar user="reply.author" size="38"
+          classes="ph-margin-avatar img-circle"
+          ></avatar>
       <div class="ph-margin-row-container ph-margin-reply">
         <!-- arrow -->
         <div class="ph-margin-arrow-container">
@@ -147,7 +149,7 @@
           <div ng-if="!replyState.editing" class="clearfix">
             <div class="ph-margin-info">
               <p class="ph-xs-margin-bottom">
-                <a href="./users/{{reply.author.username}}">
+                <a href="./users/{{reply.author.account.username}}">
                   {{reply.author.displayName}}</a>
                 · <span am-time-ago="reply.createdAt"></span>
               </p>
@@ -160,29 +162,29 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right ph-margin-dropdown">
                   <li>
-                    <a href="./{{'articles.discussions.thread' | routeSegmentUrl:
-                      {discussionId: discussion.id} }}#{{reply._id}}">
+                    <a href="./{{'documents.discussions.thread' | routeSegmentUrl:
+                      {discussionId: discussion.id} }}#{{reply.id}}">
                       <i class="fa fa-fw fa-comments"></i> Show discussion view
                     </a>
                   </li>
                   <!-- edit reply -->
-                  <li ng-if="auth.user._id === reply.author._id"
+                  <li ng-if="auth.user.id === reply.author.id"
                       ng-class="{disabled: replyState.submitting}">
                     <a ng-click="replyState.editing = true" href>
                       <i class="fa fa-fw fa-pencil"></i> Edit
                     </a>
                   </li>
                   <!-- delete reply -->
-                  <li ng-if="auth.user._id === reply.author._id"
+                  <li ng-if="auth.user.id === reply.author.id"
                       ng-class="{disabled: replyState.submitting}">
                       <a ng-confirm-click="Really delete reply?"
                           confirmed-click="replyDelete(reply)" href>
                       <i class="fa fa-fw fa-times"></i> Delete
                     </a>
                   </li>
-                  <li ng-if="auth.user._id !== reply.author._id">
+                  <!--li ng-if="auth.user.id !== reply.author.id">
                     <a href><i class="fa fa-fw fa-flag"></i> Flag</a>
-                  </li>
+                  </li-->
                 </ul>
               </span>
             </div>
@@ -220,8 +222,9 @@
     <!-- reply form -->
     <div ng-if="auth.user && !state.editing" class="ph-margin-row ph-margin-row-border-top">
       <!-- avatar -->
-      <img gravatar-user="auth.user" gravatar-size="38"
-          class="ph-margin-avatar img-circle">
+      <avatar user="auth.user" size="38"
+          classes="ph-margin-avatar img-circle"
+          ></avatar>
       <div class="ph-margin-row-container ph-margin-reply">
         <!-- arrow -->
         <div class="ph-margin-arrow-container">
@@ -264,10 +267,10 @@
         </div>
         <!-- row content -->
         <div class="ph-margin-row-content">
-          <a href="{{auth.orcidUrl}}" target="_self"
-              class="btn btn-primary btn-sm">
-            <img src="./static/img/orcid.svg" class="ph-orcid-icon"> Sign in
-          </a> to reply.
+          <a href="./signup?returnPath={{auth.returnPath}}">Sign up</a>
+          or
+          <a href="./login?returnPath={{auth.returnPath}}">log in</a>
+          to reply.
         </div>
       </div>
     </div>

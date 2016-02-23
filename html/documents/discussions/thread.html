@@ -6,7 +6,7 @@
       >
     </inline-editable>
   </h3>
-  <a href="./users/{{discussion.author.username}}">
+  <a href="./users/{{discussion.author.account.username}}">
     {{discussion.author.displayName}}</a>
   opened this discussion
   <span am-time-ago="discussion.createdAt"></span>
@@ -42,7 +42,7 @@
         </li>
 
         <li ng-repeat="reply in discussion.replies"
-            class="media" id="reply._id">
+            class="media" id="reply.id">
           <comment
             content="reply"
             on-delete="deleteReply($comment, $index)"
@@ -55,9 +55,10 @@
 
         <li class="media">
           <div ng-if="auth.user">
-            <a class="media-left" href="./users/{{auth.user.username}}">
-              <img gravatar-user="auth.user" gravatar-size="80"
-                  class="img-circle">
+            <a class="media-left" href="./users/{{auth.user.account.username}}">
+              <avatar user="auth.user" size="80"
+                  classes="img-circle"
+                  ></avatar>
             </a>
             <div class="media-body">
               <div class="panel panel-default">
@@ -74,21 +75,13 @@
                       <a href="http://kramdown.gettalong.org/syntax.html" target="_blank">Markdown</a>,
                       $$<a href="http://en.wikibooks.org/wiki/LaTeX/Mathematics#Symbols"
                         target="_blank">LaTeX</a>$$,
-                      ```<a href="https://highlightjs.org/" target="_blank">code blocks</a>```,
-                      <a href="http://jeff-collins.github.io/ment.io/"
-                        target="_blank">@mentions</a>
+                      ```<a href="https://highlightjs.org/" target="_blank">code blocks</a>```
                     </span>
 
                     <textarea
                       id="textbody"
                       class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
                       ng-model="comment.body"
-                      mentio
-                      mentio-search="searchUsers(term, 5)"
-                      mentio-items="foundUsers"
-                      mentio-template-url="html/directives/mentio-list.html"
-                      mentio-select="getMentioText(item)"
-                      mentio-require-leading-space="true"
                       elastic
                       placeholder="Reply..."
                       required
@@ -125,10 +118,9 @@
             >
             <div class="panel panel-default">
               <div class="panel-body">
-                <a href="{{auth.orcidUrl}}" target="_self"
-                    class="btn btn-default">
-                  <img class="ph-orcid-icon" src="./static/img/orcid.svg"> Sign in
-                </a>
+                <a href="./signup?returnPath={{auth.returnPath}}">Sign up</a>
+                or
+                <a href="./login?returnPath={{auth.returnPath}}">log in</a>
                 to join this discussion on PaperHive.
               </div>
             </div>
@@ -168,8 +160,7 @@
       </span>
       <hr-->
       <h5>Participants</h5>
-      <gravatar-list discussion="discussion">
-      </gravatar-list>
+      <avatar-list discussion="discussion"></avatar-list>
     </div>
 
   </div>

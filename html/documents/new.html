@@ -1,0 +1,50 @@
+<div ng-controller="DocumentNewCtrl">
+  <div class="ph-header ph-lg-margin-bottom">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <!-- title -->
+          <div class="media">
+            <div class="media-left">
+              <span class="fa-stack ph-icon">
+                <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
+                <i class="fa fa-file-text-o fa-stack-1x"></i>
+              </span>
+            </div>
+            <div class="media-body ph-vertical-middle">
+              <!--heading-->
+              <h2 class="media-heading">Add an article from arXiv</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <form name="documentNewForm" role="form" novalidate>
+      <div class="form-horizontal">
+        <div class="form-group">
+          <label for="url" class="control-label col-sm-3">
+            arXiv URL
+          </label>
+          <div class="col-sm-6">
+            <input ng-model="url" ng-disabled="submitting"
+              name="url" type="text"
+              class="form-control" id="url"
+              placeholder="Provide arXiv URL"
+              required>
+          </div>
+          <div class="col-sm-3">
+            <button type="submit" ng-disabled="!documentNewForm.$valid || submitting"
+                ng-click="submitApproved()"
+                class="btn btn-primary">
+              <i class="fa fa-fw fa-plus" ng-show="!submitting"></i>
+              <i class="fa fa-fw fa-spinner fa-spin" ng-show="submitting"></i>
+              Add to PaperHive
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

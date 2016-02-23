@@ -1,10 +1,10 @@
 <ul class="nav navbar-nav" ng-controller="NavbarUserCtrl">
   <li ng-if="!auth.user && !auth.inProgress">
     <p class="navbar-btn ph-md-margin-left ph-md-margin-right">
-      <a href="./signup?returnPath={{returnPath.returnPath}}" class="btn btn-primary">
+      <a href="./signup?returnPath={{auth.returnPath}}" class="btn btn-primary">
         Sign up
       </a>
-      <a href="./login?returnPath={{returnPath.returnPath}}" class="btn btn-default">
+      <a href="./login?returnPath={{auth.returnPath}}" class="btn btn-default">
         Log in
       </a>
     </p>
@@ -12,30 +12,27 @@
   <li ng-if="!auth.user && auth.inProgress">
     <p class="navbar-text">
       <uib-progressbar class="progress-striped active ph-no-margin" value="100">
-        <span class="ph-lg-padding-left ph-lg-padding-right">Signing in...</span>
+        <span class="ph-lg-padding-left ph-lg-padding-right">Logging in...</span>
       </uib-progressbar>
     </p>
   </li>
   <li ng-if="auth.user" class="dropdown" is-open="dropdown_open" uib-dropdown>
     <a href="" class="dropdown-toggle" uib-dropdown-toggle>
-      <img
-        gravatar-user="auth.user"
-        gravatar-size="38"
-        class="ph-avatar img-circle"
-        >
+      <avatar user="auth.user" size="38" classes="ph-avatar img-circle">
+      </avatar>
       {{auth.user.displayName}}
       <i ng-if="!dropdown_open" class="fa fa-fw fa-caret-down"></i>
       <i ng-if="dropdown_open" class="fa fa-fw fa-caret-up"></i>
     </a>
     <ul class="dropdown-menu">
-      <li ng-if="auth.user.username">
-        <a href="./users/{{auth.user.username}}">
+      <li>
+        <a href="./users/{{auth.user.account.username}}">
           <i class="fa fa-fw fa-user"></i> Profile
         </a>
       </li>
       <li>
-        <a href="./articles/new">
-          <i class="fa fa-fw fa-plus"></i> Add article
+        <a href="./documents/new">
+          <i class="fa fa-fw fa-plus"></i> Add arXiv article
         </a>
       </li>
       <li>
@@ -44,7 +41,7 @@
         </a>
       </li>
       <li>
-        <a href ng-click="auth.signout()">
+        <a href ng-click="auth.logout()">
           <i class="fa fa-fw fa-sign-out"></i> Log out
         </a>
       </li>

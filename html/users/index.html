@@ -7,27 +7,24 @@
           <div class="media">
             <div class="media-left">
               <!--picture-->
-              <img
-                gravatar-user="user"
-                gravatar-size="120"
-                class="media-object img-circle"
-                >
+              <avatar user="user" size="136" classes="media-object img-circle">
+              </avatar>
             </div>
             <div class="media-body">
               <!--heading-->
               <h2 class="media-heading">{{user.displayName}}</h2>
-              <h4><a href="./users/{{user.user.username}}">@{{user.user.username}}</a></h4>
+              <h4><a href="./users/{{user.account.username}}">@{{user.account.username}}</a></h4>
               <p class="text-muted">
                 <i class="fa fa-fw fa-clock-o"></i>
-                Joined on {{user.user.createdAt | date:'longDate'}}
+                Joined on {{user.account.createdAt | date:'longDate'}}
               </p>
               <a
-                ng-show="auth.user.username === user.username"
+                ng-show="auth.user.account.username === user.account.username"
                 href="./settings"
                 class="btn btn-default"
                 >
                 <i class="fa fa-fw fa-pencil"></i>
-                Edit my profile
+                Edit my account
               </a>
             </div>
           </div>
@@ -43,8 +40,8 @@
                 <li subnav-target="users.profile">
                   <a><i class="fa fa-fw fa-user"></i> Profile</a>
                 </li>
-                <!--li subnav-target="users.articles">
-                  <a><i class="fa fa-fw fa-user"></i> Articles</a>
+                <!--li subnav-target="users.documents">
+                  <a><i class="fa fa-fw fa-user"></i> Documents</a>
                 </li-->
                 <!--li subnav-target="users.activity">
                   <a><i class="fa fa-fw fa-comments"></i> Activity</a>

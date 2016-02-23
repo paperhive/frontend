@@ -1,8 +1,9 @@
 <div class="ph-margin-container">
   <div ng-if="auth.user" class="ph-margin-row">
     <!-- avatar -->
-    <img gravatar-user="auth.user" gravatar-size="38"
-        class="ph-margin-avatar img-circle">
+    <avatar user="auth.user" size="38"
+        classes="ph-margin-avatar img-circle"
+        ></avatar>
     <div class="ph-margin-row-container">
       <!-- arrow -->
       <div class="ph-margin-arrow-container">
@@ -69,10 +70,10 @@
       </div>
       <!-- row content -->
       <div class="ph-margin-row-content">
-        <a href="{{auth.orcidUrl}}" target="_self"
-            class="btn btn-primary btn-sm">
-          <img src="./static/img/orcid.svg" class="ph-orcid-icon"> Sign in
-        </a> to comment.
+        <a href="./signup?returnPath={{auth.returnPath}}">Sign up</a>
+        or
+        <a href="./login?returnPath={{auth.returnPath}}">log in</a>
+        to comment.
       </div>
     </div>
   </div>

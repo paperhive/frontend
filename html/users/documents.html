@@ -1,26 +1,26 @@
-<div class="row" ng-controller="UserArticlesCtrl" ng-if="user">
-  <div class="col-md-12" ng-if="auth.user._id === user._id">
+<div class="row" ng-controller="UserDocumentsCtrl" ng-if="user">
+  <div class="col-md-12" ng-if="auth.user.id === user.id">
     <p class="text-right">
-      <a href="./articles/new" class="btn btn-default">Add an article</a>
+      <a href="./documents/new" class="btn btn-default">Add a document</a>
     </p>
   </div>
   <div class="col-sm-6">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h4 class="panel-title">Authored articles</h4>
+        <h4 class="panel-title">Authored documents</h4>
       </div>
       <div class="panel-body">
         <div class="alert alert-info">
           <h5><strong>
               <i class="fa fa-fw fa-info-circle"></i>
-              Note on arXiv articles
+              Note on arXiv documents
           </strong></h5>
           <p>
-            Currently, we cannot determine which arXiv articles are authored by
+            Currently, we cannot determine which arXiv documents are authored by
             a user due to missing ORCID integration in the arXiv API.
           </p>
           <p>
-            In order to allow us to list your articles here, please head over
+            In order to allow us to list your documents here, please head over
             to <a href="http://arxiv.org">arXiv.org</a> and link your arXiv
             account to your ORCID account.
           </p>
@@ -32,16 +32,16 @@
   <div class="col-sm-6">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h4 class="panel-title">Imported articles</h4>
+        <h4 class="panel-title">Imported documents</h4>
       </div>
       <div class="panel-body">
-        <p ng-if="articles && !articles.length">
-          No imported articles yet.
+        <p ng-if="documents && !documents.length">
+          No imported documents yet.
         </p>
-        <div ng-repeat="article in articles" class="ph-md-margin-bottom">
+        <div ng-repeat="document in documents" class="ph-md-margin-bottom">
           <div class="media">
             <div class="media-left">
-              <a href="./articles/{{article.id}}">
+              <a href="./documents/{{document.id}}">
                 <span class="fa-stack ph-icon">
                   <i class="fa fa-circle fa-stack-2x text-muted"></i>
                   <i class="fa fa-file-text-o fa-stack-1x fa-inverse"></i>
@@ -50,20 +50,20 @@
             </div>
             <div class="media-body">
               <h4 class="media-heading ph-no-margin-bottom">
-                <a href="./articles/{{article.id}}">{{article.title}}</a>
+                <a href="./documents/{{document.id}}">{{document.title}}</a>
               </h4>
               <div>
-                <span ng-repeat="author in article.authors">
+                <span ng-repeat="author in document.authors">
                   {{author}}{{$last ? '' : ', '}}
                 </span>
               </div>
               <div class="text-muted">
                 <i class="fa fa-fw fa-cloud-download"></i> imported
                 from
-                <a href="{{article.source.url}}">
-                  {{article.source.name}}
+                <a href="{{document.source.url}}">
+                  {{document.source.name}}
                 </a>
-                on {{article.createdAt | date:'longDate'}}
+                on {{document.createdAt | date:'longDate'}}
               </div>
             </div>
           </div>

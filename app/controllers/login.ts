@@ -1,15 +1,11 @@
 'use strict';
 export default function(app) {
-  app.controller('LoginCtrl', ['$scope', '$location', 'authService', 'returnPathService', '$http', 'config',
-    function($scope, $location, authService, returnPathService, $http, config) {
+  app.controller('LoginCtrl', ['$scope', '$location', 'authService', '$http', 'config',
+    function($scope, $location, authService, $http, config) {
 
       $scope.auth = authService;
-      $scope.returnPath = returnPathService;
 
-      $scope.login = {
-        emailOrUsername: '',
-        password: ''
-      };
+      $scope.login = {};
 
       $scope.hasError = function(field) {
         const form = $scope.loginForm;
@@ -17,31 +13,21 @@ export default function(app) {
           form[field].$invalid;
       };
 
-      $scope.$watch('emailOrUsername', function() {
-        $scope.emailError = undefined;
-      });
+      $scope.sendLogin = function() {
+        $scope.login.inProgress = true;
+        $scope.login.error = undefined;
 
-      $scope.$watch('password', function() {
-        $scope.passwordError = undefined;
-      });
-
-      $scope.login = function() {
-        $scope.subscribing = true;
-        $scope.passwordError = undefined;
-        $scope.emailError = undefined;
-        $scope.responseError = undefined;
-
-        $http.post(config.apiUrl + '/auth/signin/email', {
-          emailOrUsername: $scope.login.emailOrUsername,
-          password: $scope.login.password
-        }).then(function(response) {
-            $scope.subscribing = false;
-            $scope.subscribed = true;
-            $location.path($scope.returnPath.returnPath);
-          }, function(response) {
-            $scope.subscribing = false;
-            $scope.responseError = response.data && response.data.message ||
-              'Unknown error';
+        authService
+          .loginEmail(
+            $scope.login.emailOrUsername, $scope.login.password
+          )
+          .then(function(data) {
+            $scope.login.inProgress = false;
+            $scope.login.succeeded = true;
+            $location.path(authService.returnPath).search({});
+          }, function(data) {
+            $scope.login.inProgress = false;
+            $scope.login.error = data && data.message || 'Unknown error';
           });
       };
 

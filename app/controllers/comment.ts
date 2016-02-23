@@ -14,9 +14,9 @@ export default function(app) {
         if (promise) {
           promise.success(function(data) {
             $location.path($routeSegment.getSegmentUrl(
-              'articles.discussions.thread',
+              'documents.discussions.thread',
               {
-                articleId: $routeSegment.$routeParams.articleId,
+                documentId: $routeSegment.$routeParams.documentId,
                 discussionId: data.id
               }
             ));
@@ -43,7 +43,7 @@ export default function(app) {
       };
 
       $scope.getMentioText = function(user) {
-        return '@' + user.username;
+        return '@' + account.username;
       };
 
     }]);

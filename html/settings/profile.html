@@ -9,8 +9,8 @@
             <label for="user" class="col-sm-3 control-label">
               Username
             </label>
-            <div class="col-sm-6">
-              <input ng-model="user.user.username"
+            <div class="col-sm-8">
+              <input ng-model="user.account.username"
                 ng-model-options="{ debounce: 250 }"
                 name="username" type="text"
                 class="form-control" id="username"
@@ -46,7 +46,7 @@
             <label for="displayName" class="col-sm-3 control-label">
               Display name
             </label>
-            <div class="col-sm-6">
+            <div class="col-sm-8">
               <input ng-model="user.displayName" name="displayName" type="text"
                 class="form-control" id="displayName"
                 required ng-minlength="3" ng-maxlength="25">
@@ -60,6 +60,23 @@
                   || profileForm.displayName.$error.maxlength">
                 <i class="fa fa-fw fa-warning"></i>
                 Display name must have between 3 and 25 characters.
+              </p>
+            </div>
+          </div>
+          <!--email-->
+          <div ng-if="user.account.email" class="form-group has-feedback"
+              ng-class="{'has-error': !user.account.email}">
+            <label for="email" class="col-sm-3 control-label">
+              Email
+            </label>
+            <div class="col-sm-8">
+              <input ng-model="user.account.email" type="email" class="form-control"
+                id="email" readonly>
+              <i ng-show="!user.account.email"
+                class="fa fa-times form-control-feedback" aria-hidden="true"></i>
+              <p class="help-block" ng-show="!user.account.email">
+                <i class="fa fa-fw fa-warning"></i>
+                No email address set!
               </p>
             </div>
           </div>
@@ -78,12 +95,11 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <!--div class="row">
     <div class="col-sm-offset-1 col-sm-8">
       <div class="panel panel-default">
         <div class="panel-heading"><h4 class="panel-title">ORCID profile</h4></div>
         <div class="panel-body">
-          <!--syncFromOrcid-->
           <div class="row ph-md-margin-bottom">
             <div class="col-sm-9 col-sm-offset-3">
               <p class="ph-md-margin-bottom">
@@ -100,7 +116,6 @@
               </button>
             </div>
           </div>
-          <!--givenNames-->
           <div class="form-group">
             <label for="givenNames" class="col-sm-3 control-label">
               Given names
@@ -110,7 +125,6 @@
                 class="form-control" id="givenNames" readonly>
             </div>
           </div>
-          <!--familyName-->
           <div class="form-group">
             <label for="familyName" class="col-sm-3 control-label">
               Family name
@@ -120,18 +134,17 @@
                 class="form-control" id="familyName" readonly>
             </div>
           </div>
-          <!--email-->
           <div class="form-group has-feedback"
-              ng-class="{'has-error': !user.user.email}">
+              ng-class="{'has-error': !user.account.email}">
             <label for="email" class="col-sm-3 control-label">
               Email
             </label>
             <div class="col-sm-9">
-              <input ng-model="user.user.email" type="email" class="form-control"
+              <input ng-model="user.account.email" type="email" class="form-control"
                 id="email" readonly>
-              <i ng-show="!user.user.email"
+              <i ng-show="!user.account.email"
                 class="fa fa-times form-control-feedback" aria-hidden="true"></i>
-              <p class="help-block" ng-show="!user.user.email">
+              <p class="help-block" ng-show="!user.account.email">
                 <i class="fa fa-fw fa-warning"></i>
                 No email address set!
               </p>
@@ -145,17 +158,14 @@
               </p>
             </div>
           </div>
-          <!--avatar-->
           <div class="form-group">
             <label for="email" class="col-sm-3 control-label">
               Profile picture
             </label>
             <div class="col-sm-9">
-              <img
-                gravatar-user="auth.user"
-                gravatar-size="100"
-                class="img-thumbnail pull-left ph-sm-margin-right"
-                >
+              <avatar user="auth.user" size="100"
+                classes="img-thumbnail pull-left ph-sm-margin-right"
+                ></avatar>
               <p class="text-muted ph-sm-margin-top">
                 Head over to
                 <a href="https://gravatar.com" target="_blank">Gravatar</a>
@@ -167,5 +177,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </div-->
 </form>
