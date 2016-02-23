@@ -161,6 +161,7 @@
           <h4>
             Associated email addresses
           </h4>
+
           <div class="row" ng-show="user.account.email">
             <span class="col-sm-8">
               {{user.account.email}}
@@ -171,18 +172,28 @@
               </span>
             </span>
           </div>
-          <div class="row" ng-repeat="account in user.externalIds">
-            <div ng-show="{{account.type == 'email' && user.account.email != account.id}}">
-              <span class="col-sm-8">
-                {{account.id}}
-              </span>
-              <span class="col-sm-3">
-                <a href="">
-                  Set as default
-                </a>
-              </span>
-            </div>
+
+          <div class="has-feedback row"
+               ng-class="{'has-error': !user.account.email}"
+               ng-show="!user.account.email">
+            <span class="col-sm-10 text-danger">
+              <i class="fa fa-fw fa-warning"></i>
+              No email address set!
+            </span>
           </div>
+
+          <div class="row" ng-repeat="account in user.externalIds"
+               ng-show="{{account.type == 'email' && user.account.email != account.id}}">
+            <span class="col-sm-8">
+              {{account.id}}
+            </span>
+            <span class="col-sm-3">
+              <a href="">
+                Set as default
+              </a>
+            </span>
+          </div>
+
           <div class="ph-lg-margin-top">
             <label for="email">
               Add email address
