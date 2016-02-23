@@ -80,17 +80,31 @@
               </p>
             </div>
           </div-->
+
           <!--save-->
           <div class="row">
-            <div class="col-sm-6 col-sm-offset-3">
+            <div class="col-sm-2 col-sm-offset-3">
               <button ng-click="save()" class="btn btn-primary"
-                  ng-disabled="settingsForm.$invalid || busy">
+                  ng-disabled="profileForm.$invalid || busy">
                 <i class="fa fa-fw fa-check" ng-show="busy !== 'save'"></i>
                 <i class="fa fa-fw fa-spinner fa-spin" ng-show="busy === 'save'"></i>
                 Save
               </button>
             </div>
+            <div class="col-sm-4" ng-class="{'has-success': profileForm.$valid}">
+              <span class="help-block">
+                <span ng-if="setting.succeeded">
+                  <i class="fa fa-fw fa-check"></i>
+                  Changes are saved.
+                </span>
+                <span ng-if="setting.error" class="text-danger">
+                  <i class="fa fa-fw fa-times"></i>
+                  {{signup.error}}
+                </span>
+              </span>
+            </div>
           </div>
+
         </div>
       </div>
     </div>
