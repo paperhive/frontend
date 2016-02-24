@@ -21,34 +21,11 @@
     <div class="collapse navbar-collapse" uib-collapse="collapsed">
       <!-- right -->
       <div class="navbar-right">
-        <form ng-controller="NavbarSearchCtrl"
-          name="searchForm"
-          class="navbar-form navbar-left"
-          role="search"
-          novalidate
-          >
-          <div class="form-group ph-navbar-search">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Search arXiv articles"
-              name="srch-term"
-              id="srch-term"
-              ng-model="search.body"
-              uib-typeahead="result as result.title for result in phSearch($viewValue, 5)"
-              typeahead-on-select="goToDocument($item, $model, $label)"
-              typeahead-template-url="html/shared/navbarSearchItem.html"
-              ng-keypress="($event.which === 13) && showAllResults(search.body)"
-              typeahead-focus-first="false"
-              autocomplete="off"
-              required
-              >
-          </div>
-        </form>
+        <navbar-search></navbar-search>
         <!--ul class="nav navbar-nav">
           <li><a href="./help" title="help">Help</a></li>
         </ul-->
-        <ng-include src="'html/shared/navbar_user.html'"></ng-include>
+        <navbar-user></navbar-user>
       </div>
     </div><!-- collapse -->
   </div><!-- container-fluid -->
