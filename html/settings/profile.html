@@ -187,10 +187,10 @@
 
           <div class="row" ng-repeat="account in user.externalIds"
                ng-show="{{account.type == 'email' && user.account.email != account.id}}">
-            <span class="col-sm-8">
+            <span class="col-sm-7">
               {{account.id}}
             </span>
-            <span class="col-sm-3">
+            <span class="col-sm-5">
               <a href="">
                 Set as default
               </a>
