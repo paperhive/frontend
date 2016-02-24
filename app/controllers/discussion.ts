@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import { pick } from 'lodash';
 
 export default function(app) {
 
@@ -63,7 +63,7 @@ export default function(app) {
 
         $scope.updateDiscussion = function(comment) {
           $scope.submitting = true;
-          const newDiscussion = _.pick(
+          const newDiscussion = pick(
             comment,
             ['title', 'body', 'target', 'tags']
           );

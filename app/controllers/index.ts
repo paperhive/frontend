@@ -1,6 +1,4 @@
-import activity from './activity';
 import document from './document';
-import documentSettings from './documentSettings';
 import documentText from './documentText';
 import documentNew from './documentNew';
 import authReturn from './authReturn';
@@ -13,8 +11,6 @@ import help from './help';
 import jobs from './jobs';
 import login from './login';
 import navbar from './navbar';
-import navbarSearch from './navbarSearch';
-import navbar_user from './navbar_user';
 import notifications from './notifications';
 import searchResults from './searchResults';
 import settings from './settings';
@@ -24,9 +20,7 @@ import subscribe from './subscribe';
 import user from './user';
 
 export default function(app) {
-  activity(app);
   document(app);
-  documentSettings(app);
   documentText(app);
   documentNew(app);
   authReturn(app);
@@ -39,8 +33,6 @@ export default function(app) {
   jobs(app);
   login(app);
   navbar(app);
-  navbarSearch(app);
-  navbar_user(app);
   notifications(app);
   searchResults(app);
   settings(app);
