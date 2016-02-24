@@ -53,10 +53,10 @@ export default function(app) {
             $scope.busy = false;
             authService.user = data;
             $scope.setting.succeeded = true;
-            /*setTimeout(function() {
+            setTimeout(function() {
               $scope.setting.succeeded = false;
               $scope.$apply();
-            }, 5000);*/
+            }, 5000);
           }).
           error(function(data) {
             $scope.busy = false;
