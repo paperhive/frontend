@@ -15,7 +15,7 @@
                 name="username" type="text"
                 class="form-control" id="username"
                 required ng-minlength="1" ng-maxlength="25"
-                pattern="[a-z0-9_]*"
+                pattern="[a-z0-9_]*" autocomplete="off"
                 validate-username>
               <i ng-show="profileForm.username.$invalid"
                 class="fa fa-times form-control-feedback" aria-hidden="true"></i>
@@ -49,7 +49,8 @@
             <div class="col-sm-8">
               <input ng-model="user.displayName" name="displayName" type="text"
                 class="form-control" id="displayName"
-                required ng-minlength="3" ng-maxlength="25">
+                required ng-minlength="3" ng-maxlength="25"
+                autocomplete="off">
               <i ng-show="profileForm.displayName.$invalid"
                 class="fa fa-times form-control-feedback" aria-hidden="true"></i>
               <p class="help-block" ng-show="profileForm.displayName.$error.required">
@@ -92,15 +93,13 @@
               </button>
             </div>
             <div class="col-sm-4" ng-class="{'has-success': profileForm.$valid}">
-              <span class="help-block">
-                <span ng-if="setting.succeeded">
-                  <i class="fa fa-fw fa-check"></i>
-                  Changes are saved.
-                </span>
-                <span ng-if="setting.error" class="text-danger">
-                  <i class="fa fa-fw fa-times"></i>
-                  {{signup.error}}
-                </span>
+              <span ng-if="setting.succeeded" class="text-success">
+                <i class="fa fa-fw fa-check"></i>
+                Changes are saved.
+              </span>
+              <span ng-if="setting.error" class="text-danger">
+                <i class="fa fa-fw fa-times"></i>
+                {{signup.error}}
               </span>
             </div>
           </div>
@@ -198,7 +197,7 @@
             <label for="email">
               Add email address
             </label>
-            <input type="email" class="form-control">
+            <input type="email" class="form-control" autocomplete="off">
           </div>
           <div class="ph-md-margin-top">
             <button class="btn btn-primary">
