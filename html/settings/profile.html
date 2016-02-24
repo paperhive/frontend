@@ -117,40 +117,43 @@
           <h4>
             Associated accounts
           </h4>
-          <div class="row">
-            <div ng-repeat="account in user.externalIds">
-              <div ng-show="{{account.type == 'google'}}">
-                <span class="col-sm-1">
-                  <img class="ph-login-icon" src="./static/img/google.svg" title="Google">
-                </span>
-                <span class="col-sm-7">
-                  <a ng-href="https://plus.google.com/{{account.id}}" target="_blank">
-                    Google profile
-                  </a>
-                </span>
-                <span class="col-sm-3">
-                  <a href="">
-                    Disconnect
-                  </a>
-                </span>
-              </div>
-              <div ng-show="{{account.type == 'orcid'}}">
-                <span class="col-sm-1">
-                  <img class="ph-login-icon" src="./static/img/orcid.svg">
-                </span>
-                <span class="col-sm-7">
-                  <a ng-href="http://orcid.org/{{account.id}}" target="_blank">
-                    ORCID account
-                  </a>
-                </span>
-                <span class="col-sm-3">
-                  <a href="">
-                    Disconnect
-                  </a>
-                </span>
-              </div>
+
+          <div class="row" ng-repeat="account in user.externalIds">
+
+            <div ng-show="{{account.type == 'google'}}">
+              <span class="col-sm-1">
+                <img class="ph-login-icon" src="./static/img/google.svg" title="Google">
+              </span>
+              <span class="col-sm-7">
+                <a ng-href="https://plus.google.com/{{account.id}}" target="_blank">
+                  Google profile
+                </a>
+              </span>
+              <span class="col-sm-3">
+                <a href="">
+                  Disconnect
+                </a>
+              </span>
             </div>
+
+            <div ng-show="{{account.type == 'orcid'}}">
+              <span class="col-sm-1">
+                <img class="ph-login-icon" src="./static/img/orcid.svg">
+              </span>
+              <span class="col-sm-7">
+                <a ng-href="http://orcid.org/{{account.id}}" target="_blank">
+                  ORCID account
+                </a>
+              </span>
+              <span class="col-sm-3">
+                <a href="">
+                  Disconnect
+                </a>
+              </span>
+            </div>
+
           </div>
+
         </div>
       </div>
     </div>
