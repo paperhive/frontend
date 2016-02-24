@@ -119,15 +119,7 @@
 
           <div class="row" ng-repeat="account in user.externalIds">
 
-            <div ng-show="{{account.type != 'google' && account.type != 'orcid'}}">
-              <span class="col-sm-11">
-                <a href="">
-                  Connect with Orcid or Google
-                </a>
-              </span>
-            </div>
-
-            <div ng-show="{{account.type == 'google'}}">
+            <div ng-if="account.type == 'google'">
               <span class="col-sm-1">
                 <img class="ph-login-icon" src="./static/img/google.svg" title="Google">
               </span>
@@ -143,7 +135,7 @@
               </span>
             </div>
 
-            <div ng-show="{{account.type == 'orcid'}}">
+            <div ng-if="account.type == 'orcid'">
               <span class="col-sm-1">
                 <img class="ph-login-icon" src="./static/img/orcid.svg">
               </span>
@@ -161,6 +153,22 @@
 
           </div>
 
+          <div class="row" ng-if="!find(user.externalIds, {type: 'google'})">
+            <span class="col-sm-12">
+              <a href="">
+                Connect with Google
+              </a>
+            </span>
+          </div>
+
+          <div class="row" ng-if="!find(user.externalIds, {type: 'orcid'})">
+            <span class="col-sm-12">
+              <a href="">
+                Connect with Orcid
+              </a>
+            </span>
+          </div>
+
         </div>
       </div>
     </div>
@@ -172,7 +180,7 @@
             Associated email addresses
           </h4>
 
-          <div class="row" ng-show="user.account.email">
+          <div class="row" ng-if="user.account.email">
             <span class="col-sm-8">
               {{user.account.email}}
             </span>
@@ -185,7 +193,7 @@
 
           <div class="has-feedback row"
                ng-class="{'has-error': !user.account.email}"
-               ng-show="!user.account.email">
+               ng-if="!user.account.email">
             <span class="col-sm-10 text-danger">
               <i class="fa fa-fw fa-warning"></i>
               No email address set!
@@ -193,7 +201,7 @@
           </div>
 
           <div class="row" ng-repeat="account in user.externalIds"
-               ng-show="{{account.type == 'email' && user.account.email != account.id}}">
+               ng-if="{{account.type == 'email' && user.account.email != account.id}}">
             <span class="col-sm-7">
               {{account.id}}
             </span>

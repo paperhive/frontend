@@ -33,6 +33,8 @@ export default function(app) {
           });
       };*/
 
+      $scope.find = _.find;
+
       // save to api
       $scope.save = function() {
         $scope.busy = 'save';
