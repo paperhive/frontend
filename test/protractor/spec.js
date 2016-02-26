@@ -35,11 +35,20 @@ describe('PaperHive homepage', function() {
 
     });
 
+    it('should be present Terms of service link', function () {
+	var legalNotice = element(by.linkText('Terms of Service and Privacy Policy'));
+	expect(legalNotice.isPresent()).toBe(true);
+	var linkLegalNotice = element(by.xpath('/html/body/footer/ng-include/div[1]/div/div/div[2]/ul/li[3]/a'));
+	linkLegalNotice.click();
+	expect(browser.getCurrentUrl()).toBe('http://localhost:8080/terms');
+
+    });
+
+
     it('should be present Legal notice link', function () {
 	var legalNotice = element(by.linkText('Legal notice'));
 	expect(legalNotice.isPresent()).toBe(true);
-
-	var linkLegalNotice = element(by.xpath('/html/body/footer/ng-include/div[1]/div/div/div[2]/ul/li[3]/a'));
+	var linkLegalNotice = element(by.xpath('/html/body/footer/ng-include/div[1]/div/div/div[2]/ul/li[4]/a'));
 	linkLegalNotice.click();
 	expect(browser.getCurrentUrl()).toBe('http://localhost:8080/legalnotice');
 
