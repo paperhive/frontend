@@ -22,15 +22,11 @@ export default function(app) {
       setReturnPath();
       $rootScope.$on('$locationChangeSuccess', setReturnPath);
 
-      // get returnUrl (includes returnPath)
-      authService.getReturnUrl = () => {
-        return `${$window.location.origin}${config.baseHref}authReturn?returnPath=${encodeURIComponent(authService.returnPath)}`;
-      };
+      const frontendUrl = `${$window.location.origin}${config.baseHref}`;
 
       // get url for initiating an auth dance
       authService.getAuthUrl = (provider) => {
-        const returnUrl = authService.getReturnUrl();
-        return `${config.apiUrl}/auth/${provider}/initiate?returnUrl=${encodeURIComponent(returnUrl)}`;
+        return `${config.apiUrl}/auth/${provider}/initiate?frontendUrl=${encodeURIComponent(frontendUrl)}&returnUrl=${encodeURIComponent(authService.returnPath)}`;
       };
 
       // log in with a token
@@ -50,7 +46,7 @@ export default function(app) {
       // log in with email/username and password
       function _loginEmail(emailOrUsername, password) {
         return function() {
-          return $http.post(config.apiUrl + '/auth/email/login', {
+          return $http.post(config.apiUrl + '/auth/emailLogin', {
             emailOrUsername,
             password,
           });
@@ -97,11 +93,23 @@ export default function(app) {
         return login(_loginEmail(emailOrUsername, password));
       };
 
-      authService.signupEmail = (email, password, returnUrl) => {
+      authService.signupEmail = (email, password) => {
         return $http.post(
-          config.apiUrl + '/auth/email/initiate',
-          {email, password, returnUrl}
+          config.apiUrl + '/auth/emailSignup/initiate',
+          {email, password, frontendUrl, returnUrl: authService.returnPath}
         );
+      };
+
+      authService.signupEmailConfirm = (token) => {
+        return login(() => {
+          return $http.post(config.apiUrl + '/auth/emailSignup/confirm', {token});
+        })
+      };
+
+      authService.oauthConfirm = (provider, code, state) => {
+        return login(() => {
+          return $http.post(config.apiUrl + '/auth/' + provider + '/confirm', {code, state});
+        })
       };
 
       // sign out and forget token
