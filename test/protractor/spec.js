@@ -1,6 +1,12 @@
 'use strict';
 
 describe('PaperHive homepage', function() {
+
+
+ beforeEach(function () {
+     this.url = browser.baseUrl;
+  });
+ 
   it('Test page title', function() {
     browser.get('./');
 
@@ -16,12 +22,13 @@ describe('PaperHive homepage', function() {
     });
 
     it('should be present about us link', function () {
+
 	var aboutUs = element(by.linkText('About us'));
 	expect(aboutUs.isPresent()).toBe(true);
-
 	var linkAboutUs = element(by.xpath('/html/body/footer/ng-include/div[1]/div/div/div[2]/ul/li[1]/a'));
 	linkAboutUs.click();
-	expect(browser.getCurrentUrl()).toBe('http://localhost:8080/about');
+
+	expect(browser.getCurrentUrl()).toBe(this.url+'/about');
 
     });
 
@@ -31,8 +38,7 @@ describe('PaperHive homepage', function() {
 
 	var linkContact = element(by.xpath('/html/body/footer/ng-include/div[1]/div/div/div[2]/ul/li[2]/a'));
 	linkContact.click();
-	expect(browser.getCurrentUrl()).toBe('http://localhost:8080/contact');
-
+	expect(browser.getCurrentUrl()).toBe(this.url+'/contact');
     });
 
     it('should be present Terms of service link', function () {
@@ -40,8 +46,7 @@ describe('PaperHive homepage', function() {
 	expect(legalNotice.isPresent()).toBe(true);
 	var linkLegalNotice = element(by.xpath('/html/body/footer/ng-include/div[1]/div/div/div[2]/ul/li[3]/a'));
 	linkLegalNotice.click();
-	expect(browser.getCurrentUrl()).toBe('http://localhost:8080/terms');
-
+	expect(browser.getCurrentUrl()).toBe(this.url+'/terms');
     });
 
 
@@ -50,10 +55,7 @@ describe('PaperHive homepage', function() {
 	expect(legalNotice.isPresent()).toBe(true);
 	var linkLegalNotice = element(by.xpath('/html/body/footer/ng-include/div[1]/div/div/div[2]/ul/li[4]/a'));
 	linkLegalNotice.click();
-	expect(browser.getCurrentUrl()).toBe('http://localhost:8080/legalnotice');
-
+	expect(browser.getCurrentUrl()).toBe(this.url+'/legalnotice');
     });
-
-
 
 });
