@@ -1,109 +1,110 @@
-<form class="form-horizontal ph-lg-margin-bottom" name="profileForm">
+<div class="form-horizontal ph-lg-margin-bottom">
   <div class="row ph-md-margin-bottom">
     <div class="col-sm-offset-1 col-sm-8">
       <div class="panel panel-default">
         <div class="panel-body">
-          <!--username-->
-          <div class="form-group has-feedback"
-              ng-class="{'has-error': profileForm.username.$invalid}">
-            <label for="user" class="col-sm-3 control-label">
-              Username
-            </label>
-            <div class="col-sm-8">
-              <input ng-model="user.account.username"
-                ng-model-options="{ debounce: 250 }"
-                name="username" type="text"
-                class="form-control" id="username"
-                required ng-minlength="1" ng-maxlength="25"
-                pattern="[a-z0-9_]*"
-                validate-username>
-              <i ng-show="profileForm.username.$invalid"
-                class="fa fa-times form-control-feedback" aria-hidden="true"></i>
-              <p class="help-block" ng-show="profileForm.username.$error.required">
-                <i class="fa fa-fw fa-warning"></i>
-                Username is required.
-              </p>
-              <p class="help-block" ng-show="profileForm.username.$error.minlength
-                  || profileForm.username.$error.maxlength">
-                <i class="fa fa-fw fa-warning"></i>
-                Username must have between 1 and 25 characters.
-              </p>
-              <p class="help-block" ng-show="profileForm.username.$error.pattern">
-                <i class="fa fa-fw fa-warning"></i>
-                Username can only contain lowercase characters <mark>a-z</mark>,
-                numbers <mark>0-9</mark> and underscores <mark>_</mark>.
-              </p>
-              <p class="help-block" ng-show="profileForm.username.$error.username">
-                <i class="fa fa-fw fa-warning"></i>
-                The username <em>{{profileForm.username.$viewValue}}</em> is
-                already taken. Please use a different username.
-              </p>
+          <form name="profileForm">
+            <!--username-->
+            <div class="form-group has-feedback"
+                ng-class="{'has-error': profileForm.username.$invalid}">
+              <label for="user" class="col-sm-3 control-label">
+                Username
+              </label>
+              <div class="col-sm-8">
+                <input ng-model="user.account.username"
+                  ng-model-options="{ debounce: 250 }"
+                  name="username" type="text"
+                  class="form-control" id="username"
+                  required ng-minlength="1" ng-maxlength="25"
+                  pattern="[a-z0-9_]*"
+                  validate-username>
+                <i ng-show="profileForm.username.$invalid"
+                  class="fa fa-times form-control-feedback" aria-hidden="true"></i>
+                <p class="help-block" ng-show="profileForm.username.$error.required">
+                  <i class="fa fa-fw fa-warning"></i>
+                  Username is required.
+                </p>
+                <p class="help-block" ng-show="profileForm.username.$error.minlength
+                    || profileForm.username.$error.maxlength">
+                  <i class="fa fa-fw fa-warning"></i>
+                  Username must have between 1 and 25 characters.
+                </p>
+                <p class="help-block" ng-show="profileForm.username.$error.pattern">
+                  <i class="fa fa-fw fa-warning"></i>
+                  Username can only contain lowercase characters <mark>a-z</mark>,
+                  numbers <mark>0-9</mark> and underscores <mark>_</mark>.
+                </p>
+                <p class="help-block" ng-show="profileForm.username.$error.username">
+                  <i class="fa fa-fw fa-warning"></i>
+                  The username <em>{{profileForm.username.$viewValue}}</em> is
+                  already taken. Please use a different username.
+                </p>
+              </div>
             </div>
-          </div>
-          <!--displayName-->
-          <div class="form-group has-feedback"
-              ng-class="{'has-error': profileForm.displayName.$invalid}">
-            <label for="displayName" class="col-sm-3 control-label">
-              Display name
-            </label>
-            <div class="col-sm-8">
-              <input ng-model="user.displayName" name="displayName" type="text"
-                class="form-control" id="displayName"
-                required ng-minlength="3" ng-maxlength="25">
-              <i ng-show="profileForm.displayName.$invalid"
-                class="fa fa-times form-control-feedback" aria-hidden="true"></i>
-              <p class="help-block" ng-show="profileForm.displayName.$error.required">
-                <i class="fa fa-fw fa-warning"></i>
-                Display name is required.
-              </p>
-              <p class="help-block" ng-show="profileForm.displayName.$error.minlength
-                  || profileForm.displayName.$error.maxlength">
-                <i class="fa fa-fw fa-warning"></i>
-                Display name must have between 3 and 25 characters.
-              </p>
+            <!--displayName-->
+            <div class="form-group has-feedback"
+                ng-class="{'has-error': profileForm.displayName.$invalid}">
+              <label for="displayName" class="col-sm-3 control-label">
+                Display name
+              </label>
+              <div class="col-sm-8">
+                <input ng-model="user.displayName" name="displayName" type="text"
+                  class="form-control" id="displayName"
+                  required ng-minlength="3" ng-maxlength="25">
+                <i ng-show="profileForm.displayName.$invalid"
+                  class="fa fa-times form-control-feedback" aria-hidden="true"></i>
+                <p class="help-block" ng-show="profileForm.displayName.$error.required">
+                  <i class="fa fa-fw fa-warning"></i>
+                  Display name is required.
+                </p>
+                <p class="help-block" ng-show="profileForm.displayName.$error.minlength
+                    || profileForm.displayName.$error.maxlength">
+                  <i class="fa fa-fw fa-warning"></i>
+                  Display name must have between 3 and 25 characters.
+                </p>
+              </div>
             </div>
-          </div>
-          <!--email-->
-          <!--div ng-if="user.account.email" class="form-group has-feedback"
-              ng-class="{'has-error': !user.account.email}">
-            <label for="email" class="col-sm-3 control-label">
-              Email
-            </label>
-            <div class="col-sm-8">
-              <input ng-model="user.account.email" type="email" class="form-control"
-                id="email" readonly>
-              <i ng-show="!user.account.email"
-                class="fa fa-times form-control-feedback" aria-hidden="true"></i>
-              <p class="help-block" ng-show="!user.account.email">
-                <i class="fa fa-fw fa-warning"></i>
-                No email address set!
-              </p>
-            </div>
-          </div-->
+            <!--email-->
+            <!--div ng-if="user.account.email" class="form-group has-feedback"
+                ng-class="{'has-error': !user.account.email}">
+              <label for="email" class="col-sm-3 control-label">
+                Email
+              </label>
+              <div class="col-sm-8">
+                <input ng-model="user.account.email" type="email" class="form-control"
+                  id="email" readonly>
+                <i ng-show="!user.account.email"
+                  class="fa fa-times form-control-feedback" aria-hidden="true"></i>
+                <p class="help-block" ng-show="!user.account.email">
+                  <i class="fa fa-fw fa-warning"></i>
+                  No email address set!
+                </p>
+              </div>
+            </div-->
 
-          <!--save-->
-          <!-- see vertical alignment: http://stackoverflow.com/a/25517025/4419582 -->
-          <div class="row ph-vertical-align">
-            <div class="col-sm-2 col-sm-offset-3">
-              <button ng-click="save()" class="btn btn-primary"
-                  ng-disabled="profileForm.$invalid || busy">
-                <i class="fa fa-fw fa-check" ng-show="busy !== 'save'"></i>
-                <i class="fa fa-fw fa-spinner fa-spin" ng-show="busy === 'save'"></i>
-                Save
-              </button>
+            <!--save-->
+            <!-- see vertical alignment: http://stackoverflow.com/a/25517025/4419582 -->
+            <div class="row ph-vertical-align">
+              <div class="col-sm-2 col-sm-offset-3">
+                <button ng-click="save()" class="btn btn-primary"
+                    ng-disabled="profileForm.$invalid || busy">
+                  <i class="fa fa-fw fa-check" ng-show="busy !== 'save'"></i>
+                  <i class="fa fa-fw fa-spinner fa-spin" ng-show="busy === 'save'"></i>
+                  Save
+                </button>
+              </div>
+              <div class="col-sm-4" ng-class="{'has-success': profileForm.$valid}">
+                <span ng-if="setting.succeeded" class="text-success">
+                  <i class="fa fa-fw fa-check"></i>
+                  Changes are saved.
+                </span>
+                <span ng-if="setting.error" class="text-danger">
+                  <i class="fa fa-fw fa-times"></i>
+                  {{signup.error}}
+                </span>
+              </div>
             </div>
-            <div class="col-sm-4" ng-class="{'has-success': profileForm.$valid}">
-              <span ng-if="setting.succeeded" class="text-success">
-                <i class="fa fa-fw fa-check"></i>
-                Changes are saved.
-              </span>
-              <span ng-if="setting.error" class="text-danger">
-                <i class="fa fa-fw fa-times"></i>
-                {{signup.error}}
-              </span>
-            </div>
-          </div>
-
+          </form>
         </div>
       </div>
     </div>
@@ -201,7 +202,7 @@
           </div>
 
           <div class="row" ng-repeat="account in user.externalIds"
-               ng-if="{{account.type == 'email' && user.account.email != account.id}}">
+               ng-if="account.type === 'email' && user.account.email !== account.id">
             <span class="col-sm-7">
               {{account.id}}
             </span>
@@ -213,18 +214,21 @@
           </div>
 
           <div class="ph-lg-margin-top">
-            <label for="email">
-              Add email address
-            </label>
-            <div class="input-group">
-              <input type="email" class="form-control">
-              <span class="input-group-btn">
-                <button class="btn btn-primary">
-                  <i class="fa fa-plus"></i>
-                  Add
-                </button>
-              </span>
-            </div>
+            <form name="addEmailForm">
+              <label for="email">
+                Add email address
+              </label>
+              <div class="input-group">
+                <input type="email" class="form-control" ng-model="setting.address"
+                  name="email" id="email" pattern=".*@.+\..+" required>
+                <span class="input-group-btn">
+                  <button class="btn btn-primary" ng-click="addEmail(setting.address)">
+                    <i class="fa fa-plus"></i>
+                    Add
+                  </button>
+                </span>
+              </div>
+            </form>
           </div>
 
         </div>
@@ -316,4 +320,4 @@
       </div>
     </div>
   </div-->
-</form>
+</div>

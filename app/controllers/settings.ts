@@ -15,6 +15,11 @@ export default function(app) {
         $scope.user = _.cloneDeep(user);
       });
 
+      $scope.addEmail = function(address) {
+        console.log(address);
+        // TODO
+      };
+
       // sync from orcid
       /*$scope.syncFromOrcid = function() {
         $scope.busy = 'sync';
