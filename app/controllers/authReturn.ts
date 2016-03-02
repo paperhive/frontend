@@ -15,13 +15,24 @@ export default function(app) {
       }
 
       function onLoginError(data) {
-        $scope.error = data.message;
+        console.log(data);
+        notificationService.notifications.push({
+          type: 'error',
+          message: data.message
+        });
       }
 
       switch ($routeParams.provider) {
         case 'emailSignup':
           authService.signupEmailConfirm($routeParams.token)
             .then(onLogin, onLoginError);
+          break;
+        case 'emailAdd':
+          $http.post(config.apiUrl + '/auth/emailAdd/confirm', {token: $routeParams.token})
+            .then(
+              response => onLogin(response.data),
+              response => onLoginError(response.data)
+             );
           break;
         case 'orcid':
         case 'google':

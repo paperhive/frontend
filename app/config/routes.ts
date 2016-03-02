@@ -127,7 +127,6 @@ export default function(app) {
         })
 
         .segment('authReturn', {
-          templateUrl: 'html/auth/return.html',
           controller: 'AuthReturnCtrl',
           title: 'PaperHive'
         })

@@ -22,7 +22,7 @@ export default function(app) {
       setReturnPath();
       $rootScope.$on('$locationChangeSuccess', setReturnPath);
 
-      const frontendUrl = `${$window.location.origin}${config.baseHref}`;
+      const frontendUrl = authService.frontendUrl = `${$window.location.origin}${config.baseHref}`;
 
       // get url for initiating an auth dance
       authService.getAuthUrl = (provider) => {

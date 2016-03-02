@@ -17,7 +17,14 @@ export default function(app) {
 
       $scope.addEmail = function(address) {
         console.log(address);
-        // TODO
+        $http.post(config.apiUrl + '/auth/emailAdd/initiate', {
+          email: address,
+          frontendUrl: authService.frontendUrl,
+          returnUrl: authService.returnPath
+        }).then(function(data){
+          // TODO show message
+          console.log(data);
+        });
       };
 
       // sync from orcid
