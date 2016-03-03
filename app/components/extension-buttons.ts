@@ -21,7 +21,7 @@ export default function(app) {
             };
             InstallTrigger.install(params);
             return false;
-          }
+          };
         }],
         template: `
           <div ng-if="isChromium">
