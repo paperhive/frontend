@@ -103,13 +103,13 @@ export default function(app) {
       authService.signupEmailConfirm = (token) => {
         return login(() => {
           return $http.post(config.apiUrl + '/auth/emailSignup/confirm', {token});
-        })
+        });
       };
 
       authService.oauthConfirm = (provider, code, state) => {
         return login(() => {
           return $http.post(config.apiUrl + '/auth/' + provider + '/confirm', {code, state});
-        })
+        });
       };
 
       // sign out and forget token
