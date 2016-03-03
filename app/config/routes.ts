@@ -29,14 +29,12 @@ export default function(app) {
         .when('/auth/return/:provider', 'authReturn')
         .when('/documents/new', 'documents_new')
         .when('/documents/:documentId', 'documents')
-        .when('/documents/:documentId/activity', 'documents.activity')
         .when('/documents/:documentId/discussions', 'documents.discussions')
         .when('/documents/:documentId/stars', 'documents.stars')
         // .when('/documents/:documentId/discussions/new',
         //       'documents.discussions.new')
         .when('/documents/:documentId/discussions/:discussionId',
               'documents.discussions.thread')
-        .when('/documents/:documentId/settings', 'documents.settings')
         .when('/documents/:documentId/text', 'documents.text')
         .when('/documents/:documentId/revisions/:revisionId', 'documents.revisions')
         .when('/documents/:documentId/about', 'documents.about')
@@ -137,10 +135,6 @@ export default function(app) {
           title: 'Document · PaperHive'
         })
         .within()
-          .segment('activity', {
-            templateUrl: 'html/documents/activity.html',
-            title: 'Document activity · PaperHive'
-          })
           .segment('stars', {
             templateUrl: 'html/documents/stars.html',
             title: 'Stars · PaperHive'
@@ -165,10 +159,6 @@ export default function(app) {
               title: 'Discussion · PaperHive'
             })
           .up()
-          .segment('settings', {
-            templateUrl: 'html/documents/settings.html',
-            title: 'Document settings · PaperHive'
-          })
           .segment('text', {
             default: true,
             templateUrl: 'html/documents/text.html',

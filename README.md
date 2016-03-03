@@ -1,8 +1,7 @@
 # PaperHive Frontend
 
-[![Build Status](https://jenkins.paperhive.org/buildStatus/icon?job=frontend-staging)](https://jenkins.paperhive.org/job/frontend-staging/)
+[![Build Status](https://jenkins.paperhive.org/buildStatus/icon?job=frontend)](https://jenkins.paperhive.org/job/frontend/)
 [![Dependency Status](https://gemnasium.com/paperhive/paperhive-frontend.svg)](https://gemnasium.com/paperhive/paperhive-frontend)
-
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/nschloe.svg)](https://saucelabs.com/u/nschloe)
 
 ---
