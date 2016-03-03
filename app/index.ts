@@ -78,7 +78,7 @@ function firefoxAddonInstall(aEvent) {
   for ( let a = aEvent.target; a.href === undefined; ) a = a.parentNode;
   const params = {
     'PaperHive': {
-      URL: aEvent.target.href,
+      URL: aEvent.target.xpiUrl,
       IconURL: aEvent.target.getAttribute('iconURL'),
       toString: function () { return this.URL; }
     }

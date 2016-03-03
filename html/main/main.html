@@ -10,10 +10,7 @@
         </h2>
       </div>
       <div class="row">
-        <div class="col-md-6">
-          <h4 class="ph-lg-margin-bottom text-center">
-            Sign up and be the first to get notified when we launch!
-          </h4>
+        <div class="col-md-offset-1 col-md-4">
           <div class="panel panel-default ph-intro-panel ph-lg-margin-bottom">
             <div class="panel-body">
               <form novalidate name="subscribeForm" ng-controller="SubscribeCtrl">
@@ -21,7 +18,9 @@
                         'has-error': hasError('email'),
                         'has-success': subscribeForm.email.$valid
                       }">
-                  <label for="email">Email address</label>
+                  <h4 class="ph-lg-margin-bottom text-center">
+                    Sign up and be the first to get notified when we launch!
+                  </h4>
                   <input type="email" class="form-control" id="email" name="email"
                     ng-model="email"
                     placeholder="you@example.com"
@@ -63,20 +62,26 @@
           </div>
           <p class="text-center">
             <a href="https://twitter.com/paperhive">
-              <span class="fa-stack fa-lg">
+              <span class="fa-stack fa-3x">
                 <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
                 <i class="fa fa-twitter fa-stack-1x"></i>
               </span>
             </a>
+            <a href="https://www.facebook.com/paperhiveorg/">
+              <span class="fa-stack fa-3x">
+                <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
+                <i class="fa fa-facebook fa-stack-1x"></i>
+              </span>
+            </a>
           </p>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-offset-2 col-md-4">
           <div class="row ph-lg-margin-bottom">
             <div class="col-md-12 text-center">
-              <h4 class="ph-lg-margin-bottom">Get the browser extension!</h4>
               <div class="panel panel-default ph-intro-panel ph-lg-margin-bottom">
                 <div class="panel-body">
-                  <a class="btn btn-primary"
+                  <h4 class="ph-lg-margin-bottom">Get the browser extension!</h4>
+                  <a class="btn btn-primary btn-block"
                      href="https://chrome.google.com/webstore/detail/paperhive/fihafdlllifbanclcjljledeifcdjbok"
                      onclick="chrome.webstore.install();return false;"
                      >
@@ -87,8 +92,9 @@
                       >
                     Add to Chrome
                   </a>
-                  <a class="btn btn-primary"
-                     href="https://addons.mozilla.org/firefox/downloads/file/405251/paperhive-fx.xpi"
+                  <a class="btn btn-primary btn-block"
+                     href="https://addons.mozilla.org/en-US/firefox/addon/paperhive/"
+                     xpiUrl="https://addons.mozilla.org/firefox/downloads/file/405251/paperhive-fx.xpi"
                      iconURL="/static/img/firefox.svg"
                      onclick="return firefoxAddonInstall(event);"
                      >
