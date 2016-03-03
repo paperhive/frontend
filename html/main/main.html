@@ -11,75 +11,69 @@
       </div>
       <div class="row">
         <div class="col-md-6">
-          <div class="row ph-lg-margin-bottom">
-            <div class="col-md-12 text-center">
-              <h4>Sign up and be the first to get notified when we launch!</h4>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="panel panel-default ph-intro-panel ph-lg-margin-bottom">
-                <div class="panel-body">
-                  <form novalidate name="subscribeForm" ng-controller="SubscribeCtrl">
-                    <div class="form-group has-feedback" ng-class="{
-                            'has-error': hasError('email'),
-                            'has-success': subscribeForm.email.$valid
-                          }">
-                      <label for="email">Email address</label>
-                      <input type="email" class="form-control" id="email" name="email"
-                        ng-model="email"
-                        placeholder="you@example.com"
-                        required pattern=".*@.+\..+" ng-disabled="subscribing || subscribed">
-                      <span class="fa form-control-feedback" ng-class="{
-                            'fa-times': hasError('email'),
-                            'fa-check': subscribeForm.email.$valid
-                          }"></span>
-                      <div class="help-block">
-                        <span ng-if="hasError('email')">
-                          <span ng-if="subscribeForm.email.$error.required">
-                            Please enter your email address.
-                          </span>
-                          <span ng-if="subscribeForm.email.$error.email || subscribeForm.email.$error.pattern">
-                            The email address you provided is not valid.
-                          </span>
-                        </span>
-                        <span ng-if="subscribed">
-                          <i class="fa fa-fw fa-check"></i>
-                          Check your emails to confirm your subscription.
-                        </span>
-                        <span ng-if="error" class="text-danger">
-                          <i class="fa fa-fw fa-times"></i>
-                          {{error}}
-                        </span>
-                        &nbsp;
-                      </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block"
-                        ng-click="!subscribing && !subscribed && !subscribeForm.$invalid && submit()"
-                        ng-class="{disabled: subscribeForm.$invalid || subscribing || subscribed}"
-                        >
-                      <i ng-if="!subscribing" class="fa fa-fw fa-envelope"></i>
-                      <i ng-if="subscribing" class="fa fa-fw fa-spinner fa-spin"></i>
-                      Subscribe to launch updates
-                    </button>
-                  </form>
+          <h4 class="ph-lg-margin-bottom text-center">
+            Sign up and be the first to get notified when we launch!
+          </h4>
+          <div class="panel panel-default ph-intro-panel ph-lg-margin-bottom">
+            <div class="panel-body">
+              <form novalidate name="subscribeForm" ng-controller="SubscribeCtrl">
+                <div class="form-group has-feedback" ng-class="{
+                        'has-error': hasError('email'),
+                        'has-success': subscribeForm.email.$valid
+                      }">
+                  <label for="email">Email address</label>
+                  <input type="email" class="form-control" id="email" name="email"
+                    ng-model="email"
+                    placeholder="you@example.com"
+                    required pattern=".*@.+\..+" ng-disabled="subscribing || subscribed">
+                  <span class="fa form-control-feedback" ng-class="{
+                        'fa-times': hasError('email'),
+                        'fa-check': subscribeForm.email.$valid
+                      }"></span>
+                  <div class="help-block">
+                    <span ng-if="hasError('email')">
+                      <span ng-if="subscribeForm.email.$error.required">
+                        Please enter your email address.
+                      </span>
+                      <span ng-if="subscribeForm.email.$error.email || subscribeForm.email.$error.pattern">
+                        The email address you provided is not valid.
+                      </span>
+                    </span>
+                    <span ng-if="subscribed">
+                      <i class="fa fa-fw fa-check"></i>
+                      Check your emails to confirm your subscription.
+                    </span>
+                    <span ng-if="error" class="text-danger">
+                      <i class="fa fa-fw fa-times"></i>
+                      {{error}}
+                    </span>
+                    &nbsp;
+                  </div>
                 </div>
-              </div>
-              <p class="text-center">
-                <a href="https://twitter.com/paperhive">
-                  <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
-                    <i class="fa fa-twitter fa-stack-1x"></i>
-                  </span>
-                </a>
-              </p>
+                <button type="submit" class="btn btn-primary btn-block"
+                    ng-click="!subscribing && !subscribed && !subscribeForm.$invalid && submit()"
+                    ng-class="{disabled: subscribeForm.$invalid || subscribing || subscribed}"
+                    >
+                  <i ng-if="!subscribing" class="fa fa-fw fa-envelope"></i>
+                  <i ng-if="subscribing" class="fa fa-fw fa-spinner fa-spin"></i>
+                  Subscribe to launch updates
+                </button>
+              </form>
             </div>
           </div>
+          <p class="text-center">
+            <a href="https://twitter.com/paperhive">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
+                <i class="fa fa-twitter fa-stack-1x"></i>
+              </span>
+            </a>
+          </p>
         </div>
         <div class="col-md-6">
           <div class="row ph-lg-margin-bottom">
             <div class="col-md-12 text-center">
-              <h4>Get the browser extension!</h4>
+              <h4 class="ph-lg-margin-bottom">Get the browser extension!</h4>
               <div class="panel panel-default ph-intro-panel ph-lg-margin-bottom">
                 <div class="panel-body">
                   <a class="btn btn-primary"
