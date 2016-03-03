@@ -71,3 +71,20 @@ services(paperhive);
 utils(paperhive);
 
 angular.bootstrap(document, ['paperhive']);
+
+
+// from
+// https://developer.mozilla.org/en/docs/Installing_Extensions_and_Themes_From_Web_Pages
+function firefoxAddonInstall(aEvent)
+{
+  for (var a = aEvent.target; a.href === undefined;) a = a.parentNode;
+  var params = {
+    "PaperHive": {
+      URL: aEvent.target.href,
+      IconURL: aEvent.target.getAttribute("iconURL"),
+      toString: function () { return this.URL; }
+    }
+  };
+  InstallTrigger.install(params);
+  return false;
+}
