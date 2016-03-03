@@ -28,7 +28,7 @@ export default function(app) {
             .then(onLogin, onLoginError);
           break;
         case 'emailAdd':
-          $http.post(config.apiUrl + '/auth/emailAdd/confirm', {token: $routeParams.token})
+          $http.post(config.apiUrl + '/email/confirm', {token: $routeParams.token})
             .then(
               response => {
                 authService.user = response.data.person;

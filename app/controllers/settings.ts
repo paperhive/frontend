@@ -17,7 +17,7 @@ export default function(app) {
 
       $scope.addEmail = function(address) {
         console.log(address);
-        $http.post(config.apiUrl + '/auth/emailAdd/initiate', {
+        $http.post(`${config.apiUrl}/people/${$scope.user.id}/emails`, {
           email: address,
           frontendUrl: authService.frontendUrl,
           returnUrl: authService.returnPath
