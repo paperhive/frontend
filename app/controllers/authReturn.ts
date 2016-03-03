@@ -30,7 +30,10 @@ export default function(app) {
         case 'emailAdd':
           $http.post(config.apiUrl + '/auth/emailAdd/confirm', {token: $routeParams.token})
             .then(
-              response => onLogin(response.data),
+              response => {
+                authService.user = response.data.person;
+                onLogin(response.data);
+              },
               response => onLoginError(response.data)
              );
           break;
