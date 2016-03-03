@@ -83,30 +83,7 @@
                 <div class="panel-body">
                   <h4 class="ph-lg-margin-bottom">Get the extension and
                   never miss updates on papers you're looking at!</h4>
-                  <a class="btn btn-primary btn-block"
-                     href="https://chrome.google.com/webstore/detail/paperhive/fihafdlllifbanclcjljledeifcdjbok"
-                     onclick="chrome.webstore.install();return false;"
-                     >
-                    <img
-                      alt="Chrome logo"
-                      width="30px"
-                      src="./static/img/chrome.svg"
-                      >
-                    Add to Chrome
-                  </a>
-                  <a class="btn btn-primary btn-block"
-                     href="https://addons.mozilla.org/en-US/firefox/addon/paperhive/"
-                     xpiUrl="https://addons.mozilla.org/firefox/downloads/file/405251/paperhive-fx.xpi"
-                     iconURL="/static/img/firefox.svg"
-                     onclick="return firefoxAddonInstall(event);"
-                     >
-                    <img
-                      alt="Firefox logo"
-                      width="30px"
-                      src="./static/img/firefox.svg"
-                      >
-                    Add to Firefox
-                  </a>
+                  <extension-buttons></extension-buttons>
                 </div>
               </div>
             </div>

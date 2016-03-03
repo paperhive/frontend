@@ -1,5 +1,6 @@
 import avatar from './avatar';
 import avatarList from './avatar-list';
+import extensionButtons from './extension-buttons';
 import comment from './comment';
 import feedbackButton from './feedback-button';
 import navbarSearch from './navbar-search';
@@ -10,6 +11,7 @@ import starredDocs from './starred-docs';
 export default function(app) {
   avatar(app);
   avatarList(app);
+  extensionButtons(app);
   comment(app);
   feedbackButton(app);
   navbarSearch(app);
