@@ -26,7 +26,7 @@ export default function(app) {
         template: `
           <div ng-if="isChromium">
             <a ng-if="isChromium"
-               class="btn btn-primary btn-block"
+               class="btn btn-primary btn-block ph-margin-bottom-10"
                href="https://chrome.google.com/webstore/detail/paperhive/fihafdlllifbanclcjljledeifcdjbok"
                onclick="chrome.webstore.install();return false;"
                >
@@ -37,12 +37,13 @@ export default function(app) {
                 >
               Add to Chrome
             </a>
-            <a href="https://addons.mozilla.org/en-US/firefox/addon/paperhive/">
+            <a class="ph-font-size-small"
+               href="https://addons.mozilla.org/en-US/firefox/addon/paperhive/">
               Also available for Mozilla Firefox.
             </a>
           </div>
           <div ng-if="isFirefox">
-            <a class="btn btn-primary btn-block"
+            <a class="btn btn-primary btn-block ph-margin-bottom-10"
                href="https://addons.mozilla.org/en-US/firefox/addon/paperhive/"
                xpiUrl="https://addons.mozilla.org/firefox/downloads/file/405251/paperhive-fx.xpi"
                iconURL="/static/img/firefox.svg"
@@ -55,7 +56,8 @@ export default function(app) {
                 >
               Add to Firefox
             </a>
-            <a href="https://chrome.google.com/webstore/detail/paperhive/fihafdlllifbanclcjljledeifcdjbok">
+            <a class="ph-font-size-small"
+               href="https://chrome.google.com/webstore/detail/paperhive/fihafdlllifbanclcjljledeifcdjbok">
               Also available for Google Chrome.
             </a>
           </div>
