@@ -3,10 +3,11 @@ import avatarList from './avatar-list';
 import extensionButtons from './extension-buttons';
 import comment from './comment';
 import feedbackButton from './feedback-button';
+import hiveButton from './hive-button';
+import hivedDocs from './hived-docs';
 import navbarSearch from './navbar-search';
 import navbarUser from './navbar-user';
-import starButton from './star-button';
-import starredDocs from './starred-docs';
+import settingsEmail from './settings-email';
 
 export default function(app) {
   avatar(app);
@@ -14,8 +15,9 @@ export default function(app) {
   extensionButtons(app);
   comment(app);
   feedbackButton(app);
+  hiveButton(app);
+  hivedDocs(app);
   navbarSearch(app);
   navbarUser(app);
-  starButton(app);
-  starredDocs(app);
+  settingsEmail(app);
 };
