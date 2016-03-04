@@ -14,13 +14,13 @@
           <div class="panel panel-default ph-intro-panel ph-lg-margin-bottom">
             <div class="panel-body">
               <form novalidate name="subscribeForm" ng-controller="SubscribeCtrl">
+                <h4 class="ph-lg-margin-bottom text-center">
+                  Sign up and be the first to get notified when we launch!
+                </h4>
                 <div class="form-group has-feedback" ng-class="{
                         'has-error': hasError('email'),
                         'has-success': subscribeForm.email.$valid
                       }">
-                  <h4 class="ph-lg-margin-bottom text-center">
-                    Sign up and be the first to get notified when we launch!
-                  </h4>
                   <input type="email" class="form-control" id="email" name="email"
                     ng-model="email"
                     placeholder="you@example.com"
@@ -137,7 +137,7 @@
         <div class="panel-body text-center">
           <h3 class="ph-no-margin-top">Learn and help out</h3>
           <p>
-            Unclear parts in documents essential for your  work? Have your
+            Unclear parts in documents essential for your work? Have your
             questions answered quickly by other researchers. Need orientation
             for a paper? Save time by checking it on PaperHive.
           </p>
