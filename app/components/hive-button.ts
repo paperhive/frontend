@@ -1,5 +1,5 @@
 'use strict';
-import { findIndex, some } from 'lodash';
+import { findIndex, map, some } from 'lodash';
 
 export default function(app) {
     app.component('hiveButton', {
@@ -34,7 +34,10 @@ export default function(app) {
             ctrl.hivers = ret.data.hivers;
             $scope.$watch('$ctrl.user', function(user) {
               if (user && user.id) {
-                ctrl.doesUserHive = some(ctrl.hivers, {'id': user.id});
+                ctrl.doesUserHive = some(
+                  map(ctrl.hivers, hiver => hiver.person),
+                    {'id': user.id}
+                );
               }
             });
             // This is an async function, so unless we $apply, angular won't
