@@ -3,10 +3,10 @@
 export default function(app) {
     app.component('extensionButtons', {
       controller: [
-        '$scope', '$element', '$attrs',
-        function($scope, $element, $attrs) {
-          $scope.isChromium = !!window.chrome;
-          $scope.isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+        '$scope', '$element', '$attrs', '$window',
+        function($scope, $element, $attrs, $window) {
+          $scope.isChromium = !!$window.chrome;
+          $scope.isFirefox = $window.navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
           // from
           // https://developer.mozilla.org/en/docs/Installing_Extensions_and_Themes_From_Web_Pages
