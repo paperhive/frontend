@@ -94,11 +94,11 @@ export default function(app) {
           `<span class="btn-group" role="group">
             <button ng-if="$ctrl.doesUserHive" type="button" class="btn btn-default"
               ng-disabled="!$ctrl.user" ng-click="$ctrl.unhive()">
-              <i class="fa fa-star"></i> Unhive
+              <img alt="logo black" height="20px" src="./static/img/logo-hexagon-black.svg"/> Unhive
             </button>
             <button ng-if="!$ctrl.doesUserHive" type="button" class="btn btn-default"
               ng-disabled="!$ctrl.user" ng-click="$ctrl.hive()">
-              <i class="fa fa-star"></i> Hive
+              <img alt="logo black" height="20px" src="./static/img/logo-hexagon-black.svg"/> Hive
             </button>
             <a href="./documents/{{$ctrl.documentId}}/hivers" class="btn btn-default">
               <span ng-if="$ctrl.hivers">{{$ctrl.hivers.length}}</span>
