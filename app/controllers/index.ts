@@ -6,6 +6,7 @@ import comment from './comment';
 import contact from './contact';
 import discussion from './discussion';
 import discussionList from './discussionList';
+import hivers from './hivers';
 import meta from './meta';
 import help from './help';
 import jobs from './jobs';
@@ -15,7 +16,6 @@ import notifications from './notifications';
 import searchResults from './searchResults';
 import settings from './settings';
 import signup from './signup';
-import stars from './stars';
 import subscribe from './subscribe';
 import user from './user';
 
@@ -28,6 +28,7 @@ export default function(app) {
   contact(app);
   discussion(app);
   discussionList(app);
+  hivers(app);
   meta(app);
   help(app);
   jobs(app);
@@ -37,7 +38,6 @@ export default function(app) {
   searchResults(app);
   settings(app);
   signup(app);
-  stars(app);
   subscribe(app);
   user(app);
 };
