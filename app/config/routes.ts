@@ -30,7 +30,7 @@ export default function(app) {
         .when('/documents/new', 'documents_new')
         .when('/documents/:documentId', 'documents')
         .when('/documents/:documentId/discussions', 'documents.discussions')
-        .when('/documents/:documentId/stars', 'documents.stars')
+        .when('/documents/:documentId/hivers', 'documents.hivers')
         // .when('/documents/:documentId/discussions/new',
         //       'documents.discussions.new')
         .when('/documents/:documentId/discussions/:discussionId',
@@ -135,9 +135,9 @@ export default function(app) {
           title: 'Document · PaperHive'
         })
         .within()
-          .segment('stars', {
-            templateUrl: 'html/documents/stars.html',
-            title: 'Stars · PaperHive'
+          .segment('hivers', {
+            templateUrl: 'html/documents/hivers.html',
+            title: 'Hivers · PaperHive'
           })
           .segment('discussions', {
             templateUrl: 'html/documents/discussions/index.html',
