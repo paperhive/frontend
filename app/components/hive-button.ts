@@ -57,7 +57,10 @@ export default function(app) {
               notificationService.httpError('could not hive document');
             }
             ctrl.submitting = false;
-            ctrl.hivers.push(ctrl.user);
+            ctrl.hivers.push({
+              hivedAt: new Date(),
+              person: ctrl.user,
+            });
             ctrl.doesUserHive = true;
             // This is an async function, so unless we $apply, angular won't
             // know that values have changed.
@@ -76,7 +79,10 @@ export default function(app) {
               notificationService.httpError('could not hive document');
             }
             ctrl.submitting = false;
-            const idx = findIndex(ctrl.hivers, {id: ctrl.user.id});
+            const idx = findIndex(
+              map(ctrl.hivers, hiver => hiver.person),
+              {id: ctrl.user.id}
+              );
             if (idx > -1) { ctrl.hivers.splice(idx, 1); }
             ctrl.doesUserHive = false;
             // This is an async function, so unless we $apply, angular won't
