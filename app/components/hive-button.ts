@@ -2,7 +2,7 @@
 import { findIndex, some } from 'lodash';
 
 export default function(app) {
-    app.component('starButton', {
+    app.component('hiveButton', {
       bindings: {
         documentId: '<',
         user: '<',
@@ -12,7 +12,7 @@ export default function(app) {
         function($scope, $element, $attrs, $http, config, notificationService) {
           const ctrl = this;
 
-          this.doesUserStar = false;
+          this.doesUserHive = false;
 
           // $watch on this?
           $scope.$watch('$ctrl.documentId', async function(id) {
@@ -21,20 +21,20 @@ export default function(app) {
             try {
               ret = await $http.get(
                 config.apiUrl +
-                  '/documents/' + id + '/stars'
+                  '/documents/' + id + '/hivers'
               );
             } catch (err) {
               console.log(err);
               notificationService.notifications.push({
                 type: 'error',
                 message: err.data.message ? err.data.message :
-                  'could not fetch stars (unknown reason)'
+                  'could not fetch hivers (unknown reason)'
               });
             }
-            ctrl.stars = ret.data.stars;
+            ctrl.hivers = ret.data.hivers;
             $scope.$watch('$ctrl.user', function(user) {
               if (user && user.id) {
-                ctrl.doesUserStar = some(ctrl.stars, {'id': user.id});
+                ctrl.doesUserHive = some(ctrl.hivers, {'id': user.id});
               }
             });
             // This is an async function, so unless we $apply, angular won't
@@ -42,40 +42,40 @@ export default function(app) {
             $scope.$apply();
           });
 
-          ctrl.star = async function() {
+          ctrl.hive = async function() {
             ctrl.submitting = true;
             try {
               await $http.post(
                 config.apiUrl +
-                  '/documents/' + ctrl.documentId + '/star'
+                  '/documents/' + ctrl.documentId + '/hive'
               );
             } catch (err) {
               ctrl.submitting = false;
-              notificationService.httpError('could not star document');
+              notificationService.httpError('could not hive document');
             }
             ctrl.submitting = false;
-            ctrl.stars.push(ctrl.user);
-            ctrl.doesUserStar = true;
+            ctrl.hivers.push(ctrl.user);
+            ctrl.doesUserHive = true;
             // This is an async function, so unless we $apply, angular won't
             // know that values have changed.
             $scope.$apply();
           };
 
-          ctrl.unstar = async function() {
+          ctrl.unhive = async function() {
             ctrl.submitting = true;
             try {
               await $http.delete(
                 config.apiUrl +
-                  '/documents/' + ctrl.documentId + '/star'
+                  '/documents/' + ctrl.documentId + '/hive'
               );
             } catch (err) {
               ctrl.submitting = false;
-              notificationService.httpError('could not star document');
+              notificationService.httpError('could not hive document');
             }
             ctrl.submitting = false;
-            const idx = findIndex(ctrl.stars, {id: ctrl.user.id});
-            if (idx > -1) { ctrl.stars.splice(idx, 1); }
-            ctrl.doesUserStar = false;
+            const idx = findIndex(ctrl.hivers, {id: ctrl.user.id});
+            if (idx > -1) { ctrl.hivers.splice(idx, 1); }
+            ctrl.doesUserHive = false;
             // This is an async function, so unless we $apply, angular won't
             // know that values have changed.
             $scope.$apply();
@@ -83,17 +83,17 @@ export default function(app) {
         }],
         template:
           `<span class="btn-group" role="group">
-            <button ng-if="$ctrl.doesUserStar" type="button" class="btn btn-default"
-              ng-disabled="!$ctrl.user" ng-click="$ctrl.unstar()">
-              <i class="fa fa-star"></i> Unstar
+            <button ng-if="$ctrl.doesUserHive" type="button" class="btn btn-default"
+              ng-disabled="!$ctrl.user" ng-click="$ctrl.unhive()">
+              <i class="fa fa-star"></i> Unhive
             </button>
-            <button ng-if="!$ctrl.doesUserStar" type="button" class="btn btn-default"
-              ng-disabled="!$ctrl.user" ng-click="$ctrl.star()">
-              <i class="fa fa-star"></i> Star
+            <button ng-if="!$ctrl.doesUserHive" type="button" class="btn btn-default"
+              ng-disabled="!$ctrl.user" ng-click="$ctrl.hive()">
+              <i class="fa fa-star"></i> Hive
             </button>
-            <a href="./documents/{{$ctrl.documentId}}/stars" class="btn btn-default">
-              <span ng-if="$ctrl.stars">{{$ctrl.stars.length}}</span>
-              <span ng-if="!$ctrl.stars">&nbsp;</span>
+            <a href="./documents/{{$ctrl.documentId}}/hivers" class="btn btn-default">
+              <span ng-if="$ctrl.hivers">{{$ctrl.hivers.length}}</span>
+              <span ng-if="!$ctrl.hivers">&nbsp;</span>
             </a>
           </span>`
     });
