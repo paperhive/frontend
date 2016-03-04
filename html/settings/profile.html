@@ -96,7 +96,7 @@
               <div class="col-sm-4" ng-class="{'has-success': profileForm.$valid}">
                 <span ng-if="setting.succeeded" class="text-success">
                   <i class="fa fa-fw fa-check"></i>
-                  Changes are saved.
+                  Changes have been saved.
                 </span>
                 <span ng-if="setting.error" class="text-danger">
                   <i class="fa fa-fw fa-times"></i>
@@ -180,57 +180,7 @@
           <h4>
             Associated email addresses
           </h4>
-
-          <div class="row" ng-if="user.account.email">
-            <span class="col-sm-8">
-              {{user.account.email}}
-            </span>
-            <span class="col-sm-3">
-              <span class="label label-default">
-                Default
-              </span>
-            </span>
-          </div>
-
-          <div class="has-feedback row"
-               ng-class="{'has-error': !user.account.email}"
-               ng-if="!user.account.email">
-            <span class="col-sm-10 text-danger">
-              <i class="fa fa-fw fa-warning"></i>
-              No email address set!
-            </span>
-          </div>
-
-          <div class="row" ng-repeat="account in user.externalIds"
-               ng-if="account.type === 'email' && user.account.email !== account.id">
-            <span class="col-sm-7">
-              {{account.id}}
-            </span>
-            <span class="col-sm-5">
-              <a href="">
-                Set as default
-              </a>
-            </span>
-          </div>
-
-          <div class="ph-lg-margin-top">
-            <form name="addEmailForm">
-              <label for="email">
-                Add email address
-              </label>
-              <div class="input-group">
-                <input type="email" class="form-control" ng-model="setting.address"
-                  name="email" id="email" pattern=".*@.+\..+" required>
-                <span class="input-group-btn">
-                  <button class="btn btn-primary" ng-click="addEmail(setting.address)">
-                    <i class="fa fa-plus"></i>
-                    Add
-                  </button>
-                </span>
-              </div>
-            </form>
-          </div>
-
+          <settings-email person="user" on-update-default-email="user.account.email = email; saveRaw()"></settings-email>
         </div>
       </div>
     </div>

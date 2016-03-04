@@ -15,18 +15,6 @@ export default function(app) {
         $scope.user = _.cloneDeep(user);
       });
 
-      $scope.addEmail = function(address) {
-        console.log(address);
-        $http.post(`${config.apiUrl}/people/${$scope.user.id}/emails`, {
-          email: address,
-          frontendUrl: authService.frontendUrl,
-          returnUrl: authService.returnPath
-        }).then(function(data){
-          // TODO show message
-          console.log(data);
-        });
-      };
-
       // sync from orcid
       /*$scope.syncFromOrcid = function() {
         $scope.busy = 'sync';
@@ -47,10 +35,7 @@ export default function(app) {
 
       $scope.find = _.find;
 
-      // save to api
-      $scope.save = function() {
-        $scope.busy = 'save';
-
+      $scope.saveRaw = () => {
         const obj = _.cloneDeep($scope.user);
 
         // TODO revisit. whitelist?
@@ -62,7 +47,14 @@ export default function(app) {
         delete obj.account.createdAt;
 
         // save
-        $http.put(config.apiUrl + '/people/' + $scope.user.id, obj).
+        return $http.put(config.apiUrl + '/people/' + $scope.user.id, obj);
+      };
+
+      // save to api
+      $scope.save = function() {
+        $scope.busy = 'save';
+
+        $scope.saveRaw().
           success(function(data) {
             $scope.busy = false;
             authService.user = data;
