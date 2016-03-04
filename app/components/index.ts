@@ -7,9 +7,6 @@ import hivedDocs from './hived-docs';
 import navbarSearch from './navbar-search';
 import navbarUser from './navbar-user';
 import { settingsEmailComponent } from './settings-email';
-import starButton from './star-button';
-import starredDocs from './starred-docs';
-
 
 export default function(app) {
   avatar(app);
@@ -21,6 +18,4 @@ export default function(app) {
   navbarSearch(app);
   navbarUser(app);
   app.component('settingsEmail', settingsEmailComponent);
-  starButton(app);
-  starredDocs(app);
 };
