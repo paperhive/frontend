@@ -19,7 +19,7 @@ export default function(app) {
                 toString: function () { return this.URL; }
               }
             };
-            InstallTrigger.install(params);
+            $window.InstallTrigger.install(params);
             return false;
           };
         }],
