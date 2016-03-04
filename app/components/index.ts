@@ -6,7 +6,7 @@ import hiveButton from './hive-button';
 import hivedDocs from './hived-docs';
 import navbarSearch from './navbar-search';
 import navbarUser from './navbar-user';
-import { settingsEmailComponent } from './settings-email';
+import settingsEmail from './settings-email';
 
 export default function(app) {
   avatar(app);
@@ -17,5 +17,5 @@ export default function(app) {
   hivedDocs(app);
   navbarSearch(app);
   navbarUser(app);
-  app.component('settingsEmail', settingsEmailComponent);
+  settingsEmail(app);
 };
