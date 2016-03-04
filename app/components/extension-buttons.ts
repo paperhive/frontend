@@ -5,8 +5,8 @@ export default function(app) {
       controller: [
         '$scope', '$element', '$attrs', '$window',
         function($scope, $element, $attrs, $window) {
-          $scope.isChromium = !!$window.chrome;
-          $scope.isFirefox = $window.navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+          this.isChromium = !!$window.chrome;
+          this.isFirefox = $window.navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
           // from
           // https://developer.mozilla.org/en/docs/Installing_Extensions_and_Themes_From_Web_Pages
@@ -24,9 +24,8 @@ export default function(app) {
           };
         }],
         template: `
-          <div ng-if="isChromium">
-            <a ng-if="isChromium"
-               class="btn btn-primary btn-block ph-margin-bottom-10"
+          <div ng-if="$ctrl.isChromium">
+            <a class="btn btn-primary btn-block ph-margin-bottom-10"
                href="https://chrome.google.com/webstore/detail/paperhive/fihafdlllifbanclcjljledeifcdjbok"
                onclick="chrome.webstore.install();return false;"
                >
@@ -42,7 +41,7 @@ export default function(app) {
               Also available for Mozilla Firefox.
             </a>
           </div>
-          <div ng-if="isFirefox">
+          <div ng-if="$ctrl.isFirefox">
             <a class="btn btn-primary btn-block ph-margin-bottom-10"
                href="https://addons.mozilla.org/en-US/firefox/addon/paperhive/"
                xpiUrl="https://addons.mozilla.org/firefox/downloads/file/405251/paperhive-fx.xpi"
@@ -61,7 +60,7 @@ export default function(app) {
               Also available for Google Chrome.
             </a>
           </div>
-          <span ng-if="!isChromium && !isFirefox">
+          <span ng-if="!$ctrl.isChromium && !$ctrl.isFirefox">
             Only available for <a href="https://chrome.google.com/webstore/detail/paperhive/fihafdlllifbanclcjljledeifcdjbok">
             Google Chrome</a> and <a href="https://addons.mozilla.org/en-US/firefox/addon/paperhive/">Mozilla Firefox</a>.
           </span>`
