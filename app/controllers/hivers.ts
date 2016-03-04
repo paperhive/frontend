@@ -1,6 +1,6 @@
 'use strict';
 export default function(app) {
-  app.controller('StarsCtrl', [
+  app.controller('HiversCtrl', [
     '$scope', '$rootScope', '$routeSegment', 'config', '$http',
     'notificationService', 'authService',
     function(
@@ -12,17 +12,17 @@ export default function(app) {
       if (!documentId) { return; }
 
       $http.get(
-        config.apiUrl + '/documents/' + documentId + '/stars'
+        config.apiUrl + '/documents/' + documentId + '/hivers'
       )
       .success(function(data) {
-        $scope.stars = data.stars;
+        $scope.hivers = data.hivers;
       })
       .error(function(err) {
         console.error(err);
         notificationService.notifications.push({
           type: 'error',
           message: err.data.message ? err.data.message :
-            'could not fetch stars (unknown reason)'
+            'could not fetch hivers (unknown reason)'
         });
       });
     }
