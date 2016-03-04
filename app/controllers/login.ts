@@ -18,19 +18,18 @@ export default function(app) {
         $scope.login.error = undefined;
 
         authService
-          .loginEmail(
-            $scope.login.emailOrUsername, $scope.login.password
-          )
+          .loginEmail($scope.login.emailOrUsername, $scope.login.password)
           .then(function(data) {
             $scope.login.inProgress = false;
             $scope.login.succeeded = true;
-            $location.path(authService.returnPath).search({});
+            $location.url(authService.returnPath);
           }, function(data) {
             $scope.login.inProgress = false;
             $scope.login.error = data && data.message || 'Unknown error';
           });
       };
 
+      // TODO
       $scope.getNewPasswd = function() {
       };
 
