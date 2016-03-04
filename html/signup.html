@@ -51,7 +51,7 @@
         }">
           <label for="email">Email</label>
           <input type="email" class="form-control" id="email" name="email"
-            ng-model="signup.email" required pattern=".*@.+\..+"
+            ng-model="signup.email" pattern=".*@.+\..+"
             ng-disabled="signup.inProgress || signup.succeeded" required>
           <div class="help-block">
             <span ng-if="hasError('email')">

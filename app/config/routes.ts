@@ -26,6 +26,7 @@ export default function(app) {
         .when('/', 'main')
         .when('/404', '404')
         .when('/about', 'about')
+        .when('/auth/return/:provider', 'authReturn')
         .when('/documents/new', 'documents_new')
         .when('/documents/:documentId', 'documents')
         .when('/documents/:documentId/discussions', 'documents.discussions')
@@ -43,7 +44,6 @@ export default function(app) {
         .when('/jobs', 'jobs')
         .when('/legalnotice', 'legalnotice')
         .when('/login', 'login')
-        .when('/authReturn', 'authReturn')
         .when('/searchResults', 'searchResults')
         .when('/settings', 'settings')
         .when('/settings/profile', 'settings.profile')
@@ -122,6 +122,11 @@ export default function(app) {
                 'seamless discussion of research papers.'
             }
           ]
+        })
+
+        .segment('authReturn', {
+          controller: 'AuthReturnCtrl',
+          title: 'PaperHive'
         })
 
         .segment('documents', {
@@ -231,12 +236,6 @@ export default function(app) {
         .segment('login', {
           templateUrl: 'html/login.html',
           title: 'Log in to · Paperhive'
-        })
-
-        .segment('authReturn', {
-          templateUrl: 'html/auth/return.html',
-          controller: 'AuthReturnCtrl',
-          title: 'PaperHive'
         })
 
         .segment('searchResults', {

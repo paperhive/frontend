@@ -8,13 +8,27 @@ export default function(app) {
       $scope.tab = 'profile';
       $scope.auth = authService;
 
+      $scope.setting = {};
+
       // keep user copy up to date
       $scope.$watch('auth.user', function(user) {
         $scope.user = _.cloneDeep(user);
       });
 
+      $scope.addEmail = function(address) {
+        console.log(address);
+        $http.post(`${config.apiUrl}/people/${$scope.user.id}/emails`, {
+          email: address,
+          frontendUrl: authService.frontendUrl,
+          returnUrl: authService.returnPath
+        }).then(function(data){
+          // TODO show message
+          console.log(data);
+        });
+      };
+
       // sync from orcid
-      $scope.syncFromOrcid = function() {
+      /*$scope.syncFromOrcid = function() {
         $scope.busy = 'sync';
 
         const account = _.findLast($scope.user.externalIds, {type: 'orcid'});
@@ -29,7 +43,9 @@ export default function(app) {
             $scope.busy = false;
             notificationService.httpError('could not sync data');
           });
-      };
+      };*/
+
+      $scope.find = _.find;
 
       // save to api
       $scope.save = function() {
@@ -50,10 +66,16 @@ export default function(app) {
           success(function(data) {
             $scope.busy = false;
             authService.user = data;
+            $scope.setting.succeeded = true;
+            setTimeout(function() {
+              $scope.setting.succeeded = false;
+              $scope.$apply();
+            }, 5000);
           }).
           error(function(data) {
             $scope.busy = false;
             notificationService.httpError('could not save data');
+            $scope.setting.succeeded = false;
           });
       };
     }
