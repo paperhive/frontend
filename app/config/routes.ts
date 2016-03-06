@@ -246,9 +246,8 @@ export default function(app) {
         })
 
         .segment('passwordRequest', {
-          templateUrl: 'html/passwordRequest.html',
-          controller: 'PasswordRequestCtrl',
-          title: 'Reset your password',
+          template: '<password-request></password-request>',
+          title: 'Reset your password · PaperHive',
         })
 
         .segment('settings', {

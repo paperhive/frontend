@@ -12,7 +12,7 @@ export default function(app) {
 
       // authService.returnPath
       function setReturnPath() {
-        if ($location.path() !== '/signup' && $location.path() !== '/login') {
+        if (['/login', '/password/request', '/signup'].indexOf($location.path()) === -1) {
           authService.returnPath = $location.url();
         }
         if (!authService.returnPath) {
@@ -119,6 +119,11 @@ export default function(app) {
         delete authService.user;
         delete authService.token;
       };
+
+      authService.passwordRequest = (emailOrUsername) =>
+        $http.post(`${config.apiUrl}/auth/passwordReset/initiate`, {
+          emailOrUsername, frontendUrl, returnUrl: authService.returnPath,
+        });
 
       // sync token from local storage to authService
       $window.addEventListener('storage', (event) => {
