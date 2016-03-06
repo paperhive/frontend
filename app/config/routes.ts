@@ -44,7 +44,7 @@ export default function(app) {
         .when('/jobs', 'jobs')
         .when('/legalnotice', 'legalnotice')
         .when('/login', 'login')
-        .when('/password/reset', 'passwordReset')
+        .when('/password/request', 'passwordRequest')
         .when('/searchResults', 'searchResults')
         .when('/settings', 'settings')
         .when('/settings/profile', 'settings.profile')
@@ -245,9 +245,9 @@ export default function(app) {
           title: 'Search results',
         })
 
-        .segment('passwordReset', {
-          templateUrl: 'html/password_reset.html',
-          controller: 'ResetPasswordCtrl',
+        .segment('passwordRequest', {
+          templateUrl: 'html/passwordRequest.html',
+          controller: 'PasswordRequestCtrl',
           title: 'Reset your password',
         })
 

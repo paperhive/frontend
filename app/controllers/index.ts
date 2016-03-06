@@ -13,7 +13,7 @@ import jobs from './jobs';
 import login from './login';
 import navbar from './navbar';
 import notifications from './notifications';
-import resetPassword from './resetPassword'
+import passwordRequest from './passwordRequest';
 import searchResults from './searchResults';
 import settings from './settings';
 import signup from './signup';
@@ -36,7 +36,7 @@ export default function(app) {
   login(app);
   navbar(app);
   notifications(app);
-  resetPassword(app);
+  passwordRequest(app);
   searchResults(app);
   settings(app);
   signup(app);

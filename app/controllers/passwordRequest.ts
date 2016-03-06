@@ -1,6 +1,6 @@
 'use strict';
 export default function(app) {
-  app.controller('ResetPasswordCtrl', ['$scope', '$location',
+  app.controller('PasswordRequestCtrl', ['$scope', '$location',
     function($scope, $location) {
 
       $scope.form = {
