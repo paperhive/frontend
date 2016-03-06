@@ -106,6 +106,12 @@ export default function(app) {
         });
       };
 
+      authService.passwordReset = (token, password) => {
+        return login(() => {
+          return $http.post(`${config.apiUrl}/auth/passwordReset/confirm`, {token, password});
+        });
+      };
+
       authService.oauthConfirm = (provider, code, state) => {
         return login(() => {
           return $http.post(config.apiUrl + '/auth/' + provider + '/confirm', {code, state});

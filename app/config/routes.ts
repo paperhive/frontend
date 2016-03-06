@@ -45,6 +45,7 @@ export default function(app) {
         .when('/legalnotice', 'legalnotice')
         .when('/login', 'login')
         .when('/password/request', 'passwordRequest')
+        .when('/password/reset', 'passwordReset')
         .when('/searchResults', 'searchResults')
         .when('/settings', 'settings')
         .when('/settings/profile', 'settings.profile')
@@ -247,6 +248,11 @@ export default function(app) {
 
         .segment('passwordRequest', {
           template: '<password-request></password-request>',
+          title: 'Reset your password · PaperHive',
+        })
+
+        .segment('passwordReset', {
+          template: '<password-reset></password-reset>',
           title: 'Reset your password · PaperHive',
         })
 

@@ -41,7 +41,9 @@ export default function(app) {
               ng-disabled="$ctrl.sending || $ctrl.success"
               required>
             <p class="help-block">
-              <span ng-if="(passwordRequestForm.$submitted || passwordRequestForm.emailOrUsername.$touched) && passwordRequestForm.emailOrUsername.$error.required">
+              <span ng-if="(passwordRequestForm.$submitted || passwordRequestForm.emailOrUsername.$touched) && passwordRequestForm.emailOrUsername.$error.required"
+                class="text=error"
+              >
                 Please enter your email address or username.
               </span>
             </p>
