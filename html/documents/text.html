@@ -52,14 +52,13 @@
       </div>
     </div>
     <div class="row">
-      <div highlight-container class="col-md-9">
+      <div highlight-container class="col-md-9" id="introjs-pdf">
         <pdf
                                pdf-url="pdfSource"
                                pdf-text-overlay="true"
                                pdf-progress="document.pdfProgress"
                                on-text-select="$target && (originalComment.draft.target = $target)"
                                highlight-root
-                               id="introjs-pdf"
                                ></pdf>
         <div class="ph-highlight-layer" ng-if="document.pdfProgress.finished">
           <div

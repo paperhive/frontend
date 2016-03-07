@@ -4,23 +4,24 @@ export default function(app) {
     '$scope',
     function($scope) {
       $scope.IntroOptions = {
-
-        // console.log('#introjs-pdf', document.querySelector('#introjs-pdf'));
-        // iconsole.log('#introjs-pdf', document.querySelectorAll('#introjs-pdf'));
-        // console.log('#introjs-title', document.querySelector('#introjs-title'));
         steps: [
           {
-            element: document.querySelector('#introjs-pdf'),
+            element: '#introjs-pdf',
             intro: 'Select text and start a discussion.',
             position: 'top'
           },
           {
-            element: document.querySelector('#introjs-hive'),
+            element: '#introjs-search',
+            intro: 'Search for the last article you\'ve read.',
+            position: 'bottom'
+          },
+          {
+            element: '#introjs-hive',
             intro: 'Hive the article to add it to your collection and receive updates.',
             position: 'left'
           },
           {
-            element: document.querySelector('#introjs-signup'),
+            element: '#introjs-signup',
             intro: 'Sign up and have fun!',
             position: 'bottom'
           },
