@@ -12,7 +12,7 @@ export default function(app) {
 
       // authService.returnPath
       function setReturnPath() {
-        if ($location.path() !== '/signup' && $location.path() !== '/login') {
+        if (['/login', '/password/request', '/password/reset', '/signup'].indexOf($location.path()) === -1) {
           authService.returnPath = $location.url();
         }
         if (!authService.returnPath) {
@@ -56,10 +56,10 @@ export default function(app) {
       // log in wrapper
       function login(loginFun) {
         if (authService.user) {
-          return $q.reject('Already logging in.');
+          return $q.reject({message: 'Already logged in.'});
         }
         if (authService.inProgress) {
-          return $q.reject('Already logging in.');
+          return $q.reject({message: 'Already logging in.'});
         }
         const deferred = $q.defer();
         authService.inProgress = true;
@@ -106,6 +106,12 @@ export default function(app) {
         });
       };
 
+      authService.passwordReset = (token, password) => {
+        return login(() => {
+          return $http.post(`${config.apiUrl}/auth/passwordReset/confirm`, {token, password});
+        });
+      };
+
       authService.oauthConfirm = (provider, code, state) => {
         return login(() => {
           return $http.post(config.apiUrl + '/auth/' + provider + '/confirm', {code, state});
@@ -119,6 +125,11 @@ export default function(app) {
         delete authService.user;
         delete authService.token;
       };
+
+      authService.passwordRequest = (emailOrUsername) =>
+        $http.post(`${config.apiUrl}/auth/passwordReset/initiate`, {
+          emailOrUsername, frontendUrl, returnUrl: authService.returnPath,
+        });
 
       // sync token from local storage to authService
       $window.addEventListener('storage', (event) => {
