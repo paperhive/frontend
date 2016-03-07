@@ -8,20 +8,9 @@ export default function(app) {
           this.isChromium = !!$window.chrome;
           this.isFirefox = $window.navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
-          // from
-          // https://developer.mozilla.org/en/docs/Installing_Extensions_and_Themes_From_Web_Pages
-          $scope.firefoxAddonInstall = function(aEvent) {
-            for ( let a = aEvent.target; a.href === undefined; ) a = a.parentNode;
-            const params = {
-              'PaperHive': {
-                URL: aEvent.target.xpiUrl,
-                IconURL: aEvent.target.getAttribute('iconURL'),
-                toString: function () { return this.URL; }
-              }
-            };
-            $window.InstallTrigger.install(params);
-            return false;
-          };
+          // There is more firefox code on
+          // <https://developer.mozilla.org/en/docs/Installing_Extensions_and_Themes_From_Web_Pages>
+          // but we didn't get this to work now.
         }],
         template: `
           <div ng-if="$ctrl.isChromium">
@@ -44,9 +33,6 @@ export default function(app) {
           <div ng-if="$ctrl.isFirefox">
             <a class="btn btn-primary btn-block ph-margin-bottom-10"
                href="https://addons.mozilla.org/en-US/firefox/addon/paperhive/"
-               xpiUrl="https://addons.mozilla.org/firefox/downloads/file/405251/paperhive-fx.xpi"
-               iconURL="/static/img/firefox.svg"
-               onclick="return firefoxAddonInstall(event);"
                >
               <img
                 alt="Firefox logo"
