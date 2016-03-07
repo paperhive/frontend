@@ -56,10 +56,10 @@ export default function(app) {
       // log in wrapper
       function login(loginFun) {
         if (authService.user) {
-          return $q.reject('Already logging in.');
+          return $q.reject({message: 'Already logged in.'});
         }
         if (authService.inProgress) {
-          return $q.reject('Already logging in.');
+          return $q.reject({message: 'Already logging in.'});
         }
         const deferred = $q.defer();
         authService.inProgress = true;

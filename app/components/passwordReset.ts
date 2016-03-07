@@ -5,13 +5,15 @@ export default function(app) {
       function ($location, authService, notificationService) {
         const ctrl = this;
 
-        const token = $location.search().token;
-        if (!token) {
-          notificationService.notifications.push({
-            type: 'error',
-            message: `Password reset token is missing.`,
-          });
+        // get token from url
+        ctrl.token = $location.search().token;
+        if (!ctrl.token) {
+          const message = 'Password reset token is missing.';
+          notificationService.notifications.push({type: 'error', message});
+          ctrl.error = {message};
         }
+
+        // remove token from url
         $location.search({});
 
         // send email/username for password reset
@@ -19,7 +21,7 @@ export default function(app) {
           ctrl.sending = true;
           ctrl.success = undefined;
           ctrl.error = undefined;
-          authService.passwordReset(token, password)
+          authService.passwordReset(ctrl.token, password)
             .then(
               data => {
                 ctrl.sending = false;
@@ -35,7 +37,7 @@ export default function(app) {
       }
     ],
     template: `
-    <div class="container ph-xl-margin-bottom">
+    <div class="container ph-xl-margin-bottom" disabled>
       <h2 class="text-center">Reset your password</h2>
 
       <h4 class="ph-heading-light ph-md-margin-bottom text-center">
@@ -49,7 +51,8 @@ export default function(app) {
             <input type="password" class="form-control" id="password" name="password"
               ng-model="$ctrl.password" placeholder="Enter your new password"
               ng-minlength="8"
-              ng-disabled="$ctrl.sending"
+              ng-class="{disabled: $ctrl.sending}"
+              ng-disabled="!$ctrl.token || $ctrl.auth.user"
               required>
             <p class="help-block">
               <span ng-if="passwordResetForm.$submitted || passwordResetForm.password.$touched" class="text-danger">
@@ -64,6 +67,7 @@ export default function(app) {
             <button class="btn btn-primary btn-block ph-md-margin-top" type="submit"
               ng-click="!$ctrl.sending && !passwordResetForm.$invalid && $ctrl.send($ctrl.password)"
               ng-class="{disabled: $ctrl.sending || passwordResetForm.$invalid}"
+              ng-disabled="!$ctrl.token || $ctrl.auth.user"
             >
               <i ng-if="$ctrl.sending" class="fa fa-fw fa-spinner fa-spin"></i>
               <i ng-if="!$ctrl.sending" class="fa fa-fw"></i>
@@ -74,7 +78,10 @@ export default function(app) {
                 <li><i class="fa fa-li fa-check"></i> {{$ctrl.success.message}}</li>
               </ul>
               <ul class="fa-ul text-danger" ng-if="$ctrl.error">
-                <li><i class="fa fa-li fa-times"></i> {{$ctrl.error.message}}</li>
+                <li>
+                  <i class="fa fa-li fa-times"></i> {{$ctrl.error.message}}<br>
+                  <a href="./password/request">Request a new password reset link.</a>
+                </li>
               </ul>
             </p>
           </form>
