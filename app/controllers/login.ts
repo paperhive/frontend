@@ -28,11 +28,6 @@ export default function(app) {
             $scope.login.error = data && data.message || 'Unknown error';
           });
       };
-
-      // TODO
-      $scope.getNewPasswd = function() {
-      };
-
     }
   ]);
 };

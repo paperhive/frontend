@@ -6,6 +6,8 @@ import hiveButton from './hive-button';
 import hivedDocs from './hived-docs';
 import navbarSearch from './navbar-search';
 import navbarUser from './navbar-user';
+import passwordRequest from './passwordRequest';
+import passwordReset from './passwordReset';
 import settingsEmail from './settings-email';
 
 export default function(app) {
@@ -17,5 +19,7 @@ export default function(app) {
   hivedDocs(app);
   navbarSearch(app);
   navbarUser(app);
+  passwordRequest(app);
+  passwordReset(app);
   settingsEmail(app);
 };
