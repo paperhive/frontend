@@ -4,7 +4,6 @@ SystemJS.config({
     "npm:@*/*.json",
     "npm:*.json"
   ],
-  globalEvaluationScope: false,
   transpiler: "plugin-babel",
   typescriptOptions: {
     "tsconfig": true,
@@ -15,6 +14,7 @@ SystemJS.config({
     "angular": "github:angular/bower-angular@1.5.0",
     "angular-animate": "github:angular/bower-angular-animate@1.5.0",
     "angular-bootstrap": "github:angular-ui/bootstrap-bower@1.1.2",
+    "angular-intro.js": "npm:angular-intro.js@1.3.0",
     "angular-leaflet-directive": "github:tombatossals/angular-leaflet-directive@0.10.0",
     "angular-moment": "npm:angular-moment@1.0.0-beta.3",
     "angular-route": "github:angular/bower-angular-route@1.5.0",
@@ -25,6 +25,7 @@ SystemJS.config({
     "assert": "github:jspm/nodelibs-assert@0.2.0-alpha",
     "bootstrap": "github:twbs/bootstrap@3.3.6",
     "highlightjs": "github:components/highlightjs@9.1.0",
+    "intro.js": "npm:intro.js@2.0.0",
     "javascript-detect-element-resize": "github:sdecima/javascript-detect-element-resize@0.5.3",
     "jquery": "npm:jquery@2.2.0",
     "json": "github:systemjs/plugin-json@0.1.0",
@@ -97,6 +98,12 @@ SystemJS.config({
     "npm:angular-moment@1.0.0-beta.3": {
       "map": {
         "moment": "npm:moment@2.10.6"
+      }
+    },
+    "npm:angular-intro.js@1.3.0": {
+      "map": {
+        "angular": "github:angular/bower-angular@1.5.0",
+        "intro": "npm:intro.js@2.0.0"
       }
     },
     "npm:url@0.11.0": {

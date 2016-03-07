@@ -7,6 +7,7 @@ import contact from './contact';
 import discussion from './discussion';
 import discussionList from './discussionList';
 import hivers from './hivers';
+import intro from './intro';
 import meta from './meta';
 import help from './help';
 import jobs from './jobs';
@@ -29,6 +30,7 @@ export default function(app) {
   discussion(app);
   discussionList(app);
   hivers(app);
+  intro(app);
   meta(app);
   help(app);
   jobs(app);

@@ -1,9 +1,16 @@
 <div ng-controller="DocumentCtrl">
+<div ng-controller="IntrojsCtrl">
+<div ng-intro-options="IntroOptions"
+     ng-intro-method="StartIntroJs"
+     ng-intro-autostart="false"
+  >
+  <button class="btn btn-large btn-success" ng-click="StartIntroJs();">Demo</button>
+
   <div class="ph-header ph-header-large ph-lg-margin-bottom">
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-10">
-          <h2 class="ph-lg-margin-top">{{revisions[latestOAIdx].title}}</h2>
+          <h2 class="ph-lg-margin-top" id="introjs-title">{{revisions[latestOAIdx].title}}</h2>
           <h4 class="ph-lg-margin-bottom">
             <span ng-repeat="author in revisions[latestOAIdx].authors">
               {{author.name}}{{$last ? '' :', '}}
@@ -12,7 +19,11 @@
         </div>
         <div class="col-sm-2 text-right">
           <h2 class="ph-lg-margin-top">
-            <hive-button document-id="revisions[0].id" user="auth.user"></hive-button>
+            <hive-button
+              id="introjs-hive"
+              document-id="revisions[0].id"
+              user="auth.user">
+            </hive-button>
           </h2>
         </div>
       </div>
@@ -52,4 +63,6 @@
   <div class="container-fluid">
     <div app-view-segment="1"></div>
   </div>
+</div>
+</div>
 </div>
