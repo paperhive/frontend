@@ -42,7 +42,7 @@ export default function(app) {
               required>
             <p class="help-block">
               <span ng-if="(passwordRequestForm.$submitted || passwordRequestForm.emailOrUsername.$touched) && passwordRequestForm.emailOrUsername.$error.required"
-                class="text=error"
+                class="text-danger"
               >
                 Please enter your email address or username.
               </span>

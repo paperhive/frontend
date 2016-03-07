@@ -52,11 +52,13 @@ export default function(app) {
               ng-disabled="$ctrl.sending"
               required>
             <p class="help-block">
-              <span ng-if="(passwordResetForm.$submitted || passwordResetForm.password.$touched) && passwordResetForm.password.$error"
-                class="text=error"
-              >
-                Please enter your new password with at least 8 characters.
-              </span>
+              <span ng-if="passwordResetForm.$submitted || passwordResetForm.password.$touched" class="text-danger">
+                <span ng-if="passwordResetForm.password.$error.required">
+                  Please enter your new password.
+                </span>
+                <span ng-if="passwordResetForm.password.$error.minlength">
+                  Please enter a password with at least 8 characters.
+                </span>
             </p>
 
             <button class="btn btn-primary btn-block ph-md-margin-top" type="submit"
