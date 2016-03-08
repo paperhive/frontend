@@ -6,6 +6,16 @@ export default function(app) {
       $scope.IntroOptions = {
         steps: [
           {
+            element: '#introjs-paperhive-logo',
+            intro: 'Welcome to PaperHive!',
+            position: 'bottom'
+          },
+          {
+            element: '#introjs-margin-discussion',
+            intro: 'Someone started a discussion. Join in if you like!',
+            position: 'left'
+          },
+          {
             element: '#introjs-pdf',
             intro: 'Select text and start a discussion.',
             position: 'top'
@@ -28,10 +38,10 @@ export default function(app) {
         ],
         showStepNumbers: false,
         showBullets: false,
-        exitOnOverlayClick: true,
+        exitOnOverlayClick: false,
         exitOnEsc: true,
         nextLabel: '<strong>Next</strong>',
-        prevLabel: '<span style=\'color:green\'>Previous</span>',
+        prevLabel: 'Previous',
         skipLabel: 'Exit',
         doneLabel: 'Thanks'
       };
