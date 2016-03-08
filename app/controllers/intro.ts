@@ -12,16 +12,16 @@ export default function(app) {
           },
           {
             element: '#introjs-margin-discussion',
-            intro: 'Someone started a discussion. Join in if you like!',
+            intro: 'Someone started a discussion. Join by clicking on it and leave a reply!',
             position: 'left'
           },
           {
             element: '#introjs-pdf',
-            intro: 'Select text and start a discussion.',
+            intro: 'To start a new discussion, select some text.',
             position: 'top'
           },
           {
-            element: '#introjs-search',
+            element: '#srch-term',
             intro: 'Search for the last article you\'ve read.',
             position: 'bottom'
           },
