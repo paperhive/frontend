@@ -14,6 +14,9 @@
             <span ng-repeat="author in document.authors">
               {{author.name}}{{$last ? '' : ', '}}
             </span>
+            <small class="text-muted ph-sm-margin-left">
+              {{document.publishedAt | date: 'yyyy'}}
+            </small>
             <div class="ph-sm-margin-top">
               <small>
                 {{document.abstract | limitTo: 220}}{{document.abstract.length > 220 ? '...' : ''}}
