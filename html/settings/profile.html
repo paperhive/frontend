@@ -64,23 +64,6 @@
                 </p>
               </div>
             </div>
-            <!--email-->
-            <!--div ng-if="user.account.email" class="form-group has-feedback"
-                ng-class="{'has-error': !user.account.email}">
-              <label for="email" class="col-sm-3 control-label">
-                Email
-              </label>
-              <div class="col-sm-8">
-                <input ng-model="user.account.email" type="email" class="form-control"
-                  id="email" readonly>
-                <i ng-show="!user.account.email"
-                  class="fa fa-times form-control-feedback" aria-hidden="true"></i>
-                <p class="help-block" ng-show="!user.account.email">
-                  <i class="fa fa-fw fa-warning"></i>
-                  No email address set!
-                </p>
-              </div>
-            </div-->
 
             <!--save-->
             <!-- see vertical alignment: http://stackoverflow.com/a/25517025/4419582 -->
@@ -117,59 +100,7 @@
           <h4>
             Associated accounts
           </h4>
-
-          <div class="row" ng-repeat="account in user.externalIds">
-
-            <div ng-if="account.type == 'google'">
-              <span class="col-sm-1">
-                <img class="ph-login-icon" src="./static/img/google.svg" title="Google">
-              </span>
-              <span class="col-sm-7">
-                <a ng-href="https://plus.google.com/{{account.id}}" target="_blank">
-                  Google profile
-                </a>
-              </span>
-              <span class="col-sm-3">
-                <a href="">
-                  Disconnect
-                </a>
-              </span>
-            </div>
-
-            <div ng-if="account.type == 'orcid'">
-              <span class="col-sm-1">
-                <img class="ph-login-icon" src="./static/img/orcid.svg">
-              </span>
-              <span class="col-sm-7">
-                <a ng-href="http://orcid.org/{{account.id}}" target="_blank">
-                  ORCID account
-                </a>
-              </span>
-              <span class="col-sm-3">
-                <a href="">
-                  Disconnect
-                </a>
-              </span>
-            </div>
-
-          </div>
-
-          <div class="row" ng-if="!find(user.externalIds, {type: 'google'})">
-            <span class="col-sm-12">
-              <a href="">
-                Connect with Google
-              </a>
-            </span>
-          </div>
-
-          <div class="row" ng-if="!find(user.externalIds, {type: 'orcid'})">
-            <span class="col-sm-12">
-              <a href="">
-                Connect with Orcid
-              </a>
-            </span>
-          </div>
-
+          <settings-accounts person="user"></settings-accounts>
         </div>
       </div>
     </div>

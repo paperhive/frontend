@@ -37,6 +37,7 @@ import config from './config/index';
 import components from './components/index';
 import controllers from './controllers/index';
 import directives from './directives/index';
+import filters from './filters/index';
 import services from './services/index';
 import utils from './utils/index';
 
@@ -69,6 +70,7 @@ config(paperhive);
 components(paperhive);
 controllers(paperhive);
 directives(paperhive);
+filters(paperhive);
 services(paperhive);
 utils(paperhive);
 

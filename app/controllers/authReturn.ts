@@ -37,6 +37,9 @@ export default function(app) {
               response => onLoginError(response.data)
              );
           break;
+        case 'passwordReset':
+          $location.url(`/password/reset?token=${$routeParams.token}`);
+          break;
         case 'orcid':
         case 'google':
           authService.oauthConfirm($routeParams.provider, $routeParams.code, $routeParams.state)
