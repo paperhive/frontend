@@ -5,11 +5,11 @@ import { find, findLastIndex, some } from 'lodash';
 export default function(app) {
 
   app.controller('DocumentCtrl', [
-    '$scope', '$route', '$routeSegment', '$document', '$http', 'config',
-    '$rootScope', '$filter', 'authService', 'notificationService',
+    '$scope', '$route', '$routeSegment', '$http', 'config',
+    '$filter', 'authService', 'notificationService',
     'metaService', 'websocketService', '$window', '$location',
     function(
-      $scope, $route, $routeSegment, $document, $http, config, $rootScope,
+      $scope, $route, $routeSegment, $http, config,
       $filter, authService, notificationService, metaService, websocketService,
       $window, $location
     ) {
@@ -184,11 +184,6 @@ export default function(app) {
       $scope.discussions = {
         stored: []
       };
-
-      // Check if tour should be taken.
-      if ($location.search().takeTour === 'true') {
-        $scope.StartIntroJs();
-      }
 
       $scope.addDocumentMetaData = function(metaData) {
         if (!$scope.document) {

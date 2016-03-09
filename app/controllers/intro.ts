@@ -3,10 +3,6 @@ export default function(app) {
   app.controller('IntrojsCtrl', [
     '$scope', 'authService',
     function($scope, authService) {
-      console.log(authService);
-      console.log(authService.user);
-
-
       $scope.IntroOptions = {
         steps: [
           {
@@ -50,7 +46,6 @@ export default function(app) {
       };
 
       $scope.auth = authService;
-      // keep user copy up to date
       $scope.$watch('auth.user', function(user) {
         if (user) {
           $scope.IntroOptions.steps = [
