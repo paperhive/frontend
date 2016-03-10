@@ -5,7 +5,6 @@ export default function(app) {
     function($scope, authService, $location, $rootScope) {
       $scope.takeTour = false;
       $rootScope.$on('$locationChangeSuccess', function(event) {
-        console.log('$locationChangeSuccess');
         $scope.takeTour = $location.search().takeTour === 'true';
       });
 
