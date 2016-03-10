@@ -5,6 +5,5 @@ export default function(app) {
     ['$scope', '$location',
       function($scope, $location) {
         $scope.collapsed = true;
-        $scope.takeTour = $location.search().takeTour === 'true';
       }]);
 };
