@@ -4,7 +4,8 @@ export default function(app) {
     '$scope', 'authService', '$location', '$rootScope', '$window',
     function($scope, authService, $location, $rootScope, $window) {
 
-      $scope.takeTour = false;
+      $scope.takeTourNow = false;
+      $scope.hasTakenTour = $window.localStorage.hasTakenTour;
       if (!$window.localStorage.hasTakenTour) {
         $rootScope.$on('$locationChangeSuccess', function(event) {
           $scope.takeTour = $location.search().takeTour === 'true';
@@ -13,6 +14,7 @@ export default function(app) {
 
       $scope.completedIntro = function() {
         $window.localStorage.hasTakenTour = true;
+        $scope.hasTakenTour = true;
       };
 
       $scope.IntroOptions = {
