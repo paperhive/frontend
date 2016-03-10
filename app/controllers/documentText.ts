@@ -102,7 +102,7 @@ export default function(app) {
           .error(notificationService.httpError('could not add discussion'));
       };
 
-      if ($scope.takeTour) {
+      if ($scope.takeTourNow) {
         $scope.$watchGroup(
           ['text.highlightInfos', 'text.marginOffsets'],
           function(data) {
