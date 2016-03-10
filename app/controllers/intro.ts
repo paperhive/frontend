@@ -1,12 +1,19 @@
 export default function(app) {
 
   app.controller('IntrojsCtrl', [
-    '$scope', 'authService', '$location', '$rootScope',
-    function($scope, authService, $location, $rootScope) {
+    '$scope', 'authService', '$location', '$rootScope', '$window',
+    function($scope, authService, $location, $rootScope, $window) {
+
       $scope.takeTour = false;
-      $rootScope.$on('$locationChangeSuccess', function(event) {
-        $scope.takeTour = $location.search().takeTour === 'true';
-      });
+      if (!$window.localStorage.hasTakenTour) {
+        $rootScope.$on('$locationChangeSuccess', function(event) {
+          $scope.takeTour = $location.search().takeTour === 'true';
+        });
+      }
+
+      $scope.completedIntro = function() {
+        $window.localStorage.hasTakenTour = true;
+      };
 
       $scope.IntroOptions = {
         steps: [
