@@ -22,6 +22,7 @@ import 'angular-route';                               // ngRoute module
 import 'angular-route-segment';                       // route-segment
 import 'angular-sanitize';                            // ngSanitize module
 import 'angular-bootstrap';                           // ui.bootstrap
+import 'angular-intro.js';
 import 'angular-moment';                              // angularMoment
 import 'angular-leaflet-directive';                   // leaflet-directive
 import 'angulartics';
@@ -47,6 +48,7 @@ import configJson from '../config.json!json';
 const paperhive = angular
   .module(
     'paperhive', [
+      'angular-intro',
       'angulartics',
       'angulartics.google.analytics',
       'ui.bootstrap',

@@ -7,10 +7,10 @@ export default function(app) {
   app.controller('DocumentTextCtrl', [
     '$scope', '$route', '$routeSegment', '$document', '$http', '$filter',
     'config', 'authService', 'notificationService', 'distangleService',
-    'metaService',
+    'metaService', '$location',
     function(
       $scope, $route, $routeSegment, $document, $http, $filter, config,
-      authService, notificationService, distangleService, metaService
+      authService, notificationService, distangleService, metaService, $location
     ) {
       $scope.text = {
         highlightInfos: {},
@@ -102,11 +102,34 @@ export default function(app) {
           .error(notificationService.httpError('could not add discussion'));
       };
 
+      if ($scope.takeTourNow) {
+        $scope.$watchGroup(
+          ['text.highlightInfos', 'text.marginOffsets'],
+          function(data) {
+            const highlightInfos = data[0];
+            const marginOffsets = data[1];
+            // wait until at least one discussions is rendered
+            let isReady = false;
+            for (let discussion of $scope.discussions.stored) {
+              if (highlightInfos[discussion.id].top !== undefined &&
+                  marginOffsets[discussion.id] !== undefined) {
+                isReady = true;
+                break;
+              }
+            }
+            if (isReady) {
+              $scope.StartIntroJs();
+            }
+          },
+          true // deep watch
+        );
+      }
+
       // set meta data
       $scope.$watchGroup(['document', 'discussions.stored'], function(newVals) {
         const document = newVals[0];
         const discussions = newVals[1];
-        if (document) {
+        if (document && discussions) {
           let description;
           if (discussions.length === 1) {
             description =  'Document with 1 discussion.';

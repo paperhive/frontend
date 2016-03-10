@@ -12,15 +12,29 @@
         <span class="icon-bar"></span>
       </button>
       <!-- brand -->
-      <a class="navbar-brand" rel="home" href="./" title="PaperHive">
-        <img class="ph-title-logo" src="./static/img/logo.svg">
+      <a
+        class="navbar-brand"
+        rel="home"
+        href="./"
+        title="PaperHive"
+        popover-placement="bottom"
+        popover-is-open="!takeTourNow && !hasTakenTour"
+        uib-popover-template="'html/shared/popover.html'"
+        popover-trigger="outsideClick"
+        popover-popup-delay="500"
+        >
+        <img
+          class="ph-title-logo"
+          src="./static/img/logo.svg"
+          id="introjs-paperhive-logo"
+          >
       </a>
     </div>
 
     <!-- collect everything in this div for responsive collapsing -->
     <div class="collapse navbar-collapse" uib-collapse="collapsed">
       <!-- right -->
-      <div class="navbar-right">
+      <div class="navbar-right" id="introjs-lol">
         <navbar-search></navbar-search>
         <!--ul class="nav navbar-nav">
           <li><a href="./help" title="help">Help</a></li>

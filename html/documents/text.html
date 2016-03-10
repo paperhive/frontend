@@ -52,7 +52,7 @@
       </div>
     </div>
     <div class="row">
-      <div highlight-container class="col-md-9">
+      <div highlight-container class="col-md-9" id="introjs-pdf">
         <pdf
                                pdf-url="pdfSource"
                                pdf-text-overlay="true"
@@ -87,6 +87,7 @@
            ng-mouseenter="text.highlightBorder[discussion.id] = true"
            ng-mouseleave="text.highlightBorder[discussion.id] = false"
            element-size="text.marginDiscussionSizes[discussion.id]"
+           id="introjs-margin-discussion"
            >
         </margin-discussion>
           <margin-discussion-draft
