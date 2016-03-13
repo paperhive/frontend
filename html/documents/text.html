@@ -28,12 +28,25 @@
       </div>
 
       <div class="col-md-5">
-        <div ng-if="document.pdfProgress.downloading">
-          <uib-progressbar class="progress-striped active" value="100">
-            Downloading...
-          </uib-progressbar>
+        <div ng-if="pdf.loadStatus.downloading">
+          <div ng-if="pdf.loadStatus.bytesLoaded === undefined ||
+              pdf.loadStatus.bytesTotal === undefined">
+            <progressbar class="progress-striped active" value="1" max="1">
+              Loading PDF
+            </progressbar>
+          </div>
+          <div ng-if="pdf.loadStatus.bytesLoaded !== undefined ||
+              pdf.loadStatus.bytesTotal !== undefined">
+            <uib-progressbar class="progress-striped active"
+              value="pdf.loadStatus.bytesLoaded / pdf.loadStatus.bytesTotal"
+              max="1">
+              Loading PDF
+              ({{pdf.loadStatus.bytesLoaded / 1024 | number:0}} KB /
+              {{pdf.loadStatus.bytesTotal / 1024 | number:0}} KB)
+            </uib-progressbar>
+          </div>
         </div>
-        <div ng-if="document.pdfProgress.numPages && !document.pdfProgress.finished">
+        <div ng-if="pdf.loadStatus.downloaded">
           <uib-progressbar class="progress-striped active"
                            value="document.pdfProgress.renderedPages.length"
                            max="document.pdfProgress.numPages">
@@ -53,13 +66,15 @@
     </div>
     <div class="row">
       <div highlight-container class="col-md-9">
-        <pdf
+
+        <pdf url="pdfSource" on-status-update="pdf.loadStatus = status"></pdf>
+        <!--pdf
                                pdf-url="pdfSource"
                                pdf-text-overlay="true"
                                pdf-progress="document.pdfProgress"
                                on-text-select="$target && (originalComment.draft.target = $target)"
                                highlight-root
-                               ></pdf>
+                               ></pdf-->
         <div class="ph-highlight-layer" ng-if="document.pdfProgress.finished">
           <div
                                         highlight-target="originalComment.draft.target"

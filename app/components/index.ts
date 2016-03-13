@@ -9,6 +9,7 @@ import navbarSearch from './navbar-search';
 import navbarUser from './navbar-user';
 import passwordRequest from './passwordRequest';
 import passwordReset from './passwordReset';
+import pdf from './pdf';
 import settingsAccounts from './settings-accounts';
 import settingsEmail from './settings-email';
 
@@ -24,6 +25,7 @@ export default function(app) {
   navbarUser(app);
   passwordRequest(app);
   passwordReset(app);
+  pdf(app);
   settingsAccounts(app);
   settingsEmail(app);
 };

@@ -185,6 +185,8 @@ export default function(app) {
         stored: []
       };
 
+      $scope.pdf = {};
+
       $scope.addDocumentMetaData = function(metaData) {
         if (!$scope.document) {
           console.warn(
