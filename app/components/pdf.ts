@@ -28,18 +28,19 @@ export default function(app) {
             numPages: undefined,
           };
 
-          // update download status
-
-
           // get PDF
           ctrl.onStatusUpdate({status});
           const loadingTask = PDFJS.getDocument(url);
+
+          // update download status
           loadingTask.onProgress = progress => {
             $scope.$apply(() => {
               status.bytesLoaded = progress.loaded;
               status.bytesTotal = progress.total;
             });
           };
+
+          // update when download finished
           loadingTask.then(
             pdf => $scope.$apply(() => {
               // successfully downloaded pdf
