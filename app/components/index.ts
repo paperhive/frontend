@@ -5,6 +5,8 @@ import comment from './comment';
 import feedbackButton from './feedback-button';
 import hiveButton from './hive-button';
 import hivedDocs from './hived-docs';
+import marginDiscussion from './marginDiscussion';
+import marginDiscussionDraft from './marginDiscussionDraft';
 import navbarSearch from './navbar-search';
 import navbarUser from './navbar-user';
 import passwordRequest from './passwordRequest';
@@ -20,6 +22,8 @@ export default function(app) {
   feedbackButton(app);
   hiveButton(app);
   hivedDocs(app);
+  marginDiscussion(app);
+  marginDiscussionDraft(app);
   navbarSearch(app);
   navbarUser(app);
   passwordRequest(app);
