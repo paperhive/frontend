@@ -83,7 +83,7 @@ export default function(app) {
         updateSize(element, canvas, page);
 
         // wait for DOM
-        await new Promise(resolve => $timeout(resolve, scope.page * 1000));
+        await new Promise(resolve => $timeout(resolve));
 
         // resolve pageInit promise
         pageInit.resolve();
@@ -127,6 +127,8 @@ export default function(app) {
               });
             }
           }
+
+          scope.onPageRendered({page: scope.page});
         }
 
         // re-render on resize and scroll events
@@ -137,6 +139,7 @@ export default function(app) {
           angular.element($window).off('scroll', render);
         });
 
+        // render page at least once
         await render();
       },
     };
