@@ -16,7 +16,12 @@ export default function(app) {
           if (ctrl.pdf) {
             ctrl.pdf.destroy();
             ctrl.pdf = undefined;
+
           }
+
+          // page directives push promises to this array so they can
+          // wait until all pages have been initialized
+          ctrl.pageInitPromises = [];
 
           // this object is passed to onStatusUpdate
           const status = {
