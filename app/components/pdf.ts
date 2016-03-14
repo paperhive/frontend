@@ -64,5 +64,6 @@ export default function(app) {
       }
     ],
     transclude: true,
+    template: '<ng-transclude></ng-transclude>'
   });
 };

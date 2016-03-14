@@ -12,6 +12,7 @@ import inlineEditable from './inline-editable';
 import kramjax from './kramjax';
 import onOutside from './onOutside';
 import onTextSelect from './onTextSelect';
+import pdfPage from './pdfPage';
 import subnav from './subnav';
 import toc from './toc';
 import validateDocumentSource from './validateDocumentSource';
@@ -33,6 +34,7 @@ export default function(app) {
   kramjax(app);
   onOutside(app);
   onTextSelect(app);
+  pdfPage(app);
   subnav(app);
   toc(app);
   validateDocumentSource(app);

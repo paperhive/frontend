@@ -31,9 +31,9 @@
         <div ng-if="pdf.loadStatus.downloading">
           <div ng-if="pdf.loadStatus.bytesLoaded === undefined ||
               pdf.loadStatus.bytesTotal === undefined">
-            <progressbar class="progress-striped active" value="1" max="1">
+            <uib-progressbar class="progress-striped active" value="1" max="1">
               Loading PDF
-            </progressbar>
+            </uib-progressbar>
           </div>
           <div ng-if="pdf.loadStatus.bytesLoaded !== undefined ||
               pdf.loadStatus.bytesTotal !== undefined">
@@ -45,14 +45,6 @@
               {{pdf.loadStatus.bytesTotal / 1024 | number:0}} KB)
             </uib-progressbar>
           </div>
-        </div>
-        <div ng-if="pdf.loadStatus.downloaded">
-          <uib-progressbar class="progress-striped active"
-                           value="document.pdfProgress.renderedPages.length"
-                           max="document.pdfProgress.numPages">
-            {{document.pdfProgress.renderedPages.length}} /
-            {{document.pdfProgress.numPages}} pages
-          </uib-progressbar>
         </div>
       </div>
 
@@ -66,8 +58,9 @@
     </div>
     <div class="row">
       <div highlight-container class="col-md-9">
-
-        <pdf url="pdfSource" on-status-update="pdf.loadStatus = status"></pdf>
+        <pdf url="pdfSource" on-status-update="pdf.loadStatus = status">
+          <pdf-page ng-repeat="page in [] | range:1:pdf.loadStatus.numPages+1" page="page"></pdf-page>
+        </pdf>
         <!--pdf
                                pdf-url="pdfSource"
                                pdf-text-overlay="true"
