@@ -95,7 +95,9 @@
          ng-style="{'top': text.highlightInfos.draft.top + 'px'}"
          on-outside-mousedown="!originalComment.draft.title &&
          !originalComment.draft.body && purgeDraft()"
-         on-submit="addDiscussion($comment)"
+         on-submit="originalComment.draft.title = $title;
+         originalComment.draft.body = $body;
+         addDiscussion(originalComment.draft);"
          on-title-change="originalComment.draft.title = $title"
          on-body-change="originalComment.draft.body = $body"
          element-size="text.marginDiscussionSizes.draft"

@@ -23,7 +23,11 @@ export default function(app) {
         });
         $scope.submit = function() {
           $scope.state.submitting = true;
-          $q.when(ctrl.onSubmit({$comment: $scope.comment}))
+          console.log('scope.comment', $scope.comment);
+          $q.when(ctrl.onSubmit({
+            $title: $scope.comment.title,
+            $body: $scope.comment.body,
+          }))
           .finally(function() {
             $scope.state.submitting = false;
           });
