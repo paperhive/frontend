@@ -2,10 +2,12 @@ import angular from 'angular';
 import * as _ from 'lodash';
 import {PDFJS} from 'pdfjs-dist';
 
+// test if height and width properties of 2 objects are equal
 function isSameSize(obj1, obj2) {
   return obj1.height === obj2.height && obj1.width === obj2.width;
 }
 
+// round viewport size to integers
 function roundViewport(viewport) {
   return {
     height: Math.round(viewport.height),
@@ -13,6 +15,7 @@ function roundViewport(viewport) {
   };
 }
 
+// update the canvas size if necessary
 function updateSize(element, canvas, page) {
   const width = element[0].offsetWidth;
   if (width === 0) {
@@ -34,8 +37,15 @@ function updateSize(element, canvas, page) {
   return viewport;
 }
 
+// determine if element is visible in current viewport
 function isVisible(element, $window) {
-  return true;
+  const elementTop = element[0].offsetTop;
+  const elementBottom = elementTop + element[0].offsetHeight;
+
+  const viewportTop = angular.element($window).scrollTop();
+  const viewportBottom = viewportTop + angular.element($window).height();
+
+  return elementTop <= viewportBottom && elementBottom >= viewportTop;
 }
 
 export default function(app) {
@@ -99,7 +109,7 @@ export default function(app) {
           const viewport = updateSize(element, canvas, page);
 
           // nothing to do if page is invisible or the canvas is up to date
-          if (!isVisible(canvas, $window) || (renderedSize && isSameSize(canvas, renderedSize))) {
+          if (!isVisible(element, $window) || (renderedSize && isSameSize(canvas, renderedSize))) {
             return;
           }
 
