@@ -1,5 +1,6 @@
 import avatar from './avatar';
 import avatarList from './avatar-list';
+import discussionThreadView from './discussion-thread-view/index';
 import extensionButtons from './extension-buttons';
 import comment from './comment';
 import feedbackButton from './feedback-button';
@@ -19,6 +20,7 @@ import settingsEmail from './settings-email';
 export default function(app) {
   avatar(app);
   avatarList(app);
+  discussionThreadView(app);
   extensionButtons(app);
   comment(app);
   feedbackButton(app);

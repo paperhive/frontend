@@ -152,7 +152,7 @@ export default function(app) {
               title: 'Discussions · PaperHive'
             })
             .segment('thread', {
-              templateUrl: 'html/documents/discussions/thread.html',
+              template: '<discussion-thread-view></discussion-thread-view>',
               dependencies: ['discussionId'],
               title: 'Discussion · PaperHive'
             })

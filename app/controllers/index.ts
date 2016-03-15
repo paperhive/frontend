@@ -3,7 +3,6 @@ import documentText from './documentText';
 import documentNew from './documentNew';
 import authReturn from './authReturn';
 import contact from './contact';
-import discussion from './discussion';
 import discussionList from './discussionList';
 import hivers from './hivers';
 import meta from './meta';
@@ -25,7 +24,6 @@ export default function(app) {
   documentNew(app);
   authReturn(app);
   contact(app);
-  discussion(app);
   discussionList(app);
   hivers(app);
   meta(app);
