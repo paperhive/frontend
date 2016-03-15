@@ -10,6 +10,7 @@ import marginDiscussion from './marginDiscussion';
 import marginDiscussionDraft from './marginDiscussionDraft';
 import navbarSearch from './navbar-search';
 import navbarUser from './navbar-user';
+import newReply from './new-reply/index';
 import passwordRequest from './passwordRequest';
 import passwordReset from './passwordReset';
 import settingsAccounts from './settings-accounts';
@@ -28,6 +29,7 @@ export default function(app) {
   marginDiscussionDraft(app);
   navbarSearch(app);
   navbarUser(app);
+  newReply(app);
   passwordRequest(app);
   passwordReset(app);
   settingsAccounts(app);

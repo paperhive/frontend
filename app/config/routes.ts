@@ -151,10 +151,6 @@ export default function(app) {
               templateUrl: 'html/documents/discussions/list.html',
               title: 'Discussions · PaperHive'
             })
-            // .segment('new', {
-            //   templateUrl: 'html/documents/discussions/new.html',
-            //   title: 'New discussion · PaperHive'
-            // })
             .segment('thread', {
               templateUrl: 'html/documents/discussions/thread.html',
               dependencies: ['discussionId'],
