@@ -2,7 +2,6 @@ import document from './document';
 import documentText from './documentText';
 import documentNew from './documentNew';
 import authReturn from './authReturn';
-import comment from './comment';
 import contact from './contact';
 import discussion from './discussion';
 import discussionList from './discussionList';
@@ -25,7 +24,6 @@ export default function(app) {
   documentText(app);
   documentNew(app);
   authReturn(app);
-  comment(app);
   contact(app);
   discussion(app);
   discussionList(app);
