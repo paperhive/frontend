@@ -24,10 +24,7 @@ export default function(app) {
         $scope.signup.error = undefined;
 
         authService
-          .signupEmail(
-            $scope.signup.email, $scope.signup.password,
-            authService.getReturnUrl()
-          )
+          .signupEmail($scope.signup.email, $scope.signup.password)
           .then(function(response) {
             $scope.signup.inProgress = false;
             $scope.signup.succeeded = true;

@@ -3,7 +3,7 @@ export default function(app) {
   app.factory('authService', ['config', '$http', '$q', '$rootScope', '$window', '$location',
     function(config, $http, $q, $rootScope, $window, $location) {
       const authService = {
-        inProgress: false,
+        loginPromise: undefined,
         user: undefined,
         token: undefined,
         loginToken: undefined,
@@ -12,7 +12,7 @@ export default function(app) {
 
       // authService.returnPath
       function setReturnPath() {
-        if ($location.path() !== '/signup' && $location.path() !== '/login') {
+        if (['/login', '/password/request', '/password/reset', '/signup'].indexOf($location.path()) === -1) {
           authService.returnPath = $location.url();
         }
         if (!authService.returnPath) {
@@ -22,15 +22,11 @@ export default function(app) {
       setReturnPath();
       $rootScope.$on('$locationChangeSuccess', setReturnPath);
 
-      // get returnUrl (includes returnPath)
-      authService.getReturnUrl = () => {
-        return `${$window.location.origin}${config.baseHref}authReturn?returnPath=${encodeURIComponent(authService.returnPath)}`;
-      };
+      const frontendUrl = authService.frontendUrl = `${$window.location.origin}${config.baseHref}`;
 
       // get url for initiating an auth dance
       authService.getAuthUrl = (provider) => {
-        const returnUrl = authService.getReturnUrl();
-        return `${config.apiUrl}/auth/${provider}/initiate?returnUrl=${encodeURIComponent(returnUrl)}`;
+        return `${config.apiUrl}/auth/${provider}/initiate?frontendUrl=${encodeURIComponent(frontendUrl)}&returnUrl=${encodeURIComponent(authService.returnPath)}`;
       };
 
       // log in with a token
@@ -50,7 +46,7 @@ export default function(app) {
       // log in with email/username and password
       function _loginEmail(emailOrUsername, password) {
         return function() {
-          return $http.post(config.apiUrl + '/auth/email/login', {
+          return $http.post(config.apiUrl + '/auth/emailLogin', {
             emailOrUsername,
             password,
           });
@@ -59,18 +55,26 @@ export default function(app) {
 
       // log in wrapper
       function login(loginFun) {
-        if (authService.user) {
-          return $q.reject('Already logging in.');
-        }
-        if (authService.inProgress) {
-          return $q.reject('Already logging in.');
-        }
         const deferred = $q.defer();
-        authService.inProgress = true;
-        const loginPromise = loginFun();
-        loginPromise
+
+        // if already logging in: wait until completed
+        if (authService.loginPromise) {
+          authService.loginPromise.then(
+            data => {
+              login(loginFun).then(deferred.resolve, deferred.reject);
+            },
+            deferred.reject
+          );
+          return deferred.promise;
+        }
+
+        // set loginPromise
+        authService.loginPromise = deferred.promise;
+
+        // log in
+        loginFun()
           .success(function(data, status) {
-            authService.inProgress = false;
+            authService.loginPromise = undefined;
             authService.user = data.person;
             authService.token = data.token;
 
@@ -83,7 +87,7 @@ export default function(app) {
             deferred.resolve(data);
           })
           .error(function(data) {
-            authService.inProgress = false;
+            authService.loginPromise = undefined;
             authService.logout();
             deferred.reject(data);
           });
@@ -97,11 +101,42 @@ export default function(app) {
         return login(_loginEmail(emailOrUsername, password));
       };
 
-      authService.signupEmail = (email, password, returnUrl) => {
+      authService.signupEmail = (email, password) => {
         return $http.post(
-          config.apiUrl + '/auth/email/initiate',
-          {email, password, returnUrl}
+          config.apiUrl + '/auth/emailSignup/initiate',
+          {email, password, frontendUrl, returnUrl: authService.returnPath}
         );
+      };
+
+      authService.signupEmailConfirm = (token) => {
+        return login(() => {
+          return $http.post(config.apiUrl + '/auth/emailSignup/confirm', {token});
+        });
+      };
+
+      authService.passwordReset = (token, password) => {
+        return login(() => {
+          return $http.post(`${config.apiUrl}/auth/passwordReset/confirm`, {token, password});
+        });
+      };
+
+      authService.oauthInitiate = (provider) => {
+        return $http.get(config.apiUrl + '/auth/' + provider + '/initiate', {
+          params: {
+            frontendUrl,
+            returnUrl: authService.returnPath,
+            redirect: false,
+          },
+        }).then(
+          response => { $window.location.href = response.data.location; },
+          response => response.data
+        );
+      };
+
+      authService.oauthConfirm = (provider, code, state) => {
+        return login(() => {
+          return $http.post(config.apiUrl + '/auth/' + provider + '/confirm', {code, state});
+        });
       };
 
       // sign out and forget token
@@ -111,6 +146,11 @@ export default function(app) {
         delete authService.user;
         delete authService.token;
       };
+
+      authService.passwordRequest = (emailOrUsername) =>
+        $http.post(`${config.apiUrl}/auth/passwordReset/initiate`, {
+          emailOrUsername, frontendUrl, returnUrl: authService.returnPath,
+        });
 
       // sync token from local storage to authService
       $window.addEventListener('storage', (event) => {

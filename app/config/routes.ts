@@ -26,10 +26,11 @@ export default function(app) {
         .when('/', 'main')
         .when('/404', '404')
         .when('/about', 'about')
+        .when('/auth/return/:provider', 'authReturn')
         .when('/documents/new', 'documents_new')
         .when('/documents/:documentId', 'documents')
         .when('/documents/:documentId/discussions', 'documents.discussions')
-        .when('/documents/:documentId/stars', 'documents.stars')
+        .when('/documents/:documentId/hivers', 'documents.hivers')
         // .when('/documents/:documentId/discussions/new',
         //       'documents.discussions.new')
         .when('/documents/:documentId/discussions/:discussionId',
@@ -43,7 +44,8 @@ export default function(app) {
         .when('/jobs', 'jobs')
         .when('/legalnotice', 'legalnotice')
         .when('/login', 'login')
-        .when('/authReturn', 'authReturn')
+        .when('/password/request', 'passwordRequest')
+        .when('/password/reset', 'passwordReset')
         .when('/searchResults', 'searchResults')
         .when('/settings', 'settings')
         .when('/settings/profile', 'settings.profile')
@@ -124,15 +126,20 @@ export default function(app) {
           ]
         })
 
+        .segment('authReturn', {
+          controller: 'AuthReturnCtrl',
+          title: 'PaperHive'
+        })
+
         .segment('documents', {
           templateUrl: 'html/documents/index.html',
           dependencies: ['documentId'],
           title: 'Document · PaperHive'
         })
         .within()
-          .segment('stars', {
-            templateUrl: 'html/documents/stars.html',
-            title: 'Stars · PaperHive'
+          .segment('hivers', {
+            templateUrl: 'html/documents/hivers.html',
+            title: 'Hivers · PaperHive'
           })
           .segment('discussions', {
             templateUrl: 'html/documents/discussions/index.html',
@@ -233,16 +240,20 @@ export default function(app) {
           title: 'Log in to · Paperhive'
         })
 
-        .segment('authReturn', {
-          templateUrl: 'html/auth/return.html',
-          controller: 'AuthReturnCtrl',
-          title: 'PaperHive'
-        })
-
         .segment('searchResults', {
           templateUrl: 'html/searchResults.html',
           controller: 'SearchResultsCtrl',
           title: 'Search results',
+        })
+
+        .segment('passwordRequest', {
+          template: '<password-request></password-request>',
+          title: 'Reset your password · PaperHive',
+        })
+
+        .segment('passwordReset', {
+          template: '<password-reset></password-reset>',
+          title: 'Reset your password · PaperHive',
         })
 
         .segment('settings', {

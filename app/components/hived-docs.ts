@@ -1,7 +1,7 @@
 'use strict';
 
 export default function(app) {
-    app.component('starredDocs', {
+    app.component('hivedDocs', {
       bindings: {
         personId: '<',
       },
@@ -15,14 +15,14 @@ export default function(app) {
             try {
               const ret = await $http.get(
                 config.apiUrl +
-                  '/people/' + id + '/stars'
+                  '/people/' + id + '/hives'
               );
-              ctrl.starredDocuments = ret.data.documents;
+              ctrl.hivedDocuments = ret.data.documents;
             } catch (err) {
               notificationService.notifications.push({
                 type: 'error',
                 message: err.data.message ? err.data.message :
-                  'could not fetch starred documents (unknown reason)'
+                  'could not fetch hived documents (unknown reason)'
               });
             }
             // This is an async function, so unless we $apply, angular won't
@@ -32,7 +32,7 @@ export default function(app) {
         }],
         template:
         `<div class="list-group">
-          <a ng-repeat="doc in $ctrl.starredDocuments" href="./documents/{{doc.id}}" class="list-group-item">
+          <a ng-repeat="doc in $ctrl.hivedDocuments" href="./documents/{{doc.id}}" class="list-group-item">
             <h4 class="list-group-item-heading">{{doc.title}}</h4>
             <p class="list-group-item-text">
               <span ng-repeat="author in doc.authors">

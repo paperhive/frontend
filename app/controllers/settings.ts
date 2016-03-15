@@ -8,13 +8,15 @@ export default function(app) {
       $scope.tab = 'profile';
       $scope.auth = authService;
 
+      $scope.setting = {};
+
       // keep user copy up to date
       $scope.$watch('auth.user', function(user) {
         $scope.user = _.cloneDeep(user);
       });
 
       // sync from orcid
-      $scope.syncFromOrcid = function() {
+      /*$scope.syncFromOrcid = function() {
         $scope.busy = 'sync';
 
         const account = _.findLast($scope.user.externalIds, {type: 'orcid'});
@@ -29,12 +31,11 @@ export default function(app) {
             $scope.busy = false;
             notificationService.httpError('could not sync data');
           });
-      };
+      };*/
 
-      // save to api
-      $scope.save = function() {
-        $scope.busy = 'save';
+      $scope.find = _.find;
 
+      $scope.saveRaw = () => {
         const obj = _.cloneDeep($scope.user);
 
         // TODO revisit. whitelist?
@@ -46,14 +47,27 @@ export default function(app) {
         delete obj.account.createdAt;
 
         // save
-        $http.put(config.apiUrl + '/people/' + $scope.user.id, obj).
+        return $http.put(config.apiUrl + '/people/' + $scope.user.id, obj);
+      };
+
+      // save to api
+      $scope.save = function() {
+        $scope.busy = 'save';
+
+        $scope.saveRaw().
           success(function(data) {
             $scope.busy = false;
             authService.user = data;
+            $scope.setting.succeeded = true;
+            setTimeout(function() {
+              $scope.setting.succeeded = false;
+              $scope.$apply();
+            }, 5000);
           }).
           error(function(data) {
             $scope.busy = false;
             notificationService.httpError('could not save data');
+            $scope.setting.succeeded = false;
           });
       };
     }
