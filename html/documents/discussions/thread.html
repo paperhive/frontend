@@ -1,8 +1,8 @@
 <div ng-controller="DiscussionCtrl">
   <h3 class="ph-no-margin-top">
     <inline-editable
-      ng-model="discussion.title"
-      on-save="updateTitle($content)"
+      original-content="discussion.title"
+      on-save="discussion.title = $content; updateTitle($content);"
       >
     </inline-editable>
   </h3>

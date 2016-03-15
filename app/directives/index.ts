@@ -6,7 +6,6 @@ import elastic from './elastic';
 import elementPosition from './elementPosition';
 import elementSize from './elementSize';
 import highlights from './highlights';
-import inlineEditable from './inline-editable';
 import kramjax from './kramjax';
 import onOutside from './onOutside';
 import onTextSelect from './onTextSelect';
@@ -26,7 +25,6 @@ export default function(app) {
   elementPosition(app);
   elementSize(app);
   highlights(app);
-  inlineEditable(app);
   kramjax(app);
   onOutside(app);
   onTextSelect(app);
