@@ -110,7 +110,6 @@ export default function(app) {
           };
 
           $scope.updateReply = function(comment, index) {
-            console.log('updateReply', comment, index);
             return $http({
               url: config.apiUrl + '/replies/' + comment.id,
               method: 'PUT',
