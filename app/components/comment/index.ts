@@ -52,9 +52,9 @@ export default function(app) {
             $scope.comment = cloneDeep(ctrl.content);
           };
 
-          $scope.update = function() {
+          $scope.update = function(comment) {
             $scope.submitting = true;
-            const promise = ctrl.onUpdate({$comment: ctrl.content});
+            const promise = ctrl.onUpdate({$comment: comment});
             if (promise) {
               promise.finally(function() {
                 $scope.submitting = false;
