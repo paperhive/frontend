@@ -2,7 +2,7 @@ import avatar from './avatar';
 import avatarList from './avatar-list';
 import discussionThreadView from './discussion-thread-view/index';
 import extensionButtons from './extension-buttons';
-import comment from './comment';
+import comment from './comment/index';
 import feedbackButton from './feedback-button';
 import hiveButton from './hive-button';
 import hivedDocs from './hived-docs';
