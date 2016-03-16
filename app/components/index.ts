@@ -18,6 +18,7 @@ import passwordReset from './passwordReset';
 import searchResults from './search-results/index';
 import settingsAccounts from './settings-accounts';
 import settingsEmail from './settings-email';
+import signup from './signup/index';
 
 export default function(app) {
   avatar(app);
@@ -40,4 +41,5 @@ export default function(app) {
   searchResults(app);
   settingsAccounts(app);
   settingsEmail(app);
+  signup(app);
 };

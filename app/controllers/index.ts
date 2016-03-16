@@ -11,7 +11,6 @@ import navbar from './navbar';
 import notifications from './notifications';
 import passwordRequest from './passwordRequest';
 import settings from './settings';
-import signup from './signup';
 import subscribe from './subscribe';
 import user from './user';
 
@@ -29,7 +28,6 @@ export default function(app) {
   notifications(app);
   passwordRequest(app);
   settings(app);
-  signup(app);
   subscribe(app);
   user(app);
 };

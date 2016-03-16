@@ -253,8 +253,8 @@ export default function(app) {
         .up()
 
         .segment('signup', {
-          templateUrl: 'html/signup.html',
-          title: 'Sign up with · Paperhive'
+          template: '<signup></signup>',
+          title: 'Sign up · Paperhive'
         })
 
         .segment('subscribed', {
