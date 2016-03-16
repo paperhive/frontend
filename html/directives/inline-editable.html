@@ -1,5 +1,5 @@
 <span ng-if="!c.isEditMode">
-  {{ngModel}}
+  {{content}}
   <button
     class="btn btn-link"
     ng-click="c.isEditMode = true"
@@ -10,16 +10,16 @@
 <form
   ng-if="c.isEditMode"
   name="inlineEditForm"
-  ng-submit="inlineEditForm.$valid && update(ngModel)"
+  ng-submit="inlineEditForm.$valid && update(content)"
   novalidate
   >
   <input
-  type="text"
-  class="form-control ph-discussion-title"
-  size="{{ngModel.length + 5}}"
-  ng-model="ngModel"
-  required
-  >
+    type="text"
+    class="form-control ph-discussion-title"
+    size="{{content.length + 5}}"
+    ng-model="content"
+    required
+    >
   <button
     class="btn btn-default"
     ng-disabled="!inlineEditForm.$valid"

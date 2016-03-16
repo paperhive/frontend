@@ -1,6 +1,8 @@
 import { cloneDeep } from 'lodash';
 import * as angular from 'angular';
 
+import template from './template.html!text';
+
 export default function(app) {
   app.component(
     'comment', {
@@ -11,7 +13,7 @@ export default function(app) {
         requiresBody: '<',
         deletable: '<'
       },
-      templateUrl: 'html/components/comment.html',
+      template,
       controller: [
         '$scope', 'authService', '$window',
         function($scope, authService, $window) {
@@ -50,9 +52,9 @@ export default function(app) {
             $scope.comment = cloneDeep(ctrl.content);
           };
 
-          $scope.update = function() {
+          $scope.update = function(comment) {
             $scope.submitting = true;
-            const promise = ctrl.onUpdate({$comment: ctrl.content});
+            const promise = ctrl.onUpdate({$comment: comment});
             if (promise) {
               promise.finally(function() {
                 $scope.submitting = false;

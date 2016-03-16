@@ -89,16 +89,19 @@
            element-size="text.marginDiscussionSizes[discussion.id]"
            >
         </margin-discussion>
-          <margin-discussion-draft
-           ng-if="originalComment.draft.target && text.highlightInfos.draft.top !== undefined"
-           ng-style="{'top': text.highlightInfos.draft.top + 'px'}"
-           on-submit="addDiscussion($comment)"
-           on-outside-mousedown="!originalComment.draft.title &&
-           !originalComment.draft.body && purgeDraft()"
-           comment="originalComment.draft"
-           element-size="text.marginDiscussionSizes.draft"
-           >
-          </margin-discussion-draft>
+        <margin-discussion-draft
+         ng-if="originalComment.draft.target && text.highlightInfos.draft.top !== undefined"
+         ng-style="{'top': text.highlightInfos.draft.top + 'px'}"
+         on-outside-mousedown="!originalComment.draft.title &&
+         !originalComment.draft.body && purgeDraft()"
+         on-submit="originalComment.draft.title = $title;
+         originalComment.draft.body = $body;
+         addDiscussion(originalComment.draft);"
+         on-title-change="originalComment.draft.title = $title"
+         on-body-change="originalComment.draft.body = $body"
+         element-size="text.marginDiscussionSizes.draft"
+         >
+        </margin-discussion-draft>
       </div>
     </div>
   </div>
