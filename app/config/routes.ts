@@ -224,8 +224,7 @@ export default function(app) {
         })
 
         .segment('searchResults', {
-          templateUrl: 'html/searchResults.html',
-          controller: 'SearchResultsCtrl',
+          template: '<search-results></search-results>',
           title: 'Search results',
         })
 

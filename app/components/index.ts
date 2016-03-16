@@ -15,6 +15,7 @@ import navbarUser from './navbar-user';
 import newReply from './new-reply/index';
 import passwordRequest from './passwordRequest';
 import passwordReset from './passwordReset';
+import searchResults from './search-results/index';
 import settingsAccounts from './settings-accounts';
 import settingsEmail from './settings-email';
 
@@ -36,6 +37,7 @@ export default function(app) {
   newReply(app);
   passwordRequest(app);
   passwordReset(app);
+  searchResults(app);
   settingsAccounts(app);
   settingsEmail(app);
 };

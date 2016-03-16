@@ -10,7 +10,6 @@ import login from './login';
 import navbar from './navbar';
 import notifications from './notifications';
 import passwordRequest from './passwordRequest';
-import searchResults from './searchResults';
 import settings from './settings';
 import signup from './signup';
 import subscribe from './subscribe';
@@ -29,7 +28,6 @@ export default function(app) {
   navbar(app);
   notifications(app);
   passwordRequest(app);
-  searchResults(app);
   settings(app);
   signup(app);
   subscribe(app);
