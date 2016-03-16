@@ -40,7 +40,6 @@ export default function(app) {
         .when('/documents/:documentId/about', 'documents.about')
         .when('/contact', 'contact')
         .when('/terms', 'terms')
-        // .when('/help', 'help')
         .when('/jobs', 'jobs')
         .when('/legalnotice', 'legalnotice')
         .when('/login', 'login')
@@ -192,18 +191,6 @@ export default function(app) {
             {
               name: 'description',
               content: 'Terms and Privacy Policy'
-            }
-          ]
-        })
-
-        .segment('help', {
-          templateUrl: 'html/help/help.html',
-          title: 'Help · PaperHive',
-          meta: [
-            {
-              name: 'description',
-              content: 'Learn how to discuss and review research documents ' +
-                'efficiently and collaboratively on PaperHive.'
             }
           ]
         })

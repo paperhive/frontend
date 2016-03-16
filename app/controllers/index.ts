@@ -5,7 +5,6 @@ import contact from './contact';
 import discussionList from './discussionList';
 import hivers from './hivers';
 import meta from './meta';
-import help from './help';
 import jobs from './jobs';
 import login from './login';
 import navbar from './navbar';
@@ -25,7 +24,6 @@ export default function(app) {
   discussionList(app);
   hivers(app);
   meta(app);
-  help(app);
   jobs(app);
   login(app);
   navbar(app);
