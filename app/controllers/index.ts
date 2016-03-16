@@ -1,6 +1,5 @@
 import document from './document';
 import documentText from './documentText';
-import documentNew from './documentNew';
 import authReturn from './authReturn';
 import contact from './contact';
 import discussionList from './discussionList';
@@ -21,7 +20,6 @@ import user from './user';
 export default function(app) {
   document(app);
   documentText(app);
-  documentNew(app);
   authReturn(app);
   contact(app);
   discussionList(app);

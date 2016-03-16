@@ -169,7 +169,7 @@ export default function(app) {
           })
         .up()
         .segment('documents_new', {
-          templateUrl: 'html/documents/new.html',
+          template: '<document-new></document-new>',
           title: 'Add a New Document · PaperHive'
         })
 

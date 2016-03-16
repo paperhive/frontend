@@ -1,8 +1,9 @@
 import avatar from './avatar';
 import avatarList from './avatar-list';
+import comment from './comment/index';
 import discussionThreadView from './discussion-thread-view/index';
 import extensionButtons from './extension-buttons/index';
-import comment from './comment/index';
+import documentNew from './document-new/index';
 import feedbackButton from './feedback-button';
 import hiveButton from './hive-button';
 import hivedDocs from './hived-docs';
@@ -20,9 +21,10 @@ import settingsEmail from './settings-email';
 export default function(app) {
   avatar(app);
   avatarList(app);
-  discussionThreadView(app);
-  extensionButtons(app);
   comment(app);
+  discussionThreadView(app);
+  documentNew(app);
+  extensionButtons(app);
   feedbackButton(app);
   hiveButton(app);
   hivedDocs(app);
