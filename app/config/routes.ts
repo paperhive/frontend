@@ -219,7 +219,7 @@ export default function(app) {
         })
 
         .segment('login', {
-          templateUrl: 'html/login.html',
+          template: '<login></login>',
           title: 'Log in to · Paperhive'
         })
 
@@ -254,7 +254,7 @@ export default function(app) {
 
         .segment('signup', {
           template: '<signup></signup>',
-          title: 'Sign up · Paperhive'
+          title: 'Sign up for · Paperhive'
         })
 
         .segment('subscribed', {

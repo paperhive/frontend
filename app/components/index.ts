@@ -8,6 +8,7 @@ import feedbackButton from './feedback-button';
 import hiveButton from './hive-button';
 import hivedDocs from './hived-docs';
 import inlineEditable from './inline-editable';
+import login from './login/index';
 import marginDiscussion from './margin-discussion';
 import marginDiscussionDraft from './margin-discussion-draft';
 import navbarSearch from './navbar-search';
@@ -31,6 +32,7 @@ export default function(app) {
   hiveButton(app);
   hivedDocs(app);
   inlineEditable(app);
+  login(app);
   marginDiscussion(app);
   marginDiscussionDraft(app);
   navbarSearch(app);
