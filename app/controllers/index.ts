@@ -10,7 +10,6 @@ import navbar from './navbar';
 import notifications from './notifications';
 import passwordRequest from './passwordRequest';
 import settings from './settings';
-import subscribe from './subscribe';
 
 export default function(app) {
   document(app);
@@ -25,5 +24,4 @@ export default function(app) {
   notifications(app);
   passwordRequest(app);
   settings(app);
-  subscribe(app);
 };

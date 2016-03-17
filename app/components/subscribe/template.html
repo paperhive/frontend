@@ -1,0 +1,45 @@
+<form novalidate name="subscribeForm">
+  <h4 class="ph-lg-margin-bottom text-center">
+    Subscribe to our newsletter!
+  </h4>
+  <div class="form-group has-feedback" ng-class="{
+          'has-error': hasError('email'),
+          'has-success': subscribeForm.email.$valid
+        }">
+    <input type="email" class="form-control" id="email" name="email"
+      ng-model="email"
+      placeholder="you@example.com"
+      required pattern=".*@.+\..+" ng-disabled="subscribing || subscribed">
+    <span class="fa form-control-feedback" ng-class="{
+          'fa-times': hasError('email'),
+          'fa-check': subscribeForm.email.$valid
+        }"></span>
+    <div class="help-block">
+      <span ng-if="hasError('email')">
+        <span ng-if="subscribeForm.email.$error.required">
+          Please enter your email address.
+        </span>
+        <span ng-if="subscribeForm.email.$error.email || subscribeForm.email.$error.pattern">
+          The email address you provided is not valid.
+        </span>
+      </span>
+      <span ng-if="subscribed">
+        <i class="fa fa-fw fa-check"></i>
+        Check your emails to confirm your subscription.
+      </span>
+      <span ng-if="error" class="text-danger">
+        <i class="fa fa-fw fa-times"></i>
+        {{error}}
+      </span>
+      &nbsp;
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary btn-block"
+      ng-click="!subscribing && !subscribed && !subscribeForm.$invalid && submit()"
+      ng-class="{disabled: subscribeForm.$invalid || subscribing || subscribed}"
+      >
+    <i ng-if="!subscribing" class="fa fa-fw fa-envelope"></i>
+    <i ng-if="subscribing" class="fa fa-fw fa-spinner fa-spin"></i>
+    Subscribe
+  </button>
+</form>
