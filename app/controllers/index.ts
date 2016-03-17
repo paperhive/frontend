@@ -11,7 +11,6 @@ import notifications from './notifications';
 import passwordRequest from './passwordRequest';
 import settings from './settings';
 import subscribe from './subscribe';
-import user from './user';
 
 export default function(app) {
   document(app);
@@ -27,5 +26,4 @@ export default function(app) {
   passwordRequest(app);
   settings(app);
   subscribe(app);
-  user(app);
 };

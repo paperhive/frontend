@@ -263,7 +263,7 @@ export default function(app) {
         })
 
         .segment('users', {
-          templateUrl: 'html/users/index.html',
+          template: '<user></user>',
           dependencies: ['username'],
           title: 'User · PaperHive'
         })

@@ -20,6 +20,7 @@ import searchResults from './search-results/index';
 import settingsAccounts from './settings-accounts';
 import settingsEmail from './settings-email';
 import signup from './signup/index';
+import user from './user/index';
 
 export default function(app) {
   avatar(app);
@@ -44,4 +45,5 @@ export default function(app) {
   settingsAccounts(app);
   settingsEmail(app);
   signup(app);
+  user(app);
 };
