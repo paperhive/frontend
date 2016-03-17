@@ -17,6 +17,7 @@ import newReply from './new-reply/index';
 import passwordRequest from './passwordRequest';
 import passwordReset from './passwordReset';
 import searchResults from './search-results/index';
+import settings from './settings/index';
 import settingsAccounts from './settings-accounts';
 import settingsEmail from './settings-email';
 import signup from './signup/index';
@@ -43,6 +44,7 @@ export default function(app) {
   passwordRequest(app);
   passwordReset(app);
   searchResults(app);
+  settings(app);
   settingsAccounts(app);
   settingsEmail(app);
   signup(app);

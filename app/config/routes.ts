@@ -239,7 +239,7 @@ export default function(app) {
         })
 
         .segment('settings', {
-          templateUrl: 'html/settings/index.html',
+          template: '<settings></settings>',
           title: 'Your profile · PaperHive'
         })
         .within()

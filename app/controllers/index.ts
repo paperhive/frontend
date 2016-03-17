@@ -9,7 +9,6 @@ import jobs from './jobs';
 import navbar from './navbar';
 import notifications from './notifications';
 import passwordRequest from './passwordRequest';
-import settings from './settings';
 
 export default function(app) {
   document(app);
@@ -23,5 +22,4 @@ export default function(app) {
   navbar(app);
   notifications(app);
   passwordRequest(app);
-  settings(app);
 };
