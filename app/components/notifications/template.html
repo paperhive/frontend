@@ -1,4 +1,4 @@
-<div ng-controller="NotificationsCtrl" ng-class="{hidden: !notifications.length}">
+<div ng-class="{hidden: !notifications.length}">
   <uib-alert class="ph-navbar-alert" ng-repeat="notification in notifications | limitTo: 1"
     type="{{types[notification.type]}}" close="close($index)">
     <span ng-show="notification.type == 'error'">

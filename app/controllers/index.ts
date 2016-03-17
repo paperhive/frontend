@@ -7,7 +7,6 @@ import hivers from './hivers';
 import meta from './meta';
 import jobs from './jobs';
 import navbar from './navbar';
-import notifications from './notifications';
 import passwordRequest from './passwordRequest';
 
 export default function(app) {
@@ -20,6 +19,5 @@ export default function(app) {
   meta(app);
   jobs(app);
   navbar(app);
-  notifications(app);
   passwordRequest(app);
 };

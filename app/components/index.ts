@@ -14,6 +14,7 @@ import marginDiscussionDraft from './margin-discussion-draft';
 import navbarSearch from './navbar-search';
 import navbarUser from './navbar-user';
 import newReply from './new-reply/index';
+import notifications from './notifications/index';
 import passwordRequest from './passwordRequest';
 import passwordReset from './passwordReset';
 import searchResults from './search-results/index';
@@ -41,6 +42,7 @@ export default function(app) {
   navbarSearch(app);
   navbarUser(app);
   newReply(app);
+  notifications(app);
   passwordRequest(app);
   passwordReset(app);
   searchResults(app);
