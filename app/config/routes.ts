@@ -131,7 +131,7 @@ export default function(app) {
         })
 
         .segment('documents', {
-          templateUrl: 'html/documents/index.html',
+          template: '<document></document>',
           dependencies: ['documentId'],
           title: 'Document · PaperHive'
         })

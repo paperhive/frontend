@@ -2,8 +2,9 @@ import avatar from './avatar';
 import avatarList from './avatar-list';
 import comment from './comment/index';
 import discussionThreadView from './discussion-thread-view/index';
-import extensionButtons from './extension-buttons/index';
+import document from './document/index';
 import documentNew from './document-new/index';
+import extensionButtons from './extension-buttons/index';
 import feedbackButton from './feedback-button';
 import hiveButton from './hive-button';
 import hivedDocs from './hived-docs';
@@ -31,6 +32,7 @@ export default function(app) {
   avatarList(app);
   comment(app);
   discussionThreadView(app);
+  document(app);
   documentNew(app);
   extensionButtons(app);
   feedbackButton(app);

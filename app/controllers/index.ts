@@ -1,4 +1,3 @@
-import document from './document';
 import documentText from './documentText';
 import authReturn from './authReturn';
 import contact from './contact';
@@ -9,7 +8,6 @@ import jobs from './jobs';
 import passwordRequest from './passwordRequest';
 
 export default function(app) {
-  document(app);
   documentText(app);
   authReturn(app);
   contact(app);
