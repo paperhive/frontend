@@ -11,6 +11,7 @@ import inlineEditable from './inline-editable';
 import login from './login/index';
 import marginDiscussion from './margin-discussion';
 import marginDiscussionDraft from './margin-discussion-draft';
+import navbar from './navbar/index';
 import navbarSearch from './navbar-search';
 import navbarUser from './navbar-user';
 import newReply from './new-reply/index';
@@ -39,6 +40,7 @@ export default function(app) {
   login(app);
   marginDiscussion(app);
   marginDiscussionDraft(app);
+  navbar(app);
   navbarSearch(app);
   navbarUser(app);
   newReply(app);

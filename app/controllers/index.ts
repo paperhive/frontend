@@ -6,7 +6,6 @@ import discussionList from './discussionList';
 import hivers from './hivers';
 import meta from './meta';
 import jobs from './jobs';
-import navbar from './navbar';
 import passwordRequest from './passwordRequest';
 
 export default function(app) {
@@ -18,6 +17,5 @@ export default function(app) {
   hivers(app);
   meta(app);
   jobs(app);
-  navbar(app);
   passwordRequest(app);
 };
