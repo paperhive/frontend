@@ -17,6 +17,7 @@ import navbarSearch from './navbar-search';
 import navbarUser from './navbar-user';
 import newReply from './new-reply/index';
 import notifications from './notifications/index';
+import officeMap from './office-map';
 import passwordRequest from './passwordRequest';
 import passwordReset from './passwordReset';
 import searchResults from './search-results/index';
@@ -47,6 +48,7 @@ export default function(app) {
   navbarUser(app);
   newReply(app);
   notifications(app);
+  officeMap(app);
   passwordRequest(app);
   passwordReset(app);
   searchResults(app);
