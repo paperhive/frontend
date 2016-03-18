@@ -190,6 +190,51 @@ export default function(app) {
       }
     }
 
+    // TODO: implement!
+    class LinkService {
+      getDestinationHash(dest) {
+        console.log(dest);
+        return dest;
+      }
+    }
+
+    class AnnotationsRenderer {
+      container: JQuery;
+      linkService: any;
+      page: PDFPageProxy;
+      annotations: PDFAnnotations;
+
+      constructor(container, page, linkService) {
+        this.container = container;
+        this.page = page;
+        this.linkService = linkService;
+      }
+
+      async render(_viewport) {
+        // get a non-flipped version of the viewport
+        // andré: this took me a few hours, uaaargh! :)
+        const viewport = _viewport.clone({
+          dontFlip: true
+        });
+
+        if (!this.annotations) {
+          this.annotations = await this.page.getAnnotations();
+        }
+
+        // wipe all children from the container
+        // TODO: use AnnotationLayer.update()
+        angular.element(this.container).empty();
+
+        PDFJS.AnnotationLayer.render({
+          annotations: this.annotations,
+          div: this.container, // layer:
+          linkService: this.linkService,
+          page: this.page,
+          viewport: viewport,
+        });
+      }
+    }
+
     return {
       restrict: 'E',
       require: '^pdf',
@@ -243,6 +288,7 @@ export default function(app) {
         // add renderers
         let canvasRenderer = new CanvasRenderer(element, page);
         let textRenderer = new TextRenderer(text[0], page);
+        let annotationsRenderer = new AnnotationsRenderer(annotations[0], page, new LinkService);
 
         // render state
         let renderedSize;
@@ -284,6 +330,7 @@ export default function(app) {
           try {
             await canvasRenderer.render(viewport);
             await textRenderer.render(viewport);
+            await annotationsRenderer.render(viewport);
 
             unlock();
 

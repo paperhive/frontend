@@ -53,4 +53,21 @@ pdf-page {
       .ph-selection(text);
     }
   }
+
+  & > .ph-pdf-annotations {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    & > section {
+      position: absolute;
+      & > a {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
 }
