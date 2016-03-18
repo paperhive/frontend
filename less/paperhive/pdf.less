@@ -16,7 +16,6 @@ pdf-page {
     top: 0;
     right: 0;
     bottom: 0;
-    overflow: hidden;
     /* set opacity instead of transparent background color because the
      * ::selection selector is not yet standardized and not fully supported
      * see https://developer.mozilla.org/en-US/docs/Web/CSS/::selection
@@ -55,12 +54,7 @@ pdf-page {
   }
 
   & > .ph-pdf-annotations {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    overflow: hidden;
+    .ph-selection(none);
     & > section {
       position: absolute;
       & > a {
