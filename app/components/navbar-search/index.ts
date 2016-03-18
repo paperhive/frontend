@@ -1,5 +1,7 @@
 'use strict';
 
+import template from './template.html!text';
+
 export default function(app) {
     app.component('navbarSearch', {
       controller: ['$scope', '$http', '$location', '$routeSegment', 'config',
@@ -39,6 +41,6 @@ export default function(app) {
           };
         }
       ],
-      templateUrl: 'html/shared/navbar-search.html',
+      template,
     });
 };
