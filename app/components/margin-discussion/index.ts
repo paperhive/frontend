@@ -1,6 +1,8 @@
 'use strict';
 import * as angular from 'angular';
 
+import template from './template.html!text';
+
 export default function(app) {
   app.component('marginDiscussion', {
     bindings: {
@@ -11,7 +13,7 @@ export default function(app) {
       onReplyUpdate: '&',
       onReplyDelete: '&'
     },
-    templateUrl: 'html/directives/marginDiscussion.html',
+    template,
     controller: [
       '$scope', '$q', '$location', '$filter', 'authService',
       function($scope, $q, $location, $filter, authService) {

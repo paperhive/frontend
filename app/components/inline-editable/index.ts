@@ -1,12 +1,14 @@
 'use strict';
-export default function(app) {
 
+import template from './template.html!text';
+
+export default function(app) {
   app.component('inlineEditable', {
     bindings: {
       originalContent: '<',
       onSave: '&'
     },
-    templateUrl: 'html/directives/inline-editable.html',
+    template,
     controller: [
       '$scope', 'authService',
       function($scope, authService) {

@@ -1,6 +1,8 @@
 'use strict';
-export default function(app) {
 
+import template from './template.html!text';
+
+export default function(app) {
   app.component(
     'marginDiscussionDraft', {
     bindings: {
@@ -8,6 +10,7 @@ export default function(app) {
       onTitleChange: '&',
       onBodyChange: '&',
     },
+    template,
     controller: [
       '$scope', '$q', 'authService',
       function($scope, $q, authService) {
@@ -32,6 +35,5 @@ export default function(app) {
           });
         };
       }],
-    templateUrl: 'html/directives/marginDiscussionDraft.html',
     });
 };
