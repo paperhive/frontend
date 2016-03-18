@@ -8,6 +8,7 @@ pdf-page {
   background-color: white;
   overflow: hidden;
   position: relative;
+  .ph-selection(none);
 
   & > .ph-pdf-text {
     position: absolute;
@@ -16,9 +17,26 @@ pdf-page {
     right: 0;
     bottom: 0;
     overflow: hidden;
-    /* override from bootstrap, cf.
+    /* set opacity instead of transparent background color because the
+     * ::selection selector is not yet standardized and not fully supported
+     * see https://developer.mozilla.org/en-US/docs/Web/CSS/::selection
+     */
+    opacity: 0.6;
+
+    // do not lighten up colors by highlighting, e.g., black text remains black
+    // although we the highlight is a layer on top of the text.
+    mix-blend-mode: multiply;
+
+    /* override bootstrap's line-height, cf.
      * <https://github.com/mozilla/pdf.js/issues/6614> */
     line-height: 1.0;
+
+    & ::selection {
+      background: @ph-highlight-color;
+    }
+    & ::-moz-selection {
+      background: @ph-highlight-color
+    }
 
     & > div {
       color: transparent;
