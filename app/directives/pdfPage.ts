@@ -102,14 +102,12 @@ export default function(app) {
     class CanvasRenderer {
       element: JQuery;
       page: PDFPageProxy;
-      mutex: Mutex;
       canvas: HTMLCanvasElement;
       renderTask: PDFRenderTask; // currently running task
 
       constructor(element, page) {
         this.element = element;
         this.page = page;
-        this.mutex = new Mutex();
       }
 
       // cancel running render()
@@ -140,6 +138,50 @@ export default function(app) {
         // kick off canvas rendering
         this.renderTask = this.page.render({
           canvasContext: this.canvas.getContext('2d'),
+          viewport,
+        });
+
+        // wait for renderTask
+        await this.renderTask;
+      }
+    }
+
+    // render a page's text in a canvas
+    class TextRenderer {
+      container: JQuery;
+      page: PDFPageProxy;
+      textContent: TextContent;
+      renderTask: PDFRenderTask; // currently running task
+
+      constructor(container, page) {
+        this.container = container;
+        this.page = page;
+      }
+
+      // cancel running render()
+      cancel() {
+        if (this.renderTask) {
+          // cancel running tasks
+          this.renderTask.cancel();
+
+          // reset state
+          this.renderTask = undefined;
+        }
+      }
+
+      async render(viewport) {
+        if (!this.textContent) {
+          this.textContent = await this.page.getTextContent();
+        }
+
+        // wipe all children from the container
+        // TODO: figure out how to update via pdfjs
+        angular.element(this.container).empty();
+
+        // kick off text rendering
+        this.renderTask = PDFJS.renderTextLayer({
+          container: this.container,
+          textContent: this.textContent,
           viewport,
         });
 
@@ -198,8 +240,9 @@ export default function(app) {
         // (otherwise the visibility test may yield wrong results)
         await $q.all(pdfCtrl.pageInitPromises);
 
-        // add canvas renderer
+        // add renderers
         let canvasRenderer = new CanvasRenderer(element, page);
+        let textRenderer = new TextRenderer(text[0], page);
 
         // render state
         let renderedSize;
@@ -215,8 +258,9 @@ export default function(app) {
             return;
           }
 
-          // cancel canvas renderer
+          // cancel renderers
           canvasRenderer.cancel();
+          textRenderer.cancel();
 
           // wait for exclusive execution
           const unlock = await renderMutex.lock();
@@ -239,6 +283,7 @@ export default function(app) {
 
           try {
             await canvasRenderer.render(viewport);
+            await textRenderer.render(viewport);
 
             unlock();
 
