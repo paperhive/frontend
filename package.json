@@ -46,7 +46,7 @@
     "gulp-util": "^3.0.7",
     "jasmine": "^2.4.0",
     "jasmine-core": "^2.3.4",
-    "jspm": "^0.17.0-beta.5",
+    "jspm": "^0.17.0-beta.11",
     "karma": "^0.13.15",
     "karma-jasmine": "^0.3.6",
     "karma-phantomjs-launcher": "^1.0.0",
@@ -89,15 +89,20 @@
       "rx": "npm:rx@^4.0.7",
       "socket.io-client": "github:socketio/socket.io-client@^1.4.5",
       "text": "github:systemjs/plugin-text@^0.0.7",
-      "ts": "github:frankwallis/plugin-typescript@^2.5.9"
+      "ts": "github:frankwallis/plugin-typescript@^4.0.2"
     },
     "devDependencies": {
-      "plugin-babel": "npm:systemjs-plugin-babel@^0.0.2",
-      "plugin-typescript": "github:frankwallis/plugin-typescript@^2.5.9"
+      "plugin-babel": "npm:systemjs-plugin-babel@^0.0.8",
+      "plugin-typescript": "github:frankwallis/plugin-typescript@^4.0.2"
     },
     "peerDependencies": {
       "assert": "github:jspm/nodelibs-assert@^0.2.0-alpha",
+      "buffer": "github:jspm/nodelibs-buffer@^0.2.0-alpha",
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha",
+      "os": "github:jspm/nodelibs-os@^0.2.0-alpha",
+      "path": "github:jspm/nodelibs-path@^0.2.0-alpha",
       "process": "github:jspm/nodelibs-process@^0.2.0-alpha",
+      "readline": "github:jspm/nodelibs-readline@^0.2.0-alpha",
       "url": "github:jspm/nodelibs-url@^0.2.0-alpha"
     },
     "overrides": {
@@ -222,7 +227,7 @@
         },
         "map": {}
       },
-      "npm:typescript@1.7.5": {
+      "npm:typescript@1.8.9": {
         "browser": {},
         "map": {
           "buffer": "@empty",
