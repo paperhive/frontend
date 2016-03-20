@@ -37,6 +37,7 @@ var paths = {
 
 var htmlminOpts = {
   collapseWhitespace: true,
+  conservativeCollapse: true,
   removeComments: true
 };
 
