@@ -27,10 +27,6 @@ var paths = {
   html: 'html/**/*.html',
   staticFiles: 'static/**/*',
   index: 'index.template.html',
-  // TODO: remove when self-executing bundle works
-  jspmFiles: [
-    'config.json','jspm.browser.js', 'jspm.config.js',
-    'jspm_packages/system.js','jspm_packages/github/systemjs/**/*'],
   less: 'src/less/**/*.less',
   build: 'build/**/*'
 };
@@ -91,13 +87,6 @@ gulp.task('static', [], function() {
     }))
     //.pipe(dev ? gutil.noop() : cachebust.resources())
     .pipe(gulp.dest(buildDir + '/static'));
-});
-
-// copy jspm files
-// TODO: remove when the self-executing bundle works
-gulp.task('jspm-files', function() {
-  return gulp.src(paths.jspmFiles, {base: './'})
-    .pipe(gulp.dest('build'));
 });
 
 // store the shasum-appended directory name globally so we can use it as a
