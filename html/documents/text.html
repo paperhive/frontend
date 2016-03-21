@@ -54,12 +54,15 @@
     <div class="row">
       <div highlight-container class="col-md-9">
         <pdf
-                               pdf-url="pdfSource"
-                               pdf-text-overlay="true"
-                               pdf-progress="document.pdfProgress"
-                               on-text-select="$target && (originalComment.draft.target = $target)"
-                               highlight-root
-                               ></pdf>
+          popover-placement="top"
+          popover-is-open="true"
+          uib-popover-template="'html/shared/popover.html'"
+          pdf-url="pdfSource"
+          pdf-text-overlay="true"
+          pdf-progress="document.pdfProgress"
+          on-text-select="$target && (originalComment.draft.target = $target)"
+          highlight-root
+        ></pdf>
         <div class="ph-highlight-layer" ng-if="document.pdfProgress.finished">
           <div
                                         highlight-target="originalComment.draft.target"
