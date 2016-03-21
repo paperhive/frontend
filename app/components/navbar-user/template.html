@@ -1,8 +1,13 @@
 <ul class="nav navbar-nav">
   <li ng-if="!auth.user && !auth.inProgress">
     <p class="navbar-btn ph-md-margin-left ph-md-margin-right">
-      <a href="./signup?returnPath={{auth.returnPath}}" class="btn btn-primary"
-        >Sign up</a>
+      <a
+        href="./signup?returnPath={{auth.returnPath}}"
+        class="btn btn-primary"
+        popover-placement="bottom"
+        popover-is-open="true"
+        uib-popover-template="'html/shared/popover.html'"
+      >Sign up</a>
       <a href="./login?returnPath={{auth.returnPath}}" class="btn btn-default"
         >Log in</a>
     </p>
