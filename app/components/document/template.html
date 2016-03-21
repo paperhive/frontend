@@ -12,7 +12,13 @@
         </div>
         <div class="col-sm-2 text-right">
           <h2 class="ph-lg-margin-top">
-            <hive-button document-id="revisions[0].id" user="auth.user"></hive-button>
+            <hive-button
+              popover-placement="left"
+              popover-is-open="true"
+              uib-popover-template="'html/shared/popover.html'"
+              document-id="revisions[0].id"
+              user="auth.user"
+            ></hive-button>
           </h2>
         </div>
       </div>
