@@ -1,0 +1,125 @@
+<!-- Content Start -->
+<div class="container ph-xl-margin-bottom">
+  <h2 id="signup">Sign up</h2>
+
+  <h4 class="ph-heading-light ph-md-margin-bottom">
+    Already have an account at PaperHive?
+    <a href="./login?returnPath={{auth.returnPath}}">
+      Log in
+    </a>
+  </h4>
+
+  <p><small>
+    By using PaperHive you agree to our
+    <a href="./terms">terms of use</a> and
+    <a href="./terms#privacy">privacy policy</a>.
+  </small></p>
+
+  <div class="ph-flex-container">
+
+    <div class="ph-flex-item-1">
+    </div>
+
+    <div class="ph-flex-item">
+      <a href="{{auth.getAuthUrl('google')}}"
+        target="_self"
+        class="btn btn-default btn-block ph-lg-margin-bottom"
+        title="Sign in with your Google account">
+        <img class="ph-login-icon" src="./static/img/google.svg"> Sign up with Google
+      </a>
+      <a href="{{auth.getAuthUrl('orcid')}}"
+        target="_self"
+        class="btn btn-default btn-block" title="Sign up with your ORCID iD">
+        <img class="ph-login-icon" src="./static/img/orcid.svg"> Sign up with ORCID
+      </a>
+    </div>
+
+    <div class="ph-flex-item-1">
+      <div class="ph-inner-flex-container">
+        <div class="ph-inner-flex-item ph-login-line-separator"></div>
+        <small class="ph-inner-flex-item ph-login-separator">OR</small>
+        <div class="ph-inner-flex-item ph-login-line-separator"></div>
+      </div>
+    </div>
+
+    <div class="ph-flex-item">
+      <form name="signupForm" novalidate>
+
+        <div class="form-group" ng-class="{
+          'has-error': hasError('email'),
+          'has-success': signupForm.email.$valid
+        }">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" id="email" name="email"
+            ng-model="signup.email" pattern=".*@.+\..+"
+            ng-disabled="signup.inProgress || signup.succeeded" required>
+          <div class="help-block">
+            <span ng-if="hasError('email')">
+              <span ng-if="signupForm.email.$error.required">
+                Please enter your email address.
+              </span>
+              <span ng-if="signupForm.email.$error.email || signupForm.email.$error.pattern">
+                The email address you provided is not valid.
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group" ng-class="{
+          'has-error': hasErrorPassword(),
+          'has-success': signupForm.password.$valid
+        }">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password"
+            name="password" ng-model="signup.password" ng-minlength="8"
+            ng-disabled="signup.inProgress || signup.succeeded"
+            ng-model-options="{updateOn: 'default blur', debounce: { 'default': 800, 'blur': 0 }}"
+            required>
+          <div class="help-block">
+            <span ng-if="hasErrorPassword()">
+              <span ng-if="signupForm.password.$error.required">
+                Please enter a password.
+              </span>
+              <span ng-if="signupForm.password.$error.password
+                || signupForm.password.$error.minlength"
+              >
+                Please enter a password with at least 8 characters.
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <div ng-class="{'has-success': signupForm.$valid}">
+          <span class="help-block">
+            <span ng-if="signup.succeeded">
+              <i class="fa fa-fw fa-check"></i>
+              Check your emails to confirm your sign-up.
+            </span>
+            <span ng-if="signup.error" class="text-danger">
+              <i class="fa fa-fw fa-times"></i>
+              {{signup.error}}
+            </span>
+          </span>
+        </div>
+
+        <div class="ph-lg-padding-top">
+          <button class="btn btn-primary btn-block"
+            type="submit"
+            ng-click="!signup.inProgress && !signup.succeeded && !signupForm.$invalid && sendSignup()"
+            ng-class="{disabled: signupForm.$invalid || signup.inProgress || signup.succeeded}"
+          >
+            <i ng-if="signup.inProgress" class="fa fa-fw fa-spinner fa-spin"></i>
+            Sign up
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+    <div class="ph-flex-item-1">
+    </div>
+
+  </div>
+
+</div>
+<!-- Content End -->

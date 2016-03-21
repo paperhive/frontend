@@ -40,7 +40,6 @@ export default function(app) {
         .when('/documents/:documentId/about', 'documents.about')
         .when('/contact', 'contact')
         .when('/terms', 'terms')
-        // .when('/help', 'help')
         .when('/jobs', 'jobs')
         .when('/legalnotice', 'legalnotice')
         .when('/login', 'login')
@@ -132,7 +131,7 @@ export default function(app) {
         })
 
         .segment('documents', {
-          templateUrl: 'html/documents/index.html',
+          template: '<document></document>',
           dependencies: ['documentId'],
           title: 'Document · PaperHive'
         })
@@ -169,7 +168,7 @@ export default function(app) {
           })
         .up()
         .segment('documents_new', {
-          templateUrl: 'html/documents/new.html',
+          template: '<document-new></document-new>',
           title: 'Add a New Document · PaperHive'
         })
 
@@ -192,18 +191,6 @@ export default function(app) {
             {
               name: 'description',
               content: 'Terms and Privacy Policy'
-            }
-          ]
-        })
-
-        .segment('help', {
-          templateUrl: 'html/help/help.html',
-          title: 'Help · PaperHive',
-          meta: [
-            {
-              name: 'description',
-              content: 'Learn how to discuss and review research documents ' +
-                'efficiently and collaboratively on PaperHive.'
             }
           ]
         })
@@ -232,13 +219,12 @@ export default function(app) {
         })
 
         .segment('login', {
-          templateUrl: 'html/login.html',
+          template: '<login></login>',
           title: 'Log in to · Paperhive'
         })
 
         .segment('searchResults', {
-          templateUrl: 'html/searchResults.html',
-          controller: 'SearchResultsCtrl',
+          template: '<search-results></search-results>',
           title: 'Search results',
         })
 
@@ -253,7 +239,7 @@ export default function(app) {
         })
 
         .segment('settings', {
-          templateUrl: 'html/settings/index.html',
+          template: '<settings></settings>',
           title: 'Your profile · PaperHive'
         })
         .within()
@@ -267,8 +253,8 @@ export default function(app) {
         .up()
 
         .segment('signup', {
-          templateUrl: 'html/signup.html',
-          title: 'Sign up with · Paperhive'
+          template: '<signup></signup>',
+          title: 'Sign up for · Paperhive'
         })
 
         .segment('subscribed', {
@@ -277,7 +263,7 @@ export default function(app) {
         })
 
         .segment('users', {
-          templateUrl: 'html/users/index.html',
+          template: '<user></user>',
           dependencies: ['username'],
           title: 'User · PaperHive'
         })
