@@ -22,18 +22,19 @@ export default function(app) {
       const revisionId = $routeSegment.$routeParams.revisionId;
 
       function getAccessiblePdfUrl(documentRevision) {
-        var userHasAccess = documentRevision.isOpenAccess;
+        const userHasAccess = documentRevision.isOpenAccess;
         if (!userHasAccess) {
           throw new Error('You currently have no access to the PDF.');
         }
-        var pdfConn = documentRevision.file;
-        if (pdfConn.hasCors && urlPackage.parse(pdfConn.url).protocol === 'https') {
+        if (documentRevision.file.hasCors &&
+            urlPackage.parse(documentRevision.file.url).protocol === 'https') {
           // all good
-          return pdfConn.url;
+          return documentRevision.file;
         }
         // No HTTPS/Cors? PaperHive can proxy the document if it's open access.
         if (documentRevision.isOpenAccess) {
-          return config.apiUrl + '/proxy?url=' + encodeURIComponent(pdfConn.url);
+          return config.apiUrl + '/proxy?url=' +
+            encodeURIComponent(documentRevision.file.url);
         }
         notificationService.notifications.push({
           type: 'error',
