@@ -34,7 +34,7 @@ export default function(app) {
           function getSearchResults(query, page) {
             $scope.search.total = undefined;
             $scope.search.documents = undefined;
-            return $http.get(config.apiUrl + '/documents/', {
+            return $http.get(config.apiUrl + '/documents/search', {
               params: {
                 q: query,
                 limit: maxPerPage,
