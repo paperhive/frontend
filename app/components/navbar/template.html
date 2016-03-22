@@ -3,7 +3,12 @@
     element-size="$root.navbarSize"
     role="navigation">
   <div class="container-fluid">
-    <div class="navbar-header">
+    <div
+      class="navbar-header"
+      popover-placement="bottom-left"
+      popover-is-open="true"
+      uib-popover-template="'html/shared/popover.html'"
+    >
       <!-- toggle nav -->
       <button ng-click="collapsed=!collapsed" type="button" class="navbar-toggle">
         <span class="sr-only">Toggle navigation</span>
@@ -12,14 +17,7 @@
         <span class="icon-bar"></span>
       </button>
       <!-- brand -->
-      <a
-        class="navbar-brand"
-        rel="home" href="./"
-        title="PaperHive"
-        popover-placement="bottom-left"
-        popover-is-open="true"
-        uib-popover-template="'html/shared/popover.html'"
-      >
+      <a class="navbar-brand" rel="home" href="./" title="PaperHive">
         <img class="ph-title-logo" src="./static/img/logo.svg">
       </a>
     </div>
