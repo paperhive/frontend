@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import { find } from 'lodash';
-import url as urlPackage from 'url';
+import * as urlPackage from 'url';
 
 export default function(app) {
 
@@ -33,7 +33,7 @@ export default function(app) {
         }
         // No HTTPS/Cors? PaperHive can proxy the document if it's open access.
         if (documentRevision.isOpenAccess) {
-          return options.apiUrl + '/proxy?url=' + encodeURIComponent(pdfConn.url);
+          return config.apiUrl + '/proxy?url=' + encodeURIComponent(pdfConn.url);
         }
         notificationService.notifications.push({
           type: 'error',
