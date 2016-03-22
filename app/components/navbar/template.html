@@ -6,8 +6,8 @@
     <div
       class="navbar-header"
       popover-placement="bottom-left"
-      popover-is-open="true"
-      uib-popover-template="'html/shared/popover.html'"
+      popover-is-open="tour.stages[tour.index] === 'welcome'"
+      uib-popover-template="'html/shared/popover0.html'"
     >
       <!-- toggle nav -->
       <button ng-click="collapsed=!collapsed" type="button" class="navbar-toggle">

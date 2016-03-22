@@ -6,8 +6,11 @@ export default function(app) {
   app.component(
     'navbar', {
       template,
-      controller : ['$scope', function($scope) {
+      controller : ['$scope', 'tourService', function($scope, tourService) {
         $scope.collapsed = true;
+
+        $scope.tour = tourService;
+
       }]
     });
 };
