@@ -11,17 +11,19 @@ export default function(app) {
       controller: [
         '$scope', '$route', '$routeSegment', '$document', '$http', 'config',
         '$rootScope', '$filter', 'authService', 'notificationService',
-        'metaService', 'websocketService', '$window',
+        'metaService', 'websocketService', '$window', 'tourService',
         function(
           $scope, $route, $routeSegment, $document, $http, config, $rootScope,
           $filter, authService, notificationService, metaService, websocketService,
-          $window
+          $window, tourService
         ) {
           // expose authService
           $scope.auth = authService;
           // Expose the routeSegment to be able to determine the active tab in the
           // template.
           $scope.$routeSegment = $routeSegment;
+
+          $scope.tour = tourService;
 
           const documentId = $routeSegment.$routeParams.documentId;
 

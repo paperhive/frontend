@@ -7,11 +7,14 @@ export default function(app) {
   app.controller('DocumentTextCtrl', [
     '$scope', '$route', '$routeSegment', '$document', '$http', '$filter',
     'config', 'authService', 'notificationService', 'distangleService',
-    'metaService',
+    'metaService', 'tourService',
     function(
       $scope, $route, $routeSegment, $document, $http, $filter, config,
-      authService, notificationService, distangleService, metaService
+      authService, notificationService, distangleService, metaService, tourService
     ) {
+
+      $scope.tour = tourService;
+
       $scope.text = {
         highlightInfos: {},
         highlightBorder: {},
