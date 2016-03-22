@@ -17,8 +17,8 @@ export default function(app) {
 
           $scope.search = {};
           $scope.phSearch = function(query, limit) {
-            return $http.get(config.apiUrl + '/documents/', {
-              params: {q: query, limit: limit, restrictToLatest: true}
+            return $http.get(config.apiUrl + '/documents/prefix_search', {
+              params: {q: query, limit}
             })
             .then(
               function(response) {
