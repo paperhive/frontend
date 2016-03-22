@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import { find } from 'lodash';
-import paperhiveSources from 'paperhive-sources';
+import url as urlPackage from 'url';
 
 export default function(app) {
 
@@ -20,6 +20,26 @@ export default function(app) {
       };
 
       const revisionId = $routeSegment.$routeParams.revisionId;
+
+      function getAccessiblePdfUrl(documentRevision) {
+        var userHasAccess = documentRevision.isOpenAccess;
+        if (!userHasAccess) {
+          throw new Error('You currently have no access to the PDF.');
+        }
+        var pdfConn = documentRevision.file;
+        if (pdfConn.hasCors && urlPackage.parse(pdfConn.url).protocol === 'https') {
+          // all good
+          return pdfConn.url;
+        }
+        // No HTTPS/Cors? PaperHive can proxy the document if it's open access.
+        if (documentRevision.isOpenAccess) {
+          return options.apiUrl + '/proxy?url=' + encodeURIComponent(pdfConn.url);
+        }
+        notificationService.notifications.push({
+          type: 'error',
+          message: 'The publisher makes the PDF available only through an insecure connection.'
+        });
+      }
 
       $scope.$watch('revisions', function(revisions) {
         if (!revisions) { return; }
@@ -41,10 +61,9 @@ export default function(app) {
         // Construct strings for display in revision selection dropdown.
         // get pdf url
         try {
-          const sources = paperhiveSources({ apiUrl: config.apiUrl });
           const revision = revisions[activeRevisionIdx];
-          $scope.origPdfSource = sources.getPdfConnection(revision);
-          $scope.pdfSource = sources.getAccessiblePdfUrl(revision);
+          $scope.origPdfSource = revision.file.url;
+          $scope.pdfSource = getAccessiblePdfUrl(revision);
         } catch (e) {
           notificationService.notifications.push({
             type: 'error',
