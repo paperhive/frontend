@@ -52,8 +52,8 @@ export default function(app) {
               status.downloading = false;
               status.downloaded = true;
               status.pdf = pdf;
-              console.log(pdf)
               ctrl.onUpdate({status});
+
             }),
             error => $scope.$apply(() => {
               // error downloading pdf

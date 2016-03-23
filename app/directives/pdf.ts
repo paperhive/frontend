@@ -16,17 +16,7 @@ function roundSize(size) {
   };
 }
 
-function getViewport(element, page) {
-  const width = element[0].offsetWidth;
-  if (width === 0) {
-    throw new Error('Element has width zero. This is not enough.');
-  }
 
-  // scale such that the width of the viewport fills the element
-  const originalViewport = page.getViewport(1.0);
-  const scale = width / originalViewport.width;
-  return page.getViewport(scale);
-}
 
 // determine if element is visible in current viewport
 function isVisible(element, $window) {
@@ -50,54 +40,6 @@ export default function(app) {
   // angular2, see
   // http://teropa.info/blog/2015/10/18/refactoring-angular-apps-to-components.html
   app.directive('pdfFull', ['$q', '$timeout', '$window', function($q, $timeout, $window) {
-
-    /*
-     * const unlock = await mutex.lock();
-     * ...
-     * unlock();
-     *
-    class Mutex {
-      locks: Array;
-      constructor() {
-        this.locks = [];
-      }
-      async lock() {
-        const mutex = this;
-
-        // copy current locks array
-        const locks = mutex.locks.slice();
-
-        // use deferred instead of es6 promise because we need access to resolve
-        // outside the promise body
-        const deferred = $q.defer();
-        const promise = deferred.promise;
-
-        // enqueue
-        mutex.locks.push(promise);
-
-        // wait for all locks (except this one)
-        await $q.all(locks);
-
-        // checks if this promise is the first in line
-        function assertState() {
-          if (mutex.locks[0] !== promise) {
-            throw new Error('Inconsistent Mutex state. Is every lock() followed by exactly one unlock()?');
-          }
-        }
-        assertState();
-
-        // return unlock function
-        return () => {
-          assertState();
-
-          // remove lock promise
-          mutex.locks.shift();
-
-          // resolve lock promise
-          deferred.resolve();
-        };
-      }
-    }*/
 
     // render a page in a canvas
     class CanvasRenderer {
@@ -200,15 +142,19 @@ export default function(app) {
     }
 
     class AnnotationsRenderer {
-      container: JQuery;
       linkService: any;
       page: PDFPageProxy;
       annotations: PDFAnnotations;
+      annotationsContainer: JQuery;
 
       constructor(container, page, linkService) {
-        this.container = container;
         this.page = page;
         this.linkService = linkService;
+
+        this.annotationsContainer = angular.element(
+          '<div class="ph-pdf-annotations"></div>'
+        );
+        container.append(this.annotationsContainer);
       }
 
       async render(_viewport) {
@@ -224,11 +170,11 @@ export default function(app) {
 
         // wipe all children from the container
         // TODO: use AnnotationLayer.update()
-        angular.element(this.container).empty();
+        this.annotationsContainer.empty();
 
         PDFJS.AnnotationLayer.render({
           annotations: this.annotations,
-          div: this.container, // layer:
+          div: this.annotationsContainer[0], // layer:
           linkService: this.linkService,
           page: this.page,
           viewport: viewport,
@@ -236,19 +182,166 @@ export default function(app) {
       }
     }
 
-    class Page {
-      element: HTMLElement;
-      page: Number;
+    // render a pdf page
+    class PdfPage {
+      element: JQuery;
+      page: PDFPageProxy;
+      pageNumber: number; // zero-based page-number
       pdf: PDFDocumentProxy;
 
-      constructor(pdf: PDFDocumentProxy, page: Number, element: HTMLElement) {
+      // renderer state
+      renderedSize: {height: number, width: number};
+      renderMutex: Mutex;
+      canvasRenderer: CanvasRenderer;
+
+      constructor(pdf, pageNumber, element) {
         this.element = element;
-        this.page = page;
+        this.pageNumber = pageNumber;
         this.pdf = pdf;
+
+        // set default height to DIN A4
+        // (overwritten with actual page size below)
+        this.updateSize({
+          height: element[0].offsetWidth * Math.sqrt(2),
+          width: element[0].offsetWidth,
+        });
+
+        // render mutex
+        this.renderMutex = new Mutex();
+      }
+
+      // get viewport for this page
+      getViewport() {
+        const width = this.element[0].offsetWidth;
+        if (width === 0) {
+          throw new Error('Element has width zero. This is not enough.');
+        }
+
+        // scale such that the width of the viewport fills the element
+        const originalViewport = this.page.getViewport(1.0);
+        const scale = width / originalViewport.width;
+        return this.page.getViewport(scale);
+      }
+
+      // initialize page (needs to be finished before any other method can
+      // be called)
+      async init() {
+        if (!this.page) {
+          // get page from pdf (pdfjs uses 1-based page numbers)
+          this.page = await this.pdf.getPage(this.pageNumber + 1);
+
+          // set element height
+          this.updateSize();
+
+          // add renderers
+          this.canvasRenderer = new CanvasRenderer(this.element, this.page);
+          // let textRenderer = new TextRenderer(text[0], page);
+          // let annotationsRenderer = new AnnotationsRenderer(annotations[0], page, new LinkService);
+        }
+      }
+
+      // set page element height via css (faster than inserting a canvas)
+      updateSize(_size = undefined) {
+        const size = _size || this.getViewport();
+        this.element.height(Math.round(size.height));
       }
 
       async render() {
+        const viewport = this.getViewport();
+        const size = roundSize(viewport);
 
+        // stop if size didn't change
+        if (isSameSize(this.renderedSize, size)) {
+          return;
+        }
+
+        // cancel renderers
+        this.canvasRenderer.cancel();
+        // textRenderer.cancel();
+
+        // wait for exclusive execution
+        const unlock = await this.renderMutex.lock();
+
+        // update size
+        this.updateSize(size);
+
+        // wait for DOM before running visibility check
+        await new Promise(resolve => $timeout(resolve));
+
+        // nothing to do if invisible
+        if (!isVisible(element, $window) || isSameSize(renderedSize, size)) {
+          unlock();
+          return;
+        }
+
+        // set rendered viewport (also indicates the viewport that is
+        // currently rendered to other render calls)
+        this.renderedSize = size;
+
+        try {
+          await this.canvasRenderer.render(viewport);
+          await textRenderer.render(viewport);
+          await annotationsRenderer.render(viewport);
+
+          unlock();
+
+          console.log(`page ${scope.page} rendered`);
+          scope.onPageRendered({page: scope.page});
+
+        } catch (error) {
+          unlock();
+
+          // return if cancelled
+          if (error === 'cancelled') return;
+          throw error;
+        }
+      }
+    }
+
+    // render a full pdf
+    class PdfFull {
+      element: JQuery;
+      pdf: PDFDocumentProxy;
+      pages: Array<PdfPage>;
+
+      constructor(pdf, element) {
+        this.element = element;
+        this.pdf = pdf;
+        this.pages = [];
+
+        // wipe element children
+        this.element.empty();
+      }
+
+      // initialize all pages
+      async init() {
+        const pageInits = [];
+
+        // create pages
+        for (let pageNumber = 0; pageNumber < this.pdf.numPages; pageNumber++) {
+          // create page element
+          const pageElement = angular.element('<div class="ph-pdf-page"></div>');
+          this.element.append(pageElement);
+
+          // init page
+          const page = new PdfPage(this.pdf, pageNumber, pageElement);
+          this.pages.push(page);
+          pageInits.push(page.init());
+        }
+
+        // await all pageInits
+        await Promise.all(pageInits);
+      }
+
+      // render relevant pages
+      async render() {
+        // resize pages
+        const pageResized = this.pages.map(page => page.updateSize());
+
+
+
+        // TODO: detect relevant pages
+        this.pages.forEach(page => page.render());
       }
     }
 
@@ -259,107 +352,47 @@ export default function(app) {
         onPageRendered: '&',
         onPageRemoved: '&',
       },
+      /*
       template: `
       <div class="ph-pdf-text"></div>
       <div class="ph-pdf-annotations"></div>
       `,
-      link: async function(scope, element, attrs, pdfCtrl) {
-        // create a promise that is resolved once the page has been initialized,
-        // i.e., the page is displayed with the correct size (but not yet rendered)
-        const pageInit = $q.defer();
-        pdfCtrl.pageInitPromises.push(pageInit.promise);
+      */
+      link: async function(scope, element, attrs) {
 
+        let pdfFull;
+        scope.$watch('pdf', async function (pdf) {
+          // destroy current pdf
+          if (pdfFull) {
+            pdfFull.destroy();
+            pdfFull = undefined;
+          }
+
+          // do nothing if no pdf is given
+          if (!pdf) return;
+
+          // init new pdf
+          pdfFull = new PdfFull(pdf, element);
+          await pdfFull.init();
+        });
+
+        scope.$on('$destroy', () => {
+          if (pdfFull) {
+            pdfFull.destroy();
+          }
+        });
+
+        /*
         // get elements from template
         const text = element.find('.ph-pdf-text');
         const annotations = element.find('.ph-pdf-annotations');
 
-        // set parent element height via css (faster than inserting a canvas)
-        function setSize(size) {
-          element.height(Math.round(size.height));
-        }
 
-        // set default height to DIN A4
-        // (overwritten with actual page size below)
-        setSize({
-          height: element[0].offsetWidth * Math.sqrt(2),
-          width: element[0].offsetWidth,
-        });
 
-        // get the page
-        const page = await pdfCtrl.pdf.getPage(scope.page);
-
-        // set element height
-        setSize(getViewport(element, page));
-
-        // wait for DOM to reflect size changes
-        await new Promise(resolve => $timeout(resolve));
-
-        // resolve pageInit promise
-        pageInit.resolve();
-
-        // wait until all pages have initialized their sizes
-        // (otherwise the visibility test may yield wrong results)
-        await $q.all(pdfCtrl.pageInitPromises);
-
-        // add renderers
-        let canvasRenderer = new CanvasRenderer(element, page);
-        let textRenderer = new TextRenderer(text[0], page);
-        let annotationsRenderer = new AnnotationsRenderer(annotations[0], page, new LinkService);
-
-        // render state
-        let renderedSize;
-        const renderMutex = new Mutex();
 
         // resize and render
         async function render() {
-          const viewport = getViewport(element, page);
-          const size = roundSize(viewport);
 
-          // stop if size didn't change
-          if (isSameSize(renderedSize, size)) {
-            return;
-          }
-
-          // cancel renderers
-          canvasRenderer.cancel();
-          textRenderer.cancel();
-
-          // wait for exclusive execution
-          const unlock = await renderMutex.lock();
-
-          // update size
-          setSize(size);
-
-          // wait for DOM before running visibility check
-          await new Promise(resolve => $timeout(resolve));
-
-          // nothing to do if invisible
-          if (!isVisible(element, $window) || isSameSize(renderedSize, size)) {
-            unlock();
-            return;
-          }
-
-          // set rendered viewport (also indicates the viewport that is
-          // currently rendered to other render calls)
-          renderedSize = size;
-
-          try {
-            await canvasRenderer.render(viewport);
-            await textRenderer.render(viewport);
-            await annotationsRenderer.render(viewport);
-
-            unlock();
-
-            console.log(`page ${scope.page} rendered`);
-            scope.onPageRendered({page: scope.page});
-
-          } catch (error) {
-            unlock();
-
-            // return if cancelled
-            if (error === 'cancelled') return;
-            throw error;
-          }
         }
 
         // re-render on resize and scroll events
@@ -372,6 +405,7 @@ export default function(app) {
 
         // try to render page at least once
         await render();
+        */
       },
     };
   }]);
