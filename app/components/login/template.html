@@ -1,0 +1,107 @@
+<!-- Content Start -->
+<div class="container ph-xl-margin-bottom">
+  <h2 id="login">Log in</h2>
+
+  <h4 class="ph-heading-light ph-md-margin-bottom">
+    New to Paperhive?
+    <a href="./signup?returnPath={{auth.returnPath}}">
+      Sign up
+    </a>
+  </h4>
+
+  <div class="ph-flex-container">
+
+    <div class="ph-flex-item-1">
+    </div>
+
+    <div class="ph-flex-item">
+      <a href="{{auth.getAuthUrl('google')}}"
+        target="_self"
+        class="btn btn-default btn-block ph-lg-margin-bottom"
+        title="Sign in with your Google account">
+        <img class="ph-login-icon" src="./static/img/google.svg"> Log in with Google
+      </a>
+      <a href="{{auth.getAuthUrl('orcid')}}"
+        target="_self"
+        class="btn btn-default btn-block" title="Sign up with your ORCID iD">
+        <img class="ph-login-icon" src="./static/img/orcid.svg"> Log in with ORCID
+      </a>
+    </div>
+
+    <div class="ph-flex-item-1">
+      <div class="ph-inner-flex-container">
+        <div class="ph-inner-flex-item ph-login-line-separator"></div>
+        <small class="ph-inner-flex-item ph-login-separator">OR</small>
+        <div class="ph-inner-flex-item ph-login-line-separator"></div>
+      </div>
+    </div>
+
+    <div class="ph-flex-item">
+      <form name="loginForm" novalidate>
+
+        <div class="form-group" ng-class="{
+          'has-error': hasError('emailOrUsername')
+        }">
+          <label for="emailOrUsername">Email or Username</label>
+          <input type="text" class="form-control" id="emailOrUsername"
+            name="emailOrUsername" ng-model="login.emailOrUsername" required>
+          <div class="help-block">
+            <span ng-if="hasError('emailOrUsername')">
+              <span ng-if="loginForm.emailOrUsername.$error.required">
+                Please enter your email address.
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group" ng-class="{
+          'has-error': hasError('password')
+        }">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password"
+            name="password" ng-model="login.password" required>
+          <a class="ph-forgot-password"
+            ng-href="./password/request?{{ {returnPath: auth.returnPath, emailOrUsername: login.emailOrUsername} | queryString}}"
+            title="Forgot password?"
+            tabindex="-1">
+            Forgot?
+          </a>
+          <div class="help-block">
+            <span ng-if="hasError('password')">
+              <span ng-if="loginForm.password.$error.required">
+                Please enter your password.
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <div ng-class="{
+          'has-success': loginForm.$valid
+        }">
+          <span class="help-block">
+            <span ng-if="login.error" class="text-danger">
+              <i class="fa fa-fw fa-times"></i>
+              {{login.error}}
+            </span>
+          </span>
+        </div>
+
+        <div class="ph-lg-padding-top">
+          <button class="btn btn-primary btn-block"
+            ng-click="!login.inProgress && !login.succeeded && !loginForm.$invalid && sendLogin()"
+            ng-class="{disabled: loginForm.$invalid || login.inProgress || login.succeeded}"
+          >
+            <i ng-if="login.inProgress" class="fa fa-fw fa-spinner fa-spin"></i>
+            Log in
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+    <div class="ph-flex-item-1">
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,42 @@
+<form
+  name="commentForm"
+  ng-submit="commentForm.$valid && onSubmit({$body: comment.body}); comment.body=undefined;"
+  novalidate
+  >
+  <span class="ph-comment-help pull-right">
+    You can use
+    <a href="http://kramdown.gettalong.org/syntax.html" target="_blank">Markdown</a>,
+    $$<a href="http://en.wikibooks.org/wiki/LaTeX/Mathematics#Symbols"
+      target="_blank">LaTeX</a>$$,
+    ```<a href="https://highlightjs.org/" target="_blank">code blocks</a>```
+  </span>
+
+  <textarea
+    id="textbody"
+    class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
+    ng-model="comment.body"
+    elastic
+    placeholder="Reply..."
+    required
+    ></textarea>
+  <hr>
+  <label for="preview">Preview</label>
+  <div class="well well-lg" id="preview">
+    <kramjax body="comment.body"></kramjax>
+  </div>
+  <span class="pull-right">
+    <!--
+    <button type="submit" class="btn btn-default">
+      Close discussion
+    </button>
+    &nbsp;
+    -->
+    <button
+      type="submit"
+      class="btn btn-primary"
+      ng-disabled="commentForm.$invalid"
+      >
+      Submit
+    </button>
+  </span>
+</form>
