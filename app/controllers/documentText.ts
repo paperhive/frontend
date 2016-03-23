@@ -90,9 +90,15 @@ export default function(app) {
             // For arXiv, concatenate the remote name and the version
             // without comma.
             desc.push('arXiv ' + revision.remote.revision);
+          } else if (revision.isbn) {
+            desc.push(`ISBN ${revision.isbn}`);
           } else {
             desc.push(revision.remote.type);
-            desc.push(revision.remote.revision);
+            if (revision.remote.revision) {
+              desc.push(revision.remote.revision);
+            } else {
+              desc.push(revision.remote.id);
+            }
           }
         }
         if (revision.publishedAt) {
