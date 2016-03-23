@@ -5,7 +5,7 @@
         href="./signup?returnPath={{auth.returnPath}}"
         class="btn btn-primary"
         popover-placement="bottom"
-        popover-is-open="tour.stages[tour.index] === 'signUp'"
+        popover-is-open="tour.stages[tour.index] === 'signUp' && !tourVisited"
         uib-popover-template="'html/shared/popover5.html'"
         popover-trigger="!outsideClick"
         popover-trigger="none"

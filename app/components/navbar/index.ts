@@ -6,10 +6,18 @@ export default function(app) {
   app.component(
     'navbar', {
       template,
-      controller : ['$scope', 'tourService', function($scope, tourService) {
+      controller : ['$scope', 'tourService', '$window', function($scope, tourService, $window) {
         $scope.collapsed = true;
 
         $scope.tour = tourService;
+
+        // ask local storage if flag 'tourVisited' is already set
+        if (!$window.localStorage.tourVisited) {
+          // set flag at first usage
+          $window.localStorage.tourVisited = true;
+          $scope.tourVisited = true;
+        }
+
 
       }]
     });
