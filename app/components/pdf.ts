@@ -4,7 +4,7 @@ export default function(app) {
   app.component('pdf', {
     bindings: {
       url: '<',
-      onStatusUpdate: '&',
+      onUpdate: '&',
     },
     controller: [
       '$scope', 'notificationService',
@@ -16,25 +16,24 @@ export default function(app) {
           if (ctrl.pdf) {
             ctrl.pdf.destroy();
             ctrl.pdf = undefined;
-
           }
 
-          // page directives push promises to this array so they can
-          // wait until all pages have been initialized
-          ctrl.pageInitPromises = [];
-
-          // this object is passed to onStatusUpdate
+          // this object is passed to onUpdate
           const status = {
             bytesLoaded: undefined,
             bytesTotal: undefined,
             downloading: true,
             downloaded: false,
-            info: undefined,
-            numPages: undefined,
+            pdf: undefined,
           };
 
+          // set initial status
+          ctrl.onUpdate({status});
+
+          // do nothing if no URL was given
+          if (!url) return;
+
           // get PDF
-          ctrl.onStatusUpdate({status});
           const loadingTask = PDFJS.getDocument(url);
 
           // update download status
@@ -52,9 +51,9 @@ export default function(app) {
               ctrl.pdf = pdf;
               status.downloading = false;
               status.downloaded = true;
-              status.info = pdf.info;
-              status.numPages = pdf.numPages;
-              ctrl.onStatusUpdate({status});
+              status.pdf = pdf;
+              console.log(pdf)
+              ctrl.onUpdate({status});
             }),
             error => $scope.$apply(() => {
               // error downloading pdf
@@ -62,13 +61,18 @@ export default function(app) {
                 type: 'error',
                 message: error.message || 'Could not download PDF.',
               });
-              ctrl.onStatusUpdate({status: {}});
+              ctrl.onUpdate({status: {}});
             })
           );
         });
+
+        // clean up on destruction
+        $scope.$on('$destroy', () => {
+          if (ctrl.pdf) {
+            ctrl.pdf.destroy();
+          }
+        });
       }
     ],
-    transclude: true,
-    template: '<ng-transclude></ng-transclude>'
   });
 };

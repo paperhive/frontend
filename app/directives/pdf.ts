@@ -1,229 +1,378 @@
+import angular from 'angular';
 import * as _ from 'lodash';
+import { Mutex } from 'mutx';
 import {PDFJS} from 'pdfjs-dist';
 
+// test if height and width properties of 2 objects are equal
+function isSameSize(obj1, obj2) {
+  return obj1 && obj2 && obj1.height === obj2.height && obj1.width === obj2.width;
+}
+
+// round size to integers
+function roundSize(size) {
+  return {
+    height: Math.round(size.height),
+    width: Math.round(size.width),
+  };
+}
+
+function getViewport(element, page) {
+  const width = element[0].offsetWidth;
+  if (width === 0) {
+    throw new Error('Element has width zero. This is not enough.');
+  }
+
+  // scale such that the width of the viewport fills the element
+  const originalViewport = page.getViewport(1.0);
+  const scale = width / originalViewport.width;
+  return page.getViewport(scale);
+}
+
+// determine if element is visible in current viewport
+function isVisible(element, $window) {
+  // relative to viewport.top
+  const elementRect = element[0].getBoundingClientRect();
+  const elementTop = elementRect.top;
+  const elementBottom = elementRect.bottom;
+
+  const viewportHeight = angular.element($window).height();
+
+  // relax viewport constraint
+  // (tight: elementTop <=  viewportHeight && elementBottom >= 0)
+  return elementTop <= 2 * viewportHeight && elementBottom >= - viewportHeight;
+}
+
 export default function(app) {
-  app.directive('pdf', ['$parse', function($parse) {
+  // Render an entire pdf;
+  // Currently (2016-03-14), this directive cannot be implemented as a
+  // component because it requires direct access to the DOM. However, this
+  // directive follows a few basic rules that make it easier to switch to
+  // angular2, see
+  // http://teropa.info/blog/2015/10/18/refactoring-angular-apps-to-components.html
+  app.directive('pdfFull', ['$q', '$timeout', '$window', function($q, $timeout, $window) {
+
+    /*
+     * const unlock = await mutex.lock();
+     * ...
+     * unlock();
+     *
+    class Mutex {
+      locks: Array;
+      constructor() {
+        this.locks = [];
+      }
+      async lock() {
+        const mutex = this;
+
+        // copy current locks array
+        const locks = mutex.locks.slice();
+
+        // use deferred instead of es6 promise because we need access to resolve
+        // outside the promise body
+        const deferred = $q.defer();
+        const promise = deferred.promise;
+
+        // enqueue
+        mutex.locks.push(promise);
+
+        // wait for all locks (except this one)
+        await $q.all(locks);
+
+        // checks if this promise is the first in line
+        function assertState() {
+          if (mutex.locks[0] !== promise) {
+            throw new Error('Inconsistent Mutex state. Is every lock() followed by exactly one unlock()?');
+          }
+        }
+        assertState();
+
+        // return unlock function
+        return () => {
+          assertState();
+
+          // remove lock promise
+          mutex.locks.shift();
+
+          // resolve lock promise
+          deferred.resolve();
+        };
+      }
+    }*/
+
+    // render a page in a canvas
+    class CanvasRenderer {
+      container: JQuery;
+      page: PDFPageProxy;
+      canvas: HTMLCanvasElement;
+      renderTask: PDFRenderTask; // currently running task
+
+      constructor(container, page) {
+        this.container = container;
+        this.page = page;
+      }
+
+      // cancel running render()
+      cancel() {
+        if (this.renderTask) {
+          // cancel running tasks
+          this.renderTask.cancel();
+
+          // reset state
+          this.renderTask = undefined;
+        }
+      }
+
+      async render(viewport) {
+        // new size
+        const size = roundSize(viewport);
+
+        // create canvas
+        if (!this.canvas) {
+          this.canvas = document.createElement('canvas');
+          this.container.prepend(this.canvas);
+        }
+
+        // update canvas size
+        this.canvas.height = size.height;
+        this.canvas.width = size.width;
+
+        // kick off canvas rendering
+        this.renderTask = this.page.render({
+          canvasContext: this.canvas.getContext('2d'),
+          viewport,
+        });
+
+        // wait for renderTask
+        await this.renderTask;
+      }
+    }
+
+    // render a page's text in a canvas
+    class TextRenderer {
+      container: JQuery;
+      page: PDFPageProxy;
+      textContent: TextContent;
+      renderTask: PDFRenderTask; // currently running task
+
+      constructor(container, page) {
+        this.container = container;
+        this.page = page;
+      }
+
+      // cancel running render()
+      cancel() {
+        if (this.renderTask) {
+          // cancel running tasks
+          this.renderTask.cancel();
+
+          // reset state
+          this.renderTask = undefined;
+        }
+      }
+
+      async render(viewport) {
+        if (!this.textContent) {
+          this.textContent = await this.page.getTextContent();
+        }
+
+        // wipe all children from the container
+        // TODO: figure out how to update via pdfjs
+        angular.element(this.container).empty();
+
+        // kick off text rendering
+        this.renderTask = PDFJS.renderTextLayer({
+          container: this.container,
+          textContent: this.textContent,
+          viewport,
+        });
+
+        // wait for renderTask
+        await this.renderTask;
+      }
+    }
+
+    // TODO: implement!
+    class LinkService {
+      getDestinationHash(dest) {
+        console.log(dest);
+        return dest;
+      }
+    }
+
+    class AnnotationsRenderer {
+      container: JQuery;
+      linkService: any;
+      page: PDFPageProxy;
+      annotations: PDFAnnotations;
+
+      constructor(container, page, linkService) {
+        this.container = container;
+        this.page = page;
+        this.linkService = linkService;
+      }
+
+      async render(_viewport) {
+        // get a non-flipped version of the viewport
+        // andré: this took me a few hours, uaaargh! :)
+        const viewport = _viewport.clone({
+          dontFlip: true
+        });
+
+        if (!this.annotations) {
+          this.annotations = await this.page.getAnnotations();
+        }
+
+        // wipe all children from the container
+        // TODO: use AnnotationLayer.update()
+        angular.element(this.container).empty();
+
+        PDFJS.AnnotationLayer.render({
+          annotations: this.annotations,
+          div: this.container, // layer:
+          linkService: this.linkService,
+          page: this.page,
+          viewport: viewport,
+        });
+      }
+    }
+
+    class Page {
+      element: HTMLElement;
+      page: Number;
+      pdf: PDFDocumentProxy;
+
+      constructor(pdf: PDFDocumentProxy, page: Number, element: HTMLElement) {
+        this.element = element;
+        this.page = page;
+        this.pdf = pdf;
+      }
+
+      async render() {
+
+      }
+    }
+
     return {
       restrict: 'E',
-      link: function(scope, element, attrs) {
+      scope: {
+        pdf: '<',
+        onPageRendered: '&',
+        onPageRemoved: '&',
+      },
+      template: `
+      <div class="ph-pdf-text"></div>
+      <div class="ph-pdf-annotations"></div>
+      `,
+      link: async function(scope, element, attrs, pdfCtrl) {
+        // create a promise that is resolved once the page has been initialized,
+        // i.e., the page is displayed with the correct size (but not yet rendered)
+        const pageInit = $q.defer();
+        pdfCtrl.pageInitPromises.push(pageInit.promise);
 
-        const renderPdf = function() {
-          const url = scope.$eval(attrs.pdfUrl);
-          const textOverlay = scope.$eval(attrs.pdfTextOverlay);
+        // get elements from template
+        const text = element.find('.ph-pdf-text');
+        const annotations = element.find('.ph-pdf-annotations');
 
-          const progress = {
-            downloading: false,
-            rendering: false,
-            finished: false,
-            numPages: undefined,
-            numRenderedPages: undefined,
-            renderedPages: [],
-            renderedTextPages: [],
-          };
-          const progressParsed = $parse(attrs.pdfProgress);
-          if (progressParsed && progressParsed.assign) {
-            progressParsed.assign(scope, progress);
+        // set parent element height via css (faster than inserting a canvas)
+        function setSize(size) {
+          element.height(Math.round(size.height));
+        }
+
+        // set default height to DIN A4
+        // (overwritten with actual page size below)
+        setSize({
+          height: element[0].offsetWidth * Math.sqrt(2),
+          width: element[0].offsetWidth,
+        });
+
+        // get the page
+        const page = await pdfCtrl.pdf.getPage(scope.page);
+
+        // set element height
+        setSize(getViewport(element, page));
+
+        // wait for DOM to reflect size changes
+        await new Promise(resolve => $timeout(resolve));
+
+        // resolve pageInit promise
+        pageInit.resolve();
+
+        // wait until all pages have initialized their sizes
+        // (otherwise the visibility test may yield wrong results)
+        await $q.all(pdfCtrl.pageInitPromises);
+
+        // add renderers
+        let canvasRenderer = new CanvasRenderer(element, page);
+        let textRenderer = new TextRenderer(text[0], page);
+        let annotationsRenderer = new AnnotationsRenderer(annotations[0], page, new LinkService);
+
+        // render state
+        let renderedSize;
+        const renderMutex = new Mutex();
+
+        // resize and render
+        async function render() {
+          const viewport = getViewport(element, page);
+          const size = roundSize(viewport);
+
+          // stop if size didn't change
+          if (isSameSize(renderedSize, size)) {
+            return;
           }
 
-          if (!url) { return; }
+          // cancel renderers
+          canvasRenderer.cancel();
+          textRenderer.cancel();
 
-          // From
-          // <https://github.com/mozilla/pdf.js/blob/master/examples/components/simpleviewer.js>.
+          // wait for exclusive execution
+          const unlock = await renderMutex.lock();
 
-          if (!textOverlay) {
-            // Simple viewer without any overlays.
+          // update size
+          setSize(size);
 
-            // Fetch the PDF document from the URL using promises
-            PDFJS.getDocument(url).then(function(pdf) {
-              const wrapperWidth = element[0].offsetWidth;
-              if (wrapperWidth === 0) {
-                // TODO make sure this error doesn't get silently intercepted
-                throw Error('Invalid wrapper width');
-              }
+          // wait for DOM before running visibility check
+          await new Promise(resolve => $timeout(resolve));
 
-              const showPage = function(page) {
-                // Scale such that the width of the viewport is the fills the
-                // wrapper.
-                let scale = 1.0;
-                let viewport = page.getViewport(scale);
-                scale = wrapperWidth / viewport.width;
-                viewport = page.getViewport(scale);
-
-                // Prepare canvas using PDF page dimensions
-                const link = document.createElement('a');
-                // From <http://stackoverflow.com/a/14717011/353337>
-                // link.setAttribute('href', './documents/0af5e13/text?scrollTo=pageContainer'.concat(page.pageIndex+1));
-                //
-                // TODO: solve this outside the pdf directive
-                link.setAttribute('href', './documents/0af5e13/text');
-                const canvas = document.createElement('canvas');
-                canvas.setAttribute('class', 'ph-page');
-                link.appendChild(canvas);
-
-                const context = canvas.getContext('2d');
-                canvas.height = viewport.height;
-                canvas.width = viewport.width;
-
-                // Render PDF page into canvas context
-                const renderContext = {
-                  canvasContext: context,
-                  viewport: viewport
-                };
-                page.render(renderContext);
-                // Append to page
-                element.append(link);
-              };
-
-              for (let i = 1; i < pdf.numPages; i++) {
-                // Using promise to fetch the page
-                pdf.getPage(i).then(showPage);
-              }
-
-              // TODO: call onLoaded
-            });
-          } else {
-            // Complex viewer with bells & whistles
-            const pdfViewer = new PDFJS.PDFViewer({
-              // use element as container and viewer element
-              // (container is only used for size measurements and events)
-              container: element[0],
-              viewer: element[0],
-              removePageBorders: true
-            });
-
-            // set scale
-            element[0].addEventListener('pagesinit', function() {
-              pdfViewer.currentScaleValue = 'page-width';
-            });
-
-            // load document
-            progress.downloading = true;
-            PDFJS.getDocument(url).then(function(pdf) {
-
-              progress.renderedPages = [];
-              progress.renderedTextPages = [];
-              // set finished = true once all pages have been rendered as
-              // canvas and text
-              const checkFinished = function() {
-                if (progress.renderedPages.length === pdf.numPages &&
-                    progress.renderedTextPages.length === pdf.numPages) {
-                  _.assign(progress, {
-                    rendering: false,
-                    finished: true
-                  });
-                }
-              };
-
-              // update progress when a page has been rendered
-              element[0].addEventListener('textlayerrendered', function(e) {
-                // normalize the DOM subtree of the rendered page
-                // (otherwise serialized ranges may be based on different
-                // DOM states)
-                e.target.normalize();
-
-                scope.$apply(function() {
-                  progress.renderedTextPages.push(e.detail.pageNumber);
-                  checkFinished();
-                });
-              });
-              element[0].addEventListener('pagerendered', function(e) {
-                scope.$apply(function() {
-                  progress.renderedPages.push(e.detail.pageNumber);
-                  checkFinished();
-                });
-              });
-
-              // document loaded, specifying document for the viewer
-              pdfViewer.setDocument(pdf);
-
-              scope.$apply(function() {
-                _.assign(progress, {
-                  downloading: false,
-                  rendering: true,
-                  numPages: pdf.numPages
-                });
-              });
-            });
-
-            // --------------------------------------------------------------------
-            // // Get text width
-            // pdf.then(function(pdf) {
-            //   const maxPages = pdf.pdfInfo.numPages;
-            //   maxPages = 1;
-            //   for (const j = 1; j <= maxPages; j++) {
-            //     const page = pdf.getPage(j);
-            //     page.then(function(page) {
-            //       const textContent = page.getTextContent();
-            //       const viewport = page.getViewport(pdfViewer.currentScale);
-            //       textContent.then(function(content) {
-            //         for (const i = 0; i < content.items.length; i++) {
-            //           // Well...
-
-            //           // Check out the discussion at
-            //           // https://github.com/mozilla/pdf.js/issues/5643#issuecomment-69969258
-            //           // for more details.
-            //           console.log('');
-            //           // Translate PDF transform into the screen presentation
-            //           // transform
-            //           //console.log(viewport.transform);
-            //           //console.log(content.items[i].transform);
-            //           tx = PDFJS.Util.transform(
-            //             viewport.transform,
-            //             content.items[i].transform
-            //           );
-            //           const fontHeight = Math.sqrt((tx[2] * tx[2]) + (tx[3] * tx[3]));
-            //           //console.log(tx[2]);
-            //           //console.log(tx[3]);
-            //           //console.log(fontHeight);
-            //           // The transformation matrix is specified as an array of
-            //           // length 6 just like CSS3 transforms, cf.
-            //           // <https://dev.opera.com/documents/understanding-the-css-transforms-matrix/>.
-            //           console.log(content.items[i]);
-            //           // x-position of the top-right point
-            //           const extent = tx[4];
-            //           //  tx[0] * content.items[i].width/fontHeight +
-            //           //  tx[4];
-            //           console.log('tx[4] = ', extent);
-            //           const actualWidth = pdfViewer.currentScale * content.items[i].width;
-            //         }
-            //       })
-            //     })
-            //   }
-            // });
-            // --------------------------------------------------------------------
-
-            // --------
-            // const container = document.createElement('div');
-            // container.id = 'container';
-            // element.append(container);
-
-            // // Loading document.
-            // const PAGE_TO_VIEW = 1;
-            // const SCALE = 1.0;
-            // PDFJS.getDocument(scope.url).then(function(pdfDocument) {
-            //   // Document loaded, retrieving the page.
-            //   return pdfDocument.getPage(PAGE_TO_VIEW).then(function(pdfPage) {
-            //     // Creating the page view with default parameters.
-            //     const pdfPageView = new PDFJS.PDFPageView({
-            //       container: container,
-            //       id: PAGE_TO_VIEW,
-            //       scale: SCALE,
-            //       defaultViewport: pdfPage.getViewport(SCALE),
-            //       // We can enable text/annotations layers, if needed
-            //       textLayerFactory: new PDFJS.DefaultTextLayerFactory(),
-            //       annotationsLayerFactory: new PDFJS.DefaultAnnotationsLayerFactory()
-            //     });
-            //     // Associates the actual page with the view, and drawing it
-            //     pdfPageView.setPdfPage(pdfPage);
-            //     return pdfPageView.draw();
-            //   });
-            // });
-            // // --------
+          // nothing to do if invisible
+          if (!isVisible(element, $window) || isSameSize(renderedSize, size)) {
+            unlock();
+            return;
           }
-        };
 
-        scope.$watchGroup(['pdfUrl', 'pdfTextOverlay'], renderPdf);
-      }
+          // set rendered viewport (also indicates the viewport that is
+          // currently rendered to other render calls)
+          renderedSize = size;
+
+          try {
+            await canvasRenderer.render(viewport);
+            await textRenderer.render(viewport);
+            await annotationsRenderer.render(viewport);
+
+            unlock();
+
+            console.log(`page ${scope.page} rendered`);
+            scope.onPageRendered({page: scope.page});
+
+          } catch (error) {
+            unlock();
+
+            // return if cancelled
+            if (error === 'cancelled') return;
+            throw error;
+          }
+        }
+
+        // re-render on resize and scroll events
+        angular.element($window).on('resize', render);
+        angular.element($window).on('scroll', render);
+        element.on('$destroy', () => {
+          angular.element($window).off('resize', render);
+          angular.element($window).off('scroll', render);
+        });
+
+        // try to render page at least once
+        await render();
+      },
     };
   }]);
-};
+}
