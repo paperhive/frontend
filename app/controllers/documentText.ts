@@ -22,9 +22,15 @@ export default function(app) {
       const revisionId = $routeSegment.$routeParams.revisionId;
 
       function getAccessiblePdfUrl(documentRevision) {
+        // TODO actually check user access here (e.g., via the Elsevier Article
+        // Entitlement API)
         const userHasAccess = documentRevision.isOpenAccess;
         if (!userHasAccess) {
-          throw new Error('You currently have no access to the PDF.');
+          notificationService.notifications.push({
+            type: 'error',
+            message: 'You currently have no access to the PDF.',
+          });
+          return undefined;
         }
         if (documentRevision.file.hasCors &&
             urlPackage.parse(documentRevision.file.url).protocol === 'https') {
