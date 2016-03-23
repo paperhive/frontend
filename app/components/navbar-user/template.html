@@ -5,11 +5,9 @@
         href="./signup?returnPath={{auth.returnPath}}"
         class="btn btn-primary"
         popover-placement="bottom"
-        popover-is-open="tour.stages[tour.index] === 'signUp'"
+        popover-is-open="tour.stages[tour.index] === 'signUp' && setVisited()"
         uib-popover-template="'html/shared/popover5.html'"
-        popover-trigger="!outsideClick"
         popover-trigger="none"
-        ng-click="tour.reject();"
       >Sign up</a>
       <a href="./login?returnPath={{auth.returnPath}}" class="btn btn-default"
         >Log in</a>
