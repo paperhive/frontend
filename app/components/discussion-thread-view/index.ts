@@ -1,4 +1,4 @@
-import { pick } from 'lodash';
+import { find, pick } from 'lodash';
 
 import template from './template.html!text';
 
@@ -7,6 +7,9 @@ export default function(app) {
   app.component(
     'discussionThreadView', {
       template,
+      bindings: {
+        discussions: '<',
+      },
       controller: [
         '$scope', '$rootScope', 'authService', '$routeSegment', '$http', 'config',
         'notificationService', 'metaService',
@@ -16,42 +19,41 @@ export default function(app) {
         ) {
           $scope.auth = authService;
 
-          // fetch discussion
-          $http({
-            url: config.apiUrl + '/discussions/' + $routeSegment.$routeParams.discussionId,
-            method: 'GET'
-          })
-          .success(function(discussion) {
-            $scope.discussion = discussion;
-            metaService.set({
-              title: discussion.title +
-                ($scope.revisions && $scope.latestOAIdx ?
-                 (' · ' + $scope.revisions[$scope.latestOAIdx].title) :
-                 ''
-                ) +
-                ' · PaperHive',
-              meta: [
-                {
-                  name: 'author',
-                  content: discussion.author.displayName
-                },
-                // TODO rather use title here?
-                {
-                  name: 'description',
-                  content: 'Annotation by ' +
-                    discussion.author.displayName + ': ' +
-                    (discussion.body ?
-                    discussion.body.substring(0, 150) : '')
-                },
-                {
-                  name: 'keywords',
-                  content: discussion.tags ?
-                    discussion.tags.join(', ') : undefined
-                }
-              ]
-            });
-          })
-          .error(notificationService.httpError('could not fetch discussion'));
+          const ctrl = this;
+
+          $scope.$watch('$ctrl.discussions.stored', function(discussions) {
+            // discussion with ID $routeSegment.$routeParams.discussionId
+            console.log(discussions);
+            $scope.discussion = find(
+              discussions,
+              {id:  $routeSegment.$routeParams.discussionId}
+            );
+            if ($scope.discussion) {
+              // set meta data
+              metaService.set({
+                title: $scope.discussion.title + ' · PaperHive',
+                meta: [
+                  {
+                    name: 'author',
+                    content: $scope.discussion.author.displayName
+                  },
+                  // TODO rather use title here?
+                  {
+                    name: 'description',
+                    content: 'Annotation by ' +
+                      $scope.discussion.author.displayName + ': ' +
+                      ($scope.discussion.body ?
+                      $scope.discussion.body.substring(0, 150) : '')
+                  },
+                  {
+                    name: 'keywords',
+                    content: $scope.discussion.tags ?
+                      $scope.discussion.tags.join(', ') : undefined
+                  }
+                ]
+              });
+            }
+          });
 
           // Problem:
           //   When updateTitle() is run, the newTitle needs to be populated in
