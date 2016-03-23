@@ -21,18 +21,19 @@ describe('login page', function() {
 
 
     it('should log in if credentials are right', function() {
+	browser.get('https://dev.paperhive.org/frontend/master/login');
+
 	var emailOrUsername = form.element(by.name('emailOrUsername'));
 	var password = form.element(by.name('password'));
-	var loginButton = form.element(by.xpath('/html/body/main/div/div/div[4]/form/div[4]/button'));
-	
+	var loginButton = form.element(by.xpath('/html/body/main/login/div/div/div[4]/form/div[4]/button'));
+     	                                         
 	emailOrUsername.clear();
 	password.clear();
 	emailOrUsername.sendKeys('test');
 	password.sendKeys('testpwd');
 	loginButton.click();
 
-	// expect(browser.getCurrentUrl()).toBe('SHOULD BE LOGGED IN URL');
-	expect($('[ng-class=dropdown-toggle]').isDisplayed()).toBeTruthy();
+	expect(browser.getCurrentUrl()).toBe('https://dev.paperhive.org/frontend/master/');
 
     });
 
