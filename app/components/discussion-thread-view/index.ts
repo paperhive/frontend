@@ -11,10 +11,10 @@ export default function(app) {
         discussions: '<',
       },
       controller: [
-        '$scope', '$rootScope', 'authService', '$routeSegment', '$http', 'config',
+        '$scope', 'authService', '$routeSegment', '$http', 'config',
         'notificationService', 'metaService',
         function(
-          $scope, $rootScope, authService, $routeSegment, $http, config,
+          $scope, authService, $routeSegment, $http, config,
           notificationService, metaService
         ) {
           $scope.auth = authService;

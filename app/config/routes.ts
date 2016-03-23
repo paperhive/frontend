@@ -147,7 +147,7 @@ export default function(app) {
           .within()
             .segment('list', {
               default: true,
-              templateUrl: 'html/documents/discussions/list.html',
+              template: '<discussion-list discussions="discussions"></discussion-list>',
               title: 'Discussions · PaperHive'
             })
             .segment('thread', {
