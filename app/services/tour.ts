@@ -2,8 +2,8 @@
 export default function(app) {
   app.factory(
     'tourService',
-    [
-      function() {
+    ['$window',
+      function($window) {
         const service = {
           stages: ['welcome', 'discussion', 'pdf', 'search', 'follow', 'signUp'],
           index: 0,
@@ -14,6 +14,15 @@ export default function(app) {
         }
 
         service.setUndefined = function() {
+          service.index = undefined;
+        }
+
+        service.reject = function() {
+          // ask local storage if flag 'tourVisited' is already set
+          if (!$window.localStorage.tourVisited) {
+            // set flag at first usage
+            $window.localStorage.tourVisited = true;
+          }
           service.index = undefined;
         }
 

@@ -12,12 +12,9 @@ export default function(app) {
         $scope.tour = tourService;
 
         // ask local storage if flag 'tourVisited' is already set
-        if (!$window.localStorage.tourVisited) {
-          // set flag at first usage
-          $window.localStorage.tourVisited = true;
+        if ($window.localStorage.tourVisited) {
           $scope.tourVisited = true;
         }
-
 
       }]
     });
