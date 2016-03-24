@@ -23,7 +23,6 @@ export default function(app) {
 
           $scope.$watch('$ctrl.discussions.stored', function(discussions) {
             // discussion with ID $routeSegment.$routeParams.discussionId
-            console.log(discussions);
             $scope.discussion = find(
               discussions,
               {id:  $routeSegment.$routeParams.discussionId}
