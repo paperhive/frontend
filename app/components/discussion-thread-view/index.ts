@@ -67,7 +67,7 @@ export default function(app) {
           // TODO find a better solution
           $scope.updateTitle = function(newTitle) {
             $scope.discussion.title = newTitle;
-            $scope.updateDiscussion($scope.discussion)
+            $scope.updateDiscussion($scope.discussion);
           };
 
           $scope.updateDiscussion = function(comment) {
