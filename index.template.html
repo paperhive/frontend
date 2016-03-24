@@ -38,6 +38,9 @@ NOTE: ng-app is removed because angular is loaded asynchronously via
     <meta name="msapplication-config" content="./static/favicons/browserconfig.xml">
     <meta name="theme-color" content="#00addc">
 
+    <!-- Chrome extension -->
+    <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/fihafdlllifbanclcjljledeifcdjbok">
+
     <!-- JSON-LD -->
     <script
       ng-repeat="jsonld in metaService.data.jsonld"
@@ -68,7 +71,7 @@ NOTE: ng-app is removed because angular is loaded asynchronously via
   </head>
   <body ng-style="{'padding-bottom': footerSize.height, 'padding-top': navbarSize.height}">
     <header>
-      <ng-include src="'html/shared/navbar.html'"></ng-include>
+      <navbar></navbar>
     </header>
     <main app-view-segment="0"></main>
 
@@ -78,15 +81,16 @@ NOTE: ng-app is removed because angular is loaded asynchronously via
       <ng-include src="'html/shared/footer.html'"></ng-include>
     </footer>
 
-    <script src="jspm_packages/system.js"></script>
-    <script src="jspm.browser.js"></script>
-    <script src="jspm.config.js"></script>
     <% if (!dev) { %>
       <!-- insert bundle in production -->
-      <script src="bundle.js"></script>
+      <script src="index.js"></script>
+    <% } else { %>
+      <script src="jspm_packages/system.js"></script>
+      <script src="jspm.browser.js"></script>
+      <script src="jspm.config.js"></script>
+      <script>
+        System.import('app/index.ts').then(undefined, console.error.bind(console));
+      </script>
     <% } %>
-    <script>
-      System.import('app/index.ts').then(undefined, console.error.bind(console));
-    </script>
   </body>
 </html>

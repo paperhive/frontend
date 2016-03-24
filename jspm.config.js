@@ -1,16 +1,28 @@
 SystemJS.config({
-  packageConfigPaths: [
-    "github:*/*.json",
-    "npm:@*/*.json",
-    "npm:*.json"
-  ],
-  globalEvaluationScope: false,
   transpiler: "plugin-babel",
   typescriptOptions: {
     "tsconfig": true,
     "typeCheck": true
   },
+  packages: {
+    "app": {
+      "defaultExtension": "ts",
+      "meta": {
+        "*.ts": {
+          "loader": "ts",
+          "format": "esm"
+        }
+      }
+    }
+  }
+});
 
+SystemJS.config({
+  packageConfigPaths: [
+    "github:*/*.json",
+    "npm:@*/*.json",
+    "npm:*.json"
+  ],
   map: {
     "angular": "github:angular/bower-angular@1.5.0",
     "angular-animate": "github:angular/bower-angular-animate@1.5.0",
@@ -23,7 +35,8 @@ SystemJS.config({
     "angulartics": "npm:angulartics@1.0.3",
     "angulartics-google-analytics": "npm:angulartics-google-analytics@0.1.4",
     "assert": "github:jspm/nodelibs-assert@0.2.0-alpha",
-    "bootstrap": "github:twbs/bootstrap@3.3.6",
+    "buffer": "github:jspm/nodelibs-buffer@0.2.0-alpha",
+    "fs": "github:jspm/nodelibs-fs@0.2.0-alpha",
     "highlightjs": "github:components/highlightjs@9.1.0",
     "javascript-detect-element-resize": "github:sdecima/javascript-detect-element-resize@0.5.3",
     "jquery": "npm:jquery@2.2.0",
@@ -32,26 +45,34 @@ SystemJS.config({
     "leaflet": "github:Leaflet/Leaflet@0.7.7",
     "lodash": "npm:lodash@4.2.0",
     "ngSmoothScroll": "github:d-oliveros/ngSmoothScroll@2.0.0",
-    "paperhive-sources": "npm:paperhive-sources@4.0.2",
+    "os": "github:jspm/nodelibs-os@0.2.0-alpha",
+    "path": "github:jspm/nodelibs-path@0.2.0-alpha",
     "pdfjs-dist": "github:mozilla/pdfjs-dist@1.4.37",
-    "plugin-babel": "npm:systemjs-plugin-babel@0.0.2",
-    "plugin-typescript": "github:frankwallis/plugin-typescript@2.5.9",
+    "plugin-babel": "npm:systemjs-plugin-babel@0.0.8",
+    "plugin-typescript": "github:frankwallis/plugin-typescript@4.0.2",
     "process": "github:jspm/nodelibs-process@0.2.0-alpha",
     "rangy": "github:timdown/rangy-release@1.3.0",
+    "readline": "github:jspm/nodelibs-readline@0.2.0-alpha",
     "rx": "npm:rx@4.0.7",
     "socket.io-client": "github:socketio/socket.io-client@1.4.5",
-    "ts": "github:frankwallis/plugin-typescript@2.5.9",
+    "text": "github:systemjs/plugin-text@0.0.7",
+    "ts": "github:frankwallis/plugin-typescript@4.0.2",
     "url": "github:jspm/nodelibs-url@0.2.0-alpha"
   },
-
   packages: {
-    "app": {
-      "defaultExtension": "ts",
-      "meta": {
-        "*.ts": {
-          "loader": "ts",
-          "format": "esm"
-        }
+    "github:frankwallis/plugin-typescript@4.0.2": {
+      "map": {
+        "typescript": "npm:typescript@1.8.9"
+      }
+    },
+    "github:jspm/nodelibs-buffer@0.2.0-alpha": {
+      "map": {
+        "buffer-browserify": "npm:buffer@4.5.0"
+      }
+    },
+    "github:jspm/nodelibs-os@0.2.0-alpha": {
+      "map": {
+        "os-browserify": "npm:os-browserify@0.2.0"
       }
     },
     "github:angular/bower-angular-animate@1.5.0": {
@@ -69,11 +90,6 @@ SystemJS.config({
         "angular": "github:angular/bower-angular@1.5.0"
       }
     },
-    "github:frankwallis/plugin-typescript@2.5.9": {
-      "map": {
-        "typescript": "npm:typescript@1.7.5"
-      }
-    },
     "github:jspm/nodelibs-url@0.2.0-alpha": {
       "map": {
         "url-browserify": "npm:url@0.11.0"
@@ -89,14 +105,16 @@ SystemJS.config({
         "leaflet": "github:Leaflet/Leaflet@0.7.7"
       }
     },
-    "github:twbs/bootstrap@3.3.6": {
-      "map": {
-        "jquery": "github:components/jquery@2.2.0"
-      }
-    },
     "npm:angular-moment@1.0.0-beta.3": {
       "map": {
         "moment": "npm:moment@2.10.6"
+      }
+    },
+    "npm:buffer@4.5.0": {
+      "map": {
+        "base64-js": "npm:base64-js@1.1.1",
+        "ieee754": "npm:ieee754@1.1.6",
+        "isarray": "npm:isarray@1.0.0"
       }
     },
     "npm:url@0.11.0": {

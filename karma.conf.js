@@ -15,13 +15,9 @@ module.exports = function(config) {
     files: [
       {pattern: 'jspm_packages/**/*', included: false},
       'build-dev/assets/mathjax*/MathJax.js',
-      'jspm_packages/system.js',
-      'jspm.browser.js',
-      'jspm.config.js',
-      'build/bundle*.js',
+      'build/index*.js',
       'bower_components/angular-mocks/angular-mocks.js',
       'test/karma/**/*.js'
-      // 'build/index*.js',
     ],
 
     // list of files to exclude

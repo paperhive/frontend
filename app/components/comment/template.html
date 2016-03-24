@@ -1,0 +1,99 @@
+<a class="media-left" href="./users/{{comment.author.account.username}}">
+  <avatar user="comment.author" size="80"
+    classes="img-circle"
+    ></avatar>
+</a>
+<div class="media-body">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <a href="./users/{{comment.author.account.username}}">
+        {{comment.author.displayName}}</a>
+      commented
+      <span am-time-ago="comment.createdAt"></span>
+      <span ng-if="comment.createdAt !== comment.updatedAt">
+        <em class="text-muted">(edited <span am-time-ago="comment.updatedAt"></span>)</em>
+      </span>
+      <span
+        class="pull-right"
+        ng-show="auth.user.id === comment.author.id"
+        >
+        <button
+          class="btn btn-link ph-no-padding-top ph-no-padding-bottom"
+          ng-disabled="submitting"
+          ng-click="editMode = true"
+          >
+          <i class="fa fa-pencil"></i>
+        </button>
+        <button
+          ng-if="deletable && auth.user.id === comment.author.id"
+          class="btn btn-link ph-no-padding-top ph-no-padding-bottom"
+          confirmed-click="delete()"
+          ng-disabled="submitting"
+          ng-confirm-click="Really delete reply?"
+          >
+          <i class="fa fa-remove"></i>
+        </button>
+      </span>
+    </div>
+    <div class="panel-body">
+      <form name="commentForm"
+        ng-if="editMode"
+        ng-submit="commentForm.$valid && update(comment)"
+        novalidate
+        >
+        <span
+          id="helpBlock"
+          class="ph-comment-help pull-right"
+          >
+          You can use
+          <a href="http://kramdown.gettalong.org/syntax.html" target="_blank">Markdown</a>,
+          $$<a href="http://en.wikibooks.org/wiki/LaTeX/Mathematics#Symbols"
+            target="_blank">LaTeX</a>$$,
+          ```<a href="https://highlightjs.org/" target="_blank">code blocks</a>```
+        </span>
+        <textarea
+          id="textbody"
+          class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
+          ng-model="comment.body"
+          elastic
+          placeholder="Leave a comment..."
+          ng-required="requiresBody"
+          >
+        </textarea>
+        <hr>
+        <label for="preview">Preview</label>
+        <div class="well well-lg" id="preview">
+          <kramjax body="comment.body"></kramjax>
+        </div>
+        <span class="pull-right">
+          <button
+            type="button"
+            class="btn btn-danger"
+            ng-click="cancel()"
+            ng-disabled="submitting"
+            >
+            <i class="fa fa-fw fa-times"></i>
+            Cancel
+          </button>
+          &nbsp;
+          <button
+            ng-disabled="commentForm.$invalid || submitting"
+            type="submit"
+            class="btn btn-primary"
+            >
+            <i ng-if="!submitting" class="fa fa-fw fa-check"></i>
+            <i ng-if="submitting" class="fa fa-fw fa-spinner fa-spin"></i>
+            Update comment
+          </button>
+        </span>
+      </form>
+      <kramjax
+        ng-if="!editMode && comment.body"
+        body="comment.body"
+        ></kramjax>
+      <em ng-if="!comment.body" class="text-muted">
+        No description provided.
+      </em>
+    </div>
+  </div>
+</div>
