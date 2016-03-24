@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import { find } from 'lodash';
-import paperhiveSources from 'paperhive-sources';
+import * as urlPackage from 'url';
 
 export default function(app) {
 
@@ -36,6 +36,33 @@ export default function(app) {
 
       const revisionId = $routeSegment.$routeParams.revisionId;
 
+      function getAccessiblePdfUrl(documentRevision) {
+        // TODO actually check user access here (e.g., via the Elsevier Article
+        // Entitlement API)
+        const userHasAccess = documentRevision.isOpenAccess;
+        if (!userHasAccess) {
+          notificationService.notifications.push({
+            type: 'error',
+            message: 'You currently have no access to the PDF.',
+          });
+          return undefined;
+        }
+        if (documentRevision.file.hasCors &&
+            urlPackage.parse(documentRevision.file.url).protocol === 'https') {
+          // all good
+          return documentRevision.file;
+        }
+        // No HTTPS/Cors? PaperHive can proxy the document if it's open access.
+        if (documentRevision.isOpenAccess) {
+          return config.apiUrl + '/proxy?url=' +
+            encodeURIComponent(documentRevision.file.url);
+        }
+        notificationService.notifications.push({
+          type: 'error',
+          message: 'The publisher makes the PDF available only through an insecure connection.'
+        });
+      }
+
       $scope.$watch('revisions', function(revisions) {
         if (!revisions) { return; }
         let activeRevisionIdx;
@@ -56,10 +83,9 @@ export default function(app) {
         // Construct strings for display in revision selection dropdown.
         // get pdf url
         try {
-          const sources = paperhiveSources({ apiUrl: config.apiUrl });
           const revision = revisions[activeRevisionIdx];
-          $scope.origPdfSource = sources.getPdfConnection(revision);
-          $scope.pdfSource = sources.getAccessiblePdfUrl(revision);
+          $scope.origPdfSource = revision.file.url;
+          $scope.pdfSource = getAccessiblePdfUrl(revision);
         } catch (e) {
           notificationService.notifications.push({
             type: 'error',
@@ -79,9 +105,15 @@ export default function(app) {
             // For arXiv, concatenate the remote name and the version
             // without comma.
             desc.push('arXiv ' + revision.remote.revision);
+          } else if (revision.isbn) {
+            desc.push(`ISBN ${revision.isbn}`);
           } else {
             desc.push(revision.remote.type);
-            desc.push(revision.remote.revision);
+            if (revision.remote.revision) {
+              desc.push(revision.remote.revision);
+            } else {
+              desc.push(revision.remote.id);
+            }
           }
         }
         if (revision.publishedAt) {

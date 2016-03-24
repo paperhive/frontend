@@ -1,4 +1,4 @@
-FROM node:5.7.1
+FROM node:5.9.0
 
 # init workspace
 RUN mkdir /paperhive-frontend
