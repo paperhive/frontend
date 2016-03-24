@@ -29,8 +29,8 @@ describe('login page', function() {
      	                                         
 	emailOrUsername.clear();
 	password.clear();
-	emailOrUsername.sendKeys('test');
-	password.sendKeys('testpwd');
+	emailOrUsername.sendKeys('adalovelace');
+	password.sendKeys('c0d1ng4lifeYO');
 	loginButton.click();
 
 	expect(browser.getCurrentUrl()).toBe('https://dev.paperhive.org/frontend/master/');

@@ -15,6 +15,13 @@ describe('PaperHive homepage', function() {
     );
   });
 
+    xit('should be present browser extension box', function () {
+	var installExtension = element(by.xpath('/html/body/main/div[1]/div/div[1]/div[2]/div[2]/div/div/div/div'));
+	expect(installExtension.isPresent()).toBe(true);
+
+    });
+
+
     it('should be present subscribe form', function () {
 	var subscribeForm = element(by.name('subscribeForm'));
 	expect(subscribeForm.isPresent()).toBe(true);
