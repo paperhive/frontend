@@ -32,7 +32,7 @@ export default function(app) {
             smoothScroll(popover, {offset: 140});
           });
         }
-      })
+      });
 
       const revisionId = $routeSegment.$routeParams.revisionId;
 

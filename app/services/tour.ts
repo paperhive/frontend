@@ -2,8 +2,8 @@
 export default function(app) {
   app.factory(
     'tourService',
-    ['$window',
-      function($window) {
+    ['$window', 'authService',
+      function($window, authService) {
         const service = {
           stages: ['welcome', 'discussion', 'pdf', 'search', 'follow', 'signUp'],
           index: 0,
@@ -16,11 +16,15 @@ export default function(app) {
           if (service.index === service.stages.length - 1) {
             $window.localStorage.tourVisited = true;
           }
-        }
+
+          if (authService.user && (service.index === service.stages.length - 2)) {
+            $window.localStorage.tourVisited = true;
+          }
+        };
 
         service.setUndefined = function() {
           service.index = undefined;
-        }
+        };
 
         service.reject = function() {
           // ask local storage if flag 'tourVisited' is already set
@@ -29,7 +33,7 @@ export default function(app) {
             $window.localStorage.tourVisited = true;
           }
           service.index = undefined;
-        }
+        };
 
         return service;
       }

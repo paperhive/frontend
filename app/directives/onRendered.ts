@@ -7,7 +7,7 @@ export default function(app) {
       link: function(scope, element, attrs) {
         $timeout(() => {
           const onRendered = $parse(attrs.onRendered);
-          onRendered(scope, {})
+          onRendered(scope, {});
         });
       }
     };
