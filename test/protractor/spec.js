@@ -15,7 +15,7 @@ describe('PaperHive homepage', function() {
   });
 
   it('should be present browser extension box', function () {
-    var installExtension = element.findElement(By.name('extension-buttons'));
+    var installExtension = element(by.id('extension-buttons'));
     expect(installExtension.isPresent()).toBe(true);
   });
 
@@ -28,7 +28,7 @@ describe('PaperHive homepage', function() {
 
 	var aboutUs = element(by.linkText('About us'));
 	expect(aboutUs.isPresent()).toBe(true);
-	var linkAboutUs = element(by.xpath('/html/body/footer/ng-include/div[1]/div/div/div[2]/ul/li[1]/a'));
+  var linkAboutUs = element(by.id('about-us-link'));
 	linkAboutUs.click();
 
 	expect(browser.getCurrentUrl()).toBe(this.url+'about');
@@ -39,7 +39,7 @@ describe('PaperHive homepage', function() {
 	var contact = element(by.linkText('Contact'));
 	expect(contact.isPresent()).toBe(true);
 
-	var linkContact = element(by.xpath('/html/body/footer/ng-include/div[1]/div/div/div[2]/ul/li[2]/a'));
+  var linkContact = element(by.id('contact-link'));
 	linkContact.click();
 	expect(browser.getCurrentUrl()).toBe(this.url+'contact');
     });
@@ -47,7 +47,7 @@ describe('PaperHive homepage', function() {
     it('should be present Terms of service link', function () {
 	var legalNotice = element(by.linkText('Terms of Service and Privacy Policy'));
 	expect(legalNotice.isPresent()).toBe(true);
-	var linkLegalNotice = element(by.xpath('/html/body/footer/ng-include/div[1]/div/div/div[2]/ul/li[3]/a'));
+	var linkLegalNotice = element(by.id('terms-link');
 	linkLegalNotice.click();
 	expect(browser.getCurrentUrl()).toBe(this.url+'terms');
     });
@@ -57,8 +57,9 @@ describe('PaperHive homepage', function() {
 	var legalNotice = element(by.linkText('Legal notice'));
 	expect(legalNotice.isPresent()).toBe(true);
 	var linkLegalNotice = element(by.xpath('/html/body/footer/ng-include/div[1]/div/div/div[2]/ul/li[4]/a'));
+	var linkLegalNotice = element(by.id('legal-link');
 	linkLegalNotice.click();
-	expect(browser.getCurrentUrl()).toBe(this.url +'legalnotice');
+	expect(browser.getCurrentUrl()).toBe(this.url + 'legalnotice');
     });
 
 });
