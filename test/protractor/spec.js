@@ -35,7 +35,7 @@ describe('PaperHive homepage', function() {
 	var linkAboutUs = element(by.xpath('/html/body/footer/ng-include/div[1]/div/div/div[2]/ul/li[1]/a'));
 	linkAboutUs.click();
 
-	expect(browser.getCurrentUrl()).toBe(this.url+'/about');
+	expect(browser.getCurrentUrl()).toBe(this.url+'about');
 
     });
 
@@ -45,7 +45,7 @@ describe('PaperHive homepage', function() {
 
 	var linkContact = element(by.xpath('/html/body/footer/ng-include/div[1]/div/div/div[2]/ul/li[2]/a'));
 	linkContact.click();
-	expect(browser.getCurrentUrl()).toBe(this.url+'/contact');
+	expect(browser.getCurrentUrl()).toBe(this.url+'contact');
     });
 
     it('should be present Terms of service link', function () {
@@ -53,7 +53,7 @@ describe('PaperHive homepage', function() {
 	expect(legalNotice.isPresent()).toBe(true);
 	var linkLegalNotice = element(by.xpath('/html/body/footer/ng-include/div[1]/div/div/div[2]/ul/li[3]/a'));
 	linkLegalNotice.click();
-	expect(browser.getCurrentUrl()).toBe(this.url+'/terms');
+	expect(browser.getCurrentUrl()).toBe(this.url+'terms');
     });
 
 
@@ -62,7 +62,7 @@ describe('PaperHive homepage', function() {
 	expect(legalNotice.isPresent()).toBe(true);
 	var linkLegalNotice = element(by.xpath('/html/body/footer/ng-include/div[1]/div/div/div[2]/ul/li[4]/a'));
 	linkLegalNotice.click();
-	expect(browser.getCurrentUrl()).toBe(this.url+'/legalnotice');
+	expect(browser.getCurrentUrl()).toBe(this.url +'legalnotice');
     });
 
 });
