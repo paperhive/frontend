@@ -8,7 +8,8 @@ exports.config = {
     defaultTimeoutInterval: 60000
   },
 
-  baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8080')
+    baseUrl: process.env.TEST_URL
+//  baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8080')
 };
 
 if (process.env.SAUCE_ONDEMAND_BROWSERS) {
