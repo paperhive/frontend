@@ -3,29 +3,32 @@ import { find, pick } from 'lodash';
 import template from './template.html!text';
 
 export default function(app) {
-
   app.component(
     'discussionThreadView', {
       template,
       bindings: {
         discussions: '<',
+        onOriginalUpdate: '&',
+        onReplySubmit: '&',
+        onReplyUpdate: '&',
+        onReplyDelete: '&'
       },
       controller: [
         '$scope', 'authService', '$routeSegment', '$http', 'config',
-        'notificationService', 'metaService',
+        'notificationService', 'metaService', '$q',
         function(
           $scope, authService, $routeSegment, $http, config,
-          notificationService, metaService
+          notificationService, metaService, $q
         ) {
-          $scope.auth = authService;
-
           const ctrl = this;
+
+          $scope.auth = authService;
 
           $scope.$watch('$ctrl.discussions.stored', function(discussions) {
             // discussion with ID $routeSegment.$routeParams.discussionId
             $scope.discussion = find(
               discussions,
-              {id:  $routeSegment.$routeParams.discussionId}
+              {id: $routeSegment.$routeParams.discussionId}
             );
             if ($scope.discussion) {
               // set meta data
@@ -92,47 +95,32 @@ export default function(app) {
 
           $scope.addReply = function(body) {
             $scope.submitting = true;
-            $http.post(
-              config.apiUrl +
-                '/replies/',
-              {
-                body: body,
-                discussion: $routeSegment.$routeParams.discussionId
-              }
-            )
-            .success(function(reply) {
+            $q.when(ctrl.onReplySubmit({
+              $discussion: $scope.discussion,
+              $reply: {body}
+            }))
+            .finally(function() {
               $scope.submitting = false;
-              $scope.discussion.replies.push(reply);
-            })
-            .error(function(data) {
-              $scope.submitting = false;
-            })
-            .error(notificationService.httpError('could not update reply'));
+            });
           };
 
-          $scope.updateReply = function(comment, index) {
-            return $http({
-              url: config.apiUrl + '/replies/' + comment.id,
-              method: 'PUT',
-              headers: {'If-Match': '"' + comment.revision + '"'},
-              data: {body: comment.body}
-            })
-            .success(function(data) {
-              $scope.discussion.replies[index] = data;
-            })
-            .error(notificationService.httpError('could not update reply'));
+          $scope.updateReply = function(reply, index) {
+            return ctrl.onReplyUpdate({
+              $discussion: $scope.discussion,
+              $replyOld: $scope.discussion.replies[index],
+              $replyNew: reply,
+            });
           };
 
-          $scope.deleteReply = function(comment, index) {
-            return $http({
-              url: config.apiUrl + '/replies/' + comment.id,
-              method: 'DELETE',
-              headers: {'If-Match': '"' + comment.revision + '"'}
-            })
-            .success(function(data) {
-              $scope.discussion.replies.splice(index, 1);
-            })
-            .error(notificationService.httpError('could not delete reply'));
+          $scope.deleteReply = function(reply) {
+            $scope.submitting = true;
+            $q.when(ctrl.onReplyDelete({
+              $discussion: $scope.discussion,
+              $reply: reply
+            }))
+            .finally(function() {
+              $scope.submitting = false;
+            });
           };
         }
       ]}
