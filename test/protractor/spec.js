@@ -9,23 +9,19 @@ describe('PaperHive homepage', function() {
  
   it('Test page title', function() {
     browser.get(this.url);
-
     expect(browser.getTitle()).toEqual(
       'PaperHive · The coworking hub for researchers'
     );
   });
 
-    xit('should be present browser extension box', function () {
-	var installExtension = element(by.xpath('/html/body/main/div[1]/div/div[1]/div[2]/div[2]/div/div/div/div'));
-	expect(installExtension.isPresent()).toBe(true);
-
-    });
-
+  it('should be present browser extension box', function () {
+    var installExtension = element.findElement(By.name('extension-buttons'));
+    expect(installExtension.isPresent()).toBe(true);
+  });
 
     it('should be present subscribe form', function () {
 	var subscribeForm = element(by.name('subscribeForm'));
 	expect(subscribeForm.isPresent()).toBe(true);
-
     });
 
     it('should be present about us link', function () {
