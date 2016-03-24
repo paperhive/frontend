@@ -2,11 +2,13 @@
 
 describe('login page', function() {
     var form, username;
-    
-    beforeEach(function() {
-	browser.get('/#/login');
+
+    beforeEach(function () {
+	this.url = browser.baseUrl;
+	browser.get(this.url + '/login');
 	form = element(by.name('loginForm'));
     });
+
     
     it('should be present sign in with Google account', function () {
 	var googleLogin = element(by.xpath('/html/body/main/div/div/div[2]/a[1]'));
