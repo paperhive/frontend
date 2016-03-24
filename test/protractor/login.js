@@ -43,7 +43,7 @@ describe('login page', function() {
 	emailOrUsername.sendKeys('user');
 	emailLoginButton.click();
 
-	expect(browser.getCurrentUrl()).toBe(this.url);
+	expect(browser.getCurrentUrl()).toBe(this.url + 'login');
     });
 
 
