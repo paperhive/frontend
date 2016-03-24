@@ -94,13 +94,9 @@ export default function(app) {
           };
 
           $scope.addReply = function(body) {
-            $scope.submitting = true;
-            $q.when(ctrl.onReplySubmit({
+            return ctrl.onReplySubmit({
               $discussion: $scope.discussion,
               $reply: {body}
-            }))
-            .finally(function() {
-              $scope.submitting = false;
             });
           };
 
@@ -113,13 +109,9 @@ export default function(app) {
           };
 
           $scope.deleteReply = function(reply) {
-            $scope.submitting = true;
-            $q.when(ctrl.onReplyDelete({
+            return ctrl.onReplyDelete({
               $discussion: $scope.discussion,
-              $reply: reply
-            }))
-            .finally(function() {
-              $scope.submitting = false;
+              $reply: reply,
             });
           };
         }
