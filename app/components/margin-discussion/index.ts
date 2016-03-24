@@ -43,7 +43,7 @@ export default function(app) {
           $scope.copy = angular.copy($scope.discussion);
           $scope.originalUpdate = function() {
             $scope.originalState.submitting = true;
-            $q.when($scope.onOriginalUpdate(
+            $q.when(ctrl.onOriginalUpdate(
               {$comment: $scope.copy}
             ))
               .then(function() {
@@ -59,7 +59,7 @@ export default function(app) {
         $scope.discussionDelete = function() {
           $scope.originalState.submitting = true;
 
-          $q.when($scope.onDiscussionDelete({$discussion: $scope.discussion}))
+          $q.when(ctrl.onDiscussionDelete({$discussion: $scope.discussion}))
             .finally(function() {
               $scope.originalState.submitting = false;
             });
