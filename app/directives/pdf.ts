@@ -16,8 +16,6 @@ function roundSize(size) {
   };
 }
 
-
-
 // determine if element is visible in current viewport
 function isVisible(element, $window) {
   // relative to viewport.top
@@ -89,15 +87,15 @@ export default function(app) {
       }
     }
 
-    // render a page's text in a canvas
+    // render a page's text
     class TextRenderer {
-      container: JQuery;
+      element: JQuery;
       page: PDFPageProxy;
       textContent: TextContent;
       renderTask: PDFRenderTask; // currently running task
 
-      constructor(container, page) {
-        this.container = container;
+      constructor(element, page) {
+        this.element = element;
         this.page = page;
       }
 
@@ -119,11 +117,11 @@ export default function(app) {
 
         // wipe all children from the container
         // TODO: figure out how to update via pdfjs
-        angular.element(this.container).empty();
+        this.element.empty();
 
         // kick off text rendering
         this.renderTask = PDFJS.renderTextLayer({
-          container: this.container,
+          container: this.element[0],
           textContent: this.textContent,
           viewport,
         });
@@ -141,20 +139,18 @@ export default function(app) {
       }
     }
 
+    // render pdf annotations (e.g., links)
     class AnnotationsRenderer {
+      element: JQuery;
       linkService: any;
       page: PDFPageProxy;
       annotations: PDFAnnotations;
-      annotationsContainer: JQuery;
 
-      constructor(container, page, linkService) {
+      constructor(element, page, linkService) {
         this.page = page;
         this.linkService = linkService;
 
-        this.annotationsContainer = angular.element(
-          '<div class="ph-pdf-annotations"></div>'
-        );
-        container.append(this.annotationsContainer);
+        this.element = element;
       }
 
       async render(_viewport) {
@@ -170,11 +166,11 @@ export default function(app) {
 
         // wipe all children from the container
         // TODO: use AnnotationLayer.update()
-        this.annotationsContainer.empty();
+        this.element.empty();
 
         PDFJS.AnnotationLayer.render({
           annotations: this.annotations,
-          div: this.annotationsContainer[0], // layer:
+          div: this.element[0], // layer:
           linkService: this.linkService,
           page: this.page,
           viewport: viewport,
@@ -193,6 +189,8 @@ export default function(app) {
       renderedSize: {height: number, width: number};
       renderMutex: Mutex;
       canvasRenderer: CanvasRenderer;
+      textRenderer: TextRenderer;
+      annotationsRenderer: AnnotationsRenderer;
 
       constructor(pdf, pageNumber, element) {
         this.element = element;
@@ -233,46 +231,49 @@ export default function(app) {
           // set element height
           this.updateSize();
 
-          // add renderers
+          // add canvas renderer
           this.canvasRenderer = new CanvasRenderer(this.element, this.page);
-          // let textRenderer = new TextRenderer(text[0], page);
-          // let annotationsRenderer = new AnnotationsRenderer(annotations[0], page, new LinkService);
+
+          // add text renderer
+          const textElement = angular.element('<div class="ph-pdf-text"></div>');
+          this.element.append(textElement);
+          this.textRenderer = new TextRenderer(textElement, this.page);
+
+          // add annotations renderer
+          const annotationsLayer = angular.element('<div class="ph-pdf-annotations"></div>');
+          this.element.append(annotationsLayer);
+          this.annotationsRenderer = new AnnotationsRenderer(annotationsLayer, this.page, new LinkService);
         }
       }
 
       // set page element height via css (faster than inserting a canvas)
       updateSize(_size = undefined) {
-        const size = _size || this.getViewport();
-        this.element.height(Math.round(size.height));
+        const newSize = roundSize(_size || this.getViewport());
+
+        // check against old size
+        if (this.element.height() === newSize.height) return false;
+
+        // set new height
+        this.element.height(newSize.height);
+
+        return true;
       }
 
       async render() {
         const viewport = this.getViewport();
         const size = roundSize(viewport);
 
-        // stop if size didn't change
+        // stop if currently rendered size is up to date
         if (isSameSize(this.renderedSize, size)) {
           return;
         }
 
-        // cancel renderers
-        this.canvasRenderer.cancel();
-        // textRenderer.cancel();
+        // TODO: cancel renderers
+        // this.canvasRenderer.cancel();
+        // this.textRenderer.cancel();
 
         // wait for exclusive execution
         const unlock = await this.renderMutex.lock();
-
-        // update size
-        this.updateSize(size);
-
-        // wait for DOM before running visibility check
-        await new Promise(resolve => $timeout(resolve));
-
-        // nothing to do if invisible
-        if (!isVisible(element, $window) || isSameSize(renderedSize, size)) {
-          unlock();
-          return;
-        }
 
         // set rendered viewport (also indicates the viewport that is
         // currently rendered to other render calls)
@@ -280,19 +281,22 @@ export default function(app) {
 
         try {
           await this.canvasRenderer.render(viewport);
-          await textRenderer.render(viewport);
-          await annotationsRenderer.render(viewport);
+          await this.textRenderer.render(viewport);
+          await this.annotationsRenderer.render(viewport);
 
           unlock();
 
-          console.log(`page ${scope.page} rendered`);
-          scope.onPageRendered({page: scope.page});
+          console.log(`page ${this.pageNumber} rendered`);
+          // scope.onPageRendered({page: scope.page});
 
         } catch (error) {
           unlock();
 
           // return if cancelled
-          if (error === 'cancelled') return;
+          if (error === 'cancelled') {
+            console.log(`page ${this.pageNumber} cancelled`);
+            return;
+          }
           throw error;
         }
       }
@@ -303,6 +307,7 @@ export default function(app) {
       element: JQuery;
       pdf: PDFDocumentProxy;
       pages: Array<PdfPage>;
+      windowSize: {height: number, width: number};
 
       constructor(pdf, element) {
         this.element = element;
@@ -331,17 +336,46 @@ export default function(app) {
 
         // await all pageInits
         await Promise.all(pageInits);
+
+        // re-render on resize and scroll events
+        const _render = this.render.bind(this);
+        angular.element($window).on('resize', _render);
+        angular.element($window).on('scroll', _render);
+        this.element.on('$destroy', () => {
+          angular.element($window).off('resize', _render);
+          angular.element($window).off('scroll', _render);
+        });
+
+        // render at least once
+        await this.render();
       }
 
-      // render relevant pages
+      // resize all and render relevant pages
       async render() {
-        // resize pages
-        const pageResized = this.pages.map(page => page.updateSize());
+        const newWindowSize = {
+          height: angular.element($window).height(),
+          width: angular.element($window).width(),
+        };
 
+        // resize pages only if the window size changed
+        if (!this.windowSize || !isSameSize(this.windowSize, newWindowSize)) {
+          // resize pages
+          const pageResized = this.pages.map(page => page.updateSize());
 
+          // store last processed window size
+          this.windowSize = newWindowSize;
 
-        // TODO: detect relevant pages
-        this.pages.forEach(page => page.render());
+          // if at least one page has been resized: wait for DOM
+          if (_.some(pageResized)) {
+            await new Promise(resolve => $timeout(resolve));
+          }
+        }
+
+        // detect relevant pages
+        const renderPages = this.pages.filter(page => isVisible(page.element, $window));
+
+        // render pages
+        const renderPromises = renderPages.map(page => page.render());
       }
     }
 
@@ -352,12 +386,6 @@ export default function(app) {
         onPageRendered: '&',
         onPageRemoved: '&',
       },
-      /*
-      template: `
-      <div class="ph-pdf-text"></div>
-      <div class="ph-pdf-annotations"></div>
-      `,
-      */
       link: async function(scope, element, attrs) {
 
         let pdfFull;
@@ -381,31 +409,6 @@ export default function(app) {
             pdfFull.destroy();
           }
         });
-
-        /*
-        // get elements from template
-        const text = element.find('.ph-pdf-text');
-        const annotations = element.find('.ph-pdf-annotations');
-
-
-
-
-        // resize and render
-        async function render() {
-
-        }
-
-        // re-render on resize and scroll events
-        angular.element($window).on('resize', render);
-        angular.element($window).on('scroll', render);
-        element.on('$destroy', () => {
-          angular.element($window).off('resize', render);
-          angular.element($window).off('scroll', render);
-        });
-
-        // try to render page at least once
-        await render();
-        */
       },
     };
   }]);
