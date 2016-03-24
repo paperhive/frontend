@@ -91,6 +91,11 @@
            ng-mouseenter="text.highlightBorder[discussion.id] = true"
            ng-mouseleave="text.highlightBorder[discussion.id] = false"
            element-size="text.marginDiscussionSizes[discussion.id]"
+           popover-placement="top"
+           popover-is-open="discussion.id === '3dmQKzejCo_c' && tour.stages[tour.index] === 'discussion'"
+           uib-popover-template="'html/shared/popover1.html'"
+           popover-trigger="none"
+           on-rendered="discussionTour.rendered = true"
            >
         </margin-discussion>
         <margin-discussion-draft

@@ -1,16 +1,24 @@
-.popover {
-  z-index: 0 !important;
-  background-color: @ph-highlight-color;
-}
+@ph-popup-border: 4px solid @ph-highlight-color;
 
+.popover {
+  z-index: 0;
+  &.bottom {
+    border-bottom: @ph-popup-border;
+  }
+  &.top, &.left, &.right {
+    border-top: @ph-popup-border;
+  }
+}
+/*
 .popover.top > .arrow:after {
-  border-top-color: @ph-highlight-color;
+  border-top-color: #E0E0E0;
 }
 
 .popover.left > .arrow:after {
-  border-left-color: @ph-highlight-color;
+  border-left-color: #E0E0E0;
 }
 
 .popover.bottom > .arrow:after {
-  border-bottom-color: @ph-highlight-color;
+  border-bottom-color: #E0E0E0;
 }
+*/

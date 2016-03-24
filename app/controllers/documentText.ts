@@ -5,12 +5,13 @@ import paperhiveSources from 'paperhive-sources';
 export default function(app) {
 
   app.controller('DocumentTextCtrl', [
-    '$scope', '$route', '$routeSegment', '$document', '$http', '$filter',
+    '$scope', '$route', '$routeSegment', '$document', '$http', '$filter', '$timeout',
     'config', 'authService', 'notificationService', 'distangleService',
-    'metaService', 'tourService',
+    'metaService', 'tourService', 'smoothScroll',
     function(
-      $scope, $route, $routeSegment, $document, $http, $filter, config,
-      authService, notificationService, distangleService, metaService, tourService
+      $scope, $route, $routeSegment, $document, $http, $filter, $timeout, config,
+      authService, notificationService, distangleService, metaService, tourService,
+      smoothScroll
     ) {
 
       $scope.tour = tourService;
@@ -21,6 +22,17 @@ export default function(app) {
         marginDiscussionSizes: {},
         marginOffsets: {}
       };
+
+      $scope.discussionTour = {};
+      $scope.$watch('discussionTour.rendered && tour.stages[tour.index] === "discussion"', (shouldScroll) => {
+        if (shouldScroll) {
+          // wait until popover is rendered
+          $timeout(() => {
+            const popover = document.getElementById('discussionTourPopover');
+            smoothScroll(popover, {offset: 140});
+          });
+        }
+      })
 
       const revisionId = $routeSegment.$routeParams.revisionId;
 

@@ -15,11 +15,9 @@ export default function(app) {
     },
     template,
     controller: [
-      '$scope', '$q', '$location', '$filter', 'authService', 'tourService',
-      function($scope, $q, $location, $filter, authService, tourService) {
+      '$scope', '$q', '$location', '$filter', 'authService',
+      function($scope, $q, $location, $filter, authService) {
         const ctrl = this;
-
-        $scope.tour = tourService;
 
         // expose discussion in template
         $scope.discussion = this.discussion;
