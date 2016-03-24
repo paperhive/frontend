@@ -9,7 +9,6 @@ describe('login page', function() {
 	form = element(by.name('loginForm'));
     });
 
-    
     it('should be present sign in with Google account', function () {
 	var googleLogin = element(by.id('google-login-button'));
 	expect(googleLogin.isPresent()).toBe(true);
@@ -38,14 +37,10 @@ describe('login page', function() {
     it('should stay in log in page if credentials does not match', function() {
 	var emailOrUsername = form.element(by.name('emailOrUsername'));
 	var password = form.element(by.name('password'));
-//	var loginButton = form.element(by.xpath('/html/body/main/div/div/div[4]/form/div[4]/button'));
 	var emailLoginButton = element(by.id('email-login-button'));   	                                         
 	emailOrUsername.sendKeys('user');
 	emailLoginButton.click();
 
 	expect(browser.getCurrentUrl()).toBe(this.url + 'login');
     });
-
-
-        
 });
