@@ -11,6 +11,11 @@ export default function(app) {
 
         service.increaseIndex = function() {
           service.index++;
+
+          // do not show the tour next time when the last stage has been reached
+          if (service.index === service.stages.length - 1) {
+            $window.localStorage.tourVisited = true;
+          }
         }
 
         service.setUndefined = function() {

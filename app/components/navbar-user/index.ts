@@ -10,10 +10,6 @@ export default function(app) {
           $scope.auth = authService;
           $scope.tour = tourService;
 
-          $scope.setVisited = function() {
-            $window.localStorage.tourVisited = true;
-          }
-
         }],
       template,
     });
