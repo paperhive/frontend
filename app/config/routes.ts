@@ -155,7 +155,7 @@ export default function(app) {
               // rather than all discussions and the discussionId.
               template: `<discussion-thread-view
                 discussions="discussions"
-                on-original-update="originalUpdate(discussion, $comment)"
+                on-original-update="originalUpdate($discussion, $comment)"
                 on-reply-submit="replyAdd($discussion, $reply)"
                 on-reply-update="replyUpdate($discussion, $replyOld, $replyNew)"
                 on-reply-delete="replyDelete($discussion, $reply)"

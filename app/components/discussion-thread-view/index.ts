@@ -67,30 +67,14 @@ export default function(app) {
           // TODO find a better solution
           $scope.updateTitle = function(newTitle) {
             $scope.discussion.title = newTitle;
-            $scope.updateDiscussion($scope.discussion);
+            $scope.updateDiscussion($scope.discussion)
           };
 
           $scope.updateDiscussion = function(comment) {
-            $scope.submitting = true;
-            const newDiscussion = pick(
-              comment,
-              ['title', 'body', 'target', 'tags']
-            );
-
-            return $http({
-              url: config.apiUrl + '/discussions/' + $routeSegment.$routeParams.discussionId,
-              method: 'PUT',
-              headers: {'If-Match': '"' + $scope.discussion.revision + '"'},
-              data: newDiscussion
-            })
-            .success(function(discussion) {
-              $scope.submitting = false;
-              $scope.discussion = discussion;
-            })
-            .error(function(data) {
-              $scope.submitting = false;
-            })
-            .error(notificationService.httpError('could not update discussion'));
+            return ctrl.onOriginalUpdate({
+              $discussion: $scope.discussion,
+              $comment: comment,
+            });
           };
 
           $scope.addReply = function(body) {
