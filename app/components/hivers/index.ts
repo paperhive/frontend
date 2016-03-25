@@ -7,10 +7,12 @@ export default function(app) {
     'hivers', {
       template,
       controller: [
-        '$scope', '$routeSegment', 'config', '$http', 'notificationService',
+        '$routeSegment', 'config', '$http', 'notificationService',
         function(
-          $scope, $routeSegment, config, $http, notificationService
+          $routeSegment, config, $http, notificationService
         ) {
+          const ctrl = this;
+
           const documentId = $routeSegment.$routeParams.documentId;
 
           if (!documentId) { return; }
@@ -19,7 +21,7 @@ export default function(app) {
             config.apiUrl + '/documents/' + documentId + '/hivers'
           )
           .success(function(data) {
-            $scope.hivers = data.hivers;
+            ctrl.hivers = data.hivers;
           })
           .error(function(err) {
             console.error(err);
