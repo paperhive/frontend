@@ -54,7 +54,6 @@ export default function(app) {
         .when('/users/:username', 'users')
         .when('/users/:username/profile', 'users.profile')
         .when('/users/:username/documents', 'users.documents')
-        .when('/users/:username/activity', 'users.activity')
 
         // Init Main Page
         .segment('main', {
@@ -284,10 +283,6 @@ export default function(app) {
           })
           .segment('documents', {
             templateUrl: 'html/users/documents.html',
-            dependencies: ['username']
-          })
-          .segment('activity', {
-            templateUrl: 'html/users/activity.html',
             dependencies: ['username']
           })
         .up()
