@@ -29,6 +29,7 @@ import searchResults from './search-results/index';
 import settings from './settings/index';
 import settingsAccounts from './settings-accounts';
 import settingsEmail from './settings-email';
+import settingsProfile from './settings-profile/index';
 import signup from './signup/index';
 import subscribe from './subscribe/index';
 import terms from './terms/index';
@@ -66,6 +67,7 @@ export default function(app) {
   settings(app);
   settingsAccounts(app);
   settingsEmail(app);
+  settingsProfile(app);
   signup(app);
   subscribe(app);
   terms(app);
