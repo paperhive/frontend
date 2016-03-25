@@ -6,19 +6,20 @@ export default function(app) {
   app.component(
     'hivers', {
       template,
+      bindings: {
+        documentId: '<',
+      },
       controller: [
-        '$routeSegment', 'config', '$http', 'notificationService',
+        'config', '$http', 'notificationService',
         function(
-          $routeSegment, config, $http, notificationService
+          config, $http, notificationService
         ) {
           const ctrl = this;
 
-          const documentId = $routeSegment.$routeParams.documentId;
-
-          if (!documentId) { return; }
+          if (!ctrl.documentId) { return; }
 
           $http.get(
-            config.apiUrl + '/documents/' + documentId + '/hivers'
+            config.apiUrl + '/documents/' + ctrl.documentId + '/hivers'
           )
           .success(function(data) {
             ctrl.hivers = data.hivers;

@@ -137,7 +137,7 @@ export default function(app) {
         })
         .within()
           .segment('hivers', {
-            template: '<hivers></hivers>',
+            template: '<hivers document-id="documentId"></hivers>',
             title: 'Hivers · PaperHive'
           })
           .segment('discussions', {
