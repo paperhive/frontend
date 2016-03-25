@@ -30,6 +30,7 @@ import settingsAccounts from './settings-accounts';
 import settingsEmail from './settings-email';
 import signup from './signup/index';
 import subscribe from './subscribe/index';
+import terms from './terms/index';
 import user from './user/index';
 
 export default function(app) {
@@ -65,5 +66,6 @@ export default function(app) {
   settingsEmail(app);
   signup(app);
   subscribe(app);
+  terms(app);
   user(app);
 };

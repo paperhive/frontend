@@ -194,7 +194,7 @@ export default function(app) {
         })
 
         .segment('terms', {
-          templateUrl: 'html/terms.html',
+          template: '<terms></terms>',
           title: 'Terms and Privacy Policy · PaperHive',
           meta: [
             {
