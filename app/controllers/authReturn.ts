@@ -15,7 +15,6 @@ export default function(app) {
       }
 
       function onLoginError(data) {
-        console.log(data);
         notificationService.notifications.push({
           type: 'error',
           message: data.message
