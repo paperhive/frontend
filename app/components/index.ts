@@ -13,6 +13,7 @@ import hiveButton from './hive-button';
 import hivedDocs from './hived-docs';
 import hivers from './hivers/index';
 import inlineEditable from './inline-editable/index';
+import legalNotice from './legal-notice/index';
 import login from './login/index';
 import marginDiscussion from './margin-discussion/index';
 import marginDiscussionDraft from './margin-discussion-draft/index';
@@ -49,6 +50,7 @@ export default function(app) {
   hivedDocs(app);
   hivers(app);
   inlineEditable(app);
+  legalNotice(app);
   login(app);
   marginDiscussion(app);
   marginDiscussionDraft(app);

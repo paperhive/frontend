@@ -216,7 +216,7 @@ export default function(app) {
         })
 
         .segment('legalnotice', {
-          templateUrl: 'html/legalnotice.html',
+          template: '<legal-notice></legal-notice>',
           title: 'Legal notice · PaperHive',
           meta: [
             {
