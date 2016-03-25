@@ -383,6 +383,10 @@ export default function(app) {
       restrict: 'E',
       scope: {
         pdf: '<',
+        linkGetDestinationHash: '&',
+        linkNavigateTo: '&',
+        linkGetAnchorUrl: '&',
+        linkExecuteNamedAction: '&',
         onPageRendered: '&',
         onPageRemoved: '&',
       },
