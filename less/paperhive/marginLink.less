@@ -1,0 +1,23 @@
+margin-above, margin-below {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  pointer-events: none;
+
+  & .ph-margin-link {
+    padding: 7px;
+    background: fade(@ph-background-color, 90%);
+    text-align: center;
+    box-shadow: 0 0px 10px -1px rgba(0, 0, 0, 0.3);
+    pointer-events: all;
+  }
+}
+
+margin-above {
+  top: 99px;
+}
+
+margin-below {
+  bottom: 0;
+}

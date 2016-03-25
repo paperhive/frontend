@@ -54,12 +54,12 @@
     <div class="row">
       <div highlight-container class="col-md-9">
         <pdf
-                               pdf-url="pdfSource"
-                               pdf-text-overlay="true"
-                               pdf-progress="document.pdfProgress"
-                               on-text-select="$target && (originalComment.draft.target = $target)"
-                               highlight-root
-                               ></pdf>
+           pdf-url="pdfSource"
+           pdf-text-overlay="true"
+           pdf-progress="document.pdfProgress"
+           on-text-select="$target && (originalComment.draft.target = $target)"
+           highlight-root
+           ></pdf>
         <div class="ph-highlight-layer" ng-if="document.pdfProgress.finished">
           <div
                                         highlight-target="originalComment.draft.target"
@@ -73,6 +73,32 @@
       </div>
       <!--column for margin notes-->
       <div class="col-md-3">
+        <margin-above offsets="text.marginOffsets">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-3 col-md-offset-9">
+                <div class="ph-margin-link">
+                  <a href="" class="ph-link-icon">
+                    4 discussions above <i class="fa fa-arrow-circle-up"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </margin-above>
+        <margin-below offsets="text.marginOffsets">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-3 col-md-offset-9">
+                <div class="ph-margin-link">
+                  <a href="" class="ph-link-icon">
+                    3 discussions below <i class="fa fa-arrow-circle-down"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </margin-below>
         <margin-discussion
            ng-repeat="discussion in discussions.stored"
            ng-if="text.highlightInfos[discussion.id].top !== undefined"
