@@ -9,6 +9,7 @@ import extensionButtons from './extension-buttons/index';
 import feedbackButton from './feedback-button';
 import hiveButton from './hive-button';
 import hivedDocs from './hived-docs';
+import hivers from './hivers/index';
 import inlineEditable from './inline-editable/index';
 import login from './login/index';
 import marginDiscussion from './margin-discussion/index';
@@ -41,6 +42,7 @@ export default function(app) {
   feedbackButton(app);
   hiveButton(app);
   hivedDocs(app);
+  hivers(app);
   inlineEditable(app);
   login(app);
   marginDiscussion(app);
