@@ -10,6 +10,7 @@ import hiveButton from './hive-button';
 import hivedDocs from './hived-docs';
 import inlineEditable from './inline-editable/index';
 import login from './login/index';
+import marginAbove from './margin-above';
 import marginDiscussion from './margin-discussion/index';
 import marginDiscussionDraft from './margin-discussion-draft/index';
 import navbar from './navbar/index';
@@ -41,6 +42,7 @@ export default function(app) {
   hivedDocs(app);
   inlineEditable(app);
   login(app);
+  marginAbove(app);
   marginDiscussion(app);
   marginDiscussionDraft(app);
   navbar(app);
