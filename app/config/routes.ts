@@ -182,7 +182,7 @@ export default function(app) {
         })
 
         .segment('contact', {
-          templateUrl: 'html/contact/contact.html',
+          template: '<contact></contact>',
           title: 'Contact · PaperHive',
           meta: [
             {
