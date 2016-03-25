@@ -21,6 +21,7 @@ import navbar from './navbar/index';
 import navbarSearch from './navbar-search/index';
 import navbarUser from './navbar-user/index';
 import newReply from './new-reply/index';
+import notFound from './not-found/index';
 import notifications from './notifications/index';
 import officeMap from './office-map';
 import passwordRequest from './passwordRequest';
@@ -60,6 +61,7 @@ export default function(app) {
   navbarSearch(app);
   navbarUser(app);
   newReply(app);
+  notFound(app);
   notifications(app);
   officeMap(app);
   passwordRequest(app);

@@ -104,7 +104,7 @@ export default function(app) {
         })
         // 404 page not found
         .segment('404', {
-          templateUrl: 'html/shared/404.html',
+          template: '<not-found></not-found>',
           title: '404 · page not found · PaperHive',
           meta: [
             {name: 'prerender-status-code', content: 404}
