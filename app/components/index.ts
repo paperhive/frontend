@@ -34,6 +34,7 @@ import signup from './signup/index';
 import subscribe from './subscribe/index';
 import terms from './terms/index';
 import user from './user/index';
+import userProfile from './user-profile/index';
 
 export default function(app) {
   about(app);
@@ -72,4 +73,5 @@ export default function(app) {
   subscribe(app);
   terms(app);
   user(app);
+  userProfile(app);
 };

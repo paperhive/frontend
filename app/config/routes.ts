@@ -274,7 +274,7 @@ export default function(app) {
         .within()
           .segment('profile', {
             default: true,
-            templateUrl: 'html/users/profile.html',
+            template: '<user-profile user="user"></user-profile>',
             dependencies: ['username']
           })
         .up()
