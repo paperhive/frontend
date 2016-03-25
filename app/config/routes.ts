@@ -254,9 +254,6 @@ export default function(app) {
             default: true,
             templateUrl: 'html/settings/profile.html'
           })
-          .segment('site', {
-            templateUrl: 'html/settings/site.html'
-          })
         .up()
 
         .segment('signup', {
