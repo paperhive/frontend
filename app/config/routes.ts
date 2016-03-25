@@ -114,7 +114,7 @@ export default function(app) {
         })
 
         .segment('about', {
-          templateUrl: 'html/about.html',
+          template: '<about></about>',
           title: 'About · PaperHive',
           meta: [
             {

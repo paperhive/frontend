@@ -1,3 +1,4 @@
+import about from './about/index';
 import avatar from './avatar';
 import avatarList from './avatar-list';
 import comment from './comment/index';
@@ -31,6 +32,7 @@ import subscribe from './subscribe/index';
 import user from './user/index';
 
 export default function(app) {
+  about(app);
   avatar(app);
   avatarList(app);
   comment(app);
