@@ -14,11 +14,9 @@ export default function(app) {
         onReplyDelete: '&'
       },
       controller: [
-        '$scope', 'authService', '$routeSegment', '$http', 'config',
-        'notificationService', 'metaService', '$q',
+        '$scope', 'authService', '$routeSegment', 'metaService',
         function(
-          $scope, authService, $routeSegment, $http, config,
-          notificationService, metaService, $q
+          $scope, authService, $routeSegment, metaService
         ) {
           const ctrl = this;
 
