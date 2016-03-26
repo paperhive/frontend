@@ -15,7 +15,7 @@ export default function(app) {
           <div class="ph-margin-link animate-show" ng-show="$ctrl.above > 0">
             <a href="" class="ph-link-icon"
               scroll-to="d:{{$ctrl.nextDiscussionId}}"
-              offset="{{$ctrl.viewportOffsetTop + 50}}"
+              offset="{{$ctrl.viewportOffsetTop + 80}}"
             >
               {{$ctrl.above}} discussions above <i class="fa fa-arrow-circle-up"></i>
             </a>
@@ -44,7 +44,7 @@ export default function(app) {
               ctrl.above++;
 
               // update nextDiscussionId
-              if (!ctrl.nextDiscussionId || offset <= ctrl.discussionOffsets[ctrl.nextDiscussionId]) {
+              if (!ctrl.nextDiscussionId || offset >= ctrl.discussionOffsets[ctrl.nextDiscussionId]) {
                 ctrl.nextDiscussionId = id;
               }
             }
