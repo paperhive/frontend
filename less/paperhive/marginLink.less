@@ -6,11 +6,21 @@ margin-above > div, margin-below {
   pointer-events: none;
 
   & .ph-margin-link {
+    position: relative;
+    transition: top ease 0.5s, opacity ease 0.5s;
     padding: 7px;
     background: fade(@ph-background-color, 90%);
     text-align: center;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
     pointer-events: all;
+    &.animate-show {
+      top: 0;
+      opacity: 1;
+    }
+    &.animate-show.ng-hide {
+      top: -40px;
+      opacity: 0;
+    }
   }
 }
 

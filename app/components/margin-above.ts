@@ -12,7 +12,7 @@ export default function(app) {
     <div class="container-fluid" ng-style="{top: $ctrl.viewportOffsetTop}">
       <div class="row">
         <div class="col-md-3 col-md-offset-9">
-          <div class="ph-margin-link" ng-if="$ctrl.above > 0">
+          <div class="ph-margin-link animate-show" ng-show="$ctrl.above > 0">
             <a href="" class="ph-link-icon"
               scroll-to="d:{{$ctrl.nextDiscussionId}}"
               offset="{{$ctrl.viewportOffsetTop + 50}}"
