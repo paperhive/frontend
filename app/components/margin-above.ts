@@ -5,15 +5,18 @@ export default function(app) {
   app.component('marginAbove', {
     bindings: {
       discussionOffsets: '<',
+      discussionSizes: '<',
       viewportOffsetTop: '<',
-      onAboveChanged: '&',
     },
     template: `
-    <div class="container-fluid">
+    <div class="container-fluid" ng-style="{top: $ctrl.viewportOffsetTop}">
       <div class="row">
         <div class="col-md-3 col-md-offset-9">
           <div class="ph-margin-link" ng-if="$ctrl.above > 0">
-            <a href="" class="ph-link-icon">
+            <a href="" class="ph-link-icon"
+              scroll-to="d:{{$ctrl.nextDiscussionId}}"
+              offset="{{$ctrl.viewportOffsetTop + 50}}"
+            >
               {{$ctrl.above}} discussions above <i class="fa fa-arrow-circle-up"></i>
             </a>
           </div>
@@ -24,30 +27,39 @@ export default function(app) {
     controller: [
       '$scope', '$element', '$window', function($scope, $element, $window) {
         const ctrl = this;
-        ctrl.above = 0;
 
         function updateAbove() {
-          let above = 0;
+          if (!ctrl.discussionOffsets || !ctrl.discussionSizes) return;
+
+          ctrl.above = 0;
+          ctrl.nextDiscussionId = undefined;
           const parentBoundingRect = $element[0].parentElement.getBoundingClientRect();
 
-          // count elements above the viewport
-          forEach(ctrl.discussionOffsets, (offset) => {
-            console.log(parentBoundingRect.top, offset, ctrl.viewportOffsetTop);
-            if (parentBoundingRect.top + offset < ctrl.viewportOffsetTop) {
-              above++;
+          // count elements above the viewport and get next discussion id
+          forEach(ctrl.discussionOffsets, (offset, id) => {
+            if (!ctrl.discussionSizes[id]) return;
+            const height = ctrl.discussionSizes[id].height;
+
+            if (parentBoundingRect.top + offset + height < ctrl.viewportOffsetTop) {
+              ctrl.above++;
+
+              // update nextDiscussionId
+              if (!ctrl.nextDiscussionId || offset <= ctrl.discussionOffsets[ctrl.nextDiscussionId]) {
+                ctrl.nextDiscussionId = id;
+              }
             }
           });
-
-          // notify on change
-          if (ctrl.above !== above) {
-            ctrl.onAboveChanged({above: above});
-            ctrl.above = above;
-          }
         }
 
         // register updateAbove on change of input data
-        $scope.$watch('$ctrl.discussionOffsets', updateAbove, true);
-        $scope.$watch('$ctrl.viewportOffsetTop', updateAbove);
+        $scope.$watchGroup(
+          [
+            '$ctrl.discussionOffsets',
+            '$ctrl.discussionSizes',
+            '$ctrl.viewportOffsetTop'
+          ],
+          updateAbove, true
+        );
 
         // register/unregister updateAbove on scroll and resize events
         angular.element($window).on('scroll', updateAbove);
