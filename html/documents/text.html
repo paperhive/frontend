@@ -73,24 +73,20 @@
       </div>
       <!--column for margin notes-->
       <div class="col-md-3">
-        <margin-above
+        <margin-link
+          position="top"
           discussion-offsets="text.marginOffsets"
           discussion-sizes="text.marginDiscussionSizes"
           viewport-offset-top="$root.navbarSize.height + subnavSize.height"
-        ></margin-above>
-        <margin-below offsets="text.marginOffsets">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-md-3 col-md-offset-9">
-                <div class="ph-margin-link">
-                  <a href="" class="ph-link-icon">
-                    3 discussions below <i class="fa fa-arrow-circle-down"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </margin-below>
+          viewport-offset-bottom="0"
+        ></margin-link>
+        <margin-link
+          position="bottom"
+          discussion-offsets="text.marginOffsets"
+          discussion-sizes="text.marginDiscussionSizes"
+          viewport-offset-top="$root.navbarSize.height + subnavSize.height"
+          viewport-offset-bottom="0"
+        ></margin-link>
         <margin-discussion
            ng-repeat="discussion in discussions.stored"
            id="d:{{discussion.id}}"
