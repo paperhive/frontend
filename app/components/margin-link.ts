@@ -1,6 +1,8 @@
 import angular from 'angular';
 import { forEach } from 'lodash';
 
+import marginLinkTemplate from './margin-link.html!text';
+
 export default function(app) {
   app.component('marginLink', {
     bindings: {
@@ -10,44 +12,7 @@ export default function(app) {
       viewportOffsetTop: '<',
       viewportOffsetBottom: '<',
     },
-    template: `
-    <div class="container-fluid" ng-style="{
-        top: ($ctrl.position === 'top' || undefined) && ($ctrl.viewportOffsetTop || 0),
-        bottom: ($ctrl.position === 'bottom' || undefined) && ($ctrl.viewportOffsetBottom || 0),
-      }">
-      <div class="row">
-        <div class="col-md-3 col-md-offset-9">
-          <div class="ph-margin-link animate-show"
-            ng-class="{
-              'ph-margin-link-top': $ctrl.position === 'top',
-              'ph-margin-link-bottom': $ctrl.position === 'bottom',
-            }"
-            ng-show="$ctrl.count > 0"
-          >
-            <a href="" class="ph-link-icon"
-              scroll-to="d:{{$ctrl.nextDiscussionId}}"
-              offset="{{$ctrl.viewportOffsetTop + 80}}"
-            >
-              <span class="ph-margin-link-current">
-                {{$ctrl.count}}
-                {{$ctrl.count === 1 ? 'discussion' : 'discussions'}}
-              </span>
-              <span class="ph-margin-link-previous">
-                {{$ctrl.countPrevious}}
-                {{$ctrl.countPrevious === 1 ? 'discussion' : 'discussions'}}
-              </span>
-              <span ng-if="$ctrl.position === 'top'">
-                above <i class="fa fa-arrow-circle-up"></i>
-              </span>
-              <span ng-if="$ctrl.position === 'bottom'">
-                below <i class="fa fa-arrow-circle-down"></i>
-              </span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-    `,
+    template: marginLinkTemplate,
     controller: [
       '$scope', '$element', '$window', function($scope, $element, $window) {
         const ctrl = this;
