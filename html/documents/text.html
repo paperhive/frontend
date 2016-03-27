@@ -79,6 +79,7 @@
           discussion-sizes="text.marginDiscussionSizes"
           viewport-offset-top="$root.navbarSize.height + subnavSize.height"
           viewport-offset-bottom="0"
+          ng-if="subnavPosition.top <= $root.navbarSize.height"
         ></margin-link>
         <margin-link
           position="bottom"
