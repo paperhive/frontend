@@ -16,10 +16,16 @@ margin-above > div, margin-below {
     &.animate-show {
       top: 0;
       opacity: 1;
-    }
-    &.animate-show.ng-hide {
-      top: -40px;
-      opacity: 0;
+      &.ng-hide {
+        top: -40px;
+        opacity: 0;
+        & .ph-margin-link-current {
+          display: none;
+        }
+      }
+      &:not(.ng-hide) .ph-margin-link-previous {
+        display: none;
+      }
     }
   }
 }

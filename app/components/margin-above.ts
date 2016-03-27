@@ -17,7 +17,9 @@ export default function(app) {
               scroll-to="d:{{$ctrl.nextDiscussionId}}"
               offset="{{$ctrl.viewportOffsetTop + 80}}"
             >
-              {{$ctrl.above}} discussions above <i class="fa fa-arrow-circle-up"></i>
+              <span class="ph-margin-link-current">{{$ctrl.above}}</span>
+              <span class="ph-margin-link-previous">{{$ctrl.abovePrevious}}</span>
+              discussions above <i class="fa fa-arrow-circle-up"></i>
             </a>
           </div>
         </div>
@@ -30,8 +32,8 @@ export default function(app) {
 
         function updateAbove() {
           if (!ctrl.discussionOffsets || !ctrl.discussionSizes) return;
+          let above = 0;
 
-          ctrl.above = 0;
           ctrl.nextDiscussionId = undefined;
           const parentBoundingRect = $element[0].parentElement.getBoundingClientRect();
 
@@ -41,7 +43,7 @@ export default function(app) {
             const height = ctrl.discussionSizes[id].height;
 
             if (parentBoundingRect.top + offset + height < ctrl.viewportOffsetTop) {
-              ctrl.above++;
+              above++;
 
               // update nextDiscussionId
               if (!ctrl.nextDiscussionId || offset >= ctrl.discussionOffsets[ctrl.nextDiscussionId]) {
@@ -49,6 +51,12 @@ export default function(app) {
               }
             }
           });
+
+          // update above and abovePrevious
+          if (ctrl.above !== above) {
+            ctrl.abovePrevious = ctrl.above;
+            ctrl.above = above;
+          }
         }
 
         // register updateAbove on change of input data
