@@ -16,11 +16,15 @@ margin-link > div {
     position: relative;
     transition: opacity ease 0.5s, top ease 0.5s, bottom ease 0.5s;
 
+    /* Note: opacity animation is disabled because it leads to flickering
+             elements with `position: fixed` in Chrome. Probably related to
+             https://bugs.chromium.org/p/chromium/issues/detail?id=438179
     // animate opacity
     opacity: 1;
     &.ng-hide {
       opacity: 0;
     }
+    */
 
     // animate top
     &.ph-margin-link-top {
