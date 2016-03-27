@@ -11,6 +11,7 @@ export default function(app) {
       discussionSizes: '<',
       viewportOffsetTop: '<',
       viewportOffsetBottom: '<',
+      extraOffset: '<',
     },
     template: marginLinkTemplate,
     controller: [
@@ -25,6 +26,10 @@ export default function(app) {
           if (!ctrl.discussionOffsets || !ctrl.discussionSizes) return;
           let count = 0;
 
+          // add/substract extra offset such that an element is considered to be
+          // hidden if this number of pixels is visible at maximum
+          const extraOffset = ctrl.extraOffset || 70;
+
           ctrl.nextDiscussionId = undefined;
           const parentBoundingRect = $element[0].parentElement.getBoundingClientRect();
 
@@ -34,7 +39,7 @@ export default function(app) {
             const height = ctrl.discussionSizes[id].height;
 
             if (ctrl.position === 'top') {
-              if (parentBoundingRect.top + offset + height < ctrl.viewportOffsetTop) {
+              if (parentBoundingRect.top + offset + height - extraOffset < ctrl.viewportOffsetTop) {
                 count++;
 
                 // update nextDiscussionId
@@ -44,7 +49,7 @@ export default function(app) {
               }
             } else {
               const viewportHeight = angular.element($window).height();
-              if (parentBoundingRect.top + offset > viewportHeight) {
+              if (parentBoundingRect.top + offset + extraOffset > viewportHeight) {
                 count++;
 
                 // update nextDiscussionId
