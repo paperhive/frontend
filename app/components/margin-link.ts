@@ -44,7 +44,7 @@ export default function(app) {
               }
             } else {
               const viewportHeight = angular.element($window).height();
-              if (parentBoundingRect.top + offset + height > ctrl.viewportOffsetTop + viewportHeight) {
+              if (parentBoundingRect.top + offset > viewportHeight) {
                 count++;
 
                 // update nextDiscussionId
