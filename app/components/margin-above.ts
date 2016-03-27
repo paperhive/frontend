@@ -47,7 +47,6 @@ export default function(app) {
       '$scope', '$element', '$window', function($scope, $element, $window) {
         const ctrl = this;
 
-        console.log(ctrl.position);
         if (ctrl.position !== 'top' && ctrl.position !== 'bottom') {
           throw new Error('position must be "top" or "bottom"');
         }
