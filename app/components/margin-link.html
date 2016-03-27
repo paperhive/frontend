@@ -12,8 +12,11 @@
         ng-show="$ctrl.count > 0"
       >
         <a href="" class="ph-link-icon"
-          scroll-to="d:{{$ctrl.nextDiscussionId}}"
+          scroll-to="{{$ctrl.scrolling ? '' : ('d:' + $ctrl.nextDiscussionId)}}"
+          duration="500"
           offset="{{$ctrl.viewportOffsetTop + 80}}"
+          callback-before="$ctrl.scrolling = true"
+          callback-after="$ctrl.scrolling = false"
         >
           <span class="ph-margin-link-current">
             {{$ctrl.count}}
