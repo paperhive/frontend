@@ -28,9 +28,14 @@ export default function(app) {
               scroll-to="d:{{$ctrl.nextDiscussionId}}"
               offset="{{$ctrl.viewportOffsetTop + 80}}"
             >
-              <span class="ph-margin-link-current">{{$ctrl.count}}</span>
-              <span class="ph-margin-link-previous">{{$ctrl.countPrevious}}</span>
-              discussions
+              <span class="ph-margin-link-current">
+                {{$ctrl.count}}
+                {{$ctrl.count === 1 ? 'discussion' : 'discussions'}}
+              </span>
+              <span class="ph-margin-link-previous">
+                {{$ctrl.countPrevious}}
+                {{$ctrl.countPrevious === 1 ? 'discussion' : 'discussions'}}
+              </span>
               <span ng-if="$ctrl.position === 'top'">
                 above <i class="fa fa-arrow-circle-up"></i>
               </span>
