@@ -147,11 +147,20 @@ export default function(app) {
           .within()
             .segment('list', {
               default: true,
-              templateUrl: 'html/documents/discussions/list.html',
+              template: '<discussion-list discussions="discussions"></discussion-list>',
               title: 'Discussions · PaperHive'
             })
             .segment('thread', {
-              template: '<discussion-thread-view></discussion-thread-view>',
+              // Ideally, we'd already provide the exact discussion here,
+              // rather than all discussions and the discussionId.
+              template: `<discussion-thread-view
+                discussions="discussions"
+                on-original-update="originalUpdate($discussion, $comment)"
+                on-reply-submit="replyAdd($discussion, $reply)"
+                on-reply-update="replyUpdate($discussion, $replyOld, $replyNew)"
+                on-reply-delete="replyDelete($discussion, $reply)"
+              >
+              </discussion-thread-view>`,
               dependencies: ['discussionId'],
               title: 'Discussion · PaperHive'
             })

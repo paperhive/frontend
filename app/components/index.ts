@@ -1,6 +1,7 @@
 import avatar from './avatar';
 import avatarList from './avatar-list';
 import comment from './comment/index';
+import discussionList from './discussion-list/index';
 import discussionThreadView from './discussion-thread-view/index';
 import document from './document/index';
 import documentNew from './document-new/index';
@@ -32,6 +33,7 @@ export default function(app) {
   avatar(app);
   avatarList(app);
   comment(app);
+  discussionList(app);
   discussionThreadView(app);
   document(app);
   documentNew(app);

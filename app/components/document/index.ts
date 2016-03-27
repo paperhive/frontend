@@ -259,7 +259,7 @@ export default function(app) {
             .success(function(reply) {
               angular.copy(reply, replyOld);
             })
-            .error(notificationService.httpError('could not add reply'));
+            .error(notificationService.httpError('could not update reply'));
           };
 
           $scope.replyDelete = function(discussion, reply) {
