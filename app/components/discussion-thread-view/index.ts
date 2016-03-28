@@ -1,57 +1,59 @@
-import { pick } from 'lodash';
+import { find, pick } from 'lodash';
 
 import template from './template.html!text';
 
 export default function(app) {
-
   app.component(
     'discussionThreadView', {
       template,
+      bindings: {
+        discussions: '<',
+        onOriginalUpdate: '&',
+        onReplySubmit: '&',
+        onReplyUpdate: '&',
+        onReplyDelete: '&'
+      },
       controller: [
-        '$scope', '$rootScope', 'authService', '$routeSegment', '$http', 'config',
-        'notificationService', 'metaService',
+        '$scope', 'authService', '$routeSegment', 'metaService',
         function(
-          $scope, $rootScope, authService, $routeSegment, $http, config,
-          notificationService, metaService
+          $scope, authService, $routeSegment, metaService
         ) {
+          const ctrl = this;
+
           $scope.auth = authService;
 
-          // fetch discussion
-          $http({
-            url: config.apiUrl + '/discussions/' + $routeSegment.$routeParams.discussionId,
-            method: 'GET'
-          })
-          .success(function(discussion) {
-            $scope.discussion = discussion;
-            metaService.set({
-              title: discussion.title +
-                ($scope.revisions && $scope.latestOAIdx ?
-                 (' · ' + $scope.revisions[$scope.latestOAIdx].title) :
-                 ''
-                ) +
-                ' · PaperHive',
-              meta: [
-                {
-                  name: 'author',
-                  content: discussion.author.displayName
-                },
-                // TODO rather use title here?
-                {
-                  name: 'description',
-                  content: 'Annotation by ' +
-                    discussion.author.displayName + ': ' +
-                    (discussion.body ?
-                    discussion.body.substring(0, 150) : '')
-                },
-                {
-                  name: 'keywords',
-                  content: discussion.tags ?
-                    discussion.tags.join(', ') : undefined
-                }
-              ]
-            });
-          })
-          .error(notificationService.httpError('could not fetch discussion'));
+          $scope.$watch('$ctrl.discussions.stored', function(discussions) {
+            // discussion with ID $routeSegment.$routeParams.discussionId
+            $scope.discussion = find(
+              discussions,
+              {id: $routeSegment.$routeParams.discussionId}
+            );
+            if ($scope.discussion) {
+              // set meta data
+              metaService.set({
+                title: $scope.discussion.title + ' · PaperHive',
+                meta: [
+                  {
+                    name: 'author',
+                    content: $scope.discussion.author.displayName
+                  },
+                  // TODO rather use title here?
+                  {
+                    name: 'description',
+                    content: 'Annotation by ' +
+                      $scope.discussion.author.displayName + ': ' +
+                      ($scope.discussion.body ?
+                      $scope.discussion.body.substring(0, 150) : '')
+                  },
+                  {
+                    name: 'keywords',
+                    content: $scope.discussion.tags ?
+                      $scope.discussion.tags.join(', ') : undefined
+                  }
+                ]
+              });
+            }
+          });
 
           // Problem:
           //   When updateTitle() is run, the newTitle needs to be populated in
@@ -67,71 +69,32 @@ export default function(app) {
           };
 
           $scope.updateDiscussion = function(comment) {
-            $scope.submitting = true;
-            const newDiscussion = pick(
-              comment,
-              ['title', 'body', 'target', 'tags']
-            );
-
-            return $http({
-              url: config.apiUrl + '/discussions/' + $routeSegment.$routeParams.discussionId,
-              method: 'PUT',
-              headers: {'If-Match': '"' + $scope.discussion.revision + '"'},
-              data: newDiscussion
-            })
-            .success(function(discussion) {
-              $scope.submitting = false;
-              $scope.discussion = discussion;
-            })
-            .error(function(data) {
-              $scope.submitting = false;
-            })
-            .error(notificationService.httpError('could not update discussion'));
+            return ctrl.onOriginalUpdate({
+              $discussion: $scope.discussion,
+              $comment: comment,
+            });
           };
 
           $scope.addReply = function(body) {
-            $scope.submitting = true;
-            $http.post(
-              config.apiUrl +
-                '/replies/',
-              {
-                body: body,
-                discussion: $routeSegment.$routeParams.discussionId
-              }
-            )
-            .success(function(reply) {
-              $scope.submitting = false;
-              $scope.discussion.replies.push(reply);
-            })
-            .error(function(data) {
-              $scope.submitting = false;
-            })
-            .error(notificationService.httpError('could not update reply'));
+            return ctrl.onReplySubmit({
+              $discussion: $scope.discussion,
+              $reply: {body}
+            });
           };
 
-          $scope.updateReply = function(comment, index) {
-            return $http({
-              url: config.apiUrl + '/replies/' + comment.id,
-              method: 'PUT',
-              headers: {'If-Match': '"' + comment.revision + '"'},
-              data: {body: comment.body}
-            })
-            .success(function(data) {
-              $scope.discussion.replies[index] = data;
-            })
-            .error(notificationService.httpError('could not update reply'));
+          $scope.updateReply = function(reply, index) {
+            return ctrl.onReplyUpdate({
+              $discussion: $scope.discussion,
+              $replyOld: $scope.discussion.replies[index],
+              $replyNew: reply,
+            });
           };
 
-          $scope.deleteReply = function(comment, index) {
-            return $http({
-              url: config.apiUrl + '/replies/' + comment.id,
-              method: 'DELETE',
-              headers: {'If-Match': '"' + comment.revision + '"'}
-            })
-            .success(function(data) {
-              $scope.discussion.replies.splice(index, 1);
-            })
-            .error(notificationService.httpError('could not delete reply'));
+          $scope.deleteReply = function(reply) {
+            return ctrl.onReplyDelete({
+              $discussion: $scope.discussion,
+              $reply: reply,
+            });
           };
         }
       ]}
