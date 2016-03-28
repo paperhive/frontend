@@ -1,19 +1,19 @@
 <div class="row">
   <div class="col-sm-6">
     <h4>Hived documents</h4>
-    <hived-docs person-id="user.id"></hived-docs>
+    <hived-docs person-id="$ctrl.user.id"></hived-docs>
   </div>
   <div class="col-sm-6">
-    <div ng-show="user.accounts.length">
+    <div ng-show="$ctrl.user.accounts.length">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h4 class="panel-title">{{user.displayName}} on the web</h4>
+          <h4 class="panel-title">{{$ctrl.user.displayName}} on the web</h4>
         </div>
         <div class="panel-body">
 
           <table class="table ph-table-no-border-top">
             <tbody>
-              <tr ng-repeat="account in user.accounts">
+              <tr ng-repeat="account in $ctrl.user.accounts">
                 <th scope="row" ng-switch="account.type">
                   <span ng-switch-when="orcid">ORCID</span>
                   <span ng-switch-default>{{account.type}}</span>
