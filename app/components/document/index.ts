@@ -25,6 +25,8 @@ export default function(app) {
 
           const documentId = $routeSegment.$routeParams.documentId;
 
+          $scope.documentId = documentId;
+
           // ask local storage if flag 'documentVisited' is already set
           if (!$window.localStorage.documentVisited) {
             // set flag at first usage
