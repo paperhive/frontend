@@ -15,6 +15,7 @@ import hivers from './hivers/index';
 import inlineEditable from './inline-editable/index';
 import legalNotice from './legal-notice/index';
 import login from './login/index';
+import marginLink from './margin-link';
 import marginDiscussion from './margin-discussion/index';
 import marginDiscussionDraft from './margin-discussion-draft/index';
 import navbar from './navbar/index';
@@ -55,6 +56,7 @@ export default function(app) {
   inlineEditable(app);
   legalNotice(app);
   login(app);
+  marginLink(app);
   marginDiscussion(app);
   marginDiscussionDraft(app);
   navbar(app);

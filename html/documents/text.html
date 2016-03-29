@@ -54,16 +54,16 @@
     <div class="row">
       <div highlight-container class="col-md-9">
         <pdf
-                               pdf-url="pdfSource"
-                               pdf-text-overlay="true"
-                               pdf-progress="document.pdfProgress"
-                               on-text-select="$target && (originalComment.draft.target = $target)"
-                               highlight-root
-                               ></pdf>
+             pdf-url="pdfSource"
+             pdf-text-overlay="true"
+             pdf-progress="document.pdfProgress"
+             on-text-select="$target && (originalComment.draft.target = $target)"
+             highlight-root
+             ></pdf>
         <div class="ph-highlight-layer" ng-if="document.pdfProgress.finished">
           <div
-                                        highlight-target="originalComment.draft.target"
-                                        highlight-info="text.highlightInfos.draft"></div>
+              highlight-target="originalComment.draft.target"
+              highlight-info="text.highlightInfos.draft"></div>
           <div ng-repeat="discussion in discussions.stored"
                highlight-target="discussion.target"
                highlight-info="text.highlightInfos[discussion.id]"
@@ -73,8 +73,24 @@
       </div>
       <!--column for margin notes-->
       <div class="col-md-3">
+        <margin-link
+          position="top"
+          discussion-offsets="text.marginOffsets"
+          discussion-sizes="text.marginDiscussionSizes"
+          viewport-offset-top="$root.navbarSize.height + subnavSize.height"
+          viewport-offset-bottom="0"
+          ng-if="subnavPosition.top <= $root.navbarSize.height"
+        ></margin-link>
+        <margin-link
+          position="bottom"
+          discussion-offsets="text.marginOffsets"
+          discussion-sizes="text.marginDiscussionSizes"
+          viewport-offset-top="$root.navbarSize.height + subnavSize.height"
+          viewport-offset-bottom="0"
+        ></margin-link>
         <margin-discussion
            ng-repeat="discussion in discussions.stored"
+           id="d:{{discussion.id}}"
            ng-if="text.highlightInfos[discussion.id].top !== undefined"
            ng-show="text.marginOffsets[discussion.id] !== undefined"
            ng-style="{'top': text.marginOffsets[discussion.id] + 'px'}"
