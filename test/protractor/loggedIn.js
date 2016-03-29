@@ -5,7 +5,7 @@ describe('logedIn main page', function() {
     
     beforeEach(function() {
 	this.url = browser.baseUrl;
-	browser.get(this.url + '/login');
+	browser.get(this.url + 'login');
 	form = element(by.name('loginForm'));
 
 	var emailOrUsername = form.element(by.name('emailOrUsername'));
@@ -25,7 +25,7 @@ describe('logedIn main page', function() {
     });
 
     it('should have a user menu', function() {
-	var userMenu = element(by.id('user-menu'));
+	var userMenu = element(by.id('user-menu-items'));
 	expect(userMenu.isPresent()).toBe(true);
     });
 
