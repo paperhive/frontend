@@ -6,31 +6,30 @@ export default function(app) {
   app.component('inlineEditable', {
     bindings: {
       originalContent: '<',
+      canEdit: '<',
       onSave: '&'
     },
     template,
     controller: [
-      '$scope', 'authService',
-      function($scope, authService) {
+      '$scope',
+      function($scope) {
         const ctrl = this;
 
         $scope.$watch('$ctrl.originalContent', function(data) {
-          $scope.content = data;
+          ctrl.content = data;
         });
 
-        $scope.auth = authService;
-
-        $scope.c = {
+        ctrl.c = {
           isEditMode: false
         };
 
-        $scope.reset = function() {
-          $scope.c.isEditMode = false;
+        ctrl.reset = function() {
+          ctrl.c.isEditMode = false;
         };
 
-        $scope.update = function(newContent) {
+        ctrl.update = function(newContent) {
           ctrl.onSave({$content: newContent});
-          $scope.c.isEditMode = false;
+          ctrl.c.isEditMode = false;
         };
       }
     ]
