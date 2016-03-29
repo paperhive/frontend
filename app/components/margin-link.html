@@ -19,19 +19,15 @@
           callback-after="$ctrl.scrolling = false"
         >
           <span class="ph-margin-link-current">
-            {{$ctrl.count}}
+            {{$ctrl.count}} more
             {{$ctrl.count === 1 ? 'discussion' : 'discussions'}}
           </span>
           <span class="ph-margin-link-previous">
             {{$ctrl.countPrevious}}
             {{$ctrl.countPrevious === 1 ? 'discussion' : 'discussions'}}
           </span>
-          <span ng-if="$ctrl.position === 'top'">
-            above <i class="fa fa-arrow-circle-up"></i>
-          </span>
-          <span ng-if="$ctrl.position === 'bottom'">
-            below <i class="fa fa-arrow-circle-down"></i>
-          </span>
+          <i ng-if="$ctrl.position === 'top'" class="fa fa-arrow-circle-up"></i>
+          <i ng-if="$ctrl.position === 'bottom'" class="fa fa-arrow-circle-down"></i>
         </a>
       </div>
     </div>
