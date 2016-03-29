@@ -25,6 +25,7 @@ export default function(app) {
 
         ctrl.reset = function() {
           ctrl.c.isEditMode = false;
+          ctrl.content = ctrl.originalContent;
         };
 
         ctrl.update = function(newContent) {

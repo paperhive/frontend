@@ -3,7 +3,7 @@
   <button
     ng-if="$ctrl.canEdit"
     class="btn btn-link"
-    ng-click="$ctrl.c.isEditMode = true"
+    ng-click="$ctrl.originalContent = $ctrl.content; $ctrl.c.isEditMode = true;"
     >
     <i class="fa fa-pencil"></i>
   </button>
