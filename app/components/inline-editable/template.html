@@ -11,7 +11,7 @@
 <form
   ng-if="$ctrl.c.isEditMode"
   name="inlineEditForm"
-  ng-submit="inlineEditForm.$valid && update($ctrl.content)"
+  ng-submit="inlineEditForm.$valid && $ctrl.update($ctrl.content)"
   novalidate
   >
   <input
