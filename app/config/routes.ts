@@ -262,7 +262,7 @@ export default function(app) {
         })
 
         .segment('subscribed', {
-          templateUrl: 'html/subscribed.html',
+          template: '<subscribed></subscribed>',
           title: 'Successfully subscribed · PaperHive'
         })
 

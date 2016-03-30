@@ -37,6 +37,7 @@ import settingsEmail from './settings-email';
 import settingsProfile from './settings-profile/index';
 import signup from './signup/index';
 import subscribe from './subscribe/index';
+import subscribed from './subscribed/index';
 import terms from './terms/index';
 import user from './user/index';
 import userProfile from './user-profile/index';
@@ -81,6 +82,7 @@ export default function(app) {
   settingsProfile(app);
   signup(app);
   subscribe(app);
+  subscribed(app);
   terms(app);
   user(app);
   userProfile(app);
