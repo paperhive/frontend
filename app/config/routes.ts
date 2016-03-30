@@ -56,7 +56,7 @@ export default function(app) {
 
         // Init Main Page
         .segment('main', {
-          templateUrl: 'html/main/main.html',
+          template: '<main-page></main-page>',
           title: meta.main.title,
           meta: [
             {name: 'description', content: meta.main.description},

@@ -18,6 +18,7 @@ import jobs from './jobs/index';
 import inlineEditable from './inline-editable/index';
 import legalNotice from './legal-notice/index';
 import login from './login/index';
+import mainPage from './main-page/index';
 import marginLink from './margin-link';
 import marginDiscussion from './margin-discussion/index';
 import marginDiscussionDraft from './margin-discussion-draft/index';
@@ -63,6 +64,7 @@ export default function(app) {
   inlineEditable(app);
   legalNotice(app);
   login(app);
+  mainPage(app);
   marginLink(app);
   marginDiscussion(app);
   marginDiscussionDraft(app);
