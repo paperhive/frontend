@@ -29,7 +29,7 @@
       <h4>
         <a href="./{{'documents.discussions.thread' | routeSegmentUrl:
             {discussionId: discussion.id} }}">
-          {{discussion.title}}</a>
+          <kramjax body="discussion.title" suppress-paragraphs="true"></kramjax></a>
         <ul
           ng-if="discussion.tags.length > 0"
           class="ph-tags list-inline"
