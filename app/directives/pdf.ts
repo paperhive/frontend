@@ -263,11 +263,16 @@ export default function(app) {
 
       onResized() {
         this.scope.$apply(() => {
+          const viewport = this.page.getViewport(1);
           this.scope.onPageResized({
             pageNumber: this.pageNumber,
-            size: {
+            displaySize: {
               height: this.element.height(),
               width: this.element.width(),
+            },
+            originalSize: {
+              height: viewport.viewBox[3],
+              width: viewport.viewBox[2],
             },
             offset: {
               top: this.element[0].offsetTop,
@@ -434,7 +439,8 @@ export default function(app) {
         // all pages are guaranteed to be resized once when initializing;
         // passed arguments: pageNumber,
         //                   offset (top, left relative to offsetParent),
-        //                   size (properties width, height)
+        //                   displaySize (height and width in pixels)
+        //                   originalSize (height and width in )
         onPageResized: '&',
 
         // pages are rendered on demand;
