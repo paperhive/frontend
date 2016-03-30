@@ -4,7 +4,10 @@
       <i class="fa fa-file-o fa-2x"></i>
     </div>
     <div class="media-body">
-      <div ng-bind-html="match.model.title | uibTypeaheadHighlight:query"></div>
+      <!--div ng-bind-html="match.model.title |
+        uibTypeaheadHighlight:query"></div-->
+      <kramjax body="match.model.title | uibTypeaheadHighlight:query">
+      </kramjax>
       <small>
         <span ng-repeat="author in match.model.authors">
           {{author.name}}{{$last ? '' : ', '}}
