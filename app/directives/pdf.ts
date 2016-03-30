@@ -182,8 +182,9 @@ export default function(app) {
     class PdfPage {
       element: JQuery;
       page: PDFPageProxy;
-      pageNumber: number; // zero-based page-number
+      pageNumber: number;
       pdf: PDFDocumentProxy;
+      scope: any;
 
       // renderer state
       renderedSize: {height: number, width: number};
@@ -192,10 +193,11 @@ export default function(app) {
       textRenderer: TextRenderer;
       annotationsRenderer: AnnotationsRenderer;
 
-      constructor(pdf, pageNumber, element) {
+      constructor(pdf, pageNumber, element, scope) {
         this.element = element;
         this.pageNumber = pageNumber;
         this.pdf = pdf;
+        this.scope = scope;
 
         // set default height to DIN A4
         // (overwritten with actual page size below)
@@ -226,7 +228,7 @@ export default function(app) {
       async init() {
         if (!this.page) {
           // get page from pdf (pdfjs uses 1-based page numbers)
-          this.page = await this.pdf.getPage(this.pageNumber + 1);
+          this.page = await this.pdf.getPage(this.pageNumber);
 
           // set element height
           this.updateSize();
@@ -259,6 +261,30 @@ export default function(app) {
         return true;
       }
 
+      onResized() {
+        this.scope.$apply(() => {
+          this.scope.onPageResized({
+            pageNumber: this.pageNumber,
+            size: {
+              height: this.element.height(),
+              width: this.element.width(),
+            },
+            offset: {
+              top: this.element[0].offsetTop,
+              left: this.element[0].offsetLeft,
+            }
+          });
+        });
+      }
+
+      onRendered() {
+        this.scope.$apply(() => {
+          this.scope.onPageRendered({
+            pageNumber: this.pageNumber,
+          });
+        });
+      }
+
       async render() {
         const viewport = this.getViewport();
         const size = roundSize(viewport);
@@ -286,9 +312,7 @@ export default function(app) {
 
           unlock();
 
-          console.log(`page ${this.pageNumber} rendered`);
-          // scope.onPageRendered({page: scope.page});
-
+          this.onRendered();
         } catch (error) {
           unlock();
 
@@ -308,10 +332,12 @@ export default function(app) {
       pdf: PDFDocumentProxy;
       pages: Array<PdfPage>;
       windowSize: {height: number, width: number};
+      scope: any;
 
-      constructor(pdf, element) {
+      constructor(pdf, element, scope) {
         this.element = element;
         this.pdf = pdf;
+        this.scope = scope;
         this.pages = [];
 
         // wipe element children
@@ -323,19 +349,25 @@ export default function(app) {
         const pageInits = [];
 
         // create pages
-        for (let pageNumber = 0; pageNumber < this.pdf.numPages; pageNumber++) {
+        for (let pageNumber = 1; pageNumber <= this.pdf.numPages; pageNumber++) {
           // create page element
           const pageElement = angular.element('<div class="ph-pdf-page"></div>');
           this.element.append(pageElement);
 
           // init page
-          const page = new PdfPage(this.pdf, pageNumber, pageElement);
+          const page = new PdfPage(this.pdf, pageNumber, pageElement, this.scope);
           this.pages.push(page);
           pageInits.push(page.init());
         }
 
         // await all pageInits
         await Promise.all(pageInits);
+
+        // give browser time to render properly sized pages
+        await new Promise(resolve => $timeout(resolve));
+
+        // call onResized
+        this.pages.forEach(page => page.onResized());
 
         // re-render on resize and scroll events
         const _render = this.render.bind(this);
@@ -368,6 +400,9 @@ export default function(app) {
           // if at least one page has been resized: wait for DOM
           if (_.some(pageResized)) {
             await new Promise(resolve => $timeout(resolve));
+
+            // call onResized
+            this.pages.forEach(page => page.onResized());
           }
         }
 
@@ -382,13 +417,54 @@ export default function(app) {
     return {
       restrict: 'E',
       scope: {
+        // Input
+        // =====
+
+        // The pdf object (output of the pdf directive)
         pdf: '<',
-        linkGetDestinationHash: '&',
-        linkNavigateTo: '&',
-        linkGetAnchorUrl: '&',
-        linkExecuteNamedAction: '&',
+
+        // highlights: array of objects
+        // interpreted properties: selectors (describes the position)
+        //                         emphasize (e.g., if the corresponding margin discussion is hovered)
+        highlights: '<',
+
+        // Output
+        // ======
+
+        // all pages are guaranteed to be resized once when initializing;
+        // passed arguments: pageNumber,
+        //                   offset (top, left relative to offsetParent),
+        //                   size (properties width, height)
+        onPageResized: '&',
+
+        // pages are rendered on demand;
+        // passed arguments: pageNumber
         onPageRendered: '&',
-        onPageRemoved: '&',
+        onPageUnrendered: '&',
+
+        // highlights are rendered after the page has been rendered
+        // passed arguments: highlight
+        //                   position (top, left relative to viewport),
+        //                   size (properties width, height)
+        onHighlightRendered: '&',
+        onHighlightUnrendered: '&',
+
+        // called when hovering over rendered highlights
+        // passed arguments: highlight
+        onHighlightMouseenter: '&',
+        onHighlightMouseleave: '&',
+
+        // called when text is selected (TODO: select arbitrary rectangles)
+        // passed arguments: selector
+        //                   position (top, left relative to viewport),
+        //                   size (properties width, height)
+        onSelect: '&',
+
+        // called when an in-document link is clicked
+        // passed arguments: TODO
+        onLinkClicked: '&', // pass function that renders the link target page (should return promise)
+
+        // TODO: scroll interface
       },
       link: async function(scope, element, attrs) {
 
@@ -404,7 +480,7 @@ export default function(app) {
           if (!pdf) return;
 
           // init new pdf
-          pdfFull = new PdfFull(pdf, element);
+          pdfFull = new PdfFull(pdf, element, scope);
           await pdfFull.init();
         });
 
