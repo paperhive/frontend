@@ -64,4 +64,25 @@
       }
     }
   }
+
+  & > .ph-pdf-highlights {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    /* set opacity instead of transparent background color because the
+     * ::selection selector is not yet standardized and not fully supported
+     * see https://developer.mozilla.org/en-US/docs/Web/CSS/::selection
+     */
+    opacity: 0.4;
+
+    // do not lighten up colors by highlighting, e.g., black text remains black
+    // although we the highlight is a layer on top of the text.
+    mix-blend-mode: multiply;
+
+    .ph-pdf-highlight {
+      background-color: @ph-text-highlight-color;
+    }
+  }
 }

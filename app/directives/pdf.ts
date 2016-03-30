@@ -37,7 +37,7 @@ export default function(app) {
   // directive follows a few basic rules that make it easier to switch to
   // angular2, see
   // http://teropa.info/blog/2015/10/18/refactoring-angular-apps-to-components.html
-  app.directive('pdfFull', ['$q', '$timeout', '$window', function($q, $timeout, $window) {
+  app.directive('pdfFull', ['$compile', '$q', '$timeout', '$window', function($compile, $q, $timeout, $window) {
 
     // render a page in a canvas
     class CanvasRenderer {
@@ -235,6 +235,19 @@ export default function(app) {
 
           // add canvas renderer
           this.canvasRenderer = new CanvasRenderer(this.element, this.page);
+
+          // add highlights layer
+          // TODO: sort more efficiently (e.g., in pdfFull directive)!
+          const highlightsLayer = $compile(`
+            <div class="ph-pdf-highlights">
+              <pdf-highlight
+                ng-repeat="highlight in highlights | highlightsByPage:${this.pageNumber}"
+                highlight="highlight"
+                page-number="${this.page.pageNumber}"
+              ></pdf-highlight>
+            </div>
+          `)(this.scope);
+          this.element.append(highlightsLayer);
 
           // add text renderer
           const textElement = angular.element('<div class="ph-pdf-text"></div>');

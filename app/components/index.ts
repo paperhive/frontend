@@ -21,6 +21,7 @@ import officeMap from './office-map';
 import passwordRequest from './passwordRequest';
 import passwordReset from './passwordReset';
 import pdf from './pdf';
+import pdfHighlight from './pdf-highlight';
 import searchResults from './search-results/index';
 import settings from './settings/index';
 import settingsAccounts from './settings-accounts';
@@ -53,6 +54,7 @@ export default function(app) {
   passwordRequest(app);
   passwordReset(app);
   pdf(app);
+  pdfHighlight(app);
   searchResults(app);
   settings(app);
   settingsAccounts(app);
