@@ -1,4 +1,5 @@
 import about from './about/index';
+import authReturn from './auth-return';
 import avatar from './avatar';
 import avatarList from './avatar-list';
 import comment from './comment/index';
@@ -40,6 +41,7 @@ import userProfile from './user-profile/index';
 
 export default function(app) {
   about(app);
+  authReturn(app);
   avatar(app);
   avatarList(app);
   comment(app);
