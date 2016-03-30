@@ -26,6 +26,7 @@ export default function(app) {
           $scope.tour = tourService;
 
           const documentId = $routeSegment.$routeParams.documentId;
+          $scope.documentId = documentId;
 
           const documentUpdates = websocketService.join('documents', documentId);
           const documentUpdatesSubscriber = documentUpdates.subscribe((update) => {

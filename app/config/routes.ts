@@ -53,8 +53,6 @@ export default function(app) {
         .when('/subscribed', 'subscribed')
         .when('/users/:username', 'users')
         .when('/users/:username/profile', 'users.profile')
-        .when('/users/:username/documents', 'users.documents')
-        .when('/users/:username/activity', 'users.activity')
 
         // Init Main Page
         .segment('main', {
@@ -106,7 +104,7 @@ export default function(app) {
         })
         // 404 page not found
         .segment('404', {
-          templateUrl: 'html/shared/404.html',
+          template: '<not-found></not-found>',
           title: '404 · page not found · PaperHive',
           meta: [
             {name: 'prerender-status-code', content: 404}
@@ -114,7 +112,7 @@ export default function(app) {
         })
 
         .segment('about', {
-          templateUrl: 'html/about.html',
+          template: '<about></about>',
           title: 'About · PaperHive',
           meta: [
             {
@@ -137,7 +135,7 @@ export default function(app) {
         })
         .within()
           .segment('hivers', {
-            templateUrl: 'html/documents/hivers.html',
+            template: '<hivers document-id="documentId"></hivers>',
             title: 'Hivers · PaperHive'
           })
           .segment('discussions', {
@@ -182,7 +180,7 @@ export default function(app) {
         })
 
         .segment('contact', {
-          templateUrl: 'html/contact/contact.html',
+          template: '<contact></contact>',
           title: 'Contact · PaperHive',
           meta: [
             {
@@ -194,7 +192,7 @@ export default function(app) {
         })
 
         .segment('terms', {
-          templateUrl: 'html/terms.html',
+          template: '<terms></terms>',
           title: 'Terms and Privacy Policy · PaperHive',
           meta: [
             {
@@ -217,7 +215,7 @@ export default function(app) {
         })
 
         .segment('legalnotice', {
-          templateUrl: 'html/legalnotice.html',
+          template: '<legal-notice></legal-notice>',
           title: 'Legal notice · PaperHive',
           meta: [
             {
@@ -254,10 +252,7 @@ export default function(app) {
         .within()
           .segment('profile', {
             default: true,
-            templateUrl: 'html/settings/profile.html'
-          })
-          .segment('site', {
-            templateUrl: 'html/settings/site.html'
+            template: `<settings-profile user="user"></settings-profile>`
           })
         .up()
 
@@ -279,15 +274,7 @@ export default function(app) {
         .within()
           .segment('profile', {
             default: true,
-            templateUrl: 'html/users/profile.html',
-            dependencies: ['username']
-          })
-          .segment('documents', {
-            templateUrl: 'html/users/documents.html',
-            dependencies: ['username']
-          })
-          .segment('activity', {
-            templateUrl: 'html/users/activity.html',
+            template: '<user-profile user="user"></user-profile>',
             dependencies: ['username']
           })
         .up()

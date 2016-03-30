@@ -1,0 +1,13 @@
+'use strict';
+
+import template from './template.html!text';
+
+export default function(app) {
+  app.component(
+    'userProfile', {
+      template,
+      bindings: {
+        'user': '<',
+      }
+    });
+};
