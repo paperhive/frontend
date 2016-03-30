@@ -32,7 +32,7 @@ describe('logedIn main page', function() {
     it('should have 4 items in user menu', function() {
 
 //	$('#user-menu-items').findElement(by.linkName('Profile')
-	element.all(by.css('#user-menu-items li')).then(function(items) {
+	element.all(by.css('.dropdown-menu li')).then(function(items) {
 //	element.all(by.id('user-menu-items li')).then(function(items) {
 	    expect(items.length).toBe(4);
 	    expect(items[0].getText()).toBe('Profile');
