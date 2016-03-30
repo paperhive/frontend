@@ -1,5 +1,5 @@
 <span ng-if="!$ctrl.c.isEditMode">
-  {{$ctrl.content}}
+  <kramjax body="$ctrl.content"></kramjax>
   <button
     ng-if="$ctrl.canEdit"
     class="btn btn-link"
