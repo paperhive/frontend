@@ -8,7 +8,7 @@
           <div class="ph-lg-margin-top media" ng-repeat="document in search.documents">
             <h4>
               <a href="./documents/{{document.id}}" title="{{document.title}}">
-                {{document.title}}
+                <kramjax body="document.title"></kramjax>
               </a>
             </h4>
             <span ng-repeat="author in document.authors">
@@ -19,7 +19,10 @@
             </small>
             <div class="ph-sm-margin-top">
               <small>
-                {{document.abstract | limitTo: 220}}{{document.abstract.length > 220 ? '...' : ''}}
+                <kramjax
+                  body="(document.abstract | limitTo: 220) + (document.abstract.length > 220 ? '&hellip;' : '')"
+                  >
+                </kramjax>
               </small>
             </div>
           </div>
