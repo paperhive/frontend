@@ -45,7 +45,7 @@ export default function(app) {
           // add an attribute option here to suppress paragraphs altogether.
           scope.$watch('suppressParagraphs', function(value) {
             if (value) {
-              renderer.paragraph = function(text) {return text;};
+              renderer.paragraph = function(text) { return text; };
             } else {
               renderer.paragraph = origParagraphRenderer;
             }
