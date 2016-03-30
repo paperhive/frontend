@@ -203,7 +203,7 @@ export default function(app) {
         })
 
         .segment('jobs', {
-          templateUrl: 'html/jobs.html',
+          template: '<jobs></jobs>',
           title: 'Jobs · PaperHive',
           meta: [
             {

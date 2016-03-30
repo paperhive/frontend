@@ -6,6 +6,5 @@ import passwordRequest from './passwordRequest';
 export default function(app) {
   documentText(app);
   meta(app);
-  jobs(app);
   passwordRequest(app);
 };
