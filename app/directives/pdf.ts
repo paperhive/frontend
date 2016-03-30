@@ -244,6 +244,8 @@ export default function(app) {
                 ng-repeat="highlight in highlights | highlightsByPage:${this.pageNumber}"
                 highlight="highlight"
                 page-number="${this.page.pageNumber}"
+                on-mouseenter="onHighlightMouseenter({highlight: highlight, pageNumber: pageNumber})"
+                on-mouseleave="onHighlightMouseleave({highlight: highlight, pageNumber: pageNumber})"
               ></pdf-highlight>
             </div>
           `)(this.scope);

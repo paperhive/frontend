@@ -56,7 +56,7 @@
         </span>
       </div>
     </div>
-
+    {{hoverId}}
     <div class="row">
       <div class="col-md-9">
         <pdf url="pdfSource" on-update="pdf.status = status"></pdf>
@@ -80,6 +80,9 @@
               ],
             },
           }]"
+          on-highlight-mouseenter=""
+          on-highlight-mouseleave=""
+          on-select="newSelectors = selectors"
         ></pdf-full>
         <!--pdf
                                pdf-url="pdfSource"

@@ -3,6 +3,8 @@ export default function(app) {
     bindings: {
       highlight: '<',
       pageNumber: '<',
+      onMouseenter: '&',
+      onMouseleave: '&',
     },
     template: `
       <div class="ph-pdf-highlight"
@@ -15,7 +17,15 @@ export default function(app) {
           bottom: rectangle.bottom * 100 + '%',
           right: rectangle.right * 100 + '%',
         }"
-      ></div>
+        ng-mouseenter="$ctrl.onMouseenter({
+          highlight: $ctrl.highlight,
+          pageNumber: $ctrl.pageNumber,
+        })"
+        ng-mouseleave="$ctrl.onMouseleave({
+          highlight: $ctrl.highlight,
+          pageNumber: $ctrl.pageNumber,
+        })"
+      >{{$ctrl.test}}</div>
     `
   });
 }
