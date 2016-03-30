@@ -29,7 +29,7 @@ describe('logedIn main page', function() {
 	expect(userMenu.isPresent()).toBe(true);
     });
 
-    xit('should have 4 items in user menu', function() {
+    it('should have 4 items in user menu', function() {
 
 //	$('#user-menu-items').findElement(by.linkName('Profile')
 //	element.all(by.css('#user-menu-items li')).then(function(items) {
