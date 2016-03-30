@@ -3,7 +3,11 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-10">
-          <h2 class="ph-lg-margin-top">{{revisions[latestOAIdx].title}}</h2>
+          <h2 class="ph-lg-margin-top">
+            <kramjax
+              body="revisions[latestOAIdx].title"
+              ></kramjax>
+          </h2>
           <h4 class="ph-lg-margin-bottom">
             <span ng-repeat="author in revisions[latestOAIdx].authors">
               {{author.name}}{{$last ? '' :', '}}
