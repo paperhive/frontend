@@ -54,12 +54,16 @@
     <div class="row">
       <div highlight-container class="col-md-9">
         <pdf
-             pdf-url="pdfSource"
-             pdf-text-overlay="true"
-             pdf-progress="document.pdfProgress"
-             on-text-select="$target && (originalComment.draft.target = $target)"
-             highlight-root
-             ></pdf>
+          popover-placement="top"
+          popover-is-open="tour.stages[tour.index] === 'highlight'"
+          uib-popover-template="'html/shared/tour-highlight.html'"
+          popover-trigger="none"
+          pdf-url="pdfSource"
+          pdf-text-overlay="true"
+          pdf-progress="document.pdfProgress"
+          on-text-select="$target && (originalComment.draft.target = $target)"
+          highlight-root
+        ></pdf>
         <div class="ph-highlight-layer" ng-if="document.pdfProgress.finished">
           <div
               highlight-target="originalComment.draft.target"
@@ -103,6 +107,11 @@
            ng-mouseenter="text.highlightBorder[discussion.id] = true"
            ng-mouseleave="text.highlightBorder[discussion.id] = false"
            element-size="text.marginDiscussionSizes[discussion.id]"
+           popover-placement="top"
+           popover-is-open="discussion.id === '3dmQKzejCo_c' && tour.stages[tour.index] === 'margin-discussion'"
+           uib-popover-template="'html/shared/tour-margin-discussion.html'"
+           popover-trigger="none"
+           on-rendered="discussionTour.rendered = true"
            >
         </margin-discussion>
         <margin-discussion-draft

@@ -5,11 +5,12 @@ import template from './template.html!text';
 export default function(app) {
     app.component('navbarSearch', {
       controller: ['$scope', '$http', '$location', '$routeSegment', 'config',
-        'notificationService',
+        'notificationService', 'tourService',
         function(
           $scope, $http, $location, $routeSegment, config,
-          notificationService
+          notificationService, tourService
         ) {
+          $scope.tour = tourService;
 
           $scope.showAllResults = function(input) {
             $location.path('/searchResults/').search({query: input, page: 1});
