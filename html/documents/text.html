@@ -56,7 +56,7 @@
         <pdf
           popover-placement="top"
           popover-is-open="tour.stages[tour.index] === 'pdf'"
-          uib-popover-template="'html/shared/popover2.html'"
+          uib-popover-template="'html/shared/tour-highlight.html'"
           popover-trigger="none"
           pdf-url="pdfSource"
           pdf-text-overlay="true"
@@ -109,7 +109,7 @@
            element-size="text.marginDiscussionSizes[discussion.id]"
            popover-placement="top"
            popover-is-open="discussion.id === '3dmQKzejCo_c' && tour.stages[tour.index] === 'discussion'"
-           uib-popover-template="'html/shared/popover1.html'"
+           uib-popover-template="'html/shared/tour-margin-discussion.html'"
            popover-trigger="none"
            on-rendered="discussionTour.rendered = true"
            >
