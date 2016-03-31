@@ -6,6 +6,10 @@
   >
   <div class="form-group ph-navbar-search">
     <input
+      popover-placement="bottom"
+      popover-is-open="tour.stages[tour.index] === 'search'"
+      uib-popover-template="'html/shared/tour-search.html'"
+      popover-trigger="none"
       type="text"
       class="form-control"
       placeholder="Search arXiv articles"

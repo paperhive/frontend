@@ -1,0 +1,11 @@
+@ph-popup-border: 4px solid @ph-highlight-color;
+
+.popover {
+  z-index: 1000;
+  &.bottom {
+    border-bottom: @ph-popup-border;
+  }
+  &.top, &.left, &.right {
+    border-top: @ph-popup-border;
+  }
+}

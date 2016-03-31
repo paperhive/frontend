@@ -16,7 +16,15 @@
         </div>
         <div class="col-sm-2 text-right">
           <h2 class="ph-lg-margin-top">
-            <hive-button document-id="revisions[0].id" user="auth.user"></hive-button>
+            <hive-button
+              popover-placement="bottom"
+              popover-is-open="tour.stages[tour.index] === 'hive'"
+              uib-popover-template="'html/shared/tour-hive.html'"
+              popover-trigger="none"
+              document-id="revisions[0].id"
+              user="auth.user"
+              title="{{auth.user ? 'Hive this document for receiving updates.' : 'You have to be logged in to hive the document.'}}"
+            ></hive-button>
           </h2>
         </div>
       </div>
