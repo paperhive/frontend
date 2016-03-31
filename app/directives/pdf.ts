@@ -1,7 +1,8 @@
 import angular from 'angular';
-import * as _ from 'lodash';
+import { isEqual, pick, some } from 'lodash';
 import { Mutex } from 'mutx';
 import {PDFJS} from 'pdfjs-dist';
+import rangy from 'rangy';
 
 // test if height and width properties of 2 objects are equal
 function isSameSize(obj1, obj2) {
@@ -37,7 +38,7 @@ export default function(app) {
   // directive follows a few basic rules that make it easier to switch to
   // angular2, see
   // http://teropa.info/blog/2015/10/18/refactoring-angular-apps-to-components.html
-  app.directive('pdfFull', ['$compile', '$q', '$timeout', '$window', function($compile, $q, $timeout, $window) {
+  app.directive('pdfFull', ['$compile', '$document', '$q', '$timeout', '$window', function($compile, $document, $q, $timeout, $window) {
 
     // render a page in a canvas
     class CanvasRenderer {
@@ -113,6 +114,7 @@ export default function(app) {
       async render(viewport) {
         if (!this.textContent) {
           this.textContent = await this.page.getTextContent();
+          console.log(this.textContent);
         }
 
         // wipe all children from the container
@@ -353,6 +355,8 @@ export default function(app) {
       pages: Array<PdfPage>;
       windowSize: {height: number, width: number};
       scope: any;
+      lastSelectors: any;
+      lastSimpleSelection: any;
 
       constructor(pdf, element, scope) {
         this.element = element;
@@ -393,13 +397,122 @@ export default function(app) {
         const _render = this.render.bind(this);
         angular.element($window).on('resize', _render);
         angular.element($window).on('scroll', _render);
+
+        // detect text selections
+        const _onTextSelect = this.onTextSelect.bind(this);
+        $document.on('mouseup keyup', _onTextSelect); // key events are not fired on PDFs
+
         this.element.on('$destroy', () => {
           angular.element($window).off('resize', _render);
           angular.element($window).off('scroll', _render);
+          $document.off('mouseup keyup', _onTextSelect); // key events are not fired on PDFs
         });
 
         // render at least once
         await this.render();
+      }
+
+      onSelect(selectors) {
+        // only call onSelect output if necessary
+        if (isEqual(selectors, this.lastSelectors)) return;
+
+        this.lastSelectors = selectors;
+        this.scope.onSelect({selectors});
+      }
+
+      onTextSelect() {
+        this.scope.$apply(() => {
+          /*
+          const onTextSelect = function(selection) {
+
+            let serializedRanges;
+
+            // serialize ALL the ranges (if a selection is given)
+            if (selection) {
+              serializedRanges = _.map(
+                selection.getAllRanges(),
+                function(range) {
+                  return rangy.serializeRange(range, true, element[0]);
+                }
+              );
+            }
+
+            // only call expression if something happened
+            // (otherwise every keypress calls the expression)
+            if (!_.isEqual(serializedRanges, lastSerializedRanges)) {
+              lastSerializedRanges = serializedRanges;
+
+              let target;
+              // construct target object if valid ranges are given
+              if (serializedRanges && serializedRanges.length &&
+                  selection) {
+                target = {
+                  text: selection.toString(),
+                  ranges: serializedRanges
+                };
+              }
+
+              this.scope.onSelect({selectors: target});
+            }
+          };
+          */
+
+          // get current text selection
+          const selection = rangy.getSelection();
+
+          // no selection object or no anchor/focus
+          if (!selection || !selection.anchorNode || !selection.focusNode) {
+            return this.onSelect(undefined);
+          }
+          console.log(selection);
+
+          // selection not contained in element?
+          if (!rangy.dom.isAncestorOf(this.element[0], selection.anchorNode) ||
+              !rangy.dom.isAncestorOf(this.element[0], selection.focusNode)) {
+            return this.onSelect(undefined);
+          }
+
+          // do not allow collapsed / empty selections
+          if (!selection.toString()) {
+            return this.onSelect(undefined);
+          }
+
+          // do not allow selections with zero or more than one ranges
+          // (André: I guess that's possible in crazy browsers)
+          if (selection.rangeCount !== 1) {
+            return this.onSelect(undefined);
+          }
+
+          // do nothing if start and end are equal to last selection
+          const simpleSelection = pick(selection,
+            'anchorNode', 'anchorOffset', 'focusNode', 'focusOffset');
+          if (isEqual(simpleSelection, this.lastSimpleSelection)) return;
+          this.lastSimpleSelection = simpleSelection;
+
+          // split selection ranges into ranges for individual pages
+          // TODO: implement O(1) page detection for a range
+          const range = selection.getAllRanges()[0];
+          const rangeByPage = {};
+          this.pages.forEach(page => {
+            if (!range.intersectsNode(page.textRenderer.element[0])) return;
+
+            // get range that selects the page's content
+            const pageRange = rangy.createRange();
+            pageRange.selectNodeContents(page.textRenderer.element[0]);
+
+            // intersect range with page range
+            rangeByPage[page.pageNumber] = range.intersection(pageRange);
+          });
+
+          console.log(rangeByPage);
+
+          const selectors = {};
+
+          // add quote selector
+          selectors.pdfTextQuotes = {}
+
+          return this.onSelect(selectors);
+        });
       }
 
       // resize all and render relevant pages
@@ -418,7 +531,7 @@ export default function(app) {
           this.windowSize = newWindowSize;
 
           // if at least one page has been resized: wait for DOM
-          if (_.some(pageResized)) {
+          if (some(pageResized)) {
             await new Promise(resolve => $timeout(resolve));
 
             // call onResized
@@ -463,15 +576,18 @@ export default function(app) {
         onPageRendered: '&',
         onPageUnrendered: '&',
 
+        /* TODO: do we need this?
         // highlights are rendered after the page has been rendered
         // passed arguments: highlight
         //                   position (top, left relative to viewport),
         //                   size (properties width, height)
         onHighlightRendered: '&',
         onHighlightUnrendered: '&',
+        */
 
         // called when hovering over rendered highlights
         // passed arguments: highlight
+        // TODO: fix event propagation issue
         onHighlightMouseenter: '&',
         onHighlightMouseleave: '&',
 
