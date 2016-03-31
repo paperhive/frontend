@@ -24,7 +24,7 @@ export default function(app) {
       };
 
       $scope.discussionTour = {};
-      $scope.$watch('discussionTour.rendered && tour.stages[tour.index] === "discussion"', (shouldScroll) => {
+      $scope.$watch('discussionTour.rendered && tour.stages[tour.index] === "margin-discussion"', (shouldScroll) => {
         if (shouldScroll) {
           // wait until popover is rendered
           $timeout(() => {
