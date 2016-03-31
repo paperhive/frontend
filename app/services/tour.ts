@@ -5,7 +5,7 @@ export default function(app) {
     ['$window', 'authService',
       function($window, authService) {
         const service = {
-          stages: ['welcome', 'discussion', 'pdf', 'search', 'follow', 'signUp'],
+          stages: ['start', 'margin-discussion', 'highlight', 'search', 'hive', 'signup'],
           index: 0,
         };
 

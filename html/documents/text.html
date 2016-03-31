@@ -55,7 +55,7 @@
       <div highlight-container class="col-md-9">
         <pdf
           popover-placement="top"
-          popover-is-open="tour.stages[tour.index] === 'pdf'"
+          popover-is-open="tour.stages[tour.index] === 'highlight'"
           uib-popover-template="'html/shared/tour-highlight.html'"
           popover-trigger="none"
           pdf-url="pdfSource"
@@ -108,7 +108,7 @@
            ng-mouseleave="text.highlightBorder[discussion.id] = false"
            element-size="text.marginDiscussionSizes[discussion.id]"
            popover-placement="top"
-           popover-is-open="discussion.id === '3dmQKzejCo_c' && tour.stages[tour.index] === 'discussion'"
+           popover-is-open="discussion.id === '3dmQKzejCo_c' && tour.stages[tour.index] === 'margin-discussion'"
            uib-popover-template="'html/shared/tour-margin-discussion.html'"
            popover-trigger="none"
            on-rendered="discussionTour.rendered = true"
