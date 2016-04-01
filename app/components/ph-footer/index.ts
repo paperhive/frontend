@@ -3,5 +3,5 @@
 import template from './template.html!text';
 
 export default function(app) {
-  app.component('footer', {template});
+  app.component('phFooter', {template});
 };
