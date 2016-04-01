@@ -16,10 +16,14 @@ export default function(app) {
           $scope.$watch('$ctrl.user.id', async function(id) {
             if (!id) { return; }
             try {
-              const ret = await $http.get(
-                config.apiUrl +
-                  '/discussions?author=' + id
-              );
+              const ret = await $http({
+                method: 'GET',
+                url: config.apiUrl + '/discussions',
+                params: {
+                  author: id,
+                  populateDocumentRevision: true,
+                }
+              });
               ctrl.discussions = ret.data.discussions;
             } catch (err) {
               notificationService.notifications.push({
