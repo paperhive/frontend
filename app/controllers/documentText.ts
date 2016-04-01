@@ -89,6 +89,8 @@ export default function(app) {
               `/documents/${latestOaRevision.id}/revisions/${latestOaRevision.revision}`
             );
             // TODO display a notification about the redirect?
+            // Problem: $routeChangeSuccess wipes the notifications and it
+            // triggered *right after* $locationChangeSuccess.
           } else {
             notificationService.notifications.push({
               type: 'error',
