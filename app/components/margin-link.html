@@ -1,0 +1,35 @@
+<div class="container-fluid" ng-style="{
+    top: ($ctrl.position === 'top' || undefined) && ($ctrl.viewportOffsetTop || 0),
+    bottom: ($ctrl.position === 'bottom' || undefined) && ($ctrl.viewportOffsetBottom || 0),
+  }">
+  <div class="row">
+    <div class="col-md-3 col-md-offset-9">
+      <div class="ph-margin-link animate-show"
+        ng-class="{
+          'ph-margin-link-top': $ctrl.position === 'top',
+          'ph-margin-link-bottom': $ctrl.position === 'bottom',
+        }"
+        ng-show="$ctrl.count > 0"
+      >
+        <a href="" class="ph-link-icon"
+          scroll-to="{{$ctrl.scrolling ? '' : ('d:' + $ctrl.nextDiscussionId)}}"
+          duration="500"
+          offset="{{$ctrl.viewportOffsetTop + 80}}"
+          callback-before="$ctrl.scrolling = true"
+          callback-after="$ctrl.scrolling = false"
+        >
+          <span class="ph-margin-link-current">
+            {{$ctrl.count}} more
+            {{$ctrl.count === 1 ? 'discussion' : 'discussions'}}
+          </span>
+          <span class="ph-margin-link-previous">
+            {{$ctrl.countPrevious}}
+            {{$ctrl.countPrevious === 1 ? 'discussion' : 'discussions'}}
+          </span>
+          <i ng-if="$ctrl.position === 'top'" class="fa fa-arrow-circle-up"></i>
+          <i ng-if="$ctrl.position === 'bottom'" class="fa fa-arrow-circle-down"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

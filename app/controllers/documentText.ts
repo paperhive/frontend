@@ -5,19 +5,34 @@ import * as urlPackage from 'url';
 export default function(app) {
 
   app.controller('DocumentTextCtrl', [
-    '$scope', '$route', '$routeSegment', '$document', '$http', '$filter',
+    '$scope', '$route', '$routeSegment', '$document', '$http', '$filter', '$timeout',
     'config', 'authService', 'notificationService', 'distangleService',
-    'metaService',
+    'metaService', 'tourService', 'smoothScroll',
     function(
-      $scope, $route, $routeSegment, $document, $http, $filter, config,
-      authService, notificationService, distangleService, metaService
+      $scope, $route, $routeSegment, $document, $http, $filter, $timeout, config,
+      authService, notificationService, distangleService, metaService, tourService,
+      smoothScroll
     ) {
+
+      $scope.tour = tourService;
+
       $scope.text = {
         highlightInfos: {},
         highlightBorder: {},
         marginDiscussionSizes: {},
         marginOffsets: {}
       };
+
+      $scope.discussionTour = {};
+      $scope.$watch('discussionTour.rendered && tour.stages[tour.index] === "margin-discussion"', (shouldScroll) => {
+        if (shouldScroll) {
+          // wait until popover is rendered
+          $timeout(() => {
+            const popover = document.getElementById('discussionTourPopover');
+            smoothScroll(popover, {offset: 140});
+          });
+        }
+      });
 
       const revisionId = $routeSegment.$routeParams.revisionId;
 
