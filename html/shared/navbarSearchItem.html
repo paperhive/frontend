@@ -4,7 +4,10 @@
       <i class="fa fa-file-o fa-2x"></i>
     </div>
     <div class="media-body">
-      <kramjax body="match.model.title | uibTypeaheadHighlight:query">
+      <kramjax
+        body="match.model.title | uibTypeaheadHighlight:query"
+        suppress-paragraphs="true"
+        >
       </kramjax>
       <small>
         <span ng-repeat="author in match.model.authors">

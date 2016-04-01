@@ -8,7 +8,10 @@
           <div class="ph-lg-margin-top media" ng-repeat="document in search.documents">
             <h4>
               <a href="./documents/{{document.id}}" title="{{document.title}}">
-                <kramjax body="document.title"></kramjax>
+                <kramjax
+                  body="document.title"
+                  suppress-paragraphs="true"
+                ></kramjax>
               </a>
             </h4>
             <span ng-repeat="author in document.authors">
