@@ -13,7 +13,6 @@ export default function(app) {
       authService, notificationService, distangleService, metaService, tourService,
       smoothScroll
     ) {
-
       $scope.tour = tourService;
 
       $scope.text = {
@@ -75,8 +74,10 @@ export default function(app) {
             });
           }
         } else {
-          // default to the latest OA revision
-          activeRevisionIdx = $scope.latestOAIdx;
+          // Default to the latest OA revision, and -- if that's not available
+          // -- the latest revision.
+          activeRevisionIdx =
+            $scope.latestOAIdx !== -1 ? $scope.latestOAIdx : revisions.length - 1;
         }
         // Expose in scope
         $scope.activeRevisionIdx = activeRevisionIdx;
