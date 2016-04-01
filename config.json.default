@@ -1,5 +1,9 @@
 {
   "apiUrl": "https://dev.paperhive.org/backend/master",
   "apiVersion": "1.0.0",
-  "baseHref": "/"
+  "baseHref": "/",
+  "elsevier": {
+    "entitlementApiUrl": "https://api.elsevier.com/content/article/entitlement/doi",
+    "apiKey": "d7cd85afb9582a3d0862eb536dac32b0"
+  }
 }

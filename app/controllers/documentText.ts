@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { find } from 'lodash';
+import { find, get } from 'lodash';
 import * as urlPackage from 'url';
 
 export default function(app) {
@@ -52,7 +52,7 @@ export default function(app) {
         });
       }
 
-      $scope.$watch('revisions', function(revisions) {
+      $scope.$watch('revisions', async function(revisions) {
         if (!revisions) { return; }
         let activeRevisionIdx;
         if (revisionId) {
@@ -76,9 +76,25 @@ export default function(app) {
         const revision = revisions[activeRevisionIdx];
         $scope.origPdfSource = revision.file.url;
 
-        // TODO actually check user access here (e.g., via the Elsevier Article
-        // Entitlement API)
-        const userHasAccess = revision.isOpenAccess;
+        let userHasAccess = false;
+        if (revision.isOpenAccess) {
+          userHasAccess = true;
+        } else if (revision.remote.type === 'elsevier') {
+          // Check via the article entitlement API if the user as access to the
+          // current document.
+          const ret = await $http({
+              method: 'GET',
+              url: `${config.elsevier.entitlementApiUrl}/doi/${revision.doi}`,
+              params: {
+                apiKey: config.elsevier.apiKey,
+              }
+            });
+          userHasAccess = !!get(
+            ret,
+            ['data', 'entitlement-response', 'document-entitlement', 'entitled']
+          );
+        }
+
         if (userHasAccess) {
           $scope.pdfSource = getPdfUrl(revision);
         } else {
@@ -98,6 +114,10 @@ export default function(app) {
             });
           }
         }
+
+        // This is an async function, so unless we $apply, angular won't
+        // know that values have changed.
+        $scope.$apply();
       });
 
       $scope.getShortDescription = (revision) => {
