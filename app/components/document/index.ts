@@ -117,25 +117,25 @@ export default function(app) {
           )
           .success(function(ret) {
             $scope.revisions = ret.revisions;
-            $scope.latestOAIdx = findLastIndex(ret.revisions, {isOpenAccess: true});
 
-            const latestOARevision = $scope.revisions[$scope.latestOAIdx];
+            const latestRevision = $scope.revisions[$scope.revisions.length - 1];
             // Cut description down to 150 chars, cf.
             // <http://moz.com/learn/seo/meta-description>
             // TODO move linebreak removal to backend?
             const metaData = [
               {
                 name: 'description',
-                content: latestOARevision.title + ' by ' + latestOARevision.authors.join(', ') + '.'
+                content: latestRevision.title + ' by ' + latestRevision.authors.join(', ') + '.'
               },
-              {name: 'author', content: latestOARevision.authors.join(', ')},
-              {name: 'keywords', content: latestOARevision.tags.join(', ')}
+              {name: 'author', content: latestRevision.authors.join(', ')},
+              {name: 'keywords', content: latestRevision.tags.join(', ')}
             ];
-
             $scope.addDocumentMetaData(metaData);
 
+            $scope.latestOAIdx = findLastIndex(ret.revisions, {isOpenAccess: true});
+
             metaService.set({
-              title: latestOARevision.title + ' · PaperHive',
+              title: latestRevision.title + ' · PaperHive',
               meta: metaData
             });
           })
