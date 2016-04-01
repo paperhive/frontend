@@ -7,11 +7,11 @@ export default function(app) {
   app.controller('DocumentTextCtrl', [
     '$scope', '$route', '$routeSegment', '$document', '$http', '$filter', '$timeout',
     'config', 'authService', 'notificationService', 'distangleService',
-    'metaService', 'tourService', 'smoothScroll',
+    'metaService', 'tourService', 'smoothScroll', '$location',
     function(
       $scope, $route, $routeSegment, $document, $http, $filter, $timeout, config,
       authService, notificationService, distangleService, metaService, tourService,
-      smoothScroll
+      smoothScroll, $location
     ) {
       $scope.tour = tourService;
 
@@ -35,17 +35,7 @@ export default function(app) {
 
       const revisionId = $routeSegment.$routeParams.revisionId;
 
-      function getAccessiblePdfUrl(documentRevision) {
-        // TODO actually check user access here (e.g., via the Elsevier Article
-        // Entitlement API)
-        const userHasAccess = documentRevision.isOpenAccess;
-        if (!userHasAccess) {
-          notificationService.notifications.push({
-            type: 'error',
-            message: 'You currently have no access to the PDF.',
-          });
-          return undefined;
-        }
+      function getPdfUrl(documentRevision) {
         if (documentRevision.file.hasCors &&
             urlPackage.parse(documentRevision.file.url).protocol === 'https') {
           // all good
@@ -83,15 +73,28 @@ export default function(app) {
         $scope.activeRevisionIdx = activeRevisionIdx;
         // Construct strings for display in revision selection dropdown.
         // get pdf url
-        try {
-          const revision = revisions[activeRevisionIdx];
-          $scope.origPdfSource = revision.file.url;
-          $scope.pdfSource = getAccessiblePdfUrl(revision);
-        } catch (e) {
-          notificationService.notifications.push({
-            type: 'error',
-            message: 'PDF cannot be displayed: ' + e.message
-          });
+        const revision = revisions[activeRevisionIdx];
+        $scope.origPdfSource = revision.file.url;
+
+        // TODO actually check user access here (e.g., via the Elsevier Article
+        // Entitlement API)
+        const userHasAccess = revision.isOpenAccess;
+        if (userHasAccess) {
+          $scope.pdfSource = getPdfUrl(revision);
+        } else {
+          if ($scope.latestOAIdx !== -1) {
+            // redirect to latest OA version
+            const latestOaRevision = revisions[$scope.latestOAIdx];
+            $location.path(
+              `/documents/${latestOaRevision.id}/revisions/${latestOaRevision.revision}`
+            );
+            // TODO display a notification about the redirect?
+          } else {
+            notificationService.notifications.push({
+              type: 'error',
+              message: 'You currently have no access to the PDF.',
+            });
+          }
         }
       });
 
