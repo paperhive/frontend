@@ -37,9 +37,9 @@ export default function(app) {
 
       function getPdfUrl(documentRevision) {
         if (documentRevision.file.hasCors &&
-            urlPackage.parse(documentRevision.file.url).protocol === 'https') {
+            urlPackage.parse(documentRevision.file.url).protocol === 'https:') {
           // all good
-          return documentRevision.file;
+          return documentRevision.file.url;
         }
         // No HTTPS/Cors? PaperHive can proxy the document if it's open access.
         if (documentRevision.isOpenAccess) {
