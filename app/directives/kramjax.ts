@@ -36,21 +36,8 @@ export default function(app) {
         restrict: 'E',
         scope: {
           body: '=',
-          suppressParagraphs: '='
         },
         link: function(scope, element, attrs) {
-          // kramed puts a <p> around every output sample, making it impossible
-          // to avoid the line break right after the kramed text; cf.
-          // <https://github.com/GitbookIO/kramed/issues/40>. To work around,
-          // add an attribute option here to suppress paragraphs altogether.
-          scope.$watch('suppressParagraphs', function(value) {
-            if (value) {
-              renderer.paragraph = function(text) { return text; };
-            } else {
-              renderer.paragraph = origParagraphRenderer;
-            }
-          });
-
           scope.$watch('body', function(newValue) {
             try {
               element.html(
