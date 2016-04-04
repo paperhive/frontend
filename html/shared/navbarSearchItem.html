@@ -5,11 +5,8 @@
     </div>
     <div class="media-body">
       <div>
-        <kramjax
-          body="match.model.title | uibTypeaheadHighlight:query"
-          suppress-paragraphs="true"
-          >
-        </kramjax>
+        <mathjax body="match.model.title | uibTypeaheadHighlight:query">
+        </mathjax>
       </div>
       <small>
         <span ng-repeat="author in match.model.authors">
