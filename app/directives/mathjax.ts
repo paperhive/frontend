@@ -1,15 +1,6 @@
 /*global MathJax*/
 'use strict';
 
-MathJax.Hub.Config({
-  tex2jax: {
-    inlineMath: [
-      ['$$', '$$'],
-    ],
-    displayMath: [],
-  }
-});
-
 export default function(app) {
   app.directive(
     'mathjax', [
