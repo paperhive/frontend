@@ -31,7 +31,7 @@ export default function(app) {
           });
         }],
         template:
-        `<div class="list-group">
+        `<div class="list-group" ng-if="$ctrl.hivedDocuments.length > 0">
           <a ng-repeat="doc in $ctrl.hivedDocuments" href="./documents/{{doc.id}}" class="list-group-item">
             <h4 class="list-group-item-heading"><kramjax body="doc.title"></kramjax></h4>
             <p class="list-group-item-text">
@@ -40,6 +40,7 @@ export default function(app) {
               </span>
             </p>
           </a>
-        </div>`
+        </div>
+        <span ng-if="$ctrl.hivedDocuments.length == 0">No documents in hive yet.</span>`
     });
 };

@@ -5,7 +5,8 @@
   </div>
   <div class="col-sm-6">
     <h4>Discussions</h4>
-    <ul class="list-group">
+    <span ng-if="$ctrl.discussions.length == 0">No discussions started yet.</span>
+    <ul class="list-group" ng-if="$ctrl.discussions.length > 0">
       <li class="list-group-item" ng-repeat="discussion in $ctrl.discussions">
       <a href="./{{'documents.discussions.thread' | routeSegmentUrl: {discussionId: discussion.id} }}">
         <span
