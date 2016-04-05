@@ -1,10 +1,17 @@
-<ul class="nav navbar-nav">
+<ul class="nav navbar-nav"
+  popover-placement="bottom"
+  popover-is-open="tour.stages[tour.index] === 'signup'"
+  uib-popover-template="'html/shared/tour-signup.html'"
+  popover-trigger="none"
+>
   <li ng-if="!auth.user && !auth.inProgress">
     <p class="navbar-btn ph-md-margin-left ph-md-margin-right">
-      <a href="./signup?returnPath={{auth.returnPath}}" class="btn btn-primary"
-        >Sign up</a>
-      <a href="./login?returnPath={{auth.returnPath}}" class="btn btn-default"
-        >Log in</a>
+      <a href="./signup?returnPath={{auth.returnPath}}"
+        class="btn btn-primary"
+      >Sign up</a>
+      <a href="./login?returnPath={{auth.returnPath}}" class="btn btn-default">
+        Log in
+      </a>
     </p>
   </li>
   <li ng-if="!auth.user && auth.inProgress">

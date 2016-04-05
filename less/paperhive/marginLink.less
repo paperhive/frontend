@@ -1,0 +1,55 @@
+margin-link > div {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  pointer-events: none;
+
+  & .ph-margin-link {
+    padding: 7px;
+    background: fade(@ph-background-color, 90%);
+    text-align: center;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+    pointer-events: all;
+
+    // animation basics
+    position: relative;
+    transition: opacity ease 0.5s, top ease 0.5s, bottom ease 0.5s;
+
+    /* Note: opacity animation is disabled because it leads to flickering
+             elements with `position: fixed` in Chrome. Probably related to
+             https://bugs.chromium.org/p/chromium/issues/detail?id=438179
+    // animate opacity
+    opacity: 1;
+    &.ng-hide {
+      opacity: 0;
+    }
+    */
+
+    // animate top
+    &.ph-margin-link-top {
+      top: 0;
+      &.ng-hide {
+        top: -40px;
+      }
+    }
+
+    // animate bottom
+    &.ph-margin-link-bottom {
+      bottom: 0;
+      &.ng-hide {
+        bottom: -40px;
+      }
+    }
+
+    // display old value when hiding (includes animation)
+    &.ng-hide .ph-margin-link-current {
+      display: none;
+    }
+
+    // display current value when not hiding
+    &:not(.ng-hide) .ph-margin-link-previous {
+      display: none;
+    }
+  }
+}

@@ -11,11 +11,11 @@ export default function(app) {
       controller: [
         '$scope', '$route', '$routeSegment', '$document', '$http', 'config',
         '$rootScope', '$filter', 'authService', 'notificationService',
-        'metaService', 'websocketService', '$window',
+        'metaService', 'websocketService', '$window', 'tourService',
         function(
           $scope, $route, $routeSegment, $document, $http, config, $rootScope,
           $filter, authService, notificationService, metaService, websocketService,
-          $window
+          $window, tourService
         ) {
           // expose authService
           $scope.auth = authService;
@@ -23,30 +23,10 @@ export default function(app) {
           // template.
           $scope.$routeSegment = $routeSegment;
 
-          const documentId = $routeSegment.$routeParams.documentId;
+          $scope.tour = tourService;
 
-          // ask local storage if flag 'documentVisited' is already set
-          if (!$window.localStorage.documentVisited) {
-            // set flag at first usage
-            $window.localStorage.documentVisited = true;
-            // and trigger notification
-            notificationService.notifications.push({
-              type: 'info',
-              message:
-                `Hints:
-              <ul>
-              <li>
-              Select text of interest and ask the research community a question
-              </li>
-              <li>
-              Save time, help others in real time by replying to their comment
-              </li>
-              <li>
-              Enrich papers with references to other useful research
-              </li>
-              </ul>`
-            });
-          }
+          const documentId = $routeSegment.$routeParams.documentId;
+          $scope.documentId = documentId;
 
           const documentUpdates = websocketService.join('documents', documentId);
           const documentUpdatesSubscriber = documentUpdates.subscribe((update) => {
@@ -280,7 +260,7 @@ export default function(app) {
             .success(function(reply) {
               angular.copy(reply, replyOld);
             })
-            .error(notificationService.httpError('could not add reply'));
+            .error(notificationService.httpError('could not update reply'));
           };
 
           $scope.replyDelete = function(discussion, reply) {

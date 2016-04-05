@@ -1,23 +1,24 @@
-<span ng-if="!c.isEditMode">
-  {{content}}
+<span ng-if="!$ctrl.c.isEditMode">
+  {{$ctrl.content}}
   <button
+    ng-if="$ctrl.canEdit"
     class="btn btn-link"
-    ng-click="c.isEditMode = true"
+    ng-click="$ctrl.originalContent = $ctrl.content; $ctrl.c.isEditMode = true;"
     >
     <i class="fa fa-pencil"></i>
   </button>
 </span>
 <form
-  ng-if="c.isEditMode"
+  ng-if="$ctrl.c.isEditMode"
   name="inlineEditForm"
-  ng-submit="inlineEditForm.$valid && update(content)"
+  ng-submit="inlineEditForm.$valid && $ctrl.update($ctrl.content)"
   novalidate
   >
   <input
     type="text"
     class="form-control ph-discussion-title"
-    size="{{content.length + 5}}"
-    ng-model="content"
+    size="{{$ctrl.content.length + 5}}"
+    ng-model="$ctrl.content"
     required
     >
   <button
@@ -29,7 +30,7 @@
   </button>
   <button
     class="btn btn-default"
-    ng-click="reset()"
+    ng-click="$ctrl.reset()"
     >
     <i class="fa fa-remove"></i>
   </button>
