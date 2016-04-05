@@ -56,7 +56,7 @@ export default function(app) {
 
         // Init Main Page
         .segment('main', {
-          templateUrl: 'html/main/main.html',
+          template: '<main-page></main-page>',
           title: meta.main.title,
           meta: [
             {name: 'description', content: meta.main.description},
@@ -124,7 +124,7 @@ export default function(app) {
         })
 
         .segment('authReturn', {
-          controller: 'AuthReturnCtrl',
+          template: '<auth-return></auth-return>',
           title: 'PaperHive'
         })
 
@@ -203,7 +203,7 @@ export default function(app) {
         })
 
         .segment('jobs', {
-          templateUrl: 'html/jobs.html',
+          template: '<jobs></jobs>',
           title: 'Jobs · PaperHive',
           meta: [
             {
@@ -262,7 +262,7 @@ export default function(app) {
         })
 
         .segment('subscribed', {
-          templateUrl: 'html/subscribed.html',
+          template: '<subscribed></subscribed>',
           title: 'Successfully subscribed · PaperHive'
         })
 

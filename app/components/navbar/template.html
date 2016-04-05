@@ -1,9 +1,17 @@
 <!-- Header bar -->
 <div class="navbar navbar-default navbar-fixed-top"
     element-size="$root.navbarSize"
-    role="navigation">
+    role="navigation"
+    id="topPopover"
+  >
   <div class="container-fluid">
-    <div class="navbar-header">
+    <div
+      class="navbar-header"
+      popover-placement="bottom-left"
+      popover-is-open="tour.stages[tour.index] === 'start' && !tourVisited"
+      uib-popover-template="'html/shared/tour-start.html'"
+      popover-trigger="none"
+    >
       <!-- toggle nav -->
       <button ng-click="collapsed=!collapsed" type="button" class="navbar-toggle">
         <span class="sr-only">Toggle navigation</span>

@@ -2,6 +2,7 @@
   <h3 class="ph-no-margin-top">
     <inline-editable
       original-content="discussion.title"
+      can-edit="auth.user.id === discussion.author.id"
       on-save="discussion.title = $content; updateTitle($content);"
       >
     </inline-editable>
