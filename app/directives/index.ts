@@ -7,6 +7,7 @@ import elementPosition from './elementPosition';
 import elementSize from './elementSize';
 import highlights from './highlights';
 import kramjax from './kramjax';
+import mathjax from './mathjax';
 import onOutside from './onOutside';
 import onRendered from './onRendered';
 import onTextSelect from './onTextSelect';
@@ -27,6 +28,7 @@ export default function(app) {
   elementSize(app);
   highlights(app);
   kramjax(app);
+  mathjax(app);
   onOutside(app);
   onRendered(app);
   onTextSelect(app);

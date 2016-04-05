@@ -29,7 +29,7 @@
       <h4>
         <a href="./{{'documents.discussions.thread' | routeSegmentUrl:
             {discussionId: discussion.id} }}">
-          {{discussion.title}}</a>
+          <mathjax body="discussion.title"></mathjax></a>
         <ul
           ng-if="discussion.tags.length > 0"
           class="ph-tags list-inline"

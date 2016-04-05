@@ -49,18 +49,18 @@ SystemJS.config({
     "path": "github:jspm/nodelibs-path@0.2.0-alpha",
     "pdfjs-dist": "github:mozilla/pdfjs-dist@1.4.37",
     "plugin-babel": "npm:systemjs-plugin-babel@0.0.8",
-    "plugin-typescript": "github:frankwallis/plugin-typescript@4.0.2",
+    "plugin-typescript": "github:frankwallis/plugin-typescript@4.0.5",
     "process": "github:jspm/nodelibs-process@0.2.0-alpha",
     "rangy": "github:timdown/rangy-release@1.3.0",
     "readline": "github:jspm/nodelibs-readline@0.2.0-alpha",
     "rx": "npm:rx@4.0.7",
     "socket.io-client": "github:socketio/socket.io-client@1.4.5",
     "text": "github:systemjs/plugin-text@0.0.7",
-    "ts": "github:frankwallis/plugin-typescript@4.0.2",
+    "ts": "github:frankwallis/plugin-typescript@4.0.5",
     "url": "github:jspm/nodelibs-url@0.2.0-alpha"
   },
   packages: {
-    "github:frankwallis/plugin-typescript@4.0.2": {
+    "github:frankwallis/plugin-typescript@4.0.5": {
       "map": {
         "typescript": "npm:typescript@1.8.9"
       }

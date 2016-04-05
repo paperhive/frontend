@@ -22,11 +22,11 @@
             </p>
           </div>
           <div ng-if="!discussion.body">
-            <kramjax body="discussion.title"></kramjax>
+            <mathjax body="discussion.title"></mathjax>
           </div>
           <div ng-if="discussion.body">
             <p class="ph-margin-title ph-no-margin ph-xs-margin-bottom">
-              <kramjax body="discussion.title"></kramjax>
+              <mathjax body="discussion.title"></mathjax>
             </p>
             <kramjax body="discussion.body"></kramjax>
           </div>

@@ -22,7 +22,7 @@ export default function(app) {
       // modify the kramed renderer such that math items are wrapped in
       // div and span groups
       const renderer = new kramed.Renderer();
-      const origRenderer = renderer.math;
+      const origMathRenderer = renderer.math;
       renderer.math = function(content, language, display) {
         if (display) {
           return '<div class="mathjax">' + content + '</div>';
@@ -30,10 +30,13 @@ export default function(app) {
           return '<span class="mathjax">' + content + '</span>';
         }
       };
+      const origParagraphRenderer = renderer.paragraph;
 
       return {
         restrict: 'E',
-        scope: {body: '='},
+        scope: {
+          body: '=',
+        },
         link: function(scope, element, attrs) {
           scope.$watch('body', function(newValue) {
             try {
@@ -42,7 +45,7 @@ export default function(app) {
               );
               // replace span/div tags with script tags
               jquery(element[0]).find('.mathjax').each(function(index, el) {
-                jquery(el).replaceWith(origRenderer(
+                jquery(el).replaceWith(origMathRenderer(
                   jquery(el).text(), 'math/tex', jquery(el).prop('tagName') === 'DIV'
                 ));
               });
