@@ -29,6 +29,7 @@ export default function(app) {
         if (shouldScroll) {
           // wait until popover is rendered
           $timeout(() => {
+            // trigger popover positioning
             angular.element($window).scroll();
             $timeout(() => {
               const popover = document.getElementById('discussionTourPopover');
