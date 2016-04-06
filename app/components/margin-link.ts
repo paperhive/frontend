@@ -31,6 +31,10 @@ export default function(app) {
           const extraOffset = ctrl.extraOffset || 70;
 
           ctrl.nextDiscussionId = undefined;
+
+          // get position of parent element
+          // (may be null when the element is detached/destroyed)
+          if (!$element[0].parentElement) return;
           const parentBoundingRect = $element[0].parentElement.getBoundingClientRect();
 
           // count elements above/below the viewport and get next discussion id
