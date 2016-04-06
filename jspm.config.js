@@ -47,7 +47,6 @@ SystemJS.config({
     "mutx": "npm:mutx@0.1.0",
     "ngSmoothScroll": "github:d-oliveros/ngSmoothScroll@2.0.0",
     "os": "github:jspm/nodelibs-os@0.2.0-alpha",
-    "paperhive-sources": "npm:paperhive-sources@4.0.2",
     "path": "github:jspm/nodelibs-path@0.2.0-alpha",
     "pdfjs-dist": "github:mozilla/pdfjs-dist@1.4.37",
     "plugin-babel": "npm:systemjs-plugin-babel@0.0.8",

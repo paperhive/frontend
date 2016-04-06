@@ -11,7 +11,7 @@
                 Username
               </label>
               <div class="col-sm-8">
-                <input ng-model="user.account.username"
+                <input ng-model="$ctrl.user.account.username"
                   ng-model-options="{ debounce: 250 }"
                   name="username" type="text"
                   class="form-control" id="username"
@@ -48,7 +48,7 @@
                 Display name
               </label>
               <div class="col-sm-8">
-                <input ng-model="user.displayName" name="displayName" type="text"
+                <input ng-model="$ctrl.user.displayName" name="displayName" type="text"
                   class="form-control" id="displayName"
                   required ng-minlength="3" ng-maxlength="25">
                 <i ng-show="profileForm.displayName.$invalid"
@@ -69,19 +69,19 @@
             <!-- see vertical alignment: http://stackoverflow.com/a/25517025/4419582 -->
             <div class="row ph-vertical-align">
               <div class="col-sm-2 col-sm-offset-3">
-                <button ng-click="save()" class="btn btn-primary"
-                    ng-disabled="profileForm.$invalid || busy">
-                  <i class="fa fa-fw fa-check" ng-show="busy !== 'save'"></i>
-                  <i class="fa fa-fw fa-spinner fa-spin" ng-show="busy === 'save'"></i>
+                <button ng-click="$ctrl.save()" class="btn btn-primary"
+                    ng-disabled="profileForm.$invalid || $ctrl.busy">
+                  <i class="fa fa-fw fa-check" ng-show="$ctrl.busy !== 'save'"></i>
+                  <i class="fa fa-fw fa-spinner fa-spin" ng-show="$ctrl.busy === 'save'"></i>
                   Save
                 </button>
               </div>
               <div class="col-sm-4" ng-class="{'has-success': profileForm.$valid}">
-                <span ng-if="setting.succeeded" class="text-success">
+                <span ng-if="$ctrl.setting.succeeded" class="text-success">
                   <i class="fa fa-fw fa-check"></i>
                   Changes have been saved.
                 </span>
-                <span ng-if="setting.error" class="text-danger">
+                <span ng-if="$ctrl.setting.error" class="text-danger">
                   <i class="fa fa-fw fa-times"></i>
                   {{signup.error}}
                 </span>
@@ -100,7 +100,7 @@
           <h4>
             Associated accounts
           </h4>
-          <settings-accounts person="user"></settings-accounts>
+          <settings-accounts person="$ctrl.user"></settings-accounts>
         </div>
       </div>
     </div>
@@ -111,7 +111,11 @@
           <h4>
             Associated email addresses
           </h4>
-          <settings-email person="user" on-update-default-email="user.account.email = email; saveRaw()"></settings-email>
+          <settings-email
+            person="$ctrl.user"
+            on-update-default-email="$ctrl.user.account.email = email; $ctrl.saveRaw()"
+            >
+          </settings-email>
         </div>
       </div>
     </div>

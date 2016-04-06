@@ -58,7 +58,6 @@ export default function(app) {
         // delete original comment (with discussion!)
         $scope.discussionDelete = function() {
           $scope.originalState.submitting = true;
-
           $q.when(ctrl.onDiscussionDelete({$discussion: $scope.discussion}))
             .finally(function() {
               $scope.originalState.submitting = false;
@@ -68,7 +67,6 @@ export default function(app) {
         // add reply
         $scope.replySubmit = function() {
           $scope.state.submitting = true;
-
           $q.when(ctrl.onReplySubmit({$reply: $scope.replyDraft}))
             .then(function() {
               $scope.replyDraft = {};
@@ -81,10 +79,8 @@ export default function(app) {
         // reply controller (for deletion)
         $scope.replyCtrl = ['$scope', function($scope) {
           $scope.replyState = {};
-
           $scope.replyDelete = function(reply) {
             $scope.replyState.submitting = true;
-
             $q.when(ctrl.onReplyDelete({$reply: reply}))
               .finally(function() {
                 $scope.replyState.submitting = false;
