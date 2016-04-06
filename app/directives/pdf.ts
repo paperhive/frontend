@@ -509,7 +509,7 @@ export default function(app) {
           const selectors = {};
 
           // add quote selector
-          selectors.pdfTextQuotes = {}
+          selectors.pdfTextQuotes = {};
 
           return this.onSelect(selectors);
         });
