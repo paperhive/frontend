@@ -1,3 +1,4 @@
+import angular from 'angular';
 import * as _ from 'lodash';
 import { find } from 'lodash';
 import * as urlPackage from 'url';
@@ -5,11 +6,11 @@ import * as urlPackage from 'url';
 export default function(app) {
 
   app.controller('DocumentTextCtrl', [
-    '$scope', '$route', '$routeSegment', '$document', '$http', '$filter', '$timeout',
+    '$scope', '$route', '$routeSegment', '$document', '$http', '$filter', '$timeout', '$window',
     'config', 'authService', 'notificationService', 'distangleService',
     'metaService', 'tourService', 'smoothScroll',
     function(
-      $scope, $route, $routeSegment, $document, $http, $filter, $timeout, config,
+      $scope, $route, $routeSegment, $document, $http, $filter, $timeout, $window, config,
       authService, notificationService, distangleService, metaService, tourService,
       smoothScroll
     ) {
@@ -28,9 +29,13 @@ export default function(app) {
         if (shouldScroll) {
           // wait until popover is rendered
           $timeout(() => {
-            const popover = document.getElementById('discussionTourPopover');
-            smoothScroll(popover, {offset: 140});
-          });
+            // trigger popover positioning
+            angular.element($window).scroll();
+            $timeout(() => {
+              const popover = document.getElementById('discussionTourPopover');
+              smoothScroll(popover, {offset: 140});
+            });
+          }, 400);
         }
       });
 

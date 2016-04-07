@@ -50,7 +50,7 @@
 
       <div class="col-md-2">
         <span class="pull-right">
-          <a class="btn btn-default" ng-href="{{origPdfSource.url}}" download>
+          <a class="btn btn-default" ng-href="{{origPdfSource}}" download>
             Download PDF
           </a>
         </span>
@@ -123,7 +123,7 @@
            ng-mouseleave="text.highlightBorder[discussion.id] = false"
            element-size="text.marginDiscussionSizes[discussion.id]"
            popover-placement="top"
-           popover-is-open="discussion.id === '3dmQKzejCo_c' && tour.stages[tour.index] === 'margin-discussion'"
+           popover-is-open="discussion.id === 'cDmUY04FkYx9' && tour.stages[tour.index] === 'margin-discussion'"
            uib-popover-template="'html/shared/tour-margin-discussion.html'"
            popover-trigger="none"
            on-rendered="discussionTour.rendered = true"
