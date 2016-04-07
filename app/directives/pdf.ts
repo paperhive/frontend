@@ -1,5 +1,5 @@
 import angular from 'angular';
-import { isEqual, pick, some } from 'lodash';
+import { isEqual, map, pick, some } from 'lodash';
 import { Mutex } from 'mutx';
 import {PDFJS} from 'pdfjs-dist';
 import rangy from 'rangy';
@@ -505,10 +505,19 @@ export default function(app) {
               rangeByPage[page.pageNumber] = range.intersection(pageRange);
             });
 
-            const selectors = {};
+            console.log(range);
 
-            // add quote selector
-            selectors.pdfTextQuotes = {};
+            const selectors = {
+              // text quote selector
+              textQuote: {
+                content: range.toString(),
+              },
+            };
+
+            // pdf text quote selector
+            selectors.pdfTextQuotes = map(rangeByPage, (range, pageNumber) =>
+              ({page: pageNumber, content: range.toString()})
+            );
 
             return this.onSelect(selectors);
           });
