@@ -114,7 +114,6 @@ export default function(app) {
       async render(viewport) {
         if (!this.textContent) {
           this.textContent = await this.page.getTextContent();
-          console.log(this.textContent);
         }
 
         // wipe all children from the container
@@ -421,97 +420,98 @@ export default function(app) {
       }
 
       onTextSelect() {
-        this.scope.$apply(() => {
-          /*
-          const onTextSelect = function(selection) {
+        // delayed execution of handler
+        // (otherwise deselection of text is not detected)
+        $timeout(() => {
+          this.scope.$apply(() => {
+            /*
+            const onTextSelect = function(selection) {
 
-            let serializedRanges;
+              let serializedRanges;
 
-            // serialize ALL the ranges (if a selection is given)
-            if (selection) {
-              serializedRanges = _.map(
-                selection.getAllRanges(),
-                function(range) {
-                  return rangy.serializeRange(range, true, element[0]);
-                }
-              );
-            }
-
-            // only call expression if something happened
-            // (otherwise every keypress calls the expression)
-            if (!_.isEqual(serializedRanges, lastSerializedRanges)) {
-              lastSerializedRanges = serializedRanges;
-
-              let target;
-              // construct target object if valid ranges are given
-              if (serializedRanges && serializedRanges.length &&
-                  selection) {
-                target = {
-                  text: selection.toString(),
-                  ranges: serializedRanges
-                };
+              // serialize ALL the ranges (if a selection is given)
+              if (selection) {
+                serializedRanges = _.map(
+                  selection.getAllRanges(),
+                  function(range) {
+                    return rangy.serializeRange(range, true, element[0]);
+                  }
+                );
               }
 
-              this.scope.onSelect({selectors: target});
+              // only call expression if something happened
+              // (otherwise every keypress calls the expression)
+              if (!_.isEqual(serializedRanges, lastSerializedRanges)) {
+                lastSerializedRanges = serializedRanges;
+
+                let target;
+                // construct target object if valid ranges are given
+                if (serializedRanges && serializedRanges.length &&
+                    selection) {
+                  target = {
+                    text: selection.toString(),
+                    ranges: serializedRanges
+                  };
+                }
+
+                this.scope.onSelect({selectors: target});
+              }
+            };
+            */
+
+            // get current text selection
+            const selection = rangy.getSelection();
+
+            // no selection object or no anchor/focus
+            if (!selection || !selection.anchorNode || !selection.focusNode) {
+              return this.onSelect(undefined);
             }
-          };
-          */
 
-          // get current text selection
-          const selection = rangy.getSelection();
+            // selection not contained in element?
+            if (!rangy.dom.isAncestorOf(this.element[0], selection.anchorNode) ||
+                !rangy.dom.isAncestorOf(this.element[0], selection.focusNode)) {
+              return this.onSelect(undefined);
+            }
 
-          // no selection object or no anchor/focus
-          if (!selection || !selection.anchorNode || !selection.focusNode) {
-            return this.onSelect(undefined);
-          }
-          console.log(selection);
+            // do not allow collapsed / empty selections
+            if (!selection.toString()) {
+              return this.onSelect(undefined);
+            }
 
-          // selection not contained in element?
-          if (!rangy.dom.isAncestorOf(this.element[0], selection.anchorNode) ||
-              !rangy.dom.isAncestorOf(this.element[0], selection.focusNode)) {
-            return this.onSelect(undefined);
-          }
+            // do not allow selections with zero or more than one ranges
+            // (André: I guess that's possible in crazy browsers)
+            if (selection.rangeCount !== 1) {
+              return this.onSelect(undefined);
+            }
 
-          // do not allow collapsed / empty selections
-          if (!selection.toString()) {
-            return this.onSelect(undefined);
-          }
+            // do nothing if start and end are equal to last selection
+            const simpleSelection = pick(selection,
+              'anchorNode', 'anchorOffset', 'focusNode', 'focusOffset');
+            if (isEqual(simpleSelection, this.lastSimpleSelection)) return;
+            this.lastSimpleSelection = simpleSelection;
 
-          // do not allow selections with zero or more than one ranges
-          // (André: I guess that's possible in crazy browsers)
-          if (selection.rangeCount !== 1) {
-            return this.onSelect(undefined);
-          }
+            // split selection ranges into ranges for individual pages
+            // TODO: implement O(1) page detection for a range
+            const range = selection.getAllRanges()[0];
+            const rangeByPage = {};
+            this.pages.forEach(page => {
+              if (!range.intersectsNode(page.textRenderer.element[0])) return;
 
-          // do nothing if start and end are equal to last selection
-          const simpleSelection = pick(selection,
-            'anchorNode', 'anchorOffset', 'focusNode', 'focusOffset');
-          if (isEqual(simpleSelection, this.lastSimpleSelection)) return;
-          this.lastSimpleSelection = simpleSelection;
+              // get range that selects the page's content
+              const pageRange = rangy.createRange();
+              pageRange.selectNodeContents(page.textRenderer.element[0]);
 
-          // split selection ranges into ranges for individual pages
-          // TODO: implement O(1) page detection for a range
-          const range = selection.getAllRanges()[0];
-          const rangeByPage = {};
-          this.pages.forEach(page => {
-            if (!range.intersectsNode(page.textRenderer.element[0])) return;
+              // intersect range with page range
+              rangeByPage[page.pageNumber] = range.intersection(pageRange);
+            });
 
-            // get range that selects the page's content
-            const pageRange = rangy.createRange();
-            pageRange.selectNodeContents(page.textRenderer.element[0]);
+            const selectors = {};
 
-            // intersect range with page range
-            rangeByPage[page.pageNumber] = range.intersection(pageRange);
+            // add quote selector
+            selectors.pdfTextQuotes = {};
+
+            return this.onSelect(selectors);
           });
-
-          console.log(rangeByPage);
-
-          const selectors = {};
-
-          // add quote selector
-          selectors.pdfTextQuotes = {};
-
-          return this.onSelect(selectors);
         });
       }
 
