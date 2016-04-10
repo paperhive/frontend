@@ -1,6 +1,6 @@
 import angular from 'angular';
 import * as _ from 'lodash';
-import { find } from 'lodash';
+import { find, get } from 'lodash';
 import * as urlPackage from 'url';
 
 export default function(app) {
@@ -8,13 +8,12 @@ export default function(app) {
   app.controller('DocumentTextCtrl', [
     '$scope', '$route', '$routeSegment', '$document', '$http', '$filter', '$timeout', '$window',
     'config', 'authService', 'notificationService', 'distangleService',
-    'metaService', 'tourService', 'smoothScroll',
+    'metaService', 'tourService', 'smoothScroll', '$location',
     function(
       $scope, $route, $routeSegment, $document, $http, $filter, $timeout, $window, config,
       authService, notificationService, distangleService, metaService, tourService,
-      smoothScroll
+      smoothScroll, $location
     ) {
-
       $scope.tour = tourService;
 
       $scope.text = {
@@ -41,21 +40,11 @@ export default function(app) {
 
       const revisionId = $routeSegment.$routeParams.revisionId;
 
-      function getAccessiblePdfUrl(documentRevision) {
-        // TODO actually check user access here (e.g., via the Elsevier Article
-        // Entitlement API)
-        const userHasAccess = documentRevision.isOpenAccess;
-        if (!userHasAccess) {
-          notificationService.notifications.push({
-            type: 'error',
-            message: 'You currently have no access to the PDF.',
-          });
-          return undefined;
-        }
+      function getPdfUrl(documentRevision) {
         if (documentRevision.file.hasCors &&
-            urlPackage.parse(documentRevision.file.url).protocol === 'https') {
+            urlPackage.parse(documentRevision.file.url).protocol === 'https:') {
           // all good
-          return documentRevision.file;
+          return documentRevision.file.url;
         }
         // No HTTPS/Cors? PaperHive can proxy the document if it's open access.
         if (documentRevision.isOpenAccess) {
@@ -68,7 +57,7 @@ export default function(app) {
         });
       }
 
-      $scope.$watch('revisions', function(revisions) {
+      $scope.$watch('revisions', async function(revisions) {
         if (!revisions) { return; }
         let activeRevisionIdx;
         if (revisionId) {
@@ -80,23 +69,60 @@ export default function(app) {
             });
           }
         } else {
-          // default to the latest OA revision
-          activeRevisionIdx = $scope.latestOAIdx;
+          // Default to the latest OA revision, and -- if that's not available
+          // -- the latest revision.
+          activeRevisionIdx =
+            $scope.latestOAIdx !== -1 ? $scope.latestOAIdx : revisions.length - 1;
         }
         // Expose in scope
         $scope.activeRevisionIdx = activeRevisionIdx;
         // Construct strings for display in revision selection dropdown.
         // get pdf url
-        try {
-          const revision = revisions[activeRevisionIdx];
-          $scope.origPdfSource = revision.file.url;
-          $scope.pdfSource = getAccessiblePdfUrl(revision);
-        } catch (e) {
-          notificationService.notifications.push({
-            type: 'error',
-            message: 'PDF cannot be displayed: ' + e.message
-          });
+        const revision = revisions[activeRevisionIdx];
+        $scope.origPdfSource = revision.file.url;
+
+        let userHasAccess = false;
+        if (revision.isOpenAccess) {
+          userHasAccess = true;
+        } else if (revision.remote.type === 'elsevier') {
+          // Check via the article entitlement API if the user as access to the
+          // current document.
+          const ret = await $http({
+              method: 'GET',
+              url: `${config.elsevier.entitlementApiUrl}/doi/${revision.doi}`,
+              params: {
+                apiKey: config.elsevier.apiKey,
+              }
+            });
+          userHasAccess = !!get(
+            ret,
+            ['data', 'entitlement-response', 'document-entitlement', 'entitled']
+          );
         }
+
+        if (userHasAccess) {
+          $scope.pdfSource = getPdfUrl(revision);
+        } else {
+          if ($scope.latestOAIdx !== -1) {
+            // redirect to latest OA version
+            const latestOaRevision = revisions[$scope.latestOAIdx];
+            $location.path(
+              `/documents/${latestOaRevision.id}/revisions/${latestOaRevision.revision}`
+            );
+            // TODO display a notification about the redirect?
+            // Problem: $routeChangeSuccess wipes the notifications and it
+            // triggered *right after* $locationChangeSuccess.
+          } else {
+            notificationService.notifications.push({
+              type: 'error',
+              message: 'You currently have no access to the PDF.',
+            });
+          }
+        }
+
+        // This is an async function, so unless we $apply, angular won't
+        // know that values have changed.
+        $scope.$apply();
       });
 
       $scope.getShortDescription = (revision) => {
