@@ -547,6 +547,8 @@ export default function(app) {
             }
 
             // do nothing if start and end are equal to last selection
+            // NOTE: this currently does not work because getRectanglesSelector
+            //       creates new TextNodes in order to measure selections
             const simpleSelection = pick(selection,
               'anchorNode', 'anchorOffset', 'focusNode', 'focusOffset');
             if (isEqual(simpleSelection, this.lastSimpleSelection)) return;
@@ -572,7 +574,12 @@ export default function(app) {
 
             const selectors = {
               // text position selector
-              textPosition: getTextPositionSelector(range, this.element[0]),
+              // TODO: the global text position selector currently makes no
+              //       sense because it requires that the full document
+              //       has been rendered. It also runs in O(N) where N is the
+              //       total number of characters in the document.
+              // textPosition: getTextPositionSelector(range, this.element[0]),
+
               // text quote selector
               textQuote: getTextQuoteSelector(range, this.element[0]),
             };
@@ -600,6 +607,8 @@ export default function(app) {
               selectors.forEach(selector => selector.pageNumber = pageRange.pageNumber);
               return selectors;
             }));
+
+            selection.removeAllRanges();
 
             return this.onSelect(selectors);
           });
