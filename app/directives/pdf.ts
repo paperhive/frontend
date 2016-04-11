@@ -1,7 +1,8 @@
 import angular from 'angular';
-import { isEqual, map, pick, some } from 'lodash';
+import jquery from 'jquery';
+import { flatten, isEqual, map, pick, some } from 'lodash';
 import { Mutex } from 'mutx';
-import {PDFJS} from 'pdfjs-dist';
+import { PDFJS } from 'pdfjs-dist';
 import rangy from 'rangy';
 
 // test if height and width properties of 2 objects are equal
@@ -31,6 +32,10 @@ function isVisible(element, $window) {
   return elementTop <= 2 * viewportHeight && elementBottom >= - viewportHeight;
 }
 
+function getTextPositionSelector(range, container) {
+  return range.toCharacterRange(container);
+}
+
 // compute textQuote selector for a range (relies on rangy's textRange)
 function getTextQuoteSelector(range, container) {
   // create prefix/suffix range
@@ -58,6 +63,65 @@ function getTextQuoteSelector(range, container) {
     prefix: prefixRange.text(),
     suffix: suffixRange.text(),
   };
+}
+
+// returns all leaf text nodes that are descendants of node or are node
+const getTextNodes = function(node) {
+  if (!node) { return []; }
+  if (node.nodeType === Node.TEXT_NODE) { return [node]; }
+
+  // process childs
+  let nodes = [];
+  jquery(node).contents().each(function(index, el) {
+    nodes = nodes.concat(getTextNodes(el));
+  });
+  return nodes;
+};
+
+function getRectanglesSelector(range, container) {
+  const containerRect = container.getBoundingClientRect();
+
+  // preserve current selection to work around browser bugs that result
+  // in a changed selection
+  // see https://github.com/timdown/rangy/issues/93
+  // and https://github.com/timdown/rangy/issues/282
+  const currentSelection = rangy.serializeSelection(rangy.getSelection(), true);
+
+  // split start container if necessary
+  range.splitBoundaries();
+
+  // get TextNodes inside the range
+  const textNodes = _.filter(
+    getTextNodes(range.commonAncestorContainer),
+    range.containsNodeText.bind(range)
+  );
+
+  // wrap each TextNode in a span to measure it
+  // See this discussion:
+  // https://github.com/paperhive/paperhive-frontend/pull/68#discussion_r25970589
+  const rects = textNodes.map(node => {
+    const $node = jquery(node);
+    const $span = $node.wrap('<span/>').parent();
+    const rect = $span.get(0).getBoundingClientRect();
+    $node.unwrap();
+
+    return {
+      top: (rect.top - containerRect.top) / containerRect.height,
+      left: (rect.left - containerRect.left) / containerRect.width,
+      height: rect.height / containerRect.height,
+      width: rect.width / containerRect.width,
+    };
+  });
+
+  // re-normalize to undo splitBoundaries
+  range.normalizeBoundaries();
+
+  // restore selection (see above)
+  if (currentSelection) {
+    rangy.deserializeSelection(currentSelection);
+  }
+
+  return rects;
 }
 
 export default function(app) {
@@ -158,6 +222,10 @@ export default function(app) {
 
         // wait for renderTask
         await this.renderTask;
+
+        // normalize the DOM subtree of the rendered page
+        // (otherwise serialized ranges may be based on different DOM states)
+        this.element[0].normalize();
       }
     }
 
@@ -271,7 +339,7 @@ export default function(app) {
           const highlightsLayer = $compile(`
             <div class="ph-pdf-highlights">
               <pdf-highlight
-                ng-repeat="highlight in highlights | highlightsByPage:${this.pageNumber}"
+                ng-repeat="highlight in highlights | highlightsByPageNumber:${this.pageNumber}"
                 highlight="highlight"
                 page-number="${this.page.pageNumber}"
                 on-mouseenter="onHighlightMouseenter({highlight: highlight, pageNumber: pageNumber})"
@@ -453,44 +521,8 @@ export default function(app) {
         // (otherwise deselection of text is not detected)
         $timeout(() => {
           this.scope.$apply(() => {
-            /*
-            const onTextSelect = function(selection) {
-
-              let serializedRanges;
-
-              // serialize ALL the ranges (if a selection is given)
-              if (selection) {
-                serializedRanges = _.map(
-                  selection.getAllRanges(),
-                  function(range) {
-                    return rangy.serializeRange(range, true, element[0]);
-                  }
-                );
-              }
-
-              // only call expression if something happened
-              // (otherwise every keypress calls the expression)
-              if (!_.isEqual(serializedRanges, lastSerializedRanges)) {
-                lastSerializedRanges = serializedRanges;
-
-                let target;
-                // construct target object if valid ranges are given
-                if (serializedRanges && serializedRanges.length &&
-                    selection) {
-                  target = {
-                    text: selection.toString(),
-                    ranges: serializedRanges
-                  };
-                }
-
-                this.scope.onSelect({selectors: target});
-              }
-            };
-            */
-
             // get current text selection
             const selection = rangy.getSelection();
-            console.log(selection);
 
             // no selection object or no anchor/focus
             if (!selection || !selection.anchorNode || !selection.focusNode) {
@@ -523,7 +555,7 @@ export default function(app) {
             // split selection ranges into ranges for individual pages
             // TODO: implement O(1) page detection for a range
             const range = selection.getAllRanges()[0];
-            const rangeByPage = {};
+            const pageRanges = [];
             this.pages.forEach(page => {
               if (!range.intersectsNode(page.textRenderer.element[0])) return;
 
@@ -532,27 +564,42 @@ export default function(app) {
               pageRange.selectNodeContents(page.textRenderer.element[0]);
 
               // intersect range with page range
-              rangeByPage[page.pageNumber] = range.intersection(pageRange);
+              pageRanges.push({
+                pageNumber: page.pageNumber,
+                range: range.intersection(pageRange),
+              });
             });
 
-            console.log(range);
-
-
-
-            const suffixRange = range.cloneRange();
-
             const selectors = {
+              // text position selector
+              textPosition: getTextPositionSelector(range, this.element[0]),
               // text quote selector
               textQuote: getTextQuoteSelector(range, this.element[0]),
             };
 
-            // pdf text quote selector
-            selectors.pdfTextQuotes = map(rangeByPage, (range, pageNumber) => {
-              const page = this.pages[pageNumber - 1];
-              const selector = getTextQuoteSelector(range, page.textRenderer.element[0]);
-              selector.pageNumber = pageNumber;
+            // pdf text positions selector
+            selectors.pdfTextQuotes = pageRanges.map(pageRange => {
+              const page = this.pages[pageRange.pageNumber - 1];
+              const selector = getTextQuoteSelector(pageRange.range, page.textRenderer.element[0]);
+              selector.pageNumber = pageRange.pageNumber;
               return selector;
             });
+
+            // pdf text quotes selector
+            selectors.pdfTextPositions = pageRanges.map(pageRange => {
+              const page = this.pages[pageRange.pageNumber - 1];
+              const selector = getTextPositionSelector(pageRange.range, page.textRenderer.element[0]);
+              selector.pageNumber = pageRange.pageNumber;
+              return selector;
+            });
+
+            // pdf rectangles selector
+            selectors.pdfRectangles = flatten(pageRanges.map(pageRange => {
+              const page = this.pages[pageRange.pageNumber - 1];
+              const selectors = getRectanglesSelector(range, page.textRenderer.element[0]);
+              selectors.forEach(selector => selector.pageNumber = pageRange.pageNumber);
+              return selectors;
+            }));
 
             return this.onSelect(selectors);
           });

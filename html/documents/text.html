@@ -56,7 +56,6 @@
         </span>
       </div>
     </div>
-    {{newSelectors}}
     <div class="row">
       <div class="col-md-9">
         <pdf url="pdfSource" on-update="pdf.status = status"></pdf>
@@ -64,27 +63,11 @@
           pdf="pdf.status.pdf"
           highlights="[{
             id: '67KJNds4-z',
-            selectors: {
-              textPosition: {start: 15, end: 35},
-              textQuote: {content: 'jürgen', prefix: 'hans-', suffix: 'wurst'},
-              pdfRectangles: [
-                {page: 1, top: 0.3, left: 0.35, bottom: 0.4, right: 0.5},
-                {page: 1, top: 0.45, left: 0.45, bottom: 0.5, right: 0.3},
-                {page: 2, top: 0.3, left: 0.35, bottom: 0.4, right: 0.5},
-              ],
-              pdfTextPositions: [
-                {page: 1, start: 15, end: 22},
-                {page: 2, start: 30, end: 35},
-              ],
-              pdfTextQuotes: [
-                {page: 1, exact: 'jürgen', prefix: 'hans-', suffix: ' wurst'},
-                {page: 2, exact: 'müller', prefix: 'herr', suffix: ' lüdenscheid'},
-              ],
-            },
+            selectors: newSelectors
           }]"
           on-highlight-mouseenter=""
           on-highlight-mouseleave=""
-          on-select="newSelectors = selectors"
+          on-select="newSelectors = selectors || newSelectors"
 
           popover-placement="top"
           popover-is-open="tour.stages[tour.index] === 'highlight'"

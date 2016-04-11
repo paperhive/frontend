@@ -1,9 +1,9 @@
-import highlightsByPage from './highlightsByPage';
+import highlightsByPageNumber from './highlightsByPageNumber';
 import queryString from './queryString';
 import range from './range';
 
 export default function(app) {
-  highlightsByPage(app);
+  highlightsByPageNumber(app);
   queryString(app);
   range(app);
 }
