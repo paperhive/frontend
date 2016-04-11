@@ -31,6 +31,35 @@ function isVisible(element, $window) {
   return elementTop <= 2 * viewportHeight && elementBottom >= - viewportHeight;
 }
 
+// compute textQuote selector for a range (relies on rangy's textRange)
+function getTextQuoteSelector(range, container) {
+  // create prefix/suffix range
+  const prefixRange = range.cloneRange();
+  const suffixRange = range.cloneRange();
+
+  // move ranges to the left/right
+  prefixRange.moveStart('character', -10);
+  suffixRange.moveEnd('character', 10);
+
+  // restrict ranges to element
+  if (!rangy.dom.isAncestorOf(container, prefixRange.startContainer)) {
+    prefixRange.setStart(container, 0);
+  }
+  if (!rangy.dom.isAncestorOf(container, suffixRange.endContainer)) {
+    suffixRange.setEndAfter(container);
+  }
+
+  // move end/start of ranges to start/end of original range
+  prefixRange.setEnd(range.startContainer, range.startOffset);
+  suffixRange.setStart(range.endContainer, range.endOffset);
+
+  return {
+    content: range.text(),
+    prefix: prefixRange.text(),
+    suffix: suffixRange.text(),
+  };
+}
+
 export default function(app) {
   // Render an entire pdf;
   // Currently (2016-03-14), this directive cannot be implemented as a
@@ -461,6 +490,7 @@ export default function(app) {
 
             // get current text selection
             const selection = rangy.getSelection();
+            console.log(selection);
 
             // no selection object or no anchor/focus
             if (!selection || !selection.anchorNode || !selection.focusNode) {
@@ -507,17 +537,22 @@ export default function(app) {
 
             console.log(range);
 
+
+
+            const suffixRange = range.cloneRange();
+
             const selectors = {
               // text quote selector
-              textQuote: {
-                content: range.toString(),
-              },
+              textQuote: getTextQuoteSelector(range, this.element[0]),
             };
 
             // pdf text quote selector
-            selectors.pdfTextQuotes = map(rangeByPage, (range, pageNumber) =>
-              ({page: pageNumber, content: range.toString()})
-            );
+            selectors.pdfTextQuotes = map(rangeByPage, (range, pageNumber) => {
+              const page = this.pages[pageNumber - 1];
+              const selector = getTextQuoteSelector(range, page.textRenderer.element[0]);
+              selector.pageNumber = pageNumber;
+              return selector;
+            });
 
             return this.onSelect(selectors);
           });

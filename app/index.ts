@@ -15,6 +15,7 @@ import 'jquery';
 // in some controllers, i.e., by angular).
 import 'rangy';
 import 'rangy/rangy-serializer';
+import 'rangy/rangy-textrange';
 
 import * as angular from 'angular';
 import 'angular-animate';                             // ngAnimate module
