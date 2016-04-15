@@ -63,11 +63,13 @@
           pdf="pdf.status.pdf"
           highlights="[{
             id: '67KJNds4-z',
-            selectors: newSelectors
+            selectors: draftSelectors
           }]"
-          on-highlight-mouseenter=""
-          on-highlight-mouseleave=""
-          on-select="newSelectors = selectors || newSelectors"
+          emphasized-highlights="hoveredMarginDiscussions"
+          on-highlight-mouseenter="hoveredHighlights[highlight.id] = true"
+          on-highlight-mouseleave="hoveredHighlights[highlight.id] = false"
+          on-page-resized="pageCoordinates[pageNumber] = {offset: offset, size: displaySize}"
+          on-select="draftSelectors = selectors || draftSelectors"
 
           popover-placement="top"
           popover-is-open="tour.stages[tour.index] === 'highlight'"
@@ -75,58 +77,24 @@
           popover-trigger="none"
         ></pdf-full>
       </div>
-      <!--column for margin notes-->
       <div class="col-md-3">
-        <margin-link
-          position="top"
-          discussion-offsets="text.marginOffsets"
-          discussion-sizes="text.marginDiscussionSizes"
+        <margin-discussions
+          discussions="discussions.stored"
+          draft-selectors="draftSelectors"
+          emphasized-discussions="hoveredHighlights"
+          page-coordinates="pageCoordinates"
           viewport-offset-top="$root.navbarSize.height + subnavSize.height"
           viewport-offset-bottom="0"
-          ng-if="subnavPosition.top <= $root.navbarSize.height"
-        ></margin-link>
-        <margin-link
-          position="bottom"
-          discussion-offsets="text.marginOffsets"
-          discussion-sizes="text.marginDiscussionSizes"
-          viewport-offset-top="$root.navbarSize.height + subnavSize.height"
-          viewport-offset-bottom="0"
-        ></margin-link>
-        <margin-discussion
-           ng-repeat="discussion in discussions.stored"
-           id="d:{{discussion.id}}"
-           ng-if="text.highlightInfos[discussion.id].top !== undefined"
-           ng-show="text.marginOffsets[discussion.id] !== undefined"
-           ng-style="{'top': text.marginOffsets[discussion.id] + 'px'}"
-           discussion="discussion"
-           on-original-update="originalUpdate(discussion, $comment)"
-           on-discussion-delete="discussionDelete(discussion)"
-           on-reply-submit="replyAdd(discussion, $reply)"
-           on-reply-update="replyUpdate(discussion, $replyOld, $replyNew)"
-           on-reply-delete="replyDelete(discussion, $reply)"
-           ng-mouseenter="text.highlightBorder[discussion.id] = true"
-           ng-mouseleave="text.highlightBorder[discussion.id] = false"
-           element-size="text.marginDiscussionSizes[discussion.id]"
-           popover-placement="top"
-           popover-is-open="discussion.id === 'cDmUY04FkYx9' && tour.stages[tour.index] === 'margin-discussion'"
-           uib-popover-template="'html/shared/tour-margin-discussion.html'"
-           popover-trigger="none"
-           on-rendered="discussionTour.rendered = true"
-           >
-        </margin-discussion>
-        <margin-discussion-draft
-         ng-if="originalComment.draft.target && text.highlightInfos.draft.top !== undefined"
-         ng-style="{'top': text.highlightInfos.draft.top + 'px'}"
-         on-outside-mousedown="!originalComment.draft.title &&
-         !originalComment.draft.body && purgeDraft()"
-         on-submit="originalComment.draft.title = $title;
-         originalComment.draft.body = $body;
-         addDiscussion(originalComment.draft);"
-         on-title-change="originalComment.draft.title = $title"
-         on-body-change="originalComment.draft.body = $body"
-         element-size="text.marginDiscussionSizes.draft"
-         >
-        </margin-discussion-draft>
+          on-draft-discard="draftSelectors = undefined"
+          on-discussion-submit="TODO"
+          on-discussion-update="originalUpdate(discussion, comment)"
+          on-discussion-delete="discussionDelete(discussion)"
+          on-reply-submit="replyAdd(discussion, reply)"
+          on-reply-update="replyUpdate(discussion, replyOld, replyNew)"
+          on-reply-delete="replyDelete(discussion, reply)"
+          on-discussion-mouseenter="hoveredMarginDiscussions[discussion.id] = true"
+          on-discussion-mouseleave="hoveredMarginDiscussions[discussion.id] = false"
+        ></margin-discussions>
       </div>
     </div>
   </div>

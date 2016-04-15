@@ -24,6 +24,10 @@ export default function(app) {
         marginOffsets: {}
       };
 
+      $scope.pageCoordinates = {};
+      $scope.hoveredHighlights = {};
+      $scope.hoveredMarginDiscussions = {};
+
       $scope.discussionTour = {};
       $scope.$watch('discussionTour.rendered && tour.stages[tour.index] === "margin-discussion"', (shouldScroll) => {
         if (shouldScroll) {
