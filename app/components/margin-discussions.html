@@ -37,8 +37,8 @@
 ></margin-discussion>
 <margin-discussion-draft
   selectors="$ctrl.draftSelectors"
-  on-submit="onDiscussionSubmit({discussion: discussion})"
-  on-discard="onDraftDiscard()"
+  on-submit="$ctrl.onDiscussionSubmit({discussion: discussion})"
+  on-discard="$ctrl.onDraftDiscard()"
 
   element-size="$ctrl.draftSize"
   ng-if="$ctrl.draftSelectors"

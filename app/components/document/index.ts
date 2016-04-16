@@ -207,6 +207,22 @@ export default function(app) {
             $scope.originalComment.draft = {};
           };
 
+          $scope.discussionSubmit = function(_newDiscussion, revision) {
+            const newDiscussion = _.cloneDeep(_newDiscussion);
+
+            // insert document id and revision
+            newDiscussion.target.document = revision.id;
+            newDiscussion.target.documentRevision = revision.revision;
+
+            return $http.post(config.apiUrl + '/discussions', newDiscussion)
+              .success(function(discussion) {
+                if (!find($scope.discussions.stored, {id: discussion.id})) {
+                  $scope.discussions.stored.push(discussion);
+                }
+              })
+              .error(notificationService.httpError('could not add discussion'));
+          };
+
           $scope.originalUpdate = function(discussion, comment) {
             const disc = _.cloneDeep(_.pick(
               comment, ['title', 'body', 'target', 'tags']

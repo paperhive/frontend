@@ -19,15 +19,16 @@ export default function(app) {
         $scope.comment = {};
 
         ctrl.submit = function() {
-          ctrl.submitting = true;
-          $q.when(ctrl.onSubmit({
-            selectors: ctrl.selectors,
+          const discussion = {
+            target: {selectors: ctrl.selectors},
             title: $scope.comment.title,
             body: $scope.comment.body,
-          }))
-          .finally(function() {
-            ctrl.submitting = false;
-          });
+          };
+          ctrl.submitting = true;
+
+          $q.when(ctrl.onSubmit({discussion}))
+            .then(data => console.log(data))
+            .finally(() => ctrl.submitting = false);
         };
       }],
     });
