@@ -38,7 +38,6 @@ export default function(app) {
           const parentBoundingRect = $element[0].parentElement.getBoundingClientRect();
 
           ctrl.parentTop = parentBoundingRect.top;
-          console.log(parentBoundingRect)
 
           // count elements above/below the viewport and get next discussion id
           forEach(ctrl.discussionOffsets, (offset, id) => {
