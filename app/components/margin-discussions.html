@@ -25,7 +25,7 @@
 
   element-size="$ctrl.discussionSizes[discussion.id]"
   id="d:{{discussion.id}}"
-  ang-show="$ctrl.discussionPositions[discussion.id] !== undefined"
+  ng-show="$ctrl.discussionPositions[discussion.id] !== undefined"
   ng-style="{'top': $ctrl.discussionPositions[discussion.id] + 'px'}"
 
   popover-placement="top"

@@ -81,7 +81,7 @@ export default function(app) {
           // create array with id, offset and height for each discussion
           // (ignores discussions without size, e.g., unrendered discussions)
           const coords = sortBy(compact(map(discussionRawPositions, (position, id) => {
-            if (!ctrl.discussionSizes[id]) return;
+            if (position === undefined || !ctrl.discussionSizes[id]) return;
             return {id, position, height: ctrl.discussionSizes[id].height};
           })), 'position');
 
@@ -116,7 +116,6 @@ export default function(app) {
             for (let i = 0; i < anchors.length; i++) {
               positions[ids[i]] = optAnchors[i];
             }
-
           };
 
           // place discussions
