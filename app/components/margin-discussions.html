@@ -1,14 +1,15 @@
 <margin-link
   position="top"
-  discussion-offsets="$.marginOffsets"
-  discussion-sizes="text.marginDiscussionSizes"
+  discussion-offsets="$ctrl.discussionPositions"
+  discussion-sizes="$ctrl.discussionSizes"
   viewport-offset-top="$ctrl.viewportOffsetTop"
-  ng-if="TODO; subnavPosition.top <= $root.navbarSize.height"
+  viewport-offset-bottom="$ctrl.viewportOffsetBottom"
 ></margin-link>
 <margin-link
   position="bottom"
-  discussion-offsets="text.marginOffsets"
-  discussion-sizes="text.marginDiscussionSizes"
+  discussion-offsets="$ctrl.discussionPositions"
+  discussion-sizes="$ctrl.discussionSizes"
+  viewport-offset-top="$ctrl.viewportOffsetTop"
   viewport-offset-bottom="$ctrl.viewportOffsetBottom"
 ></margin-link>
 <margin-discussion
