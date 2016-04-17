@@ -40,33 +40,29 @@ export default function(app) {
         };
 
         // add reply
-        $scope.replySubmit = function() {
+        $scope.replySubmit = () => {
           $scope.state.submitting = true;
-          $q.when(ctrl.onReplySubmit({$reply: $scope.replyDraft}))
-            .then(function() {
-              $scope.replyDraft = {};
-            })
-            .finally(function() {
-              $scope.state.submitting = false;
-            });
+          $q.when(ctrl.onReplySubmit({reply: $scope.replyDraft}))
+            .then(() => $scope.replyDraft = {})
+            .finally(() => $scope.state.submitting = false);
         };
 
         // reply controller (for deletion)
-        $scope.replyCtrl = ['$scope', function($scope) {
+        // TODO: remove controller!
+        $scope.replyCtrl = ['$scope', $scope => {
           $scope.replyState = {};
-          $scope.replyDelete = function(reply) {
+          $scope.replyDelete = reply => {
             $scope.replyState.submitting = true;
-            $q.when(ctrl.onReplyDelete({$reply: reply}))
-              .finally(function() {
-                $scope.replyState.submitting = false;
-              });
+            $q.when(ctrl.onReplyDelete({reply: reply}))
+              .finally(() => $scope.replyState.submitting = false);
           };
         }];
 
         // reply controller (for editing)
-        $scope.replyEditCtrl = ['$scope', function($scope) {
+        // TODO: remove controller (move into new component)
+        $scope.replyEditCtrl = ['$scope', $scope => {
           $scope.copy = angular.copy($scope.reply);
-          $scope.replyUpdate = function() {
+          $scope.replyUpdate = () => {
             $scope.replyState.submitting = true;
             $q.when(ctrl.onReplyUpdate(
               {$replyOld: $scope.reply, $replyNew: $scope.copy}
