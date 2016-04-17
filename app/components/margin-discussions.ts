@@ -72,8 +72,11 @@ export default function(app) {
             {position: draftRawPosition, height: ctrl.draftSize.height};
 
           // get raw discussion positions
-          const discussionRawPositions = mapValues(
-            ctrl.discussions, discussion => getRawPosition(discussion.selectors));
+          const discussionRawPositions = {};
+          ctrl.discussions.forEach(discussion => {
+            discussionRawPositions[discussion.id] =
+              getRawPosition(discussion.target.selectors);
+          });
 
           // create array with id, offset and height for each discussion
           // (ignores discussions without size, e.g., unrendered discussions)
@@ -88,8 +91,8 @@ export default function(app) {
           // treat above and below separately
           const coordsAbove = draftCoord &&
             coords.filter(coord => coord.position <= draftCoord.position);
-          const coordsBelow = coords.filter(offset =>
-            !draftCoord || offset.position > draftCoord.position
+          const coordsBelow = coords.filter(coord =>
+            !draftCoord || coord.position > draftCoord.position
           );
 
           // move bottom elements from above to below if there's not enough space
@@ -118,7 +121,7 @@ export default function(app) {
 
           // place discussions
           if (draftCoord) {
-            place(coordsAbove, 0, draftCoord.height);
+            place(coordsAbove, 0, draftCoord.position);
             place(coordsBelow, draftCoord.position + draftCoord.height + padding, undefined);
           } else {
             place(coordsBelow, 0, undefined);
@@ -131,13 +134,13 @@ export default function(app) {
 
         // update positions if discussions, draftSelectors, discussionSizes,
         // draftSize or page coords changed
-        $scope.$watchGroup([
+        [
           '$ctrl.discussions',
           '$ctrl.draftSelectors',
           '$ctrl.discussionSizes',
           '$ctrl.draftSize',
           '$ctrl.pageCoordinates',
-        ], updatePositions, true);
+        ].forEach(name => $scope.$watch(name, updatePositions, true));
       }
     ],
   });

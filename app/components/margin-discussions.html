@@ -25,9 +25,8 @@
 
   element-size="$ctrl.discussionSizes[discussion.id]"
   id="d:{{discussion.id}}"
-  ng-if="text.highlightInfos[discussion.id].top !== undefined"
-  ng-show="text.marginOffsets[discussion.id] !== undefined"
-  ng-style="{'top': text.marginOffsets[discussion.id] + 'px'}"
+  ang-show="$ctrl.discussionPositions[discussion.id] !== undefined"
+  ng-style="{'top': $ctrl.discussionPositions[discussion.id] + 'px'}"
 
   popover-placement="top"
   popover-is-open="discussion.id === 'cDmUY04FkYx9' && $ctrl.tour.stages[$ctrl.tour.index] === 'margin-discussion'"
