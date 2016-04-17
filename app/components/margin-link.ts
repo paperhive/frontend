@@ -80,12 +80,16 @@ export default function(app) {
           '$ctrl.viewportOffsetTop'
         ].map(name => $scope.$watch(updateCount, true));
 
+
+        // wrap updateCount with $apply for non-angular events
+        const updateCountApply = () => $scope.$apply(updateCount);
+
         // register/unregister updateCount on scroll and resize events
-        angular.element($window).on('scroll', updateCount);
-        angular.element($window).on('resize', updateCount);
+        angular.element($window).on('scroll', updateCountApply);
+        angular.element($window).on('resize', updateCountApply);
         $element.on('$destroy', () => {
-          angular.element($window).off('scroll', updateCount);
-          angular.element($window).off('resize', updateCount);
+          angular.element($window).off('scroll', updateCountApply);
+          angular.element($window).off('resize', updateCountApply);
         });
       }
     ],
