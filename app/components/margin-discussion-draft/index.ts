@@ -27,7 +27,7 @@ export default function(app) {
           ctrl.submitting = true;
 
           $q.when(ctrl.onSubmit({discussion}))
-            .then(data => console.log(data))
+            .then(data => ctrl.onDiscard())
             .finally(() => ctrl.submitting = false);
         };
       }],
