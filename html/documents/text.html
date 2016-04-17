@@ -61,15 +61,12 @@
         <pdf url="pdfSource" on-update="pdf.status = status"></pdf>
         <pdf-full
           pdf="pdf.status.pdf"
-          highlights="[{
-            id: '67KJNds4-z',
-            selectors: draftSelectors
-          }]"
+          highlights="highlights"
           emphasized-highlights="hoveredMarginDiscussions"
           on-highlight-mouseenter="hoveredHighlights[highlight.id] = true"
           on-highlight-mouseleave="hoveredHighlights[highlight.id] = false"
           on-page-resized="pageCoordinates[pageNumber] = {offset: offset, size: displaySize}"
-          on-select="draftSelectors = selectors || draftSelectors"
+          on-select="draft.selectors = selectors || draft.selectors"
 
           popover-placement="top"
           popover-is-open="tour.stages[tour.index] === 'highlight'"
@@ -80,12 +77,12 @@
       <div class="col-md-3">
         <margin-discussions
           discussions="discussions.stored"
-          draft-selectors="draftSelectors"
+          draft-selectors="draft.selectors"
           emphasized-discussions="hoveredHighlights"
           page-coordinates="pageCoordinates"
           viewport-offset-top="$root.navbarSize.height + subnavSize.height"
           viewport-offset-bottom="0"
-          on-draft-discard="draftSelectors = undefined"
+          on-draft-discard="draft.selectors = undefined"
           on-discussion-submit="discussionSubmit(discussion, revisions[activeRevisionIdx])"
           on-discussion-update="discussionUpdate(discussion, comment)"
           on-discussion-delete="discussionDelete(discussion)"

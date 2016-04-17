@@ -27,6 +27,28 @@ export default function(app) {
       $scope.pageCoordinates = {};
       $scope.hoveredHighlights = {};
       $scope.hoveredMarginDiscussions = {};
+      $scope.hightlights = [];
+
+      $scope.draft = {};
+
+      // generate highlights array
+      function updateHighlights() {
+        const highlights = $scope.discussions.stored.map(discussion => {
+          return {id: discussion.id, selectors: discussion.target.selectors};
+        });
+
+        // add draft selectors
+        if ($scope.draft.selectors) {
+          highlights.push({id: 'draft', selectors: $scope.draft.selectors});
+          console.log(highlights);
+        }
+
+        $scope.highlights = highlights;
+      }
+
+      // update highlights when discussions or draft selectors change
+      $scope.$watch('discussions.stored', updateHighlights, true);
+      $scope.$watch('draft.selectors', updateHighlights, true);
 
       $scope.discussionTour = {};
       $scope.$watch('discussionTour.rendered && tour.stages[tour.index] === "margin-discussion"', (shouldScroll) => {
