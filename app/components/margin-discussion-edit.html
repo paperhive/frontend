@@ -1,0 +1,45 @@
+<form ng-submit="editForm.$valid && $ctrl.submit()" name="editForm" novalidate>
+  <div class="form-group ph-no-margin ph-sm-margin-bottom has-feedback"
+    ng-class="{'has-error': editForm.title.$dirty && editForm.title.$invalid}"
+  >
+    <input ng-model="$ctrl.discussionCopy.title" name="title"
+      ng-click="$event.stopPropagation()"
+      class="form-group form-control ph-no-margin ph-margin-textarea"
+      type="text" placeholder="Enter title..."
+      required ng-maxlength="40">
+    <i ng-if="editForm.title.$dirty && editForm.title.$invalid"
+      class="fa fa-fw fa-times form-control-feedback" aria-hidden="true"></i>
+    <p class="help-block small"
+        ng-if="editForm.title.$dirty && editForm.title.$error.required">
+      A title is required.
+    </p>
+    <p class="help-block small" ng-if="editForm.title.$error.maxlength">
+      A title is limited to 40 characters (you entered
+      {{editForm.title.$viewValue.length}} characters).
+    </p>
+  </div>
+  <textarea ng-model="$ctrl.discussionCopy.body"
+    ng-click="$event.stopPropagation()"
+    id="textbody" placeholder="Enter comment (optional)..."
+    class="form-group form-control ph-comment-body ph-no-margin ph-margin-textarea ph-textarea-elastic ph-textarea-small"
+    elastic
+  ></textarea>
+  <div class="ph-sm-margin-top clearfix">
+    <span class="pull-right">
+      <button
+          ng-click="$ctrl.onDiscard(); $event.stopPropagation()"
+          ng-disabled="$ctrl.submitting"
+          type="button" class="btn btn-danger btn-sm">
+        <i class="fa fa-fw fa-times"></i>
+        Cancel
+      </button>
+      <button ng-disabled="editForm.$invalid || editForm.$pristine || $ctrl.submitting"
+          ng-click="$event.stopPropagation()"
+          class="btn btn-sm btn-primary">
+        <i ng-if="!$ctrl.submitting" class="fa fa-fw fa-check"></i>
+        <i ng-if="$ctrl.submitting" class="fa fa-fw fa-spinner fa-spin"></i>
+        Update comment
+      </button>
+    </span>
+  </div>
+</form>

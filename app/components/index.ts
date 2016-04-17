@@ -21,6 +21,7 @@ import mainPage from './main-page/index';
 import marginLink from './margin-link';
 import marginDiscussion from './margin-discussion/index';
 import marginDiscussionDraft from './margin-discussion-draft/index';
+import marginDiscussionEdit from './margin-discussion-edit';
 import marginDiscussions from './margin-discussions';
 import navbar from './navbar/index';
 import navbarSearch from './navbar-search/index';
@@ -70,6 +71,7 @@ export default function(app) {
   marginLink(app);
   marginDiscussion(app);
   marginDiscussionDraft(app);
+  marginDiscussionEdit(app);
   marginDiscussions(app);
   navbar(app);
   navbarSearch(app);

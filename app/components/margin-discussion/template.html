@@ -13,7 +13,7 @@
       </div>
       <div class="ph-margin-row-content">
         <!-- view original comment -->
-        <div ng-if="!originalState.editing" class="clearfix">
+        <div ng-if="!$ctrl.editing" class="clearfix">
           <div class="ph-margin-info">
             <p class="ph-xs-margin-bottom">
               <a href="./users/{{discussion.author.account.username}}">
@@ -41,21 +41,19 @@
                     <i class="fa fa-fw fa-comments"></i> Show discussion view
                   </a>
                 </li>
-                <li ng-if="auth.user.id === discussion.author.id"
-                    ng-class="{disabled: originalState.submitting}">
-                  <a ng-click="originalState.editing = true; $event.stopPropagation()" href>
+                <li ng-if="auth.user.id === discussion.author.id">
+                  <a ng-click="$ctrl.editing = true; $event.stopPropagation()" href>
                     <i class="fa fa-fw fa-pencil"></i> Edit
                   </a>
                 </li>
                 <li ng-if="auth.user.id === discussion.author.id"
-                    ng-class="{disabled: originalState.submitting ||
-                      discussion.replies.length}">
-                  <a ng-if="!discussion.replies.length && !originalState.submitting"
+                    ng-class="{disabled: discussion.replies.length || $ctrl.deleting}">
+                  <a ng-if="!discussion.replies.length && !$ctrl.deleting"
                       ng-confirm-click="Really delete discussion?"
-                      confirmed-click="discussionDelete()" href>
+                      confirmed-click="$ctrl.discussionDelete()" href>
                     <i class="fa fa-fw fa-times"></i> Delete
                   </a>
-                  <a ng-if="!discussion.replies.length && originalState.submitting" href>
+                  <a ng-if="!discussion.replies.length && $ctrl.deleting" href>
                     <i class="fa fa-fw fa-times"></i> Delete
                   </a>
                   <a ng-if="discussion.replies.length" href
@@ -79,53 +77,12 @@
           </span>
         </div>
         <!-- edit original comment -->
-        <form ng-if="originalState.editing"
-            ng-submit="originalForm.$valid && originalUpdate()"
-            ng-controller="originalEditCtrl"
-            name="originalForm" novalidate>
-          <div class="form-group ph-no-margin ph-sm-margin-bottom has-feedback"
-            ng-class="{'has-error': originalForm.title.$dirty &&
-              originalForm.title.$invalid}">
-            <input ng-model="copy.title" name="title"
-              ng-click="$event.stopPropagation()"
-              class="form-group form-control ph-no-margin ph-margin-textarea"
-              type="text" placeholder="Enter title..."
-              required ng-maxlength="40">
-            <i ng-if="originalForm.title.$dirty && originalForm.title.$invalid"
-              class="fa fa-fw fa-times form-control-feedback" aria-hidden="true"></i>
-            <p class="help-block small"
-                ng-if="originalForm.title.$dirty && originalForm.title.$error.required">
-              A title is required.
-            </p>
-            <p class="help-block small" ng-if="originalForm.title.$error.maxlength">
-              A title is limited to 40 characters (you entered
-              {{originalForm.title.$viewValue.length}} characters).
-            </p>
-          </div>
-          <textarea ng-model="copy.body"
-            ng-click="$event.stopPropagation()"
-            id="textbody" placeholder="Enter comment (optional)..."
-            class="form-group form-control ph-comment-body ph-no-margin ph-margin-textarea ph-textarea-elastic ph-textarea-small"
-            elastic></textarea>
-          <div class="ph-sm-margin-top clearfix">
-            <span class="pull-right">
-              <button
-                  ng-click="originalState.editing = false; $event.stopPropagation()"
-                  ng-disabled="originalState.submitting"
-                  type="button" class="btn btn-danger btn-sm">
-                <i class="fa fa-fw fa-times"></i>
-                Cancel
-              </button>
-              <button ng-disabled="originalForm.$invalid || originalForm.$pristine || originalState.submitting"
-                  ng-click="$event.stopPropagation()"
-                  class="btn btn-sm btn-primary">
-                <i ng-if="!originalState.submitting" class="fa fa-fw fa-check"></i>
-                <i ng-if="originalState.submitting" class="fa fa-fw fa-spinner fa-spin"></i>
-                Update comment
-              </button>
-            </span>
-          </div>
-        </form>
+        <margin-discussion-edit
+          discussion="discussion"
+          on-submit="$ctrl.onDiscussionUpdate({discussion: discussion})"
+          on-discard="$ctrl.editing = false"
+          ng-if="$ctrl.editing"
+        ></margin-discussion-edit>
       </div>
     </div>
   </div>

@@ -207,7 +207,7 @@ export default function(app) {
             $scope.originalComment.draft = {};
           };
 
-          $scope.discussionSubmit = function(_newDiscussion, revision) {
+          $scope.discussionSubmit = (_newDiscussion, revision) => {
             const newDiscussion = _.cloneDeep(_newDiscussion);
 
             // insert document id and revision
@@ -215,7 +215,7 @@ export default function(app) {
             newDiscussion.target.documentRevision = revision.revision;
 
             return $http.post(config.apiUrl + '/discussions', newDiscussion)
-              .success(function(discussion) {
+              .success(discussion => {
                 if (!find($scope.discussions.stored, {id: discussion.id})) {
                   $scope.discussions.stored.push(discussion);
                 }
@@ -223,19 +223,28 @@ export default function(app) {
               .error(notificationService.httpError('could not add discussion'));
           };
 
-          $scope.originalUpdate = function(discussion, comment) {
-            const disc = _.cloneDeep(_.pick(
-              comment, ['title', 'body', 'target', 'tags']
-            ));
+          $scope.discussionUpdate = _newDiscussion => {
+            const newDiscussion =
+              _.pick(_newDiscussion, 'title', 'body', 'target', 'tags');
 
             return $http.put(
-              config.apiUrl + '/discussions/' + discussion.id,
-              disc
+              config.apiUrl + '/discussions/' + _newDiscussion.id,
+              newDiscussion
             )
-            .success(function(newDiscussion) {
-              angular.copy(newDiscussion, discussion);
-            })
-            .error(notificationService.httpError('could not update discussion'));
+              .success(discussion => {
+                // overwrite old discussion
+                const oldDiscussion =
+                  find($scope.discussions.stored, {id: _newDiscussion.id});
+                if (!oldDiscussion) {
+                  notificationService.notifications.push({
+                    type: 'error',
+                    message: 'Old discussion not found',
+                  });
+                  return;
+                }
+                angular.copy(discussion, oldDiscussion);
+              })
+              .error(notificationService.httpError('could not update discussion'));
           };
 
           $scope.discussionDelete = function(discussion) {

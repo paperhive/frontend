@@ -32,32 +32,11 @@ export default function(app) {
           $location.path(path);
         };
 
-        // original comment
-        $scope.originalState = {};
-        // update original comment
-        $scope.originalEditCtrl = ['$scope', function($scope) {
-          $scope.copy = angular.copy($scope.discussion);
-          $scope.originalUpdate = function() {
-            $scope.originalState.submitting = true;
-            $q.when(ctrl.onOriginalUpdate(
-              {$comment: $scope.copy}
-            ))
-              .then(function() {
-                $scope.originalState.editing = false;
-              })
-              .finally(function() {
-                $scope.originalState.submitting = false;
-              });
-          };
-        }];
-
         // delete original comment (with discussion!)
-        $scope.discussionDelete = function() {
-          $scope.originalState.submitting = true;
-          $q.when(ctrl.onDiscussionDelete({$discussion: $scope.discussion}))
-            .finally(function() {
-              $scope.originalState.submitting = false;
-            });
+        ctrl.discussionDelete = () => {
+          ctrl.deleting = true;
+          $q.when(ctrl.onDiscussionDelete({discussion: ctrl.discussion}))
+            .finally(() => ctrl.deleting = false);
         };
 
         // add reply
