@@ -68,7 +68,7 @@ export default function(app) {
 
           // create draft coord object (falsy if it has no position or no height)
           const draftCoord = draftRawPosition !== undefined &&
-            ctrl.draftSize !== undefined &&
+            ctrl.draftSize && ctrl.draftSize.height &&
             {position: draftRawPosition, height: ctrl.draftSize.height};
 
           // get raw discussion positions
