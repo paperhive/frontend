@@ -7,7 +7,7 @@ export default function(app) {
   app.component('marginDiscussion', {
     bindings: {
       discussion: '<',
-      onOriginalUpdate: '&',
+      onDiscussionUpdate: '&',
       onDiscussionDelete: '&',
       onReplySubmit: '&',
       onReplyUpdate: '&',
@@ -15,8 +15,8 @@ export default function(app) {
     },
     template,
     controller: [
-      '$scope', '$q', '$location', '$filter', 'authService',
-      function($scope, $q, $location, $filter, authService) {
+      '$scope', '$q', '$location', 'authService',
+      function($scope, $q, $location, authService) {
         const ctrl = this;
 
         // expose discussion in template
@@ -30,10 +30,6 @@ export default function(app) {
         // html5mode, see http://stackoverflow.com/q/28945975/1219479
         $scope.changePath = function(path) {
           $location.path(path);
-        };
-
-        $scope.filterRouteSegmentUrl = function(segment, args) {
-          return $filter('routeSegmentUrl')(segment, args);
         };
 
         // original comment
