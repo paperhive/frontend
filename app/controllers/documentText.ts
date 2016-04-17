@@ -40,7 +40,6 @@ export default function(app) {
         // add draft selectors
         if ($scope.draft.selectors) {
           highlights.push({id: 'draft', selectors: $scope.draft.selectors});
-          console.log(highlights);
         }
 
         $scope.highlights = highlights;
