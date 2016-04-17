@@ -147,32 +147,12 @@
             </div>
           </div>
           <!-- edit reply -->
-          <form ng-if="replyState.editing"
-              ng-controller="replyEditCtrl"
-              ng-submit="replyEditForm.$valid && replyUpdate()"
-              name="replyEditForm" novalidate>
-            <textarea ng-model="copy.body"
-              class="form-group form-control ph-comment-body ph-margin-textarea ph-no-margin ph-textarea-elastic ph-textarea-small"
-              elastic placeholder="Enter reply..." required
-              ></textarea>
-            <div class="ph-sm-margin-top clearfix">
-              <span class="pull-right">
-                <button ng-click="replyState.editing = false"
-                    ng-disabled="replyState.submitting"
-                    type="button" class="btn btn-danger btn-sm">
-                  <i class="fa fa-fw fa-times"></i>
-                  Cancel
-                </button>
-                <button
-                    ng-disabled="replyEditForm.$invalid || replyEditForm.$pristine || replyState.submitting"
-                    type="submit" class="btn btn-primary btn-sm">
-                  <i ng-if="!replyState.submitting" class="fa fa-fw fa-check"></i>
-                  <i ng-if="replyState.submitting" class="fa fa-fw fa-spinner fa-spin"></i>
-                  Update reply
-                </button>
-              </span>
-            </div>
-          </form>
+          <margin-reply-edit
+            reply="reply"
+            on-submit="$ctrl.onReplyUpdate({discussion: discussion, reply: reply})"
+            on-discard="replyState.editing = false"
+            ng-if="replyState.editing"
+          ></margin-reply-edit>
         </div>
       </div>
     </div>

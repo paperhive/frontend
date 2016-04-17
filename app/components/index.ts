@@ -23,6 +23,7 @@ import marginDiscussion from './margin-discussion/index';
 import marginDiscussionDraft from './margin-discussion-draft/index';
 import marginDiscussionEdit from './margin-discussion-edit';
 import marginDiscussions from './margin-discussions';
+import marginReplyEdit from './margin-reply-edit';
 import navbar from './navbar/index';
 import navbarSearch from './navbar-search/index';
 import navbarUser from './navbar-user/index';
@@ -73,6 +74,7 @@ export default function(app) {
   marginDiscussionDraft(app);
   marginDiscussionEdit(app);
   marginDiscussions(app);
+  marginReplyEdit(app);
   navbar(app);
   navbarSearch(app);
   navbarUser(app);

@@ -16,11 +16,11 @@
   ng-repeat="discussion in $ctrl.discussions"
 
   discussion="discussion"
-  on-discussion-update="$ctrl.onDiscussionUpdate({discussion: discussion, comment: comment})"
+  on-discussion-update="$ctrl.onDiscussionUpdate({discussion: discussion})"
   on-discussion-delete="$ctrl.onDiscussionDelete({discussion: discussion})"
-  on-reply-submit="$ctrl.replyAdd({discussion: discussion, reply: reply})"
-  on-reply-update="$ctrl.replyUpdate({discussion: discussion, replyNew: replyNew, replyOld: replyOld})"
-  on-reply-delete="$ctrl.replyDelete({discussion: discussion, reply: reply})"
+  on-reply-submit="$ctrl.onReplySubmit({discussion: discussion, reply: reply})"
+  on-reply-update="$ctrl.onReplyUpdate({discussion: discussion, reply: reply})"
+  on-reply-delete="$ctrl.onReplyDelete({discussion: discussion, reply: reply})"
   ng-mouseenter="$ctrl.onDiscussionMouseenter({discussion: discussion})"
   ng-mouseleave="$ctrl.onDiscussionMouseleave({discussion: discussion})"
 

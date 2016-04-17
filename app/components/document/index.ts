@@ -247,7 +247,7 @@ export default function(app) {
             .error(notificationService.httpError('could not delete discussion'));
           };
 
-          $scope.replyAdd = (discussion, _reply) => {
+          $scope.replySubmit = (discussion, _reply) => {
             const reply = pick(_reply, 'body');
             reply.discussion = discussion.id;
             return $http.post(config.apiUrl + '/replies', reply)

@@ -1,0 +1,23 @@
+<form ng-submit="replyEditForm.$valid && $ctrl.submit()" name="replyEditForm" novalidate>
+  <textarea ng-model="$ctrl.replyCopy.body"
+    class="form-group form-control ph-comment-body ph-margin-textarea ph-no-margin ph-textarea-elastic ph-textarea-small"
+    elastic placeholder="Enter reply..." required
+  ></textarea>
+  <div class="ph-sm-margin-top clearfix">
+    <span class="pull-right">
+      <button ng-click="$ctrl.onDiscard()"
+          ng-disabled="$ctrl.submitting"
+          type="button" class="btn btn-danger btn-sm">
+        <i class="fa fa-fw fa-times"></i>
+        Cancel
+      </button>
+      <button
+          ng-disabled="replyEditForm.$invalid || replyEditForm.$pristine || $ctrl.submitting"
+          type="submit" class="btn btn-primary btn-sm">
+        <i ng-if="!$ctrl.submitting" class="fa fa-fw fa-check"></i>
+        <i ng-if="$ctrl.submitting" class="fa fa-fw fa-spinner fa-spin"></i>
+        Update reply
+      </button>
+    </span>
+  </div>
+</form>
