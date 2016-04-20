@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import * as angular from 'angular';
-import { cloneDeep, find, findLastIndex, pick, remove, some, sortBy } from 'lodash';
+import { cloneDeep, find, findLastIndex, merge, pick, remove, some, sortBy } from 'lodash';
 
 import template from './template.html!text';
 import { getRevisionMetadata } from '../../utils/documents';
@@ -92,7 +92,11 @@ class DiscussionsController {
       method: 'DELETE',
       headers: {'If-Match': `"${reply.revision}"`},
     });
-    this._replyDelete(reply);
+    this._replyDelete(merge(
+      {},
+      reply,
+      {discussionRevision: response.data.discussionRevision}
+    ));
   }
 
   // subscribe to push notifications
@@ -106,7 +110,7 @@ class DiscussionsController {
             switch (update.method) {
               case 'post': this._discussionCreate(data); break;
               case 'put': this._discussionUpdate(data); break;
-              case 'delete': this._discussionDelete(data.id); break;
+              case 'delete': this._discussionDelete(data); break;
             }
             break;
           case 'reply':
@@ -181,9 +185,6 @@ class DiscussionsController {
   _replyDelete(deletedReply) {
     const discussion = this._discussionGet(deletedReply.discussion);
     const removed = remove(discussion.replies, {id: deletedReply.id});
-    if (removed.length === 0) {
-      throw new Error('Could not find reply for deletion.');
-    }
     discussion.revision = deletedReply.discussionRevision;
   }
 }
