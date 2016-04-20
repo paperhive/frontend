@@ -23,8 +23,7 @@ class DocumentTextCtrl {
   static $inject = ['$routeSegment', '$scope', 'config', 'notificationService',
     'tourService'];
   constructor(public $routeSegment, public $scope, public config,
-      public notificationService, public tourService)
-  {
+      public notificationService, public tourService) {
     this.hoveredHighlights = {};
     this.hoveredMarginDiscussions = {};
     this.pageCoordinates = {};
@@ -115,7 +114,6 @@ class DocumentTextCtrl {
     const revisionId = this.$routeSegment.$routeParams.revisionId;
     if (revisionId) {
       this.activeRevision = find(revisions, {revision: revisionId});
-      console.log(this.activeRevision)
       if (!this.activeRevision) {
         this.notificationService.notifications.push({
           type: 'error',

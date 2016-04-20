@@ -67,7 +67,7 @@ export default function(app) {
               {},
               $ctrl.discussion,
               _discussion
-            )
+            );
             return $ctrl.onDiscussionUpdate({discussion});
           };
 
