@@ -1,4 +1,4 @@
-<div ng-if="$ctrl.pdfUrl">
+<div class="container-fluid">
   <div class="row ph-md-margin-bottom" >
     <div class="col-md-3">
       <span class="text-muted">Version:</span>
@@ -60,7 +60,8 @@
       </a>
     </div>
   </div>
-  <div class="row">
+
+  <div class="row" ng-if="$ctrl.pdfUrl">
     <div class="col-md-9">
       <pdf url="$ctrl.pdfUrl" on-update="$ctrl.pdfStatus = status"></pdf>
       <pdf-full
@@ -96,6 +97,26 @@
         on-discussion-mouseenter="$ctrl.hoveredMarginDiscussions[discussion.id] = true"
         on-discussion-mouseleave="$ctrl.hoveredMarginDiscussions[discussion.id] = false"
       ></margin-discussions>
+    </div>
+  </div>
+</div>
+
+<div class="container" ng-if="$ctrl.activeRevision && !$ctrl.pdfUrl">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 text-center ph-lg-margin-top ph-lg-margin-bottom">
+      <p>
+        <span class="fa-stack fa-5x">
+          <i class="fa fa-file-o fa-stack-1x"></i>
+          <i class="fa fa-ban fa-stack-2x text-danger"></i>
+        </span>
+      </p>
+      <h3>PDF cannot be displayed</h3>
+      <p>
+        Unfortunately, this document version cannot be displayed because we don't
+        know an accessible URL for the PDF. Please select another version from the
+        version dropdown. <a href="./contact">Let us know</a> if you know a URL
+        for the corresponding PDF that can be accessed.
+      </p>
     </div>
   </div>
 </div>

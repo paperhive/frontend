@@ -111,25 +111,27 @@ class DocumentTextCtrl {
   updateActiveRevision(revisions) {
     if (!revisions) return;
 
+    // explicitly provided revision id?
     const revisionId = this.$routeSegment.$routeParams.revisionId;
     if (revisionId) {
       this.activeRevision = find(revisions, {revision: revisionId});
+      console.log(this.activeRevision)
       if (!this.activeRevision) {
         this.notificationService.notifications.push({
           type: 'error',
           message: `Unknown revision ID ${revisionId}.`
         });
       }
-      return;
-    }
-
-    const openAccessRevisions = filter(revisions, {isOpenAccess: true});
-    if (openAccessRevisions.length > 0) {
-      // use latest open access version if there is one
-      this.activeRevision = last(sortBy(openAccessRevisions, 'publishedAt'));
     } else {
-      // show latest version if no open access version is found
-      this.activeRevision = last(sortBy(revisions, 'publishedAt', 'desc'));
+      // pick a revision
+      const openAccessRevisions = filter(revisions, {isOpenAccess: true});
+      if (openAccessRevisions.length > 0) {
+        // use latest open access version if there is one
+        this.activeRevision = last(sortBy(openAccessRevisions, 'publishedAt'));
+      } else {
+        // show latest version if no open access version is found
+        this.activeRevision = last(sortBy(revisions, 'publishedAt', 'desc'));
+      }
     }
 
     // get pdf url
