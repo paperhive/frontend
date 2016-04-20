@@ -24,7 +24,7 @@
               <i class="fa fa-fw"></i>
             </a>
             <a ng-if="!revision.isOpenAccess" title="This document is not open-access and cannot be displayed yet.">
-              {{$ctrl.getRevisionDescription($ctrl.revision)}},
+              {{$ctrl.getRevisionDescription(revision)}},
               {{revision.publishedAt | date:'MMM yyyy'}}
               <i class="fa fa-fw fa-lock"></i>
             </a>

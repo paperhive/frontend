@@ -1,98 +1,11 @@
-<div ng-controller="DocumentTextCtrl">
-  <div ng-if="pdfSource">
-    <div class="row ph-md-margin-bottom" >
-      <div class="col-md-2">
-        <span style="color:gray;">Version:</span>
-        <span class="dropdown" is-open="dropdown_open" uib-dropdown style="z-index: 1010;">
-          <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
-            {{getShortDescription(revisions[activeRevisionIdx])}} <i class="fa fa-fw fa-caret-down"></i>
-          </button>
-          <ul class="dropdown-menu">
-            <li ng-repeat="revision in revisions.slice().reverse()"
-                ng-class="{'disabled': !revision.isOpenAccess}">
-              <a ng-if="revision.isOpenAccess"
-                 href="./documents/{{revision.id}}/revisions/{{revision.revision}}">
-                <strong ng-if="revision.revision ===
-                revisions[activeRevisionIdx].revision">{{getShortDescription(revision)}}</strong>
-                <span ng-if="revision.revision !==
-                revisions[activeRevisionIdx].revision">{{getShortDescription(revision)}}</span>
-                <i class="fa fa-fw"></i>
-              </a>
-              <a ng-if="!revision.isOpenAccess" title="This document is not open-access and cannot be displayed yet.">
-                {{getShortDescription(revision)}}
-                <i class="fa fa-fw fa-lock"></i>
-              </a>
-            </li>
-          </ul>
-        </span>
-      </div>
-
-      <div class="col-md-5">
-        <div ng-if="pdf.status.downloading">
-          <div ng-if="pdf.status.bytesLoaded === undefined ||
-              pdf.status.bytesTotal === undefined">
-            <uib-progressbar class="progress-striped active" value="1" max="1">
-              Loading PDF
-            </uib-progressbar>
-          </div>
-          <div ng-if="pdf.status.bytesLoaded !== undefined ||
-              pdf.status.bytesTotal !== undefined">
-            <uib-progressbar class="progress-striped active"
-              value="pdf.status.bytesLoaded / pdf.status.bytesTotal"
-              max="1">
-              Loading PDF
-              ({{pdf.status.bytesLoaded / 1024 | number:0}} KB /
-              {{pdf.status.bytesTotal / 1024 | number:0}} KB)
-            </uib-progressbar>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-2">
-        <span class="pull-right">
-          <a class="btn btn-default" ng-href="{{origPdfSource}}" download>
-            Download PDF
-          </a>
-        </span>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-9">
-        <pdf url="pdfSource" on-update="pdf.status = status"></pdf>
-        <pdf-full
-          pdf="pdf.status.pdf"
-          highlights="highlights"
-          emphasized-highlights="hoveredMarginDiscussions"
-          on-highlight-mouseenter="hoveredHighlights[highlight.id] = true"
-          on-highlight-mouseleave="hoveredHighlights[highlight.id] = false"
-          on-page-resized="pageCoordinates[pageNumber] = {offset: offset, size: displaySize}"
-          on-select="draft.selectors = selectors || draft.selectors"
-
-          popover-placement="top"
-          popover-is-open="tour.stages[tour.index] === 'highlight'"
-          uib-popover-template="'html/shared/tour-highlight.html'"
-          popover-trigger="none"
-        ></pdf-full>
-      </div>
-      <div class="col-md-3">
-        <margin-discussions
-          discussions="$ctrl.discussionsCtrl.discussions"
-          draft-selectors="draft.selectors"
-          emphasized-discussions="hoveredHighlights"
-          page-coordinates="pageCoordinates"
-          viewport-offset-top="$root.navbarSize.height + subnavSize.height"
-          viewport-offset-bottom="0"
-          on-draft-discard="draft.selectors = undefined"
-          on-discussion-submit="discussionSubmit(discussion, revisions[activeRevisionIdx])"
-          on-discussion-update="discussionUpdate(discussion)"
-          on-discussion-delete="discussionDelete(discussion)"
-          on-reply-submit="replySubmit(discussion, reply)"
-          on-reply-update="replyUpdate(discussion, reply)"
-          on-reply-delete="replyDelete(discussion, reply)"
-          on-discussion-mouseenter="hoveredMarginDiscussions[discussion.id] = true"
-          on-discussion-mouseleave="hoveredMarginDiscussions[discussion.id] = false"
-        ></margin-discussions>
-      </div>
-    </div>
-  </div>
-</div>
+<document-text
+  revisions="$ctrl.revisions"
+  discussions="$ctrl.discussionsCtrl.discussions"
+  viewport-offset-top="$root.navbarSize.height + subnavSize.height"
+  on-discussion-submit="$ctrl.discussionsCtrl.discussionSubmit(discussion)"
+  on-discussion-update="$ctrl.discussionsCtrl.discussionUpdate(discussion)"
+  on-discussion-delete="$ctrl.discussionsCtrl.discussionDelete(discussion)"
+  on-reply-submit="$ctrl.discussionsCtrl.replySubmit(reply)"
+  on-reply-update="$ctrl.discussionsCtrl.replyUpdate(reply)"
+  on-reply-delete="$ctrl.discussionsCtrl.replyDelete(reply)"
+></document-text>`

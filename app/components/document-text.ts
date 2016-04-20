@@ -1,5 +1,5 @@
 import * as angular from 'angular';
-import { filter, find, merge, sortBy } from 'lodash';
+import { filter, find, last, merge, sortBy } from 'lodash';
 import { parse as urlParse } from 'url';
 
 import template from './document-text.html!text';
@@ -79,6 +79,8 @@ class DocumentTextCtrl {
 
   // Construct strings for display in revision selection dropdown.
   getRevisionDescription(revision) {
+    if (!revision) return;
+
     // prefer short/shortened journal name
     if (revision.journal && revision.journal.nameShort) {
       return revision.journal.nameShort;
@@ -121,13 +123,13 @@ class DocumentTextCtrl {
       return;
     }
 
-    const openAccessRevisions = filter(revisions, {openAccess: true});
+    const openAccessRevisions = filter(revisions, {isOpenAccess: true});
     if (openAccessRevisions.length > 0) {
       // use latest open access version if there is one
-      this.activeRevision = sortBy(openAccessRevisions, 'publishedAt', 'desc')[0];
+      this.activeRevision = last(sortBy(openAccessRevisions, 'publishedAt'));
     } else {
       // show latest version if no open access version is found
-      this.activeRevision = sortBy(revisions, 'publishedAt', 'desc')[0];
+      this.activeRevision = last(sortBy(revisions, 'publishedAt', 'desc'));
     }
 
     // get pdf url

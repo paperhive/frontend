@@ -170,17 +170,7 @@ export default function(app) {
           .up()
           .segment('text', {
             default: true,
-            template: `<document-text
-              revisions="$ctrl.revisions"
-              discussions="$ctrl.discussionsCtrl.discussions"
-              viewport-offset-top="$root.navbarSize.height + subnavSize.height"
-              on-discussion-submit="$ctrl.discussionsCtrl.discussionSubmit(discussion)"
-              on-discussion-update="$ctrl.discussionsCtrl.discussionUpdate(discussion)"
-              on-discussion-delete="$ctrl.discussionsCtrl.discussionDelete(discussion)"
-              on-reply-submit="$ctrl.discussionsCtrl.replySubmit(reply)"
-              on-reply-update="$ctrl.discussionsCtrl.replyUpdate(reply)"
-              on-reply-delete="$ctrl.discussionsCtrl.replyDelete(reply)"
-            ></document-text>`,
+            templateUrl: 'html/documents/text.html',
             title: 'Document · PaperHive'
           })
           .segment('revisions', {
