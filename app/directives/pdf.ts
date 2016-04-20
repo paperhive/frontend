@@ -508,6 +508,10 @@ export default function(app) {
         await this.render();
       }
 
+      destroy() {
+        // TODO: release PDFjs resources (canvas, ...)?
+      }
+
       onSelect(selectors) {
         // only call onSelect output if necessary
         if (isEqual(selectors, this.lastSelectors)) return;

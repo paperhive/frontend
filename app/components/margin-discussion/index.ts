@@ -1,5 +1,6 @@
 'use strict';
 import * as angular from 'angular';
+import { merge } from 'lodash';
 
 import template from './template.html!text';
 
@@ -40,10 +41,22 @@ export default function(app) {
         };
 
         // add reply
-        $scope.replySubmit = () => {
+        ctrl.replySubmit = () => {
           $scope.state.submitting = true;
-          $q.when(ctrl.onReplySubmit({reply: $scope.replyDraft}))
+          const reply = merge(
+            {},
+            $scope.replyDraft,
+            {discussion: $scope.discussion.id}
+          );
+          $q.when(ctrl.onReplySubmit({reply: reply}))
             .then(() => $scope.replyDraft = {})
+            .finally(() => $scope.state.submitting = false);
+        };
+
+        // delete reply
+        ctrl.replyDelete = (reply) => {
+          $scope.state.submitting = true;
+          $q.when(ctrl.onReplyDelete({reply}))
             .finally(() => $scope.state.submitting = false);
         };
 

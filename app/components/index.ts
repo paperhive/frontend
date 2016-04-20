@@ -8,6 +8,7 @@ import discussionList from './discussion-list/index';
 import discussionThreadView from './discussion-thread-view/index';
 import document from './document/index';
 import documentNew from './document-new/index';
+import documentText from './document-text';
 import extensionButtons from './extension-buttons/index';
 import feedbackButton from './feedback-button';
 import hiveButton from './hive-button';
@@ -59,6 +60,7 @@ export default function(app) {
   discussionThreadView(app);
   document(app);
   documentNew(app);
+  documentText(app);
   extensionButtons(app);
   feedbackButton(app);
   hiveButton(app);

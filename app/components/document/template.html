@@ -3,9 +3,9 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-10">
-          <h2 class="ph-lg-margin-top">{{revisions[latestOAIdx].title}}</h2>
+          <h2 class="ph-lg-margin-top">{{$ctrl.latestRevision.title}}</h2>
           <h4 class="ph-lg-margin-bottom">
-            <span ng-repeat="author in revisions[latestOAIdx].authors">
+            <span ng-repeat="author in $ctrl.latestRevision.authors">
               {{author.name}}{{$last ? '' :', '}}
             </span>
           </h4>
@@ -14,11 +14,11 @@
           <h2 class="ph-lg-margin-top">
             <hive-button
               popover-placement="bottom"
-              popover-is-open="tour.stages[tour.index] === 'hive'"
+              popover-is-open="$ctrl.tour.stages[tour.index] === 'hive'"
               uib-popover-template="'html/shared/tour-hive.html'"
               popover-trigger="none"
-              document-id="revisions[0].id"
-              user="auth.user"
+              document-id="$ctrl.latestRevision.id"
+              user="$ctrl.auth.user"
               title="{{auth.user ? 'Hive this document for receiving updates.' : 'You have to be logged in to hive the document.'}}"
             ></hive-button>
           </h2>
@@ -43,8 +43,8 @@
                     </li>
                     <li subnav-target="documents.discussions">
                       <a><i class="fa fa-fw fa-comments"></i> Discussions
-                        <span class="badge" ng-if="discussions.stored.length > 0">
-                          {{discussions.stored.length}}
+                        <span class="badge" ng-if="$ctrl.discussionsCtrl.discussions.length > 0">
+                          {{$ctrl.discussionsCtrl.discussions.length}}
                         </span></a>
                     </li>
                   </ul>

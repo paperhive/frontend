@@ -139,33 +139,48 @@ export default function(app) {
             title: 'Hivers · PaperHive'
           })
           .segment('discussions', {
-            templateUrl: 'html/documents/discussions/index.html',
+            template: `<div
+              ng-if="$ctrl.discussionsCtrl.discussions"
+              app-view-segment="2"
+            ></div>`,
             title: 'Discussions · PaperHive'
           })
           .within()
             .segment('list', {
               default: true,
-              template: '<discussion-list discussions="discussions"></discussion-list>',
+              template: `<discussion-list
+                document-revision="$ctrl.latestRevision"
+                discussions="$ctrl.discussionsCtrl.discussions"
+              ></discussion-list>`,
               title: 'Discussions · PaperHive'
             })
             .segment('thread', {
               // Ideally, we'd already provide the exact discussion here,
               // rather than all discussions and the discussionId.
               template: `<discussion-thread-view
-                discussions="discussions"
-                on-original-update="originalUpdate($discussion, $comment)"
-                on-reply-submit="replyAdd($discussion, $reply)"
-                on-reply-update="replyUpdate($discussion, $replyOld, $replyNew)"
-                on-reply-delete="replyDelete($discussion, $reply)"
-              >
-              </discussion-thread-view>`,
+                discussions="$ctrl.discussionsCtrl.discussions"
+                on-discussion-update="$ctrl.discussionsCtrl.discussionUpdate(discussion)"
+                on-reply-submit="$ctrl.discussionsCtrl.replySubmit(reply)"
+                on-reply-update="$ctrl.discussionsCtrl.replyUpdate(reply)"
+                on-reply-delete="$ctrl.discussionsCtrl.replyDelete(reply)"
+              ></discussion-thread-view>`,
               dependencies: ['discussionId'],
               title: 'Discussion · PaperHive'
             })
           .up()
           .segment('text', {
             default: true,
-            templateUrl: 'html/documents/text.html',
+            template: `<document-text
+              revisions="$ctrl.revisions"
+              discussions="$ctrl.discussionsCtrl.discussions"
+              viewport-offset-top="$root.navbarSize.height + subnavSize.height"
+              on-discussion-submit="$ctrl.discussionsCtrl.discussionSubmit(discussion)"
+              on-discussion-update="$ctrl.discussionsCtrl.discussionUpdate(discussion)"
+              on-discussion-delete="$ctrl.discussionsCtrl.discussionDelete(discussion)"
+              on-reply-submit="$ctrl.discussionsCtrl.replySubmit(reply)"
+              on-reply-update="$ctrl.discussionsCtrl.replyUpdate(reply)"
+              on-reply-delete="$ctrl.discussionsCtrl.replyDelete(reply)"
+            ></document-text>`,
             title: 'Document · PaperHive'
           })
           .segment('revisions', {

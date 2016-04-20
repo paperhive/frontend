@@ -28,18 +28,18 @@ export default function(app) {
     controller: [
       '$scope', 'distangleService', 'tourService',
       function($scope, distangleService, tourService) {
-        const ctrl = this;
+        const $ctrl = this;
 
-        ctrl.tour = tourService;
+        $ctrl.tour = tourService;
 
         // sizes of discussions by discussion id
-        ctrl.discussionSizes = {};
+        $ctrl.discussionSizes = {};
 
         // top positions of discussions by discussion id
         // (computed from pageCoordinates, selectors and marginDiscussionSizes
         // with distangleService)
-        ctrl.discussionPositions = {};
-        ctrl.draftPosition = undefined;
+        $ctrl.discussionPositions = {};
+        $ctrl.draftPosition = undefined;
 
         // get raw top position of provided selectors (relative to offsetParent)
         function getRawPosition(selectors) {
@@ -54,7 +54,7 @@ export default function(app) {
           });
 
           // get page offset
-          const pageCoord = ctrl.pageCoordinates[topRect.pageNumber];
+          const pageCoord = $ctrl.pageCoordinates[topRect.pageNumber];
           if (!pageCoord) return;
 
           // compute position
@@ -63,17 +63,19 @@ export default function(app) {
 
         // compute discussionPosititions and draftPosition
         function updatePositions() {
+          if (!$ctrl.discussions) return;
+
           // get raw draft position
-          const draftRawPosition = getRawPosition(ctrl.draftSelectors);
+          const draftRawPosition = getRawPosition($ctrl.draftSelectors);
 
           // create draft coord object (falsy if it has no position or no height)
           const draftCoord = draftRawPosition !== undefined &&
-            ctrl.draftSize && ctrl.draftSize.height &&
-            {position: draftRawPosition, height: ctrl.draftSize.height};
+            $ctrl.draftSize && $ctrl.draftSize.height &&
+            {position: draftRawPosition, height: $ctrl.draftSize.height};
 
           // get raw discussion positions
           const discussionRawPositions = {};
-          ctrl.discussions.forEach(discussion => {
+          $ctrl.discussions.forEach(discussion => {
             discussionRawPositions[discussion.id] =
               getRawPosition(discussion.target.selectors);
           });
@@ -81,8 +83,8 @@ export default function(app) {
           // create array with id, offset and height for each discussion
           // (ignores discussions without size, e.g., unrendered discussions)
           const coords = sortBy(compact(map(discussionRawPositions, (position, id) => {
-            if (position === undefined || !ctrl.discussionSizes[id]) return;
-            return {id, position, height: ctrl.discussionSizes[id].height};
+            if (position === undefined || !$ctrl.discussionSizes[id]) return;
+            return {id, position, height: $ctrl.discussionSizes[id].height};
           })), 'position');
 
           // padding between elements
@@ -127,8 +129,8 @@ export default function(app) {
           }
 
           // update controller properties
-          ctrl.draftPosition = draftCoord ? draftCoord.position : undefined;
-          angular.copy(positions, ctrl.discussionPositions);
+          $ctrl.draftPosition = draftCoord ? draftCoord.position : undefined;
+          angular.copy(positions, $ctrl.discussionPositions);
         }
 
         // update positions if discussions, draftSelectors, discussionSizes,

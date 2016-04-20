@@ -1,29 +1,29 @@
 <div class="container">
   <h3 class="ph-no-margin-top">
     <inline-editable
-      original-content="discussion.title"
-      can-edit="auth.user.id === discussion.author.id"
-      on-save="discussion.title = $content; updateTitle($content);"
+      content="$ctrl.discussion.title"
+      can-edit="auth.user.id === $ctrl.discussion.author.id"
+      on-submit="$ctrl.updateDiscussion({title: content})"
       >
     </inline-editable>
   </h3>
-  <a href="./users/{{discussion.author.account.username}}">
-    {{discussion.author.displayName}}</a>
+  <a href="./users/{{$ctrl.discussion.author.account.username}}">
+    {{$ctrl.discussion.author.displayName}}</a>
   opened this discussion
-  <span am-time-ago="discussion.createdAt"></span>
-  <span ng-if="discussion.replies.length == 1">
-    &middot; {{discussion.replies.length}} reply
+  <span am-time-ago="$ctrl.discussion.createdAt"></span>
+  <span ng-if="$ctrl.discussion.replies.length == 1">
+    &middot; {{$ctrl.discussion.replies.length}} reply
   </span>
-  <span ng-if="discussion.replies.length > 1">
-    &middot; {{discussion.replies.length}} replies
+  <span ng-if="$ctrl.discussion.replies.length > 1">
+    &middot; {{$ctrl.discussion.replies.length}} replies
   </span>
 
-  <div ng-if="discussion.target.text">
+  <div ng-if="$ctrl.discussion.target.textQuote.content">
     <hr>
     <h4>Referenced text</h4>
     <div class="well well-lg ph-reference">
       <blockquote>
-        {{discussion.target.text}}
+        {{$ctrl.discussion.target.textQuote.content}}
       </blockquote>
     </div>
   </div>
@@ -34,20 +34,20 @@
       <ul class="media-list">
         <li class="media">
           <comment
-            content="discussion"
-            on-update="updateDiscussion($comment)"
+            content="$ctrl.discussion"
+            on-update="$ctrl.updateDiscussion({body: $comment.body})"
             requires-body="false"
             deletable="false"
             >
           </comment>
         </li>
 
-        <li ng-repeat="reply in discussion.replies"
+        <li ng-repeat="reply in $ctrl.discussion.replies"
             class="media" id="reply.id">
           <comment
             content="reply"
-            on-delete="deleteReply($comment)"
-            on-update="updateReply($comment, $index)"
+            on-delete="$ctrl.onReplyDelete({reply: reply})"
+            on-update="$ctrl.onReplyUpdate({reply: $comment})"
             requires-body="true"
             deletable="true"
             >
@@ -63,7 +63,7 @@
             <div class="media-body">
               <div class="panel panel-default">
                 <div class="panel-body">
-                  <new-reply on-submit="addReply($body)"></new-reply>
+                  <new-reply on-submit="addReply(reply)"></new-reply>
                 </div>
               </div>
             </div>
@@ -94,7 +94,7 @@
         </h5>
       </a-->
       <!--ul class="ph-tags">
-        <li ng-repeat="label in discussion.tags">
+        <li ng-repeat="label in $ctrl.discussion.tags">
         <a href="#" class="btn btn-default {{label}}">{{label}}</a>
         </li>
       </ul>
@@ -117,7 +117,7 @@
       </span>
       <hr-->
       <h5>Participants</h5>
-      <avatar-list discussion="discussion"></avatar-list>
+      <avatar-list discussion="$ctrl.discussion"></avatar-list>
     </div>
 
   </div>

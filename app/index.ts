@@ -45,7 +45,7 @@ import '../build-tmp/html.js';
 import configJson from '../config.json!json';
 
 
-const paperhive = angular
+export const paperhive = angular
   .module(
     'paperhive', [
       'angulartics',
