@@ -18,12 +18,12 @@
     &middot; {{$ctrl.discussion.replies.length}} replies
   </span>
 
-  <div ng-if="$ctrl.discussion.target.textQuote.content">
+  <div ng-if="$ctrl.discussion.target.selectors.textQuote.content">
     <hr>
     <h4>Referenced text</h4>
     <div class="well well-lg ph-reference">
       <blockquote>
-        {{$ctrl.discussion.target.textQuote.content}}
+        {{$ctrl.discussion.target.selectors.textQuote.content}}
       </blockquote>
     </div>
   </div>
