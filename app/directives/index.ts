@@ -8,7 +8,6 @@ import elementSize from './elementSize';
 import kramjax from './kramjax';
 import onOutside from './onOutside';
 import onRendered from './onRendered';
-import onTextSelect from './onTextSelect';
 import pdf from './pdf';
 import subnav from './subnav';
 import toc from './toc';
@@ -27,7 +26,6 @@ export default function(app) {
   kramjax(app);
   onOutside(app);
   onRendered(app);
-  onTextSelect(app);
   pdf(app);
   subnav(app);
   toc(app);
