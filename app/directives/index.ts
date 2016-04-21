@@ -5,7 +5,6 @@ import confirmedClick from './confirmed-click';
 import elastic from './elastic';
 import elementPosition from './elementPosition';
 import elementSize from './elementSize';
-import highlights from './highlights';
 import kramjax from './kramjax';
 import onOutside from './onOutside';
 import onRendered from './onRendered';
@@ -25,7 +24,6 @@ export default function(app) {
   elastic(app);
   elementPosition(app);
   elementSize(app);
-  highlights(app);
   kramjax(app);
   onOutside(app);
   onRendered(app);
