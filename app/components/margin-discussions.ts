@@ -26,11 +26,25 @@ export default function(app) {
     },
     template,
     controller: [
-      '$scope', 'distangleService', 'tourService',
-      function($scope, distangleService, tourService) {
+      '$scope', '$timeout', '$window', 'smoothScroll', 'distangleService', 'tourService',
+      function($scope, $timeout, $window, smoothScroll, distangleService, tourService) {
         const $ctrl = this;
 
         $ctrl.tour = tourService;
+        // scroll to discussion tour popover
+        $scope.$watch('$ctrl.discussionPositions["cDmUY04FkYx9"] !== undefined && $ctrl.tour.stages[$ctrl.tour.index] === "margin-discussion"', shouldScroll => {
+          if (shouldScroll) {
+            // wait until popover is rendered
+            $timeout(() => {
+              // trigger popover positioning
+              angular.element($window).scroll();
+              $timeout(() => {
+                const popover = document.getElementById('discussionTourPopover');
+                smoothScroll(popover, {offset: 140});
+              });
+            }, 400);
+          }
+        });
 
         // sizes of discussions by discussion id
         $ctrl.discussionSizes = {};

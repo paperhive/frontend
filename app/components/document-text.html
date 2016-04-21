@@ -74,7 +74,7 @@
         on-select="$ctrl.draftSelectors = selectors || $ctrl.draftSelectors"
 
         popover-placement="top"
-        popover-is-open="tour.stages[tour.index] === 'highlight'"
+        popover-is-open="$ctrl.tourService.stages[$ctrl.tourService.index] === 'highlight'"
         uib-popover-template="'html/shared/tour-highlight.html'"
         popover-trigger="none"
       ></pdf-full>
