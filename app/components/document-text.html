@@ -72,6 +72,7 @@
         on-highlight-mouseleave="$ctrl.hoveredHighlights[highlight.id] = false"
         on-page-resized="$ctrl.pageCoordinates[pageNumber] = {offset: offset, size: displaySize}"
         on-select="$ctrl.draftSelectors = selectors || $ctrl.draftSelectors"
+        on-link-dest-create="$ctrl.getLinkDest(dest)"
 
         popover-placement="top"
         popover-is-open="$ctrl.tourService.stages[$ctrl.tourService.index] === 'highlight'"

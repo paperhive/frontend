@@ -63,6 +63,18 @@ class DocumentTextCtrl {
     });
   }
 
+  // create link for pdf destinations
+  getLinkDest(dest) {
+    const segmentName = this.$routeSegment.name;
+    const baseUrl = this.$routeSegment.getSegmentUrl(
+      segmentName,
+      segmentName === 'documents.text' ?
+        {documentId: this.activeRevision.id} :
+        {documentId: this.activeRevision.id, revisionId: this.activeRevision.revision}
+    );
+    return `${baseUrl}#pdfdest:${encodeURIComponent(dest)}`
+  }
+
   getNewDiscussion(discussion) {
     return merge(
       {},

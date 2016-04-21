@@ -231,9 +231,14 @@ export default function(app) {
 
     // TODO: implement!
     class LinkService {
+      constructor(public onLinkCreate) {}
+
       getDestinationHash(dest) {
+        return this.onLinkCreate({dest});
+      }
+
+      navigateTo(dest) {
         console.log(dest);
-        return dest;
       }
     }
 
@@ -273,16 +278,16 @@ export default function(app) {
           page: this.page,
           viewport: viewport,
         });
+
+        // remove onclick handler (otherwise the link has no effect because only
+        // linkService.navigateTo is called)
+        this.element.find('a.internalLink').prop('onclick', null);
       }
     }
 
     // render a pdf page
     class PdfPage {
-      element: JQuery;
       page: PDFPageProxy;
-      pageNumber: number;
-      pdf: PDFDocumentProxy;
-      scope: any;
 
       // renderer state
       renderedSize: {height: number, width: number};
@@ -291,12 +296,9 @@ export default function(app) {
       textRenderer: TextRenderer;
       annotationsRenderer: AnnotationsRenderer;
 
-      constructor(pdf, pageNumber, element, scope) {
-        this.element = element;
-        this.pageNumber = pageNumber;
-        this.pdf = pdf;
-        this.scope = scope;
-
+      constructor(public pdf: PDFDocumentProxy, public pageNumber: number,
+          public element: JQuery, public scope: any,
+          public linkService) {
         // set default height to DIN A4
         // (overwritten with actual page size below)
         this.updateSize({
@@ -357,7 +359,7 @@ export default function(app) {
           // add annotations renderer
           const annotationsLayer = angular.element('<div class="ph-pdf-annotations"></div>');
           this.element.append(annotationsLayer);
-          this.annotationsRenderer = new AnnotationsRenderer(annotationsLayer, this.page, new LinkService);
+          this.annotationsRenderer = new AnnotationsRenderer(annotationsLayer, this.page, this.linkService);
         }
       }
 
@@ -446,22 +448,20 @@ export default function(app) {
 
     // render a full pdf
     class PdfFull {
-      element: JQuery;
-      pdf: PDFDocumentProxy;
       pages: Array<PdfPage>;
       windowSize: {height: number, width: number};
-      scope: any;
       lastSelectors: any;
       lastSimpleSelection: any;
+      linkService: LinkService;
 
-      constructor(pdf, element, scope) {
-        this.element = element;
-        this.pdf = pdf;
-        this.scope = scope;
+      constructor(public pdf:PDFDocumentProxy, public element: JQuery,
+          public scope: any) {
         this.pages = [];
 
         // wipe element children
         this.element.empty();
+
+        this.linkService = new LinkService(scope.onLinkDestCreate);
       }
 
       // initialize all pages
@@ -475,7 +475,7 @@ export default function(app) {
           this.element.append(pageElement);
 
           // init page
-          const page = new PdfPage(this.pdf, pageNumber, pageElement, this.scope);
+          const page = new PdfPage(this.pdf, pageNumber, pageElement, this.scope, this.linkService);
           this.pages.push(page);
           pageInits.push(page.init());
         }
@@ -701,9 +701,8 @@ export default function(app) {
         //                   size (properties width, height)
         onSelect: '&',
 
-        // called when an in-document link is clicked
-        // passed arguments: TODO
-        onLinkClicked: '&', // pass function that renders the link target page (should return promise)
+        // called when an in-document link is created; should return the URL
+        onLinkDestCreate: '&',
 
         // TODO: scroll interface
       },
