@@ -1,5 +1,5 @@
 {
-  "apiUrl": "https://dev.paperhive.org/backend/master",
+  "apiUrl": "https://dev.paperhive.org/backend/pdf-selectors",
   "apiVersion": "1.0.0",
   "baseHref": "/"
 }
