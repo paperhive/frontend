@@ -8,7 +8,10 @@ export function getRevisionMetadata(revision) {
       name: 'description',
       content: revision.title + ' by ' + revision.authors.join(', ') + '.'
     },
-    {name: 'author', content: revision.authors.join(', ')},
+    {
+      name: 'author',
+      content: revision.authors.map(author => author.name).join(', ')
+    },
     {name: 'keywords', content: revision.tags.join(', ')}
   ];
 
@@ -22,7 +25,7 @@ export function getRevisionMetadata(revision) {
 
   // Both "John Smith" and "Smith, John" are fine.
   revision.authors.forEach(author => {
-    metadata.push({name: 'citation_author', content: author});
+    metadata.push({name: 'citation_author', content: author.name});
   });
 
   // citation_publication_date: REQUIRED for Google Scholar.
