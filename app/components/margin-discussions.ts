@@ -146,7 +146,3 @@ export default function(app) {
     ],
   });
 }
-
-/*
-
-*/
