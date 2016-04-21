@@ -454,7 +454,7 @@ export default function(app) {
       lastSimpleSelection: any;
       linkService: LinkService;
 
-      constructor(public pdf:PDFDocumentProxy, public element: JQuery,
+      constructor(public pdf: PDFDocumentProxy, public element: JQuery,
           public scope: any) {
         this.pages = [];
 

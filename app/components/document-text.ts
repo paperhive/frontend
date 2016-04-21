@@ -72,7 +72,7 @@ class DocumentTextCtrl {
         {documentId: this.activeRevision.id} :
         {documentId: this.activeRevision.id, revisionId: this.activeRevision.revision}
     );
-    return `${baseUrl}#pdfdest:${encodeURIComponent(dest)}`
+    return `${baseUrl}#pdfdest:${encodeURIComponent(dest)}`;
   }
 
   getNewDiscussion(discussion) {
