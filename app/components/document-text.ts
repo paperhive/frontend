@@ -25,7 +25,7 @@ class DocumentTextCtrl {
   constructor(public $routeSegment, public $scope, public config,
       public notificationService, public tourService) {
     this.hoveredHighlights = {};
-    this.hoveredMarginDiscussions = {};
+    this.hoveredMarginDiscussions = {draft: true};
     this.pageCoordinates = {};
 
     // update active revision

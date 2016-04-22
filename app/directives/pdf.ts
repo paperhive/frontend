@@ -343,6 +343,7 @@ export default function(app) {
               <pdf-highlight
                 ng-repeat="highlight in highlights | highlightsByPageNumber:${this.pageNumber}"
                 highlight="highlight"
+                emphasized="emphasizedHighlights[highlight.id]"
                 page-number="${this.page.pageNumber}"
                 on-mouseenter="onHighlightMouseenter({highlight: highlight, pageNumber: pageNumber})"
                 on-mouseleave="onHighlightMouseleave({highlight: highlight, pageNumber: pageNumber})"
@@ -664,6 +665,9 @@ export default function(app) {
         // interpreted properties: selectors (describes the position)
         //                         emphasize (e.g., if the corresponding margin discussion is hovered)
         highlights: '<',
+
+        // object mapping highlight ids to emphasize state (boolean)
+        emphasizedHighlights: '<',
 
         // Output
         // ======

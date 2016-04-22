@@ -2,6 +2,7 @@ export default function(app) {
   app.component('pdfHighlight', {
     bindings: {
       highlight: '<',
+      emphasized: '<',
       pageNumber: '<',
       onMouseenter: '&',
       onMouseleave: '&',
@@ -17,6 +18,7 @@ export default function(app) {
           height: rectangle.height * 100 + '%',
           width: rectangle.width * 100 + '%',
         }"
+        ng-class="{'ph-pdf-highlight-emphasize': $ctrl.emphasized}"
         ng-mouseenter="$ctrl.onMouseenter({
           highlight: $ctrl.highlight,
           pageNumber: $ctrl.pageNumber,
@@ -25,7 +27,7 @@ export default function(app) {
           highlight: $ctrl.highlight,
           pageNumber: $ctrl.pageNumber,
         })"
-      >{{$ctrl.test}}</div>
+      ></div>
     `
   });
 }

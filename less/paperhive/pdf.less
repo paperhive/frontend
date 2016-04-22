@@ -34,7 +34,7 @@
       background: @ph-highlight-color;
     }
     & ::-moz-selection {
-      background: @ph-highlight-color
+      background: @ph-highlight-color;
     }
 
     & > div {
@@ -76,7 +76,11 @@
     mix-blend-mode: multiply;
 
     .ph-pdf-highlight {
+      transition: background-color 0.3s ease;
       background-color: @ph-text-highlight-color;
+      &.ph-pdf-highlight-emphasize {
+        background-color: @ph-highlight-color;
+      }
     }
   }
 }
