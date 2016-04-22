@@ -430,7 +430,7 @@ export default function(app) {
         try {
           await this.canvasRenderer.render(viewport);
           await this.textRenderer.render(viewport);
-          //await this.annotationsRenderer.render(viewport);
+          // await this.annotationsRenderer.render(viewport);
 
           unlock();
 
