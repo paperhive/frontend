@@ -358,9 +358,10 @@ export default function(app) {
           this.textRenderer = new TextRenderer(textElement, this.page);
 
           // add annotations renderer
-          const annotationsLayer = angular.element('<div class="ph-pdf-annotations"></div>');
-          this.element.append(annotationsLayer);
-          this.annotationsRenderer = new AnnotationsRenderer(annotationsLayer, this.page, this.linkService);
+          // TODO: re-enable (disabled until scroll-to-dest is implemented)
+          // const annotationsLayer = angular.element('<div class="ph-pdf-annotations"></div>');
+          // this.element.append(annotationsLayer);
+          // this.annotationsRenderer = new AnnotationsRenderer(annotationsLayer, this.page, this.linkService);
         }
       }
 
