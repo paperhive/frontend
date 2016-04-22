@@ -2,7 +2,7 @@
   <!-- original comment -->
   <div class="ph-margin-row">
     <!-- avatar -->
-    <avatar user="discussion.author" size="38"
+    <avatar user="$ctrl.discussion.author" size="38"
       classes="ph-margin-avatar img-circle"
       ></avatar>
     <div class="ph-margin-link-default"
@@ -13,22 +13,22 @@
       </div>
       <div class="ph-margin-row-content">
         <!-- view original comment -->
-        <div ng-if="!originalState.editing" class="clearfix">
+        <div ng-if="!$ctrl.editing" class="clearfix">
           <div class="ph-margin-info">
             <p class="ph-xs-margin-bottom">
-              <a href="./users/{{discussion.author.account.username}}">
-                {{discussion.author.displayName}}</a>
-              · <span am-time-ago="discussion.createdAt"></span>
+              <a href="./users/{{$ctrl.discussion.author.account.username}}">
+                {{$ctrl.discussion.author.displayName}}</a>
+              · <span am-time-ago="$ctrl.discussion.createdAt"></span>
             </p>
           </div>
-          <div ng-if="!discussion.body">
-            <kramjax body="discussion.title"></kramjax>
+          <div ng-if="!$ctrl.discussion.body">
+            <kramjax body="$ctrl.discussion.title"></kramjax>
           </div>
-          <div ng-if="discussion.body">
+          <div ng-if="$ctrl.discussion.body">
             <p class="ph-margin-title ph-no-margin ph-xs-margin-bottom">
-              <kramjax body="discussion.title"></kramjax>
+              <kramjax body="$ctrl.discussion.title"></kramjax>
             </p>
-            <kramjax body="discussion.body"></kramjax>
+            <kramjax body="$ctrl.discussion.body"></kramjax>
           </div>
           <div class="pull-right">
             <span ng-click="$event.stopPropagation()" class="dropdown" uib-dropdown>
@@ -37,28 +37,26 @@
               </button>
               <ul class="dropdown-menu dropdown-menu-right ph-margin-dropdown">
                 <li>
-                  <a ng-click="changePath(filterRouteSegmentUrl('documents.discussions.thread', {discussionId: discussion.id}))">
+                  <a ng-click="changePath(('documents.discussions.thread' | routeSegmentUrl:{discussionId: $ctrl.discussion.id}))">
                     <i class="fa fa-fw fa-comments"></i> Show discussion view
                   </a>
                 </li>
-                <li ng-if="auth.user.id === discussion.author.id"
-                    ng-class="{disabled: originalState.submitting}">
-                  <a ng-click="originalState.editing = true; $event.stopPropagation()" href>
+                <li ng-if="auth.user.id === $ctrl.discussion.author.id">
+                  <a ng-click="$ctrl.editing = true; $event.stopPropagation()" href>
                     <i class="fa fa-fw fa-pencil"></i> Edit
                   </a>
                 </li>
-                <li ng-if="auth.user.id === discussion.author.id"
-                    ng-class="{disabled: originalState.submitting ||
-                      discussion.replies.length}">
-                  <a ng-if="!discussion.replies.length && !originalState.submitting"
+                <li ng-if="auth.user.id === $ctrl.discussion.author.id"
+                    ng-class="{disabled: $ctrl.discussion.replies.length || $ctrl.deleting}">
+                  <a ng-if="!$ctrl.discussion.replies.length && !$ctrl.deleting"
                       ng-confirm-click="Really delete discussion?"
-                      confirmed-click="discussionDelete()" href>
+                      confirmed-click="$ctrl.discussionDelete()" href>
                     <i class="fa fa-fw fa-times"></i> Delete
                   </a>
-                  <a ng-if="!discussion.replies.length && originalState.submitting" href>
+                  <a ng-if="!$ctrl.discussion.replies.length && $ctrl.deleting" href>
                     <i class="fa fa-fw fa-times"></i> Delete
                   </a>
-                  <a ng-if="discussion.replies.length" href
+                  <a ng-if="$ctrl.discussion.replies.length" href
                       uib-tooltip="Discussions with replies cannot be deleted"
                       tooltip-placement="left">
                     <i class="fa fa-fw fa-times"></i> Delete
@@ -72,66 +70,25 @@
           </div>
           <!-- do not move this before the options link (pull-right!) because
           this creates a newline after inserting the first reply -->
-          <span class="badge ph-margin-badge" ng-if="discussion.replies.length">
-            {{discussion.replies.length}}
-            {{discussion.replies.length === 1 ? 'answer' : 'answers'}}
+          <span class="badge ph-margin-badge" ng-if="$ctrl.discussion.replies.length">
+            {{$ctrl.discussion.replies.length}}
+            {{$ctrl.discussion.replies.length === 1 ? 'answer' : 'answers'}}
             <i class="fa fa-fw fa-comments"></i>
           </span>
         </div>
         <!-- edit original comment -->
-        <form ng-if="originalState.editing"
-            ng-submit="originalForm.$valid && originalUpdate()"
-            ng-controller="originalEditCtrl"
-            name="originalForm" novalidate>
-          <div class="form-group ph-no-margin ph-sm-margin-bottom has-feedback"
-            ng-class="{'has-error': originalForm.title.$dirty &&
-              originalForm.title.$invalid}">
-            <input ng-model="copy.title" name="title"
-              ng-click="$event.stopPropagation()"
-              class="form-group form-control ph-no-margin ph-margin-textarea"
-              type="text" placeholder="Enter title..."
-              required ng-maxlength="40">
-            <i ng-if="originalForm.title.$dirty && originalForm.title.$invalid"
-              class="fa fa-fw fa-times form-control-feedback" aria-hidden="true"></i>
-            <p class="help-block small"
-                ng-if="originalForm.title.$dirty && originalForm.title.$error.required">
-              A title is required.
-            </p>
-            <p class="help-block small" ng-if="originalForm.title.$error.maxlength">
-              A title is limited to 40 characters (you entered
-              {{originalForm.title.$viewValue.length}} characters).
-            </p>
-          </div>
-          <textarea ng-model="copy.body"
-            ng-click="$event.stopPropagation()"
-            id="textbody" placeholder="Enter comment (optional)..."
-            class="form-group form-control ph-comment-body ph-no-margin ph-margin-textarea ph-textarea-elastic ph-textarea-small"
-            elastic></textarea>
-          <div class="ph-sm-margin-top clearfix">
-            <span class="pull-right">
-              <button
-                  ng-click="originalState.editing = false; $event.stopPropagation()"
-                  ng-disabled="originalState.submitting"
-                  type="button" class="btn btn-danger btn-sm">
-                <i class="fa fa-fw fa-times"></i>
-                Cancel
-              </button>
-              <button ng-disabled="originalForm.$invalid || originalForm.$pristine || originalState.submitting"
-                  ng-click="$event.stopPropagation()"
-                  class="btn btn-sm btn-primary">
-                <i ng-if="!originalState.submitting" class="fa fa-fw fa-check"></i>
-                <i ng-if="originalState.submitting" class="fa fa-fw fa-spinner fa-spin"></i>
-                Update comment
-              </button>
-            </span>
-          </div>
-        </form>
+        <margin-discussion-edit
+          discussion="$ctrl.discussion"
+          on-submit="$ctrl.onDiscussionUpdate({discussion: discussion})"
+          on-discard="$ctrl.editing = false"
+          ng-if="$ctrl.editing"
+        ></margin-discussion-edit>
       </div>
     </div>
   </div>
   <div uib-collapse="!state.showReplies" class="ph-margin-collapse">
     <!-- replies (note that ng-repeat creates a child scope!) -->
-    <div ng-repeat="reply in discussion.replies"
+    <div ng-repeat="reply in $ctrl.discussion.replies"
         ng-controller="replyCtrl"
         class="ph-margin-row ph-margin-row-border-top">
       <!-- avatar -->
@@ -178,7 +135,7 @@
                   <li ng-if="auth.user.id === reply.author.id"
                       ng-class="{disabled: replyState.submitting}">
                       <a ng-confirm-click="Really delete reply?"
-                          confirmed-click="replyDelete(reply)" href>
+                          confirmed-click="$ctrl.replyDelete(reply)" href>
                       <i class="fa fa-fw fa-times"></i> Delete
                     </a>
                   </li>
@@ -190,32 +147,12 @@
             </div>
           </div>
           <!-- edit reply -->
-          <form ng-if="replyState.editing"
-              ng-controller="replyEditCtrl"
-              ng-submit="replyEditForm.$valid && replyUpdate()"
-              name="replyEditForm" novalidate>
-            <textarea ng-model="copy.body"
-              class="form-group form-control ph-comment-body ph-margin-textarea ph-no-margin ph-textarea-elastic ph-textarea-small"
-              elastic placeholder="Enter reply..." required
-              ></textarea>
-            <div class="ph-sm-margin-top clearfix">
-              <span class="pull-right">
-                <button ng-click="replyState.editing = false"
-                    ng-disabled="replyState.submitting"
-                    type="button" class="btn btn-danger btn-sm">
-                  <i class="fa fa-fw fa-times"></i>
-                  Cancel
-                </button>
-                <button
-                    ng-disabled="replyEditForm.$invalid || replyEditForm.$pristine || replyState.submitting"
-                    type="submit" class="btn btn-primary btn-sm">
-                  <i ng-if="!replyState.submitting" class="fa fa-fw fa-check"></i>
-                  <i ng-if="replyState.submitting" class="fa fa-fw fa-spinner fa-spin"></i>
-                  Update reply
-                </button>
-              </span>
-            </div>
-          </form>
+          <margin-reply-edit
+            reply="reply"
+            on-submit="$ctrl.onReplyUpdate({discussion: discussion, reply: reply})"
+            on-discard="replyState.editing = false"
+            ng-if="replyState.editing"
+          ></margin-reply-edit>
         </div>
       </div>
     </div>
@@ -232,7 +169,7 @@
         </div>
         <!-- row content -->
         <div class="ph-margin-row-content">
-          <form ng-submit="replyForm.$valid && replySubmit()"
+          <form ng-submit="replyForm.$valid && $ctrl.replySubmit()"
               name="replyForm" novalidate>
             <textarea ng-model="replyDraft.body"
               ng-focus="state.textFocused = true"

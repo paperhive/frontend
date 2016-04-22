@@ -1,0 +1,47 @@
+<margin-link
+  position="top"
+  discussion-offsets="$ctrl.discussionPositions"
+  discussion-sizes="$ctrl.discussionSizes"
+  viewport-offset-top="$ctrl.viewportOffsetTop"
+  viewport-offset-bottom="$ctrl.viewportOffsetBottom"
+></margin-link>
+<margin-link
+  position="bottom"
+  discussion-offsets="$ctrl.discussionPositions"
+  discussion-sizes="$ctrl.discussionSizes"
+  viewport-offset-top="$ctrl.viewportOffsetTop"
+  viewport-offset-bottom="$ctrl.viewportOffsetBottom"
+></margin-link>
+<margin-discussion
+  ng-repeat="discussion in $ctrl.discussions"
+
+  discussion="discussion"
+  on-discussion-update="$ctrl.onDiscussionUpdate({discussion: discussion})"
+  on-discussion-delete="$ctrl.onDiscussionDelete({discussion: discussion})"
+  on-reply-submit="$ctrl.onReplySubmit({discussion: discussion, reply: reply})"
+  on-reply-update="$ctrl.onReplyUpdate({discussion: discussion, reply: reply})"
+  on-reply-delete="$ctrl.onReplyDelete({discussion: discussion, reply: reply})"
+  ng-mouseenter="$ctrl.onDiscussionMouseenter({discussion: discussion})"
+  ng-mouseleave="$ctrl.onDiscussionMouseleave({discussion: discussion})"
+
+  element-size="$ctrl.discussionSizes[discussion.id]"
+  id="d:{{discussion.id}}"
+  ng-show="$ctrl.discussionPositions[discussion.id] !== undefined"
+  ng-class="{'ph-animate-top': $ctrl.discussionPositions[discussion.id] !== undefined}"
+  ng-style="{'top': $ctrl.discussionPositions[discussion.id] + 'px'}"
+
+  popover-placement="top"
+  popover-is-open="$ctrl.discussionPositions[discussion.id] !== undefined && discussion.id === 'cDmUY04FkYx9' && $ctrl.tour.stages[$ctrl.tour.index] === 'margin-discussion'"
+  uib-popover-template="'html/shared/tour-margin-discussion.html'"
+  popover-trigger="none"
+></margin-discussion>
+<margin-discussion-draft
+  selectors="$ctrl.draftSelectors"
+  on-submit="$ctrl.onDiscussionSubmit({discussion: discussion})"
+  on-discard="$ctrl.onDraftDiscard()"
+
+  element-size="$ctrl.draftSize"
+  ng-if="$ctrl.draftSelectors"
+  ng-show="$ctrl.draftPosition !== undefined"
+  ng-style="{'top': $ctrl.draftPosition + 'px'}"
+></margin-discussion-draft>

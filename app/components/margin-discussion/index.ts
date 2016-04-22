@@ -1,5 +1,6 @@
 'use strict';
 import * as angular from 'angular';
+import { merge } from 'lodash';
 
 import template from './template.html!text';
 
@@ -7,7 +8,7 @@ export default function(app) {
   app.component('marginDiscussion', {
     bindings: {
       discussion: '<',
-      onOriginalUpdate: '&',
+      onDiscussionUpdate: '&',
       onDiscussionDelete: '&',
       onReplySubmit: '&',
       onReplyUpdate: '&',
@@ -15,8 +16,8 @@ export default function(app) {
     },
     template,
     controller: [
-      '$scope', '$q', '$location', '$filter', 'authService',
-      function($scope, $q, $location, $filter, authService) {
+      '$scope', '$q', '$location', 'authService',
+      function($scope, $q, $location, authService) {
         const ctrl = this;
 
         // expose discussion in template
@@ -32,66 +33,49 @@ export default function(app) {
           $location.path(path);
         };
 
-        $scope.filterRouteSegmentUrl = function(segment, args) {
-          return $filter('routeSegmentUrl')(segment, args);
-        };
-
-        // original comment
-        $scope.originalState = {};
-        // update original comment
-        $scope.originalEditCtrl = ['$scope', function($scope) {
-          $scope.copy = angular.copy($scope.discussion);
-          $scope.originalUpdate = function() {
-            $scope.originalState.submitting = true;
-            $q.when(ctrl.onOriginalUpdate(
-              {$comment: $scope.copy}
-            ))
-              .then(function() {
-                $scope.originalState.editing = false;
-              })
-              .finally(function() {
-                $scope.originalState.submitting = false;
-              });
-          };
-        }];
-
         // delete original comment (with discussion!)
-        $scope.discussionDelete = function() {
-          $scope.originalState.submitting = true;
-          $q.when(ctrl.onDiscussionDelete({$discussion: $scope.discussion}))
-            .finally(function() {
-              $scope.originalState.submitting = false;
-            });
+        ctrl.discussionDelete = () => {
+          ctrl.deleting = true;
+          $q.when(ctrl.onDiscussionDelete({discussion: ctrl.discussion}))
+            .finally(() => ctrl.deleting = false);
         };
 
         // add reply
-        $scope.replySubmit = function() {
+        ctrl.replySubmit = () => {
           $scope.state.submitting = true;
-          $q.when(ctrl.onReplySubmit({$reply: $scope.replyDraft}))
-            .then(function() {
-              $scope.replyDraft = {};
-            })
-            .finally(function() {
-              $scope.state.submitting = false;
-            });
+          const reply = merge(
+            {},
+            $scope.replyDraft,
+            {discussion: $scope.discussion.id}
+          );
+          $q.when(ctrl.onReplySubmit({reply: reply}))
+            .then(() => $scope.replyDraft = {})
+            .finally(() => $scope.state.submitting = false);
+        };
+
+        // delete reply
+        ctrl.replyDelete = (reply) => {
+          $scope.state.submitting = true;
+          $q.when(ctrl.onReplyDelete({reply}))
+            .finally(() => $scope.state.submitting = false);
         };
 
         // reply controller (for deletion)
-        $scope.replyCtrl = ['$scope', function($scope) {
+        // TODO: remove controller!
+        $scope.replyCtrl = ['$scope', $scope => {
           $scope.replyState = {};
-          $scope.replyDelete = function(reply) {
+          $scope.replyDelete = reply => {
             $scope.replyState.submitting = true;
-            $q.when(ctrl.onReplyDelete({$reply: reply}))
-              .finally(function() {
-                $scope.replyState.submitting = false;
-              });
+            $q.when(ctrl.onReplyDelete({reply: reply}))
+              .finally(() => $scope.replyState.submitting = false);
           };
         }];
 
         // reply controller (for editing)
-        $scope.replyEditCtrl = ['$scope', function($scope) {
+        // TODO: remove controller (move into new component)
+        $scope.replyEditCtrl = ['$scope', $scope => {
           $scope.copy = angular.copy($scope.reply);
-          $scope.replyUpdate = function() {
+          $scope.replyUpdate = () => {
             $scope.replyState.submitting = true;
             $q.when(ctrl.onReplyUpdate(
               {$replyOld: $scope.reply, $replyNew: $scope.copy}

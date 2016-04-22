@@ -4,7 +4,7 @@
     <ul class="list-inline">
       <li>
       <strong>
-        <i class="fa fa-comment"></i> {{discussions.stored.length}} open
+        <i class="fa fa-comment"></i> {{$ctrl.discussions.length}} open
       </strong>
       </li>
       <!--li>
@@ -16,7 +16,7 @@
     <!--span class="pull-right">Sort</span-->
   </div>
   <ul class="list-group">
-    <li class="list-group-item" ng-repeat="discussion in discussions.stored">
+    <li class="list-group-item" ng-repeat="discussion in $ctrl.discussions">
     <a href="./{{'documents.discussions.thread' | routeSegmentUrl:
       {discussionId: discussion.id} }}"
       >

@@ -1,6 +1,6 @@
 <form
   name="commentForm"
-  ng-submit="commentForm.$valid && onSubmit({$body: comment.body}); comment.body=undefined;"
+  ng-submit="!$ctrl.submitting && commentForm.$valid && $ctrl.submit()"
   novalidate
   >
   <span class="ph-comment-help pull-right">
@@ -14,7 +14,7 @@
   <textarea
     id="textbody"
     class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
-    ng-model="comment.body"
+    ng-model="$ctrl.body"
     elastic
     placeholder="Reply..."
     required
@@ -22,7 +22,7 @@
   <hr>
   <label for="preview">Preview</label>
   <div class="well well-lg" id="preview">
-    <kramjax body="comment.body"></kramjax>
+    <kramjax body="$ctrl.body"></kramjax>
   </div>
   <span class="pull-right">
     <!--
@@ -34,7 +34,7 @@
     <button
       type="submit"
       class="btn btn-primary"
-      ng-disabled="commentForm.$invalid"
+      ng-disabled="$ctrl.submitting || commentForm.$invalid"
       >
       Submit
     </button>

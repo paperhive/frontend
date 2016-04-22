@@ -15,6 +15,7 @@ import 'jquery';
 // in some controllers, i.e., by angular).
 import 'rangy';
 import 'rangy/rangy-serializer';
+import 'rangy/rangy-textrange';
 
 import * as angular from 'angular';
 import 'angular-animate';                             // ngAnimate module
@@ -34,7 +35,6 @@ import 'pdfjs-dist/web/pdf_viewer';
 
 import config from './config/index';
 import components from './components/index';
-import controllers from './controllers/index';
 import directives from './directives/index';
 import filters from './filters/index';
 import services from './services/index';
@@ -44,7 +44,7 @@ import '../build-tmp/html.js';
 import configJson from '../config.json!json';
 
 
-const paperhive = angular
+export const paperhive = angular
   .module(
     'paperhive', [
       'angulartics',
@@ -66,7 +66,6 @@ const paperhive = angular
 
 config(paperhive);
 components(paperhive);
-controllers(paperhive);
 directives(paperhive);
 filters(paperhive);
 services(paperhive);
