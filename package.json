@@ -51,7 +51,7 @@
     "karma-phantomjs-launcher": "^1.0.0",
     "less": "^2.6.0",
     "less-plugin-clean-css": "^1.5.1",
-    "live-server": "^0.9.1",
+    "live-server": "^1.0.0",
     "lodash": "^4.3.0",
     "merge-stream": "^1.0.0",
     "nodemon": "^1.8.1",
