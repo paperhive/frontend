@@ -1,8 +1,8 @@
 <div class="container-fluid" ng-if="$ctrl.revisions">
   <div class="row ph-md-margin-bottom" >
     <div class="col-md-3">
-      <span class="text-muted">Version:</span>
-      <span class="dropdown" is-open="dropdown_open" uib-dropdown style="z-index: 1010;">
+      <label class="text-muted">Version</label>
+      <div class="dropdown" is-open="dropdown_open" uib-dropdown>
         <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
           {{$ctrl.getRevisionDescription($ctrl.activeRevision)}},
           {{$ctrl.activeRevision.publishedAt | date:'MMM yyyy'}}
@@ -30,10 +30,19 @@
             </a>
           </li>
         </ul>
-      </span>
+      </div>
     </div>
 
     <div class="col-md-3">
+      <label class="text-muted">Brought to you by</label>
+      <div>
+        <a href="http://www.knowledgeunlatched.org/">
+          <img src="./static/img/knowledge-unlatched.svg"
+            title="Knowledge Unlatched"
+            class="ph-distributor-logo"
+          >
+        </a>
+      </div>
       <div ng-if="$ctrl.pdfStatus.downloading">
         <div ng-if="$ctrl.pdfStatus.bytesLoaded === undefined ||
             $ctrl.pdfStatus.bytesTotal === undefined">

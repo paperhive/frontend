@@ -107,6 +107,8 @@ class DocumentTextCtrl {
       return `arXiv ${revision.remote.revision}`;
     }
 
+    if (revision.remote.type === 'oapen') return 'OAPEN';
+
     // isbn
     if (revision.isbn) {
       return `ISBN ${revision.isbn}`;
