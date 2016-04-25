@@ -1,7 +1,10 @@
-<div class="container-fluid" ng-style="{
+<div class="container-fluid"
+  ng-if="$ctrl.position === 'top' && $ctrl.parentTop < $ctrl.viewportOffsetTop || $ctrl.position === 'bottom'"
+  ng-style="{
     top: ($ctrl.position === 'top' || undefined) && ($ctrl.viewportOffsetTop || 0),
     bottom: ($ctrl.position === 'bottom' || undefined) && ($ctrl.viewportOffsetBottom || 0),
-  }">
+  }"
+>
   <div class="row">
     <div class="col-md-3 col-md-offset-9">
       <div class="ph-margin-link animate-show"

@@ -135,30 +135,35 @@ export default function(app) {
         })
         .within()
           .segment('hivers', {
-            template: '<hivers document-id="documentId"></hivers>',
+            template: '<hivers document-id="$ctrl.documentId"></hivers>',
             title: 'Hivers · PaperHive'
           })
           .segment('discussions', {
-            templateUrl: 'html/documents/discussions/index.html',
+            template: `<div
+              ng-if="$ctrl.discussionsCtrl.discussions"
+              app-view-segment="2"
+            ></div>`,
             title: 'Discussions · PaperHive'
           })
           .within()
             .segment('list', {
               default: true,
-              template: '<discussion-list discussions="discussions"></discussion-list>',
+              template: `<discussion-list
+                document-revision="$ctrl.latestRevision"
+                discussions="$ctrl.discussionsCtrl.discussions"
+              ></discussion-list>`,
               title: 'Discussions · PaperHive'
             })
             .segment('thread', {
               // Ideally, we'd already provide the exact discussion here,
               // rather than all discussions and the discussionId.
               template: `<discussion-thread-view
-                discussions="discussions"
-                on-original-update="originalUpdate($discussion, $comment)"
-                on-reply-submit="replyAdd($discussion, $reply)"
-                on-reply-update="replyUpdate($discussion, $replyOld, $replyNew)"
-                on-reply-delete="replyDelete($discussion, $reply)"
-              >
-              </discussion-thread-view>`,
+                discussions="$ctrl.discussionsCtrl.discussions"
+                on-discussion-update="$ctrl.discussionsCtrl.discussionUpdate(discussion)"
+                on-reply-submit="$ctrl.discussionsCtrl.replySubmit(reply)"
+                on-reply-update="$ctrl.discussionsCtrl.replyUpdate(reply)"
+                on-reply-delete="$ctrl.discussionsCtrl.replyDelete(reply)"
+              ></discussion-thread-view>`,
               dependencies: ['discussionId'],
               title: 'Discussion · PaperHive'
             })

@@ -1,4 +1,4 @@
-import { find, pick } from 'lodash';
+import { cloneDeep, find, merge, pick } from 'lodash';
 
 import template from './template.html!text';
 
@@ -8,7 +8,7 @@ export default function(app) {
       template,
       bindings: {
         discussions: '<',
-        onOriginalUpdate: '&',
+        onDiscussionUpdate: '&',
         onReplySubmit: '&',
         onReplyUpdate: '&',
         onReplyDelete: '&'
@@ -18,37 +18,36 @@ export default function(app) {
         function(
           $scope, authService, $routeSegment, metaService
         ) {
-          const ctrl = this;
+          const $ctrl = this;
 
           $scope.auth = authService;
 
-          $scope.$watch('$ctrl.discussions.stored', function(discussions) {
+          $scope.$watch('$ctrl.discussions', discussions => {
             // discussion with ID $routeSegment.$routeParams.discussionId
-            $scope.discussion = find(
-              discussions,
-              {id: $routeSegment.$routeParams.discussionId}
-            );
-            if ($scope.discussion) {
+            $ctrl.discussion =
+              find(discussions, {id: $routeSegment.$routeParams.discussionId});
+
+            if ($ctrl.discussion) {
               // set meta data
               metaService.set({
-                title: $scope.discussion.title + ' · PaperHive',
+                title: $ctrl.discussion.title + ' · PaperHive',
                 meta: [
                   {
                     name: 'author',
-                    content: $scope.discussion.author.displayName
+                    content: $ctrl.discussion.author.displayName
                   },
                   // TODO rather use title here?
                   {
                     name: 'description',
                     content: 'Annotation by ' +
-                      $scope.discussion.author.displayName + ': ' +
-                      ($scope.discussion.body ?
-                      $scope.discussion.body.substring(0, 150) : '')
+                      $ctrl.discussion.author.displayName + ': ' +
+                      ($ctrl.discussion.body ?
+                      $ctrl.discussion.body.substring(0, 150) : '')
                   },
                   {
                     name: 'keywords',
-                    content: $scope.discussion.tags ?
-                      $scope.discussion.tags.join(', ') : undefined
+                    content: $ctrl.discussion.tags ?
+                      $ctrl.discussion.tags.join(', ') : undefined
                   }
                 ]
               });
@@ -63,23 +62,27 @@ export default function(app) {
           // Disadvantage:
           //   The title is set twice, and this is kind of ugly.
           // TODO find a better solution
-          $scope.updateTitle = function(newTitle) {
-            $scope.discussion.title = newTitle;
-            $scope.updateDiscussion($scope.discussion);
+          $ctrl.updateDiscussion = function(_discussion) {
+            const discussion = merge(
+              {},
+              $ctrl.discussion,
+              _discussion
+            );
+            return $ctrl.onDiscussionUpdate({discussion});
           };
 
+/*
           $scope.updateDiscussion = function(comment) {
             return ctrl.onOriginalUpdate({
               $discussion: $scope.discussion,
               $comment: comment,
             });
           };
-
-          $scope.addReply = function(body) {
-            return ctrl.onReplySubmit({
-              $discussion: $scope.discussion,
-              $reply: {body}
-            });
+*/
+          $scope.addReply = function(_reply) {
+            const reply = cloneDeep(_reply);
+            reply.discussion = $ctrl.discussion.id;
+            return $ctrl.onReplySubmit({reply});
           };
 
           $scope.updateReply = function(reply, index) {

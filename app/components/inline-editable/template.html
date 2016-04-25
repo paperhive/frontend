@@ -1,37 +1,35 @@
-<span ng-if="!$ctrl.c.isEditMode">
+<span ng-if="!$ctrl.isEditMode">
   {{$ctrl.content}}
-  <button
-    ng-if="$ctrl.canEdit"
-    class="btn btn-link"
-    ng-click="$ctrl.originalContent = $ctrl.content; $ctrl.c.isEditMode = true;"
-    >
+  <button ng-if="$ctrl.canEdit" class="btn btn-link" ng-click="$ctrl.isEditMode = true">
     <i class="fa fa-pencil"></i>
   </button>
 </span>
 <form
-  ng-if="$ctrl.c.isEditMode"
+  ng-if="$ctrl.isEditMode"
   name="inlineEditForm"
-  ng-submit="inlineEditForm.$valid && $ctrl.update($ctrl.content)"
+  ng-submit="!$ctrl.submitting && inlineEditForm.$valid && $ctrl.submit($ctrl.contentCopy)"
   novalidate
-  >
+>
   <input
     type="text"
     class="form-control ph-discussion-title"
-    size="{{$ctrl.content.length + 5}}"
-    ng-model="$ctrl.content"
+    size="{{$ctrl.contentCopy.length + 5}}"
+    ng-model="$ctrl.contentCopy"
+    ng-disabled="$ctrl.submitting"
     required
-    >
+  >
   <button
     class="btn btn-default"
-    ng-disabled="!inlineEditForm.$valid"
+    ng-disabled="$ctrl.submitting || !inlineEditForm.$valid"
     type="submit"
-    >
+  >
     <i class="fa fa-check"></i>
   </button>
   <button
     class="btn btn-default"
     ng-click="$ctrl.reset()"
-    >
+    ng-disabled="$ctrl.submitting"
+  >
     <i class="fa fa-remove"></i>
   </button>
 </form>

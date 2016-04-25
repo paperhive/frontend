@@ -1,39 +1,33 @@
 'use strict';
+import { find } from 'lodash';
 
 import template from './template.html!text';
+import { getRevisionMetadata } from '../../utils/documents';
 
 export default function(app) {
   app.component(
     'discussionList', {
       template,
       bindings: {
+        documentRevision: '<',
         discussions: '<',
       },
-      controller: [
-        '$scope', 'metaService',
-        function($scope, metaService) {
-          $scope.$watch('$ctrl.discussions', function(discussions) {
-            $scope.discussions = discussions;
-          });
+      controller: ['$scope', 'metaService', function($scope, metaService) {
+        // set meta data
+        $scope.$watch('$ctrl.documentRevision', revision => {
+          if (revision) {
+            const metadata = getRevisionMetadata(revision);
+            const description = find(metadata, {name: 'description'});
 
-          // set meta data
-          $scope.$watch('document', function(document) {
-            if (document) {
-              const meta = [{
-                name: 'description',
-                content: 'Discussions overview for ' + document.title +
-                  ' by ' + document.authors.join(', ')
-              }];
+            description.content =
+              `Discussions overview for ${revision.title} by ${revision.authors.join(', ')}`;
 
-              $scope.addDocumentMetaData(meta);
-
-              metaService.set({
-                title: 'Discussions · ' + document.title + ' · PaperHive',
-                meta: meta
-              });
-            }
-          });
-        }
-      ]
+            metaService.set({
+              title: 'Discussions · ' + document.title + ' · PaperHive',
+              meta: metadata
+            });
+          }
+        });
+      }]
     });
 };

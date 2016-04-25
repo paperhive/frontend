@@ -1,41 +1,86 @@
-pdf {
+.ph-pdf-page {
   display: block;
-  // no selection of divs (only textLayer)
-  .ph-selection(none);
-}
-
-/* Don't use PDFJS's PNG shadow. */
-pdf .page {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   margin-bottom: 15px;
   margin-top: 0;
   margin-left: 0;
   margin-right: 0;
-/*  margin-left: auto;
-  margin-right: auto; */
-  width:100%;
+  background-color: white;
+  overflow: hidden;
   position: relative;
-  /* override from bootstrap, cf.
-   * <https://github.com/mozilla/pdf.js/issues/6614> */
-  line-height: 1.0;
-}
+  .ph-selection(none);
 
-.ph-page {
-  box-shadow: 0px 0px 1px black;
-  margin-bottom: 15px;
-  margin-top: 0px;
-  width: 100%;
-}
+  & > .ph-pdf-text {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    /* set opacity instead of transparent background color because the
+     * ::selection selector is not yet standardized and not fully supported
+     * see https://developer.mozilla.org/en-US/docs/Web/CSS/::selection
+     */
+    opacity: 0.6;
 
-pdf .page .loadingIcon {
-  background: none;
-}
+    // do not lighten up colors by highlighting, e.g., black text remains black
+    // although we the highlight is a layer on top of the text.
+    mix-blend-mode: multiply;
 
-pdf .textLayer {
-  z-index: 1000;
-  // allow text selections
-  .ph-selection(text);
-}
-pdf .annotationLayer {
-  z-index: 1001;
+    /* override bootstrap's line-height, cf.
+     * <https://github.com/mozilla/pdf.js/issues/6614> */
+    line-height: 1.0;
+
+    & ::selection {
+      background: @ph-highlight-color;
+    }
+    & ::-moz-selection {
+      background: @ph-highlight-color;
+    }
+
+    & > div {
+      color: transparent;
+      position: absolute;
+      white-space: pre;
+      cursor: text;
+      -webkit-transform-origin: 0% 0%;
+      -moz-transform-origin: 0% 0%;
+      -o-transform-origin: 0% 0%;
+      -ms-transform-origin: 0% 0%;
+      transform-origin: 0% 0%;
+      z-index: 1000;
+      // allow text selections
+      .ph-selection(text);
+    }
+  }
+
+  & > .ph-pdf-annotations {
+    .ph-selection(none);
+    & > section {
+      position: absolute;
+      box-sizing: content-box;
+      & > a {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  & > .ph-pdf-highlights {
+    .ph-selection(none);
+
+    opacity: 0.4;
+
+    // do not lighten up colors by highlighting, e.g., black text remains black
+    // although we the highlight is a layer on top of the text.
+    mix-blend-mode: multiply;
+
+    .ph-pdf-highlight {
+      transition: background-color 0.3s ease;
+      background-color: @ph-text-highlight-color;
+      &.ph-pdf-highlight-emphasize {
+        background-color: @ph-highlight-color;
+      }
+    }
+  }
 }

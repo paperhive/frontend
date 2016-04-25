@@ -1,0 +1,123 @@
+<div class="container-fluid" ng-if="$ctrl.revisions">
+  <div class="row ph-md-margin-bottom" >
+    <div class="col-md-3">
+      <span class="text-muted">Version:</span>
+      <span class="dropdown" is-open="dropdown_open" uib-dropdown style="z-index: 1010;">
+        <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
+          {{$ctrl.getRevisionDescription($ctrl.activeRevision)}},
+          {{$ctrl.activeRevision.publishedAt | date:'MMM yyyy'}}
+          <i class="fa fa-fw fa-caret-down"></i>
+        </button>
+        <ul class="dropdown-menu">
+          <li ng-repeat="revision in $ctrl.revisions | orderBy:'publishedAt':true"
+              ng-class="{'disabled': !revision.isOpenAccess}">
+            <a ng-if="revision.isOpenAccess"
+               href="./documents/{{revision.id}}/revisions/{{revision.revision}}">
+              <strong ng-if="revision === $ctrl.activeRevision">
+                {{$ctrl.getRevisionDescription(revision)}},
+                {{revision.publishedAt | date:'MMM yyyy'}}
+              </strong>
+              <span ng-if="revision !== $ctrl.activeRevision">
+                {{$ctrl.getRevisionDescription(revision)}},
+                {{revision.publishedAt | date:'MMM yyyy'}}
+              </span>
+              <i class="fa fa-fw"></i>
+            </a>
+            <a ng-if="!revision.isOpenAccess" title="This document is not open-access and cannot be displayed yet.">
+              {{$ctrl.getRevisionDescription(revision)}},
+              {{revision.publishedAt | date:'MMM yyyy'}}
+              <i class="fa fa-fw fa-lock"></i>
+            </a>
+          </li>
+        </ul>
+      </span>
+    </div>
+
+    <div class="col-md-3">
+      <div ng-if="$ctrl.pdfStatus.downloading">
+        <div ng-if="$ctrl.pdfStatus.bytesLoaded === undefined ||
+            $ctrl.pdfStatus.bytesTotal === undefined">
+          <uib-progressbar class="progress-striped active" value="1" max="1">
+            Loading PDF
+          </uib-progressbar>
+        </div>
+        <div ng-if="$ctrl.pdfStatus.bytesLoaded !== undefined ||
+            $ctrl.pdfStatus.bytesTotal !== undefined">
+          <uib-progressbar class="progress-striped active"
+            value="$ctrl.pdfStatus.bytesLoaded / $ctrl.pdfStatus.bytesTotal"
+            max="1">
+            Loading PDF
+            ({{$ctrl.pdfStatus.bytesLoaded / 1024 | number:0}} KB /
+            {{$ctrl.pdfStatus.bytesTotal / 1024 | number:0}} KB)
+          </uib-progressbar>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 text-right">
+      <a class="btn btn-default" ng-href="{{$ctrl.origPdfUrl}}" download>
+        Download PDF
+      </a>
+    </div>
+  </div>
+
+  <div class="row" ng-if="$ctrl.pdfUrl">
+    <div class="col-md-9">
+      <pdf url="$ctrl.pdfUrl" on-update="$ctrl.pdfStatus = status"></pdf>
+      <pdf-full
+        pdf="$ctrl.pdfStatus.pdf"
+        highlights="$ctrl.highlights"
+        emphasized-highlights="$ctrl.hoveredMarginDiscussions"
+        on-highlight-mouseenter="$ctrl.hoveredHighlights[highlight.id] = true"
+        on-highlight-mouseleave="$ctrl.hoveredHighlights[highlight.id] = false"
+        on-page-resized="$ctrl.pageCoordinates[pageNumber] = {offset: offset, size: displaySize}"
+        on-select="$ctrl.draftSelectors = selectors || $ctrl.draftSelectors"
+        on-link-dest-create="$ctrl.getLinkDest(dest)"
+
+        popover-placement="top"
+        popover-is-open="$ctrl.tourService.stages[$ctrl.tourService.index] === 'highlight'"
+        uib-popover-template="'html/shared/tour-highlight.html'"
+        popover-trigger="none"
+      ></pdf-full>
+    </div>
+    <div class="col-md-3">
+      <margin-discussions
+        discussions="$ctrl.discussions"
+        draft-selectors="$ctrl.draftSelectors"
+        emphasized-discussions="$ctrl.hoveredHighlights"
+        page-coordinates="$ctrl.pageCoordinates"
+        viewport-offset-top="$ctrl.viewportOffsetTop"
+        viewport-offset-bottom="0"
+        on-draft-discard="$ctrl.draftSelectors = undefined"
+        on-discussion-submit="$ctrl.onDiscussionSubmit({discussion: $ctrl.getNewDiscussion(discussion)})"
+        on-discussion-update="$ctrl.onDiscussionUpdate({discussion: discussion})"
+        on-discussion-delete="$ctrl.onDiscussionDelete({discussion: discussion})"
+        on-reply-submit="$ctrl.onReplySubmit({reply: reply})"
+        on-reply-update="$ctrl.onReplyUpdate({reply: reply})"
+        on-reply-delete="$ctrl.onReplyDelete({reply: reply})"
+        on-discussion-mouseenter="$ctrl.hoveredMarginDiscussions[discussion.id] = true"
+        on-discussion-mouseleave="$ctrl.hoveredMarginDiscussions[discussion.id] = false"
+      ></margin-discussions>
+    </div>
+  </div>
+</div>
+
+<div class="container" ng-if="$ctrl.activeRevision && !$ctrl.pdfUrl">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 text-center ph-lg-margin-top ph-lg-margin-bottom">
+      <p>
+        <span class="fa-stack fa-5x">
+          <i class="fa fa-file-o fa-stack-1x"></i>
+          <i class="fa fa-ban fa-stack-2x text-danger"></i>
+        </span>
+      </p>
+      <h3>PDF cannot be displayed</h3>
+      <p>
+        Unfortunately, this document version cannot be displayed because we don't
+        know an accessible URL for the PDF. Please select another version from the
+        version dropdown. <a href="./contact">Let us know</a> if you know a URL
+        for the corresponding PDF that can be accessed.
+      </p>
+    </div>
+  </div>
+</div>

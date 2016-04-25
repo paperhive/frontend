@@ -8,15 +8,15 @@ export default function(app) {
     'comment', {
       bindings: {
         content: '<',
+        deletable: '<',
+        requiresBody: '<',
         onDelete: '&',
         onUpdate: '&',
-        requiresBody: '<',
-        deletable: '<'
       },
       template,
       controller: [
-        '$scope', 'authService', '$window',
-        function($scope, authService, $window) {
+        '$scope', '$q', 'authService', '$window',
+        function($scope, $q, authService, $window) {
           const ctrl = this;
 
           // expose a bunch of variables in the scope
@@ -47,32 +47,24 @@ export default function(app) {
           };
 
           // Needed for access from child scope
-          $scope.cancel = function() {
+          $scope.cancel = () => {
             $scope.editMode = false;
             $scope.comment = cloneDeep(ctrl.content);
           };
 
-          $scope.update = function(comment) {
+          $scope.update = comment => {
             $scope.submitting = true;
-            const promise = ctrl.onUpdate({$comment: comment});
-            if (promise) {
-              promise.finally(function() {
-                $scope.submitting = false;
-                $scope.editMode = false;
-              });
-            }
+            $q.when(ctrl.onUpdate({$comment: comment}))
+              .then(() => $scope.editMode = false)
+              .finally(() => $scope.submitting = false);
           };
 
-          $scope.delete = function() {
+          $scope.delete = () => {
             $scope.submitting = true;
-            const promise = ctrl.onDelete({$comment: ctrl.content});
-            if (promise) {
-              promise.finally(function() {
-                $scope.submitting = false;
-                $scope.editMode = false;
-              });
-            }
+            $q.when(ctrl.onDelete({$comment: ctrl.comment}))
+              .finally(() => $scope.submitting = false);
           };
+
           // $scope.annotationBody = null;
           // $scope.isEditMode = false;
           //
