@@ -9,3 +9,4 @@ config.json
 paperhive-frontend-deploy
 out
 typings
+.idea
