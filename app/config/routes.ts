@@ -29,6 +29,7 @@ export default function(app) {
         .when('/auth/return/:provider', 'authReturn')
         .when('/documents/new', 'documents_new')
         .when('/documents/:documentId', 'documents')
+        .when('/documents/:documentId/activity', 'documents.activity')
         .when('/documents/:documentId/discussions', 'documents.discussions')
         .when('/documents/:documentId/hivers', 'documents.hivers')
         // .when('/documents/:documentId/discussions/new',
@@ -134,6 +135,10 @@ export default function(app) {
           title: 'Document · PaperHive'
         })
         .within()
+          .segment('activity', {
+            templateUrl: 'app/components/activity/template.html',
+            title: 'Activity · PaperHive'
+          })
           .segment('hivers', {
             template: '<hivers document-id="$ctrl.documentId"></hivers>',
             title: 'Hivers · PaperHive'
