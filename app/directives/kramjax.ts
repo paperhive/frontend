@@ -35,18 +35,21 @@ export default function(app) {
         restrict: 'E',
         scope: {body: '='},
         link: function(scope, element, attrs) {
-          scope.$watch('body', function(newValue) {
+          scope.$watch('body', function(newValue, oldValue) {
             try {
               element.html(
-                $sanitize(kramed(newValue || '', {renderer: renderer}))
+                  $sanitize(kramed(newValue || '', {renderer: renderer}))
               );
               // replace span/div tags with script tags
               jquery(element[0]).find('.mathjax').each(function(index, el) {
                 jquery(el).replaceWith(origRenderer(
-                  jquery(el).text(), 'math/tex', jquery(el).prop('tagName') === 'DIV'
+                    jquery(el).text(), 'math/tex', jquery(el).prop('tagName') === 'DIV'
                 ));
               });
-              MathJax.Hub.Queue(['Typeset', MathJax.Hub, element[0]]);
+              MathJax.Hub.Queue(['Typeset', MathJax.Hub, element[0]], [function() {
+                console.log('done queue');
+                scope.$emit('FinishedMathJax');
+              }] );
             } catch (e) {
               notificationService.notifications.push({
                 type: 'error',
