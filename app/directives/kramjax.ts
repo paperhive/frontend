@@ -35,7 +35,7 @@ export default function(app) {
         restrict: 'E',
         scope: {body: '='},
         link: function(scope, element, attrs) {
-          scope.$watch('body', function(newValue, oldValue) {
+          scope.$watch('body', function(newValue) {
             try {
               element.html(
                   $sanitize(kramed(newValue || '', {renderer: renderer}))
@@ -47,7 +47,6 @@ export default function(app) {
                 ));
               });
               MathJax.Hub.Queue(['Typeset', MathJax.Hub, element[0]], [function() {
-                console.log('done queue');
                 scope.$emit('FinishedMathJax');
               }] );
             } catch (e) {
