@@ -379,23 +379,21 @@ export default function(app) {
       }
 
       onResized() {
-        this.scope.$apply(() => {
-          const viewport = this.page.getViewport(1);
-          this.scope.onPageResized({
-            pageNumber: this.pageNumber,
-            displaySize: {
-              height: this.element.height(),
-              width: this.element.width(),
-            },
-            originalSize: {
-              height: viewport.viewBox[3],
-              width: viewport.viewBox[2],
-            },
-            offset: {
-              top: this.element[0].offsetTop,
-              left: this.element[0].offsetLeft,
-            }
-          });
+        const viewport = this.page.getViewport(1);
+        this.scope.onPageResized({
+          pageNumber: this.pageNumber,
+          displaySize: {
+            height: this.element.height(),
+            width: this.element.width(),
+          },
+          originalSize: {
+            height: viewport.viewBox[3],
+            width: viewport.viewBox[2],
+          },
+          offset: {
+            top: this.element[0].offsetTop,
+            left: this.element[0].offsetLeft,
+          }
         });
       }
 
@@ -488,8 +486,10 @@ export default function(app) {
         // give browser time to render properly sized pages
         await new Promise(resolve => $timeout(resolve));
 
-        // call onResized
-        this.pages.forEach(page => page.onResized());
+        this.scope.$apply(() => {
+          // call onResized
+          this.pages.forEach(page => page.onResized());
+        });
 
         // re-render on resize and scroll events
         const _render = this.render.bind(this);
@@ -641,7 +641,9 @@ export default function(app) {
             await new Promise(resolve => $timeout(resolve));
 
             // call onResized
-            this.pages.forEach(page => page.onResized());
+            this.scope.$apply(() => {
+              this.pages.forEach(page => page.onResized());
+            });
           }
         }
 
