@@ -1,74 +1,158 @@
-<div class="container" ng-controller="">
-  <div class="row ph-md-margin-bottom" >
-    <div class="col-md-10">
-      <ul class="list-group">
+<!-- inspried by http://codepen.io/jasondavis/pen/fDGdK?editors=1100 -->
+<style type="text/css">
 
-        <li class="list-group-item">
-          <div class="media">
-            <div class="media-left media-middle ph-sm-padding-left">
-              <i style="color: #10b2de" class="fa fa-comment fa-2x" aria-hidden="true"></i>
-            </div>
-            <div class="media-body ph-md-padding-left">
-              <div class="text-muted small">
-                9 hours ago
-              </div>
-              <div>
-                <a>jengeb</a> started a <a>discussion</a> on <a>document</a>
-              </div>
-            </div>
-          </div>
-        </li>
+  .ph-timeline {
+    list-style: none;
+    padding: 2em 0 1em;
+    position: relative;
+  }
+  .ph-timeline:before {
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    content: " ";
+    width: 3px;
+    background-color: #EEEEEE;
+    margin-left: -1.5px;
+  }
+  .ph-timeline > li {
+    margin-bottom: 1.5em;
+    position: relative;
+  }
+  .ph-timeline > li:before,
+  .ph-timeline > li:after {
+    content: " ";
+    display: table;
+  }
+  .ph-timeline > li:after {
+    clear: both;
+  }
+  .ph-timeline > li > .ph-timeline-panel {
+    width: 95%;
+    border: 1px solid #d4d4d4;
+    border-radius: 2px;
+    padding: 20px;
+    position: relative;
+    -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+  }
+  .ph-timeline > li > .ph-timeline-panel:before {
+    position: absolute;
+    top: 26px;
+    right: -15px;
+    border-top: 15px solid transparent;
+    border-left: 15px solid #ccc;
+    border-right: 0 solid #ccc;
+    border-bottom: 15px solid transparent;
+    content: " ";
+  }
+  .ph-timeline > li > .ph-timeline-panel:after {
+    position: absolute;
+    top: 27px;
+    right: -14px;
+    border-top: 14px solid transparent;
+    border-left: 14px solid #fff;
+    border-right: 0 solid #fff;
+    border-bottom: 14px solid transparent;
+    content: " ";
+  }
+  .ph-timeline > li > .ph-timeline-badge {
+    color: #FFFFFF;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 1.4em;
+    text-align: center;
+    position: absolute;
+    top: 16px;
+    margin-left: -25px;
+    background-color: #10b2de;
+    border-top-right-radius: 50%;
+    border-top-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    border-bottom-left-radius: 50%;
+  }
+  .ph-timeline > li.ph-timeline-inverted > .ph-timeline-panel {
+    left: 3.2em;
+    background-color: #ffffff;
+  }
+  .ph-timeline > li.ph-timeline-inverted > .ph-timeline-panel:before {
+    border-left-width: 0;
+    border-right-width: 15px;
+    left: -15px;
+    right: auto;
+  }
+  .ph-timeline > li.ph-timeline-inverted > .ph-timeline-panel:after {
+    border-left-width: 0;
+    border-right-width: 14px;
+    left: -14px;
+    right: auto;
+  }
 
-        <li class="list-group-item">
-          <div class="media">
-            <div class="media-left media-middle ph-sm-padding-left">
-              <i style="color: #10b2de" class="fa fa-reply fa-2x" aria-hidden="true"></i>
-            </div>
-            <div class="media-body ph-md-padding-left">
-              <div class="text-muted small">
-                10 hours ago
-              </div>
-              <div>
-                <a>jengeb</a> added a reply to <a>discussion</a> on <a>document</a>
-              </div>
-            </div>
-          </div>
-        </li>
+</style>
 
-        <li class="list-group-item">
-          <div class="media">
-            <div class="media-left media-middle ph-sm-padding-left">
-              <i style="color: #10b2de" class="fa fa-reply fa-2x" aria-hidden="true"></i>
-            </div>
-            <div class="media-body ph-md-padding-left">
-              <div class="text-muted small">
-                11 hours ago
-              </div>
-              <div>
-                <a>andre</a> updated a reply to <a>discussion</a> on <a>document</a>
-              </div>
-            </div>
-          </div>
-        </li>
+<div class="container">
 
-        <li class="list-group-item">
-          <div class="media">
-            <div class="media-left media-middle ph-sm-padding-left">
-              <i style="color: #10b2de" class="fa fa-comment-o fa-2x" aria-hidden="true"></i>
-            </div>
-            <div class="media-body ph-md-padding-left">
-              <div class="text-muted small">
-                12 hours ago
-              </div>
-              <div>
-                <a><img width="19" height="19" class="img-circle" src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg?sz=136"> andre</a> updated a <a>discussion</a> on <a>document</a>
-              </div>
-              <span class="label label-info">Math</span> <span class="label label-info">Math</span> <span class="label label-info">Math</span> 
-            </div>
-          </div>
-        </li>
+  <ul class="ph-timeline" ng-if="$ctrl.activities.length">
 
-      </ul>
-    </div>
-  </div>
+    <li ng-repeat="activity in $ctrl.activities" class="ph-timeline-inverted">
+      <div ng-show="{{activity.activityType === 'updateReply' || activity.activityType === 'createReply'}}" class="ph-timeline-badge">
+        <i class="fa fa-reply" aria-hidden="true"></i>
+      </div>
+      <div ng-show="{{activity.activityType === 'updateDiscussion' || activity.activityType === 'createDiscussion'}}" class="ph-timeline-badge">
+        <i class="fa fa-comment" aria-hidden="true"></i>
+      </div>
+      <div ng-show="{{activity.activityType === 'documentHived'}}" class="ph-timeline-badge">
+        <i class="fa fa-star" aria-hidden="true"></i>
+      </div>
+      <div class="ph-timeline-panel">
+        <div class="ph-sm-margin-bottom">
+          <small class="text-muted">
+            <i class="fa fa-clock-o" aria-hidden="true"></i>
+            <span am-time-ago="activity.updatedAt"></span>
+          </small>
+        </div>
+        <div>
+          <span ng-show="{{activity.person.account.avatar.type === 'google'}}">
+            <img width="23" height="23" class="img-circle" src="{{activity.person.account.avatar.value}}">
+          </span>
+          <a ng-show="{{activity.person.account.avatar.type === 'gravatar'}}">
+            <img width="23" height="23" class="img-circle" src="http://www.gravatar.com/avatar/{{activity.person.account.avatar.value}}">
+          </a>
+
+          <a href="http://localhost:8080/users/{{activity.person.account.username}}">
+            <strong>{{activity.person.displayName}}</strong>
+          </a>
+
+          <span ng-show="{{activity.activityType === 'documentHived'}}">
+            hived this document
+          </span>
+
+          <span ng-show="{{activity.activityType === 'createDiscussion'}}">
+            started a
+          </span>
+
+          <span ng-show="{{activity.activityType === 'createReply'}}">
+            added a reply to
+          </span>
+
+          <span ng-show="{{activity.activityType === 'updateReply'}}">
+            updated a reply to
+          </span>
+
+          <span ng-show="{{activity.activityType === 'updateDiscussion'}}">
+            updated a
+          </span>
+
+          <span ng-show="{{activity.activityType !== 'documentHived'}}">
+            <a ng-href="http://localhost:8080/documents/{{activity.document.id}}/discussions/{{activity.discussion.id}}">discussion</a>
+          </span>
+
+          <!--a ng-href="http://localhost:8080/documents/{{activity.document.id}}">document</a-->
+
+        </div>
+      </div>
+    </li>
+
+  </ul>
 </div>
