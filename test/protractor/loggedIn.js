@@ -32,10 +32,11 @@ describe('logedIn main page', function() {
     it('should have 4 items in user menu list', function() {
 
 //	$('#user-menu-items').findElement(by.linkName('Profile')
-	element.all(by.css('#user-menu-items li')).then(function(items) {
-//	element.all(by.id('user-menu-items li')).then(function(items) {
+
+	element.all(by.id('user-menu-items li')).then(function(items) {
+
 	    expect(items.length).toBe(4);
-	    console.log('Items in #user-menu-items', items);
+//	    console.log('Items in #user-menu-items', items);
 //	    expect(items[0].getText()).toBe('Profile');
 //	    expect(items[1].getText()).toBe('Add arXiv article');
 //	    expect(items[2].getText()).toBe('Settings');
