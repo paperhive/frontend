@@ -14,13 +14,15 @@ export default function(app) {
       function($http, config, notificationService) {
         const ctrl = this;
         ctrl.$onChanges = function(changesObj) {
-
-          console.log(ctrl.document);
-
+          let personId;
+          if (ctrl.user) {
+            personId = ctrl.user.id;
+          }
           $http.get(
             config.apiUrl + `/activities/`, {
               params: {
                 document: ctrl.document,
+                person: personId,
               }
             }
           )
@@ -34,8 +36,6 @@ export default function(app) {
               'could not fetch activities (unknown reason)'
             });
           });
-
-
         }
       }
     ],
