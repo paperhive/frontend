@@ -53,6 +53,7 @@ export default function(app) {
         .when('/signup', 'signup')
         .when('/subscribed', 'subscribed')
         .when('/users/:username', 'users')
+        .when('/users/:username/activity', 'users.activity')
         .when('/users/:username/profile', 'users.profile')
 
         // Init Main Page
@@ -136,7 +137,7 @@ export default function(app) {
         })
         .within()
           .segment('activity', {
-            template: '<activity document="documentId"></activity>',
+            template: '<div class="container"><activity document="documentId"></activity></div>',
             title: 'Activity · PaperHive'
           })
           .segment('hivers', {
@@ -286,6 +287,9 @@ export default function(app) {
             default: true,
             template: '<user-profile user="user"></user-profile>',
             dependencies: ['username']
+          })
+          .segment('activity', {
+            template: `<activity user="user"></activity>`
           })
         .up()
         ;
