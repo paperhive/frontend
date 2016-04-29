@@ -1,6 +1,7 @@
 import angular from 'angular';
+import { queue } from 'async';
 import jquery from 'jquery';
-import { flatten, isEqual, map, pick, some } from 'lodash';
+import { clone, difference, flatten, isEqual, map, pick, some } from 'lodash';
 import { Mutex } from 'mutx';
 import { PDFJS } from 'pdfjs-dist';
 import rangy from 'rangy';
@@ -433,7 +434,7 @@ export default function(app) {
         // stop if currently rendered size is up to date
         if (isSameSize(this.renderedSize, size)) {
           unlock();
-          return;
+          return false;
         }
 
         // TODO: cancel renderers
@@ -452,13 +453,15 @@ export default function(app) {
           unlock();
 
           this.onRendered();
+
+          return true;
         } catch (error) {
           unlock();
 
           // return if cancelled
           if (error === 'cancelled') {
             console.log(`page ${this.pageNumber} cancelled`);
-            return;
+            return false;
           }
           throw error;
         }
@@ -468,17 +471,22 @@ export default function(app) {
     // render a full pdf
     class PdfFull {
       pages: Array<PdfPage>;
+      renderedPages: Array<PdfPage>;
+      renderQueue: any;
+
+
       windowSize: {height: number, width: number};
       lastSelectors: any;
       lastSimpleSelection: any;
       linkService: LinkService;
 
-      renderedPages: Array<number>;
-      renderingPages: Array<number>;
-
       constructor(public pdf: PDFDocumentProxy, public element: JQuery,
           public scope: any) {
         this.pages = [];
+
+        // set up render queue
+        this.renderQueue = queue(this.renderPage.bind(this));
+        this.renderedPages = [];
 
         // wipe element children
         this.element.empty();
@@ -661,9 +669,14 @@ export default function(app) {
         };
 
         // resize pages only if the window size changed
-        if (!this.windowSize || !isSameSize(this.windowSize, newWindowSize)) {
+        let sizeChanged = !this.windowSize ||
+          !isSameSize(this.windowSize, newWindowSize);
+        if (sizeChanged) {
+          // container width
+          const width = this.element[0].offsetWidth;
+
           // resize pages
-          const pageResized = this.pages.map(page => page.updateSize());
+          const pageResized = this.pages.map(page => page.updateSize(width));
 
           // store last processed window size
           this.windowSize = newWindowSize;
@@ -680,10 +693,46 @@ export default function(app) {
         }
 
         // detect relevant pages
-        const renderPages = this.pages.filter(page => isVisible(page.element, $window));
+        let renderPages =
+          this.pages.filter(page => isVisible(page.element, $window));
 
-        // render pages
-        const renderPromises = renderPages.map(page => page.render());
+        // remove waiting tasks from queue
+        this.renderQueue.kill();
+
+        // get currently running tasks
+        const running = this.renderQueue.workersList().map(task => task.data);
+
+        // if not resized: remove pages that are already rendered or running
+        if (!sizeChanged) {
+          console.log('-----------')
+          console.log(renderPages, clone(running), clone(this.renderedPages));
+          renderPages = difference(renderPages, running, this.renderedPages);
+          console.log(renderPages);
+        }
+
+        // add pages to queue
+        renderPages.forEach(page => {
+          this.renderQueue.push(page, (err, rendered) => {
+            console.log('finished rendering page ' + page.pageNumber);
+            console.log('rendered', rendered);
+            console.log(this.renderedPages);
+            console.log(this.renderQueue.tasks.map(task => task.data));
+
+            // do not update rendered pages if not rendered or already present
+            if (!rendered || this.renderedPages.indexOf(page) !== -1) return;
+
+            // update array of rendered pages
+            this.renderedPages.push(page);
+          });
+        });
+      }
+
+      renderPage(page, callback) {
+        console.log('start', page);
+        page.render().then(
+          rendered => callback(undefined, rendered),
+          err => callback(err)
+        );
       }
     }
 
@@ -746,7 +795,6 @@ export default function(app) {
         // TODO: scroll interface
       },
       link: async function(scope, element, attrs) {
-
         let pdfFull;
         scope.$watch('pdf', async function (pdf) {
           // destroy current pdf
