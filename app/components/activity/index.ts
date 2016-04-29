@@ -8,12 +8,12 @@ export default function(app) {
       document: '<',
     },
     controller: [
-    '$scope', '$element', '$attrs', '$http', 'config', 'notificationService',
-      function($scope, $element, $attrs, $http, config, notificationService) {
+    '$http', 'config', 'notificationService',
+      function($http, config, notificationService) {
 
         const ctrl = this;
 
-        // TODO filter person="user.id", document, discussion
+        // TODO filter person="user.id", discussion
         // <activities person="user.id" ...></activities>
 
         $http.get(
@@ -36,6 +36,6 @@ export default function(app) {
 
       }
     ],
-    template: template,
+    template,
   });
 };
