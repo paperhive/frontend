@@ -15,9 +15,7 @@ export default function(app) {
         const ctrl = this;
         ctrl.$onChanges = function(changesObj) {
 
-          if (ctrl.user) {
-            console.log(ctrl.user.id);
-          }
+          console.log(ctrl.document);
 
           $http.get(
             config.apiUrl + `/activities/`, {
@@ -36,6 +34,7 @@ export default function(app) {
               'could not fetch activities (unknown reason)'
             });
           });
+
 
         }
       }
