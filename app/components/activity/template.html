@@ -3,13 +3,13 @@
   <ul class="ph-timeline" ng-if="$ctrl.activities.length">
 
     <li ng-repeat="activity in $ctrl.activities" class="ph-timeline-inverted">
-      <div ng-show="{{activity.activityType === 'updateReply' || activity.activityType === 'createReply'}}" class="ph-timeline-badge">
+      <div ng-if="activity.activityType === 'updateReply' || activity.activityType === 'createReply'" class="ph-timeline-badge">
         <i class="fa fa-reply" aria-hidden="true"></i>
       </div>
-      <div ng-show="{{activity.activityType === 'updateDiscussion' || activity.activityType === 'createDiscussion'}}" class="ph-timeline-badge">
+      <div ng-if="activity.activityType === 'updateDiscussion' || activity.activityType === 'createDiscussion'" class="ph-timeline-badge">
         <i class="fa fa-comment" aria-hidden="true"></i>
       </div>
-      <div ng-show="{{activity.activityType === 'documentHived'}}" class="ph-timeline-badge">
+      <div ng-if="activity.activityType === 'documentHived'" class="ph-timeline-badge">
         <i class="fa fa-star" aria-hidden="true"></i>
       </div>
       <div class="ph-timeline-panel">
@@ -20,10 +20,10 @@
           </small>
         </div>
         <div>
-          <span ng-show="{{activity.person.account.avatar.type === 'google'}}">
+          <span ng-if="activity.person.account.avatar.type === 'google'">
             <img width="23" height="23" class="img-circle" src="{{activity.person.account.avatar.value}}">
           </span>
-          <a ng-show="{{activity.person.account.avatar.type === 'gravatar'}}">
+          <a ng-if="activity.person.account.avatar.type === 'gravatar'">
             <img width="23" height="23" class="img-circle" src="http://www.gravatar.com/avatar/{{activity.person.account.avatar.value}}">
           </a>
 
@@ -31,27 +31,27 @@
             <strong>{{activity.person.displayName}}</strong>
           </a>
 
-          <span ng-show="{{activity.activityType === 'documentHived'}}">
+          <span ng-if="activity.activityType === 'documentHived'">
             hived this document
           </span>
 
-          <span ng-show="{{activity.activityType === 'createDiscussion'}}">
+          <span ng-if="activity.activityType === 'createDiscussion'">
             started a
           </span>
 
-          <span ng-show="{{activity.activityType === 'createReply'}}">
+          <span ng-if="activity.activityType === 'createReply'">
             added a reply to
           </span>
 
-          <span ng-show="{{activity.activityType === 'updateReply'}}">
+          <span ng-if="activity.activityType === 'updateReply'">
             updated a reply to
           </span>
 
-          <span ng-show="{{activity.activityType === 'updateDiscussion'}}">
+          <span ng-if="activity.activityType === 'updateDiscussion'">
             updated a
           </span>
 
-          <span ng-show="{{activity.activityType !== 'documentHived'}}">
+          <span ng-if="activity.activityType !== 'documentHived'">
             <a ng-href="http://localhost:8080/documents/{{activity.document.id}}/discussions/{{activity.discussion.id}}">discussion</a>
           </span>
 
