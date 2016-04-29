@@ -24,14 +24,14 @@ SystemJS.config({
     "npm:*.json"
   ],
   map: {
-    "angular": "github:angular/bower-angular@1.5.0",
-    "angular-animate": "github:angular/bower-angular-animate@1.5.0",
+    "angular": "github:angular/bower-angular@1.5.5",
+    "angular-animate": "github:angular/bower-angular-animate@1.5.5",
     "angular-bootstrap": "github:angular-ui/bootstrap-bower@1.1.2",
     "angular-leaflet-directive": "github:tombatossals/angular-leaflet-directive@0.10.0",
     "angular-moment": "npm:angular-moment@1.0.0-beta.3",
-    "angular-route": "github:angular/bower-angular-route@1.5.0",
-    "angular-route-segment": "github:artch/angular-route-segment@1.5.0",
-    "angular-sanitize": "github:angular/bower-angular-sanitize@1.5.0",
+    "angular-route": "github:angular/bower-angular-route@1.5.5",
+    "angular-route-segment": "github:artch/angular-route-segment@1.5.1",
+    "angular-sanitize": "github:angular/bower-angular-sanitize@1.5.5",
     "angulartics": "npm:angulartics@1.0.3",
     "angulartics-google-analytics": "npm:angulartics-google-analytics@0.1.4",
     "assert": "github:jspm/nodelibs-assert@0.2.0-alpha",
@@ -62,6 +62,21 @@ SystemJS.config({
     "url": "github:jspm/nodelibs-url@0.2.0-alpha"
   },
   packages: {
+    "github:angular/bower-angular-animate@1.5.5": {
+      "map": {
+        "angular": "github:angular/bower-angular@1.5.5"
+      }
+    },
+    "github:angular/bower-angular-route@1.5.5": {
+      "map": {
+        "angular": "github:angular/bower-angular@1.5.5"
+      }
+    },
+    "github:angular/bower-angular-sanitize@1.5.5": {
+      "map": {
+        "angular": "github:angular/bower-angular@1.5.5"
+      }
+    },
     "github:frankwallis/plugin-typescript@4.0.2": {
       "map": {
         "typescript": "npm:typescript@1.8.9"
@@ -75,21 +90,6 @@ SystemJS.config({
     "github:jspm/nodelibs-os@0.2.0-alpha": {
       "map": {
         "os-browserify": "npm:os-browserify@0.2.0"
-      }
-    },
-    "github:angular/bower-angular-animate@1.5.0": {
-      "map": {
-        "angular": "github:angular/bower-angular@1.5.0"
-      }
-    },
-    "github:angular/bower-angular-route@1.5.0": {
-      "map": {
-        "angular": "github:angular/bower-angular@1.5.0"
-      }
-    },
-    "github:angular/bower-angular-sanitize@1.5.0": {
-      "map": {
-        "angular": "github:angular/bower-angular@1.5.0"
       }
     },
     "github:jspm/nodelibs-url@0.2.0-alpha": {
