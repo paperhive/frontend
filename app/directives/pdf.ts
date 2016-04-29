@@ -28,9 +28,7 @@ function isVisible(element, $window) {
 
   const viewportHeight = angular.element($window).height();
 
-  // relax viewport constraint
-  // (tight: elementTop <=  viewportHeight && elementBottom >= 0)
-  return elementTop <= 2 * viewportHeight && elementBottom >= - viewportHeight;
+  return elementTop <= viewportHeight && elementBottom >= 0;
 }
 
 function getTextPositionSelector(range, container) {
@@ -466,6 +464,18 @@ export default function(app) {
           throw error;
         }
       }
+
+      unrender() {
+        delete this.canvasRenderer;
+        delete this.textRenderer;
+        delete this.annotationsRenderer;
+        delete this.renderedSize;
+
+        // remove all child elements
+        this.element.empty();
+
+        this.initializedRenderers = false;
+      }
     }
 
     // render a full pdf
@@ -692,32 +702,44 @@ export default function(app) {
           }
         }
 
-        // detect relevant pages
-        let renderPages =
+        // get currently running render tasks
+        const running = this.renderQueue.workersList().map(task => task.data);
+
+        // detect visible pages
+        // TODO: implement O(log(n)) algorithm (bisection!)
+        const visiblePages =
           this.pages.filter(page => isVisible(page.element, $window));
+
+        // determine pages that need to be rendered
+        let renderPages = clone(visiblePages);
+
+        // add adjacent pages of visible pages
+        // (note: pdfjs page numbers are 1-based)
+        const firstPageNumber = visiblePages[0].pageNumber;
+        if (firstPageNumber > 1) {
+          renderPages.push(this.pages[firstPageNumber - 2]);
+        }
+        const lastPageNumber = visiblePages[visiblePages.length - 1].pageNumber;
+        if (lastPageNumber < this.pages.length + 1) {
+          renderPages.push(this.pages[lastPageNumber]);
+        }
+
+        // unrender pages (exclude running tasks)
+        const unrenderPages = difference(this.renderedPages, running, renderPages);
+        unrenderPages.forEach(page => page.unrender());
+        this.renderedPages = difference(this.renderedPages, unrenderPages);
 
         // remove waiting tasks from queue
         this.renderQueue.kill();
 
-        // get currently running tasks
-        const running = this.renderQueue.workersList().map(task => task.data);
-
-        // if not resized: remove pages that are already rendered or running
+        // if not resized: remove pages that are running or already rendered
         if (!sizeChanged) {
-          console.log('-----------')
-          console.log(renderPages, clone(running), clone(this.renderedPages));
           renderPages = difference(renderPages, running, this.renderedPages);
-          console.log(renderPages);
         }
 
         // add pages to queue
         renderPages.forEach(page => {
           this.renderQueue.push(page, (err, rendered) => {
-            console.log('finished rendering page ' + page.pageNumber);
-            console.log('rendered', rendered);
-            console.log(this.renderedPages);
-            console.log(this.renderQueue.tasks.map(task => task.data));
-
             // do not update rendered pages if not rendered or already present
             if (!rendered || this.renderedPages.indexOf(page) !== -1) return;
 
@@ -728,7 +750,6 @@ export default function(app) {
       }
 
       renderPage(page, callback) {
-        console.log('start', page);
         page.render().then(
           rendered => callback(undefined, rendered),
           err => callback(err)
