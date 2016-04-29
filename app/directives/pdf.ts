@@ -386,7 +386,7 @@ export default function(app) {
         const height = Math.floor(size.height / size.width * width);
 
         // check against old size
-        //if (this.element.height() === height) return false;
+        // if (this.element.height() === height) return false;
 
         // set new height
         this.element.height(height);
@@ -472,6 +472,9 @@ export default function(app) {
       lastSelectors: any;
       lastSimpleSelection: any;
       linkService: LinkService;
+
+      renderedPages: Array<number>;
+      renderingPages: Array<number>;
 
       constructor(public pdf: PDFDocumentProxy, public element: JQuery,
           public scope: any) {
