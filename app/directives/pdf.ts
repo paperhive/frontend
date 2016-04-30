@@ -720,7 +720,7 @@ export default function(app) {
           renderPages.push(this.pages[firstPageNumber - 2]);
         }
         const lastPageNumber = visiblePages[visiblePages.length - 1].pageNumber;
-        if (lastPageNumber < this.pages.length + 1) {
+        if (lastPageNumber < this.pages.length) {
           renderPages.push(this.pages[lastPageNumber]);
         }
 
