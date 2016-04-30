@@ -759,7 +759,8 @@ export default function(app) {
       }
 
       renderPage(page, callback) {
-        // no page given: resize
+        // if page is provided: render
+        // otherwise: resize all pages
         const promise = page ? page.render() : this.resizePages();
 
         promise.then(
