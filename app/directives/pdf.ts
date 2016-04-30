@@ -673,6 +673,9 @@ export default function(app) {
 
       // resize all and render relevant pages
       async render() {
+        // remove waiting tasks from queue
+        this.renderQueue.kill();
+
         const newWindowSize = {
           height: angular.element($window).height(),
           width: angular.element($window).width(),
@@ -682,24 +685,8 @@ export default function(app) {
         let sizeChanged = !this.windowSize ||
           !isSameSize(this.windowSize, newWindowSize);
         if (sizeChanged) {
-          // container width
-          const width = this.element[0].offsetWidth;
-
-          // resize pages
-          const pageResized = this.pages.map(page => page.updateSize(width));
-
-          // store last processed window size
-          this.windowSize = newWindowSize;
-
-          // if at least one page has been resized: wait for DOM
-          if (some(pageResized)) {
-            await new Promise(resolve => $timeout(resolve));
-
-            // call onResized
-            this.scope.$apply(() => {
-              this.pages.forEach(page => page.onResized());
-            });
-          }
+          // no page => resize
+          this.renderQueue.push(undefined);
         }
 
         // get currently running render tasks
@@ -729,8 +716,6 @@ export default function(app) {
         unrenderPages.forEach(page => page.unrender());
         this.renderedPages = difference(this.renderedPages, unrenderPages);
 
-        // remove waiting tasks from queue
-        this.renderQueue.kill();
 
         // if not resized: remove pages that are running or already rendered
         if (!sizeChanged) {
@@ -749,8 +734,35 @@ export default function(app) {
         });
       }
 
+      async resizePages() {
+        // container width
+        const width = this.element[0].offsetWidth;
+
+        // resize pages
+        const pageResized = this.pages.map(page => page.updateSize(width));
+
+        // store last processed window size
+        this.windowSize = {
+          height: angular.element($window).height(),
+          width: angular.element($window).width(),
+        };
+
+        // if at least one page has been resized: wait for DOM
+        if (some(pageResized)) {
+          await new Promise(resolve => $timeout(resolve));
+
+          // call onResized
+          this.scope.$apply(() => {
+            this.pages.forEach(page => page.onResized());
+          });
+        }
+      }
+
       renderPage(page, callback) {
-        page.render().then(
+        // no page given: resize
+        const promise = page ? page.render() : this.resizePages();
+
+        promise.then(
           rendered => callback(undefined, rendered),
           err => callback(err)
         );
