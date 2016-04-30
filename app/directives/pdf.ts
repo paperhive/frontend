@@ -548,7 +548,7 @@ export default function(app) {
         });
 
         // render at least once
-        await this.render();
+        this.render();
 
         // wait until all pages have the correct size
         await Promise.all(this.pages.map(page => page.initPageSize(width)));
@@ -672,7 +672,7 @@ export default function(app) {
       }
 
       // resize all and render relevant pages
-      async render() {
+      render(force = false) {
         // remove waiting tasks from queue
         this.renderQueue.kill();
 
@@ -702,13 +702,15 @@ export default function(app) {
 
         // add adjacent pages of visible pages
         // (note: pdfjs page numbers are 1-based)
-        const firstPageNumber = visiblePages[0].pageNumber;
-        if (firstPageNumber > 1) {
-          renderPages.push(this.pages[firstPageNumber - 2]);
-        }
-        const lastPageNumber = visiblePages[visiblePages.length - 1].pageNumber;
-        if (lastPageNumber < this.pages.length) {
-          renderPages.push(this.pages[lastPageNumber]);
+        if (visiblePages.length > 0) {
+          const firstPageNumber = visiblePages[0].pageNumber;
+          if (firstPageNumber > 1) {
+            renderPages.push(this.pages[firstPageNumber - 2]);
+          }
+          const lastPageNumber = visiblePages[visiblePages.length - 1].pageNumber;
+          if (lastPageNumber < this.pages.length) {
+            renderPages.push(this.pages[lastPageNumber]);
+          }
         }
 
         // unrender pages (exclude running tasks)
@@ -718,7 +720,7 @@ export default function(app) {
 
 
         // if not resized: remove pages that are running or already rendered
-        if (!sizeChanged) {
+        if (!force && !sizeChanged) {
           renderPages = difference(renderPages, running, this.renderedPages);
         }
 
@@ -755,6 +757,9 @@ export default function(app) {
           this.scope.$apply(() => {
             this.pages.forEach(page => page.onResized());
           });
+
+          // re-evaluate what needs to be rendered and force re-rendering
+          this.render(true);
         }
       }
 
