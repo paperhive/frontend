@@ -1,56 +1,58 @@
 <div class="container-fluid" ng-if="$ctrl.revisions">
-  <div class="row ph-md-margin-bottom" >
-    <div class="col-md-3">
-      <label class="text-muted">Version</label>
-      <div class="dropdown" is-open="dropdown_open" uib-dropdown>
-        <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
-          {{$ctrl.getRevisionDescription($ctrl.activeRevision)}},
-          {{$ctrl.activeRevision.publishedAt | date:'MMM yyyy'}}
-          <i class="fa fa-fw fa-caret-down"></i>
-        </button>
-        <ul class="dropdown-menu">
-          <li ng-repeat="revision in $ctrl.revisions | orderBy:'publishedAt':true"
-              ng-class="{'disabled': !revision.isOpenAccess}">
-            <a ng-if="revision.isOpenAccess"
-               href="./documents/{{revision.id}}/revisions/{{revision.revision}}">
-              <strong ng-if="revision === $ctrl.activeRevision">
+  <div class="row ph-md-margin-bottom">
+    <div class="col-md-9 ph-document-info">
+      <div>
+        <label class="text-muted">Version</label>
+        <div class="dropdown" is-open="dropdown_open" uib-dropdown>
+          <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
+            {{$ctrl.getRevisionDescription($ctrl.activeRevision)}},
+            {{$ctrl.activeRevision.publishedAt | date:'MMM yyyy'}}
+            <i class="fa fa-fw fa-caret-down"></i>
+          </button>
+          <ul class="dropdown-menu">
+            <li ng-repeat="revision in $ctrl.revisions | orderBy:'publishedAt':true"
+                ng-class="{'disabled': !revision.isOpenAccess}">
+              <a ng-if="revision.isOpenAccess"
+                 href="./documents/{{revision.id}}/revisions/{{revision.revision}}">
+                <strong ng-if="revision === $ctrl.activeRevision">
+                  {{$ctrl.getRevisionDescription(revision)}},
+                  {{revision.publishedAt | date:'MMM yyyy'}}
+                </strong>
+                <span ng-if="revision !== $ctrl.activeRevision">
+                  {{$ctrl.getRevisionDescription(revision)}},
+                  {{revision.publishedAt | date:'MMM yyyy'}}
+                </span>
+                <i class="fa fa-fw"></i>
+              </a>
+              <a ng-if="!revision.isOpenAccess" title="This document is not open-access and cannot be displayed yet.">
                 {{$ctrl.getRevisionDescription(revision)}},
                 {{revision.publishedAt | date:'MMM yyyy'}}
-              </strong>
-              <span ng-if="revision !== $ctrl.activeRevision">
-                {{$ctrl.getRevisionDescription(revision)}},
-                {{revision.publishedAt | date:'MMM yyyy'}}
-              </span>
-              <i class="fa fa-fw"></i>
-            </a>
-            <a ng-if="!revision.isOpenAccess" title="This document is not open-access and cannot be displayed yet.">
-              {{$ctrl.getRevisionDescription(revision)}},
-              {{revision.publishedAt | date:'MMM yyyy'}}
-              <i class="fa fa-fw fa-lock"></i>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="col-md-3">
-      <div ng-if="$ctrl.activeRevision.distributor === 'Knowledge Unlatched'">
-        <label class="text-muted">Brought to you by</label>
-        <div>
-          <a href="http://www.knowledgeunlatched.org/">
-            <img src="./static/img/knowledge-unlatched.svg"
-              title="Knowledge Unlatched"
-              class="ph-distributor-logo"
-            >
-          </a>
+                <i class="fa fa-fw fa-lock"></i>
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
-    </div>
 
-    <div class="col-md-3 text-right">
-      <a class="btn btn-default" ng-href="{{$ctrl.origPdfUrl}}" download>
-        Download PDF
-      </a>
+      <div>
+        <div ng-if="$ctrl.activeRevision.distributor === 'Knowledge Unlatched'">
+          <label class="text-muted">Brought to you by</label>
+          <div>
+            <a href="http://www.knowledgeunlatched.org/">
+              <img src="./static/img/knowledge-unlatched.svg"
+                title="Knowledge Unlatched"
+                class="ph-distributor-logo"
+              >
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="ph-docoument-info-download text-right">
+        <a class="btn btn-default" ng-href="{{$ctrl.origPdfUrl}}" download>
+          Download PDF
+        </a>
+      </div>
     </div>
   </div>
 
