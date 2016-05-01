@@ -1,16 +1,3 @@
-<style>
-  .flex-container {
-    display: -webkit-flex;
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .flex-item {
-    margin-right: 4em;
-    margin-bottom: 1em;
-    flex: 0 0 300px;
-  }
-</style>
-
 <div class="container ph-md-margin-top ph-lg-margin-bottom">
 
   <h2>Knowledge Unlatched</h2>
@@ -19,17 +6,11 @@
     <h3>
       {{category.category}}
     </h3>
-
     <div class="row ph-sm-margin-bottom">
-
       <div class="col-md-12">
-
-        <div class="flex-container">
-
-          <document-item document="document" class="flex-item" ng-repeat="document in category.documents"></document-item>
-
+        <div class="ph-document-list">
+          <document-item document="document" class="ph-document-item" ng-repeat="document in category.documents"></document-item>
         </div>
-
       </div>
     </div>
   </div>
