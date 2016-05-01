@@ -5,8 +5,6 @@
     flex-wrap: wrap;
   }
   .flex-item {
-    /*display: -webkit-flex;
-    display: flex;*/
     margin-right: 4em;
     margin-bottom: 1em;
     flex: 0 0 300px;
@@ -15,10 +13,12 @@
 
 <div class="container ph-md-margin-top ph-lg-margin-bottom">
 
+  <h2>Knowledge Unlatched</h2>
+
   <div ng-repeat="category in $ctrl.categories">
-    <h2>
+    <h3>
       {{category.category}}
-    </h2>
+    </h3>
 
     <div class="row ph-sm-margin-bottom">
 

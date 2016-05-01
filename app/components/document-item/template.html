@@ -1,12 +1,14 @@
 <div class="panel panel-default">
   <div class="panel-body">
     <h4>
-      {{$ctrl.document.title}}
+      <a href="./documents/{{$ctrl.document.id}}">
+        {{$ctrl.document.title}}
+      </a>
     </h4>
     <div>
       <small>
         <span ng-repeat="author in $ctrl.document.authors">
-          {{author.name}}
+          {{author.name}}{{$last ? '' : ', '}}
         </span>
       </small>
     </div>
