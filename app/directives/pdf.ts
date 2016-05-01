@@ -158,6 +158,7 @@ export default function(app) {
         // new size
         const size = roundSize(viewport);
 
+
         // create canvas
         if (!this.canvas) {
           this.canvas = document.createElement('canvas');
@@ -165,8 +166,14 @@ export default function(app) {
         }
 
         // update canvas size
-        this.canvas.height = size.height;
-        this.canvas.width = size.width;
+        this.canvas.height = Math.round(size.height);
+        this.canvas.width = Math.round(size.width);
+
+        // compensate for zoom and device pixel ratio
+        // important: do not round here!
+        const pixelRatio = $window.devicePixelRatio || 1;
+        this.canvas.style.width = (size.width / pixelRatio) + 'px';
+        this.canvas.style.height = (size.height / pixelRatio) + 'px';
 
         // kick off canvas rendering
         this.renderTask = this.page.render({
@@ -299,7 +306,7 @@ export default function(app) {
 
       constructor(public pdf: PDFDocumentProxy, public pageNumber: number,
           public element: JQuery, public scope: any,
-          public linkService, public defaultSize, initialWidth: number) {
+          public linkService, public defaultPageSize, initialWidth: number) {
         // update size to default size
         this.updateSize(initialWidth);
       }
@@ -312,9 +319,16 @@ export default function(app) {
         }
 
         // scale such that the width of the viewport fills the element
-        const originalViewport = this.page.getViewport(1.0);
-        const scale = width / originalViewport.width;
-        return this.page.getViewport(scale);
+        const scale = width / this.pageSize.width;
+
+        // respect zoom / native device resolution
+        const pixelRatio = $window.devicePixelRatio || 1;
+
+        // viewport:
+        return {
+          viewport: this.page.getViewport(scale),
+          deviceViewport: this.page.getViewport(scale * pixelRatio),
+        };
       }
 
       async initPageSize(_width = undefined) {
@@ -376,11 +390,8 @@ export default function(app) {
       // (based on actual page size or default page size)
       updateSize(_width = undefined) {
         const width = _width || this.element[0].offsetWidth;
-        const size = this.pageSize || this.defaultSize;
+        const size = this.pageSize || this.defaultPageSize;
         const height = Math.floor(size.height / size.width * width);
-
-        // check against old size
-        // if (this.element.height() === height) return false;
 
         // set new height
         this.element.height(height);
@@ -418,8 +429,11 @@ export default function(app) {
         await this.initPageSize();
         await this.initRenderers();
 
-        const viewport = this.getViewport();
-        const size = roundSize(viewport);
+        const {viewport, deviceViewport} = this.getViewport();
+        const size = {
+          height: deviceViewport.height,
+          width: deviceViewport.width,
+        };
 
         // stop if currently rendered size is up to date
         if (isSameSize(this.renderedSize, size)) return false;
@@ -433,7 +447,7 @@ export default function(app) {
         this.renderedSize = size;
 
         try {
-          await this.canvasRenderer.render(viewport);
+          await this.canvasRenderer.render(deviceViewport);
           await this.textRenderer.render(viewport);
           // await this.annotationsRenderer.render(viewport);
 
@@ -502,7 +516,7 @@ export default function(app) {
 
         // get size of first page and use it as a preliminary default size
         const firstPage = await this.pdf.getPage(1);
-        const defaultSize = firstPage.getViewport(1.0);
+        const defaultPageSize = firstPage.getViewport(1.0);
 
         // create pages
         for (let pageNumber = 1; pageNumber <= this.pdf.numPages; pageNumber++) {
@@ -511,7 +525,7 @@ export default function(app) {
           this.element.append(pageElement);
 
           // instantiate page
-          const page = new PdfPage(this.pdf, pageNumber, pageElement, this.scope, this.linkService, defaultSize, width);
+          const page = new PdfPage(this.pdf, pageNumber, pageElement, this.scope, this.linkService, defaultPageSize, width);
           this.pages.push(page);
         }
 
