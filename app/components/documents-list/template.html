@@ -1,0 +1,17 @@
+<div class="container ph-md-margin-top ph-lg-margin-bottom">
+
+  <h2>Knowledge Unlatched</h2>
+
+  <div ng-repeat="category in $ctrl.categories">
+    <h3>
+      {{category.category}}
+    </h3>
+    <div class="row ph-sm-margin-bottom">
+      <div class="col-md-12">
+        <div class="ph-document-list">
+          <document-item document="document" class="ph-document-item" ng-repeat="document in category.documents"></document-item>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
