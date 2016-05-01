@@ -15,26 +15,22 @@
 
 <div class="container ph-md-margin-top ph-lg-margin-bottom">
 
-  <h2>
-    Anthropology
-  </h2>
+  <div ng-repeat="category in $ctrl.categories">
+    <h2>
+      {{category.category}}
+    </h2>
 
-  <div class="row ph-sm-margin-bottom">
+    <div class="row ph-sm-margin-bottom">
 
-    <div class="col-md-12">
+      <div class="col-md-12">
 
-      <div class="flex-container">
+        <div class="flex-container">
 
-        <document-item class="flex-item"></document-item>
-        <document-item class="flex-item"></document-item>
-        <document-item class="flex-item"></document-item>
-        <document-item class="flex-item"></document-item>
+          <document-item document="document" class="flex-item" ng-repeat="document in category.documents"></document-item>
 
-
-        <document-item class="flex-item"></document-item>
+        </div>
 
       </div>
-
     </div>
   </div>
 </div>

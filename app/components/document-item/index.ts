@@ -3,5 +3,10 @@
 import template from './template.html!text';
 
 export default function(app) {
-  app.component('documentItem', {template});
+  app.component('documentItem', {
+    bindings: {
+      document: '<',
+    },
+    template
+  });
 };
