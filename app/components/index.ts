@@ -10,6 +10,7 @@ import document from './document/index';
 import documentNew from './document-new/index';
 import documentRedirect from './document-redirect';
 import documentText from './document-text';
+import documentsList from './documents-list/index';
 import extensionButtons from './extension-buttons/index';
 import feedbackButton from './feedback-button';
 import hiveButton from './hive-button';
@@ -63,6 +64,7 @@ export default function(app) {
   documentNew(app);
   documentRedirect(app);
   documentText(app);
+  documentsList(app);
   extensionButtons(app);
   feedbackButton(app);
   hiveButton(app);
