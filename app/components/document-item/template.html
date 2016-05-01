@@ -5,12 +5,14 @@
     </h4>
     <div>
       <small>
-        Name Lastname and Name Lastname and Name Lastname
+        <span ng-repeat="author in $ctrl.document.authors">
+          {{author.name}}
+        </span>
       </small>
     </div>
     <div class="text-muted">
       <small>
-        2016 &middot; Publisher
+        {{$ctrl.document.publishedAt | date:'yyyy'}} &middot; {{$ctrl.document.publisher}}
       </small>
     </div>
 
