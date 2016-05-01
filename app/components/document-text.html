@@ -34,15 +34,30 @@
     </div>
 
     <div class="col-md-3">
-      <label class="text-muted">Brought to you by</label>
-      <div>
-        <a href="http://www.knowledgeunlatched.org/">
-          <img src="./static/img/knowledge-unlatched.svg"
-            title="Knowledge Unlatched"
-            class="ph-distributor-logo"
-          >
-        </a>
+      <div ng-if="$ctrl.activeRevision.distributor === 'Knowledge Unlatched'">
+        <label class="text-muted">Brought to you by</label>
+        <div>
+          <a href="http://www.knowledgeunlatched.org/">
+            <img src="./static/img/knowledge-unlatched.svg"
+              title="Knowledge Unlatched"
+              class="ph-distributor-logo"
+            >
+          </a>
+        </div>
       </div>
+    </div>
+
+    <div class="col-md-3 text-right">
+      <a class="btn btn-default" ng-href="{{$ctrl.origPdfUrl}}" download>
+        Download PDF
+      </a>
+    </div>
+  </div>
+
+  <div class="row" ng-if="$ctrl.pdfUrl">
+    <div class="col-md-9">
+      <pdf url="$ctrl.pdfUrl" on-update="$ctrl.pdfStatus = status"></pdf>
+
       <div ng-if="$ctrl.pdfStatus.downloading">
         <div ng-if="$ctrl.pdfStatus.bytesLoaded === undefined ||
             $ctrl.pdfStatus.bytesTotal === undefined">
@@ -61,18 +76,7 @@
           </uib-progressbar>
         </div>
       </div>
-    </div>
 
-    <div class="col-md-3 text-right">
-      <a class="btn btn-default" ng-href="{{$ctrl.origPdfUrl}}" download>
-        Download PDF
-      </a>
-    </div>
-  </div>
-
-  <div class="row" ng-if="$ctrl.pdfUrl">
-    <div class="col-md-9">
-      <pdf url="$ctrl.pdfUrl" on-update="$ctrl.pdfStatus = status"></pdf>
       <pdf-full
         pdf="$ctrl.pdfStatus.pdf"
         highlights="$ctrl.highlights"
