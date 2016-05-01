@@ -43,6 +43,7 @@ export default function(app) {
         .when('/contact', 'contact')
         .when('/terms', 'terms')
         .when('/jobs', 'jobs')
+        .when('/knowledgeunlatched', 'knowledgeunlatched')
         .when('/legalnotice', 'legalnotice')
         .when('/login', 'login')
         .when('/password/request', 'passwordRequest')
@@ -224,6 +225,11 @@ export default function(app) {
                 'research fun again.'
             }
           ]
+        })
+
+        .segment('knowledgeunlatched', {
+          template: '<documents-list></documents-list>',
+          title: 'Knowledge unlatched books'
         })
 
         .segment('legalnotice', {
