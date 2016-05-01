@@ -50,10 +50,15 @@
   display: flex;
   align-items: stretch;
   justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .ph-intro-panel {
-  width: 40%;
+  min-width: 350px;
+  width: 100%;
+  @media (min-width: @screen-md-min) {
+    width: 40%;
+  }
   background-color: rgba(255, 255, 255, 0.7);
   color: @text-color;
 }
