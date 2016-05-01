@@ -35,7 +35,7 @@ export default function(app) {
           $window.localStorage.tourVisited = false;
           service.index = 1;
           $location.url('/documents/0tsHJq1-yyVZ');
-        }
+        };
 
         service.setUndefined = function() {
           service.index = undefined;
