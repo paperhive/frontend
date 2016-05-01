@@ -57,7 +57,7 @@ export default function(app) {
               const document = get(response, 'data.documents[0]');
               oapenDocuments[id] = document;
             }
-          )
+          );
         }));
 
         // this code runs async, so let's $apply the changes!
