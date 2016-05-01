@@ -26,7 +26,8 @@ class DocumentRedirectCtrl {
           notificationService.notifications.push({
             type: 'error',
             message: `No document found for URL ${url}.`
-          })
+          });
+          return;
         }
 
         // get target URL
@@ -43,7 +44,7 @@ class DocumentRedirectCtrl {
           type: 'error',
           message: response.data && response.data.message ||
             `Obtaining document for URL ${url} failed for an unknown reason.`
-        })
+        });
       }
     );
   }
