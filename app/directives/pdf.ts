@@ -1,7 +1,7 @@
 import angular from 'angular';
+import { queue } from 'async';
 import jquery from 'jquery';
-import { flatten, isEqual, map, pick, some } from 'lodash';
-import { Mutex } from 'mutx';
+import { clone, difference, flatten, isEqual, map, pick, some } from 'lodash';
 import { PDFJS } from 'pdfjs-dist';
 import rangy from 'rangy';
 
@@ -13,8 +13,8 @@ function isSameSize(obj1, obj2) {
 // round size to integers
 function roundSize(size) {
   return {
-    height: Math.round(size.height),
-    width: Math.round(size.width),
+    height: Math.floor(size.height),
+    width: Math.floor(size.width),
   };
 }
 
@@ -27,9 +27,7 @@ function isVisible(element, $window) {
 
   const viewportHeight = angular.element($window).height();
 
-  // relax viewport constraint
-  // (tight: elementTop <=  viewportHeight && elementBottom >= 0)
-  return elementTop <= 2 * viewportHeight && elementBottom >= - viewportHeight;
+  return elementTop <= viewportHeight && elementBottom >= 0;
 }
 
 function getTextPositionSelector(range, container) {
@@ -287,27 +285,23 @@ export default function(app) {
 
     // render a pdf page
     class PdfPage {
+      // page not set: call init() before!
       page: PDFPageProxy;
+      initializedPageSize: boolean;
+      initializedRenderers: boolean;
+      pageSize: any; // TODO: remove?
 
       // renderer state
       renderedSize: {height: number, width: number};
-      renderMutex: Mutex;
       canvasRenderer: CanvasRenderer;
       textRenderer: TextRenderer;
       annotationsRenderer: AnnotationsRenderer;
 
       constructor(public pdf: PDFDocumentProxy, public pageNumber: number,
           public element: JQuery, public scope: any,
-          public linkService) {
-        // set default height to DIN A4
-        // (overwritten with actual page size below)
-        this.updateSize({
-          height: element[0].offsetWidth * Math.sqrt(2),
-          width: element[0].offsetWidth,
-        });
-
-        // render mutex
-        this.renderMutex = new Mutex();
+          public linkService, public defaultSize, initialWidth: number) {
+        // update size to default size
+        this.updateSize(initialWidth);
       }
 
       // get viewport for this page
@@ -323,79 +317,92 @@ export default function(app) {
         return this.page.getViewport(scale);
       }
 
-      // initialize page (needs to be finished before any other method can
-      // be called)
-      async init() {
-        if (!this.page) {
-          // get page from pdf (pdfjs uses 1-based page numbers)
-          this.page = await this.pdf.getPage(this.pageNumber);
+      async initPageSize(_width = undefined) {
+        if (this.initializedPageSize) return false;
 
-          // set element height
-          this.updateSize();
+        // get page from pdf (pdfjs uses 1-based page numbers)
+        this.page = await this.pdf.getPage(this.pageNumber);
 
-          // add canvas renderer
-          this.canvasRenderer = new CanvasRenderer(this.element, this.page);
+        // get page size
+        this.pageSize = this.page.getViewport(1.0);
 
-          // add highlights layer
-          // TODO: sort more efficiently (e.g., in pdfFull directive)!
-          const highlightsLayer = $compile(`
-            <div class="ph-pdf-highlights">
-              <pdf-highlight
-                ng-repeat="highlight in highlights | highlightsByPageNumber:${this.pageNumber}"
-                highlight="highlight"
-                emphasized="emphasizedHighlights[highlight.id]"
-                page-number="${this.page.pageNumber}"
-                on-mouseenter="onHighlightMouseenter({highlight: highlight, pageNumber: pageNumber})"
-                on-mouseleave="onHighlightMouseleave({highlight: highlight, pageNumber: pageNumber})"
-              ></pdf-highlight>
-            </div>
-          `)(this.scope);
-          this.element.append(highlightsLayer);
+        // update element size
+        this.updateSize(_width);
 
-          // add text renderer
-          const textElement = angular.element('<div class="ph-pdf-text"></div>');
-          this.element.append(textElement);
-          this.textRenderer = new TextRenderer(textElement, this.page);
-
-          // add annotations renderer
-          // TODO: re-enable (disabled until scroll-to-dest is implemented)
-          // const annotationsLayer = angular.element('<div class="ph-pdf-annotations"></div>');
-          // this.element.append(annotationsLayer);
-          // this.annotationsRenderer = new AnnotationsRenderer(annotationsLayer, this.page, this.linkService);
-        }
+        this.initializedPageSize = true;
+        return true;
       }
 
-      // set page element height via css (faster than inserting a canvas)
-      updateSize(_size = undefined) {
-        const newSize = roundSize(_size || this.getViewport());
+      // initialize page (needs to be finished before any other method can
+      // be called)
+      async initRenderers() {
+        if (this.initializedRenderers) return false;
+
+        // add canvas renderer
+        this.canvasRenderer = new CanvasRenderer(this.element, this.page);
+
+        // add highlights layer
+        // TODO: sort more efficiently (e.g., in pdfFull directive)!
+        const highlightsLayer = $compile(`
+          <div class="ph-pdf-highlights">
+            <pdf-highlight
+              ng-repeat="highlight in highlights | highlightsByPageNumber:${this.pageNumber}"
+              highlight="highlight"
+              emphasized="emphasizedHighlights[highlight.id]"
+              page-number="${this.page.pageNumber}"
+              on-mouseenter="onHighlightMouseenter({highlight: highlight, pageNumber: pageNumber})"
+              on-mouseleave="onHighlightMouseleave({highlight: highlight, pageNumber: pageNumber})"
+            ></pdf-highlight>
+          </div>
+        `)(this.scope);
+        this.element.append(highlightsLayer);
+
+        // add text renderer
+        const textElement = angular.element('<div class="ph-pdf-text"></div>');
+        this.element.append(textElement);
+        this.textRenderer = new TextRenderer(textElement, this.page);
+
+        // add annotations renderer
+        // TODO: re-enable (disabled until scroll-to-dest is implemented)
+        // const annotationsLayer = angular.element('<div class="ph-pdf-annotations"></div>');
+        // this.element.append(annotationsLayer);
+        // this.annotationsRenderer = new AnnotationsRenderer(annotationsLayer, this.page, this.linkService);
+
+        this.initializedRenderers = true;
+        return true;
+      }
+
+      // set page element height via css
+      // (based on actual page size or default page size)
+      updateSize(_width = undefined) {
+        const width = _width || this.element[0].offsetWidth;
+        const size = this.pageSize || this.defaultSize;
+        const height = Math.floor(size.height / size.width * width);
 
         // check against old size
-        if (this.element.height() === newSize.height) return false;
+        // if (this.element.height() === height) return false;
 
         // set new height
-        this.element.height(newSize.height);
+        this.element.height(height);
 
         return true;
       }
 
       onResized() {
-        this.scope.$apply(() => {
-          const viewport = this.page.getViewport(1);
-          this.scope.onPageResized({
-            pageNumber: this.pageNumber,
-            displaySize: {
-              height: this.element.height(),
-              width: this.element.width(),
-            },
-            originalSize: {
-              height: viewport.viewBox[3],
-              width: viewport.viewBox[2],
-            },
-            offset: {
-              top: this.element[0].offsetTop,
-              left: this.element[0].offsetLeft,
-            }
-          });
+        this.scope.onPageResized({
+          pageNumber: this.pageNumber,
+          displaySize: {
+            height: this.element.height(),
+            width: this.element.width(),
+          },
+          originalSize: this.pageSize && {
+            height: this.pageSize.viewBox[3],
+            width: this.pageSize.viewBox[2],
+          },
+          offset: {
+            top: this.element[0].offsetTop,
+            left: this.element[0].offsetLeft,
+          }
         });
       }
 
@@ -408,20 +415,18 @@ export default function(app) {
       }
 
       async render() {
+        await this.initPageSize();
+        await this.initRenderers();
+
         const viewport = this.getViewport();
         const size = roundSize(viewport);
 
         // stop if currently rendered size is up to date
-        if (isSameSize(this.renderedSize, size)) {
-          return;
-        }
+        if (isSameSize(this.renderedSize, size)) return false;
 
         // TODO: cancel renderers
         // this.canvasRenderer.cancel();
         // this.textRenderer.cancel();
-
-        // wait for exclusive execution
-        const unlock = await this.renderMutex.lock();
 
         // set rendered viewport (also indicates the viewport that is
         // currently rendered to other render calls)
@@ -432,26 +437,40 @@ export default function(app) {
           await this.textRenderer.render(viewport);
           // await this.annotationsRenderer.render(viewport);
 
-          unlock();
-
           this.onRendered();
-        } catch (error) {
-          unlock();
 
+          return true;
+        } catch (error) {
           // return if cancelled
           if (error === 'cancelled') {
             console.log(`page ${this.pageNumber} cancelled`);
-            return;
+            return false;
           }
           throw error;
         }
+      }
+
+      unrender() {
+        delete this.canvasRenderer;
+        delete this.textRenderer;
+        delete this.annotationsRenderer;
+        delete this.renderedSize;
+
+        // remove all child elements
+        this.element.empty();
+
+        this.initializedRenderers = false;
       }
     }
 
     // render a full pdf
     class PdfFull {
       pages: Array<PdfPage>;
-      windowSize: {height: number, width: number};
+      renderedPages: Array<PdfPage>;
+      renderQueue: any;
+
+
+      containerWidth: number;
       lastSelectors: any;
       lastSimpleSelection: any;
       linkService: LinkService;
@@ -459,6 +478,10 @@ export default function(app) {
       constructor(public pdf: PDFDocumentProxy, public element: JQuery,
           public scope: any) {
         this.pages = [];
+
+        // set up render queue
+        this.renderQueue = queue(this.renderPage.bind(this));
+        this.renderedPages = [];
 
         // wipe element children
         this.element.empty();
@@ -468,7 +491,18 @@ export default function(app) {
 
       // initialize all pages
       async init() {
-        const pageInits = [];
+        // oh, don't ask why
+        if (this.pdf.numPages === 0) {
+          console.warn('The PDF has no pages. :(');
+          return;
+        }
+
+        // container element width
+        const width = this.element[0].offsetWidth;
+
+        // get size of first page and use it as a preliminary default size
+        const firstPage = await this.pdf.getPage(1);
+        const defaultSize = firstPage.getViewport(1.0);
 
         // create pages
         for (let pageNumber = 1; pageNumber <= this.pdf.numPages; pageNumber++) {
@@ -476,20 +510,17 @@ export default function(app) {
           const pageElement = angular.element('<div class="ph-pdf-page"></div>');
           this.element.append(pageElement);
 
-          // init page
-          const page = new PdfPage(this.pdf, pageNumber, pageElement, this.scope, this.linkService);
+          // instantiate page
+          const page = new PdfPage(this.pdf, pageNumber, pageElement, this.scope, this.linkService, defaultSize, width);
           this.pages.push(page);
-          pageInits.push(page.init());
         }
 
-        // await all pageInits
-        await Promise.all(pageInits);
-
-        // give browser time to render properly sized pages
-        await new Promise(resolve => $timeout(resolve));
+        // render first page unconditionally
+        await this.pages[0].render();
+        this.renderedPages = [this.pages[0]];
 
         // call onResized
-        this.pages.forEach(page => page.onResized());
+        this.scope.$apply(() => this.pages.forEach(page => page.onResized()));
 
         // re-render on resize and scroll events
         const _render = this.render.bind(this);
@@ -500,14 +531,15 @@ export default function(app) {
         const _onTextSelect = this.onTextSelect.bind(this);
         $document.on('mouseup keyup', _onTextSelect); // key events are not fired on PDFs
 
+        // unregister event handlers
         this.element.on('$destroy', () => {
           angular.element($window).off('resize', _render);
           angular.element($window).off('scroll', _render);
-          $document.off('mouseup keyup', _onTextSelect); // key events are not fired on PDFs
+          $document.off('mouseup keyup', _onTextSelect);
         });
 
         // render at least once
-        await this.render();
+        this.render();
       }
 
       destroy() {
@@ -565,7 +597,8 @@ export default function(app) {
             const range = selection.getAllRanges()[0];
             const pageRanges = [];
             this.pages.forEach(page => {
-              if (!range.intersectsNode(page.textRenderer.element[0])) return;
+              if (!page.textRenderer ||
+                  !range.intersectsNode(page.textRenderer.element[0])) return;
 
               // get range that selects the page's content
               const pageRange = rangy.createRange();
@@ -622,34 +655,103 @@ export default function(app) {
       }
 
       // resize all and render relevant pages
-      async render() {
-        const newWindowSize = {
-          height: angular.element($window).height(),
-          width: angular.element($window).width(),
-        };
+      render(force = false) {
+        // remove waiting tasks from queue
+        this.renderQueue.kill();
+
+        const newContainerWidth = this.element[0].offsetWidth;
 
         // resize pages only if the window size changed
-        if (!this.windowSize || !isSameSize(this.windowSize, newWindowSize)) {
-          // resize pages
-          const pageResized = this.pages.map(page => page.updateSize());
+        let sizeChanged = this.containerWidth !== newContainerWidth;
+        if (sizeChanged) {
+          // no page => resize
+          this.renderQueue.push(undefined);
+        }
 
-          // store last processed window size
-          this.windowSize = newWindowSize;
+        // get currently running render tasks
+        const running = this.renderQueue.workersList().map(task => task.data);
 
-          // if at least one page has been resized: wait for DOM
-          if (some(pageResized)) {
-            await new Promise(resolve => $timeout(resolve));
+        // detect visible pages
+        // TODO: implement O(log(n)) algorithm (bisection!)
+        const visiblePages =
+          this.pages.filter(page => isVisible(page.element, $window));
 
-            // call onResized
-            this.pages.forEach(page => page.onResized());
+        // determine pages that need to be rendered
+        let renderPages = clone(visiblePages);
+
+        // add adjacent pages of visible pages
+        // (note: pdfjs page numbers are 1-based)
+        if (visiblePages.length > 0) {
+          const firstPageNumber = visiblePages[0].pageNumber;
+          if (firstPageNumber > 1) {
+            renderPages.push(this.pages[firstPageNumber - 2]);
+          }
+          const lastPageNumber = visiblePages[visiblePages.length - 1].pageNumber;
+          if (lastPageNumber < this.pages.length) {
+            renderPages.push(this.pages[lastPageNumber]);
           }
         }
 
-        // detect relevant pages
-        const renderPages = this.pages.filter(page => isVisible(page.element, $window));
+        // unrender pages (exclude running tasks)
+        const unrenderPages = difference(this.renderedPages, running, renderPages);
+        unrenderPages.forEach(page => page.unrender());
+        this.renderedPages = difference(this.renderedPages, unrenderPages);
 
-        // render pages
-        const renderPromises = renderPages.map(page => page.render());
+
+        // if not resized: remove pages that are running or already rendered
+        if (!force && !sizeChanged) {
+          renderPages = difference(renderPages, running, this.renderedPages);
+        }
+
+        // add pages to queue
+        renderPages.forEach(page => {
+          this.renderQueue.push(page, (err, rendered) => {
+            // do not update rendered pages if not rendered or already present
+            if (!rendered || this.renderedPages.indexOf(page) !== -1) return;
+
+            // update array of rendered pages
+            this.renderedPages.push(page);
+          });
+        });
+      }
+
+      async resizePages() {
+        // container width
+        const width = this.element[0].offsetWidth;
+
+        // wait until all pages initialized their correct size
+        const initialized =
+          await Promise.all(this.pages.map(page => page.initPageSize(width)));
+
+        // update page size if none have been initialized
+        const resized = this.pages.map(page => page.updateSize(width));
+
+        // store last processed size
+        this.containerWidth = width;
+
+        // if at least one page has been initialized or resized: wait for DOM
+        if (some(initialized) || some(resized)) {
+          await new Promise(resolve => $timeout(resolve));
+
+          // call onResized
+          this.scope.$apply(() => {
+            this.pages.forEach(page => page.onResized());
+          });
+
+          // re-evaluate what needs to be rendered and force re-rendering
+          this.render(true);
+        }
+      }
+
+      renderPage(page, callback) {
+        // if page is provided: render
+        // otherwise: resize all pages
+        const promise = page ? page.render() : this.resizePages();
+
+        promise.then(
+          rendered => callback(undefined, rendered),
+          err => callback(err)
+        );
       }
     }
 
@@ -712,7 +814,6 @@ export default function(app) {
         // TODO: scroll interface
       },
       link: async function(scope, element, attrs) {
-
         let pdfFull;
         scope.$watch('pdf', async function (pdf) {
           // destroy current pdf

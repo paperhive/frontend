@@ -35,6 +35,7 @@ SystemJS.config({
     "angulartics": "npm:angulartics@1.0.3",
     "angulartics-google-analytics": "npm:angulartics-google-analytics@0.1.4",
     "assert": "github:jspm/nodelibs-assert@0.2.0-alpha",
+    "async": "npm:async@2.0.0-rc.3",
     "buffer": "github:jspm/nodelibs-buffer@0.2.0-alpha",
     "fs": "github:jspm/nodelibs-fs@0.2.0-alpha",
     "highlightjs": "github:components/highlightjs@9.1.0",
@@ -43,8 +44,7 @@ SystemJS.config({
     "json": "github:systemjs/plugin-json@0.1.0",
     "kramed": "npm:kramed@0.5.5",
     "leaflet": "github:Leaflet/Leaflet@0.7.7",
-    "lodash": "npm:lodash@4.2.0",
-    "mutx": "npm:mutx@0.1.1",
+    "lodash": "npm:lodash@4.11.1",
     "ngSmoothScroll": "github:d-oliveros/ngSmoothScroll@2.0.0",
     "os": "github:jspm/nodelibs-os@0.2.0-alpha",
     "paperhive-sources": "npm:paperhive-sources@4.0.2",
@@ -69,7 +69,7 @@ SystemJS.config({
     },
     "github:jspm/nodelibs-buffer@0.2.0-alpha": {
       "map": {
-        "buffer-browserify": "npm:buffer@4.5.0"
+        "buffer-browserify": "npm:buffer@4.6.0"
       }
     },
     "github:jspm/nodelibs-os@0.2.0-alpha": {
@@ -112,9 +112,14 @@ SystemJS.config({
         "moment": "npm:moment@2.10.6"
       }
     },
-    "npm:buffer@4.5.0": {
+    "npm:async@2.0.0-rc.3": {
       "map": {
-        "base64-js": "npm:base64-js@1.1.1",
+        "lodash": "npm:lodash@4.11.1"
+      }
+    },
+    "npm:buffer@4.6.0": {
+      "map": {
+        "base64-js": "npm:base64-js@1.1.2",
         "ieee754": "npm:ieee754@1.1.6",
         "isarray": "npm:isarray@1.0.0"
       }
