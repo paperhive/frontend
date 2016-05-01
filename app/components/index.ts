@@ -7,6 +7,7 @@ import contact from './contact/index';
 import discussionList from './discussion-list/index';
 import discussionThreadView from './discussion-thread-view/index';
 import document from './document/index';
+import documentItem from './document-item/index';
 import documentNew from './document-new/index';
 import documentRedirect from './document-redirect';
 import documentText from './document-text';
@@ -61,6 +62,7 @@ export default function(app) {
   discussionList(app);
   discussionThreadView(app);
   document(app);
+  documentItem(app);
   documentNew(app);
   documentRedirect(app);
   documentText(app);
