@@ -8,6 +8,7 @@ import discussionList from './discussion-list/index';
 import discussionThreadView from './discussion-thread-view/index';
 import document from './document/index';
 import documentNew from './document-new/index';
+import documentRedirect from './document-redirect';
 import documentText from './document-text';
 import extensionButtons from './extension-buttons/index';
 import feedbackButton from './feedback-button';
@@ -60,6 +61,7 @@ export default function(app) {
   discussionThreadView(app);
   document(app);
   documentNew(app);
+  documentRedirect(app);
   documentText(app);
   extensionButtons(app);
   feedbackButton(app);
