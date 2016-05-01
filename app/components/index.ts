@@ -38,6 +38,7 @@ import passwordReset from './passwordReset';
 import pdf from './pdf';
 import pdfHighlight from './pdf-highlight';
 import phFooter from './ph-footer/index';
+import publishers from './publishers';
 import searchResults from './search-results/index';
 import settings from './settings/index';
 import settingsAccounts from './settings-accounts';
@@ -91,6 +92,7 @@ export default function(app) {
   pdf(app);
   pdfHighlight(app);
   phFooter(app);
+  publishers(app);
   searchResults(app);
   settings(app);
   settingsAccounts(app);
