@@ -45,7 +45,6 @@ SystemJS.config({
     "kramed": "npm:kramed@0.5.5",
     "leaflet": "github:Leaflet/Leaflet@0.7.7",
     "lodash": "npm:lodash@4.11.1",
-    "mutx": "npm:mutx@0.1.1",
     "ngSmoothScroll": "github:d-oliveros/ngSmoothScroll@2.0.0",
     "os": "github:jspm/nodelibs-os@0.2.0-alpha",
     "paperhive-sources": "npm:paperhive-sources@4.0.2",

@@ -2,7 +2,6 @@ import angular from 'angular';
 import { queue } from 'async';
 import jquery from 'jquery';
 import { clone, difference, flatten, isEqual, map, pick, some } from 'lodash';
-import { Mutex } from 'mutx';
 import { PDFJS } from 'pdfjs-dist';
 import rangy from 'rangy';
 
@@ -294,7 +293,6 @@ export default function(app) {
 
       // renderer state
       renderedSize: {height: number, width: number};
-      renderMutex: Mutex;
       canvasRenderer: CanvasRenderer;
       textRenderer: TextRenderer;
       annotationsRenderer: AnnotationsRenderer;
@@ -304,9 +302,6 @@ export default function(app) {
           public linkService, public defaultSize, initialWidth: number) {
         // update size to default size
         this.updateSize(initialWidth);
-
-        // render mutex
-        this.renderMutex = new Mutex();
       }
 
       // get viewport for this page
@@ -420,9 +415,6 @@ export default function(app) {
       }
 
       async render() {
-        // wait for exclusive execution
-        const unlock = await this.renderMutex.lock();
-
         await this.initPageSize();
         await this.initRenderers();
 
@@ -430,10 +422,7 @@ export default function(app) {
         const size = roundSize(viewport);
 
         // stop if currently rendered size is up to date
-        if (isSameSize(this.renderedSize, size)) {
-          unlock();
-          return false;
-        }
+        if (isSameSize(this.renderedSize, size)) return false;
 
         // TODO: cancel renderers
         // this.canvasRenderer.cancel();
@@ -448,14 +437,10 @@ export default function(app) {
           await this.textRenderer.render(viewport);
           // await this.annotationsRenderer.render(viewport);
 
-          unlock();
-
           this.onRendered();
 
           return true;
         } catch (error) {
-          unlock();
-
           // return if cancelled
           if (error === 'cancelled') {
             console.log(`page ${this.pageNumber} cancelled`);
