@@ -470,7 +470,7 @@ export default function(app) {
       renderQueue: any;
 
 
-      windowSize: {height: number, width: number};
+      containerWidth: number;
       lastSelectors: any;
       lastSimpleSelection: any;
       linkService: LinkService;
@@ -491,6 +491,12 @@ export default function(app) {
 
       // initialize all pages
       async init() {
+        // oh, don't ask why
+        if (this.pdf.numPages === 0) {
+          console.warn('The PDF has no pages. :(');
+          return;
+        }
+
         // container element width
         const width = this.element[0].offsetWidth;
 
@@ -509,13 +515,12 @@ export default function(app) {
           this.pages.push(page);
         }
 
-        // give browser time to render properly sized pages
-        await new Promise(resolve => $timeout(resolve));
+        // render first page unconditionally
+        await this.pages[0].render();
+        this.renderedPages = [this.pages[0]];
 
-        this.scope.$apply(() => {
-          // call onResized
-          this.pages.forEach(page => page.onResized());
-        });
+        // call onResized
+        this.scope.$apply(() => this.pages.forEach(page => page.onResized()));
 
         // re-render on resize and scroll events
         const _render = this.render.bind(this);
@@ -526,22 +531,15 @@ export default function(app) {
         const _onTextSelect = this.onTextSelect.bind(this);
         $document.on('mouseup keyup', _onTextSelect); // key events are not fired on PDFs
 
+        // unregister event handlers
         this.element.on('$destroy', () => {
           angular.element($window).off('resize', _render);
           angular.element($window).off('scroll', _render);
-          $document.off('mouseup keyup', _onTextSelect); // key events are not fired on PDFs
+          $document.off('mouseup keyup', _onTextSelect);
         });
 
         // render at least once
         this.render();
-
-        // wait until all pages have the correct size
-        await Promise.all(this.pages.map(page => page.initPageSize(width)));
-
-        // call onResized
-        this.scope.$apply(() => {
-          this.pages.forEach(page => page.onResized());
-        });
       }
 
       destroy() {
@@ -661,14 +659,10 @@ export default function(app) {
         // remove waiting tasks from queue
         this.renderQueue.kill();
 
-        const newWindowSize = {
-          height: angular.element($window).height(),
-          width: angular.element($window).width(),
-        };
+        const newContainerWidth = this.element[0].offsetWidth;
 
         // resize pages only if the window size changed
-        let sizeChanged = !this.windowSize ||
-          !isSameSize(this.windowSize, newWindowSize);
+        let sizeChanged = this.containerWidth !== newContainerWidth;
         if (sizeChanged) {
           // no page => resize
           this.renderQueue.push(undefined);
@@ -725,17 +719,18 @@ export default function(app) {
         // container width
         const width = this.element[0].offsetWidth;
 
-        // resize pages
-        const pageResized = this.pages.map(page => page.updateSize(width));
+        // wait until all pages initialized their correct size
+        const initialized =
+          await Promise.all(this.pages.map(page => page.initPageSize(width)));
 
-        // store last processed window size
-        this.windowSize = {
-          height: angular.element($window).height(),
-          width: angular.element($window).width(),
-        };
+        // update page size if none have been initialized
+        const resized = this.pages.map(page => page.updateSize(width));
 
-        // if at least one page has been resized: wait for DOM
-        if (some(pageResized)) {
+        // store last processed size
+        this.containerWidth = width;
+
+        // if at least one page has been initialized or resized: wait for DOM
+        if (some(initialized) || some(resized)) {
           await new Promise(resolve => $timeout(resolve));
 
           // call onResized
