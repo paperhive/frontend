@@ -229,7 +229,7 @@ export default function(app) {
 
         .segment('knowledgeunlatched', {
           template: '<documents-list></documents-list>',
-          title: 'Knowledge unlatched books'
+          title: 'Knowledge Unlatched books'
         })
 
         .segment('legalnotice', {
