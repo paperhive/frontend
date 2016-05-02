@@ -34,6 +34,10 @@ pdf-full {
      * <https://github.com/mozilla/pdf.js/issues/6614> */
     line-height: 1.0;
 
+    // allow text selections
+    .ph-selection(text);
+
+    // style text selections
     & ::selection {
       background: @ph-highlight-color;
     }
@@ -52,8 +56,6 @@ pdf-full {
       -ms-transform-origin: 0% 0%;
       transform-origin: 0% 0%;
       z-index: 1000;
-      // allow text selections
-      .ph-selection(text);
     }
   }
 
