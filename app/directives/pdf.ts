@@ -661,8 +661,6 @@ export default function(app) {
               return selectors;
             }));
 
-            selection.removeAllRanges();
-
             return this.onSelect(selectors);
           });
         });
