@@ -48,6 +48,7 @@ export default function(app) {
         .when('/login', 'login')
         .when('/password/request', 'passwordRequest')
         .when('/password/reset', 'passwordReset')
+        .when('/publishers', 'publishers')
         .when('/searchResults', 'searchResults')
         .when('/settings', 'settings')
         .when('/settings/profile', 'settings.profile')
@@ -228,7 +229,7 @@ export default function(app) {
 
         .segment('knowledgeunlatched', {
           template: '<documents-list></documents-list>',
-          title: 'Knowledge unlatched books'
+          title: 'Knowledge Unlatched books'
         })
 
         .segment('legalnotice', {
@@ -260,6 +261,11 @@ export default function(app) {
         .segment('passwordReset', {
           template: '<password-reset></password-reset>',
           title: 'Reset your password · PaperHive',
+        })
+
+        .segment('publishers', {
+          template: '<publishers></publishers>',
+          title: 'PaperHive for Publishers and repositories · Paperhive'
         })
 
         .segment('settings', {

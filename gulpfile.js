@@ -83,7 +83,7 @@ gulp.task('static', [], function() {
       interlaced: true,  // gif
       multipass: true,  // svg
       progressive: true,  // jpg
-      svgoPlugins: [{removeViewBox: false}]
+      svgoPlugins: [{removeViewBox: false}, {minifyStyles: false}]
     }))
     //.pipe(dev ? gutil.noop() : cachebust.resources())
     .pipe(gulp.dest(buildDir + '/static'));

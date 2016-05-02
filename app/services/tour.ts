@@ -1,11 +1,19 @@
 'use strict';
+
 export default function(app) {
   app.factory(
     'tourService',
-    ['$window', 'authService',
-      function($window, authService) {
+    ['$location', '$window', 'authService',
+      function($location, $window, authService) {
         const service = {
-          stages: ['start', 'margin-discussion', 'highlight', 'search', 'hive', 'signup'],
+          stages: [
+            'start',
+            'margin-discussion',
+            'highlight',
+            'search',
+            'hive',
+            'signup'
+          ],
           index: 0,
         };
 
@@ -20,6 +28,13 @@ export default function(app) {
           if (authService.user && (service.index === service.stages.length - 2)) {
             $window.localStorage.tourVisited = true;
           }
+        };
+
+        // begin with margin discussion
+        service.start = function () {
+          $window.localStorage.tourVisited = false;
+          service.index = 1;
+          $location.url('/documents/0tsHJq1-yyVZ');
         };
 
         service.setUndefined = function() {
