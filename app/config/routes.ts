@@ -265,7 +265,7 @@ export default function(app) {
 
         .segment('publishers', {
           template: '<publishers></publishers>',
-          title: 'PaperHive for Publishers · Paperhive'
+          title: 'PaperHive for Publishers and repositories · Paperhive'
         })
 
         .segment('settings', {
