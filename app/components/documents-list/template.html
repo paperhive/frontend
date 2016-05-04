@@ -2,6 +2,31 @@
 
   <h2>Knowledge Unlatched books</h2>
 
+  <div class="row">
+    <div class="col-md-6">
+      <a href="http://knowledgeunlatched.org">Knowledge Unlatched</a>
+      is a global consortium that promotes collaboration
+      between libraries and publishers to make great academic books open
+      access. The freed books are made available under a
+      <a href="https://creativecommons.org/">Creative Commons</a>
+      license. 106 books from more than 30 scholarly publishers have already
+      been unlatched with the help of 300 libraries around the world.
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-xs-offset-3 col-xs-6">
+          <a href="http://knowledgeunlatched.org">
+            <img class="img-responsive" src="./static/img/knowledge-unlatched.svg">
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div ng-if="!$ctrl.categories" class="ph-lg-margin-top">
+    <i class="fa fa-spinner fa-spin"></i>
+    <span class="sr-only">Loading...</span>
+  </div>
   <div ng-repeat="category in $ctrl.categories">
     <h3>
       {{category.category}}
