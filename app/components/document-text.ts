@@ -17,13 +17,13 @@ class DocumentTextCtrl {
   hoveredHighlights: any;
   hoveredMarginDiscussions: any;
   pageCoordinates: any;
+  pdfAnchor: string;
 
-
-
-  static $inject = ['$routeSegment', '$scope', 'config', 'notificationService',
-    'tourService'];
-  constructor(public $routeSegment, public $scope, public config,
-      public notificationService, public tourService) {
+  static $inject = ['$location', '$routeSegment', '$scope', 'smoothScroll',
+   'config', 'notificationService', 'tourService'];
+  constructor(public $location, public $routeSegment, public $scope,
+      public smoothScroll, public config, public notificationService,
+      public tourService) {
     this.hoveredHighlights = {};
     this.hoveredMarginDiscussions = {draft: true};
     this.pageCoordinates = {};
@@ -34,6 +34,9 @@ class DocumentTextCtrl {
     // update highlights when discussions or draft selectors change
     $scope.$watch('$ctrl.discussions', this.updateHighlights.bind(this), true);
     $scope.$watch('$ctrl.draftSelectors', this.updateHighlights.bind(this), true);
+
+    // watch location hash
+    $scope.$watch(() => $location.hash(), this.updateAnchor.bind(this));
   }
 
   getAccessiblePdfUrl(documentRevision) {
@@ -155,6 +158,27 @@ class DocumentTextCtrl {
         type: 'error',
         message: 'PDF cannot be displayed: ' + e.message
       });
+    }
+  }
+
+  updateAnchor(anchor) {
+    if (!anchor) {
+      this.pdfAnchor = undefined;
+      return;
+    }
+
+    // discussion anchor?
+    if (/^d:/.test(anchor)) {
+      this.pdfAnchor = undefined;
+
+      // get element
+      const element = document.getElementById(anchor);
+      if (!element) return;
+
+      // scroll to element
+      this.smoothScroll(element, {offset: 140});
+    } else {
+      this.pdfAnchor = anchor;
     }
   }
 
