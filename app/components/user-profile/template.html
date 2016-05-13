@@ -4,29 +4,40 @@
     <hived-docs person-id="$ctrl.user.id"></hived-docs>
   </div>
   <div class="col-sm-6">
-    <div ng-show="$ctrl.user.accounts.length">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h4 class="panel-title">{{$ctrl.user.displayName}} on the web</h4>
-        </div>
-        <div class="panel-body">
-
-          <table class="table ph-table-no-border-top">
-            <tbody>
-              <tr ng-repeat="account in $ctrl.user.accounts">
-                <th scope="row" ng-switch="account.type">
-                  <span ng-switch-when="orcid">ORCID</span>
-                  <span ng-switch-default>{{account.type}}</span>
-                </th>
-                <td ng-switch="account.type">
-                  <a ng-switch-when="orcid" href="https://orcid.org/{{account.id}}">{{account.id}}</a>
-                  <span ng-switch-default>{{account.id}}</span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+    <h4>Discussions</h4>
+    <span ng-if="$ctrl.discussions.length == 0">No discussions started yet.</span>
+    <ul class="list-group" ng-if="$ctrl.discussions.length > 0">
+      <li class="list-group-item" ng-repeat="discussion in $ctrl.discussions">
+      <a href="./{{'documents.discussions.thread' | routeSegmentUrl: {discussionId: discussion.id} }}">
+        <span
+          ng-if="discussion.replies.length > 0"
+          class="pull-right ph-discussion-replies-counter"
+          >
+          <i class="fa fa-comments"></i> {{discussion.replies.length}}
+      </span></a>
+        <h4>
+          <a href="./documents/{{discussion.target.document}}/discussions/{{discussion.id}}">
+            <kramjax body="discussion.title"></kramjax>
+          </a>
+          <ul
+            ng-if="discussion.tags.length > 0"
+            class="ph-tags list-inline"
+            >
+            <li ng-repeat="tag in discussion.tags">
+              <a href="#" class="btn btn-default">{{tag}}</a>
+            </li>
+          </ul>
+        </h4>
+        <span class="ph-discussion-subtitle">
+          opened <span am-time-ago="discussion.createdAt"></span>
+          on document
+          <a href="./documents/{{discussion.target.document}}">
+            <kramjax
+              body="discussion.target.documentRevision.title"
+            ></kramjax>
+          </a>
+        </span>
+      </li>
+    </ul>
   </div>
 </div>
