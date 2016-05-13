@@ -8,7 +8,7 @@ import template from './template.html!text';
 // TODO: get rid of this!
 const kuCategories = [
   {
-    category: 'Antropology',
+    category: 'Anthropology',
     oapenIds: ['605035', '604531', '605861', '605031', '605021', '605457', '606219', '605458'],
   },
   {
