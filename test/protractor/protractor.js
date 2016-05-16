@@ -21,6 +21,7 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
       browserName: entry.browser,
       version: entry['browser-version'],
       platform: entry.platform,
+      os: entry.os,
       build: process.env.BUILD_NUMBER
     });
     // Test against deployed platform
