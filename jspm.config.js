@@ -24,6 +24,7 @@ SystemJS.config({
     "npm:*.json"
   ],
   map: {
+    "plugin-typescript": "github:frankwallis/plugin-typescript@4.0.2",
     "angular": "github:angular/bower-angular@1.5.5",
     "angular-animate": "github:angular/bower-angular-animate@1.5.5",
     "angular-bootstrap": "github:angular-ui/bootstrap-bower@1.3.2",
@@ -41,7 +42,7 @@ SystemJS.config({
     "highlightjs": "github:components/highlightjs@9.1.0",
     "javascript-detect-element-resize": "github:sdecima/javascript-detect-element-resize@0.5.3",
     "jquery": "npm:jquery@2.2.0",
-    "json": "github:systemjs/plugin-json@0.1.2",
+    "json": "github:systemjs/plugin-json@0.1.0",
     "kramed": "npm:kramed@0.5.5",
     "leaflet": "github:Leaflet/Leaflet@0.7.7",
     "lodash": "npm:lodash@4.12.0",
@@ -50,15 +51,14 @@ SystemJS.config({
     "paperhive-sources": "npm:paperhive-sources@4.0.2",
     "path": "github:jspm/nodelibs-path@0.2.0-alpha",
     "pdfjs-dist": "github:mozilla/pdfjs-dist@1.4.37",
-    "plugin-babel": "npm:systemjs-plugin-babel@0.0.10",
-    "plugin-typescript": "github:frankwallis/plugin-typescript@4.0.15",
+    "plugin-babel": "npm:systemjs-plugin-babel@0.0.8",
     "process": "github:jspm/nodelibs-process@0.2.0-alpha",
     "rangy": "github:timdown/rangy-release@1.3.0",
     "readline": "github:jspm/nodelibs-readline@0.2.0-alpha",
     "rx": "npm:rx@4.0.7",
     "socket.io-client": "github:socketio/socket.io-client@1.4.5",
-    "text": "github:systemjs/plugin-text@0.0.8",
-    "ts": "github:frankwallis/plugin-typescript@4.0.15",
+    "text": "github:systemjs/plugin-text@0.0.7",
+    "ts": "github:frankwallis/plugin-typescript@4.0.2",
     "url": "github:jspm/nodelibs-url@0.2.0-alpha"
   },
   packages: {
@@ -77,7 +77,7 @@ SystemJS.config({
         "angular": "github:angular/bower-angular@1.5.5"
       }
     },
-    "github:frankwallis/plugin-typescript@4.0.15": {
+    "github:frankwallis/plugin-typescript@4.0.2": {
       "map": {
         "typescript": "npm:typescript@1.8.10"
       }
