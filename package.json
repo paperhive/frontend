@@ -26,7 +26,7 @@
     "watch:index": "nodemon -e html -w index.template.html -x \"npm run build:dev:index\"",
     "watch:serve": "live-server --no-browser --wait=250 --watch=app --watch=jspm_packages --watch=build-dev --watch=build-tmp --mount=/:build-dev --entry-file=build-dev/index.html"
   },
-  "author": "Nico Schlömer <nico@paperhive.org>",
+  "author": "André Gaul <andre@paperhive.org>",
   "license": "GPL-3.0",
   "private": true,
   "devDependencies": {
