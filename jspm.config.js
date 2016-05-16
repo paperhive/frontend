@@ -44,7 +44,7 @@ SystemJS.config({
     "json": "github:systemjs/plugin-json@0.1.0",
     "kramed": "npm:kramed@0.5.5",
     "leaflet": "github:Leaflet/Leaflet@0.7.7",
-    "lodash": "npm:lodash@4.11.1",
+    "lodash": "npm:lodash@4.12.0",
     "ngSmoothScroll": "github:d-oliveros/ngSmoothScroll@2.0.0",
     "os": "github:jspm/nodelibs-os@0.2.0-alpha",
     "paperhive-sources": "npm:paperhive-sources@4.0.2",
@@ -114,7 +114,7 @@ SystemJS.config({
     },
     "npm:async@2.0.0-rc.3": {
       "map": {
-        "lodash": "npm:lodash@4.11.1"
+        "lodash": "npm:lodash@4.12.0"
       }
     },
     "npm:buffer@4.6.0": {
