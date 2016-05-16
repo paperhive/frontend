@@ -35,7 +35,7 @@ SystemJS.config({
     "angulartics": "npm:angulartics@1.0.3",
     "angulartics-google-analytics": "npm:angulartics-google-analytics@0.1.4",
     "assert": "github:jspm/nodelibs-assert@0.2.0-alpha",
-    "async": "npm:async@2.0.0-rc.4",
+    "async": "npm:async@2.0.0-rc.5",
     "buffer": "github:jspm/nodelibs-buffer@0.2.0-alpha",
     "fs": "github:jspm/nodelibs-fs@0.2.0-alpha",
     "highlightjs": "github:components/highlightjs@9.1.0",
@@ -111,7 +111,7 @@ SystemJS.config({
         "moment": "npm:moment@2.10.6"
       }
     },
-    "npm:async@2.0.0-rc.4": {
+    "npm:async@2.0.0-rc.5": {
       "map": {
         "lodash": "npm:lodash@4.12.0"
       }
