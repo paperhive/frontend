@@ -17,10 +17,11 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
   exports.config.multiCapabilities = [];
   JSON.parse(process.env.SAUCE_ONDEMAND_BROWSERS).forEach(function(entry) {
     exports.config.multiCapabilities.push({
-      'name': 'PaperHive (' + entry.browser + ')',
-      'browserName': entry.browser,
-      'platform': entry.platform,
-      'build': process.env.BUILD_NUMBER
+      name: 'PaperHive (' + entry.browser + ')',
+      browserName: entry.browser,
+      version: entry['browser-version'],
+      platform: entry.platform,
+      build: process.env.BUILD_NUMBER
     });
     // Test against deployed platform
     exports.config.baseUrl = process.env.TEST_URL;
