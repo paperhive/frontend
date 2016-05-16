@@ -20,8 +20,8 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
       name: 'PaperHive (' + entry.browser + ')',
       browserName: entry.browser,
       version: entry['browser-version'],
-      // platform: entry.platform,
-      // os: entry.os,
+      // andré: OS seems to be platform!
+      platform: entry.os,
       build: process.env.BUILD_NUMBER
     });
     // Test against deployed platform
