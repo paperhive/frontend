@@ -8,21 +8,16 @@ export default function(app) {
       onCancel: '&',
       onSubmitted: '&',
     },
-    controller: function($scope) {
-      $scope.sendFeedback = {};
-
+    controller: ['$scope', function($scope) {
       $scope.hasError = function(field) {
         const form = $scope.form;
         return (form.$submitted || form[field].$touched) &&
           form[field].$invalid;
       };
-      $scope.sendFeedback = function() {
-        $scope.sendFeedback.inProgress = true;
-        $scope.sendFeedback.error = undefined;
+      $scope.submit = function(){
         //TODO
-        $scope.sendFeedback.succeeded = true;
       };
-    },
+    }],
     template
   });
 };

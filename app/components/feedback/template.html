@@ -61,8 +61,8 @@
     <i class="fa fa-times" aria-hidden="true"></i>
     Discard
   </button>
-  <button class="btn btn-primary" type="button" ng-click="!form.$invalid && $ctrl.submit()"
-    ng-class="{disabled: form.$invalid}">
+  <button type="submit" class="btn btn-primary" ng-class="{disabled: form.$invalid}"
+    ng-click="!form.$invalid && $ctrl.submit()">
     <i class="fa fa-paper-plane" aria-hidden="true"></i>
     Send
   </button>
