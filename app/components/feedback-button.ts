@@ -3,30 +3,19 @@
 export default function(app) {
   app.component('feedbackButton', {
 
-    controller: function($scope, $uibModal) {
+    controller: ['$scope', '$uibModal', function($scope, $uibModal) {
       $scope.open = function () {
         var modalInstance = $uibModal.open({
           animation: true,
-          template:
-            `<div class="modal-header">
-              <h3 class="modal-title">Feedback</h3>
-            </div>
-            <div class="modal-body">
-              <feedback></feedback>
-            </div>
-            <div class="modal-footer">
-              <button class="btn btn-default" type="button" ng-click="discard()">
-                <i class="fa fa-times" aria-hidden="true"></i>
-                Discard
-              </button>
-              <button class="btn btn-primary" type="button" ng-click="send()">
-                <i class="fa fa-paper-plane" aria-hidden="true"></i>
-                Send
-              </button>
-            </div>`
+          template: '<feedback on-cancel="close()" on-submitted="close()"></feedback>',
+          controller: ['$scope', '$uibModalInstance', function($scope, $uibModalInstance) {
+            $scope.close = function () {
+              $uibModalInstance.close();
+            }
+          }],
         });
       };
-    },
+    }],
 
     template:
     `<a type="link"
