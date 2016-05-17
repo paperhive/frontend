@@ -3,10 +3,10 @@
 export default function(app) {
   app.component('feedbackButton', {
 
-    controller: function($scope, $uibModal, $log) {
+    controller: function($scope, $uibModal) {
       $scope.open = function () {
         var modalInstance = $uibModal.open({
-          animation: $scope.animationsEnabled,
+          animation: true,
           template:
             `<div class="modal-header">
               <h3 class="modal-title">Feedback</h3>
@@ -15,14 +15,15 @@ export default function(app) {
               <feedback></feedback>
             </div>
             <div class="modal-footer">
-              <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-              <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-            </div>`,
-          resolve: {
-            items: function () {
-              return $scope.items;
-            }
-          }
+              <button class="btn btn-default" type="button" ng-click="discard()">
+                <i class="fa fa-times" aria-hidden="true"></i>
+                Discard
+              </button>
+              <button class="btn btn-primary" type="button" ng-click="send()">
+                <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                Send
+              </button>
+            </div>`
         });
       };
     },
