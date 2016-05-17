@@ -57,7 +57,7 @@ SystemJS.config({
     "rx": "npm:rx@4.0.7",
     "socket.io-client": "github:socketio/socket.io-client@1.4.5",
     "text": "github:systemjs/plugin-text@0.0.8",
-    "ts": "github:frankwallis/plugin-typescript@4.0.8",
+    "ts": "github:frankwallis/plugin-typescript@4.0.16",
     "url": "github:jspm/nodelibs-url@0.2.0-alpha"
   },
   packages: {
@@ -76,7 +76,7 @@ SystemJS.config({
         "angular": "github:angular/bower-angular@1.5.5"
       }
     },
-    "github:frankwallis/plugin-typescript@4.0.8": {
+    "github:frankwallis/plugin-typescript@4.0.16": {
       "map": {
         "typescript": "npm:typescript@1.8.10"
       }
