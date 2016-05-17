@@ -1,14 +1,14 @@
-<form>
+<form name="form">
   <div class="form-group">
     <label for="name">Name</label>
-    <input type="text" class="form-control" placeholder="Name">
+    <input name="name" type="text" class="form-control" placeholder="Name" ng-model="user.name" required>
   </div>
   <div class="form-group">
     <label for="email">Email address</label>
-    <input type="email" class="form-control" placeholder="Email">
+    <input name="email" type="email" class="form-control" placeholder="Email" ng-model="user.email" required>
   </div>
   <div class="form-group">
     <label for="message">Message</label>
-    <textarea class="form-control" rows="4" placeholder="Your message"></textarea>
+    <textarea name="message" class="form-control" rows="4" placeholder="Your message" ng-model="user.message" required></textarea>
   </div>
 </form>
