@@ -91,7 +91,6 @@
     },
     "devDependencies": {
       "json": "github:systemjs/plugin-json@^0.1.2",
-      "os": "github:jspm/nodelibs-os@^0.2.0-alpha",
       "plugin-babel": "npm:systemjs-plugin-babel@^0.0.10",
       "text": "github:systemjs/plugin-text@^0.0.8"
     },
@@ -99,6 +98,7 @@
       "assert": "github:jspm/nodelibs-assert@^0.2.0-alpha",
       "buffer": "github:jspm/nodelibs-buffer@^0.2.0-alpha",
       "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha",
+      "os": "github:jspm/nodelibs-os@^0.2.0-alpha",
       "path": "github:jspm/nodelibs-path@^0.2.0-alpha",
       "process": "github:jspm/nodelibs-process@^0.2.0-alpha",
       "readline": "github:jspm/nodelibs-readline@^0.2.0-alpha",
