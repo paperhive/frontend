@@ -8,16 +8,27 @@ export default function(app) {
       onCancel: '&',
       onSubmitted: '&',
     },
-    controller: ['$scope', function($scope) {
-      $scope.hasError = function(field) {
-        const form = $scope.form;
+    controller: function() {
+      const $ctrl = this;
+
+      $ctrl.user = {
+        name: '',
+        email: '',
+        message: '',
+      };
+
+      $ctrl.hasError = function(field) {
+        const form = $ctrl.form;
         return (form.$submitted || form[field].$touched) &&
           form[field].$invalid;
       };
-      $scope.submit = function(){
+
+      $ctrl.submit = function() {
         //TODO
+        console.log($ctrl.user);
       };
-    }],
+
+    },
     template
   });
 };

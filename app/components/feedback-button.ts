@@ -8,10 +8,11 @@ export default function(app) {
         var modalInstance = $uibModal.open({
           animation: true,
           template: '<feedback on-cancel="close()" on-submitted="close()"></feedback>',
-          controller: ['$scope', '$uibModalInstance', function($scope, $uibModalInstance) {
-            $scope.close = function () {
+          controller: ['$uibModalInstance', function($uibModalInstance) {
+            const $ctrl = this;
+            $ctrl.close = function () {
               $uibModalInstance.close();
-            }
+            };
           }],
         });
       };
