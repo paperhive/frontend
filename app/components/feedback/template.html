@@ -15,7 +15,7 @@
         ng-model="$ctrl.name"
         ng-model-options="{updateOn: 'default blur', debounce: {default: 500, blur: 0}}"
         ng-disabled="$ctrl.submitting" required>
-      <span class="fa form-control-feedback" ng-class="{
+      <span class="fa fa-fw form-control-feedback" ng-class="{
         'fa-times': $ctrl.hasError('name'),
         'fa-check': form.name.$valid
       }"></span>
@@ -37,7 +37,7 @@
         ng-model="$ctrl.email" pattern=".*@.+\..+"
         ng-model-options="{updateOn: 'default blur', debounce: {default: 1000, blur: 0}}"
         ng-disabled="$ctrl.submitting" required>
-      <span class="fa form-control-feedback" ng-class="{
+      <span class="fa fa-fw form-control-feedback" ng-class="{
         'fa-times': $ctrl.hasError('email'),
         'fa-check': form.email.$valid
       }"></span>
@@ -61,7 +61,7 @@
       <textarea name="message" class="form-control" rows="4" placeholder="Your message"
         ng-model="$ctrl.message" required ng-disabled="$ctrl.submitting"
         ng-model-options="{updateOn: 'default blur', debounce: {default: 500, blur: 0}}"></textarea>
-      <span class="fa form-control-feedback" ng-class="{
+      <span class="fa fa-fw form-control-feedback" ng-class="{
         'fa-times': $ctrl.hasError('message'),
         'fa-check': form.message.$valid
       }"></span>
@@ -80,8 +80,8 @@
     </span>
     <button type="submit" class="btn btn-primary" ng-class="{disabled: form.$invalid}"
       ng-click="!form.$invalid && $ctrl.submit()">
-      <i ng-if="!$ctrl.submitting" class="fa fa-paper-plane"></i>
-      <i ng-if="$ctrl.submitting" class="fa fa-spinner fa-spin"></i>
+      <i ng-if="!$ctrl.submitting" class="fa fa-fw fa-paper-plane"></i>
+      <i ng-if="$ctrl.submitting" class="fa fa-fw fa-spinner fa-spin"></i>
       Send
     </button>
   </div>
