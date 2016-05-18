@@ -1,17 +1,20 @@
-<div class="modal-header">
-  <h3 class="modal-title">Feedback</h3>
-</div>
-<div class="modal-body">
-  <form name="form">
-
-    <div class="form-group" ng-class="{
-      'has-error': hasError('name'),
+<form name="form" novalidate>
+  <div class="modal-header">
+    <h3 class="modal-title">Feedback</h3>
+  </div>
+  <div class="modal-body">
+    <div class="form-group has-feedback" ng-class="{
+      'has-error': $ctrl.hasError('name'),
       'has-success': form.name.$valid
     }">
       <label for="name">Name</label>
       <input name="name" type="text" class="form-control" placeholder="Name" ng-model="$ctrl.name" required>
+      <span class="fa form-control-feedback" ng-class="{
+        'fa-times': $ctrl.hasError('name'),
+        'fa-check': form.name.$valid
+      }"></span>
       <div class="help-block">
-        <span ng-if="hasError('name')">
+        <span ng-if="$ctrl.hasError('name')">
           <span ng-if="form.name.$error.required">
             Please enter your name.
           </span>
@@ -19,15 +22,19 @@
       </div>
     </div>
 
-    <div class="form-group" ng-class="{
-      'has-error': hasError('email'),
+    <div class="form-group has-feedback" ng-class="{
+      'has-error': $ctrl.hasError('email'),
       'has-success': form.email.$valid
     }">
       <label for="email">Email address</label>
       <input name="email" type="email" class="form-control" placeholder="Email" ng-model="$ctrl.email"
         pattern=".*@.+\..+" ng-disabled="sendFeedback.inProgress || sendFeedback.succeeded" required>
+      <span class="fa form-control-feedback" ng-class="{
+        'fa-times': $ctrl.hasError('email'),
+        'fa-check': form.email.$valid
+      }"></span>
       <div class="help-block">
-        <span ng-if="hasError('email')">
+        <span ng-if="$ctrl.hasError('email')">
           <span ng-if="form.email.$error.required">
             Please enter your email address.
           </span>
@@ -38,32 +45,35 @@
       </div>
     </div>
 
-    <div class="form-group" ng-class="{
-      'has-error': hasError('message'),
+    <div class="form-group has-feedback" ng-class="{
+      'has-error': $ctrl.hasError('message'),
       'has-success': form.message.$valid
     }">
       <label for="message">Message</label>
       <textarea name="message" class="form-control" rows="4" placeholder="Your message"
         ng-model="$ctrl.message" required></textarea>
+      <span class="fa form-control-feedback" ng-class="{
+        'fa-times': $ctrl.hasError('message'),
+        'fa-check': form.message.$valid
+      }"></span>
       <div class="help-block">
-        <span ng-if="hasError('message')">
+        <span ng-if="$ctrl.hasError('message')">
           <span ng-if="form.message.$error.required">
             Please enter your message.
           </span>
         </span>
       </div>
     </div>
-
-  </form>
-</div>
-<div class="modal-footer">
-  <button class="btn btn-default" type="button" ng-click="$ctrl.onCancel()">
-    <i class="fa fa-times" aria-hidden="true"></i>
-    Discard
-  </button>
-  <button type="submit" class="btn btn-primary" ng-class="{disabled: form.$invalid}"
-    ng-click="!form.$invalid && $ctrl.submit()">
-    <i class="fa fa-paper-plane" aria-hidden="true"></i>
-    Send
-  </button>
-</div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-default" type="button" ng-click="$ctrl.onCancel()">
+      <i class="fa fa-times" aria-hidden="true"></i>
+      Discard
+    </button>
+    <button type="submit" class="btn btn-primary" ng-class="{disabled: form.$invalid}"
+      ng-click="!form.$invalid && $ctrl.submit()">
+      <i class="fa fa-paper-plane" aria-hidden="true"></i>
+      Send
+    </button>
+  </div>
+</form>

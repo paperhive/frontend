@@ -9,16 +9,17 @@ export default function(app) {
       onSubmitted: '&',
     },
     controller: class FeedbackFormCtrl {
-      $inject = ['authService'];
-      constructor(public authService) {
+      $inject = ['$scope', 'authService'];
+      constructor(public $scope, public authService) {
         if (this.authService.user) {
           this.name = this.authService.user.displayName;
           this.email = this.authService.user.account.email;
         }
       }
       hasError(field) {
-        const form = this.form;
-        return (form.$submitted || form[field].$touched) &&
+        const form = this.$scope.form;
+        console.log(form);
+        return (form.$submitted || !form[field].$pristine) &&
           form[field].$invalid;
       }
       submit() {
