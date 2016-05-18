@@ -9,8 +9,8 @@ export default function(app) {
       onSubmitted: '&',
     },
     controller: class FeedbackFormCtrl {
-      $inject = ['$scope', 'authService'];
-      constructor(public $scope, public authService) {
+      $inject = ['$http', '$scope', 'authService', 'config'];
+      constructor(public $http, public $scope, public authService, public config) {
         if (this.authService.user) {
           this.name = this.authService.user.displayName;
           this.email = this.authService.user.account.email;
@@ -21,10 +21,21 @@ export default function(app) {
         return (form.$submitted || !form[field].$pristine) &&
           form[field].$invalid;
       }
+
       submit() {
-        //TODO
-        console.log(this.name, this.email, this.message);
-        this.onSubmitted();
+        this.$http.post(this.config.apiUrl + '/feedback/', {
+          name: this.name,
+          email: this.email,
+          message: this.message
+        }).then((response) => {
+            // this.submitting = false;
+            // this.submitted = true;
+            this.onSubmitted();
+          }, (response) => {
+            // this.submitting = false;
+            this.error = response.data && response.data.message ||
+              'Unknown error';
+          });
       }
     },
     template
