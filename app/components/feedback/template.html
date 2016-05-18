@@ -9,7 +9,7 @@
       'has-success': form.name.$valid
     }">
       <label for="name">Name</label>
-      <input name="name" type="text" class="form-control" placeholder="Name" ng-model="$ctrl.user.name" required>
+      <input name="name" type="text" class="form-control" placeholder="Name" ng-model="$ctrl.name" required>
       <div class="help-block">
         <span ng-if="hasError('name')">
           <span ng-if="form.name.$error.required">
@@ -24,7 +24,7 @@
       'has-success': form.email.$valid
     }">
       <label for="email">Email address</label>
-      <input name="email" type="email" class="form-control" placeholder="Email" ng-model="$ctrl.user.email"
+      <input name="email" type="email" class="form-control" placeholder="Email" ng-model="$ctrl.email"
         pattern=".*@.+\..+" ng-disabled="sendFeedback.inProgress || sendFeedback.succeeded" required>
       <div class="help-block">
         <span ng-if="hasError('email')">
@@ -44,7 +44,7 @@
     }">
       <label for="message">Message</label>
       <textarea name="message" class="form-control" rows="4" placeholder="Your message"
-        ng-model="$ctrl.user.message" required></textarea>
+        ng-model="$ctrl.message" required></textarea>
       <div class="help-block">
         <span ng-if="hasError('message')">
           <span ng-if="form.message.$error.required">

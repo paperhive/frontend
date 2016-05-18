@@ -8,26 +8,23 @@ export default function(app) {
       onCancel: '&',
       onSubmitted: '&',
     },
-    controller: function() {
-      const $ctrl = this;
-
-      $ctrl.user = {
-        name: '',
-        email: '',
-        message: '',
-      };
-
-      $ctrl.hasError = function(field) {
-        const form = $ctrl.form;
+    controller: class FeedbackFormCtrl {
+      $inject = ['authService'];
+      constructor(public authService) {
+        if (this.authService.user) {
+          this.name = this.authService.user.displayName;
+          this.email = this.authService.user.account.email;
+        }
+      }
+      hasError(field) {
+        const form = this.form;
         return (form.$submitted || form[field].$touched) &&
           form[field].$invalid;
-      };
-
-      $ctrl.submit = function() {
+      }
+      submit() {
         //TODO
-        console.log($ctrl.user);
-      };
-
+        console.log(this.name, this.email, this.message);
+      }
     },
     template
   });
