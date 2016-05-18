@@ -8,7 +8,8 @@
       'has-success': form.name.$valid
     }">
       <label for="name">Name</label>
-      <input name="name" type="text" class="form-control" placeholder="Name" ng-model="$ctrl.name" required>
+      <input name="name" type="text" class="form-control" placeholder="Name"
+        ng-model="$ctrl.name" ng-model-options="{ debounce: 1000 }" required>
       <span class="fa form-control-feedback" ng-class="{
         'fa-times': $ctrl.hasError('name'),
         'fa-check': form.name.$valid
@@ -27,8 +28,9 @@
       'has-success': form.email.$valid
     }">
       <label for="email">Email address</label>
-      <input name="email" type="email" class="form-control" placeholder="Email" ng-model="$ctrl.email"
-        pattern=".*@.+\..+" ng-disabled="sendFeedback.inProgress || sendFeedback.succeeded" required>
+      <input name="email" type="email" class="form-control" placeholder="Email"
+        ng-model="$ctrl.email" pattern=".*@.+\..+" ng-model-options="{ debounce: 1000 }"
+        ng-disabled="sendFeedback.inProgress || sendFeedback.succeeded" required>
       <span class="fa form-control-feedback" ng-class="{
         'fa-times': $ctrl.hasError('email'),
         'fa-check': form.email.$valid
@@ -51,7 +53,7 @@
     }">
       <label for="message">Message</label>
       <textarea name="message" class="form-control" rows="4" placeholder="Your message"
-        ng-model="$ctrl.message" required></textarea>
+        ng-model="$ctrl.message" ng-model-options="{ debounce: 1000 }" required></textarea>
       <span class="fa form-control-feedback" ng-class="{
         'fa-times': $ctrl.hasError('message'),
         'fa-check': form.message.$valid
