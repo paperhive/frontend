@@ -2,6 +2,7 @@
 
 const modal = {
   animation: true,
+  backdrop: 'static',
   template: '<feedback on-cancel="$ctrl.close()" on-submitted="$ctrl.close()"></feedback>',
   controllerAs: '$ctrl',
   controller: class ModalCtrl {

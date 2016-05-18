@@ -18,13 +18,13 @@ export default function(app) {
       }
       hasError(field) {
         const form = this.$scope.form;
-        console.log(form);
         return (form.$submitted || !form[field].$pristine) &&
           form[field].$invalid;
       }
       submit() {
         //TODO
         console.log(this.name, this.email, this.message);
+        this.onSubmitted();
       }
     },
     template

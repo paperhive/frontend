@@ -1,5 +1,8 @@
 <form name="form" novalidate>
   <div class="modal-header">
+    <button type="button" class="close" aria-label="Close" ng-click="$ctrl.onCancel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
     <h3 class="modal-title">Feedback</h3>
   </div>
   <div class="modal-body">
@@ -9,7 +12,9 @@
     }">
       <label for="name">Name</label>
       <input name="name" type="text" class="form-control" placeholder="Name"
-        ng-model="$ctrl.name" ng-model-options="{ debounce: 1000 }" required>
+        ng-model="$ctrl.name"
+        ng-model-options="{updateOn: 'default blur', debounce: {default: 1000, blur: 0}}"
+        required>
       <span class="fa form-control-feedback" ng-class="{
         'fa-times': $ctrl.hasError('name'),
         'fa-check': form.name.$valid
@@ -29,7 +34,8 @@
     }">
       <label for="email">Email address</label>
       <input name="email" type="email" class="form-control" placeholder="Email"
-        ng-model="$ctrl.email" pattern=".*@.+\..+" ng-model-options="{ debounce: 1000 }"
+        ng-model="$ctrl.email" pattern=".*@.+\..+"
+        ng-model-options="{updateOn: 'default blur', debounce: {default: 1000, blur: 0}}"
         ng-disabled="sendFeedback.inProgress || sendFeedback.succeeded" required>
       <span class="fa form-control-feedback" ng-class="{
         'fa-times': $ctrl.hasError('email'),
@@ -53,7 +59,8 @@
     }">
       <label for="message">Message</label>
       <textarea name="message" class="form-control" rows="4" placeholder="Your message"
-        ng-model="$ctrl.message" ng-model-options="{ debounce: 1000 }" required></textarea>
+        ng-model="$ctrl.message" required
+        ng-model-options="{updateOn: 'default blur', debounce: {default: 1000, blur: 0}}"></textarea>
       <span class="fa form-control-feedback" ng-class="{
         'fa-times': $ctrl.hasError('message'),
         'fa-check': form.message.$valid
@@ -68,10 +75,6 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-default" type="button" ng-click="$ctrl.onCancel()">
-      <i class="fa fa-times" aria-hidden="true"></i>
-      Discard
-    </button>
     <button type="submit" class="btn btn-primary" ng-class="{disabled: form.$invalid}"
       ng-click="!form.$invalid && $ctrl.submit()">
       <i class="fa fa-paper-plane" aria-hidden="true"></i>
