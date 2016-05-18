@@ -9,8 +9,8 @@ export default function(app) {
       onSubmitted: '&',
     },
     controller: class FeedbackFormCtrl {
-      $inject = ['$http', '$scope', 'authService', 'config'];
-      constructor(public $http, public $scope, public authService, public config) {
+      $inject = ['$http', '$scope', 'authService', 'config', 'notificationService'];
+      constructor(public $http, public $scope, public authService, public config, public notificationService) {
         if (this.authService.user) {
           this.name = this.authService.user.displayName;
           this.email = this.authService.user.account.email;
@@ -23,16 +23,16 @@ export default function(app) {
       }
 
       submit() {
+        this.submitting = true;
         this.$http.post(this.config.apiUrl + '/feedback/', {
           name: this.name,
           email: this.email,
           message: this.message
         }).then((response) => {
-            // this.submitting = false;
-            // this.submitted = true;
+            this.submitting = false;
             this.onSubmitted();
           }, (response) => {
-            // this.submitting = false;
+            this.submitting = false;
             this.error = response.data && response.data.message ||
               'Unknown error';
           });

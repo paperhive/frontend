@@ -13,8 +13,8 @@
       <label for="name">Name</label>
       <input name="name" type="text" class="form-control" placeholder="Name"
         ng-model="$ctrl.name"
-        ng-model-options="{updateOn: 'default blur', debounce: {default: 1000, blur: 0}}"
-        required>
+        ng-model-options="{updateOn: 'default blur', debounce: {default: 500, blur: 0}}"
+        ng-disabled="$ctrl.submitting" required>
       <span class="fa form-control-feedback" ng-class="{
         'fa-times': $ctrl.hasError('name'),
         'fa-check': form.name.$valid
@@ -36,7 +36,7 @@
       <input name="email" type="email" class="form-control" placeholder="Email"
         ng-model="$ctrl.email" pattern=".*@.+\..+"
         ng-model-options="{updateOn: 'default blur', debounce: {default: 1000, blur: 0}}"
-        ng-disabled="sendFeedback.inProgress || sendFeedback.succeeded" required>
+        ng-disabled="$ctrl.submitting" required>
       <span class="fa form-control-feedback" ng-class="{
         'fa-times': $ctrl.hasError('email'),
         'fa-check': form.email.$valid
@@ -59,8 +59,8 @@
     }">
       <label for="message">Message</label>
       <textarea name="message" class="form-control" rows="4" placeholder="Your message"
-        ng-model="$ctrl.message" required
-        ng-model-options="{updateOn: 'default blur', debounce: {default: 1000, blur: 0}}"></textarea>
+        ng-model="$ctrl.message" required ng-disabled="$ctrl.submitting"
+        ng-model-options="{updateOn: 'default blur', debounce: {default: 500, blur: 0}}"></textarea>
       <span class="fa form-control-feedback" ng-class="{
         'fa-times': $ctrl.hasError('message'),
         'fa-check': form.message.$valid
@@ -75,9 +75,13 @@
     </div>
   </div>
   <div class="modal-footer">
+    <span class="ph-md-margin-right text-danger" ng-if="$ctrl.error">
+      <i class="fa fa-fw fa-warning"></i> Error: {{$ctrl.error}}
+    </span>
     <button type="submit" class="btn btn-primary" ng-class="{disabled: form.$invalid}"
       ng-click="!form.$invalid && $ctrl.submit()">
-      <i class="fa fa-paper-plane" aria-hidden="true"></i>
+      <i ng-if="!$ctrl.submitting" class="fa fa-paper-plane"></i>
+      <i ng-if="$ctrl.submitting" class="fa fa-spinner fa-spin"></i>
       Send
     </button>
   </div>
