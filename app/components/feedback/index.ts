@@ -24,6 +24,7 @@ export default function(app) {
 
       submit() {
         this.submitting = true;
+        this.error = undefined;
         this.$http.post(this.config.apiUrl + '/feedback/', {
           name: this.name,
           email: this.email,
