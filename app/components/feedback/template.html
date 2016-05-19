@@ -58,8 +58,9 @@
       'has-success': form.message.$valid
     }">
       <label for="message">Message</label>
-      <textarea name="message" class="form-control" rows="4" placeholder="Your message"
-        ng-model="$ctrl.message" required ng-disabled="$ctrl.submitting"
+      <textarea name="message" class="form-control ph-textarea-elastic ph-textarea-large"
+        elastic placeholder="Your message" ng-model="$ctrl.message"
+        required ng-disabled="$ctrl.submitting"
         ng-model-options="{updateOn: 'default blur', debounce: {default: 500, blur: 0}}"></textarea>
       <span class="fa fa-fw form-control-feedback" ng-class="{
         'fa-times': $ctrl.hasError('message'),
