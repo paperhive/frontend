@@ -13,6 +13,7 @@ import documentRedirect from './document-redirect';
 import documentText from './document-text';
 import documentsList from './documents-list/index';
 import extensionButtons from './extension-buttons/index';
+import feedback from './feedback/index';
 import feedbackButton from './feedback-button';
 import hiveButton from './hive-button';
 import hivedDocs from './hived-docs';
@@ -69,6 +70,7 @@ export default function(app) {
   documentText(app);
   documentsList(app);
   extensionButtons(app);
+  feedback(app);
   feedbackButton(app);
   hiveButton(app);
   hivedDocs(app);
