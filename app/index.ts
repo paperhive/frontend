@@ -71,4 +71,4 @@ filters(paperhive);
 services(paperhive);
 utils(paperhive);
 
-angular.bootstrap(document, ['paperhive']);
+angular.bootstrap(document, ['paperhive'], {strictDi: true});
