@@ -6,7 +6,7 @@ const modal = {
   template: '<feedback on-cancel="$ctrl.close()" on-submitted="$ctrl.close()"></feedback>',
   controllerAs: '$ctrl',
   controller: class ModalCtrl {
-    $inject = ['$uibModalInstance'];
+    static $inject = ['$uibModalInstance'];
     constructor(public $uibModalInstance) {}
     close() {
       this.$uibModalInstance.close();
@@ -18,7 +18,7 @@ export default function(app) {
   app.component('feedbackButton', {
 
     controller: class FeedbackButtonCtrl {
-      $inject = ['$uibModal'];
+      static $inject = ['$uibModal'];
       constructor(public $uibModal) {}
       open() {
         this.$uibModal.open(modal);

@@ -9,7 +9,7 @@ export default function(app) {
       onSubmitted: '&',
     },
     controller: class FeedbackFormCtrl {
-      $inject = ['$http', '$location', '$scope', 'authService', 'config', 'notificationService'];
+      static $inject = ['$http', '$location', '$scope', 'authService', 'config', 'notificationService'];
       constructor(public $http, public $location, public $scope, public authService, public config, public notificationService) {
         if (this.authService.user) {
           this.name = this.authService.user.displayName;
