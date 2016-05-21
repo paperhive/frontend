@@ -5,7 +5,7 @@ class NewReplyCtrl {
   body: string;
   submitting: boolean;
 
-  $inject = ['$q'];
+  static $inject = ['$q'];
   constructor(public $q) {}
 
   submit() {

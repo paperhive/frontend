@@ -19,7 +19,7 @@
               popover-trigger="none"
               document-id="$ctrl.latestRevision.id"
               user="$ctrl.auth.user"
-              title="{{auth.user ? 'Hive this document for receiving updates.' : 'You have to be logged in to hive the document.'}}"
+              title="{{$ctrl.auth.user ? 'Hive this document for receiving updates.' : 'You have to be logged in to hive the document.'}}"
             ></hive-button>
           </h2>
         </div>
