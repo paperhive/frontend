@@ -20,10 +20,11 @@ export default function(app) {
           true
         );
       }],
-      template: `<span ng-repeat="user in participants" class="ph-xs-padding">
-        <a href="./users/{{user.account.username}}">
-      <avatar user="user" size="30" classes="img-circle"></avatar>
-        </a>
-      </span>`
+      template:
+        `<span ng-repeat="user in participants" class="ph-xs-padding">
+          <a href="./users/{{user.account.username}}" class="ph-link-icon">
+            <avatar user="user" size="30" classes="img-circle"></avatar>
+          </a>
+        </span>`
   });
 };
