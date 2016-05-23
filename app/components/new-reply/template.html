@@ -1,42 +1,50 @@
-<form
-  name="commentForm"
-  ng-submit="!$ctrl.submitting && commentForm.$valid && $ctrl.submit()"
-  novalidate
-  >
-  <span class="ph-comment-help pull-right">
-    You can use
-    <a href="http://kramdown.gettalong.org/syntax.html" target="_blank">Markdown</a>,
-    $$<a href="http://en.wikibooks.org/wiki/LaTeX/Mathematics#Symbols"
-      target="_blank">LaTeX</a>$$,
-    ```<a href="https://highlightjs.org/" target="_blank">code blocks</a>```
-  </span>
-
-  <textarea
-    id="textbody"
-    class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
-    ng-model="$ctrl.body"
-    elastic
-    placeholder="Reply..."
-    required
-    ></textarea>
-  <hr>
-  <label for="preview">Preview</label>
-  <div class="well well-lg" id="preview">
-    <kramjax body="$ctrl.body" class="ph-comment-word-wrap"></kramjax>
-  </div>
-  <span class="pull-right">
-    <!--
-    <button type="submit" class="btn btn-default">
-      Close discussion
-    </button>
-    &nbsp;
-    -->
-    <button
-      type="submit"
-      class="btn btn-primary"
-      ng-disabled="$ctrl.submitting || commentForm.$invalid"
+<a href="./users/{{$ctrl.auth.user.account.username}}">
+  <avatar user="$ctrl.auth.user" size="80" classes="img-circle">
+  </avatar>
+</a>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <form
+      name="commentForm"
+      ng-submit="!$ctrl.submitting && commentForm.$valid && $ctrl.submit()"
+      novalidate
       >
-      Submit
-    </button>
-  </span>
-</form>
+      <span class="ph-comment-help pull-right">
+        You can use
+        <a href="http://kramdown.gettalong.org/syntax.html" target="_blank">Markdown</a>,
+        $$<a href="http://en.wikibooks.org/wiki/LaTeX/Mathematics#Symbols"
+          target="_blank">LaTeX</a>$$,
+        ```<a href="https://highlightjs.org/" target="_blank">code blocks</a>```
+      </span>
+
+      <textarea
+        id="textbody"
+        class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
+        ng-model="$ctrl.body"
+        elastic
+        placeholder="Reply..."
+        required
+        ></textarea>
+      <hr>
+      <label for="preview">Preview</label>
+      <div class="well well-lg" id="preview">
+        <kramjax body="$ctrl.body"></kramjax>
+      </div>
+      <span class="pull-right">
+        <!--
+        <button type="submit" class="btn btn-default">
+          Close discussion
+        </button>
+        &nbsp;
+        -->
+        <button
+          type="submit"
+          class="btn btn-primary"
+          ng-disabled="$ctrl.submitting || commentForm.$invalid"
+          >
+          Submit
+        </button>
+      </span>
+    </form>
+  </div>
+</div>
