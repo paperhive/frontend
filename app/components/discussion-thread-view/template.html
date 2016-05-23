@@ -30,8 +30,41 @@
 
   <hr>
   <div class="row">
-    <div class="col-md-10">
 
+    <div class="col-md-2 col-md-push-10 ph-md-margin-bottom">
+      <!--a href="#">
+        <h5>
+          Labels <span class="pull-right"><i class="fa fa-gear"></i></span>
+        </h5>
+      </a-->
+      <!--ul class="ph-tags">
+        <li ng-repeat="label in $ctrl.discussion.tags">
+        <a href="#" class="btn btn-default {{label}}">{{label}}</a>
+        </li>
+      </ul>
+      <hr-->
+      <!--h5>Notifications</h5>
+      <button type="button" class="btn btn-default ph-subscription-button"
+        ng-disabled="!auth.user" ng-click="toggleSubscribe()">
+        <span ng-show="isSubscribed">
+          <i class="fa fa-bell-slash"></i> Unsubscribe
+        </span>
+        <span ng-show="!isSubscribed">
+          <i class="fa fa-bell"></i> Subscribe
+        </span>
+      </button>
+      <span ng-show="isSubscribed" class="ph-subscription-text">
+        You're receiving notifications because you're subscribed to this thread.
+      </span>
+      <span ng-show="!isSubscribed" class="ph-subscription-text">
+        You're ignoring this thread.
+      </span>
+      <hr-->
+      <h5>Participants</h5>
+      <avatar-list discussion="$ctrl.discussion"></avatar-list>
+    </div>
+
+    <div class="col-md-10 col-md-pull-2">
       <comment
         content="$ctrl.discussion"
         on-update="$ctrl.updateDiscussion({body: $comment.body})"
@@ -70,39 +103,6 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="col-md-2">
-      <!--a href="#">
-        <h5>
-          Labels <span class="pull-right"><i class="fa fa-gear"></i></span>
-        </h5>
-      </a-->
-      <!--ul class="ph-tags">
-        <li ng-repeat="label in $ctrl.discussion.tags">
-        <a href="#" class="btn btn-default {{label}}">{{label}}</a>
-        </li>
-      </ul>
-      <hr-->
-      <!--h5>Notifications</h5>
-      <button type="button" class="btn btn-default ph-subscription-button"
-        ng-disabled="!auth.user" ng-click="toggleSubscribe()">
-        <span ng-show="isSubscribed">
-          <i class="fa fa-bell-slash"></i> Unsubscribe
-        </span>
-        <span ng-show="!isSubscribed">
-          <i class="fa fa-bell"></i> Subscribe
-        </span>
-      </button>
-      <span ng-show="isSubscribed" class="ph-subscription-text">
-        You're receiving notifications because you're subscribed to this thread.
-      </span>
-      <span ng-show="!isSubscribed" class="ph-subscription-text">
-        You're ignoring this thread.
-      </span>
-      <hr-->
-      <h5>Participants</h5>
-      <avatar-list discussion="$ctrl.discussion"></avatar-list>
     </div>
 
   </div>
