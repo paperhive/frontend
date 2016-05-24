@@ -17,7 +17,7 @@ class DocumentTextCtrl {
   hoveredHighlights: any;
   hoveredMarginDiscussions: any;
   pageCoordinates: any;
-  pdfAnchor: string;
+  anchor: string;
 
   static $inject = ['$location', '$routeSegment', '$scope', 'smoothScroll',
    'config', 'notificationService', 'tourService'];
@@ -35,8 +35,9 @@ class DocumentTextCtrl {
     $scope.$watch('$ctrl.discussions', this.updateHighlights.bind(this), true);
     $scope.$watch('$ctrl.draftSelectors', this.updateHighlights.bind(this), true);
 
-    // watch location hash
-    $scope.$watch(() => $location.hash(), this.updateAnchor.bind(this));
+    // update and watch anchor and query parameter
+    this.updateAnchor();
+    $scope.$on('$routeUpdate', () => this.updateAnchor());
   }
 
   getAccessiblePdfUrl(documentRevision) {
@@ -161,25 +162,18 @@ class DocumentTextCtrl {
     }
   }
 
-  updateAnchor(anchor) {
-    if (!anchor) {
-      this.pdfAnchor = undefined;
-      return;
+  // note: a query parameter is used because a fragment identifier (hash)
+  //       is *not* part of the URL.
+  updateAnchor() {
+    // transform fragment identifier (hash) into a query parameter
+    let hash = this.$location.hash();
+    if (hash) {
+      this.$location.hash('');
+      this.$location.search({a: hash});
     }
 
-    // discussion anchor?
-    if (/^d:/.test(anchor)) {
-      this.pdfAnchor = undefined;
-
-      // get element
-      const element = document.getElementById(anchor);
-      if (!element) return;
-
-      // scroll to element
-      this.smoothScroll(element, {offset: 140});
-    } else {
-      this.pdfAnchor = anchor;
-    }
+    // use query parameter 'a' as anchor
+    this.anchor = this.$location.search().a;
   }
 
   // generate highlights array

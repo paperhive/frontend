@@ -771,6 +771,8 @@ export default function(app) {
       }
 
       scrollToAnchor(anchor) {
+        if (!anchor) return;
+
         let match;
         // match page
         if (match = /^p:(\d+)$/.exec(anchor)) {

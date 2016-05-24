@@ -15,7 +15,7 @@
         ng-show="$ctrl.count > 0"
       >
         <a href="" class="ph-link-icon"
-          scroll-to="{{$ctrl.scrolling ? '' : ('d:' + $ctrl.nextDiscussionId)}}"
+          scroll-to="{{$ctrl.scrolling ? '' : ('discussion:' + $ctrl.nextDiscussionId)}}"
           duration="500"
           offset="{{$ctrl.viewportOffsetTop + 80}}"
           callback-before="$ctrl.scrolling = true"

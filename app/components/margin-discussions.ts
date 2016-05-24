@@ -1,6 +1,6 @@
 'use strict';
 import * as angular from 'angular';
-import { compact, map, mapValues, sortBy, sum } from 'lodash';
+import { compact, map, mapValues, keys, sortBy, sum } from 'lodash';
 
 import template from './margin-discussions.html!text';
 
@@ -13,6 +13,7 @@ export default function(app) {
       pageCoordinates: '<',
       viewportOffsetTop: '<',
       viewportOffsetBottom: '<',
+      scrollToAnchor: '<',
 
       onDraftDiscard: '&',
       onDiscussionSubmit: '&',
@@ -74,6 +75,37 @@ export default function(app) {
           // compute position
           return pageCoord.offset.top + pageCoord.size.height * topRect.top;
         }
+
+        function updateScroll() {
+          // do not scroll if already scrolled to this anchor
+          if ($ctrl.scrollToAnchor === $ctrl.currentScrollAnchor) return;
+
+          // reset scrolledAnchor (possibly updated below)
+          $ctrl.currentScrollAnchor = undefined;
+
+          // test if the anchor is a discussion anchor
+          const match = /^d:(.*)$/.exec($ctrl.scrollToAnchor);
+          if (!match) return;
+
+          // get element
+          const element = document.getElementById(`discussion:${match[1]}`);
+          if (!element) return;
+
+          smoothScroll(element, {offset: ($ctrl.viewportOffsetTop || 0) + 50});
+
+          $ctrl.currentScrollAnchor = $ctrl.scrollToAnchor;
+        }
+
+        $scope.$watch('$ctrl.scrollToAnchor', updateScroll);
+
+        // wait until pages have been initialized
+        // andre: yes, this is ugly... the problem is that we need to wait until
+        //        mathjax and all animations have finished
+        $scope.$watch('$ctrl.pageCoordinates', coordinates => {
+          if (keys(coordinates).length > 0) {
+            $timeout(updateScroll, 500);
+          }
+        }, true);
 
         // compute discussionPosititions and draftPosition
         function updatePositions() {
