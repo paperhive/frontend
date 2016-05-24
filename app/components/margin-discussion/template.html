@@ -5,8 +5,7 @@
     <avatar user="$ctrl.discussion.author" size="38"
       classes="ph-margin-avatar img-circle"
       ></avatar>
-    <div class="ph-margin-link-default"
-        ng-click="state.showReplies = !state.showReplies">
+    <div class="ph-margin-base-row">
       <!-- arrow -->
       <div class="ph-margin-arrow-container">
         <div class="ph-arrow ph-arrow-outward-left"></div>
@@ -31,7 +30,7 @@
             <kramjax body="$ctrl.discussion.body"></kramjax>
           </div>
           <div class="pull-right">
-            <span ng-click="$event.stopPropagation()" class="dropdown" uib-dropdown>
+            <span class="dropdown" uib-dropdown>
               <button class="btn btn-link btn-xs dropdown-toggle" uib-dropdown-toggle>
                 Options <i class="fa fa-caret-down"></i>
               </button>
@@ -70,11 +69,25 @@
           </div>
           <!-- do not move this before the options link (pull-right!) because
           this creates a newline after inserting the first reply -->
-          <span class="badge ph-margin-badge" ng-if="$ctrl.discussion.replies.length">
+          <a
+            ng-if="$ctrl.discussion.replies.length"
+            class="badge ph-margin-badge"
+            ng-click="state.showReplies = !state.showReplies"
+          >
+            {{state.showReplies ? 'Hide' : 'Show'}}
             {{$ctrl.discussion.replies.length}}
-            {{$ctrl.discussion.replies.length === 1 ? 'answer' : 'answers'}}
+            {{$ctrl.discussion.replies.length === 1 ? 'reply' : 'replies'}}
             <i class="fa fa-fw fa-comments"></i>
-          </span>
+          </a>
+          <a
+            ng-if="!$ctrl.discussion.replies.length"
+            class="badge ph-margin-badge"
+            ng-click="state.showReplies = !state.showReplies"
+          >
+            <span ng-if="state.showReplies">Hide reply form</span>
+            <span ng-if="!state.showReplies">Click to reply</span>
+            <i class="fa fa-fw fa-comments"></i>
+          </a>
         </div>
         <!-- edit original comment -->
         <margin-discussion-edit
