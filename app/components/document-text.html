@@ -11,8 +11,8 @@
           </button>
           <ul class="dropdown-menu">
             <li ng-repeat="revision in $ctrl.revisions | orderBy:'publishedAt':true"
-                ng-class="{'disabled': !revision.isOpenAccess}">
-              <a ng-if="revision.isOpenAccess"
+                ng-class="{'disabled': !$ctrl.revisionAccess[revision.revision]}">
+              <a ng-if="$ctrl.revisionAccess[revision.revision]"
                  href="./documents/{{revision.id}}/revisions/{{revision.revision}}">
                 <strong ng-if="revision === $ctrl.activeRevision">
                   {{$ctrl.getRevisionDescription(revision)}},
@@ -24,7 +24,7 @@
                 </span>
                 <i class="fa fa-fw"></i>
               </a>
-              <a ng-if="!revision.isOpenAccess" title="This document is not open-access and cannot be displayed yet.">
+              <a ng-if="!$ctrl.revisionAccess[revision.revision]" title="This document is not accessible and cannot be displayed yet.">
                 {{$ctrl.getRevisionDescription(revision)}},
                 {{revision.publishedAt | date:'MMM yyyy'}}
                 <i class="fa fa-fw fa-lock"></i>

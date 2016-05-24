@@ -120,7 +120,6 @@ class DocumentTextCtrl {
     return `${revision.remote.type}, ${revision.remote.id}`;
   }
 
-
   async isRevisionAccessible(revision) {
     if (revision.isOpenAccess) {
       return true;
