@@ -1,5 +1,5 @@
 import * as angular from 'angular';
-import { filter, find, last, merge, sortBy } from 'lodash';
+import { filter, find, get, last, merge, reverse, sortBy } from 'lodash';
 import { parse as urlParse } from 'url';
 
 import template from './document-text.html!text';
@@ -11,6 +11,7 @@ class DocumentTextCtrl {
 
   // internal
   activeRevision: any;
+  revisionAccess: any;
 
   draftSelectors: any;
   highlights: Array<any>;
@@ -18,11 +19,9 @@ class DocumentTextCtrl {
   hoveredMarginDiscussions: any;
   pageCoordinates: any;
 
-
-
-  static $inject = ['$routeSegment', '$scope', 'config', 'notificationService',
+  static $inject = ['$http', '$routeSegment', '$scope', 'config', 'notificationService',
     'tourService'];
-  constructor(public $routeSegment, public $scope, public config,
+  constructor(public $http, public $routeSegment, public $scope, public config,
       public notificationService, public tourService) {
     this.hoveredHighlights = {};
     this.hoveredMarginDiscussions = {draft: true};
@@ -121,8 +120,36 @@ class DocumentTextCtrl {
     return `${revision.remote.type}, ${revision.remote.id}`;
   }
 
-  updateActiveRevision(revisions) {
+
+  async isRevisionAccessible(revision) {
+    if (revision.isOpenAccess) {
+      return true;
+    }
+    if (revision.remote.type === 'elsevier') {
+      const result = await this.$http.get(
+        `https://api.elsevier.com/content/article/entitlement/doi/${revision.doi}`,
+        {
+          params: {
+            apiKey: 'd7cd85afb9582a3d0862eb536dac32b0',
+            httpAccept: 'application/json',
+          }
+        }
+      );
+      if (get(result, 'data.entitlement-response.document-entitlement.entitled')) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  async updateActiveRevision(revisions) {
     if (!revisions) return;
+
+    // get accessibility information for all revisions
+    this.revisionAccess = {};
+    for (const revision of revisions) {
+      this.revisionAccess[revision.revision] = await this.isRevisionAccessible(revision);
+    }
 
     // explicitly provided revision id?
     const revisionId = this.$routeSegment.$routeParams.revisionId;
@@ -135,15 +162,16 @@ class DocumentTextCtrl {
         });
       }
     } else {
-      // pick a revision
-      const openAccessRevisions = filter(revisions, {isOpenAccess: true});
-      if (openAccessRevisions.length > 0) {
-        // use latest open access version if there is one
-        this.activeRevision = last(sortBy(openAccessRevisions, 'publishedAt'));
-      } else {
-        // show latest version if no open access version is found
-        this.activeRevision = last(sortBy(revisions, 'publishedAt', 'desc'));
-      }
+      // order revisions by date: newest first
+      const sortedRevisions = reverse(sortBy(revisions, 'publishedAt'));
+
+      // filter accessible revisions
+      const accessibleRevisions =
+        sortedRevisions.filter(revision => this.revisionAccess[revision.revision]);
+
+      // use latest accessible revision (or latest revision if none are accessible)
+      this.activeRevision = accessibleRevisions.length > 0 ?
+        accessibleRevisions[0] : sortedRevisions[0];
     }
 
     // get pdf url
@@ -156,6 +184,7 @@ class DocumentTextCtrl {
         message: 'PDF cannot be displayed: ' + e.message
       });
     }
+    this.$scope.$apply();
   }
 
   // generate highlights array
