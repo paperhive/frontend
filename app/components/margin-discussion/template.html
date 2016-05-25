@@ -30,10 +30,22 @@
             <kramjax body="$ctrl.discussion.body"></kramjax>
           </div>
           <div class="pull-right">
-            <span class="dropdown" uib-dropdown>
-              <button class="btn btn-link btn-xs dropdown-toggle"
+            <div class="btn-group">
+              <button class="btn btn-link btn-xs"
+                uib-tooltip="Share URL"
+                tooltip-class="tooltip-nowrap"
+                uib-popover-template="'html/directives/marginDiscussionUrlPopover.html'"
+                popover-placement="bottom-right"
+                popover-trigger="outsideClick"
+              >
+                <i class="fa fa-fw fa-lg fa-share-alt"></i>
+              </button>
+            </div>
+            <div class="btn-group" uib-dropdown>
+              <button class="btn btn-link btn-xs"
                 uib-dropdown-toggle
                 uib-tooltip="Options"
+                tooltip-class="tooltip-nowrap"
               >
                 <i class="fa fa-fw fa-lg fa-ellipsis-v"></i>
               </button>
@@ -68,7 +80,7 @@
                   <a href><i class="fa fa-fw fa-flag"></i> Flag</a>
                 </li-->
               </ul>
-            </span>
+            </div>
           </div>
           <!-- do not move this before the options link (pull-right!) because
           this creates a newline after inserting the first reply -->
@@ -133,6 +145,7 @@
                 <button class="btn btn-link btn-xs dropdown-toggle"
                   uib-dropdown-toggle
                   uib-tooltip="Options"
+                  tooltip-class="tooltip-nowrap"
                 >
                   <i class="fa fa-fw fa-lg fa-ellipsis-v"></i>
                 </button>
