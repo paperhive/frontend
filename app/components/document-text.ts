@@ -2,7 +2,7 @@ import * as angular from 'angular';
 import { filter, find, last, merge, sortBy } from 'lodash';
 import { parse as urlParse } from 'url';
 
-import template from './document-text.html!text';
+import template from './document-text.html';
 
 class DocumentTextCtrl {
   // input

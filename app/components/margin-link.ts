@@ -1,7 +1,7 @@
 import angular from 'angular';
 import { forEach } from 'lodash';
 
-import marginLinkTemplate from './margin-link.html!text';
+import marginLinkTemplate from './margin-link.html';
 
 export default function(app) {
   app.component('marginLink', {

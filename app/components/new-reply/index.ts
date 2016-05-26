@@ -1,5 +1,5 @@
 'use strict';
-import template from './template.html!text';
+import template from './template.html';
 
 class NewReplyCtrl {
   body: string;

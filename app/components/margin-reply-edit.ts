@@ -1,7 +1,7 @@
 'use strict';
 import * as angular from 'angular';
 
-import template from './margin-reply-edit.html!text';
+import template from './margin-reply-edit.html';
 
 export default function(app) {
   app.component('marginReplyEdit', {

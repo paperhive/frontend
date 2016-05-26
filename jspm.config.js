@@ -28,10 +28,10 @@ SystemJS.config({
           "format": "esm"
         },
         "*.json": {
-          "plugin": "json"
+          "loader": "json"
         },
         "*.html": {
-          "plugin": "text"
+          "loader": "text"
         }
       }
     }

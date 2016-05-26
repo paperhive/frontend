@@ -2,7 +2,7 @@
 import * as angular from 'angular';
 import { compact, map, mapValues, keys, sortBy, sum } from 'lodash';
 
-import template from './margin-discussions.html!text';
+import template from './margin-discussions.html';
 
 export default function(app) {
   app.component('marginDiscussions', {
