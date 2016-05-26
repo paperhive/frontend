@@ -41,31 +41,22 @@ class DocumentTextCtrl {
     $scope.$on('$routeUpdate', () => this.updateAnchor());
   }
 
-  getAccessiblePdfUrl(documentRevision) {
-    // TODO actually check user access here (e.g., via the Elsevier Article
-    // Entitlement API)
-    const userHasAccess = documentRevision.isOpenAccess;
-    if (!userHasAccess) {
-      this.notificationService.notifications.push({
-        type: 'error',
-        message: 'You currently have no access to the PDF.',
-      });
-      return undefined;
+  getAccessiblePdfUrl(revision) {
+    if (!this.revisionAccess[revision.revision]) {
+      throw new Error('You currently have no access to the PDF.');
     }
-    if (documentRevision.file.hasCors &&
-        urlParse(documentRevision.file.url).protocol === 'https') {
-      // all good
-      return documentRevision.file;
+
+    // if the file available via HTTPS with enabled CORS then just use it
+    if (/^https/.test(revision.file.url) && revision.file.hasCors) {
+      return revision.file;
     }
+
     // No HTTPS/Cors? PaperHive can proxy the document if it's open access.
-    if (documentRevision.isOpenAccess) {
-      return this.config.apiUrl + '/proxy?url=' +
-        encodeURIComponent(documentRevision.file.url);
+    if (revision.isOpenAccess) {
+      const encodedUrl = encodeURIComponent(revision.file.url);
+      return `${this.config.apiUrl}/proxy?url=${encodedUrl}`;
     }
-    this.notificationService.notifications.push({
-      type: 'error',
-      message: 'The publisher makes the PDF available only through an insecure connection.'
-    });
+    throw new Error('The publisher of the PDF has an incomplete server configuration (no HTTPS or no CORS).');
   }
 
   // create link for pdf destinations
