@@ -1,5 +1,8 @@
-<div class="container-fluid" ng-if="$ctrl.revisions">
-  <div class="row ph-md-margin-bottom">
+<div class="container-fluid">
+  <div ng-if="!$ctrl.activeRevision">
+    <i class="fa fa-spinner fa-spin"></i>
+  </div>
+  <div ng-if="$ctrl.activeRevision" class="row ph-md-margin-bottom">
     <div class="col-md-9 ph-document-info">
       <div>
         <label class="text-muted">Version</label>
@@ -48,7 +51,10 @@
         </div>
       </div>
 
-      <div class="ph-docoument-info-download text-right">
+      <div
+        ng-if="$ctrl.revisionAccess[$ctrl.activeRevision.revision]"
+        class="ph-docoument-info-download text-right"
+      >
         <a class="btn btn-default" ng-href="{{$ctrl.origPdfUrl}}" download>
           Download PDF
         </a>
@@ -121,20 +127,41 @@
 
 <div class="container" ng-if="$ctrl.activeRevision && !$ctrl.pdfUrl">
   <div class="row">
-    <div class="col-md-6 col-md-offset-3 text-center ph-lg-margin-top ph-lg-margin-bottom">
-      <p>
-        <span class="fa-stack fa-5x">
-          <i class="fa fa-file-o fa-stack-1x"></i>
-          <i class="fa fa-ban fa-stack-2x text-danger"></i>
-        </span>
-      </p>
-      <h3>PDF cannot be displayed</h3>
-      <p>
-        Unfortunately, this document version cannot be displayed because we don't
-        know an accessible URL for the PDF. Please select another version from the
-        version dropdown. <a href="./contact">Let us know</a> if you know a URL
-        for the corresponding PDF that can be accessed.
-      </p>
+    <div class="col-md-4 col-md-offset-4 text-center ph-lg-margin-top ph-lg-margin-bottom">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <p>
+            <span class="fa-stack fa-5x">
+              <i class="fa fa-file-o fa-stack-1x"></i>
+              <i class="fa fa-ban fa-stack-2x text-danger"></i>
+            </span>
+          </p>
+          <div ng-if="!$ctrl.revisionAccess[$ctrl.activeRevision.revision]">
+            <h3>No access to PDF :(</h3>
+            <p>
+              Unfortunately, you (currently) don't have access to the PDF for this
+              document version. This is sad.
+            </p>
+          </div>
+          <div ng-if="$ctrl.revisionAccess[$ctrl.activeRevision.revision]">
+            <h3>No PDF location known :(</h3>
+            <p>
+              Unfortunately, this document version cannot be displayed because we
+              don't know a URL for the PDF. <a href="./contact">Let us know</a> if
+              you know where it can be found!
+            </p>
+          </div>
+          <p>
+            If available, you can select another version from the version dropdown.
+          </p>
+        </div>
+        <div
+          ng-if="!$ctrl.revisionAccess[$ctrl.activeRevision.revision]"
+          class="panel-footer"
+        >
+          Science + open access = <i class="fa fa-heart"></i>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -42,9 +42,7 @@ class DocumentTextCtrl {
   }
 
   getAccessiblePdfUrl(revision) {
-    if (!this.revisionAccess[revision.revision]) {
-      throw new Error('You currently have no access to the PDF.');
-    }
+    if (!this.revisionAccess[revision.revision]) return undefined;
 
     // if the file available via HTTPS with enabled CORS then just use it
     if (/^https/.test(revision.file.url) && revision.file.hasCors) {
@@ -56,7 +54,7 @@ class DocumentTextCtrl {
       const encodedUrl = encodeURIComponent(revision.file.url);
       return `${this.config.apiUrl}/proxy?url=${encodedUrl}`;
     }
-    throw new Error('The publisher of the PDF has an incomplete server configuration (no HTTPS or no CORS).');
+    return undefined;
   }
 
   // create link for pdf destinations
