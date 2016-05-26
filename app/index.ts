@@ -41,7 +41,7 @@ import services from './services/index';
 import utils from './utils/index';
 
 import '../build-tmp/html.js';
-import configJson from '../config.json!json';
+import configJson from './config.json';
 
 
 export const paperhive = angular

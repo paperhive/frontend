@@ -2,7 +2,7 @@ import * as angular from 'angular';
 import { filter, find, last, merge, sortBy } from 'lodash';
 import { parse as urlParse } from 'url';
 
-import template from './document-text.html!text';
+import template from './document-text.html';
 
 class DocumentTextCtrl {
   // input
@@ -17,13 +17,13 @@ class DocumentTextCtrl {
   hoveredHighlights: any;
   hoveredMarginDiscussions: any;
   pageCoordinates: any;
+  anchor: string;
 
-
-
-  static $inject = ['$routeSegment', '$scope', 'config', 'notificationService',
-    'tourService'];
-  constructor(public $routeSegment, public $scope, public config,
-      public notificationService, public tourService) {
+  static $inject = ['$location', '$routeSegment', '$scope', 'smoothScroll',
+   'config', 'notificationService', 'tourService'];
+  constructor(public $location, public $routeSegment, public $scope,
+      public smoothScroll, public config, public notificationService,
+      public tourService) {
     this.hoveredHighlights = {};
     this.hoveredMarginDiscussions = {draft: true};
     this.pageCoordinates = {};
@@ -34,6 +34,10 @@ class DocumentTextCtrl {
     // update highlights when discussions or draft selectors change
     $scope.$watch('$ctrl.discussions', this.updateHighlights.bind(this), true);
     $scope.$watch('$ctrl.draftSelectors', this.updateHighlights.bind(this), true);
+
+    // update and watch anchor and query parameter
+    this.updateAnchor();
+    $scope.$on('$routeUpdate', () => this.updateAnchor());
   }
 
   getAccessiblePdfUrl(documentRevision) {
@@ -156,6 +160,20 @@ class DocumentTextCtrl {
         message: 'PDF cannot be displayed: ' + e.message
       });
     }
+  }
+
+  // note: a query parameter is used because a fragment identifier (hash)
+  //       is *not* part of the URL.
+  updateAnchor() {
+    // transform fragment identifier (hash) into a query parameter
+    let hash = this.$location.hash();
+    if (hash) {
+      this.$location.hash('');
+      this.$location.search({a: hash});
+    }
+
+    // use query parameter 'a' as anchor
+    this.anchor = this.$location.search().a;
   }
 
   // generate highlights array

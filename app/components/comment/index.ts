@@ -1,7 +1,7 @@
 import { cloneDeep } from 'lodash';
 import * as angular from 'angular';
 
-import template from './template.html!text';
+import template from './template.html';
 
 export default function(app) {
   app.component(

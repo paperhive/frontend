@@ -1,7 +1,7 @@
 'use strict';
 import { find } from 'lodash';
 
-import template from './template.html!text';
+import template from './template.html';
 import { getRevisionMetadata } from '../../utils/documents';
 
 export default function(app) {
