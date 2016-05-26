@@ -5,8 +5,10 @@ class NewReplyCtrl {
   body: string;
   submitting: boolean;
 
-  static $inject = ['$q'];
-  constructor(public $q) {}
+  static $inject = ['$q', 'authService'];
+  constructor(public $q, public authService) {
+    this.auth = authService;
+  }
 
   submit() {
     const reply = {
