@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import * as angular from 'angular';
 import { cloneDeep, find, findLastIndex, merge, pick, remove, some, sortBy } from 'lodash';
 
-import template from './template.html!text';
+import template from './template.html';
 import { getRevisionMetadata } from '../../utils/documents';
 
 class DiscussionsController {

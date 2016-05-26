@@ -1,6 +1,6 @@
 import { cloneDeep, find, merge, pick } from 'lodash';
 
-import template from './template.html!text';
+import template from './template.html';
 
 export default function(app) {
   app.component(

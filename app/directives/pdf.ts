@@ -129,7 +129,7 @@ export default function(app) {
   // directive follows a few basic rules that make it easier to switch to
   // angular2, see
   // http://teropa.info/blog/2015/10/18/refactoring-angular-apps-to-components.html
-  app.directive('pdfFull', ['$compile', '$document', '$q', '$timeout', '$window', function($compile, $document, $q, $timeout, $window) {
+  app.directive('pdfFull', ['$compile', '$document', '$q', 'smoothScroll', '$timeout', '$window', function($compile, $document, $q, smoothScroll, $timeout, $window) {
 
     // render a page in a canvas
     class CanvasRenderer {
@@ -521,7 +521,8 @@ export default function(app) {
         // create pages
         for (let pageNumber = 1; pageNumber <= this.pdf.numPages; pageNumber++) {
           // create page element
-          const pageElement = angular.element('<div class="ph-pdf-page"></div>');
+          const pageElement =
+            angular.element(`<div class="ph-pdf-page" id="p:${pageNumber}"></div>`);
           this.element.append(pageElement);
 
           // instantiate page
@@ -554,6 +555,9 @@ export default function(app) {
 
         // render at least once
         this.render();
+
+        // monitor scrollToAnchor
+        this.scope.$watch('scrollToAnchor', this.scrollToAnchor.bind(this));
       }
 
       destroy() {
@@ -765,6 +769,26 @@ export default function(app) {
           err => callback(err)
         );
       }
+
+      scrollToAnchor(anchor) {
+        if (!anchor) return;
+
+        let match;
+        // match page
+        if (match = /^p:(\d+)$/.exec(anchor)) {
+          return this.scrollToId(anchor);
+        }
+        console.warn(`Anchor ${anchor} does not match.`);
+      }
+
+      scrollToId(id) {
+        // get element
+        const element = $document[0].getElementById(id);
+        if (!element) return;
+
+        // scroll
+        smoothScroll(element, {offset: 140});
+      }
     }
 
     return {
@@ -783,6 +807,8 @@ export default function(app) {
 
         // object mapping highlight ids to emphasize state (boolean)
         emphasizedHighlights: '<',
+
+        scrollToAnchor: '<',
 
         // Output
         // ======
