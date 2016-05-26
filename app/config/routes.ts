@@ -30,14 +30,14 @@ export default function(app) {
         // register new and redirect before id-dependent routes
         .when('/documents/new', 'documents_new')
         .when('/documents/redirect', 'documents_redirect')
-        .when('/documents/:documentId', 'documents')
+        .when('/documents/:documentId', 'documents', {reloadOnSearch: false})
         .when('/documents/:documentId/discussions', 'documents.discussions')
         .when('/documents/:documentId/hivers', 'documents.hivers')
         // .when('/documents/:documentId/discussions/new',
         //       'documents.discussions.new')
         .when('/documents/:documentId/discussions/:discussionId',
               'documents.discussions.thread')
-        .when('/documents/:documentId/text', 'documents.text')
+        .when('/documents/:documentId/text', 'documents.text', {reloadOnSearch: false})
         .when('/documents/:documentId/revisions/:revisionId', 'documents.revisions')
         .when('/documents/:documentId/about', 'documents.about')
         .when('/contact', 'contact')
@@ -135,7 +135,7 @@ export default function(app) {
         .segment('documents', {
           template: '<document></document>',
           dependencies: ['documentId'],
-          title: 'Document · PaperHive'
+          title: 'Document · PaperHive',
         })
         .within()
           .segment('hivers', {
@@ -175,7 +175,7 @@ export default function(app) {
           .segment('text', {
             default: true,
             templateUrl: 'html/documents/text.html',
-            title: 'Document · PaperHive'
+            title: 'Document · PaperHive',
           })
           .segment('revisions', {
             templateUrl: 'html/documents/text.html',

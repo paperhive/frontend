@@ -2,7 +2,7 @@
 
 import { compact, flatten, get } from 'lodash';
 
-import template from './template.html!text';
+import template from './template.html';
 
 // knowledge unlatched ids
 // TODO: get rid of this!

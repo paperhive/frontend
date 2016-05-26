@@ -51,6 +51,7 @@ import signup from './signup/index';
 import subscribe from './subscribe/index';
 import subscribed from './subscribed/index';
 import terms from './terms/index';
+import urlShare from './urlShare';
 import user from './user/index';
 import userProfile from './user-profile/index';
 
@@ -108,6 +109,7 @@ export default function(app) {
   subscribe(app);
   subscribed(app);
   terms(app);
+  urlShare(app);
   user(app);
   userProfile(app);
 };
