@@ -67,7 +67,7 @@
             Loading PDF
           </uib-progressbar>
         </div>
-        <div ng-if="$ctrl.pdfStatus.bytesLoaded !== undefined ||
+        <div ng-if="$ctrl.pdfStatus.bytesLoaded !== undefined &&
             $ctrl.pdfStatus.bytesTotal !== undefined">
           <uib-progressbar class="progress-striped active"
             value="$ctrl.pdfStatus.bytesLoaded / $ctrl.pdfStatus.bytesTotal"
