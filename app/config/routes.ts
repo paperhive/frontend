@@ -49,7 +49,7 @@ export default function(app) {
         .when('/password/request', 'passwordRequest')
         .when('/password/reset', 'passwordReset')
         .when('/publishers', 'publishers')
-        .when('/searchResults', 'searchResults')
+        .when('/search', 'search')
         .when('/settings', 'settings')
         .when('/settings/profile', 'settings.profile')
         .when('/settings/site', 'settings.site')
@@ -248,7 +248,7 @@ export default function(app) {
           title: 'Log in to · Paperhive'
         })
 
-        .segment('searchResults', {
+        .segment('search', {
           template: '<search-results></search-results>',
           title: 'Search results',
         })

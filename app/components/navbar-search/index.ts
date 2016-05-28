@@ -13,7 +13,7 @@ export default function(app) {
           $scope.tour = tourService;
 
           $scope.showAllResults = function(input) {
-            $location.path('/searchResults/').search({query: input, page: 1});
+            $location.path('/search/').search({query: input, page: 1});
           };
 
           $scope.search = {};
