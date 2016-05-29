@@ -3,15 +3,19 @@
 import {localStorageAvailable} from '../utils/localStorage';
 
 export default function(app) {
-  app.factory('authService', ['config', '$http', '$q', '$rootScope', '$window', '$location',
-    function(config, $http, $q, $rootScope, $window, $location) {
-      const authService = {
-        loginPromise: undefined,
-        user: undefined,
-        token: undefined,
-        loginToken: undefined,
-        logout: undefined,
-      };
+  app.factory('authState', () => {
+    return {
+      loginPromise: undefined,
+      user: undefined,
+      token: undefined,
+      loginToken: undefined,
+      logout: undefined,
+    };
+  });
+
+  app.factory('authService', ['authState', 'config', '$http', '$q', '$rootScope', '$window', '$location',
+    function(authState, config, $http, $q, $rootScope, $window, $location) {
+      const authService = authState;
 
       // authService.returnPath
       function setReturnPath() {
@@ -86,9 +90,6 @@ export default function(app) {
               $window.localStorage.token = data.token;
             }
 
-            // use token for all subsequent HTTP requests to API
-            $http.defaults.headers.common['Authorization'] = 'token ' + data.token;
-
             deferred.resolve(data);
           })
           .error(function(data) {
@@ -149,7 +150,6 @@ export default function(app) {
         if (localStorageAvailable) {
           delete $window.localStorage.token;
         }
-        delete $http.defaults.headers['Authorization'];
         delete authService.user;
         delete authService.token;
       };
