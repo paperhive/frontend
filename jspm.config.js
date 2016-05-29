@@ -17,7 +17,7 @@ SystemJS.config({
   transpiler: "plugin-babel",
   typescriptOptions: {
     "tsconfig": true,
-    "typeCheck": true
+    "typeCheck": false
   },
   packages: {
     "app": {
