@@ -119,20 +119,31 @@ class DocumentTextCtrl {
     if (revision.isOpenAccess) {
       return true;
     }
-    if (revision.remote.type === 'elsevier') {
-      const result = await this.$http.get(
-        `https://api.elsevier.com/content/article/entitlement/doi/${revision.doi}`,
-        {
-          params: {
-            apiKey: 'd7cd85afb9582a3d0862eb536dac32b0',
-            httpAccept: 'application/json',
+    try {
+      if (revision.remote.type === 'elsevier') {
+        const result = await this.$http.get(
+          `https://api.elsevier.com/content/article/entitlement/doi/${revision.doi}`,
+          {
+            params: {
+              apiKey: 'd7cd85afb9582a3d0862eb536dac32b0',
+              httpAccept: 'application/json',
+            }
           }
+        );
+        if (get(result, 'data.entitlement-response.document-entitlement.entitled')) {
+          return true;
         }
-      );
-      if (get(result, 'data.entitlement-response.document-entitlement.entitled')) {
-        return true;
       }
+    } catch (err) {
+      this.notificationService.notifications.push({
+        type: 'error',
+        message: `Access check error for revision ${revision.revision}: ` +
+          ((err.status && err.statusText) ?
+          `request to ${err.config.url} failed (${err.status} ${err.statusText})` :
+          err.message),
+      });
     }
+
     return false;
   }
 
