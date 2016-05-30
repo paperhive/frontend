@@ -385,6 +385,15 @@ export default function(app) {
         // this.element.append(annotationsLayer);
         // this.annotationsRenderer = new AnnotationsRenderer(annotationsLayer, this.page, this.linkService);
 
+        // add popup layer
+        const popup = $compile(`
+          <pdf-popup
+            selectors="popupSelectors"
+            page-number="${this.page.pageNumber}"
+          ></pdf-popup>
+        `)(this.scope);
+        this.element.append(popup);
+
         this.initializedRenderers = true;
         return true;
       }
@@ -648,6 +657,9 @@ export default function(app) {
 
               // text quote selector
               textQuote: getTextQuoteSelector(range, this.element[0]),
+
+              // is this a backwards selection (bottom to top)
+              isBackwards: selection.isBackwards(),
             };
 
             // pdf text positions selector
@@ -816,6 +828,9 @@ export default function(app) {
 
         // object mapping highlight ids to emphasize state (boolean)
         emphasizedHighlights: '<',
+
+        // TODO: add documentation
+        popupSelectors: '<',
 
         scrollToAnchor: '<',
 

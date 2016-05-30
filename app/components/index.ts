@@ -43,6 +43,7 @@ import passwordRequest from './password-request';
 import passwordReset from './password-reset';
 import pdf from './pdf';
 import pdfHighlight from './pdf-highlight';
+import pdfPopup from './pdf-popup';
 import phFooter from './ph-footer';
 import publishers from './publishers';
 import searchResults from './search-results';
@@ -105,6 +106,7 @@ export default function(app) {
   passwordReset(app);
   pdf(app);
   pdfHighlight(app);
+  pdfPopup(app);
   phFooter(app);
   publishers(app);
   searchResults(app);
