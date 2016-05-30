@@ -35,22 +35,24 @@ export default function(app) {
       }
     },
     template: `
-    <button
-      ng-if="$ctrl.rect"
-      ng-click="$event.stopPropagation()"
-      ng-style="{
-        top: !$ctrl.selectors.isBackwards && (($ctrl.rect.top + $ctrl.rect.height) * 100 + '%'),
-        left: !$ctrl.selectors.isBackwards && (($ctrl.rect.left + $ctrl.rect.width) * 100 + '%'),
-        bottom: $ctrl.selectors.isBackwards && ((1 - $ctrl.rect.top) * 100 + '%'),
-        right: $ctrl.selectors.isBackwards && ((1 - $ctrl.rect.left) * 100 + '%'),
-      }"
-      class="btn btn-default btn-xs ph-popup-button"
-      uib-tooltip="Share text selection URL"
-      tooltip-class="tooltip-nowrap"
-
-    >
-      <i class="fa fa-lg fa-share-alt"></i>
-    </button>
+    <div ng-if="$ctrl.rect" ng-mousedown="$event.stopPropagation()">
+      <button
+        ng-style="{
+          top: !$ctrl.selectors.isBackwards && (($ctrl.rect.top + $ctrl.rect.height) * 100 + '%'),
+          left: !$ctrl.selectors.isBackwards && (($ctrl.rect.left + $ctrl.rect.width) * 100 + '%'),
+          bottom: $ctrl.selectors.isBackwards && ((1 - $ctrl.rect.top) * 100 + '%'),
+          right: $ctrl.selectors.isBackwards && ((1 - $ctrl.rect.left) * 100 + '%'),
+        }"
+        class="btn btn-default btn-xs ph-popup-button"
+        uib-tooltip="Share text selection URL"
+        tooltip-class="tooltip-nowrap"
+        uib-popover-template="'html/directives/marginDiscussionUrlPopover.html'"
+        popover-placement="bottom-right"
+        popover-trigger="outsideClick"
+      >
+        <i class="fa fa-lg fa-share-alt"></i>
+      </button>
+    </div>
     `
   });
 }
