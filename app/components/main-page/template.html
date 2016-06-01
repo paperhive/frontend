@@ -1,60 +1,47 @@
-<div ng-style="{'margin-top': -navbarSize.height}"
+<div ng-style="{'margin-top': - $root.navbarSize.height}"
     class="ph-bg-full ph-bg-full-fiber ph-bg-full-dark ph-attribution-container ph-undo-navbar-padding">
   <div class="ph-intro-content ph-bg-overlay" viewport-height>
-    <div class="container text-center">
-      <div class="jumbotron text-center">
-        <h1>PaperHive, the coworking hub for researchers.</h1>
-        <h2>
-          Simplifying research communication and introducing
-          new ways of collaboration through in-document discussions.
-        </h2>
-      </div>
-      <div class="row">
-        <div class="col-md-offset-1 col-md-4">
-          <div class="panel panel-default ph-intro-panel ph-lg-margin-bottom">
-            <div class="panel-body">
-              <subscribe></subscribe>
-            </div>
+    <div class="container">
+      <div class="jumbotron">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <h1>PaperHive, the coworking hub for researchers</h1>
+            <h2>
+              Simplifying research communication and introducing
+              new ways of collaboration through in-document discussions.
+            </h2>
           </div>
-          <p class="text-center">
-            <a href="https://twitter.com/paperhive"
-              target="_blank"
-              class="ph-padding-20"
-              >
-              <span class="fa-stack fa-3x">
-                <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
-                <i class="fa fa-twitter fa-stack-1x"></i>
-              </span>
-            </a>
-            <a href="https://www.facebook.com/paperhiveorg/"
-              class="ph-padding-20"
-              target="_blank"
-              >
-              <span class="fa-stack fa-3x">
-                <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
-                <i class="fa fa-facebook fa-stack-1x"></i>
-              </span>
-            </a>
-          </p>
         </div>
-        <div class="col-md-offset-2 col-md-4">
-          <div class="row ph-lg-margin-bottom">
-            <div class="col-md-12 text-center">
-              <div class="panel panel-default ph-intro-panel ph-lg-margin-bottom">
-                <div class="panel-body">
-                  <h4 class="ph-lg-margin-bottom">Get the extension and
-                  never miss updates on papers you're looking at!</h4>
-                  <extension-buttons></extension-buttons>
-                </div>
-              </div>
-            </div>
+      </div>
+      <div class="ph-intro-panels">
+        <div class="panel ph-intro-panel text-center">
+          <div class="panel-body">
+            <h2 class="ph-heading-light">Get started!</h2>
+            <button class="btn btn-lg btn-primary ph-md-margin-top"
+              ng-click="$ctrl.tourService.start()"
+            >
+              Take the 1 minute tour
+            </button>
+          </div>
+        </div>
+
+        <div class="panel ph-intro-panel text-center">
+          <div class="panel-body">
+            <h2 class="ph-heading-light">Good news!</h2>
+            <p class="lead">
+              PaperHive now includes all books that are freed by
+              Knowledge Unlatched.
+            </p>
+            <a href="./knowledgeunlatched" class="btn btn-lg btn-primary">
+              Take me to the books
+            </a>
           </div>
         </div>
       </div>
     </div>
     <div class="ph-intro-arrow ph-intro-arrow-bottom ph-intro-arrow-bright">
       <a href="#" scroll-to="description" duration="1000">
-        <i class="fa fa-chevron-circle-down"></i>
+        <i class="fa fa-chevron-circle-down fa-3x"></i>
       </a>
     </div>
   </div>
@@ -64,61 +51,202 @@
     attribution-url="https://www.flickr.com/photos/blizzy/14513340140/"
     license-name="CC-BY 2.0"
     license-url="http://creativecommons.org/licenses/by/2.0/"
-    >
-  </attribution>
+  ></attribution>
 </div>
 
-<div class="ph-intro-content ph-bg-hexagons" id="description" viewport-height>
-  <div class="container ph-home">
-    <div class="row">
-      <div class="col-md-4 panel ph-teaser">
-        <div class="panel-heading text-center">
-          <span class="fa-stack ph-icon">
-            <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
-            <i class="fa fa-comments-o fa-stack-1x"></i>
-          </span>
-        </div>
-        <div class="panel-body text-center">
-          <h3 class="ph-no-margin-top">Discuss and connect</h3>
-          <p>
-            Share your expert opinion with other researchers in real time.
-            Increase the visibility of your work by adding helpful references
-            on PaperHive. Get into contact with future collaborators.
-          </p>
-        </div>
-      </div>
+<div class="ph-intro-content ph-bg-hexagons" id="description">
+  <div class="container">
 
-      <div class="col-md-4 panel ph-teaser">
-        <div class="panel-heading text-center">
-          <span class="fa-stack ph-icon">
-            <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
-            <i class="fa fa-lightbulb-o fa-stack-1x"></i>
-          </span>
-        </div>
-        <div class="panel-body text-center">
-          <h3 class="ph-no-margin-top">Learn and help out</h3>
-          <p>
-            Unclear parts in documents essential for your work? Have your
-            questions answered quickly by other researchers. Need orientation
-            for a paper? Save time by checking it on PaperHive.
-          </p>
-        </div>
+    <div class="row ph-xl-margin-bottom">
+      <div class="col-md-6 col-xs-9">
+        <h2 class="ph-heading-light">
+          Contextual in-depth discussions
+          <small class="ph-newline">Connect within the content</small>
+        </h2>
+        <p>
+          Experts are brought closer together and benefit from each others'
+          knowledge, opinions and results. Discussions are structured and
+          happen in real time. All comments are citable and licenced under
+          <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a>.
+        </p>
       </div>
+      <div class="col-md-6 col-xs-3 text-center">
+        <img class="ph-intro-icon" src="./static/img/icon-discussion.svg">
+      </div>
+    </div>
 
-      <div class="col-md-4 panel ph-teaser">
-        <div class="panel-heading text-center">
-          <span class="fa-stack ph-icon">
-            <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
-            <i class="fa fa-paperclip fa-stack-1x"></i>
-          </span>
-        </div>
-        <div class="panel-body text-center">
-          <h3 class="ph-no-margin-top">Annotate and discover</h3>
-          <p>
-            Discussions often refer to a specific section of an document. Add
-            your comments right where they belong. Get inspired by the
-            contributions of others.
-          </p>
+    <div class="row ph-xl-margin-bottom">
+      <div class="col-md-6 col-xs-3 text-center">
+        <img class="ph-intro-icon" src="./static/img/icon-reading.svg">
+      </div>
+      <div class="col-md-6 col-xs-9">
+        <h2 class="ph-heading-light">
+          Collaborative Reading
+          <small class="ph-newline">
+            Faster understanding of complex concepts
+          </small>
+        </h2>
+        <p>
+          By helping each other with explanations, code, data, and forward
+          references, readers develop a web of interconnected knowledge.
+          Reading becomes interactive, social and more productive. Authors,
+          other experts and publishers can add background information to
+          increase the accessibility, value and impact of the original content.
+        </p>
+      </div>
+    </div>
+
+    <div class="row ph-xl-margin-bottom">
+      <div class="col-md-6 col-xs-9">
+        <h2 class="ph-heading-light">
+          Interaction with great content
+          <small class="ph-newline">Making great literature stand out</small>
+        </h2>
+        <p>
+          PaperHive now allows the interaction with more than 1 million
+          academic papers in mathematics, physics, economics and computer
+          science from <a href="http://arxiv.org">arXiv</a> and thousands of
+          books in political science, anthropology and history made available
+          by our partners from <a href="https://oapen.org">OAPEN</a> and
+          <a href="http://www.knowledgeunlatched.org/">Knowledge Unlatched</a>.
+        </p>
+      </div>
+      <div class="col-md-6 col-xs-3 text-center">
+        <img class="ph-intro-icon" src="./static/img/icon-content.svg">
+      </div>
+    </div>
+
+    <div class="row ph-xl-margin-bottom">
+      <div class="col-md-6 col-xs-3 text-center">
+        <img class="ph-intro-icon" src="./static/img/icon-hives.svg">
+      </div>
+      <div class="col-md-6 col-xs-9">
+        <h2 class="ph-heading-light">
+          Personal literature management
+          <small class="ph-newline">Discover and keep up-to-date</small>
+        </h2>
+        <p>
+          Researchers and students collect the articles relevant for them
+          in their own Hives and receive personalized notifications for
+          updates and  new comments. Hives by prominent researchers are an
+          inspiration for other readers.
+        </p>
+      </div>
+    </div>
+
+    <div class="row ph-xl-margin-bottom">
+      <div class="col-md-6 col-xs-8">
+        <h2 class="ph-heading-light">
+          The Researcher’s companion
+          <small class="ph-newline">Stay connected with your work</small>
+        </h2>
+        <p>
+          Our browser extension for Firefox and Chrome will help you to
+          never miss on updates to great content and easily enter PaperHive’s
+          platform. It also allows you to access free legal versions of
+          articles you have no access to. Now available for all articles on
+          <a href="http://arxiv.org">arXiv</a>.
+        </p>
+      </div>
+      <div class="col-md-6 col-xs-4 text-center">
+        <a href="https://chrome.google.com/webstore/detail/paperhive/fihafdlllifbanclcjljledeifcdjbok"
+        ><img
+          class="ph-intro-icon-sm"
+          src="./static/img/chrome.svg"
+          title="PaperHive Chrome extension"
+        ></a>
+        <a href="https://addons.mozilla.org/en-US/firefox/addon/paperhive/"
+        ><img
+          class="ph-intro-icon-sm"
+          src="./static/img/firefox.svg"
+          title="PaperHive Firefox extension"
+        ></a>
+      </div>
+    </div>
+
+    <div class="row ph-xl-margin-bottom">
+      <div class="col-md-6 col-xs-3 text-center">
+        <img class="ph-intro-icon" src="./static/img/icon-deeplinks.svg">
+      </div>
+      <div class="col-md-6 col-xs-9">
+        <h2 class="ph-heading-light">
+          Deep links and sharing
+          <small class="ph-newline">
+            Save time when navigating in documents
+          </small>
+        </h2>
+        <p>
+          Deep links to specific passages of academic articles and books make
+          sharing of relevant information fast and easy. You don’t have to scan
+          an entire document to find what you are looking for.
+        </p>
+      </div>
+    </div>
+
+    <div class="row ph-xl-margin-bottom">
+      <div class="col-md-6 col-xs-9">
+        <h2 class="ph-heading-light">
+          Peer-review and community proofreading
+          <small class="ph-newline">
+            Improve and evaluate articles and books together
+          </small>
+        </h2>
+        <p>
+          PaperHive allows a convenient and transparent post-publication
+          peer review of academic literature. The system is optimized for
+          documents of any size and multiple reviewers. All discussions are
+          securely stored.
+        </p>
+      </div>
+      <div class="col-md-6 col-xs-3 text-center">
+        <img class="ph-intro-icon" src="./static/img/icon-review.svg">
+      </div>
+    </div>
+
+    <div class="row ph-xl-margin-bottom">
+      <div class="col-md-6 col-xs-3 text-center">
+        <img class="ph-intro-icon" src="./static/img/icon-learning.svg">
+      </div>
+      <div class="col-md-6 col-xs-9">
+        <h2 class="ph-heading-light">
+          Collaborative learning
+          <small class="ph-newline">
+            Foster cooperation and critical thinking
+          </small>
+        </h2>
+        <p>
+          By interacting in research documents during seminars and lectures
+          students develop a much better understanding of even the most
+          complex concepts. They help each other, stay focused and analyze
+          literature in greater depth.
+        </p>
+      </div>
+    </div>
+
+    <div class="row ph-xl-margin-bottom">
+      <div class="col-md-6 col-xs-9">
+        <h2 class="ph-heading-light">
+          For publishers and repositories
+        </h2>
+        <p>
+          Publishers and repositories benefit from including content on
+          PaperHive. <a href="./publishers">Learn more...</a>
+        </p>
+      </div>
+      <div class="col-md-6 col-xs-3 text-center">
+        <img class="ph-intro-icon" src="./static/img/icon-cross-publisher.svg">
+      </div>
+    </div>
+
+    <div class="row ph-xl-margin-bottom">
+      <div class="col-md-offset-3 col-md-6 ">
+        <h2 class="ph-heading-light text-center">Newsletter</h2>
+        <p class="text-center">
+          Sign up for our monthly newsletter to receive helpful tips on how
+          to boost your research productivity!
+        </p>
+        <div class="col-md-offset-1 col-md-10">
+          <subscribe></subscribe>
         </div>
       </div>
     </div>

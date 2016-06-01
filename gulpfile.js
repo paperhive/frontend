@@ -83,7 +83,7 @@ gulp.task('static', [], function() {
       interlaced: true,  // gif
       multipass: true,  // svg
       progressive: true,  // jpg
-      svgoPlugins: [{removeViewBox: false}]
+      svgoPlugins: [{removeViewBox: false}, {minifyStyles: false}]
     }))
     //.pipe(dev ? gutil.noop() : cachebust.resources())
     .pipe(gulp.dest(buildDir + '/static'));
@@ -156,7 +156,7 @@ gulp.task('vendor', [], function() {
   var mathjax = gulp.src(mathjaxSrc, {base: mathjaxBase})
     .pipe(gulp.dest(buildDir + '/assets/mathjax'));
 
-  var pdfjs = gulp.src('jspm_packages/github/mozilla/pdfjs-dist@1.4.37/build/pdf.worker.js')
+  var pdfjs = gulp.src('jspm_packages/github/mozilla/pdfjs-dist@1.5.274/build/pdf.worker.js')
     .pipe(dev ? gutil.noop() : streamify(uglify({
       // disable compression, otherwise pdf rendering fails!
       // see https://github.com/mozilla/pdf.js/wiki/Frequently-Asked-Questions#minified

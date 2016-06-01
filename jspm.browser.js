@@ -1,14 +1,13 @@
 SystemJS.config({
   baseURL: "/",
-  // production: true,
   paths: {
-    "github:*": "jspm_packages/github/*",
-    "npm:*": "jspm_packages/npm/*",
-    "app/": "app/"
+    "app/": "app/",
+    "github:": "jspm_packages/github/",
+    "npm:": "jspm_packages/npm/"
   },
   meta: {
     "*": {
-      scriptLoad: false
+      "scriptLoad": false
     }
   }
 });

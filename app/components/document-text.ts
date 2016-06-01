@@ -1,8 +1,8 @@
 import * as angular from 'angular';
-import { filter, find, last, merge, sortBy } from 'lodash';
+import { filter, find, get, last, merge, reverse, sortBy } from 'lodash';
 import { parse as urlParse } from 'url';
 
-import template from './document-text.html!text';
+import template from './document-text.html';
 
 class DocumentTextCtrl {
   // input
@@ -11,19 +11,20 @@ class DocumentTextCtrl {
 
   // internal
   activeRevision: any;
+  revisionAccess: any;
 
   draftSelectors: any;
   highlights: Array<any>;
   hoveredHighlights: any;
   hoveredMarginDiscussions: any;
   pageCoordinates: any;
+  anchor: string;
 
-
-
-  static $inject = ['$routeSegment', '$scope', 'config', 'notificationService',
-    'tourService'];
-  constructor(public $routeSegment, public $scope, public config,
-      public notificationService, public tourService) {
+  static $inject = ['$http', '$location', '$routeSegment', '$scope', 'config',
+    'notificationService', 'tourService'];
+  constructor(public $http, public $location, public $routeSegment,
+      public $scope, public config, public notificationService,
+      public tourService) {
     this.hoveredHighlights = {};
     this.hoveredMarginDiscussions = {draft: true};
     this.pageCoordinates = {};
@@ -34,33 +35,26 @@ class DocumentTextCtrl {
     // update highlights when discussions or draft selectors change
     $scope.$watch('$ctrl.discussions', this.updateHighlights.bind(this), true);
     $scope.$watch('$ctrl.draftSelectors', this.updateHighlights.bind(this), true);
+
+    // update and watch anchor and query parameter
+    this.updateAnchor();
+    $scope.$on('$routeUpdate', () => this.updateAnchor());
   }
 
-  getAccessiblePdfUrl(documentRevision) {
-    // TODO actually check user access here (e.g., via the Elsevier Article
-    // Entitlement API)
-    const userHasAccess = documentRevision.isOpenAccess;
-    if (!userHasAccess) {
-      this.notificationService.notifications.push({
-        type: 'error',
-        message: 'You currently have no access to the PDF.',
-      });
-      return undefined;
+  getAccessiblePdfUrl(revision) {
+    if (!this.revisionAccess[revision.revision]) return undefined;
+
+    // if the file available via HTTPS with enabled CORS then just use it
+    if (/^https/.test(revision.file.url) && revision.file.hasCors) {
+      return revision.file;
     }
-    if (documentRevision.file.hasCors &&
-        urlParse(documentRevision.file.url).protocol === 'https') {
-      // all good
-      return documentRevision.file;
-    }
+
     // No HTTPS/Cors? PaperHive can proxy the document if it's open access.
-    if (documentRevision.isOpenAccess) {
-      return this.config.apiUrl + '/proxy?url=' +
-        encodeURIComponent(documentRevision.file.url);
+    if (revision.isOpenAccess) {
+      const encodedUrl = encodeURIComponent(revision.file.url);
+      return `${this.config.apiUrl}/proxy?url=${encodedUrl}`;
     }
-    this.notificationService.notifications.push({
-      type: 'error',
-      message: 'The publisher makes the PDF available only through an insecure connection.'
-    });
+    return undefined;
   }
 
   // create link for pdf destinations
@@ -107,6 +101,8 @@ class DocumentTextCtrl {
       return `arXiv ${revision.remote.revision}`;
     }
 
+    if (revision.remote.type === 'oapen') return 'OAPEN';
+
     // isbn
     if (revision.isbn) {
       return `ISBN ${revision.isbn}`;
@@ -119,8 +115,50 @@ class DocumentTextCtrl {
     return `${revision.remote.type}, ${revision.remote.id}`;
   }
 
-  updateActiveRevision(revisions) {
+  async isRevisionAccessible(revision) {
+    if (revision.isOpenAccess) {
+      return true;
+    }
+    try {
+      if (revision.remote.type === 'elsevier') {
+        // TODO re-enable actual check when elsevier fixed the first-page bug
+        return false;
+        /*
+        const result = await this.$http.get(
+          `https://api.elsevier.com/content/article/entitlement/doi/${revision.doi}`,
+          {
+            params: {
+              apiKey: 'd7cd85afb9582a3d0862eb536dac32b0',
+              httpAccept: 'application/json',
+            }
+          }
+        );
+        if (get(result, 'data.entitlement-response.document-entitlement.entitled')) {
+          return true;
+        }
+        */
+      }
+    } catch (err) {
+      this.notificationService.notifications.push({
+        type: 'error',
+        message: `Access check error for revision ${revision.revision}: ` +
+          ((err.status && err.statusText) ?
+          `request to ${err.config.url} failed (${err.status} ${err.statusText})` :
+          err.message),
+      });
+    }
+
+    return false;
+  }
+
+  async updateActiveRevision(revisions) {
     if (!revisions) return;
+
+    // get accessibility information for all revisions
+    this.revisionAccess = {};
+    for (const revision of revisions) {
+      this.revisionAccess[revision.revision] = await this.isRevisionAccessible(revision);
+    }
 
     // explicitly provided revision id?
     const revisionId = this.$routeSegment.$routeParams.revisionId;
@@ -133,15 +171,16 @@ class DocumentTextCtrl {
         });
       }
     } else {
-      // pick a revision
-      const openAccessRevisions = filter(revisions, {isOpenAccess: true});
-      if (openAccessRevisions.length > 0) {
-        // use latest open access version if there is one
-        this.activeRevision = last(sortBy(openAccessRevisions, 'publishedAt'));
-      } else {
-        // show latest version if no open access version is found
-        this.activeRevision = last(sortBy(revisions, 'publishedAt', 'desc'));
-      }
+      // order revisions by date: newest first
+      const sortedRevisions = reverse(sortBy(revisions, 'publishedAt'));
+
+      // filter accessible revisions
+      const accessibleRevisions =
+        sortedRevisions.filter(revision => this.revisionAccess[revision.revision]);
+
+      // use latest accessible revision (or latest revision if none are accessible)
+      this.activeRevision = accessibleRevisions.length > 0 ?
+        accessibleRevisions[0] : sortedRevisions[0];
     }
 
     // get pdf url
@@ -154,6 +193,21 @@ class DocumentTextCtrl {
         message: 'PDF cannot be displayed: ' + e.message
       });
     }
+    this.$scope.$apply();
+  }
+
+  // note: a query parameter is used because a fragment identifier (hash)
+  //       is *not* part of the URL.
+  updateAnchor() {
+    // transform fragment identifier (hash) into a query parameter
+    let hash = this.$location.hash();
+    if (hash) {
+      this.$location.hash('');
+      this.$location.search({a: hash});
+    }
+
+    // use query parameter 'a' as anchor
+    this.anchor = this.$location.search().a;
   }
 
   // generate highlights array

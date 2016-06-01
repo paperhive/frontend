@@ -5,8 +5,7 @@
     <avatar user="$ctrl.discussion.author" size="38"
       classes="ph-margin-avatar img-circle"
       ></avatar>
-    <div class="ph-margin-link-default"
-        ng-click="state.showReplies = !state.showReplies">
+    <div class="ph-margin-base-row">
       <!-- arrow -->
       <div class="ph-margin-arrow-container">
         <div class="ph-arrow ph-arrow-outward-left"></div>
@@ -31,18 +30,33 @@
             <kramjax body="$ctrl.discussion.body"></kramjax>
           </div>
           <div class="pull-right">
-            <span ng-click="$event.stopPropagation()" class="dropdown" uib-dropdown>
-              <button class="btn btn-link btn-xs dropdown-toggle" uib-dropdown-toggle>
-                Options <i class="fa fa-caret-down"></i>
+            <div class="btn-group">
+              <button class="btn btn-link btn-xs"
+                uib-tooltip="Share URL"
+                tooltip-class="tooltip-nowrap"
+                uib-popover-template="'html/directives/marginDiscussionUrlPopover.html'"
+                popover-placement="bottom-right"
+                popover-trigger="outsideClick"
+              >
+                <i class="fa fa-fw fa-lg fa-share-alt"></i>
+              </button>
+            </div>
+            <div class="btn-group" uib-dropdown>
+              <button class="btn btn-link btn-xs"
+                uib-dropdown-toggle
+                uib-tooltip="Options"
+                tooltip-class="tooltip-nowrap"
+              >
+                <i class="fa fa-fw fa-lg fa-ellipsis-v"></i>
               </button>
               <ul class="dropdown-menu dropdown-menu-right ph-margin-dropdown">
                 <li>
-                  <a ng-click="changePath(('documents.discussions.thread' | routeSegmentUrl:{discussionId: $ctrl.discussion.id}))">
+                  <a ng-href=".{{'documents.discussions.thread' | routeSegmentUrl:{discussionId: $ctrl.discussion.id} }}">
                     <i class="fa fa-fw fa-comments"></i> Show discussion view
                   </a>
                 </li>
                 <li ng-if="auth.user.id === $ctrl.discussion.author.id">
-                  <a ng-click="$ctrl.editing = true; $event.stopPropagation()" href>
+                  <a ng-click="$ctrl.editing = true" href>
                     <i class="fa fa-fw fa-pencil"></i> Edit
                   </a>
                 </li>
@@ -66,15 +80,29 @@
                   <a href><i class="fa fa-fw fa-flag"></i> Flag</a>
                 </li-->
               </ul>
-            </span>
+            </div>
           </div>
           <!-- do not move this before the options link (pull-right!) because
           this creates a newline after inserting the first reply -->
-          <span class="badge ph-margin-badge" ng-if="$ctrl.discussion.replies.length">
+          <a
+            ng-if="$ctrl.discussion.replies.length"
+            class="badge ph-margin-badge"
+            ng-click="state.showReplies = !state.showReplies"
+          >
+            {{state.showReplies ? 'Hide' : 'Show'}}
             {{$ctrl.discussion.replies.length}}
-            {{$ctrl.discussion.replies.length === 1 ? 'answer' : 'answers'}}
+            {{$ctrl.discussion.replies.length === 1 ? 'reply' : 'replies'}}
             <i class="fa fa-fw fa-comments"></i>
-          </span>
+          </a>
+          <a
+            ng-if="!$ctrl.discussion.replies.length"
+            class="badge ph-margin-badge"
+            ng-click="state.showReplies = !state.showReplies"
+          >
+            <span ng-if="state.showReplies">Hide reply form</span>
+            <span ng-if="!state.showReplies">Add a reply</span>
+            <i class="fa fa-fw fa-comments"></i>
+          </a>
         </div>
         <!-- edit original comment -->
         <margin-discussion-edit
@@ -113,13 +141,17 @@
             </div>
             <kramjax body="reply.body"></kramjax>
             <div class="pull-right">
-              <span ng-click="$event.stopPropagation()" class="dropdown" uib-dropdown>
-                <button class="btn btn-link btn-xs dropdown-toggle" uib-dropdown-toggle>
-                  Options <i class="fa fa-caret-down"></i>
+              <div class="btn-group" uib-dropdown>
+                <button class="btn btn-link btn-xs"
+                  uib-dropdown-toggle
+                  uib-tooltip="Options"
+                  tooltip-class="tooltip-nowrap"
+                >
+                  <i class="fa fa-fw fa-lg fa-ellipsis-v"></i>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right ph-margin-dropdown">
                   <li>
-                    <a href="./{{'documents.discussions.thread' | routeSegmentUrl:
+                    <a ng-href=".{{'documents.discussions.thread' | routeSegmentUrl:
                       {discussionId: discussion.id} }}#{{reply.id}}">
                       <i class="fa fa-fw fa-comments"></i> Show discussion view
                     </a>
@@ -143,7 +175,7 @@
                     <a href><i class="fa fa-fw fa-flag"></i> Flag</a>
                   </li-->
                 </ul>
-              </span>
+              </div>
             </div>
           </div>
           <!-- edit reply -->

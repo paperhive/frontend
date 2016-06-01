@@ -66,9 +66,8 @@ margin-discussion-draft {
   height: @ph-margin-avatar-size;
 }
 
-.ph-margin-link-default {
-  cursor: pointer;
-  .button-variant(@btn-default-color; @btn-default-bg; @btn-default-border);
+.ph-margin-base-row {
+  background-color: @ph-margin-basecolor;
   > .ph-margin-arrow-container {
     .ph-arrow-container(
       @ph-margin-arrow-size,
@@ -76,39 +75,7 @@ margin-discussion-draft {
       @ph-margin-border-color
     );
   }
-  &:hover, &:focus, &.focus, &:active, &.active {
-    background-color: darken(@btn-default-bg, 8%);
-    > .ph-margin-arrow-container {
-      .ph-arrow-container(
-        @ph-margin-arrow-size,
-        darken(@btn-default-bg, 8%),
-        @ph-margin-border-color
-      );
-    }
-  }
 }
-
-.ph-margin-link-primary {
-  cursor: pointer;
-  .button-variant(@btn-default-color; @btn-primary-bg; @btn-default-border);
-  > .ph-margin-arrow-container {
-    .ph-arrow-container(
-      @ph-margin-arrow-size,
-      @btn-primary-bg,
-      @ph-margin-border-color
-    );
-  }
-  &:hover, &:focus, &.focus, &:active, &.active {
-    > .ph-margin-arrow-container {
-      .ph-arrow-container(
-        @ph-margin-arrow-size,
-        darken(@btn-primary-bg, 10%),
-        @ph-margin-border-color
-      );
-    }
-  }
-}
-
 
 @ph-margin-reply-bgcolor: darken(@btn-default-bg, 5%);
 .ph-margin-reply {
@@ -125,6 +92,7 @@ margin-discussion-draft {
 .ph-margin-row-content {
   padding: 8px;
   min-height: @ph-margin-avatar-size;
+  word-wrap: break-word;
 }
 
 .ph-margin-row-border-top {
@@ -149,7 +117,10 @@ margin-discussion-draft {
   font-size: smaller;
   font-weight: normal;
   padding: 3px 7px;
-  background-color: #29ABE2 !important;
+  background-color: @ph-highlight-color;
+  &:hover {
+    background-color: lighten(@ph-highlight-color, 10%);
+  }
 }
 
 margin-discussion kramjax p {

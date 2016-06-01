@@ -2,7 +2,7 @@
 import * as angular from 'angular';
 import { merge } from 'lodash';
 
-import template from './template.html!text';
+import template from './template.html';
 
 export default function(app) {
   app.component('marginDiscussion', {

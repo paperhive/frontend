@@ -27,8 +27,10 @@ export default function(app) {
         .when('/404', '404')
         .when('/about', 'about')
         .when('/auth/return/:provider', 'authReturn')
+        // register new and redirect before id-dependent routes
         .when('/documents/new', 'documents_new')
-        .when('/documents/:documentId', 'documents')
+        .when('/documents/redirect', 'documents_redirect')
+        .when('/documents/:documentId', 'documents', {reloadOnSearch: false})
         .when('/documents/:documentId/activity', 'documents.activity')
         .when('/documents/:documentId/discussions', 'documents.discussions')
         .when('/documents/:documentId/hivers', 'documents.hivers')
@@ -36,17 +38,19 @@ export default function(app) {
         //       'documents.discussions.new')
         .when('/documents/:documentId/discussions/:discussionId',
               'documents.discussions.thread')
-        .when('/documents/:documentId/text', 'documents.text')
+        .when('/documents/:documentId/text', 'documents.text', {reloadOnSearch: false})
         .when('/documents/:documentId/revisions/:revisionId', 'documents.revisions')
         .when('/documents/:documentId/about', 'documents.about')
         .when('/contact', 'contact')
         .when('/terms', 'terms')
         .when('/jobs', 'jobs')
+        .when('/knowledgeunlatched', 'knowledgeunlatched')
         .when('/legalnotice', 'legalnotice')
         .when('/login', 'login')
         .when('/password/request', 'passwordRequest')
         .when('/password/reset', 'passwordReset')
-        .when('/searchResults', 'searchResults')
+        .when('/publishers', 'publishers')
+        .when('/search', 'search')
         .when('/settings', 'settings')
         .when('/settings/profile', 'settings.profile')
         .when('/settings/site', 'settings.site')
@@ -133,7 +137,7 @@ export default function(app) {
         .segment('documents', {
           template: '<document></document>',
           dependencies: ['documentId'],
-          title: 'Document · PaperHive'
+          title: 'Document · PaperHive',
         })
         .within()
           .segment('activity', {
@@ -177,7 +181,7 @@ export default function(app) {
           .segment('text', {
             default: true,
             templateUrl: 'html/documents/text.html',
-            title: 'Document · PaperHive'
+            title: 'Document · PaperHive',
           })
           .segment('revisions', {
             templateUrl: 'html/documents/text.html',
@@ -188,6 +192,10 @@ export default function(app) {
         .segment('documents_new', {
           template: '<document-new></document-new>',
           title: 'Add a New Document · PaperHive'
+        })
+        .segment('documents_redirect', {
+          template: '<document-redirect></document-redirect>',
+          title: 'Document redirect · PaperHive'
         })
 
         .segment('contact', {
@@ -225,6 +233,11 @@ export default function(app) {
           ]
         })
 
+        .segment('knowledgeunlatched', {
+          template: '<documents-list></documents-list>',
+          title: 'Knowledge Unlatched books'
+        })
+
         .segment('legalnotice', {
           template: '<legal-notice></legal-notice>',
           title: 'Legal notice · PaperHive',
@@ -241,7 +254,7 @@ export default function(app) {
           title: 'Log in to · Paperhive'
         })
 
-        .segment('searchResults', {
+        .segment('search', {
           template: '<search-results></search-results>',
           title: 'Search results',
         })
@@ -254,6 +267,11 @@ export default function(app) {
         .segment('passwordReset', {
           template: '<password-reset></password-reset>',
           title: 'Reset your password · PaperHive',
+        })
+
+        .segment('publishers', {
+          template: '<publishers></publishers>',
+          title: 'PaperHive for Publishers and repositories · Paperhive'
         })
 
         .segment('settings', {

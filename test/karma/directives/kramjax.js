@@ -15,7 +15,6 @@ describe('KramJax directive:', function() {
   }));
 
   it('should render inline plain text', function(done) {
-
     $scope.kramjaxBody = 'hello world';
     $scope.$digest();
 
@@ -23,7 +22,6 @@ describe('KramJax directive:', function() {
       expect(element.html()).toContain('<p>hello world</p>');
       done();
     });
-
   });
 
   it('should render inline markdown', function(done) {
@@ -34,7 +32,6 @@ describe('KramJax directive:', function() {
       expect(element.html()).toContain('<p><em>hello</em></p>');
       done();
     });
-
   });
 
   it('should render inline latex', function(done) {
@@ -45,7 +42,6 @@ describe('KramJax directive:', function() {
       expect(element.html()).toContain('<script type="math/tex; mode=display">alpha</script>');
       done();
     });
-
   });
 
   it('should render block plain text', function(done) {
@@ -56,7 +52,6 @@ describe('KramJax directive:', function() {
       expect(element.html()).toContain('<p>hello</p>\n<p>world</p>');
       done();
     });
-
   });
 
   it('should render block markdown text', function(done) {
@@ -65,6 +60,36 @@ describe('KramJax directive:', function() {
 
     $scope.$on('FinishedMathJax', function() {
       expect(element.html()).toContain('<h1>hello</h1>');
+      done();
+    });
+  });
+
+  it('should render plain links', function(done) {
+    $scope.kramjaxBody = 'https://paperhive.org/about';
+    $scope.$digest();
+
+    $scope.$on('FinishedMathJax', function() {
+      expect(element.html()).toContain('<a href="https://paperhive.org/about">https://paperhive.org/about</a>');
+      done();
+    });
+  });
+
+  it('should render links with text', function(done) {
+    $scope.kramjaxBody = '[about](https://paperhive.org/about)';
+    $scope.$digest();
+
+    $scope.$on('FinishedMathJax', function() {
+      expect(element.html()).toContain('<a href="https://paperhive.org/about">about</a>');
+      done();
+    });
+  });
+
+  it('should render outbound links with target="_blank"', function(done) {
+    $scope.kramjaxBody = '[google](https://google.com)';
+    $scope.$digest();
+
+    $scope.$on('FinishedMathJax', function() {
+      expect(element.html()).toContain('<a href="https://google.com" target="_blank">google</a>');
       done();
     });
   });

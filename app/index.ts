@@ -41,7 +41,7 @@ import services from './services/index';
 import utils from './utils/index';
 
 import '../build-tmp/html.js';
-import configJson from '../config.json!json';
+import configJson from './config.json';
 
 
 export const paperhive = angular
@@ -71,4 +71,4 @@ filters(paperhive);
 services(paperhive);
 utils(paperhive);
 
-angular.bootstrap(document, ['paperhive']);
+angular.bootstrap(document, ['paperhive'], {strictDi: true});

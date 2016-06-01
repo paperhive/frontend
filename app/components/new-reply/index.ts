@@ -1,12 +1,14 @@
 'use strict';
-import template from './template.html!text';
+import template from './template.html';
 
 class NewReplyCtrl {
   body: string;
   submitting: boolean;
 
-  $inject = ['$q'];
-  constructor(public $q) {}
+  static $inject = ['$q', 'authService'];
+  constructor(public $q, public authService) {
+    this.auth = authService;
+  }
 
   submit() {
     const reply = {
