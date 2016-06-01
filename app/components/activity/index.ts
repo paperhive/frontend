@@ -36,7 +36,7 @@ export default function(app) {
               'could not fetch activities (unknown reason)'
             });
           });
-        }
+        };
       }
     ],
     template,
