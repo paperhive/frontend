@@ -24,9 +24,17 @@
           <img width="23" height="23" class="img-circle" src="http://www.gravatar.com/avatar/{{activity.person.account.avatar.value}}">
         </a>
         <a href="http://localhost:8080/users/{{activity.person.account.username}}"><strong>{{activity.person.displayName}}</strong></a>
-        <span ng-if="activity.activityType === 'documentHived'">
+        <span ng-if="$ctrl.document && activity.activityType === 'documentHived'">
           hived this document
         </span>
+
+        <span ng-if="$ctrl.user && activity.activityType === 'documentHived'">
+          hived
+          <a href="http://localhost:8080/documents/{{activity.document.id}}">
+            document
+          </a>
+        </span>
+
         <span ng-if="activity.activityType === 'createDiscussion'">
           started a
         </span>
@@ -40,7 +48,15 @@
           updated a
         </span>
         <span ng-if="activity.activityType !== 'documentHived'">
-          <a ng-href="http://localhost:8080/documents/{{activity.document.id}}/discussions/{{activity.discussion.id}}">discussion</a>
+          <a ng-href="http://localhost:8080/documents/{{activity.document.id}}/discussions/{{activity.discussion.id}}">
+            discussion
+          </a>
+        </span>
+        <span ng-if="activity.activityType !== 'documentHived' && $ctrl.user">
+          on
+          <a href="http://localhost:8080/documents/{{activity.document.id}}">
+            document
+          </a>
         </span>
       </div>
     </div>
