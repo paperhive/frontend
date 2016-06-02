@@ -27,14 +27,12 @@
         <span ng-if="$ctrl.document && activity.activityType === 'documentHived'">
           hived this document
         </span>
-
         <span ng-if="$ctrl.user && activity.activityType === 'documentHived'">
           hived
           <a href="http://localhost:8080/documents/{{activity.document.id}}">
             document
           </a>
         </span>
-
         <span ng-if="activity.activityType === 'createDiscussion'">
           started a
         </span>
