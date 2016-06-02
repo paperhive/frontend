@@ -314,10 +314,9 @@ export default function(app) {
             dependencies: ['username']
           })
           .segment('activity', {
-            template: `<div class="container">
+            template: `<div class="container-fluid">
               <div class="row">
-                <div class="col-sm-1 col-xs-1"></div>
-                <div class="col-md-12 col-sm-10 col-xs-9">
+                <div class="col-md-12 col-sm-11 col-xs-11">
                   <activity user="user"></activity>
                 </div>
               </div>
