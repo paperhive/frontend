@@ -142,6 +142,12 @@
               Unfortunately, you currently don't have access to the PDF for this
               document version. This is sad.
             </p>
+            <p>
+              We rely on the publisher's access control, so the document is
+              accessible here if it can be accessed from the publisher's
+              website. So it might be worthwile to check if you have access
+              from an institutional network.
+            </p>
           </div>
           <div ng-if="$ctrl.revisionAccess[$ctrl.activeRevision.revision]">
             <h3>No PDF location known :(</h3>
@@ -154,12 +160,6 @@
           <p>
             If available, you can select another version from the version dropdown.
           </p>
-        </div>
-        <div
-          ng-if="!$ctrl.revisionAccess[$ctrl.activeRevision.revision]"
-          class="panel-footer"
-        >
-          Science + open access = <i class="fa fa-heart"></i>
         </div>
       </div>
     </div>

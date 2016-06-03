@@ -121,9 +121,6 @@ class DocumentTextCtrl {
     }
     try {
       if (revision.remote.type === 'elsevier') {
-        // TODO re-enable actual check when elsevier fixed the first-page bug
-        return false;
-        /*
         const result = await this.$http.get(
           `https://api.elsevier.com/content/article/entitlement/doi/${revision.doi}`,
           {
@@ -136,7 +133,6 @@ class DocumentTextCtrl {
         if (get(result, 'data.entitlement-response.document-entitlement.entitled')) {
           return true;
         }
-        */
       }
     } catch (err) {
       this.notificationService.notifications.push({
