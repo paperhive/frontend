@@ -64,9 +64,10 @@
         </span>
         <span ng-if="activity.activityType !== 'documentHived' && $ctrl.user">
           on
-          <a ng-href="./documents/{{activity.document.id}}">
-            document
-          </a>
+          <a ng-href="./documents/{{activity.document.id}}">{{activity.documentRevision.title}}</a>
+          <small class="text-muted" ng-repeat="author in activity.documentRevision.authors">
+            {{author.name}}{{$last ? '' :', '}}
+          </small>
         </span>
       </div>
     </div>
