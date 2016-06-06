@@ -13,7 +13,7 @@ export default function(app) {
     '$http', 'config', 'notificationService',
       function($http, config, notificationService) {
         const ctrl = this;
-        ctrl.$onChanges = function(changesObj) {
+        ctrl.$onChanges = changesObj => {
           let personId;
           if (ctrl.user) {
             personId = ctrl.user.id;
@@ -26,10 +26,10 @@ export default function(app) {
               }
             }
           )
-          .success(function(ret) {
+          .success(ret => {
             ctrl.activities = ret.activities;
           })
-          .error(function(data) {
+          .error(data => {
             notificationService.notifications.push({
               type: 'error',
               message: data.message ? data.message :
