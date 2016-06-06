@@ -388,7 +388,7 @@ export default function(app) {
         // add popup layer
         const popup = $compile(`
           <pdf-popup
-            selectors="popupSelectors"
+            target="popupTarget"
             page-number="${this.page.pageNumber}"
           ></pdf-popup>
         `)(this.scope);
@@ -830,7 +830,7 @@ export default function(app) {
         emphasizedHighlights: '<',
 
         // TODO: add documentation
-        popupSelectors: '<',
+        popupTarget: '<',
 
         scrollToAnchor: '<',
 

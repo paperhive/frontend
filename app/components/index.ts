@@ -44,6 +44,7 @@ import passwordReset from './password-reset';
 import pdf from './pdf';
 import pdfHighlight from './pdf-highlight';
 import pdfPopup from './pdf-popup';
+import pdfSelectionPopup from './pdfSelectionPopup';
 import phFooter from './ph-footer';
 import publishers from './publishers';
 import searchResults from './search-results';
@@ -107,6 +108,7 @@ export default function(app) {
   pdf(app);
   pdfHighlight(app);
   pdfPopup(app);
+  pdfSelectionPopup(app);
   phFooter(app);
   publishers(app);
   searchResults(app);

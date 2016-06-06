@@ -7,13 +7,19 @@ export default function(app) {
       label: '@',
     },
     controller: class UrlShareCtrl {
+      url: string;
+      baseUrl: string;
+      fullUrl: string;
+
       static $inject = ['$window', 'config'];
       constructor(public $window, public config) {
         // remove trailing slash
-        const baseUrl =
+        this.baseUrl =
           `${$window.location.origin}${config.baseHref}`.replace(/\/$/, '');
+      }
 
-        this.fullUrl = `${baseUrl}${this.url}`;
+      $onChanges() {
+        this.fullUrl = `${this.baseUrl}${this.url}`;
       }
     },
     template,

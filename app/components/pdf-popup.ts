@@ -3,18 +3,19 @@ import { last } from 'lodash';
 export default function(app) {
   app.component('pdfPopup', {
     bindings: {
-      selectors: '<',
+      target: '<',
       pageNumber: '<',
     },
     controller: class PdfPopupCtrl {
       static $inject = ['$scope'];
       constructor(public $scope) {
-        $scope.$watch('$ctrl.selectors', selectors => {
+        $scope.$watch('$ctrl.target', target => {
           // reset rect
           this.rect = undefined;
 
-          if (!selectors) return;
+          if (!target || !target.selectors) return;
 
+          const selectors = target.selectors;
           if (!selectors.pdfRectangles) {
             console.warn('selectors object does not have a pdfRectangles property');
             return;
@@ -38,15 +39,15 @@ export default function(app) {
     <div ng-if="$ctrl.rect" ng-mousedown="$event.stopPropagation()">
       <button
         ng-style="{
-          top: !$ctrl.selectors.isBackwards && (($ctrl.rect.top + $ctrl.rect.height) * 100 + '%'),
-          left: !$ctrl.selectors.isBackwards && (($ctrl.rect.left + $ctrl.rect.width) * 100 + '%'),
-          bottom: $ctrl.selectors.isBackwards && ((1 - $ctrl.rect.top) * 100 + '%'),
-          right: $ctrl.selectors.isBackwards && ((1 - $ctrl.rect.left) * 100 + '%'),
+          top: !$ctrl.target.selectors.isBackwards && (($ctrl.rect.top + $ctrl.rect.height) * 100 + '%'),
+          left: !$ctrl.target.selectors.isBackwards && (($ctrl.rect.left + $ctrl.rect.width) * 100 + '%'),
+          bottom: $ctrl.target.selectors.isBackwards && ((1 - $ctrl.rect.top) * 100 + '%'),
+          right: $ctrl.target.selectors.isBackwards && ((1 - $ctrl.rect.left) * 100 + '%'),
         }"
         class="btn btn-default btn-xs ph-popup-button"
         uib-tooltip="Share text selection URL"
         tooltip-class="tooltip-nowrap"
-        uib-popover-template="'html/directives/marginDiscussionUrlPopover.html'"
+        uib-popover-template="'html/directives/textSelectionUrlPopover.html'"
         popover-placement="bottom-right"
         popover-trigger="outsideClick"
       >
