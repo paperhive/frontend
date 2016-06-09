@@ -38,20 +38,20 @@
           </a>
         </span>
         <span ng-if="activity.activityType === 'createDiscussion'">
-          started a
+          started
         </span>
         <span ng-if="activity.activityType === 'createReply'">
-          added a reply to
+          replied to
         </span>
         <span ng-if="activity.activityType === 'updateReply'">
           updated a reply to
         </span>
         <span ng-if="activity.activityType === 'updateDiscussion'">
-          updated a
+          updated
         </span>
         <span ng-if="activity.activityType !== 'documentHived'">
           <a ng-href="./documents/{{activity.document.id}}/discussions/{{activity.discussion.id}}">
-            discussion
+            {{activity.discussion.title}}
           </a>
         </span>
         <span ng-if="activity.activityType !== 'documentHived' && $ctrl.user">
