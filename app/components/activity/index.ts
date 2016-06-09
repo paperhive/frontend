@@ -15,7 +15,7 @@ export default function(app) {
         const ctrl = this;
         ctrl.$onChanges = changesObj => {
           let personId;
-          if (ctrl.user) {
+          if (ctrl.person) {
             personId = ctrl.person.id;
           }
           $http.get(

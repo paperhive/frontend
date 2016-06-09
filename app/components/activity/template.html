@@ -1,5 +1,6 @@
 <ul class="ph-timeline" ng-if="$ctrl.activities.length">
   <li ng-repeat="activity in $ctrl.activities" class="ph-timeline-inverted">
+
     <div class="ph-timeline-badge"
       ng-if="activity.activityType === 'updateReply' || activity.activityType === 'createReply'"
     >
@@ -13,11 +14,12 @@
     <div ng-if="activity.activityType === 'documentHived'" class="ph-timeline-badge">
       <img alt="logo white" height="30" src="./static/img/logo-hexagon-white.svg" />
     </div>
+
     <div class="panel panel-default ph-timeline-panel">
       <div class="ph-timeline-arrow-container">
         <div class="ph-arrow ph-arrow-outward-left"></div>
       </div>
-      <div class="pull-right ph-xs-margin-top">
+      <div class="pull-right">
         <small class="text-muted">
           <i class="fa fa-clock-o" aria-hidden="true"></i>
           <span am-time-ago="activity.updatedAt"></span>
@@ -28,39 +30,34 @@
           <avatar user="activity.person" size="30" classes="img-circle"></avatar>
         </a>
         <a ng-href="./users/{{activity.person.account.username}}">{{activity.person.displayName}}</a>
-        <span ng-if="$ctrl.document && activity.activityType === 'documentHived'">
-          hived this document
+
+        <span ng-switch="activity.activityType">
+          <span ng-switch-when="documentHived">
+            <span ng-if="$ctrl.document">hived this document</span>
+            <span ng-if="$ctrl.person">
+              hived
+              <a ng-href="./documents/{{activity.document.id}}">document</a>
+            </span>
+          </span>
+          <span ng-switch-when="createDiscussion">started</span>
+          <span ng-switch-when="createReply">replied to</span>
+          <span ng-switch-when="updateReply">updated a reply to</span>
+          <span ng-switch-when="updateDiscussion">updated</span>
         </span>
-        <span ng-if="$ctrl.person && activity.activityType === 'documentHived'">
-          hived
-          <a ng-href="./documents/{{activity.document.id}}">
-            document
-          </a>
-        </span>
-        <span ng-if="activity.activityType === 'createDiscussion'">
-          started
-        </span>
-        <span ng-if="activity.activityType === 'createReply'">
-          replied to
-        </span>
-        <span ng-if="activity.activityType === 'updateReply'">
-          updated a reply to
-        </span>
-        <span ng-if="activity.activityType === 'updateDiscussion'">
-          updated
-        </span>
+
         <span ng-if="activity.activityType !== 'documentHived'">
           <a ng-href="./documents/{{activity.document.id}}/discussions/{{activity.discussion.id}}">
             {{activity.discussion.title}}
           </a>
+          <span ng-if="$ctrl.person">
+            on
+            <a ng-href="./documents/{{activity.document.id}}">{{activity.documentRevision.title}}</a>
+            <small class="text-muted" ng-repeat="author in activity.documentRevision.authors">
+              {{author.name}}{{$last ? '' :', '}}
+            </small>
+          </span>
         </span>
-        <span ng-if="activity.activityType !== 'documentHived' && $ctrl.person">
-          on
-          <a ng-href="./documents/{{activity.document.id}}">{{activity.documentRevision.title}}</a>
-          <small class="text-muted" ng-repeat="author in activity.documentRevision.authors">
-            {{author.name}}{{$last ? '' :', '}}
-          </small>
-        </span>
+
       </div>
     </div>
   </li>
