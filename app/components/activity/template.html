@@ -35,9 +35,7 @@
           />
         </a>
         <a ng-href="./users/{{activity.person.account.username}}">
-          <strong>
-            {{activity.person.displayName}}
-          </strong>
+          {{activity.person.displayName}}
         </a>
         <span ng-if="$ctrl.document && activity.activityType === 'documentHived'">
           hived this document
