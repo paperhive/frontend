@@ -13,15 +13,11 @@ export default function(app) {
       function($http, config, notificationService) {
         const ctrl = this;
         ctrl.$onChanges = changesObj => {
-          let personId;
-          if (ctrl.person) {
-            personId = ctrl.person.id;
-          }
           $http.get(
             config.apiUrl + `/activities/`, {
               params: {
                 document: ctrl.document,
-                person: personId,
+                person: ctrl.person,
               }
             }
           )
