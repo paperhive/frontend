@@ -17,26 +17,17 @@
       <div class="ph-timeline-arrow-container">
         <div class="ph-arrow ph-arrow-outward-left"></div>
       </div>
-      <div class="pull-right">
+      <div class="pull-right ph-xs-margin-top">
         <small class="text-muted">
           <i class="fa fa-clock-o" aria-hidden="true"></i>
           <span am-time-ago="activity.updatedAt"></span>
         </small>
       </div>
       <div>
-        <span ng-if="activity.person.account.avatar.type === 'google'">
-          <img width="23" height="23" class="img-circle"
-            src="{{activity.person.account.avatar.value}}"
-          />
-        </span>
-        <a ng-if="activity.person.account.avatar.type === 'gravatar'">
-          <img width="23" height="23" class="img-circle"
-            src="http://www.gravatar.com/avatar/{{activity.person.account.avatar.value}}"
-          />
+        <a class="ph-link-icon" ng-href="./users/{{activity.person.account.username}}">
+          <avatar user="activity.person" size="30" classes="img-circle"></avatar>
         </a>
-        <a ng-href="./users/{{activity.person.account.username}}">
-          {{activity.person.displayName}}
-        </a>
+        <a ng-href="./users/{{activity.person.account.username}}">{{activity.person.displayName}}</a>
         <span ng-if="$ctrl.document && activity.activityType === 'documentHived'">
           hived this document
         </span>
