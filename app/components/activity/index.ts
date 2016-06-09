@@ -7,7 +7,7 @@ export default function(app) {
     bindings: {
       discussion: '<',
       document: '<',
-      user: '<',
+      person: '<',
     },
     controller: [
     '$http', 'config', 'notificationService',
@@ -16,7 +16,7 @@ export default function(app) {
         ctrl.$onChanges = changesObj => {
           let personId;
           if (ctrl.user) {
-            personId = ctrl.user.id;
+            personId = ctrl.person.id;
           }
           $http.get(
             config.apiUrl + `/activities/`, {

@@ -31,7 +31,7 @@
         <span ng-if="$ctrl.document && activity.activityType === 'documentHived'">
           hived this document
         </span>
-        <span ng-if="$ctrl.user && activity.activityType === 'documentHived'">
+        <span ng-if="$ctrl.person && activity.activityType === 'documentHived'">
           hived
           <a ng-href="./documents/{{activity.document.id}}">
             document
@@ -54,7 +54,7 @@
             {{activity.discussion.title}}
           </a>
         </span>
-        <span ng-if="activity.activityType !== 'documentHived' && $ctrl.user">
+        <span ng-if="activity.activityType !== 'documentHived' && $ctrl.person">
           on
           <a ng-href="./documents/{{activity.document.id}}">{{activity.documentRevision.title}}</a>
           <small class="text-muted" ng-repeat="author in activity.documentRevision.authors">
