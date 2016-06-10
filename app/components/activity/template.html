@@ -71,15 +71,15 @@
         </span>
 
         <span ng-if="activity.activityType !== 'documentHived'">
-          <a ng-href="./documents/{{activity.document.id}}/discussions/{{activity.discussion.id}}">
-            {{activity.discussion.title}}
-          </a>
+          <a ng-href="./documents/{{activity.document.id}}/discussions/{{activity.discussion.id}}">{{activity.discussion.title}}</a>
           <span ng-if="$ctrl.person">
             on
-            <a ng-href="./documents/{{activity.document.id}}">{{activity.documentRevision.title}}</a>
-            <small class="text-muted" ng-repeat="author in activity.documentRevision.authors">
-              {{author.name}}{{$last ? '' :', '}}
-            </small>
+            <p>
+              <a ng-href="./documents/{{activity.document.id}}">{{activity.documentRevision.title}}</a>
+              <small class="text-muted" ng-repeat="author in activity.documentRevision.authors">
+                {{author.name}}{{$last ? '' :', '}}
+              </small>
+            </p>
           </span>
         </span>
 
