@@ -14,10 +14,10 @@
       </div>
 
       <div ng-if="$ctrl.person" class="ph-sm-padding-top ph-sm-padding-bottom text-center text-muted">
-        <span ng-if="$ctrl.auth.user.username === TODO">
+        <span ng-if="$ctrl.auth.user.id === $ctrl.person">
           You can improve your activity by discussing, replying and hiving documents.
         </span>
-        <span ng-if="$ctrl.auth.user.username !== TODO">
+        <span ng-if="$ctrl.auth.user.id !== $ctrl.person">
           Here you can find TODOs recently discussed, replied and hived documents.
         </span>
       </div>
