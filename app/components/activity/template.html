@@ -10,15 +10,15 @@
       </div>
 
       <div ng-if="$ctrl.document" class="ph-sm-padding-top ph-sm-padding-bottom text-center text-muted">
-        You can discuss, reply and hive documents to start your activity now.
+        You can discuss, reply and hive documents to start up your activity now.
       </div>
 
       <div ng-if="$ctrl.person" class="ph-sm-padding-top ph-sm-padding-bottom text-center text-muted">
-        <span ng-if="$ctrl.auth.user.id === $ctrl.person">
+        <span ng-if="$ctrl.auth.user.id === $ctrl.person.id">
           You can improve your activity by discussing, replying and hiving documents.
         </span>
-        <span ng-if="$ctrl.auth.user.id !== $ctrl.person">
-          Here you can find recently discussed, replied and hived documents by TODO {{$ctrl.person.displayName}}.
+        <span ng-if="$ctrl.auth.user.id !== $ctrl.person.id">
+          Here you can find recently discussed, replied and hived documents by {{$ctrl.person.displayName}}.
         </span>
       </div>
     </div>

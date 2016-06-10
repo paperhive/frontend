@@ -14,11 +14,15 @@ export default function(app) {
         const ctrl = this;
         ctrl.auth = authService;
         ctrl.$onChanges = changesObj => {
+          let personId;
+          if (ctrl.person) {
+            personId = ctrl.person.id;
+          }
           $http.get(
             config.apiUrl + `/activities/`, {
               params: {
                 document: ctrl.document,
-                person: ctrl.person,
+                person: personId,
               }
             }
           )

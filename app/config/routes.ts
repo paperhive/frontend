@@ -317,7 +317,7 @@ export default function(app) {
             template: `<div class="container-fluid ph-lg-margin-bottom">
               <div class="row">
                 <div class="col-md-12 col-sm-11 col-xs-11">
-                  <activity person="user.id"></activity>
+                  <activity person="user"></activity>
                 </div>
               </div>
             </div>`
