@@ -1,4 +1,29 @@
-<ul class="ph-timeline" ng-if="$ctrl.activities.length">
+<ul class="ph-timeline">
+
+  <li class="ph-timeline-inverted">
+    <div class="ph-timeline-badge">
+      <i class="fa fa-heartbeat" aria-hidden="true"></i>
+    </div>
+    <div class="panel panel-default ph-timeline-panel">
+      <div class="ph-timeline-arrow-container">
+        <div class="ph-arrow ph-arrow-outward-left"></div>
+      </div>
+
+      <div ng-if="$ctrl.document">
+        You can discuss, reply and hive documents to start your activity now.
+      </div>
+
+      <div ng-if="$ctrl.person">
+        <span ng-if="$ctrl.auth.user.username === TODO">
+          You can improve your activity by discussing, replying and hiving documents.
+        </span>
+        <span ng-if="$ctrl.auth.user.username !== TODO">
+          Here you can find TODOs recently discussed, replied and hived documents.
+        </span>
+      </div>
+    </div>
+  </li>
+
   <li ng-repeat="activity in $ctrl.activities" class="ph-timeline-inverted">
 
     <div class="ph-timeline-badge"
@@ -63,10 +88,10 @@
   </li>
 </ul>
 
-<div ng-if="$ctrl.activities.length === 0" class="panel panel-default">
+<!-- <div ng-if="$ctrl.activities.length === 0" class="panel panel-default">
   <div class="panel-body">
     <h4 class="ph-sm-padding text-center">
       There are no activities to show.
     </h4>
   </div>
-</div>
+</div> -->

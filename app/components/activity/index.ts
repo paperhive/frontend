@@ -9,9 +9,10 @@ export default function(app) {
       person: '<',
     },
     controller: [
-    '$http', 'config', 'notificationService',
-      function($http, config, notificationService) {
+    '$http', 'authService', 'config', 'notificationService',
+      function($http, authService, config, notificationService) {
         const ctrl = this;
+        ctrl.auth = authService;
         ctrl.$onChanges = changesObj => {
           $http.get(
             config.apiUrl + `/activities/`, {
