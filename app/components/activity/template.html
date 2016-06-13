@@ -9,11 +9,11 @@
         <div class="ph-arrow ph-arrow-outward-left"></div>
       </div>
 
-      <div ng-if="$ctrl.document" class="ph-sm-padding-top ph-sm-padding-bottom text-center text-muted">
+      <div ng-if="$ctrl.document" class="ph-sm-padding-top ph-sm-padding-bottom text-muted">
         You can discuss, reply and hive documents to start up your activity now.
       </div>
 
-      <div ng-if="$ctrl.person" class="ph-sm-padding-top ph-sm-padding-bottom text-center text-muted">
+      <div ng-if="$ctrl.person" class="ph-sm-padding-top ph-sm-padding-bottom text-muted">
         <span ng-if="$ctrl.auth.user.id === $ctrl.person.id">
           You can improve your activity by discussing, replying and hiving documents.
         </span>
@@ -72,15 +72,15 @@
 
         <span ng-if="activity.activityType !== 'documentHived'">
           <a ng-href="./documents/{{activity.document.id}}/discussions/{{activity.discussion.id}}">{{activity.discussion.title}}</a>
-          <span ng-if="$ctrl.person">
-            on
-            <p>
+          <div ng-if="$ctrl.person">
+            <small>
+              on
               <a ng-href="./documents/{{activity.document.id}}">{{activity.documentRevision.title}}</a>
-              <small class="text-muted" ng-repeat="author in activity.documentRevision.authors">
+              <span class="text-muted" ng-repeat="author in activity.documentRevision.authors">
                 {{author.name}}{{$last ? '' :', '}}
-              </small>
-            </p>
-          </span>
+              </span>
+            </small>
+          </div>
         </span>
 
       </div>
