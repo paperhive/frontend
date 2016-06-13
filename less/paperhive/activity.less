@@ -38,6 +38,7 @@
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
   min-height: 84px;
 }
+
 .ph-timeline > li > .ph-timeline-badge {
   color: #FFFFFF;
   width: 50px;
@@ -76,11 +77,18 @@
   height: 2 * @ph-timeline-icon-offset;
   .ph-arrow-container(@ph-timeline-arrow-size, @panel-bg, @panel-default-border);
 }
-.ph-timeline-date {
-  margin-bottom: 0.5em;
+
+.ph-activity-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
-@media only screen and (min-width: 800px) {
+.ph-activity {
+  flex-grow: 2;
+}
+
+@media only screen and (min-width: @screen-sm-min) {
   .ph-timeline-date {
     float: right;
     margin-left: 2em;

@@ -4,16 +4,16 @@
     <div class="ph-timeline-badge">
       <i class="fa fa-heartbeat" aria-hidden="true"></i>
     </div>
-    <div class="panel panel-default ph-timeline-panel">
+    <div class="panel panel-default ph-timeline-panel ph-activity-container">
       <div class="ph-timeline-arrow-container">
         <div class="ph-arrow ph-arrow-outward-left"></div>
       </div>
 
-      <div ng-if="$ctrl.document" class="ph-sm-padding-top ph-sm-padding-bottom text-muted">
+      <div ng-if="$ctrl.document" class="text-muted">
         You can discuss, reply and hive documents to start up your activity now.
       </div>
 
-      <div ng-if="$ctrl.person" class="ph-sm-padding-top ph-sm-padding-bottom text-muted">
+      <div ng-if="$ctrl.person" class="text-muted">
         <span ng-if="$ctrl.auth.user.id === $ctrl.person.id">
           You can improve your activity by discussing, replying and hiving documents.
         </span>
@@ -40,17 +40,19 @@
       <img alt="logo white" height="30" src="./static/img/logo-hexagon-white.svg" />
     </div>
 
-    <div class="panel panel-default ph-timeline-panel">
+    <div class="panel panel-default ph-timeline-panel ph-activity-container">
       <div class="ph-timeline-arrow-container">
         <div class="ph-arrow ph-arrow-outward-left"></div>
       </div>
-      <div class="ph-timeline-date">
-        <small class="text-muted">
-          <i class="fa fa-clock-o" aria-hidden="true"></i>
-          <span am-time-ago="activity.updatedAt"></span>
-        </small>
-      </div>
-      <div>
+      <div class="ph-activity">
+
+        <div class="ph-timeline-date">
+          <small class="text-muted">
+            <i class="fa fa-clock-o" aria-hidden="true"></i>
+            <span am-time-ago="activity.updatedAt"></span>
+          </small>
+        </div>
+
         <a ng-if="!$ctrl.person" class="ph-link-icon" ng-href="./users/{{activity.person.account.username}}">
           <avatar user="activity.person" size="25" classes="img-circle"></avatar>
         </a>
