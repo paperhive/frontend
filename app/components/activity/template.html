@@ -63,7 +63,12 @@
             <span ng-if="$ctrl.document">hived this document</span>
             <span ng-if="$ctrl.person">
               hived
-              <a ng-href="./documents/{{activity.document.id}}">document</a>
+              <small>
+                <a ng-href="./documents/{{activity.document.id}}">{{activity.documentRevision.title}}</a>
+                <span class="text-muted" ng-repeat="author in activity.documentRevision.authors">
+                  {{author.name}}{{$last ? '' :', '}}
+                </span>
+              </small>
             </span>
           </span>
           <span ng-switch-when="createDiscussion">started</span>
