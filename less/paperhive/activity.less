@@ -2,11 +2,12 @@
 @ph-timeline-icon-size: 50px;
 @ph-timeline-icon-offset-y: 16px;
 @ph-timeline-line-width: 3px;
+@ph-timeline-line-color: #eee;
 
 .ph-timeline {
   list-style: none;
   padding: 0;
-  padding-bottom: @ph-timeline-icon-size / 2;
+  margin-bottom: @ph-timeline-icon-size + 2 * @ph-timeline-icon-offset-y;
   position: relative;
 }
 
@@ -16,7 +17,17 @@
   position: absolute;
   content: " ";
   width: @ph-timeline-line-width;
-  background-color: #eeeeee;
+  background-color: @ph-timeline-line-color;
+  margin-left: @ph-timeline-icon-size / 2 - @ph-timeline-line-width / 2;
+}
+
+.ph-timeline:after {
+  bottom: -@ph-timeline-icon-size;
+  height: @ph-timeline-icon-size;
+  position: absolute;
+  content: " ";
+  width: @ph-timeline-line-width;
+  background: linear-gradient(@ph-timeline-line-color, rgba(0, 0, 0, 0));
   margin-left: @ph-timeline-icon-size / 2 - @ph-timeline-line-width / 2;
 }
 
