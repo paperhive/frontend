@@ -141,13 +141,8 @@ export default function(app) {
         })
         .within()
           .segment('activity', {
-            template: `<div class="container ph-lg-margin-bottom">
-              <div class="row">
-                <div class="col-sm-1 col-xs-1"></div>
-                <div class="col-md-12 col-sm-10 col-xs-9">
-                  <activity document="$ctrl.documentId"></activity>
-                </div>
-              </div>
+            template: `<div class="container">
+              <activity document="$ctrl.documentId"></activity>
             </div>`,
             title: 'Activity · PaperHive'
           })
