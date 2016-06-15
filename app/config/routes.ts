@@ -31,6 +31,7 @@ export default function(app) {
         .when('/documents/new', 'documents_new')
         .when('/documents/redirect', 'documents_redirect')
         .when('/documents/:documentId', 'documents', {reloadOnSearch: false})
+        .when('/documents/:documentId/activity', 'documents.activity')
         .when('/documents/:documentId/discussions', 'documents.discussions')
         .when('/documents/:documentId/hivers', 'documents.hivers')
         // .when('/documents/:documentId/discussions/new',
@@ -56,6 +57,7 @@ export default function(app) {
         .when('/signup', 'signup')
         .when('/subscribed', 'subscribed')
         .when('/users/:username', 'users')
+        .when('/users/:username/activity', 'users.activity')
         .when('/users/:username/profile', 'users.profile')
 
         // Init Main Page
@@ -138,6 +140,12 @@ export default function(app) {
           title: 'Document · PaperHive',
         })
         .within()
+          .segment('activity', {
+            template: `<div class="container">
+              <activity document="$ctrl.documentId"></activity>
+            </div>`,
+            title: 'Activity · PaperHive'
+          })
           .segment('hivers', {
             template: '<hivers document-id="$ctrl.documentId"></hivers>',
             title: 'Hivers · PaperHive'
@@ -299,6 +307,9 @@ export default function(app) {
             default: true,
             template: '<user-profile user="user"></user-profile>',
             dependencies: ['username']
+          })
+          .segment('activity', {
+            template: `<activity person="user"></activity>`
           })
         .up()
         ;
