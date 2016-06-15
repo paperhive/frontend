@@ -10,15 +10,28 @@
       </div>
 
       <div ng-if="$ctrl.document" class="text-muted">
-        You can discuss, reply and hive documents to start up your activity now.
+        Here you can find the recent discussions, replies and hives on
+        this document.
+        <span ng-if="$ctrl.activities.length === 0">
+          Unfortunately, there is no activity yet. Be the first to hive the
+          document or start a discussion.
+        </span>
       </div>
 
       <div ng-if="$ctrl.person" class="text-muted">
         <span ng-if="$ctrl.auth.user.id === $ctrl.person.id">
-          You can improve your activity by discussing, replying and hiving documents.
+          Here you can find your recent discussions, replies and hived documents.
+          <span ng-if="$ctrl.activities.length === 0">
+            A good way to get started is to search and hive a document
+            you are interested in.
+          </span>
         </span>
         <span ng-if="$ctrl.auth.user.id !== $ctrl.person.id">
-          Here you can find recently discussed, replied and hived documents by {{$ctrl.person.displayName}}.
+          Here you can find recent discussions, replies and hived documents by
+          {{$ctrl.person.displayName}}.
+          <span ng-if="$ctrl.activities.length === 0">
+            Unfortunately, {{$ctrl.person.displayName}} has no recent activity.
+          </span>
         </span>
       </div>
     </div>
@@ -71,10 +84,10 @@
               </small>
             </span>
           </span>
-          <span ng-switch-when="createDiscussion">started</span>
-          <span ng-switch-when="createReply">replied to</span>
-          <span ng-switch-when="updateReply">updated a reply to</span>
-          <span ng-switch-when="updateDiscussion">updated</span>
+          <span ng-switch-when="createDiscussion">started the discussion</span>
+          <span ng-switch-when="createReply">replied to the discussion</span>
+          <span ng-switch-when="updateReply">updated a reply to the discussion</span>
+          <span ng-switch-when="updateDiscussion">updated the discussion</span>
         </span>
 
         <span ng-if="activity.activityType !== 'documentHived'">
