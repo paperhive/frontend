@@ -314,13 +314,7 @@ export default function(app) {
             dependencies: ['username']
           })
           .segment('activity', {
-            template: `<div class="container-fluid ph-lg-margin-bottom">
-              <div class="row">
-                <div class="col-md-12 col-sm-11 col-xs-11">
-                  <activity person="user"></activity>
-                </div>
-              </div>
-            </div>`
+            template: `<activity person="user"></activity>`
           })
         .up()
         ;

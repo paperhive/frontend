@@ -1,6 +1,6 @@
 <ul class="ph-timeline">
 
-  <li class="ph-timeline-inverted">
+  <li class="ph-timeline-item ph-lg-margin-bottom">
     <div class="ph-timeline-badge">
       <i class="fa fa-heartbeat" aria-hidden="true"></i>
     </div>
@@ -37,20 +37,17 @@
     </div>
   </li>
 
-  <li ng-repeat="activity in $ctrl.activities" class="ph-timeline-inverted">
+  <li ng-repeat="activity in $ctrl.activities" class="ph-timeline-item ph-lg-margin-bottom">
 
-    <div class="ph-timeline-badge"
-      ng-if="activity.activityType === 'updateReply' || activity.activityType === 'createReply'"
-    >
-      <i class="fa fa-reply" aria-hidden="true"></i>
-    </div>
-    <div class="ph-timeline-badge"
-      ng-if="activity.activityType === 'updateDiscussion' || activity.activityType === 'createDiscussion'"
-    >
-      <i class="fa fa-comment" aria-hidden="true"></i>
-    </div>
-    <div ng-if="activity.activityType === 'documentHived'" class="ph-timeline-badge">
-      <img alt="logo white" height="30" src="./static/img/logo-hexagon-white.svg" />
+    <div class="ph-timeline-badge">
+      <i class="fa fa-reply" aria-hidden="true"
+        ng-if="activity.activityType === 'updateReply' || activity.activityType === 'createReply'"
+      ></i>
+      <i class="fa fa-comment" aria-hidden="true"
+        ng-if="activity.activityType === 'updateDiscussion' || activity.activityType === 'createDiscussion'"
+      ></i>
+      <img alt="logo white" src="./static/img/logo-hexagon-white.svg"
+        ng-if="activity.activityType === 'documentHived'"/>
     </div>
 
     <div class="panel panel-default ph-timeline-panel ph-activity-container">
@@ -107,4 +104,3 @@
     </div>
   </li>
 </ul>
-
