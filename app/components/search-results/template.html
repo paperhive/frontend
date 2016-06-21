@@ -1,48 +1,209 @@
 <div class="container">
-  <div ng-if="search.documents !== undefined">
-    <h2 ng-if="!search.documents.length">No results for <em>{{search.query}}</em></h2>
-    <div ng-if="search.documents.length">
-      <h2>Results for <em>{{search.query}}</em></h2>
-      <div class="row ph-lg-margin-bottom row ph-lg-margin-top">
-        <div class="col-md-8">
-          <div class="ph-lg-margin-top media" ng-repeat="document in search.documents">
-            <h4>
-              <a href="./documents/{{document.id}}" title="{{document.title}}">
-                {{document.title}}
-              </a>
-            </h4>
-            <span ng-repeat="author in document.authors">
-              {{author.name}}{{$last ? '' : ', '}}
-            </span>
-            <small class="text-muted ph-sm-margin-left">
-              {{document.publishedAt | date: 'yyyy'}}
-            </small>
-            <div class="ph-sm-margin-top">
-              <small>
-                {{document.abstract | limitTo: 220}}{{document.abstract.length > 220 ? '...' : ''}}
-              </small>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="ph-search-sidebar">
+
+        <div class="form-group">
+          <label for="srch-term">Search:</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Search documents"
+            name="srch-term"
+            id="srch-term"
+            ng-model="search.query"
+            ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
+            ng-keypress="($event.which === 13) && showAllResults(search.query)"
+            autocomplete="off"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label>In:</label><br/>
+
+          <div class="checkbox-inline">
+            <label>
+              <input type="checkbox" ng-model="search.inTitle"> Title
+            </label>
+          </div>
+          <div class="checkbox-inline">
+            <label>
+              <input type="checkbox" ng-model="search.inAuthors"> Authors
+            </label>
+          </div>
+          <div class="checkbox-inline disabled">
+            <label>
+              <input type="checkbox" ng-model="search.inAbstract" disabled> Abstract
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+
+          <div class="radio">
+            <label>
+              <input type="radio" name="srch-period" id="srch-period-any" value="any" ng-model="search.period" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }" checked> Any time
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="srch-period" id="srch-period-thisyear" value="thisyear" ng-model="search.period" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"> This year
+            </label>
+          </div>
+
+          <div class="radio">
+            <label>
+              <input type="radio" name="srch-period" id="srch-period-lastyear" value="lastyear" ng-model="search.period" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"> Last year
+            </label>
+          </div>
+
+          <div class="radio">
+            <label>
+              <input type="radio" name="srch-period" id="srch-period-thisdecade" value="thisdecade" ng-model="search.period" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"> This decade
+            </label>
+          </div>
+
+          <div class="radio">
+            <label>
+              <input type="radio" name="srch-period" id="srch-period-custom" value="custom" ng-model="search.period" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"> Custom:
+            </label>
+          </div>
+
+          <div class="form-inline">
+            <div class="form-group">
+              <label for="srch-period-from">From:</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="1950"
+                name="srch-period-from"
+                id="srch-period-from"
+                ng-model="search.periodFrom"
+                ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
+                autocomplete="off"
+                size="4"
+                ng-disabled="search.period != 'custom'"
+              >
+            </div>
+            <div class="form-group">
+              <label for="srch-period-until">Until:</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="2012"
+                name="srch-period-until"
+                id="srch-period-until"
+                ng-model="search.periodUntil"
+                ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
+                autocomplete="off"
+                size="4"
+                ng-disabled="search.period != 'custom'"
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="srch-journal">Journal:</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="General Relativity and Gravitation"
+            name="srch-journal"
+            id="srch-journal"
+            ng-model="search.journal"
+            ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
+            autocomplete="off"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="srch-publisher">Publisher:</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Springer"
+            name="srch-publisher"
+            id="srch-publisher"
+            ng-model="search.publisher"
+            ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
+            autocomplete="off"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="srch-tags">Tags:</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Physics, Astrophysics"
+            name="srch-tags"
+            id="srch-tags"
+            ng-model="search.tags"
+            ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
+            autocomplete="off"
+          >
+        </div>
+
+      </div> <!-- ph-search-sidebar -->
+    </div> <!-- col-md-3 -->
+    <div class="col-md-9">
+      <div ng-if="search.documents !== undefined">
+        <h2 ng-if="!search.documents.length">No results for <em>{{search.query}}</em></h2>
+        <div ng-if="search.documents.length">
+          <h2>Results for <em>{{search.query}}</em></h2>
+          <div class="row ph-lg-margin-bottom row ph-lg-margin-top">
+            <div class="col-md-8">
+              <div class="ph-lg-margin-top media" ng-repeat="document in search.documents">
+                <h4>
+                  <a href="./documents/{{document.id}}" title="{{document.title}}">
+                    {{document.title}}
+                  </a>
+                </h4>
+                <span ng-repeat="author in document.authors">
+                  {{author.name}}{{$last ? '' : ', '}}
+                </span>
+                <small class="text-muted ph-sm-margin-left">
+                <a href="" ng-click="filterForDate(document.publishedAt)">{{document.publishedAt | date: 'yyyy'}}</a>
+                </small>
+                <div class="ph-sm-margin-top">
+                  <ul class="ph-tags">
+                    <li ng-repeat="tag in document.tags">
+                      <a href="" ng-click="filterForTag(tag)">
+                        {{tag.value}}
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="ph-sm-margin-top">
+                  <small>
+                    {{document.abstract | limitTo: 220}}{{document.abstract.length > 220 ? '...' : ''}}
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row ph-lg-margin-bottom">
+            <div class="col-md-8">
+              <uib-pagination
+                boundary-links="true"
+                total-items="search.total"
+                ng-model="search.page"
+                max-size="search.maxSize"
+                class="pagination-sm"
+                previous-text="&lsaquo;"
+                next-text="&rsaquo;"
+                first-text="&laquo;"
+                last-text="&raquo;"
+                rotate="false"
+                ng-click="scrollToTop()"
+                boundary-link-numbers="true"
+              ></uib-pagination>
             </div>
           </div>
         </div>
       </div>
-      <div class="row ph-lg-margin-bottom">
-        <div class="col-md-8">
-          <uib-pagination
-            boundary-links="true"
-            total-items="search.total"
-            ng-model="search.page"
-            max-size="search.maxSize"
-            class="pagination-sm"
-            previous-text="&lsaquo;"
-            next-text="&rsaquo;"
-            first-text="&laquo;"
-            last-text="&raquo;"
-            rotate="false"
-            ng-click="scrollToTop()"
-            boundary-link-numbers="true"
-          ></uib-pagination>
-        </div>
-      </div>
-    </div>
-  </div>
+    </div> <!-- col-md-9 -->
+  </div> <!-- row -->
 </div>
