@@ -214,11 +214,11 @@ export default function(app) {
 
         .segment('terms', {
           template: '<terms></terms>',
-          title: 'Terms and Privacy Policy · PaperHive',
+          title: 'Terms and privacy policy · PaperHive',
           meta: [
             {
               name: 'description',
-              content: 'Terms and Privacy Policy'
+              content: 'Terms and privacy policy'
             }
           ]
         })
