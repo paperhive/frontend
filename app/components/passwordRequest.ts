@@ -35,7 +35,7 @@ export default function(app) {
       <div class="row ph-md-padding-top">
         <div class="col-md-offset-4 col-md-4">
           <form name="passwordRequestForm" novalidate>
-            <label for="emailOrUsername">Email or Username</label>
+            <label for="emailOrUsername">Email or username</label>
             <input type="text" class="form-control" id="emailOrUsername" name="emailOrUsername"
               ng-model="$ctrl.emailOrUsername" placeholder="Enter your email address or username"
               ng-disabled="$ctrl.sending || $ctrl.success"
