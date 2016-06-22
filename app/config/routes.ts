@@ -193,7 +193,7 @@ export default function(app) {
         .up()
         .segment('documents_new', {
           template: '<document-new></document-new>',
-          title: 'Add a New Document · PaperHive'
+          title: 'Add a new document · PaperHive'
         })
         .segment('documents_redirect', {
           template: '<document-redirect></document-redirect>',
@@ -214,11 +214,11 @@ export default function(app) {
 
         .segment('terms', {
           template: '<terms></terms>',
-          title: 'Terms and Privacy Policy · PaperHive',
+          title: 'Terms and privacy policy · PaperHive',
           meta: [
             {
               name: 'description',
-              content: 'Terms and Privacy Policy'
+              content: 'Terms and privacy policy'
             }
           ]
         })
@@ -273,7 +273,7 @@ export default function(app) {
 
         .segment('publishers', {
           template: '<publishers></publishers>',
-          title: 'PaperHive for Publishers and repositories · Paperhive'
+          title: 'PaperHive for publishers and repositories · Paperhive'
         })
 
         .segment('settings', {
