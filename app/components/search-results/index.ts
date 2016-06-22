@@ -103,7 +103,7 @@ export default function(app) {
             let searchPage = newValues[1];
 
             updateFromScope(searchPage);
-            getSearchResults(searchQuery, searchPage)
+            getSearchResults(searchQuery, searchPage);
           });
 
           $scope.scrollToTop = function() {
@@ -111,7 +111,7 @@ export default function(app) {
           };
 
           $scope.filterForTag = function(tag) {
-            if($scope.search.tags.length > 0) {
+            if ($scope.search.tags.length > 0) {
               $scope.search.tags += ', ';
             }
             $scope.search.tags += tag.value;
