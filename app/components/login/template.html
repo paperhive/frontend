@@ -60,8 +60,8 @@
           <label for="password">Password</label>
           <input type="password" class="form-control" id="password"
             name="password" ng-model="login.password" required>
-          <a class="ph-forgot-password"
-            ng-href="./password/request?{{ {returnPath: auth.returnPath, emailOrUsername: login.emailOrUsername} | queryString}}"
+          <a class="ph-forgot-password ph-link-icon"
+            ng-href="./password/request?{{ {returnPath: auth.returnPath, emailOrUsername: login.emailOrUsername} | queryString }}"
             title="Forgot password?"
             tabindex="-1">
             Forgot?
