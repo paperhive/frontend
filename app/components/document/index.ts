@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import * as angular from 'angular';
-import { cloneDeep, find, findLastIndex, merge, pick, remove, some, sortBy } from 'lodash';
+import { cloneDeep, find, findLastIndex, merge, orderBy, pick, remove, some } from 'lodash';
 
 import template from './template.html';
 import { getRevisionMetadata } from '../../utils/documents';
@@ -228,7 +228,7 @@ export default function(app) {
             }
 
             // use latest revision for metadata
-            $ctrl.latestRevision = sortBy($ctrl.revisions, 'publishedAt', 'desc')[0];
+            $ctrl.latestRevision = orderBy($ctrl.revisions, 'publishedAt', 'desc')[0];
 
             const metadata = getRevisionMetadata($ctrl.latestRevision);
             metaService.set({
