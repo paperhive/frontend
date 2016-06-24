@@ -79,9 +79,7 @@
           'has-success': loginForm.$valid
         }">
           <span class="help-block">
-            <span ng-if="login.error" class="text-danger">
-              <i class="fa fa-fw fa-times"></i>
-              {{login.error}}
+            <span ng-if="login.error" class="text-danger" ng-bind-html="login.error">
             </span>
           </span>
         </div>

@@ -7,8 +7,8 @@ export default function(app) {
     'login', {
       template,
       controller: [
-        '$scope', '$location', 'authService', '$http', 'config',
-        function($scope, $location, authService, $http, config) {
+        '$http', '$location', '$sce', '$scope', 'authService', 'config',
+        function($http, $location, $sce, $scope, authService, config) {
           $scope.auth = authService;
 
           $scope.login = {};
@@ -31,7 +31,15 @@ export default function(app) {
               $location.url(authService.returnPath);
             }, function(data) {
               $scope.login.inProgress = false;
-              $scope.login.error = data && data.message || 'Unknown error';
+              if (data && data.status === 401 && data.message === 'Invalid credentials.') {
+                $scope.login.error = $sce.trustAsHtml(`<i class="fa fa-fw fa-times"></i> Sorry, we don't
+                  recognize those credentials. If you forgot your password click
+                  <a style="cursor: pointer;" href="./password/request?{{
+                  {returnPath: auth.returnPath, emailOrUsername: login.emailOrUsername} |
+                  queryString }}">here</a>.`);
+              } else {
+                $scope.login.error = data && data.message || `<i class="fa fa-fw fa-times"></i> Unknown error`;
+              }
             });
           };
         }
