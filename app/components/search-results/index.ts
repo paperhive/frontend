@@ -27,6 +27,7 @@ export default function(app) {
             $scope.search.period = $location.search().period || 'any';
             $scope.search.publishedAfter = $location.search().publishedAfter || 1900;
             $scope.search.publishedBefore = $location.search().publishedBefore || (new Date()).getFullYear();
+            $scope.search.sortOrder = $location.search().sortOrder || 'desc';
 
             $scope.search.inTitle = ($location.search().inTitle === false ? false : true);
             $scope.search.inAuthors = ($location.search().inAuthors === false ? false : true);
@@ -48,6 +49,7 @@ export default function(app) {
               period: $scope.search.period,
               publishedAfter: $scope.search.publishedAfter,
               publishedBefore: $scope.search.publishedBefore,
+              sortOrder: $scope.search.sortOrder,
               inTitle: $scope.search.inTitle,
               inAuthors: $scope.search.inAuthors,
               inAbstract: $scope.search.inAbstract,
@@ -76,6 +78,7 @@ export default function(app) {
                 period: $scope.search.period,
                 publishedAfter: $scope.search.publishedAfter,
                 publishedBefore: $scope.search.publishedBefore,
+                sortOrder: $scope.search.sortOrder,
                 inTitle: $location.search().inTitle,
                 inAuthors: $location.search().inAuthors,
                 inAbstract: $location.search().inAbstract,
@@ -98,7 +101,7 @@ export default function(app) {
             );
           };
 
-          $scope.$watchGroup(['search.query', 'search.page', 'search.period', 'search.inTitle', 'search.inAuthors', 'search.inAbstract', 'search.publishedAfter', 'search.publishedBefore' , 'search.journal', 'search.publisher', 'search.tags'], newValues => {
+          $scope.$watchGroup(['search.query', 'search.page', 'search.period', 'search.sortOrder', 'search.inTitle', 'search.inAuthors', 'search.inAbstract', 'search.publishedAfter', 'search.publishedBefore', 'search.journal', 'search.publisher', 'search.tags'], newValues => {
             let searchQuery = newValues[0];
             let searchPage = newValues[1];
 
@@ -121,33 +124,39 @@ export default function(app) {
             let journals = [];
 
             _.forEach($scope.search.documents, document => {
-              journals.push(document.journal.nameLong);
+              if (_.indexOf(journals, document.journal.nameLong) === -1) {
+                journals.push(document.journal.nameLong);
+              }
             });
 
             return journals;
-          }
+          };
 
           $scope.getAllPublishers = function() {
             let publishers = [];
 
             _.forEach($scope.search.documents, document => {
-              publishers.push(document.publisher);
+              if (_.indexOf(publishers, document.publisher) === -1) {
+                publishers.push(document.publisher);
+              }
             });
 
             return publishers;
-          }
+          };
 
           $scope.getAllTags = function() {
             let tags = [];
 
             _.forEach($scope.search.documents, document => {
               _.forEach(document.tags, tag => {
-                tags.push(tag.value);
+                if (_.indexOf(tags, tag.value) === -1) {
+                  tags.push(tag.value);
+                }
               });
             });
 
             return tags;
-          }
+          };
 
           $scope.getAllYears = function() {
             let years = [];
@@ -157,7 +166,7 @@ export default function(app) {
             }
 
             return years;
-          }
+          };
 
           $scope.filterForDate = function(dateString) {
             let dateObj = new Date(dateString);
