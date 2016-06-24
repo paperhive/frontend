@@ -117,6 +117,38 @@ export default function(app) {
             $scope.search.tags += tag.value;
           };
 
+          $scope.getAllJournals = function() {
+            let journals = [];
+
+            _.forEach($scope.search.documents, document => {
+              journals.push(document.journal.nameLong);
+            });
+
+            return journals;
+          }
+
+          $scope.getAllPublishers = function() {
+            let publishers = [];
+
+            _.forEach($scope.search.documents, document => {
+              publishers.push(document.publisher);
+            });
+
+            return publishers;
+          }
+
+          $scope.getAllTags = function() {
+            let tags = [];
+
+            _.forEach($scope.search.documents, document => {
+              _.forEach(document.tags, tag => {
+                tags.push(tag.value);
+              });
+            });
+
+            return tags;
+          }
+
           $scope.filterForDate = function(dateString) {
             let dateObj = new Date(dateString);
 

@@ -48,19 +48,13 @@
           </div>
           <div class="radio">
             <label>
-              <input type="radio" name="srch-period" id="srch-period-thisyear" value="thisyear" ng-model="search.period" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"> This year
+              <input type="radio" name="srch-period" id="srch-period-lastmonth" value="lastmonth" ng-model="search.period" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"> Last month
             </label>
           </div>
 
           <div class="radio">
             <label>
               <input type="radio" name="srch-period" id="srch-period-lastyear" value="lastyear" ng-model="search.period" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"> Last year
-            </label>
-          </div>
-
-          <div class="radio">
-            <label>
-              <input type="radio" name="srch-period" id="srch-period-thisdecade" value="thisdecade" ng-model="search.period" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"> This decade
             </label>
           </div>
 
@@ -115,6 +109,8 @@
             ng-model="search.journal"
             ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
             autocomplete="off"
+            uib-typeahead="journal for journal in getAllJournals() | filter:$viewValue"
+            typeahead-focus-first="false"
           >
         </div>
 
@@ -129,6 +125,8 @@
             ng-model="search.publisher"
             ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
             autocomplete="off"
+            uib-typeahead="journal for journal in getAllPublishers() | filter:$viewValue"
+            typeahead-focus-first="false"
           >
         </div>
 
@@ -143,6 +141,8 @@
             ng-model="search.tags"
             ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
             autocomplete="off"
+            uib-typeahead="journal for journal in getAllTags() | filter:$viewValue"
+            typeahead-focus-first="false"
           >
         </div>
 
