@@ -149,6 +149,16 @@ export default function(app) {
             return tags;
           }
 
+          $scope.getAllYears = function() {
+            let years = [];
+
+            for (let i = 1900; i <= (new Date()).getFullYear(); i++) {
+              years.push(i);
+            }
+
+            return years;
+          }
+
           $scope.filterForDate = function(dateString) {
             let dateObj = new Date(dateString);
 

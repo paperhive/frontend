@@ -67,7 +67,7 @@
           <div class="form-inline">
             <div class="form-group">
               <label for="srch-period-from">From:</label>
-              <input
+<!--               <input
                 type="text"
                 class="form-control"
                 placeholder="1950"
@@ -78,11 +78,22 @@
                 autocomplete="off"
                 size="4"
                 ng-disabled="search.period != 'custom'"
+              > -->
+              <select
+                class="form-control"
+                name="srch-period-from"
+                id="srch-period-from"
+                ng-model="search.publishedAfter"
+                ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
+                size="1"
+                ng-disabled="search.period != 'custom'"
               >
+                <option ng-repeat="year in getAllYears()" value="{{year}}">{{year}}</option>
+              </select>
             </div>
             <div class="form-group">
               <label for="srch-period-until">Until:</label>
-              <input
+<!--               <input
                 type="text"
                 class="form-control"
                 placeholder="2012"
@@ -93,7 +104,19 @@
                 autocomplete="off"
                 size="4"
                 ng-disabled="search.period != 'custom'"
+              > -->
+              <select
+                class="form-control"
+                name="srch-period-from"
+                name="srch-period-until"
+                id="srch-period-until"
+                ng-model="search.publishedBefore"
+                ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
+                size="1"
+                ng-disabled="search.period != 'custom'"
               >
+                <option ng-repeat="year in getAllYears()" value="{{year}}">{{year}}</option>
+              </select>
             </div>
           </div>
         </div>
