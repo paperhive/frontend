@@ -25,8 +25,8 @@ export default function(app) {
             $scope.search.page = $location.search().page || 1;
 
             $scope.search.period = $location.search().period || 'any';
-            $scope.search.periodFrom = $location.search().periodFrom || 1900;
-            $scope.search.periodUntil = $location.search().periodUntil || (new Date()).getFullYear();
+            $scope.search.publishedAfter = $location.search().publishedAfter || 1900;
+            $scope.search.publishedBefore = $location.search().publishedBefore || (new Date()).getFullYear();
 
             $scope.search.inTitle = ($location.search().inTitle === false ? false : true);
             $scope.search.inAuthors = ($location.search().inAuthors === false ? false : true);
@@ -46,8 +46,8 @@ export default function(app) {
               query: $scope.search.query,
               page: page,
               period: $scope.search.period,
-              periodFrom: $scope.search.periodFrom,
-              periodUntil: $scope.search.periodUntil,
+              publishedAfter: $scope.search.publishedAfter,
+              publishedBefore: $scope.search.publishedBefore,
               inTitle: $scope.search.inTitle,
               inAuthors: $scope.search.inAuthors,
               inAbstract: $scope.search.inAbstract,
@@ -74,8 +74,8 @@ export default function(app) {
                 skip: (page - 1) * maxPerPage,
                 restrictToLatest: true,
                 period: $scope.search.period,
-                periodFrom: $scope.search.periodFrom,
-                periodUntil: $scope.search.periodUntil,
+                publishedAfter: $scope.search.publishedAfter,
+                publishedBefore: $scope.search.publishedBefore,
                 inTitle: $location.search().inTitle,
                 inAuthors: $location.search().inAuthors,
                 inAbstract: $location.search().inAbstract,
@@ -98,7 +98,7 @@ export default function(app) {
             );
           };
 
-          $scope.$watchGroup(['search.query', 'search.page', 'search.period', 'search.inTitle', 'search.inAuthors', 'search.inAbstract', 'search.periodFrom', 'search.periodUntil', 'search.journal', 'search.publisher', 'search.tags'], newValues => {
+          $scope.$watchGroup(['search.query', 'search.page', 'search.period', 'search.inTitle', 'search.inAuthors', 'search.inAbstract', 'search.publishedAfter', 'search.publishedBefore' , 'search.journal', 'search.publisher', 'search.tags'], newValues => {
             let searchQuery = newValues[0];
             let searchPage = newValues[1];
 
@@ -121,8 +121,8 @@ export default function(app) {
             let dateObj = new Date(dateString);
 
             $scope.search.period = 'custom';
-            $scope.search.periodFrom = dateObj.getFullYear();
-            $scope.search.periodUntil = dateObj.getFullYear();
+            $scope.search.publishedAfter = dateObj.getFullYear();
+            $scope.search.publishedBefore = dateObj.getFullYear();
           };
 
         }
