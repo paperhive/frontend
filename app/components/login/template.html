@@ -81,7 +81,19 @@
           <span class="help-block">
             <span ng-if="login.error" class="text-danger">
               <i class="fa fa-fw fa-times"></i>
-              {{login.error}}
+              <span ng-if="login.errorStatus === 401 && login.error === 'Invalid credentials.'">
+                Sorry, we don't recognize those credentials. If you forgot your password click
+                <a style="cursor: pointer;" href="./password/request?{{
+                  {returnPath: auth.returnPath, emailOrUsername: login.emailOrUsername} |
+                  queryString }}"
+                >
+                  here
+                </a>
+                .
+              </span>
+              <span ng-if="!(login.errorStatus === 401 && login.error === 'Invalid credentials.')">
+                {{login.error}}
+              </span>
             </span>
           </span>
         </div>
