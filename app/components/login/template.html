@@ -83,7 +83,7 @@
               <i class="fa fa-fw fa-times"></i>
               <span ng-if="login.errorStatus === 401">
                 Sorry, we don't recognize those credentials. If you forgot your password click
-                <a style="cursor: pointer;" href="./password/request?{{
+                <a href="./password/request?{{
                   {returnPath: auth.returnPath, emailOrUsername: login.emailOrUsername} |
                   queryString }}"
                 >here</a>.
