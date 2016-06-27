@@ -47,6 +47,7 @@ export default function(app) {
         .when('/knowledgeunlatched', 'knowledgeunlatched')
         .when('/legalnotice', 'legalnotice')
         .when('/login', 'login')
+        .when('/markdown', 'markdown')
         .when('/password/request', 'passwordRequest')
         .when('/password/reset', 'passwordReset')
         .when('/publishers', 'publishers')
@@ -254,6 +255,11 @@ export default function(app) {
         .segment('login', {
           template: '<login></login>',
           title: 'Log in to · Paperhive'
+        })
+
+        .segment('markdown', {
+          template: '<markdown></markdown>',
+          title: 'Markdown cheat sheet',
         })
 
         .segment('search', {
