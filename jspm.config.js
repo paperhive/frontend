@@ -75,6 +75,7 @@ SystemJS.config({
     "readline": "github:jspm/nodelibs-readline@0.2.0-alpha",
     "rx": "npm:rx@4.1.0",
     "socket.io-client": "github:socketio/socket.io-client@1.4.6",
+    "strip-indent": "npm:strip-indent@2.0.0",
     "url": "github:jspm/nodelibs-url@0.2.0-alpha"
   },
   packages: {
