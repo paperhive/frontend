@@ -15,7 +15,7 @@ export default function(app) {
           # Title
           This is a text.
           ## Subtitle
-          It's very easy to make some words **bold** and other words *italic* with Markdown. You can even [link to Google!](http://google.com).
+          It's very easy to make some words **bold** and other words *italic* with Markdown. You can even [link to PaperHive](https://paperhive.org/).
 
           Any word wrapped with two tildes (like ~~this~~) will appear crossed out.
           `).trim();
