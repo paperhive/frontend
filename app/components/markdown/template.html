@@ -46,6 +46,38 @@
     </div>
   </div>
 
-  <h3 class="ph-heading-light">More infomation can be found here: <a href="">link</a></h3>
+  <h3 class="ph-heading-light">Headers and quotes</h3>
+  <div class="row">
+    <div class="col-md-6">
+      <textarea
+        class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
+        elastic
+        style="width: 100%;"
+        ng-model="headers"
+      ></textarea>
+    </div>
+    <div class="col-md-6">
+      <kramjax body="headers"></kramjax>
+    </div>
+  </div>
+
+  <h3 class="ph-heading-light">Code</h3>
+  <div class="row">
+    <div class="col-md-6">
+      <textarea
+        class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
+        elastic
+        style="width: 100%;"
+        ng-model="code"
+      ></textarea>
+    </div>
+    <div class="col-md-6">
+      <kramjax body="code"></kramjax>
+    </div>
+  </div>
+
+  <h3 class="ph-heading-light">More elements can be found here:
+    <a href="http://kramdown.gettalong.org/syntax.html">kramdown Syntax</a>
+  </h3>
 
 </div>
