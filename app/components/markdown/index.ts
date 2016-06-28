@@ -14,28 +14,20 @@ export default function(app) {
         ctrl.toc = [];
 
         $scope.text = stripIndent(`
-          # Title
-          This is a text.
-          ## Subtitle
-          ### Another deeper title
-
           Paragraphs are separated by a blank line.
 
           It's very easy to make some words *italic* and other words **bold**.
-
           Any word wrapped with two tildes (like ~~this~~) will appear crossed out.
 
           A horizontal line looks like this:
 
           ---
-
           You can even link to [PaperHive](https://paperhive.org/).
 
         `).trim();
 
         $scope.lists = stripIndent(`
           Bullet list:
-
           * Start a line with a star
           * Food
             * Fruits
@@ -45,7 +37,6 @@ export default function(app) {
           ***
 
           Numbered list:
-
           1. One
           2. Two
           3. Three
@@ -58,12 +49,13 @@ export default function(app) {
         `).trim();
 
         $scope.headers = stripIndent(`
-          # Structured documents
-          Sometimes it's useful to have different levels of headings to structure your documents. Start lines with a \`#\` to create headings. Multiple \`##\` in a row denote smaller heading sizes.
+          You can structure your texts in the following way:
 
-          ### This is a third-tier heading
+          # Title
+          ## Subtitle
+          ### Another deeper title
 
-          You can use one \`#\` all the way up to \`######\` six for different heading sizes.
+          You can use one \`#\` all the way up to \`######\` six for different title sizes.
 
           If you'd like to quote someone, use the > character before the line:
 
