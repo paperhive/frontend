@@ -1,87 +1,111 @@
 <div class="container ph-lg-margin-bottom">
-  <h2 id="markdown">Markdown cheat sheet</h2>
-
-  PaperHive allows you to use Markdown syntax any place in the user interface
-  where you can enter a comment. You can link to external websites, insert images,
-  use $$LaTeX$$ and ```code blocks```.
-
-  <h3 class="ph-heading-light">Text</h3>
-  <div class="row">
-    <div class="col-md-6">
-      <textarea
-        class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
-        elastic
-        style="width: 100%;"
-        ng-model="text"
-      ></textarea>
+  <div class="row ph-equal-height">
+    <div class="col-md-3">
+      <div class="ph-affix" affix affix-offset-top="$root.navbarSize.height">
+        <!-- sections -->
+        <ul ng-if="$ctrl.toc.length" class="nav ph-sidenav">
+          <li ng-repeat="section in $ctrl.toc"
+              ng-class="{active: section.active}">
+            <a href="#{{section.id}}">{{section.text}}</a>
+            <!-- subsections -->
+            <ul ng-if="section.subToc" class="nav ph-sidenav-sub">
+              <li ng-repeat="subsection in section.subToc"
+                  ng-class="{active: subsection.active}">
+                <a href="#{{subsection.id}}">
+                  {{subsection.text}}
+                  <i class="fa fa-chevron-right fa-fw"></i>
+                </a>
+              </li>
+            </ul><!-- /subsections -->
+          </li>
+        </ul><!-- /sections -->
+      </div>
     </div>
-    <div class="col-md-6">
-      <kramjax body="text"></kramjax>
+    <div class="col-md-9" toc="$ctrl.toc" toc-scrollspy-offset="$root.navbarSize.height + 100">
+      <h2 id="markdown">Markdown cheat sheet</h2>
+
+      PaperHive allows you to use Markdown syntax any place in the user interface
+      where you can enter a comment. You can link to external websites, insert images,
+      use $$LaTeX$$ and ```code blocks```.
+
+      <h3 class="ph-heading-light" toc-level="1" id="text">Text</h3>
+      <div class="row">
+        <div class="col-md-5">
+          <textarea
+            class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
+            elastic
+            style="width: 100%;"
+            ng-model="text"
+          ></textarea>
+        </div>
+        <div class="col-md-7">
+          <kramjax body="text"></kramjax>
+        </div>
+      </div>
+
+      <h3 class="ph-heading-light" toc-level="2" id="lists">Lists</h3>
+      <div class="row">
+        <div class="col-md-5">
+          <textarea
+            class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
+            elastic
+            style="width: 100%;"
+            ng-model="lists"
+          ></textarea>
+        </div>
+        <div class="col-md-7">
+          <kramjax body="lists"></kramjax>
+        </div>
+      </div>
+
+      <h3 class="ph-heading-light" toc-level="2" id="images">Images</h3>
+      <div class="row">
+        <div class="col-md-5">
+          <textarea
+            class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
+            elastic
+            style="width: 100%;"
+            ng-model="image"
+          ></textarea>
+        </div>
+        <div class="col-md-7">
+          <kramjax body="image"></kramjax>
+        </div>
+      </div>
+
+      <h3 class="ph-heading-light" toc-level="1" id="headers">Headers and quotes</h3>
+      <div class="row">
+        <div class="col-md-5">
+          <textarea
+            class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
+            elastic
+            style="width: 100%;"
+            ng-model="headers"
+          ></textarea>
+        </div>
+        <div class="col-md-7">
+          <kramjax body="headers"></kramjax>
+        </div>
+      </div>
+
+      <h3 class="ph-heading-light">Code</h3>
+      <div class="row">
+        <div class="col-md-5">
+          <textarea
+            class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
+            elastic
+            style="width: 100%;"
+            ng-model="code"
+          ></textarea>
+        </div>
+        <div class="col-md-7">
+          <kramjax body="code"></kramjax>
+        </div>
+      </div>
+
+      <h3 class="ph-heading-light">More elements can be found here:
+        <a href="http://kramdown.gettalong.org/syntax.html">kramdown Syntax</a>
+      </h3>
     </div>
   </div>
-
-  <h3 class="ph-heading-light">Lists</h3>
-  <div class="row">
-    <div class="col-md-6">
-      <textarea
-        class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
-        elastic
-        style="width: 100%;"
-        ng-model="lists"
-      ></textarea>
-    </div>
-    <div class="col-md-6">
-      <kramjax body="lists"></kramjax>
-    </div>
-  </div>
-
-  <h3 class="ph-heading-light">Images</h3>
-  <div class="row">
-    <div class="col-md-6">
-      <textarea
-        class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
-        elastic
-        style="width: 100%;"
-        ng-model="image"
-      ></textarea>
-    </div>
-    <div class="col-md-6">
-      <kramjax body="image"></kramjax>
-    </div>
-  </div>
-
-  <h3 class="ph-heading-light">Headers and quotes</h3>
-  <div class="row">
-    <div class="col-md-6">
-      <textarea
-        class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
-        elastic
-        style="width: 100%;"
-        ng-model="headers"
-      ></textarea>
-    </div>
-    <div class="col-md-6">
-      <kramjax body="headers"></kramjax>
-    </div>
-  </div>
-
-  <h3 class="ph-heading-light">Code</h3>
-  <div class="row">
-    <div class="col-md-6">
-      <textarea
-        class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
-        elastic
-        style="width: 100%;"
-        ng-model="code"
-      ></textarea>
-    </div>
-    <div class="col-md-6">
-      <kramjax body="code"></kramjax>
-    </div>
-  </div>
-
-  <h3 class="ph-heading-light">More elements can be found here:
-    <a href="http://kramdown.gettalong.org/syntax.html">kramdown Syntax</a>
-  </h3>
-
 </div>

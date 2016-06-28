@@ -11,6 +11,8 @@ export default function(app) {
       function($scope) {
         const ctrl = this;
 
+        ctrl.toc = [];
+
         $scope.text = stripIndent(`
           # Title
           This is a text.
