@@ -31,21 +31,55 @@
       </p>
 
       <h3 class="ph-heading-light" toc-level="1" id="text">Text</h3>
+
+      <h4 class="ph-heading-light" toc-level="2" id="paragraph">Paragraph</h4>
       <div class="row ph-lg-margin-bottom">
         <div class="col-md-6">
           <textarea
             class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
             elastic
             style="width: 100%;"
-            ng-model="$ctrl.text"
+            ng-model="$ctrl.paragraph"
           ></textarea>
         </div>
         <div class="col-md-6">
-          <kramjax body="$ctrl.text"></kramjax>
+          <kramjax body="$ctrl.paragraph"></kramjax>
         </div>
       </div>
 
-      <h3 class="ph-heading-light" toc-level="1" id="headers">Headers and quotes</h3>
+      <h4 class="ph-heading-light" toc-level="2" id="fontStyle">Font style</h4>
+      <div class="row ph-lg-margin-bottom">
+        <div class="col-md-6">
+          <textarea
+            class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
+            elastic
+            style="width: 100%;"
+            ng-model="$ctrl.fontStyle"
+          ></textarea>
+        </div>
+        <div class="col-md-6">
+          <kramjax body="$ctrl.fontStyle"></kramjax>
+        </div>
+      </div>
+
+      <h4 class="ph-heading-light" toc-level="2" id="link">Link</h4>
+      <div class="row ph-lg-margin-bottom">
+        <div class="col-md-6">
+          <textarea
+            class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
+            elastic
+            style="width: 100%;"
+            ng-model="$ctrl.link"
+          ></textarea>
+        </div>
+        <div class="col-md-6">
+          <kramjax body="$ctrl.link"></kramjax>
+        </div>
+      </div>
+
+      <h3 class="ph-heading-light" toc-level="1" id="structure">Structure</h3>
+
+      <h4 class="ph-heading-light" toc-level="2" id="headers">Headers</h4>
       <div class="row ph-lg-margin-bottom">
         <div class="col-md-6">
           <textarea
@@ -60,7 +94,7 @@
         </div>
       </div>
 
-      <h3 class="ph-heading-light" toc-level="1" id="lists">Lists</h3>
+      <h4 class="ph-heading-light" toc-level="2" id="lists">Lists</h4>
       <div class="row ph-lg-margin-bottom">
         <div class="col-md-6">
           <textarea
@@ -72,6 +106,36 @@
         </div>
         <div class="col-md-6">
           <kramjax body="$ctrl.lists"></kramjax>
+        </div>
+      </div>
+
+      <h4 class="ph-heading-light" toc-level="2" id="separator">Separator</h4>
+      <div class="row ph-lg-margin-bottom">
+        <div class="col-md-6">
+          <textarea
+            class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
+            elastic
+            style="width: 100%;"
+            ng-model="$ctrl.separator"
+          ></textarea>
+        </div>
+        <div class="col-md-6">
+          <kramjax body="$ctrl.separator"></kramjax>
+        </div>
+      </div>
+
+      <h4 class="ph-heading-light" toc-level="2" id="quote">Quote</h4>
+      <div class="row ph-lg-margin-bottom">
+        <div class="col-md-6">
+          <textarea
+            class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
+            elastic
+            style="width: 100%;"
+            ng-model="$ctrl.quote"
+          ></textarea>
+        </div>
+        <div class="col-md-6">
+          <kramjax body="$ctrl.quote"></kramjax>
         </div>
       </div>
 
