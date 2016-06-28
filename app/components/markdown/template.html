@@ -43,11 +43,11 @@
             class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
             elastic
             style="width: 100%;"
-            ng-model="text"
+            ng-model="$ctrl.text"
           ></textarea>
         </div>
         <div class="col-md-6">
-          <kramjax body="text"></kramjax>
+          <kramjax body="$ctrl.text"></kramjax>
         </div>
       </div>
 
@@ -58,11 +58,11 @@
             class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
             elastic
             style="width: 100%;"
-            ng-model="headers"
+            ng-model="$ctrl.headers"
           ></textarea>
         </div>
         <div class="col-md-6">
-          <kramjax body="headers"></kramjax>
+          <kramjax body="$ctrl.headers"></kramjax>
         </div>
       </div>
 
@@ -73,11 +73,11 @@
             class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
             elastic
             style="width: 100%;"
-            ng-model="lists"
+            ng-model="$ctrl.lists"
           ></textarea>
         </div>
         <div class="col-md-6">
-          <kramjax body="lists"></kramjax>
+          <kramjax body="$ctrl.lists"></kramjax>
         </div>
       </div>
 
@@ -88,11 +88,11 @@
             class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
             elastic
             style="width: 100%;"
-            ng-model="image"
+            ng-model="$ctrl.image"
           ></textarea>
         </div>
         <div class="col-md-6">
-          <kramjax body="image"></kramjax>
+          <kramjax body="$ctrl.image"></kramjax>
         </div>
       </div>
 
@@ -103,11 +103,26 @@
             class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
             elastic
             style="width: 100%;"
-            ng-model="code"
+            ng-model="$ctrl.code"
           ></textarea>
         </div>
         <div class="col-md-6">
-          <kramjax body="code"></kramjax>
+          <kramjax body="$ctrl.code"></kramjax>
+        </div>
+      </div>
+
+      <h3 class="ph-heading-light" toc-level="1" id="formulas">Formulas</h3>
+      <div class="row ph-lg-margin-bottom">
+        <div class="col-md-6">
+          <textarea
+            class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
+            elastic
+            style="width: 100%;"
+            ng-model="$ctrl.formulas"
+          ></textarea>
+        </div>
+        <div class="col-md-6">
+          <kramjax body="$ctrl.formulas"></kramjax>
         </div>
       </div>
 

@@ -7,13 +7,12 @@ export default function(app) {
   app.component('markdown', {
     template,
     controller: [
-      '$scope',
-      function($scope) {
+      function() {
         const ctrl = this;
 
         ctrl.toc = [];
 
-        $scope.text = stripIndent(`
+        ctrl.text = stripIndent(`
           Paragraphs are separated by a blank line.
 
           It's very easy to make some words *italic* and other words **bold**.
@@ -26,9 +25,9 @@ export default function(app) {
 
         `).trim();
 
-        $scope.lists = stripIndent(`
+        ctrl.lists = stripIndent(`
           Bullet list:
-          * Start a line with a star
+          * Start a line with an asterisk
           * Food
             * Fruits
               * Oranges
@@ -42,13 +41,13 @@ export default function(app) {
           3. Three
         `).trim();
 
-        $scope.image = stripIndent(`
+        ctrl.image = stripIndent(`
           If you want to embed images, this is how you do it:
 
           ![Image of Einstein](https://upload.wikimedia.org/wikipedia/commons/6/6f/Einstein-formal_portrait-35.jpg)
         `).trim();
 
-        $scope.headers = stripIndent(`
+        ctrl.headers = stripIndent(`
           You can structure your texts in the following way:
 
           # Title
@@ -64,7 +63,7 @@ export default function(app) {
           > This is the second paragraph.
         `).trim();
 
-        $scope.code = stripIndent(`
+        ctrl.code = stripIndent(`
           If you have inline code blocks, you can wrap them in backticks: \`var example = true\`.  If you've got a longer block of code, you can indent with four spaces:
 
               if (isAwesome){
@@ -79,6 +78,8 @@ export default function(app) {
           }
           \`\`\`
         `).trim();
+
+        ctrl.formulas = ``;
 
       }
     ]
