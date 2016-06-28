@@ -79,7 +79,10 @@ export default function(app) {
           \`\`\`
         `).trim();
 
-        ctrl.formulas = ``;
+        ctrl.formulas = stripIndent(`
+          Formulas like $$e=mc^2$$ can be used inline or as a display block when it is on a separate line:
+          \$\$\\int_\\Omega \\nabla u \\cdot \\nabla v~dx = \\int_\\Omega fv~dx\$\$
+        `).trim();
 
       }
     ]
