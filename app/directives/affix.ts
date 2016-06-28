@@ -50,10 +50,8 @@ export default function(app) {
 
             // get position of parent
             const offsetParent = element[0].offsetParent;
-            console.log(offsetParent);
             if (!offsetParent) { return; }
             const parentRect = offsetParent.getBoundingClientRect();
-            console.log(parentRect);
 
             // positioned normally
             let top = 0;
@@ -68,7 +66,6 @@ export default function(app) {
                 // affixed to bottom of container
                 element.css({position: 'relative', top: parentRect.height - height});
               } else {
-                console.log('top')
                 // affixed to top of viewport (plus offsetTop)
                 element.css({
                   position: 'relative',
