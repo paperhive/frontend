@@ -44,7 +44,7 @@ export default function(app) {
                 params.offsetBottom - 1,
               element[0].scrollHeight
             ]);
-            //const height = element[0].scrollHeight;
+            // const height = element[0].scrollHeight;
             // TODO: revisit
             element.css({height: height + 'px'});
 
