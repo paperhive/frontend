@@ -1,3 +1,9 @@
+<style>
+  img[alt="Image of Einstein"] {
+    width: 70%;
+  }
+</style>
+
 <div class="container ph-lg-margin-bottom">
   <div class="row ph-equal-height">
     <div class="col-md-3">
@@ -21,16 +27,18 @@
         </ul><!-- /sections -->
       </div>
     </div>
+
     <div class="col-md-9" toc="$ctrl.toc" toc-scrollspy-offset="$root.navbarSize.height + 100">
       <h2 id="markdown">Markdown cheat sheet</h2>
-
-      PaperHive allows you to use Markdown syntax any place in the user interface
-      where you can enter a comment. You can link to external websites, insert images,
-      use $$LaTeX$$ and ```code blocks```.
+      <p>
+        PaperHive allows you to use Markdown syntax any place in the user interface
+        where you can enter a comment. You can link to external websites, insert images,
+        use $$LaTeX$$ and ```code blocks```.
+      </p>
 
       <h3 class="ph-heading-light" toc-level="1" id="text">Text</h3>
-      <div class="row">
-        <div class="col-md-5">
+      <div class="row ph-lg-margin-bottom">
+        <div class="col-md-6">
           <textarea
             class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
             elastic
@@ -38,14 +46,14 @@
             ng-model="text"
           ></textarea>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-6">
           <kramjax body="text"></kramjax>
         </div>
       </div>
 
-      <h3 class="ph-heading-light" toc-level="2" id="lists">Lists</h3>
-      <div class="row">
-        <div class="col-md-5">
+      <h3 class="ph-heading-light" toc-level="1" id="lists">Lists</h3>
+      <div class="row ph-lg-margin-bottom">
+        <div class="col-md-6">
           <textarea
             class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
             elastic
@@ -53,14 +61,14 @@
             ng-model="lists"
           ></textarea>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-6">
           <kramjax body="lists"></kramjax>
         </div>
       </div>
 
-      <h3 class="ph-heading-light" toc-level="2" id="images">Images</h3>
-      <div class="row">
-        <div class="col-md-5">
+      <h3 class="ph-heading-light" toc-level="1" id="images">Images</h3>
+      <div class="row ph-lg-margin-bottom">
+        <div class="col-md-6">
           <textarea
             class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
             elastic
@@ -68,14 +76,14 @@
             ng-model="image"
           ></textarea>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-6">
           <kramjax body="image"></kramjax>
         </div>
       </div>
 
       <h3 class="ph-heading-light" toc-level="1" id="headers">Headers and quotes</h3>
-      <div class="row">
-        <div class="col-md-5">
+      <div class="row ph-lg-margin-bottom">
+        <div class="col-md-6">
           <textarea
             class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
             elastic
@@ -83,14 +91,14 @@
             ng-model="headers"
           ></textarea>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-6">
           <kramjax body="headers"></kramjax>
         </div>
       </div>
 
-      <h3 class="ph-heading-light">Code</h3>
-      <div class="row">
-        <div class="col-md-5">
+      <h3 class="ph-heading-light" toc-level="1" id="code">Code</h3>
+      <div class="row ph-lg-margin-bottom">
+        <div class="col-md-6">
           <textarea
             class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
             elastic
@@ -98,7 +106,7 @@
             ng-model="code"
           ></textarea>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-6">
           <kramjax body="code"></kramjax>
         </div>
       </div>

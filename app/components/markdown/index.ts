@@ -17,27 +17,45 @@ export default function(app) {
           # Title
           This is a text.
           ## Subtitle
-          It's very easy to make some words **bold** and other words *italic* with Markdown. You can even [link to PaperHive](https://paperhive.org/).
+          ### Another deeper title
+
+          Paragraphs are separated by a blank line.
+
+          It's very easy to make some words *italic* and other words **bold**.
 
           Any word wrapped with two tildes (like ~~this~~) will appear crossed out.
-          `).trim();
+
+          A horizontal line looks like this:
+
+          ---
+
+          You can even link to [PaperHive](https://paperhive.org/).
+
+        `).trim();
 
         $scope.lists = stripIndent(`
-          Sometimes you want numbered lists:
+          Bullet list:
+
+          * Start a line with a star
+          * Food
+            * Fruits
+              * Oranges
+              * Apples
+
+          ***
+
+          Numbered list:
 
           1. One
           2. Two
           3. Three
+        `).trim();
 
-          ***
+        $scope.image = stripIndent(`
+          If you want to embed images, this is how you do it:
 
-          Sometimes you want bullet points:
-
-          * Start a line with a star
-          * Profit!
-          `).trim();
-
-        $scope.image = "If you want to embed images, this is how you do it: ![Image of Einstein](https://upload.wikimedia.org/wikipedia/commons/6/6f/Einstein-formal_portrait-35.jpg)";
+          ![Image of Einstein](https://upload.wikimedia.org/wikipedia/commons/6/6f/Einstein-formal_portrait-35.jpg)
+        `).trim();
 
         $scope.headers = stripIndent(`
           # Structured documents
@@ -50,20 +68,18 @@ export default function(app) {
           If you'd like to quote someone, use the > character before the line:
 
           > This is a blockquote.
-          >     on multiple lines
-          that may be lazy.
           >
           > This is the second paragraph.
         `).trim();
 
         $scope.code = stripIndent(`
-          There are many different ways to style code with markdown. If you have inline code blocks, wrap them in backticks: \`var example = true\`.  If you've got a longer block of code, you can indent with four spaces:
+          If you have inline code blocks, you can wrap them in backticks: \`var example = true\`.  If you've got a longer block of code, you can indent with four spaces:
 
               if (isAwesome){
                  return true
               }
 
-          PaperHive also supports something called code fencing, which allows for multiple lines without indentation:
+          Or you can write multiple lines without indentation by using \`\`\`:
 
           \`\`\`
           if (isAwesome){
