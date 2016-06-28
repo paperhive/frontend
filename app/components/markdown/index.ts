@@ -67,7 +67,7 @@ export default function(app) {
         `).trim();
 
         ctrl.image = stripIndent(`
-          If you want to embed images, this is how you do it:
+          If you want to insert images, this is how you do it:
 
           ![Image of Einstein](https://upload.wikimedia.org/wikipedia/commons/6/6f/Einstein-formal_portrait-35.jpg)
         `).trim();
