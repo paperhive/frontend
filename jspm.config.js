@@ -58,6 +58,7 @@ SystemJS.config({
     "assert": "github:jspm/nodelibs-assert@0.2.0-alpha",
     "async": "npm:async@2.0.0-rc.5",
     "buffer": "github:jspm/nodelibs-buffer@0.2.0-alpha",
+    "dentist": "npm:dentist@1.0.0",
     "fs": "github:jspm/nodelibs-fs@0.2.0-alpha",
     "highlightjs": "github:components/highlightjs@9.3.0",
     "javascript-detect-element-resize": "github:sdecima/javascript-detect-element-resize@0.5.3",
@@ -75,7 +76,6 @@ SystemJS.config({
     "readline": "github:jspm/nodelibs-readline@0.2.0-alpha",
     "rx": "npm:rx@4.1.0",
     "socket.io-client": "github:socketio/socket.io-client@1.4.6",
-    "strip-indent": "npm:strip-indent@2.0.0",
     "url": "github:jspm/nodelibs-url@0.2.0-alpha"
   },
   packages: {
