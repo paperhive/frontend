@@ -59,11 +59,11 @@ export default function(app) {
         `).trim();
 
         ctrl.quote = stripIndent(`
-          If you'd like to quote someone, use the > character before the line:
+          If you'd like to quote someone, use the \> character before the line:
 
-          > This is a blockquote.
-          >
-          > This is the second paragraph.
+          \> This is a blockquote.
+          \>
+          \> This is the second paragraph.
         `).trim();
 
         ctrl.image = stripIndent(`
