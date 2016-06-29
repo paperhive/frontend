@@ -4,7 +4,7 @@ import { dedent } from 'dentist';
 import template from './template.html';
 
 export default function(app) {
-  app.component('markdown', {
+  app.component('helpMarkdown', {
     template,
     controller: [
       function() {
