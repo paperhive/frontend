@@ -85,8 +85,8 @@ export default function(app) {
         `);
 
         ctrl.formulas = dedent(`
-          Formulas like $$e=mc^2$$ can be used inline or as a display block when it is on a separate line:
-          \$\$\\int_\\Omega \\nabla u \\cdot \\nabla v~dx = \\int_\\Omega fv~dx\$\$
+          You can use $$\\LaTeX$$ to typeset formulas. A formula can be displayed inline, e.g. $$e=mc^2$$, or as a block:
+          $$\\int_\\Omega \\nabla u \\cdot \\nabla v~dx = \\int_\\Omega fv~dx$$
         `);
 
       }
