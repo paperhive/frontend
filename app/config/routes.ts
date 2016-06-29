@@ -47,7 +47,7 @@ export default function(app) {
         .when('/knowledgeunlatched', 'knowledgeunlatched')
         .when('/legalnotice', 'legalnotice')
         .when('/login', 'login')
-        .when('/markdown', 'markdown')
+        .when('/help/markdown', 'markdown')
         .when('/password/request', 'passwordRequest')
         .when('/password/reset', 'passwordReset')
         .when('/publishers', 'publishers')
