@@ -67,7 +67,7 @@
       "angular-route-segment": "github:artch/angular-route-segment@^1.5.1",
       "angulartics-google-analytics": "npm:angulartics-google-analytics@^0.1.4",
       "async": "npm:async@^2.0.0-rc.5",
-      "dentist": "npm:dentist@^1.0.2",
+      "dentist": "npm:dentist@^1.0.3",
       "highlightjs": "github:components/highlightjs@^9.1.0",
       "javascript-detect-element-resize": "github:sdecima/javascript-detect-element-resize@^0.5.3",
       "kramed": "npm:kramed@^0.5.5",
