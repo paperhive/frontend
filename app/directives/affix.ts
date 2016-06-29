@@ -44,8 +44,6 @@ export default function(app) {
                 params.offsetBottom - 1,
               element[0].scrollHeight
             ]);
-            // const height = element[0].scrollHeight;
-            // TODO: revisit
             element.css({height: height + 'px'});
 
             // get position of parent
@@ -73,23 +71,6 @@ export default function(app) {
                 });
               }
             }
-            /*
-            if (parentRect.top <= params.offsetTop) {
-              affixed = true;
-              if (params.useParentHeight &&
-                  -parentRect.top + params.offsetTop + height >
-                  parentRect.height) {
-                // positioned at bottom of parent element
-                console.log(parentRect.height, height)
-                top = parentRect.height - height;
-              } else {
-                // positioned at top
-                top = -parentRect.top + params.offsetTop;
-              }
-            }
-
-            element.css({ top: top + 'px' });
-            */
             const affixedSetter = $parse(attrs.affixed);
             if (affixedSetter && affixedSetter.assign) {
               affixedSetter.assign(scope, affixed);
