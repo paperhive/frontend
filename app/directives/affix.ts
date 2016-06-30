@@ -1,45 +1,25 @@
-import * as _ from 'lodash';
+import { clone, min} from 'lodash';
 // TODO: ts complains about missing default export but this works!
 import jquery from 'jquery';
 
 export default function(app) {
   app.directive(
     'affix',
-    ['$window', '$timeout', '$parse', function($window, $timeout, $parse) {
+    ['$window', '$timeout', function($window, $timeout) {
       return {
         restrict: 'A',
         link: function(scope, element, attrs) {
           const paramsDefault = {
             offsetTop: 0,
             offsetBottom: 0,
-            useParentHeight: true
+            useParentHeight: true,
           };
-          const params = _.clone(paramsDefault);
-
-          // do not call reposition() for each parameter
-          let init = true;
-
-          // watch parameters
-          scope.$watch(attrs.affixOffsetTop, function(offsetTop) {
-            params.offsetTop = offsetTop !== undefined ? offsetTop :
-              paramsDefault.offsetTop;
-            if (!init) { reposition(); }
-          });
-          scope.$watch(attrs.affixOffsetBottom, function(offsetBottom) {
-            params.offsetBottom = offsetBottom !== undefined ? offsetBottom :
-              paramsDefault.offsetBottom;
-            if (!init) { reposition(); }
-          });
-          scope.$watch(attrs.affixUseParentHeight, function(useParentHeight) {
-            params.useParentHeight = useParentHeight !== undefined ?
-              useParentHeight : paramsDefault.useParentHeight;
-            if (!init) { reposition(); }
-          });
+          const params = clone(paramsDefault);
 
           function reposition() {
             // set height of element such that it fits the viewport
             // note: the 1px prevents scroll bars in certain situations
-            const height = _.min([
+            const height = min([
               jquery($window).innerHeight() - params.offsetTop -
                 params.offsetBottom - 1,
               element[0].scrollHeight
@@ -71,11 +51,6 @@ export default function(app) {
                 });
               }
             }
-            const affixedSetter = $parse(attrs.affixed);
-            if (affixedSetter && affixedSetter.assign) {
-              affixedSetter.assign(scope, affixed);
-              scope.$apply();
-            }
           }
 
           $timeout(function() {
@@ -93,9 +68,16 @@ export default function(app) {
               destroyed = true;
             });
 
-            // run once
-            init = false;
-            reposition();
+            // run once and reposition if parameters change
+            scope.$watchGroup(
+              [attrs.affixOffsetTop, attrs.affixOffsetBottom, attrs.affixUseParentHeight],
+              (vals) => {
+                params.offsetTop = vals[0] || paramsDefault.offsetTop;
+                params.offsetBottom = vals[1] || paramsDefault.offsetBottom;
+                params.useParentHeight = vals[2] !== undefined ?
+                  vals[2] : paramsDefault.useParentHeight;
+              }
+            );
           });
         }
       };
