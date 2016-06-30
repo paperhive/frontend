@@ -31,7 +31,7 @@ export default function(app) {
               $location.url(authService.returnPath);
             }, function(data) {
               $scope.login.inProgress = false;
-              $scope.login.error = data && data.message || 'Unknown error';
+              $scope.login.error = data || {message: 'Unknown error'};
             });
           };
         }

@@ -81,7 +81,16 @@
           <span class="help-block">
             <span ng-if="login.error" class="text-danger">
               <i class="fa fa-fw fa-times"></i>
-              {{login.error}}
+              <span ng-if="login.error.status === 401">
+                Invalid email/username and password combination.
+                <a href="./password/request?{{
+                  {returnPath: auth.returnPath, emailOrUsername: login.emailOrUsername} |
+                  queryString }}"
+                >Forgot password?</a>
+              </span>
+              <span ng-if="login.error.status !== 401">
+                {{login.error.message}}
+              </span>
             </span>
           </span>
         </div>
