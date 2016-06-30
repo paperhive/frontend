@@ -1,0 +1,186 @@
+<div class="container ph-xl-margin-bottom">
+  <div class="row ph-equal-height">
+    <div class="col-md-3 hidden-xs hidden-sm">
+      <div class="ph-affix" affix affix-offset-top="$root.navbarSize.height">
+        <!-- sections -->
+        <ul ng-if="$ctrl.toc.length" class="nav ph-sidenav">
+          <li ng-repeat="section in $ctrl.toc"
+              ng-class="{active: section.active}">
+            <a href="#{{section.id}}">{{section.text}}</a>
+            <!-- subsections -->
+            <ul ng-if="section.subToc" class="nav ph-sidenav-sub">
+              <li ng-repeat="subsection in section.subToc"
+                  ng-class="{active: subsection.active}">
+                <a href="#{{subsection.id}}">
+                  {{subsection.text}}
+                  <i class="fa fa-chevron-right fa-fw"></i>
+                </a>
+              </li>
+            </ul><!-- /subsections -->
+          </li>
+        </ul><!-- /sections -->
+      </div>
+    </div>
+
+    <div class="col-md-9" toc="$ctrl.toc" toc-scrollspy-offset="$root.navbarSize.height + 100">
+      <h1 class="ph-heading-light" id="markdown">Markdown cheat sheet</h1>
+      <p>
+        You can enrich your comments by using
+        <a href="http://daringfireball.net/projects/markdown/">Markdown</a>
+        syntax. <a href="#code">Code</a> and <a href="#formulas">formulas</a>
+        can be formatted with <em>PaperHive flavored Markdown</em>
+        (inspired by
+        <a href="https://guides.github.com/features/mastering-markdown/">GitHub</a>).
+      </p>
+
+      <h2 class="ph-heading-light" toc-level="1" id="text">Text</h2>
+
+      <h3 class="ph-heading-light" toc-level="2" id="paragraph">Paragraph</h3>
+      <div class="row ph-lg-margin-bottom">
+        <div class="col-md-6">
+          <textarea
+            class="form-control ph-full-width ph-textarea-elastic ph-textarea-large"
+            elastic
+            ng-model="$ctrl.paragraph"
+          ></textarea>
+        </div>
+        <div class="col-md-6">
+          <kramjax body="$ctrl.paragraph"></kramjax>
+        </div>
+      </div>
+
+      <h3 class="ph-heading-light" toc-level="2" id="fontStyle">Font style</h3>
+      <div class="row ph-lg-margin-bottom">
+        <div class="col-md-6">
+          <textarea
+            class="form-control ph-full-width ph-textarea-elastic ph-textarea-large"
+            elastic
+            ng-model="$ctrl.fontStyle"
+          ></textarea>
+        </div>
+        <div class="col-md-6">
+          <kramjax body="$ctrl.fontStyle"></kramjax>
+        </div>
+      </div>
+
+      <h3 class="ph-heading-light" toc-level="2" id="link">Link</h3>
+      <div class="row ph-lg-margin-bottom">
+        <div class="col-md-6">
+          <textarea
+            class="form-control ph-full-width ph-textarea-elastic ph-textarea-large"
+            elastic
+            ng-model="$ctrl.link"
+          ></textarea>
+        </div>
+        <div class="col-md-6">
+          <kramjax body="$ctrl.link"></kramjax>
+        </div>
+      </div>
+
+      <h2 class="ph-heading-light" toc-level="1" id="structure">Structure</h2>
+
+      <h3 class="ph-heading-light" toc-level="2" id="headers">Headers</h3>
+      <div class="row ph-lg-margin-bottom">
+        <div class="col-md-6">
+          <textarea
+            class="form-control ph-full-width ph-textarea-elastic ph-textarea-large"
+            elastic
+            ng-model="$ctrl.headers"
+          ></textarea>
+        </div>
+        <div class="col-md-6">
+          <kramjax body="$ctrl.headers"></kramjax>
+        </div>
+      </div>
+
+      <h3 class="ph-heading-light" toc-level="2" id="lists">Lists</h3>
+      <div class="row ph-lg-margin-bottom">
+        <div class="col-md-6">
+          <textarea
+            class="form-control ph-full-width ph-textarea-elastic ph-textarea-large"
+            elastic
+            ng-model="$ctrl.lists"
+          ></textarea>
+        </div>
+        <div class="col-md-6">
+          <kramjax body="$ctrl.lists"></kramjax>
+        </div>
+      </div>
+
+      <h3 class="ph-heading-light" toc-level="2" id="separator">Separator</h3>
+      <div class="row ph-lg-margin-bottom">
+        <div class="col-md-6">
+          <textarea
+            class="form-control ph-full-width ph-textarea-elastic ph-textarea-large"
+            elastic
+            ng-model="$ctrl.separator"
+          ></textarea>
+        </div>
+        <div class="col-md-6">
+          <kramjax body="$ctrl.separator"></kramjax>
+        </div>
+      </div>
+
+      <h3 class="ph-heading-light" toc-level="2" id="quote">Quote</h3>
+      <div class="row ph-lg-margin-bottom">
+        <div class="col-md-6">
+          <textarea
+            class="form-control ph-full-width ph-textarea-elastic ph-textarea-large"
+            elastic
+            ng-model="$ctrl.quote"
+          ></textarea>
+        </div>
+        <div class="col-md-6">
+          <kramjax body="$ctrl.quote"></kramjax>
+        </div>
+      </div>
+
+      <h2 class="ph-heading-light" toc-level="1" id="images">Images</h2>
+      <div class="row ph-lg-margin-bottom">
+        <div class="col-md-6">
+          <textarea
+            class="form-control ph-full-width ph-textarea-elastic ph-textarea-large"
+            elastic
+            ng-model="$ctrl.image"
+          ></textarea>
+        </div>
+        <div class="col-md-6">
+          <kramjax body="$ctrl.image"></kramjax>
+        </div>
+      </div>
+
+      <h2 class="ph-heading-light" toc-level="1" id="code">Code</h2>
+      <div class="row ph-lg-margin-bottom">
+        <div class="col-md-6">
+          <textarea
+            class="form-control ph-full-width ph-textarea-elastic ph-textarea-large"
+            elastic
+            ng-model="$ctrl.code"
+          ></textarea>
+        </div>
+        <div class="col-md-6">
+          <kramjax body="$ctrl.code"></kramjax>
+        </div>
+      </div>
+
+      <h2 class="ph-heading-light" toc-level="1" id="formulas">Formulas</h2>
+      <div class="row ph-lg-margin-bottom">
+        <div class="col-md-6">
+          <textarea
+            class="form-control ph-full-width ph-textarea-elastic ph-textarea-large"
+            elastic
+            ng-model="$ctrl.formulas"
+          ></textarea>
+        </div>
+        <div class="col-md-6">
+          <kramjax body="$ctrl.formulas"></kramjax>
+        </div>
+      </div>
+
+      <h2 class="ph-heading-light" toc-level="1" id="advanced">Advanced</h2>
+      More elements can be found here:
+      <a href="http://kramdown.gettalong.org/syntax.html">kramdown syntax</a>
+
+    </div>
+  </div>
+</div>

@@ -9,14 +9,6 @@
       ng-submit="!$ctrl.submitting && commentForm.$valid && $ctrl.submit()"
       novalidate
       >
-      <span class="ph-comment-help pull-right">
-        You can use
-        <a href="http://kramdown.gettalong.org/syntax.html" target="_blank">Markdown</a>,
-        $$<a href="http://en.wikibooks.org/wiki/LaTeX/Mathematics#Symbols"
-          target="_blank">LaTeX</a>$$,
-        ```<a href="https://highlightjs.org/" target="_blank">code blocks</a>```
-      </span>
-
       <textarea
         id="textbody"
         class="form-control ph-comment-body ph-textarea-elastic ph-textarea-large"
@@ -24,7 +16,12 @@
         elastic
         placeholder="Reply..."
         required
-        ></textarea>
+      ></textarea>
+      <span class="ph-comment-help text-muted">
+        Use
+        <a href="./help/markdown" target="_blank" title="Markdown cheat sheet">Markdown</a>
+        to enrich this comment.
+      </span>
       <hr>
       <label for="preview">Preview</label>
       <div class="well well-lg" id="preview">
