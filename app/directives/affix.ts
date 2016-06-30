@@ -24,7 +24,7 @@ export default function(app) {
                 params.offsetBottom - 1,
               element[0].scrollHeight
             ]);
-            element.css({height: height + 'px'});
+            element.css({height: height > 0 ? height + 'px' : 'auto'});
 
             // get position of parent
             const offsetParent = element[0].offsetParent;
