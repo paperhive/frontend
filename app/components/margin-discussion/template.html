@@ -210,11 +210,11 @@
               elastic placeholder="Reply..." required
               ></textarea>
             <div uib-collapse="!state.textFocused && !replyDraft.body">
-              <span class="ph-text-smaller text-muted">
+              <div class="ph-text-smaller text-muted">
                 Use
                 <a href="./help/markdown" target="_blank" title="Markdown cheat sheet">Markdown</a>
                 to enrich this comment.
-              </span>
+              </div>
               <div class="ph-sm-margin-top clearfix">
                 <button type="submit" class="btn btn-primary btn-sm pull-right"
                     ng-disabled="replyForm.$invalid || state.submitting">
