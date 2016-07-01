@@ -5,6 +5,13 @@ export default function(app) {
       controller: [
         '$scope', '$routeParams', '$location', '$http', 'authService', 'config', 'notificationService',
         function($scope, $routeParams, $location, $http, authService, config, notificationService) {
+
+          // if user is already logged in, redirect to '/'
+          if (authService.user) {
+            $location.url('/').replace();
+            return;
+          }
+
           function onLogin(data) {
             $location.url(data.returnUrl);
             if (data.personCreated) {
