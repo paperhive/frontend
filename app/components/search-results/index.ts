@@ -25,8 +25,8 @@ export default function(app) {
             $scope.search.page = $location.search().page || 1;
 
             $scope.search.period = $location.search().period || 'any';
-            $scope.search.publishedAfter = $location.search().publishedAfter || 1900;
-            $scope.search.publishedBefore = $location.search().publishedBefore || (new Date()).getFullYear();
+            $scope.search.publishedAfter = parseInt($location.search().publishedAfter, 10) || 1900;
+            $scope.search.publishedBefore = parseInt($location.search().publishedBefore, 10) || (new Date()).getFullYear();
             $scope.search.sortOrder = $location.search().sortOrder || 'desc';
 
             $scope.search.inTitle = ($location.search().inTitle === false ? false : true);
@@ -37,6 +37,15 @@ export default function(app) {
             $scope.search.publisher = $location.search().publisher || '';
             $scope.search.tags = $location.search().tags || '';
 
+            if ($scope.search.publishedAfter !== 1900 || $scope.search.publishedBefore !== (new Date()).getFullYear()) {
+              $scope.showSearchOptions = true;
+              $scope.showSearchOptionPeriod = true;
+            }
+
+            if ($scope.search.tags !== '') {
+              $scope.showSearchOptions = true;
+              $scope.showSearchOptionTags = true;
+            }
           }
           updateFromLocation();
           $scope.$on('$locationChangeSuccess', updateFromLocation);
@@ -63,6 +72,30 @@ export default function(app) {
             $scope.search.total = undefined;
             $scope.search.documents = undefined;
 
+            const todayDate = new Date();
+            const lastMonth = `0${todayDate.getMonth()}`.slice(-2);
+            const lastMonthDays = `0${(new Date(todayDate.getFullYear(), (todayDate.getMonth()), 0)).getDate()}`.slice(-2);
+            switch ($scope.search.period) {
+              case 'any':
+                $scope.search.publishedBefore = null;
+                $scope.search.publishedAfter = null;
+                break;
+              case 'lastmonth':
+                $scope.search.publishedAfter = `${todayDate.getFullYear()}-${lastMonth}-01`;
+                $scope.search.publishedBefore = `${todayDate.getFullYear()}-${lastMonth}-${lastMonthDays}`;
+                break;
+              case 'lastyear':
+                $scope.search.publishedAfter = `${(todayDate.getFullYear() - 1)}-01-01`;
+                $scope.search.publishedBefore = `${(todayDate.getFullYear() - 1)}-12-31`;
+                break;
+              // case 'custom':
+              //   $scope.search.publishedAfter = `${parseInt($scope.search.publishedAfter, 10)}-01-01`;
+              //   $scope.search.publishedBefore = `${parseInt($scope.search.publishedBefore, 10)}-12-31`;
+              //   break;
+              default:
+                break;
+            }
+
             // $scope.search.searchIn = {
             //   title: true,
             //   authors: true,
@@ -75,7 +108,6 @@ export default function(app) {
                 limit: maxPerPage,
                 skip: (page - 1) * maxPerPage,
                 restrictToLatest: true,
-                period: $scope.search.period,
                 publishedAfter: $scope.search.publishedAfter,
                 publishedBefore: $scope.search.publishedBefore,
                 sortOrder: $scope.search.sortOrder,
@@ -118,6 +150,9 @@ export default function(app) {
               $scope.search.tags += ', ';
             }
             $scope.search.tags += tag.value;
+
+            $scope.showSearchOptions = true;
+            $scope.showSearchOptionTags = true;
           };
 
           $scope.getAllJournals = function() {
@@ -174,6 +209,31 @@ export default function(app) {
             $scope.search.period = 'custom';
             $scope.search.publishedAfter = dateObj.getFullYear();
             $scope.search.publishedBefore = dateObj.getFullYear();
+
+            $scope.showSearchOptions = true;
+            $scope.showSearchOptionPeriod = true;
+          };
+
+          $scope.searchAtLeastInOne = function(item) {
+            let score = 0;
+
+            _.forEach(Object.keys($scope.search), attr => {
+              if (attr.substring(0, 2) === 'in' && attr[2] === attr[2].toUpperCase()) {
+                if ($scope.search[attr] === true) {
+                  score++;
+                }
+              }
+            });
+
+            if (score > 1) {
+                return false;
+            } else {
+              if ($scope.search[item] === false) {
+                return false;
+              } else {
+                return true;
+              }
+            }
           };
 
         }

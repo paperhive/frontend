@@ -19,26 +19,6 @@
           >
         </div>
 
-        <div class="form-group">
-          <label>In:</label><br/>
-
-          <div class="checkbox-inline">
-            <label>
-              <input type="checkbox" ng-model="search.inTitle"> Title
-            </label>
-          </div>
-          <div class="checkbox-inline">
-            <label>
-              <input type="checkbox" ng-model="search.inAuthors"> Authors
-            </label>
-          </div>
-          <div class="checkbox-inline disabled">
-            <label>
-              <input type="checkbox" ng-model="search.inAbstract" disabled> Abstract
-            </label>
-          </div>
-        </div>
-
         <div class="btn-group" data-toggle="buttons">
           <label class="btn btn-default btn-sm">
             <input ng-model="showSearchOptions" type="checkbox" autocomplete="off"> Search Options
@@ -47,147 +27,164 @@
 
         <div uib-collapse="!showSearchOptions" class="ph-lg-margin-top">
           <div class="form-group">
-          <label for="srch-period">Time:</label>
-            <div class="radio">
-              <label>
-                <input type="radio" name="srch-period" id="srch-period-any" value="any" ng-model="search.period" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }" checked> Any time
-              </label>
-            </div>
-            <div class="radio">
-              <label>
-                <input type="radio" name="srch-period" id="srch-period-lastmonth" value="lastmonth" ng-model="search.period" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"> Last month
-              </label>
-            </div>
+            <label>In:</label><br/>
 
-            <div class="radio">
+            <div class="checkbox-inline">
               <label>
-                <input type="radio" name="srch-period" id="srch-period-lastyear" value="lastyear" ng-model="search.period" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"> Last year
+                <input type="checkbox" ng-model="search.inTitle" ng-disabled="searchAtLeastInOne('inTitle')"> Title
               </label>
             </div>
-
-            <div class="radio">
+            <div class="checkbox-inline">
               <label>
-                <input type="radio" name="srch-period" id="srch-period-custom" value="custom" ng-model="search.period" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"> Custom:
+                <input type="checkbox" ng-model="search.inAuthors" ng-disabled="searchAtLeastInOne('inAuthors')"> Authors
               </label>
             </div>
+            <div class="checkbox-inline">
+              <label>
+                <input type="checkbox" ng-model="search.inAbstract" ng-disabled="searchAtLeastInOne('inAbstract')"> Abstract
+              </label>
+            </div>
+          </div>
 
-            <div class="form-inline">
-              <div class="form-group">
-                <label for="srch-period-from">From:</label>
-  <!--               <input
-                  type="text"
-                  class="form-control"
-                  placeholder="1950"
-                  name="srch-period-from"
-                  id="srch-period-from"
-                  ng-model="search.publishedAfter"
-                  ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
-                  autocomplete="off"
-                  size="4"
-                  ng-disabled="search.period != 'custom'"
-                > -->
-                <select
-                  class="form-control"
-                  name="srch-period-from"
-                  id="srch-period-from"
-                  ng-model="search.publishedAfter"
-                  ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
-                  size="1"
-                  ng-disabled="search.period != 'custom'"
-                >
-                  <option ng-repeat="year in getAllYears()" value="{{year}}">{{year}}</option>
-                </select>
+          <div class="form-group">
+
+            <label for="srch-period">
+              <input type="checkbox" ng-model="showSearchOptionPeriod"> Time:
+            </label>
+            <div uib-collapse="!showSearchOptionPeriod">
+              <div class="radio">
+                <label>
+                  <input type="radio" name="srch-period" id="srch-period-any" value="any" ng-model="search.period" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }" checked> Any time
+                </label>
               </div>
-              <div class="form-group">
-                <label for="srch-period-until">Until:</label>
-  <!--               <input
-                  type="text"
-                  class="form-control"
-                  placeholder="2012"
-                  name="srch-period-until"
-                  id="srch-period-until"
-                  ng-model="search.publishedBefore"
-                  ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
-                  autocomplete="off"
-                  size="4"
-                  ng-disabled="search.period != 'custom'"
-                > -->
-                <select
-                  class="form-control"
-                  name="srch-period-until"
-                  id="srch-period-until"
-                  ng-model="search.publishedBefore"
-                  ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
-                  size="1"
-                  ng-disabled="search.period != 'custom'"
-                >
-                  <option ng-repeat="year in getAllYears()" value="{{year}}">{{year}}</option>
-                </select>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="srch-period" id="srch-period-lastmonth" value="lastmonth" ng-model="search.period" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"> Last month
+                </label>
               </div>
+
+              <div class="radio">
+                <label>
+                  <input type="radio" name="srch-period" id="srch-period-lastyear" value="lastyear" ng-model="search.period" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"> Last year
+                </label>
+              </div>
+
+              <div class="radio">
+                <label>
+                  <input type="radio" name="srch-period" id="srch-period-custom" value="custom" ng-model="search.period" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"> Custom:
+                </label>
+              </div>
+
+              <div class="form-inline">
+                <div class="form-group">
+                  <label for="srch-period-from">From:</label>
+                  <select
+                    class="form-control"
+                    name="srch-period-from"
+                    id="srch-period-from"
+                    ng-model="search.publishedAfter"
+                    ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
+                    ng-options="year for year in getAllYears()"
+                    size="1"
+                    ng-disabled="search.period != 'custom'"
+                  >
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="srch-period-until">Until:</label>
+                  <select
+                    class="form-control"
+                    name="srch-period-until"
+                    id="srch-period-until"
+                    ng-model="search.publishedBefore"
+                    ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
+                    ng-options="year for year in getAllYears()"
+                    size="1"
+                    ng-disabled="search.period != 'custom'"
+                  >
+                  </select>
+                </div>
+              </div>
+            </div> <!-- collapse -->
+          </div>
+
+          <div class="form-group">
+            <label for="srch-period-until">
+              <input type="checkbox" ng-model="showSearchOptionSort"> Sort:
+            </label>
+            <div uib-collapse="!showSearchOptionSort">
+              <select
+                class="form-control"
+                name="srch-period-sort"
+                id="srch-period-sort"
+                ng-model="search.sortOrder"
+                ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
+                size="1"
+              >
+                <option value="desc">Newest first</option>
+                <option value="asc">Oldest first</option>
+              </select>
+            </div> <!-- collapse -->
+          </div>
+
+          <div class="form-group">
+            <label for="srch-journal">
+              <input type="checkbox" ng-model="showSearchOptionJournal"> Journal:
+            </label>
+            <div uib-collapse="!showSearchOptionJournal">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="General Relativity and Gravitation"
+                name="srch-journal"
+                id="srch-journal"
+                ng-model="search.journal"
+                ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
+                autocomplete="off"
+                uib-typeahead="journal for journal in getAllJournals() | filter:$viewValue"
+                typeahead-focus-first="false"
+              >
+            </div> <!-- collapse -->
+          </div>
+
+          <div class="form-group">
+            <label for="srch-publisher">
+              <input type="checkbox" ng-model="showSearchOptionPublisher"> Publisher:
+            </label>
+            <div uib-collapse="!showSearchOptionPublisher">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Springer"
+                name="srch-publisher"
+                id="srch-publisher"
+                ng-model="search.publisher"
+                ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
+                autocomplete="off"
+                uib-typeahead="journal for journal in getAllPublishers() | filter:$viewValue"
+                typeahead-focus-first="false"
+              >
             </div>
           </div>
 
           <div class="form-group">
-            <label for="srch-period-until">Sort:</label>
-            <select
-              class="form-control"
-              name="srch-period-sort"
-              id="srch-period-sort"
-              ng-model="search.sortOrder"
-              ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
-              size="1"
-            >
-              <option value="desc">Newest first</option>
-              <option value="asc">Oldest first</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="srch-journal">Journal:</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="General Relativity and Gravitation"
-              name="srch-journal"
-              id="srch-journal"
-              ng-model="search.journal"
-              ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
-              autocomplete="off"
-              uib-typeahead="journal for journal in getAllJournals() | filter:$viewValue"
-              typeahead-focus-first="false"
-            >
-          </div>
-
-          <div class="form-group">
-            <label for="srch-publisher">Publisher:</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Springer"
-              name="srch-publisher"
-              id="srch-publisher"
-              ng-model="search.publisher"
-              ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
-              autocomplete="off"
-              uib-typeahead="journal for journal in getAllPublishers() | filter:$viewValue"
-              typeahead-focus-first="false"
-            >
-          </div>
-
-          <div class="form-group">
-            <label for="srch-tags">Tags:</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Physics, Astrophysics"
-              name="srch-tags"
-              id="srch-tags"
-              ng-model="search.tags"
-              ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
-              autocomplete="off"
-              uib-typeahead="journal for journal in getAllTags() | filter:$viewValue"
-              typeahead-focus-first="false"
-            >
+            <label for="srch-tags">
+              <input type="checkbox" ng-model="showSearchOptionTags"> Tags:
+            </label>
+            <div uib-collapse="!showSearchOptionTags">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Physics, Astrophysics"
+                name="srch-tags"
+                id="srch-tags"
+                ng-model="search.tags"
+                ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
+                autocomplete="off"
+                uib-typeahead="journal for journal in getAllTags() | filter:$viewValue"
+                typeahead-focus-first="false"
+              >
+            </div> <!-- collapse -->
           </div>
 
         </div> <!-- collapse -->
