@@ -42,7 +42,7 @@ export default function(app) {
         .when('/documents/:documentId/revisions/:revisionId', 'documents.revisions')
         .when('/documents/:documentId/about', 'documents.about')
         .when('/contact', 'contact')
-        .when('/terms', 'terms')
+        .when('/help/markdown', 'helpMarkdown')
         .when('/jobs', 'jobs')
         .when('/knowledgeunlatched', 'knowledgeunlatched')
         .when('/legalnotice', 'legalnotice')
@@ -56,6 +56,7 @@ export default function(app) {
         .when('/settings/site', 'settings.site')
         .when('/signup', 'signup')
         .when('/subscribed', 'subscribed')
+        .when('/terms', 'terms')
         .when('/users/:username', 'users')
         .when('/users/:username/activity', 'users.activity')
         .when('/users/:username/profile', 'users.profile')
@@ -212,15 +213,9 @@ export default function(app) {
           ]
         })
 
-        .segment('terms', {
-          template: '<terms></terms>',
-          title: 'Terms and privacy policy · PaperHive',
-          meta: [
-            {
-              name: 'description',
-              content: 'Terms and privacy policy'
-            }
-          ]
+        .segment('helpMarkdown', {
+          template: '<help-markdown></help-markdown>',
+          title: 'Markdown cheat sheet',
         })
 
         .segment('jobs', {
@@ -256,11 +251,6 @@ export default function(app) {
           title: 'Log in to · Paperhive'
         })
 
-        .segment('search', {
-          template: '<search-results></search-results>',
-          title: 'Search results',
-        })
-
         .segment('passwordRequest', {
           template: '<password-request></password-request>',
           title: 'Reset your password · PaperHive',
@@ -274,6 +264,11 @@ export default function(app) {
         .segment('publishers', {
           template: '<publishers></publishers>',
           title: 'PaperHive for publishers and repositories · Paperhive'
+        })
+
+        .segment('search', {
+          template: '<search-results></search-results>',
+          title: 'Search results',
         })
 
         .segment('settings', {
@@ -295,6 +290,17 @@ export default function(app) {
         .segment('subscribed', {
           template: '<subscribed></subscribed>',
           title: 'Successfully subscribed · PaperHive'
+        })
+
+        .segment('terms', {
+          template: '<terms></terms>',
+          title: 'Terms and privacy policy · PaperHive',
+          meta: [
+            {
+              name: 'description',
+              content: 'Terms and privacy policy'
+            }
+          ]
         })
 
         .segment('users', {

@@ -16,6 +16,7 @@ import documentsList from './documents-list/index';
 import extensionButtons from './extension-buttons/index';
 import feedback from './feedback/index';
 import feedbackButton from './feedback-button';
+import helpMarkdown from './helpMarkdown/index';
 import hiveButton from './hive-button';
 import hivedDocs from './hived-docs';
 import hivers from './hivers/index';
@@ -75,6 +76,7 @@ export default function(app) {
   extensionButtons(app);
   feedback(app);
   feedbackButton(app);
+  helpMarkdown(app);
   hiveButton(app);
   hivedDocs(app);
   hivers(app);
