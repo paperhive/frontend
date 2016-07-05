@@ -122,15 +122,15 @@ class DocumentTextCtrl {
     }
     try {
       if (revision.remote.type === 'elsevier') {
+        // extract apiKey from file.url
+        const parsedUrl = urlParse(revision.file.url, true);
+        const apiKey = parsedUrl.query.apiKey;
+
+        const id = revision.pii ? `pii/${revision.pii}` : `doi/${revision.doi}`;
+
         const result = await this.$http.get(
-          `https://api.elsevier.com/content/article/entitlement/doi/${revision.doi}`,
-          {
-            params: {
-              // TODO: use apiKey from config.json
-              apiKey: 'd7cd85afb9582a3d0862eb536dac32b0',
-              httpAccept: 'application/json',
-            }
-          }
+          `https://api.elsevier.com/content/article/entitlement/${id}`,
+          {params: {apiKey, httpAccept: 'application/json'}}
         );
         if (get(result, 'data.entitlement-response.document-entitlement.entitled')) {
           return true;
