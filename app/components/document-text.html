@@ -1,6 +1,6 @@
 <div class="container-fluid">
-  <div ng-if="!$ctrl.activeRevision">
-    <i class="fa fa-spinner fa-spin"></i>
+  <div ng-if="!$ctrl.activeRevision" class="text-center">
+    <i class="fa fa-spinner fa-3x fa-spin"></i>
   </div>
   <div ng-if="$ctrl.activeRevision" class="row ph-md-margin-bottom">
     <div class="col-md-9 ph-document-info">
@@ -131,22 +131,22 @@
       <div class="panel panel-default">
         <div class="panel-body">
           <p>
-            <span class="fa-stack fa-5x">
-              <i class="fa fa-file-o fa-stack-1x"></i>
-              <i class="fa fa-ban fa-stack-2x text-danger"></i>
-            </span>
+          <i class="fa fa-lock fa-5x" aria-hidden="true"></i>
+
           </p>
           <div ng-if="!$ctrl.revisionAccess[$ctrl.activeRevision.revision]">
             <h3>No access to PDF :(</h3>
             <p>
-              Unfortunately, you currently don't have access to the PDF for this
-              document version. This is sad.
+              PaperHive relies on the publisher's access control and,
+              unfortunately, you currently don't have access to this document.
             </p>
             <p>
-              We rely on the publisher's access control, so the document is
-              accessible here if it can be accessed from the publisher's
-              website. So it might be worthwile to check if you have access
-              from an institutional network.
+              It might be worthwhile to check if you can open it from your
+              institutional network.
+            </p>
+            <p ng-if="$ctrl.latestAccessibleRevision">
+              You can also access
+              <a href="./documents/{{$ctrl.latestAccessibleRevision.id}}/revisions/{{$ctrl.latestAccessibleRevision.revision}}">another version of the document</a>.
             </p>
           </div>
           <div ng-if="$ctrl.revisionAccess[$ctrl.activeRevision.revision]">
@@ -157,9 +157,6 @@
               you know where it can be found!
             </p>
           </div>
-          <p>
-            If available, you can select another version from the version dropdown.
-          </p>
         </div>
       </div>
     </div>
