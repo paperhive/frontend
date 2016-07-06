@@ -1,46 +1,50 @@
-<div class="ph-header ph-lg-margin-bottom">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-12">
-        <!-- title -->
-        <div class="media">
-          <div class="media-left">
-            <span class="fa-stack ph-icon">
-              <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
-              <i class="fa fa-file-text-o fa-stack-1x"></i>
-            </span>
-          </div>
-          <div class="media-body ph-vertical-middle">
-            <!--heading-->
-            <h2 class="media-heading">Add an article from arXiv</h2>
-          </div>
-        </div>
+<div class="container ph-xl-margin-bottom">
+  <h1>Import or update a document</h1>
+  <div class="row">
+    <div class="col-md-offset-3 col-md-6">
+      <div class="alert alert-info">
+        Documents are imported automatically to PaperHive, so you usually don't
+        need to take manual action. If a document is missing or outdated, you
+        can trigger a manual import or update here.
       </div>
     </div>
   </div>
-</div>
-<div class="container">
-  <form name="documentNewForm" role="form" novalidate>
-    <div class="form-horizontal">
-      <div class="form-group">
-        <label for="url" class="control-label col-sm-3">
-          arXiv URL
-        </label>
-        <div class="col-sm-6">
-          <input ng-model="url" ng-disabled="submitting"
-            name="url" type="text"
-            class="form-control" id="url"
-            placeholder="Provide arXiv URL"
-            required>
-        </div>
-        <div class="col-sm-3">
-          <button type="submit" ng-disabled="!documentNewForm.$valid || submitting"
-              ng-click="submitApproved()"
-              class="btn btn-primary">
-            <i class="fa fa-fw fa-plus" ng-show="!submitting"></i>
-            <i class="fa fa-fw fa-spinner fa-spin" ng-show="submitting"></i>
-            Add to PaperHive
-          </button>
+  <form name="documentNewForm" role="form" class="form-horizontal" novalidate>
+    <div class="form-group">
+      <label class="col-md-3 control-label">Type</label>
+      <div class="col-md-6">
+        <select class="form-control" ng-model="$ctrl.type">
+          <option value="url">URL (arXiv.org, doi.org, oapen.org)</option>
+          <option value="doi">DOI (ScienceDirect)</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-md-3 control-label">Identifier</label>
+      <div class="col-md-6">
+        <input type="text" class="form-control"
+          ng-model="$ctrl.id"
+          ng-disabled="$ctrl.submitting"
+          required
+        >
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-md-offset-3 col-md-6">
+        <button type="button" name="id" class="btn btn-primary"
+          ng-disabled="!documentNewForm.$valid || $ctrl.submitting"
+          ng-click="$ctrl.submit($ctrl.type, $ctrl.id)"
+        >
+          <i class="fa fa-fw fa-plus" ng-show="!$ctrl.submitting"></i>
+          <i class="fa fa-fw fa-spinner fa-spin" ng-show="$ctrl.submitting"></i>
+          Import or update
+        </button>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-md-offset-3 col-md-6">
+        <div class="alert alert-danger" ng-if="$ctrl.error">
+          <strong>Error:</strong> {{$ctrl.error}}
         </div>
       </div>
     </div>
