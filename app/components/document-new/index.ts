@@ -5,36 +5,33 @@ import template from './template.html';
 export default function(app) {
   app.component('documentNew', {
     template,
-    controller: [
-      '$scope', '$http', '$q', '$location', 'config', 'authService',
-      'notificationService',
-      function(
-        $scope, $http, $q, $location, config, authService,
-        notificationService
-      ) {
-        $scope.check = {};
+    controller: class DocumentNewCtrl {
+      type: string;
 
-        $scope.submitApproved = function() {
-          $scope.submitting = true;
-          $http.post(config.apiUrl + '/documents/', undefined, {
-            params: {url: $scope.url}
-          })
-          .success(function(document) {
-            $scope.submitting = false;
-            $location.path('/documents/' + document.id);
-          })
-          .error(function(data) {
-            $scope.submitting = false;
-            notificationService.notifications.push({
-              type: 'error',
-              message: 'Could not add document: ' +
-                ((data && data.message) ||
-                 'could not add document (unknown reason)')
-            });
-          });
-
-        };
+      error: string;
+      submitting: boolean;
+      static $inject = ['$http', '$location', 'config'];
+      constructor(public $http, public $location, public config) {
+        this.type = 'url';
       }
-    ]
+
+      submit(type, id) {
+        this.submitting = true;
+        this.error = undefined;
+        this.$http.post(`${this.config.apiUrl}/documents/remote`, undefined, {
+          params: {type, id},
+        }).then(
+          response => {
+            this.submitting = false;
+            this.$location.path(`/documents/${response.data.id}`);
+          },
+          response => {
+            this.submitting = false;
+            this.error = response.data && response.data.message ||
+              'unknown reason';
+          }
+        );
+      }
+    }
   });
 };
