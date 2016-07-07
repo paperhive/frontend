@@ -8,7 +8,7 @@
         <label class="text-muted">Version</label>
         <div class="dropdown" is-open="dropdown_open" uib-dropdown>
           <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
-            {{$ctrl.getRevisionDescription($ctrl.activeRevision)}},
+            <span class="ph-document-journal">{{$ctrl.getRevisionDescription($ctrl.activeRevision)}}</span>,
             {{$ctrl.activeRevision.publishedAt | date:'MMM yyyy'}}
             <i class="fa fa-fw fa-caret-down"></i>
           </button>
@@ -18,17 +18,17 @@
               <a ng-if="$ctrl.revisionAccess[revision.revision]"
                  href="./documents/{{revision.id}}/revisions/{{revision.revision}}">
                 <strong ng-if="revision === $ctrl.activeRevision">
-                  {{$ctrl.getRevisionDescription(revision)}},
+                  <span class="ph-document-journal">{{$ctrl.getRevisionDescription(revision)}}</span>,
                   {{revision.publishedAt | date:'MMM yyyy'}}
                 </strong>
                 <span ng-if="revision !== $ctrl.activeRevision">
-                  {{$ctrl.getRevisionDescription(revision)}},
+                  <span class="ph-document-journal">{{$ctrl.getRevisionDescription(revision)}}</span>,
                   {{revision.publishedAt | date:'MMM yyyy'}}
                 </span>
                 <i class="fa fa-fw"></i>
               </a>
               <a ng-if="!$ctrl.revisionAccess[revision.revision]" title="This document is not accessible and cannot be displayed yet.">
-                {{$ctrl.getRevisionDescription(revision)}},
+                <span class="ph-document-journal">{{$ctrl.getRevisionDescription(revision)}}</span>,
                 {{revision.publishedAt | date:'MMM yyyy'}}
                 <i class="fa fa-fw fa-lock"></i>
               </a>
