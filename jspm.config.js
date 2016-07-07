@@ -1,7 +1,7 @@
 SystemJS.config({
   devConfig: {
     "map": {
-      "plugin-babel": "npm:systemjs-plugin-babel@0.0.10",
+      "plugin-babel": "npm:systemjs-plugin-babel@0.0.12",
       "text": "github:systemjs/plugin-text@0.0.8",
       "json": "github:systemjs/plugin-json@0.1.2",
       "ts": "github:frankwallis/plugin-typescript@4.0.16"
@@ -45,7 +45,7 @@ SystemJS.config({
     "npm:*.json"
   ],
   map: {
-    "angular": "github:angular/bower-angular@1.5.5",
+    "angular": "github:angular/bower-angular@1.5.7",
     "angular-animate": "github:angular/bower-angular-animate@1.5.5",
     "angular-bootstrap": "github:angular-ui/bootstrap-bower@1.3.3",
     "angular-leaflet-directive": "github:tombatossals/angular-leaflet-directive@0.10.0",
@@ -58,6 +58,7 @@ SystemJS.config({
     "assert": "github:jspm/nodelibs-assert@0.2.0-alpha",
     "async": "npm:async@2.0.0-rc.5",
     "buffer": "github:jspm/nodelibs-buffer@0.2.0-alpha",
+    "core-js": "npm:core-js@2.4.0",
     "dentist": "npm:dentist@1.0.3",
     "fs": "github:jspm/nodelibs-fs@0.2.0-alpha",
     "highlightjs": "github:components/highlightjs@9.3.0",
@@ -81,17 +82,17 @@ SystemJS.config({
   packages: {
     "github:angular/bower-angular-animate@1.5.5": {
       "map": {
-        "angular": "github:angular/bower-angular@1.5.5"
+        "angular": "github:angular/bower-angular@1.5.7"
       }
     },
     "github:angular/bower-angular-route@1.5.5": {
       "map": {
-        "angular": "github:angular/bower-angular@1.5.5"
+        "angular": "github:angular/bower-angular@1.5.7"
       }
     },
     "github:angular/bower-angular-sanitize@1.5.5": {
       "map": {
-        "angular": "github:angular/bower-angular@1.5.5"
+        "angular": "github:angular/bower-angular@1.5.7"
       }
     },
     "github:jspm/nodelibs-buffer@0.2.0-alpha": {

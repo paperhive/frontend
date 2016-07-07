@@ -5,6 +5,7 @@
  * Licensed under GPL3
  * (https://github.com/paperhive/paperhive-frontend/blob/master/LICENSE)
  */
+import 'core-js/shim';
 
 // import jquery before angular (so angular can use it instead of jqlite)
 import 'jquery';
