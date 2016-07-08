@@ -6,7 +6,7 @@ var port = process.env.HTTP_PORT || 9998;
 var server;
 
 exports.config = {
-  specs: ['loggedIn.js', 'login.js', 'spec.js'],
+  specs: ['test/protractor/**/*.spec.js'],
 
   jasmineNodeOpts: {
     showColors: true,

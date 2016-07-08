@@ -19,7 +19,7 @@
     "lint": "npm run lint:ts",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "karma start --single-run",
-    "test:e2e": "protractor test/protractor/protractor.js",
+    "test:e2e": "protractor protractor.conf.js",
     "watch": "rm -rf build-dev/* && mkdir -p build-dev && npm run build:dev:vendor && npm-run-all -p watch:*",
     "watch:css": "nodemon -e less -w less -x \"npm run build:dev:css\"",
     "watch:html": "nodemon -e html -w html -x \"npm run build:dev:html\"",
