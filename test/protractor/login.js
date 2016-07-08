@@ -4,7 +4,7 @@ describe('login page', function() {
   var form, username;
 
   beforeEach(function () {
-    browser.get(browser.baseUrl + '/login');
+    browser.get('./login');
     form = element(by.name('loginForm'));
   });
 

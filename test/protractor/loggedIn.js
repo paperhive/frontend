@@ -4,7 +4,7 @@ describe('logedIn main page', function() {
   var form, username;
 
   beforeEach(function() {
-    browser.get(browser.baseUrl + '/login');
+    browser.get('./login');
     form = element(by.name('loginForm'));
 
     var emailOrUsername = form.element(by.name('emailOrUsername'));
