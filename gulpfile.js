@@ -3,7 +3,6 @@
 var _ = require('lodash');
 var CacheBuster = require('gulp-cachebust');
 var cachebust = new CacheBuster();
-var connect = require('gulp-connect');
 var del = require('del');
 var fs = require('fs');
 var gulp = require('gulp');
@@ -11,7 +10,6 @@ var gutil = require('gulp-util');
 var htmlmin = require('gulp-htmlmin');
 var imagemin = require('gulp-imagemin');
 var merge = require('merge-stream');
-var protractor = require('gulp-protractor').protractor;
 var rename = require('gulp-rename');
 var streamify = require('gulp-streamify');
 var template = require('gulp-template');
@@ -49,12 +47,14 @@ function handleError(error) {
   process.exit(1);
 }
 
+/* TODO: run via package.json scripts
 gulp.task('htmlhint', function() {
   return gulp.src([paths.index, paths.templates], {base: 'src'})
     .pipe(htmlhint(htmlhintOpts))
     .pipe(htmlhint.reporter())
     .pipe(htmlhint.failReporter());
 });
+*/
 
 // bundle html templates via angular's templateCache
 // The templates reference the static files, and since they are cachebusted,
@@ -186,23 +186,4 @@ gulp.task('index', function() {
     .pipe(dev ? gutil.noop() : htmlmin(htmlminOpts))
     .pipe(rename('index.html'))
     .pipe(gulp.dest(dev ? 'build-dev' : 'build'));
-});
-
-// serve without watchin (no livereload)
-gulp.task('serve-nowatch', function() {
-  connect.server({
-    root: 'build'
-  });
-});
-
-// test
-gulp.task('test', ['serve-nowatch'], function() {
-  gulp.src(['./test/protractor/*.js'])
-  .pipe(protractor({
-    configFile: 'test/protractor/protractor.js'
-  }))
-  .on('error', handleError)
-  .on('end', function(e) {
-    connect.serverClose();
-  });
 });
