@@ -1,100 +1,44 @@
 <div class="container">
   <h3 class="ph-no-margin-top">
     <inline-editable
-      original-content="discussion.title"
-      can-edit="auth.user.id === discussion.author.id"
-      on-save="discussion.title = $content; updateTitle($content);"
+      content="$ctrl.discussion.title"
+      can-edit="auth.user.id === $ctrl.discussion.author.id"
+      on-submit="$ctrl.updateDiscussion({title: content})"
       >
     </inline-editable>
   </h3>
-  <a href="./users/{{discussion.author.account.username}}">
-    {{discussion.author.displayName}}</a>
+  <a href="./users/{{$ctrl.discussion.author.account.username}}">
+    {{$ctrl.discussion.author.displayName}}</a>
   opened this discussion
-  <span am-time-ago="discussion.createdAt"></span>
-  <span ng-if="discussion.replies.length == 1">
-    &middot; {{discussion.replies.length}} reply
+  <span am-time-ago="$ctrl.discussion.createdAt"></span>
+  <span ng-if="$ctrl.discussion.replies.length == 1">
+    &middot; {{$ctrl.discussion.replies.length}} reply
   </span>
-  <span ng-if="discussion.replies.length > 1">
-    &middot; {{discussion.replies.length}} replies
+  <span ng-if="$ctrl.discussion.replies.length > 1">
+    &middot; {{$ctrl.discussion.replies.length}} replies
   </span>
 
-  <div ng-if="discussion.target.text">
+  <div ng-if="$ctrl.discussion.target.selectors.textQuote.content">
     <hr>
     <h4>Referenced text</h4>
     <div class="well well-lg ph-reference">
       <blockquote>
-        {{discussion.target.text}}
+        {{$ctrl.discussion.target.selectors.textQuote.content}}
       </blockquote>
     </div>
   </div>
 
   <hr>
   <div class="row">
-    <div class="col-md-10">
-      <ul class="media-list">
-        <li class="media">
-          <comment
-            content="discussion"
-            on-update="updateDiscussion($comment)"
-            requires-body="false"
-            deletable="false"
-            >
-          </comment>
-        </li>
 
-        <li ng-repeat="reply in discussion.replies"
-            class="media" id="reply.id">
-          <comment
-            content="reply"
-            on-delete="deleteReply($comment)"
-            on-update="updateReply($comment, $index)"
-            requires-body="true"
-            deletable="true"
-            >
-          </comment>
-        </li>
-
-        <li class="media">
-          <div ng-if="auth.user">
-            <a class="media-left" href="./users/{{auth.user.account.username}}">
-              <avatar user="auth.user" size="80" classes="img-circle">
-              </avatar>
-            </a>
-            <div class="media-body">
-              <div class="panel panel-default">
-                <div class="panel-body">
-                  <new-reply on-submit="addReply($body)"></new-reply>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            ng-if="!auth.user"
-            class="media-body ph-login-info-block"
-            >
-            <div class="panel panel-default">
-              <div class="panel-body">
-                <a href="./signup?returnPath={{auth.returnPath}}">Sign up</a>
-                or
-                <a href="./login?returnPath={{auth.returnPath}}">log in</a>
-                to join this discussion on PaperHive.
-              </div>
-            </div>
-          </div>
-
-        </li>
-      </ul>
-    </div>
-
-    <div class="col-md-2">
+    <div class="col-md-2 col-md-push-10 ph-lg-margin-bottom">
       <!--a href="#">
         <h5>
           Labels <span class="pull-right"><i class="fa fa-gear"></i></span>
         </h5>
       </a-->
       <!--ul class="ph-tags">
-        <li ng-repeat="label in discussion.tags">
+        <li ng-repeat="label in $ctrl.discussion.tags">
         <a href="#" class="btn btn-default {{label}}">{{label}}</a>
         </li>
       </ul>
@@ -117,7 +61,48 @@
       </span>
       <hr-->
       <h5>Participants</h5>
-      <avatar-list discussion="discussion"></avatar-list>
+      <avatar-list discussion="$ctrl.discussion"></avatar-list>
+    </div>
+
+    <div class="col-md-10 col-md-pull-2">
+      <comment
+        content="$ctrl.discussion"
+        on-update="$ctrl.updateDiscussion({body: $comment.body})"
+        requires-body="false"
+        deletable="false"
+        class="ph-md-margin-bottom"
+        >
+      </comment>
+
+      <comment ng-repeat="reply in $ctrl.discussion.replies"
+        content="reply"
+        on-delete="$ctrl.onReplyDelete({reply: reply})"
+        on-update="$ctrl.onReplyUpdate({reply: $comment})"
+        requires-body="true"
+        deletable="true"
+        id="reply.id"
+        class="ph-md-margin-bottom"
+      ></comment>
+
+      <new-reply
+        ng-if="auth.user"
+        on-submit="addReply(reply)"
+        class="ph-md-margin-bottom"
+      ></new-reply>
+
+      <div ng-if="!auth.user" class="ph-md-margin-bottom ph-comment-row">
+        <div class="ph-discussion-not-auth-user">
+          <i class="fa fa-user fa-4x"></i>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <a href="./signup?returnPath={{auth.returnPath}}">Sign up</a>
+            or
+            <a href="./login?returnPath={{auth.returnPath}}">log in</a>
+            to join this discussion on PaperHive.
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>

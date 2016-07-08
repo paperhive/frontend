@@ -1,17 +1,20 @@
-<div class="ph-margin-container">
+<div
+    class="ph-margin-container"
+    on-outside-mousedown="!comment.title && !comment.body && $ctrl.onDiscard()"
+  >
   <div ng-if="auth.user" class="ph-margin-row">
     <!-- avatar -->
     <avatar user="auth.user" size="38"
         classes="ph-margin-avatar img-circle"
         ></avatar>
-    <div class="ph-margin-row-container">
+    <div class="ph-margin-base-row">
       <!-- arrow -->
       <div class="ph-margin-arrow-container">
         <div class="ph-arrow ph-arrow-outward-left"></div>
       </div>
       <!-- row content -->
       <div class="ph-margin-row-content">
-        <form ng-submit="commentForm.$valid && submit()"
+        <form ng-submit="commentForm.$valid && $ctrl.submit()"
           name="commentForm" novalidate>
           <div class="form-group ph-no-margin has-feedback"
             ng-class="{'has-error': commentForm.title.$dirty &&
@@ -43,11 +46,16 @@
               class="form-group form-control ph-comment-body ph-no-margin ph-margin-textarea ph-textarea-elastic ph-textarea-small"
               >
             </textarea>
+            <div class="ph-text-smaller text-muted">
+              Use
+              <a href="./help/markdown" target="_blank" title="Markdown cheat sheet">Markdown</a>
+              to enrich this comment.
+            </div>
             <div class="ph-sm-margin-top clearfix">
-              <button ng-disabled="commentForm.$invalid || state.submitting"
+              <button ng-disabled="commentForm.$invalid || $ctrl.submitting"
                   class="btn btn-sm btn-primary pull-right">
-                <i ng-if="!state.submitting" class="fa fa-fw fa-check"></i>
-                <i ng-if="state.submitting" class="fa fa-fw fa-spinner fa-spin"></i>
+                <i ng-if="!$ctrl.submitting" class="fa fa-fw fa-check"></i>
+                <i ng-if="$ctrl.submitting" class="fa fa-fw fa-spinner fa-spin"></i>
                 Add comment
               </button>
             </div>
@@ -63,7 +71,7 @@
         <i class="fa fa-user"></i>
       </div>
     </div>
-    <div class="ph-margin-row-container">
+    <div class="ph-margin-base-row">
       <!-- arrow -->
       <div class="ph-margin-arrow-container">
         <div class="ph-arrow ph-arrow-outward-left"></div>

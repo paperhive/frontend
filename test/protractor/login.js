@@ -31,7 +31,7 @@ describe('login page', function() {
     password.sendKeys('c0d1ng4lifeYO');
     emailLoginButton.click();
 
-    expect(browser.getCurrentUrl()).toBe(this.url);
+    expect(browser.getCurrentUrl()).toBe(this.url + '/');
   });
 
   it('should stay in log in page if credentials does not match', function() {
@@ -41,6 +41,6 @@ describe('login page', function() {
     emailOrUsername.sendKeys('user');
     emailLoginButton.click();
 
-    expect(browser.getCurrentUrl()).toBe(this.url + 'login');
+    expect(browser.getCurrentUrl()).toBe(this.url + '/login');
   });
 });

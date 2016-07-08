@@ -1,14 +1,41 @@
 'use strict';
 
+var liveServer = require('live-server');
+
+var port = process.env.HTTP_PORT || 9999;
+var server;
+
 exports.config = {
-  specs: ['spec.js'],
+  specs: ['loggedIn.js', 'login.js', 'spec.js'],
 
   jasmineNodeOpts: {
     showColors: true,
     defaultTimeoutInterval: 60000
   },
 
-  baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8080')
+  baseUrl: 'http://localhost:' + port,
+
+  onPrepare: function() {
+    server = liveServer.start({
+      root: 'build/',
+      file: 'index.html',
+      port: port,
+      open: false,
+      watch: ['non-existing']
+    });
+    return new Promise(function(resolve, reject) {
+      server.addListener('listening', resolve);
+      server.addListener('error', reject);
+    });
+  },
+  onComplete: function() {
+    return new Promise(function(resolve, reject) {
+      server.close(function (err) {
+        if (err) return reject(err);
+        resolve();
+      });
+    });
+  }
 };
 
 if (process.env.SAUCE_ONDEMAND_BROWSERS) {
@@ -17,10 +44,12 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
   exports.config.multiCapabilities = [];
   JSON.parse(process.env.SAUCE_ONDEMAND_BROWSERS).forEach(function(entry) {
     exports.config.multiCapabilities.push({
-      'name': 'PaperHive (' + entry.browser + ')',
-      'browserName': entry.browser,
-      'platform': entry.platform,
-      'build': process.env.BUILD_NUMBER
+      name: 'PaperHive (' + entry.browser + ')',
+      browserName: entry.browser,
+      version: entry['browser-version'],
+      // andré: OS seems to be platform!
+      platform: entry.os,
+      build: process.env.BUILD_NUMBER
     });
     // Test against deployed platform
     exports.config.baseUrl = process.env.TEST_URL;

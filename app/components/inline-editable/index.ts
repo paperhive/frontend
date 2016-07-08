@@ -1,38 +1,32 @@
 'use strict';
 
-import template from './template.html!text';
+import template from './template.html';
 
 export default function(app) {
   app.component('inlineEditable', {
     bindings: {
-      originalContent: '<',
+      content: '<',
       canEdit: '<',
-      onSave: '&'
+      onSubmit: '&'
     },
     template,
-    controller: [
-      '$scope',
-      function($scope) {
-        const ctrl = this;
+    controller: ['$scope', '$q', function($scope, $q) {
+      const $ctrl = this;
 
-        $scope.$watch('$ctrl.originalContent', function(data) {
-          ctrl.content = data;
-        });
+      $scope.$watch('$ctrl.content', content => $ctrl.contentCopy = content);
+      $ctrl.isEditMode = false;
 
-        ctrl.c = {
-          isEditMode: false
-        };
+      $ctrl.reset = () => {
+        $ctrl.contentCopy = $ctrl.content;
+        $ctrl.isEditMode = false;
+      };
 
-        ctrl.reset = function() {
-          ctrl.c.isEditMode = false;
-          ctrl.content = ctrl.originalContent;
-        };
-
-        ctrl.update = function(newContent) {
-          ctrl.onSave({$content: newContent});
-          ctrl.c.isEditMode = false;
-        };
-      }
-    ]
+      $ctrl.submit = (newContent) => {
+        $ctrl.submitting = true;
+        $q.when($ctrl.onSubmit({content: newContent}))
+          .then(() => $ctrl.isEditMode = false)
+          .finally(() => $ctrl.submitting = false);
+      };
+    }],
   });
 };

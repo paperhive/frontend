@@ -1,14 +1,21 @@
 'use strict';
+
+import {localStorageAvailable} from '../utils/localStorage';
+
 export default function(app) {
-  app.factory('authService', ['config', '$http', '$q', '$rootScope', '$window', '$location',
-    function(config, $http, $q, $rootScope, $window, $location) {
-      const authService = {
-        loginPromise: undefined,
-        user: undefined,
-        token: undefined,
-        loginToken: undefined,
-        logout: undefined,
-      };
+  app.factory('authState', () => {
+    return {
+      loginPromise: undefined,
+      user: undefined,
+      token: undefined,
+      loginToken: undefined,
+      logout: undefined,
+    };
+  });
+
+  app.factory('authService', ['authState', 'config', '$http', '$q', '$rootScope', '$window', '$location',
+    function(authState, config, $http, $q, $rootScope, $window, $location) {
+      const authService = authState;
 
       // authService.returnPath
       function setReturnPath() {
@@ -79,10 +86,9 @@ export default function(app) {
             authService.token = data.token;
 
             // fires 'storage' event in other tabs
-            $window.localStorage.token = data.token;
-
-            // use token for all subsequent HTTP requests to API
-            $http.defaults.headers.common['Authorization'] = 'token ' + data.token;
+            if (localStorageAvailable) {
+              $window.localStorage.token = data.token;
+            }
 
             deferred.resolve(data);
           })
@@ -141,8 +147,9 @@ export default function(app) {
 
       // sign out and forget token
       authService.logout = function() {
-        delete $window.localStorage.token;
-        delete $http.defaults.headers['Authorization'];
+        if (localStorageAvailable) {
+          delete $window.localStorage.token;
+        }
         delete authService.user;
         delete authService.token;
       };
@@ -167,9 +174,11 @@ export default function(app) {
         $rootScope.$apply();
       });
 
-      // set token from local storage when initializing (if available)
-      if ($window.localStorage.token) {
-        authService.loginToken($window.localStorage.token);
+      if (localStorageAvailable) {
+        // set token from local storage when initializing (if available)
+        if ($window.localStorage.token) {
+          authService.loginToken($window.localStorage.token);
+        }
       }
 
       return authService;

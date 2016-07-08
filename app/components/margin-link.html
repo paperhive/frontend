@@ -1,7 +1,10 @@
-<div class="container-fluid" ng-style="{
+<div class="container-fluid"
+  ng-if="$ctrl.position === 'top' && $ctrl.parentTop < $ctrl.viewportOffsetTop || $ctrl.position === 'bottom'"
+  ng-style="{
     top: ($ctrl.position === 'top' || undefined) && ($ctrl.viewportOffsetTop || 0),
     bottom: ($ctrl.position === 'bottom' || undefined) && ($ctrl.viewportOffsetBottom || 0),
-  }">
+  }"
+>
   <div class="row">
     <div class="col-md-3 col-md-offset-9">
       <div class="ph-margin-link animate-show"
@@ -12,7 +15,7 @@
         ng-show="$ctrl.count > 0"
       >
         <a href="" class="ph-link-icon"
-          scroll-to="{{$ctrl.scrolling ? '' : ('d:' + $ctrl.nextDiscussionId)}}"
+          scroll-to="{{$ctrl.scrolling ? '' : ('discussion:' + $ctrl.nextDiscussionId)}}"
           duration="500"
           offset="{{$ctrl.viewportOffsetTop + 80}}"
           callback-before="$ctrl.scrolling = true"
@@ -23,7 +26,7 @@
             {{$ctrl.count === 1 ? 'discussion' : 'discussions'}}
           </span>
           <span class="ph-margin-link-previous">
-            {{$ctrl.countPrevious}}
+            {{$ctrl.countPrevious}} more
             {{$ctrl.countPrevious === 1 ? 'discussion' : 'discussions'}}
           </span>
           <i ng-if="$ctrl.position === 'top'" class="fa fa-arrow-circle-up"></i>

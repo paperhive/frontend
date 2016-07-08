@@ -5,7 +5,7 @@ NOTE: ng-app is removed because angular is loaded asynchronously via
       SystemJS. Bootstrapping is now initiated in app/index.ts
 -->
 <html lang="en" ng-strict-di>
-  <head ng-controller="MetaCtrl">
+  <head>
     <!-- base href is the entry point of the deployed app -->
     <base href="<%= config.baseHref %>">
     <title data-ng-bind="metaService.data.title"></title>

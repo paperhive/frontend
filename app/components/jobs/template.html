@@ -1,92 +1,76 @@
 <!-- Header Start -->
-<div class="ph-header ph-xl-margin-bottom">
-  <div class="container">
-    <div class="row">
-
-      <div class="col-sm-12">
-        <div class="media">
-
-          <div class="media-left">
-            <!--icon-->
-            <span class="fa-stack ph-icon">
-              <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
-              <i class="fa fa-users fa-stack-1x"></i>
-            </span>
-          </div>
-
-          <div class="media-body ph-vertical-middle">
-            <!--heading-->
-            <h2 class="media-heading ph-no-margin">Jobs</h2>
-            <h4>Join the PaperHive team and help us to make research fun
-              again!</h4>
-          </div>
-
+<div class="container ph-xl-margin-bottom">
+  <h2 id="jobs">Jobs</h2>
+  <h3>Join the PaperHive team</h3>
+  <div class="row">
+    <div class="col-md-8">
+      <p>
+        PaperHive is a software company in the field of scientific research and
+        collaboration. After becoming a part of the
+        <a href="https://www.entrepreneurship.tu-berlin.de/">Centre for
+          Entrepreneurship</a>
+        incubator at the TU Berlin in mid 2015 and receiving the
+        <a href="https://www.exist.de">EXIST startup grant</a> since December
+        2015, the company is releasing its product in Q2 2016.
+      </p>
+      <p>
+        PaperHive is the coworking hub for researchers, aiming to support
+        knowledge-creators in their work and to dramatically increase open
+        collaboration in science.
+      </p>
+      <p>
+        We strive for high diversity in <a href="./about">our team</a> and
+        encourage you to apply regardless of your (and our)
+        identity.
+      </p>
+    </div>
+    <div class="col-md-3 col-md-offset-1">
+      <div class="row">
+        <div class="col-xs-6">
+          <a href="https://www.exist.de">
+            <img src="./static/img/logo_exist.svg"
+              alt="EXIST Existenzgründungen aus der Wissenschaft"
+              class="img-responsive center-block ph-img-hover">
+          </a>
         </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-<!-- Header End -->
-
-<!-- Content Start -->
-<div class="container">
-  <div class="row ph-equal-height">
-
-    <!-- left-row Start -->
-    <div class="col-sm-3 hidden-xs">
-      <div class="ph-affix" affix affix-offset-top="65">
-        <!-- sections -->
-        <ul ng-if="jobsData.toc.length" class="nav ph-sidenav">
-          <li ng-repeat="section in jobsData.toc"
-              ng-class="{active: section.active}">
-            <a href="./jobs#{{section.id}}">{{section.text}}</a>
-            <!-- subsections -->
-            <ul ng-if="section.subToc" class="nav ph-sidenav-sub">
-              <li ng-repeat="subsection in section.subToc"
-                  ng-class="{active: subsection.active}">
-                <a href="./jobs#{{subsection.id}}">
-                  {{subsection.text}}
-                  <i class="fa fa-chevron-right fa-fw"></i>
-                </a>
-              </li>
-            </ul><!-- /subsections -->
-          </li>
-        </ul><!-- /sections -->
-      </div>
-    </div>
-    <!-- left-row End -->
-
-    <!-- right-row Start -->
-    <div class="col-sm-9" toc="jobsData.toc" toc-scrollspy-offset="85">
-      <div>
-        <h3 id="work">Join PaperHive!</h3>
-
-        <div class="row">
-          <div class="col-md-6">
-            <p>
-              If you share our enthusiasm for revolutionizing research
-              communication and if you want to help us: please
-              <a href="./contact">contact us</a>!
-              We strive for high diversity in our team and encourage you to get in
-              touch with us regardless of your (and our) identity.
-            </p>
-          </div>
-          <div class="col-md-6">
-            <p>
-              Our software is built with AngularJS, node.js, MongoDB and
-              Elasticsearch – make sure to let us know if you're experienced with
-              any of these techniques. At PaperHive, we love free software (free as
-              in freedom) and we
-              <a href="https://github.com/paperhive/">contribute</a> to the
-              software we use and the free software ecosystem in general.
-            </p>
-          </div>
+        <div class="col-xs-6">
+          <a href="https://www.entrepreneurship.tu-berlin.de/">
+            <img src="./static/img/logo_cfe.svg"
+              alt="Centre for Entrepreneurship"
+              class="img-responsive center-block ph-img-hover">
+          </a>
         </div>
       </div>
     </div>
-    <!-- right-row End -->
+  </div>
 
+  <div class="row">
+    <div class="col-md-8">
+      <p>
+        We are always looking for incredibly creative developers willing to take over
+        responsibility for engineering our existing
+        application in a user-friendly and sustainable way.
+      </p>
+    </div>
+  </div>
+  <div class="ph-icon-container">
+    <a href="https://angularjs.org/">
+      <img class="img-responsive center-block ph-img-hover" src="./static/img/angular.svg" alt="AngularJS">
+    </a>
+    <a href="https://nodejs.org/">
+      <img class="img-responsive center-block ph-img-hover" src="./static/img/nodejs.svg" alt="Node.js">
+    </a>
+    <a href="https://www.typescriptlang.org/">
+      <img class="img-responsive center-block ph-img-hover" src="./static/img/typescript.svg" alt="TypeScript">
+    </a>
+    <a href="https://en.wikipedia.org/wiki/ECMAScript#6th_Edition">
+      <img class="img-responsive center-block ph-img-hover" src="./static/img/es6.svg" alt="ES6 === ES2015">
+    </a>
+    <a href="https://www.mongodb.org/">
+      <img class="img-responsive center-block ph-img-hover" src="./static/img/mongodb.svg" alt="MongoDB">
+    </a>
+    <a href="https://www.elastic.co/products/elasticsearch">
+      <img class="img-responsive center-block ph-img-hover" src="./static/img/elasticsearch.svg" alt="Elasticsearch">
+    </a>
   </div>
 </div>
-<!-- Content End -->

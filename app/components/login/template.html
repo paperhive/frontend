@@ -3,7 +3,7 @@
   <h2 id="login">Log in</h2>
 
   <h4 class="ph-heading-light ph-md-margin-bottom">
-    New to Paperhive?
+    New to PaperHive?
     <a href="./signup?returnPath={{auth.returnPath}}">
       Sign up
     </a>
@@ -46,7 +46,7 @@
         <div class="form-group" ng-class="{
           'has-error': hasError('emailOrUsername')
         }">
-          <label for="emailOrUsername">Email or Username</label>
+          <label for="emailOrUsername">Email or username</label>
           <input type="text" class="form-control" id="emailOrUsername"
             name="emailOrUsername" ng-model="login.emailOrUsername" required>
           <div class="help-block">
@@ -65,7 +65,7 @@
           <input type="password" class="form-control" id="password"
             name="password" ng-model="login.password" required>
           <a class="ph-forgot-password"
-            ng-href="./password/request?{{ {returnPath: auth.returnPath, emailOrUsername: login.emailOrUsername} | queryString}}"
+            ng-href="./password/request?{{ {returnPath: auth.returnPath, emailOrUsername: login.emailOrUsername} | queryString }}"
             title="Forgot password?"
             tabindex="-1">
             Forgot?
@@ -85,7 +85,16 @@
           <span class="help-block">
             <span ng-if="login.error" class="text-danger">
               <i class="fa fa-fw fa-times"></i>
-              {{login.error}}
+              <span ng-if="login.error.status === 401">
+                Invalid email/username and password combination.
+                <a href="./password/request?{{
+                  {returnPath: auth.returnPath, emailOrUsername: login.emailOrUsername} |
+                  queryString }}"
+                >Forgot password?</a>
+              </span>
+              <span ng-if="login.error.status !== 401">
+                {{login.error.message}}
+              </span>
             </span>
           </span>
         </div>

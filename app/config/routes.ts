@@ -27,31 +27,38 @@ export default function(app) {
         .when('/404', '404')
         .when('/about', 'about')
         .when('/auth/return/:provider', 'authReturn')
+        // register new and redirect before id-dependent routes
         .when('/documents/new', 'documents_new')
-        .when('/documents/:documentId', 'documents')
+        .when('/documents/redirect', 'documents_redirect')
+        .when('/documents/:documentId', 'documents', {reloadOnSearch: false})
+        .when('/documents/:documentId/activity', 'documents.activity')
         .when('/documents/:documentId/discussions', 'documents.discussions')
         .when('/documents/:documentId/hivers', 'documents.hivers')
         // .when('/documents/:documentId/discussions/new',
         //       'documents.discussions.new')
         .when('/documents/:documentId/discussions/:discussionId',
               'documents.discussions.thread')
-        .when('/documents/:documentId/text', 'documents.text')
+        .when('/documents/:documentId/text', 'documents.text', {reloadOnSearch: false})
         .when('/documents/:documentId/revisions/:revisionId', 'documents.revisions')
         .when('/documents/:documentId/about', 'documents.about')
         .when('/contact', 'contact')
-        .when('/terms', 'terms')
+        .when('/help/markdown', 'helpMarkdown')
         .when('/jobs', 'jobs')
+        .when('/knowledgeunlatched', 'knowledgeunlatched')
         .when('/legalnotice', 'legalnotice')
         .when('/login', 'login')
         .when('/password/request', 'passwordRequest')
         .when('/password/reset', 'passwordReset')
-        .when('/searchResults', 'searchResults')
+        .when('/publishers', 'publishers')
+        .when('/search', 'search')
         .when('/settings', 'settings')
         .when('/settings/profile', 'settings.profile')
         .when('/settings/site', 'settings.site')
         .when('/signup', 'signup')
         .when('/subscribed', 'subscribed')
+        .when('/terms', 'terms')
         .when('/users/:username', 'users')
+        .when('/users/:username/activity', 'users.activity')
         .when('/users/:username/profile', 'users.profile')
 
         // Init Main Page
@@ -131,34 +138,45 @@ export default function(app) {
         .segment('documents', {
           template: '<document></document>',
           dependencies: ['documentId'],
-          title: 'Document · PaperHive'
+          title: 'Document · PaperHive',
         })
         .within()
+          .segment('activity', {
+            template: `<div class="container">
+              <activity document="$ctrl.documentId"></activity>
+            </div>`,
+            title: 'Activity · PaperHive'
+          })
           .segment('hivers', {
-            template: '<hivers document-id="documentId"></hivers>',
+            template: '<hivers document-id="$ctrl.documentId"></hivers>',
             title: 'Hivers · PaperHive'
           })
           .segment('discussions', {
-            templateUrl: 'html/documents/discussions/index.html',
+            template: `<div
+              ng-if="$ctrl.discussionsCtrl.discussions"
+              app-view-segment="2"
+            ></div>`,
             title: 'Discussions · PaperHive'
           })
           .within()
             .segment('list', {
               default: true,
-              template: '<discussion-list discussions="discussions"></discussion-list>',
+              template: `<discussion-list
+                document-revision="$ctrl.latestRevision"
+                discussions="$ctrl.discussionsCtrl.discussions"
+              ></discussion-list>`,
               title: 'Discussions · PaperHive'
             })
             .segment('thread', {
               // Ideally, we'd already provide the exact discussion here,
               // rather than all discussions and the discussionId.
               template: `<discussion-thread-view
-                discussions="discussions"
-                on-original-update="originalUpdate($discussion, $comment)"
-                on-reply-submit="replyAdd($discussion, $reply)"
-                on-reply-update="replyUpdate($discussion, $replyOld, $replyNew)"
-                on-reply-delete="replyDelete($discussion, $reply)"
-              >
-              </discussion-thread-view>`,
+                discussions="$ctrl.discussionsCtrl.discussions"
+                on-discussion-update="$ctrl.discussionsCtrl.discussionUpdate(discussion)"
+                on-reply-submit="$ctrl.discussionsCtrl.replySubmit(reply)"
+                on-reply-update="$ctrl.discussionsCtrl.replyUpdate(reply)"
+                on-reply-delete="$ctrl.discussionsCtrl.replyDelete(reply)"
+              ></discussion-thread-view>`,
               dependencies: ['discussionId'],
               title: 'Discussion · PaperHive'
             })
@@ -166,7 +184,7 @@ export default function(app) {
           .segment('text', {
             default: true,
             templateUrl: 'html/documents/text.html',
-            title: 'Document · PaperHive'
+            title: 'Document · PaperHive',
           })
           .segment('revisions', {
             templateUrl: 'html/documents/text.html',
@@ -176,7 +194,11 @@ export default function(app) {
         .up()
         .segment('documents_new', {
           template: '<document-new></document-new>',
-          title: 'Add a New Document · PaperHive'
+          title: 'Add a new document · PaperHive'
+        })
+        .segment('documents_redirect', {
+          template: '<document-redirect></document-redirect>',
+          title: 'Document redirect · PaperHive'
         })
 
         .segment('contact', {
@@ -191,15 +213,9 @@ export default function(app) {
           ]
         })
 
-        .segment('terms', {
-          template: '<terms></terms>',
-          title: 'Terms and Privacy Policy · PaperHive',
-          meta: [
-            {
-              name: 'description',
-              content: 'Terms and Privacy Policy'
-            }
-          ]
+        .segment('helpMarkdown', {
+          template: '<help-markdown></help-markdown>',
+          title: 'Markdown cheat sheet',
         })
 
         .segment('jobs', {
@@ -212,6 +228,11 @@ export default function(app) {
                 'research fun again.'
             }
           ]
+        })
+
+        .segment('knowledgeunlatched', {
+          template: '<documents-list></documents-list>',
+          title: 'Knowledge Unlatched books'
         })
 
         .segment('legalnotice', {
@@ -230,11 +251,6 @@ export default function(app) {
           title: 'Log in to · Paperhive'
         })
 
-        .segment('searchResults', {
-          template: '<search-results></search-results>',
-          title: 'Search results',
-        })
-
         .segment('passwordRequest', {
           template: '<password-request></password-request>',
           title: 'Reset your password · PaperHive',
@@ -243,6 +259,16 @@ export default function(app) {
         .segment('passwordReset', {
           template: '<password-reset></password-reset>',
           title: 'Reset your password · PaperHive',
+        })
+
+        .segment('publishers', {
+          template: '<publishers></publishers>',
+          title: 'PaperHive for publishers and repositories · Paperhive'
+        })
+
+        .segment('search', {
+          template: '<search-results></search-results>',
+          title: 'Search results',
         })
 
         .segment('settings', {
@@ -266,6 +292,17 @@ export default function(app) {
           title: 'Successfully subscribed · PaperHive'
         })
 
+        .segment('terms', {
+          template: '<terms></terms>',
+          title: 'Terms and privacy policy · PaperHive',
+          meta: [
+            {
+              name: 'description',
+              content: 'Terms and privacy policy'
+            }
+          ]
+        })
+
         .segment('users', {
           template: '<user></user>',
           dependencies: ['username'],
@@ -276,6 +313,9 @@ export default function(app) {
             default: true,
             template: '<user-profile user="user"></user-profile>',
             dependencies: ['username']
+          })
+          .segment('activity', {
+            template: `<activity person="user"></activity>`
           })
         .up()
         ;

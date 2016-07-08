@@ -1,7 +1,7 @@
 import angular from 'angular';
 import { forEach } from 'lodash';
 
-import marginLinkTemplate from './margin-link.html!text';
+import marginLinkTemplate from './margin-link.html';
 
 export default function(app) {
   app.component('marginLink', {
@@ -31,7 +31,13 @@ export default function(app) {
           const extraOffset = ctrl.extraOffset || 70;
 
           ctrl.nextDiscussionId = undefined;
+
+          // get position of parent element
+          // (may be null when the element is detached/destroyed)
+          if (!$element[0].parentElement) return;
           const parentBoundingRect = $element[0].parentElement.getBoundingClientRect();
+
+          ctrl.parentTop = parentBoundingRect.top;
 
           // count elements above/below the viewport and get next discussion id
           forEach(ctrl.discussionOffsets, (offset, id) => {
@@ -68,20 +74,23 @@ export default function(app) {
         }
 
         // register updateCount on change of input data
-        $scope.$watchGroup(
-          [
-            '$ctrl.discussionOffsets',
-            '$ctrl.discussionSizes',
-            '$ctrl.viewportOffsetTop'
-          ],
-          updateCount, true
-        );
+        [
+          '$ctrl.discussionOffsets',
+          '$ctrl.discussionSizes',
+          '$ctrl.viewportOffsetTop'
+        ].map(name => $scope.$watch(updateCount, true));
+
+
+        // wrap updateCount with $apply for non-angular events
+        const updateCountApply = () => $scope.$apply(updateCount);
 
         // register/unregister updateCount on scroll and resize events
-        angular.element($window).on('scroll', updateCount);
-        angular.element($window).on('resize', updateCount);
-        $element.on('$destroy', () => angular.element($window).off('scroll', updateCount));
-        $element.on('$destroy', () => angular.element($window).off('resize', updateCount));
+        angular.element($window).on('scroll', updateCountApply);
+        angular.element($window).on('resize', updateCountApply);
+        $element.on('$destroy', () => {
+          angular.element($window).off('scroll', updateCountApply);
+          angular.element($window).off('resize', updateCountApply);
+        });
       }
     ],
   });

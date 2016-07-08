@@ -12,11 +12,6 @@ describe('PaperHive homepage', function() {
     );
   });
 
-  it('should be present browser extension box', function () {
-    var installExtension = element(by.id('extension-buttons'));
-    expect(installExtension.isPresent()).toBe(true);
-  });
-
   it('should be present subscribe form', function () {
     var subscribeForm = element(by.name('subscribeForm'));
     expect(subscribeForm.isPresent()).toBe(true);
@@ -27,7 +22,7 @@ describe('PaperHive homepage', function() {
     expect(aboutUs.isPresent()).toBe(true);
     var linkAboutUs = element(by.id('about-us-link'));
     linkAboutUs.click();
-    expect(browser.getCurrentUrl()).toBe(this.url+'about');
+    expect(browser.getCurrentUrl()).toBe(this.url+'/about');
   });
 
   it('should be present Contact link', function () {
@@ -35,15 +30,15 @@ describe('PaperHive homepage', function() {
     expect(contact.isPresent()).toBe(true);
     var linkContact = element(by.id('contact-link'));
     linkContact.click();
-    expect(browser.getCurrentUrl()).toBe(this.url+'contact');
+    expect(browser.getCurrentUrl()).toBe(this.url+'/contact');
   });
 
   it('should be present Terms of service link', function () {
-    var legalNotice = element(by.linkText('Terms of Service and Privacy Policy'));
+    var legalNotice = element(by.linkText('Terms of service and privacy policy'));
     expect(legalNotice.isPresent()).toBe(true);
     var linkLegalNotice = element(by.id('terms-link'));
     linkLegalNotice.click();
-    expect(browser.getCurrentUrl()).toBe(this.url+'terms');
+    expect(browser.getCurrentUrl()).toBe(this.url+'/terms');
   });
 
   it('should be present Legal notice link', function () {
@@ -51,6 +46,6 @@ describe('PaperHive homepage', function() {
     expect(legalNotice.isPresent()).toBe(true);
     var linkLegalNotice = element(by.id('legal-link'));
     linkLegalNotice.click();
-    expect(browser.getCurrentUrl()).toBe(this.url + 'legalnotice');
+    expect(browser.getCurrentUrl()).toBe(this.url + '/legalnotice');
   });
 });

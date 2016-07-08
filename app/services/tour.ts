@@ -1,25 +1,54 @@
 'use strict';
+
+import {localStorageAvailable} from '../utils/localStorage';
+
 export default function(app) {
   app.factory(
     'tourService',
-    ['$window', 'authService',
-      function($window, authService) {
+    ['$location', '$window', 'authService',
+      function($location, $window, authService) {
         const service = {
-          stages: ['start', 'margin-discussion', 'highlight', 'search', 'hive', 'signup'],
+          stages: [
+            'start',
+            'margin-discussion',
+            'highlight',
+            'search',
+            'hive',
+            'signup'
+          ],
           index: 0,
+          visited: false,
         };
+
+        // get tourVisited from localStorage
+        if (localStorageAvailable) {
+          service.visited = $window.localStorage.tourVisited;
+        }
 
         service.increaseIndex = function() {
           service.index++;
 
           // do not show the tour next time when the last stage has been reached
-          if (service.index === service.stages.length - 1) {
-            $window.localStorage.tourVisited = true;
+          if (service.index === service.stages.length - 1 ||
+              authService.user && (service.index === service.stages.length - 2)
+              ) {
+            service.visited = true;
+            if (localStorageAvailable) {
+              $window.localStorage.tourVisited = true;
+            }
+          }
+        };
+
+        // begin with margin discussion
+        service.start = function () {
+          // reset visited flag
+          service.visited = false;
+          if (localStorageAvailable) {
+            $window.localStorage.tourVisited = false;
           }
 
-          if (authService.user && (service.index === service.stages.length - 2)) {
-            $window.localStorage.tourVisited = true;
-          }
+          service.index = 1;
+          $location.url('/documents/0tsHJq1-yyVZ');
         };
 
         service.setUndefined = function() {
@@ -27,11 +56,11 @@ export default function(app) {
         };
 
         service.reject = function() {
-          // ask local storage if flag 'tourVisited' is already set
-          if (!$window.localStorage.tourVisited) {
-            // set flag at first usage
+          service.visited = true;
+          if (localStorageAvailable) {
             $window.localStorage.tourVisited = true;
           }
+
           service.index = undefined;
         };
 

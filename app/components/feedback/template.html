@@ -1,0 +1,91 @@
+<form name="form" novalidate>
+  <div class="modal-header">
+    <button type="button" class="close" aria-label="Close" title="Close" ng-click="$ctrl.onCancel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h3 class="modal-title">Feedback</h3>
+    <p>Let us know if you have ideas for new features or if you experience any problems! We are constantly including
+    new content in PaperHive, so let us know what publishers and journals you want to see here next!</p>
+  </div>
+  <div class="modal-body">
+    <div class="form-group has-feedback" ng-class="{
+      'has-error': $ctrl.hasError('name'),
+      'has-success': form.name.$valid
+    }">
+      <label for="name">Name</label>
+      <input name="name" type="text" class="form-control" placeholder="Name"
+        ng-model="$ctrl.name"
+        ng-model-options="{updateOn: 'default blur', debounce: {default: 500, blur: 0}}"
+        ng-disabled="$ctrl.submitting" required>
+      <span class="fa fa-fw form-control-feedback" ng-class="{
+        'fa-times': $ctrl.hasError('name'),
+        'fa-check': form.name.$valid
+      }"></span>
+      <div class="help-block">
+        <span ng-if="$ctrl.hasError('name')">
+          <span ng-if="form.name.$error.required">
+            Please enter your name.
+          </span>
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group has-feedback" ng-class="{
+      'has-error': $ctrl.hasError('email'),
+      'has-success': form.email.$valid
+    }">
+      <label for="email">Email address</label>
+      <input name="email" type="email" class="form-control" placeholder="Email"
+        ng-model="$ctrl.email" pattern=".*@.+\..+"
+        ng-model-options="{updateOn: 'default blur', debounce: {default: 1000, blur: 0}}"
+        ng-disabled="$ctrl.submitting" required>
+      <span class="fa fa-fw form-control-feedback" ng-class="{
+        'fa-times': $ctrl.hasError('email'),
+        'fa-check': form.email.$valid
+      }"></span>
+      <div class="help-block">
+        <span ng-if="$ctrl.hasError('email')">
+          <span ng-if="form.email.$error.required">
+            Please enter your email address.
+          </span>
+          <span ng-if="form.email.$error.email || form.email.$error.pattern">
+            The email address you provided is not valid.
+          </span>
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group has-feedback" ng-class="{
+      'has-error': $ctrl.hasError('message'),
+      'has-success': form.message.$valid
+    }">
+      <label for="message">Message</label>
+      <textarea name="message" class="form-control ph-textarea-elastic ph-textarea-large"
+        elastic placeholder="Your message" ng-model="$ctrl.message"
+        required ng-disabled="$ctrl.submitting"
+        ng-model-options="{updateOn: 'default blur', debounce: {default: 500, blur: 0}}"></textarea>
+      <span class="fa fa-fw form-control-feedback" ng-class="{
+        'fa-times': $ctrl.hasError('message'),
+        'fa-check': form.message.$valid
+      }"></span>
+      <div class="help-block">
+        <span ng-if="$ctrl.hasError('message')">
+          <span ng-if="form.message.$error.required">
+            Please enter your message.
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <span class="ph-md-margin-right text-danger" ng-if="$ctrl.error">
+      <i class="fa fa-fw fa-warning"></i> Error: {{$ctrl.error}}
+    </span>
+    <button type="submit" class="btn btn-primary" ng-class="{disabled: form.$invalid}"
+      ng-click="!form.$invalid && $ctrl.submit()">
+      <i ng-if="!$ctrl.submitting" class="fa fa-fw fa-paper-plane"></i>
+      <i ng-if="$ctrl.submitting" class="fa fa-fw fa-spinner fa-spin"></i>
+      Send
+    </button>
+  </div>
+</form>
