@@ -2,7 +2,7 @@
 
 var liveServer = require('live-server');
 
-var port = process.env.HTTP_PORT || 9999;
+var port = process.env.HTTP_PORT || 9998;
 var server;
 
 exports.config = {

@@ -1,5 +1,7 @@
 'use strict';
 
+var utils = require('./utils');
+
 describe('login page', function() {
   var form, username;
 
@@ -30,7 +32,7 @@ describe('login page', function() {
     password.sendKeys('c0d1ng4lifeYO');
     emailLoginButton.click();
 
-    expect(browser.getCurrentUrl()).toBe(browser.baseUrl + '/');
+    utils.expectUrl('./');
   });
 
   it('should stay in log in page if credentials does not match', function() {
@@ -40,6 +42,6 @@ describe('login page', function() {
     emailOrUsername.sendKeys('user');
     emailLoginButton.click();
 
-    expect(browser.getCurrentUrl()).toBe(browser.baseUrl + '/login');
+    utils.expectUrl('./login');
   });
 });

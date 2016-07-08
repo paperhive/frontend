@@ -1,5 +1,7 @@
 'use strict';
 
+var utils = require('./utils');
+
 describe('logedIn main page', function() {
   var form, username;
 
@@ -19,7 +21,7 @@ describe('logedIn main page', function() {
   });
 
   it('should log in', function() {
-    expect(browser.getCurrentUrl()).toBe(browser.baseUrl + '/');
+    utils.expectUrl('./');
   });
 
   it('should have a user menu', function() {
@@ -48,7 +50,7 @@ describe('logedIn main page', function() {
     element.all(by.id('user-menu-items li')).then(function(items) {
       var userProfile = items[0];
       userProfile.click();
-      expect(browser.getCurrentUrl).toBe(browser.baseUrl + 'users/adalovelace');
+      utils.expectUrl('./users/adalovelace');
     });
   });
 
@@ -56,7 +58,7 @@ describe('logedIn main page', function() {
     element.all(by.id('user-menu-items li')).then(function(items) {
       var userAddArXiv = items[1];
       userAddArXiv.click();
-      expect(browser.getCurrentUrl).toBe(browser.baseUrl + 'documents/new');
+      utils.expectUrl('./documents/new');
     });
   });
 
@@ -64,7 +66,7 @@ describe('logedIn main page', function() {
     element.all(by.id('user-menu-items li')).then(function(items) {
       var userSettings = items[2];
       userSettings.click();
-      expect(browser.getCurrentUrl).toBe(browser.baseUrl + 'settings');
+      utils.expectUrl('./settings');
     });
   });
 
