@@ -3,7 +3,7 @@
 var utils = require('./utils');
 
 describe('logedIn main page', function() {
-  var form, username;
+  var form;
 
   beforeEach(function() {
     browser.get('./login');
@@ -38,7 +38,6 @@ describe('logedIn main page', function() {
     listElements.then(function(items) {
 
       expect(items.length).toBe(4);
-      console.log('Items in #user-menu-items', items);
       //	    expect(items[0].getText()).toBe('Profile');
       //	    expect(items[1].getText()).toBe('Add arXiv article');
       //	    expect(items[2].getText()).toBe('Settings');

@@ -16,7 +16,8 @@
     "clean": "rm -rf build*",
     "install-deps": "npm install && bower install && jspm install && typings install",
     "lint:ts": "find app/ -name *.ts | xargs ./node_modules/.bin/tslint",
-    "lint": "npm run lint:ts",
+    "lint:js": "eslint test",
+    "lint": "npm run lint:ts && npm run lint:js",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "karma start --single-run",
     "test:e2e": "protractor protractor.conf.js",
@@ -32,6 +33,7 @@
   "devDependencies": {
     "bower": "^1.6.5",
     "del": "^2.0.2",
+    "eslint": "^3.0.1",
     "gulp": "^3.9.0",
     "gulp-angular-templatecache": "^2.0.0",
     "gulp-cachebust": "^0.0.6",

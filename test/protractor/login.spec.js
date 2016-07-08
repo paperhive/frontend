@@ -3,7 +3,7 @@
 var utils = require('./utils');
 
 describe('login page', function() {
-  var form, username;
+  var form;
 
   beforeEach(function () {
     browser.get('./login');
@@ -37,7 +37,6 @@ describe('login page', function() {
 
   it('should stay in log in page if credentials does not match', function() {
     var emailOrUsername = form.element(by.name('emailOrUsername'));
-    var password = form.element(by.name('password'));
     var emailLoginButton = element(by.id('email-login-button'));
     emailOrUsername.sendKeys('user');
     emailLoginButton.click();
