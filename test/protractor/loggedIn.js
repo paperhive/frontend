@@ -4,8 +4,7 @@ describe('logedIn main page', function() {
   var form, username;
 
   beforeEach(function() {
-    this.url = browser.baseUrl;
-    browser.get(this.url + '/login');
+    browser.get(browser.baseUrl + '/login');
     form = element(by.name('loginForm'));
 
     var emailOrUsername = form.element(by.name('emailOrUsername'));
@@ -49,7 +48,7 @@ describe('logedIn main page', function() {
     element.all(by.id('user-menu-items li')).then(function(items) {
       var userProfile = items[0];
       userProfile.click();
-      expect(browser.getCurrentUrl).toBe(this.url + 'users/adalovelace');
+      expect(browser.getCurrentUrl).toBe(browser.baseUrl + 'users/adalovelace');
     });
   });
 
@@ -57,7 +56,7 @@ describe('logedIn main page', function() {
     element.all(by.id('user-menu-items li')).then(function(items) {
       var userAddArXiv = items[1];
       userAddArXiv.click();
-      expect(browser.getCurrentUrl).toBe(this.url + 'documents/new');
+      expect(browser.getCurrentUrl).toBe(browser.baseUrl + 'documents/new');
     });
   });
 
@@ -65,7 +64,7 @@ describe('logedIn main page', function() {
     element.all(by.id('user-menu-items li')).then(function(items) {
       var userSettings = items[2];
       userSettings.click();
-      expect(browser.getCurrentUrl).toBe(this.url + 'settings');
+      expect(browser.getCurrentUrl).toBe(browser.baseUrl + 'settings');
     });
   });
 
@@ -75,10 +74,8 @@ describe('logedIn main page', function() {
       userLogOut.click();
     });
 
-    expect(browser.getCurrentUrl).toBe(this.url);
+    expect(browser.getCurrentUrl).toBe(browser.baseUrl);
     expect(element(by.id('user-menu-items').isPresent(false)));
 
   });
-
-
 });

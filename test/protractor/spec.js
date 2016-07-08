@@ -1,12 +1,8 @@
 'use strict';
 
 describe('PaperHive homepage', function() {
-  beforeEach(function () {
-    this.url = browser.baseUrl;
-  });
-
   it('Test page title', function() {
-    browser.get(this.url);
+    browser.get(browser.baseUrl);
     expect(browser.getTitle()).toEqual(
       'PaperHive · The coworking hub for researchers'
     );
@@ -22,7 +18,7 @@ describe('PaperHive homepage', function() {
     expect(aboutUs.isPresent()).toBe(true);
     var linkAboutUs = element(by.id('about-us-link'));
     linkAboutUs.click();
-    expect(browser.getCurrentUrl()).toBe(this.url+'/about');
+    expect(browser.getCurrentUrl()).toBe(browser.baseUrl+'/about');
   });
 
   it('should be present Contact link', function () {
@@ -30,7 +26,7 @@ describe('PaperHive homepage', function() {
     expect(contact.isPresent()).toBe(true);
     var linkContact = element(by.id('contact-link'));
     linkContact.click();
-    expect(browser.getCurrentUrl()).toBe(this.url+'/contact');
+    expect(browser.getCurrentUrl()).toBe(browser.baseUrl+'/contact');
   });
 
   it('should be present Terms of service link', function () {
@@ -38,7 +34,7 @@ describe('PaperHive homepage', function() {
     expect(legalNotice.isPresent()).toBe(true);
     var linkLegalNotice = element(by.id('terms-link'));
     linkLegalNotice.click();
-    expect(browser.getCurrentUrl()).toBe(this.url+'/terms');
+    expect(browser.getCurrentUrl()).toBe(browser.baseUrl+'/terms');
   });
 
   it('should be present Legal notice link', function () {
@@ -46,6 +42,6 @@ describe('PaperHive homepage', function() {
     expect(legalNotice.isPresent()).toBe(true);
     var linkLegalNotice = element(by.id('legal-link'));
     linkLegalNotice.click();
-    expect(browser.getCurrentUrl()).toBe(this.url + '/legalnotice');
+    expect(browser.getCurrentUrl()).toBe(browser.baseUrl + '/legalnotice');
   });
 });
