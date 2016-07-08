@@ -11,30 +11,6 @@ exports.config = {
   jasmineNodeOpts: {
     showColors: true,
     defaultTimeoutInterval: 60000
-  },
-
-  baseUrl: 'http://localhost:' + port,
-
-  onPrepare: function() {
-    server = liveServer.start({
-      root: 'build/',
-      file: 'index.html',
-      port: port,
-      open: false,
-      watch: ['non-existing']
-    });
-    return new Promise(function(resolve, reject) {
-      server.addListener('listening', resolve);
-      server.addListener('error', reject);
-    });
-  },
-  onComplete: function() {
-    return new Promise(function(resolve, reject) {
-      server.close(function (err) {
-        if (err) return reject(err);
-        resolve();
-      });
-    });
   }
 };
 
@@ -106,6 +82,28 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
   exports.config.multiCapabilities = [{
     'browserName': 'chrome'
   }];
+  exports.config.baseUrl = 'http://localhost:' + port;
+  exports.config.onPrepare = function() {
+    server = liveServer.start({
+      root: 'build/',
+      file: 'index.html',
+      port: port,
+      open: false,
+      watch: ['non-existing']
+    });
+    return new Promise(function(resolve, reject) {
+      server.addListener('listening', resolve);
+      server.addListener('error', reject);
+    });
+  };
+  exports.config.onComplete = function() {
+    return new Promise(function(resolve, reject) {
+      server.close(function (err) {
+        if (err) return reject(err);
+        resolve();
+      });
+    });
+  };
 }
 
 if (process.env.SAUCE_USER_NAME) {
