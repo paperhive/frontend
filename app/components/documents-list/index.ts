@@ -50,13 +50,11 @@ export default function(app) {
 
         await Promise.all(oapenIds.map(id => {
           return this.$http({
-            url: `${this.config.apiUrl}/documents/search`,
-            params: {url: `http://oapen.org/search?identifier=${id}`},
+            url: `${this.config.apiUrl}/documents/remote`,
+            params: {type: 'oapen', id: id},
           }).then(
-            response => {
-              const document = get(response, 'data.documents[0]');
-              oapenDocuments[id] = document;
-            }
+            response => oapenDocuments[id] = response.data,
+            response => { /* do nothing, the doc is not yet uploaded to oapen */ }
           );
         }));
 

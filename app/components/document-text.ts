@@ -11,6 +11,7 @@ class DocumentTextCtrl {
 
   // internal
   activeRevision: any;
+  latestAccessibleRevision: any;
   revisionAccess: any;
 
   draftSelectors: any;
@@ -30,7 +31,7 @@ class DocumentTextCtrl {
     this.pageCoordinates = {};
 
     // update active revision
-    $scope.$watch('$ctrl.revisions', this.updateActiveRevision.bind(this));
+    $scope.$watch('$ctrl.revisions', this.updateRevisions.bind(this));
 
     // update highlights when discussions or draft selectors change
     $scope.$watch('$ctrl.discussions', this.updateHighlights.bind(this), true);
@@ -121,14 +122,15 @@ class DocumentTextCtrl {
     }
     try {
       if (revision.remote.type === 'elsevier') {
+        // extract apiKey from file.url
+        const parsedUrl = urlParse(revision.file.url, true);
+        const apiKey = parsedUrl.query.apiKey;
+
+        const id = revision.pii ? `pii/${revision.pii}` : `doi/${revision.doi}`;
+
         const result = await this.$http.get(
-          `https://api.elsevier.com/content/article/entitlement/doi/${revision.doi}`,
-          {
-            params: {
-              apiKey: 'd7cd85afb9582a3d0862eb536dac32b0',
-              httpAccept: 'application/json',
-            }
-          }
+          `https://api.elsevier.com/content/article/entitlement/${id}`,
+          {params: {apiKey, httpAccept: 'application/json'}}
         );
         if (get(result, 'data.entitlement-response.document-entitlement.entitled')) {
           return true;
@@ -147,7 +149,7 @@ class DocumentTextCtrl {
     return false;
   }
 
-  async updateActiveRevision(revisions) {
+  async updateRevisions(revisions) {
     if (!revisions) return;
 
     // get accessibility information for all revisions
@@ -155,6 +157,16 @@ class DocumentTextCtrl {
     for (const revision of revisions) {
       this.revisionAccess[revision.revision] = await this.isRevisionAccessible(revision);
     }
+
+    // order revisions by date: newest first
+    const sortedRevisions = reverse(sortBy(revisions, 'publishedAt'));
+
+    // filter accessible revisions
+    const accessibleRevisions =
+      sortedRevisions.filter(revision => this.revisionAccess[revision.revision]);
+
+    // use latest accessible revision (or undefined)
+    this.latestAccessibleRevision = accessibleRevisions[0];
 
     // explicitly provided revision id?
     const revisionId = this.$routeSegment.$routeParams.revisionId;
@@ -167,13 +179,6 @@ class DocumentTextCtrl {
         });
       }
     } else {
-      // order revisions by date: newest first
-      const sortedRevisions = reverse(sortBy(revisions, 'publishedAt'));
-
-      // filter accessible revisions
-      const accessibleRevisions =
-        sortedRevisions.filter(revision => this.revisionAccess[revision.revision]);
-
       // use latest accessible revision (or latest revision if none are accessible)
       this.activeRevision = accessibleRevisions.length > 0 ?
         accessibleRevisions[0] : sortedRevisions[0];
