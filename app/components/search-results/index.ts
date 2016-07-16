@@ -159,7 +159,7 @@ export default function(app) {
             let journals = [];
 
             _.forEach($scope.search.documents, document => {
-              if (_.indexOf(journals, document.journal.nameLong) === -1) {
+              if (document && document.journal && _.indexOf(journals, document.journal.nameLong) === -1) {
                 journals.push(document.journal.nameLong);
               }
             });
