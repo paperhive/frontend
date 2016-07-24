@@ -1,0 +1,12 @@
+{
+  "extends": "eslint:recommended",
+  "env": {
+    "jasmine": true,
+    "node": true,
+    "protractor": true
+  },
+  "rules": {
+    "func-names": 0,
+    "no-unused-expressions": 0
+  }
+}
