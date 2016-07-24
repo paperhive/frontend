@@ -145,6 +145,11 @@ SystemJS.config({
       "map": {
         "angular": "github:angular/bower-angular@1.5.7"
       }
+    },
+    "github:Leaflet/Leaflet@0.7.7": {
+      "map": {
+        "css": "github:systemjs/plugin-css@0.1.23"
+      }
     }
   }
 });
