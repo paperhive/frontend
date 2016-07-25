@@ -79,12 +79,11 @@ gulp.task('html', function() {
 // copy static files
 gulp.task('static', [], function() {
   return gulp.src(paths.staticFiles)
-    .pipe(imagemin({
-      interlaced: true,  // gif
-      multipass: true,  // svg
-      progressive: true,  // jpg
-      svgoPlugins: [{removeViewBox: false}, {minifyStyles: false}]
-    }))
+    .pipe(imagemin([
+      imagemin.jpegtran(),
+      imagemin.optipng(),
+      imagemin.svgo({plugins: [{removeViewBox: false}, {minifyStyles: false}]}),
+    ], {verbose: true}))
     //.pipe(dev ? gutil.noop() : cachebust.resources())
     .pipe(gulp.dest(buildDir + '/static'));
 });
