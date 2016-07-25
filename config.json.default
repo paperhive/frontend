@@ -1,5 +1,5 @@
 {
-  "apiUrl": "https://dev.paperhive.org/backend/langsci",
+  "apiUrl": "https://dev.paperhive.org/backend/langscipress",
   "apiVersion": "1.0.0",
   "baseHref": "/"
 }
