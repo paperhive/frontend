@@ -39,7 +39,7 @@
     "gulp-cachebust": "^0.0.6",
     "gulp-connect": "^4.0.0",
     "gulp-htmlmin": "^2.0.0",
-    "gulp-imagemin": "^2.4.0",
+    "gulp-imagemin": "^3.0.2",
     "gulp-protractor": "^2.0.0",
     "gulp-streamify": "^1.0.2",
     "gulp-template": "^4.0.0",
