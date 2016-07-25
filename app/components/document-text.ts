@@ -104,6 +104,12 @@ class DocumentTextCtrl {
 
     if (revision.remote.type === 'oapen') return 'OAPEN';
 
+    if (revision.remote.type === 'langsci') {
+      const rev = revision.remote.revision === 'openreview' ?
+        'open review' : revision.remote.revision;
+      return `LangSci ${rev}`;
+    }
+
     // isbn
     if (revision.isbn) {
       return `ISBN ${revision.isbn}`;
