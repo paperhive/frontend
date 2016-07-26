@@ -1,14 +1,17 @@
 'use strict';
 
+var liveServer = require('live-server');
+
+var port = process.env.HTTP_PORT || 9998;
+var server;
+
 exports.config = {
-  specs: ['spec.js'],
+  specs: ['test/protractor/**/*.spec.js'],
 
   jasmineNodeOpts: {
     showColors: true,
     defaultTimeoutInterval: 60000
-  },
-
-  baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '8080')
+  }
 };
 
 if (process.env.SAUCE_ONDEMAND_BROWSERS) {
@@ -79,6 +82,28 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
   exports.config.multiCapabilities = [{
     'browserName': 'chrome'
   }];
+  exports.config.baseUrl = 'http://localhost:' + port;
+  exports.config.onPrepare = function() {
+    server = liveServer.start({
+      root: 'build/',
+      file: 'index.html',
+      port: port,
+      open: false,
+      watch: ['non-existing']
+    });
+    return new Promise(function(resolve, reject) {
+      server.addListener('listening', resolve);
+      server.addListener('error', reject);
+    });
+  };
+  exports.config.onComplete = function() {
+    return new Promise(function(resolve, reject) {
+      server.close(function (err) {
+        if (err) return reject(err);
+        resolve();
+      });
+    });
+  };
 }
 
 if (process.env.SAUCE_USER_NAME) {
