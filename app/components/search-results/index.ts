@@ -8,14 +8,16 @@ export default function(app) {
     {
       template,
       controller: [
-        'config', '$http', '$location', '$scope', 'notificationService',
-        function(config, $http, $location, $scope, notificationService) {
+        'config', '$http', '$location', '$scope', 'feedbackModal', 'notificationService',
+        function(config, $http, $location, $scope, feedbackModal, notificationService) {
           const maxPerPage = 10;
 
           $scope.search = {
             page: 1,
             maxSize: 7,
           };
+
+          $scope.feedbackModal = feedbackModal;
 
           // update scope variables from location
           function updateFromLocation() {

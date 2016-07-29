@@ -1,8 +1,12 @@
 <div class="container">
   <div ng-if="search.documents !== undefined">
     <h2 ng-if="!search.documents.length">No results for <em>{{search.query}}</em></h2>
+    <h2 ng-if="search.documents.length">Results for <em>{{search.query}}</em></h2>
+    <small class="text-muted">
+      Couldn't find what you are looking for? <a href ng-click="feedbackModal.open()">Send us feedback</a> with
+      suggestions for content that you miss on PaperHive.
+    </small>
     <div ng-if="search.documents.length">
-      <h2>Results for <em>{{search.query}}</em></h2>
       <div class="row ph-lg-margin-bottom row ph-lg-margin-top">
         <div class="col-md-8">
           <div class="ph-lg-margin-top media" ng-repeat="document in search.documents">
