@@ -37,7 +37,7 @@
     "gulp": "^3.9.0",
     "gulp-angular-templatecache": "^2.0.0",
     "gulp-cachebust": "^0.0.6",
-    "gulp-connect": "^4.0.0",
+    "gulp-connect": "^5.0.0",
     "gulp-htmlmin": "^2.0.0",
     "gulp-imagemin": "^3.0.2",
     "gulp-protractor": "^3.0.0",
