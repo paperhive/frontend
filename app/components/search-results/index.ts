@@ -208,7 +208,7 @@ export default function(app) {
 
             $scope.search.period = 'custom';
             $scope.search.publishedAfter = dateObj.getFullYear();
-            $scope.search.publishedBefore = dateObj.getFullYear();
+            $scope.search.publishedBefore = dateObj.getFullYear() + 1;
 
             $scope.showSearchOptions = true;
             $scope.showSearchOptionPeriod = true;
