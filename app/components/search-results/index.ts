@@ -37,14 +37,16 @@ export default function(app) {
 
             $scope.search.journal = $location.search().journal || '';
             $scope.search.publisher = $location.search().publisher || '';
-            $scope.search.tags = $location.search().tags || '';
+
+            $scope.search.tags = (Array.isArray($location.search().tag) ? $location.search().tag.join(',') : $location.search().tag) || '';
+            $scope.search.tagsArray = (Array.isArray($location.search().tag) ? $location.search().tag : [$location.search().tag]) || [];
 
             if ($scope.search.publishedAfter !== 1900 || $scope.search.publishedBefore !== (new Date()).getFullYear()) {
               $scope.showSearchOptions = true;
               $scope.showSearchOptionPeriod = true;
             }
 
-            if ($scope.search.tags !== '') {
+            if ($scope.search.tagsArray.length > 0) {
               $scope.showSearchOptions = true;
               $scope.showSearchOptionTags = true;
             }
@@ -66,7 +68,7 @@ export default function(app) {
               inAbstract: $scope.search.inAbstract,
               journal: $scope.search.journal,
               publisher: $scope.search.publisher,
-              tags: $scope.search.tags
+              tag: $scope.search.tags.split(',')
             });
           }
 
@@ -113,12 +115,14 @@ export default function(app) {
                 publishedAfter: $scope.search.publishedAfter,
                 publishedBefore: $scope.search.publishedBefore,
                 sortOrder: $scope.search.sortOrder,
-                inTitle: $location.search().inTitle,
-                inAuthors: $location.search().inAuthors,
-                inAbstract: $location.search().inAbstract,
+                in: [
+                  ($location.search().inTitle ? 'title' : undefined),
+                  ($location.search().inAuthors ? 'authors' : undefined),
+                  ($location.search().inAbstract ? 'abstract' : undefined),
+                ],
                 journal: $scope.search.journal,
                 publisher: $scope.search.publisher,
-                tags: $scope.search.tags
+                tag: $scope.search.tagsArray
               }
             })
             .then(
@@ -148,10 +152,7 @@ export default function(app) {
           };
 
           $scope.filterForTag = function(tag) {
-            if ($scope.search.tags.length > 0) {
-              $scope.search.tags += ', ';
-            }
-            $scope.search.tags += tag.value;
+            $scope.search.tagsArray.push(tag.value);
 
             $scope.showSearchOptions = true;
             $scope.showSearchOptionTags = true;
