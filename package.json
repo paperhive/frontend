@@ -54,7 +54,7 @@
     "less": "^2.6.0",
     "less-plugin-clean-css": "^1.5.1",
     "live-server": "^1.0.0",
-    "lodash": "^4.3.0",
+    "lodash": "^4.14.2",
     "merge-stream": "^1.0.0",
     "nodemon": "^1.8.1",
     "npm-run-all": "^2.2.0",
