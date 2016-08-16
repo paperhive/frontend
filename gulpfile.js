@@ -16,7 +16,9 @@ var template = require('gulp-template');
 var uglify = require('gulp-uglify');
 
 // dev environment is false by default
-var dev = process.env.DEV || false;
+// provide --dev on CLI to activate dev environment
+var argv = require('yargs').argv;
+var dev = argv.dev || false;
 var buildDir = dev ? 'build-dev' : 'build';
 
 var config = require('./config.json');

@@ -10,9 +10,9 @@
     "build:prod:static": "gulp static",
     "build:prod:vendor": "gulp vendor",
     "build:dev:css": "lessc less/index.less build-dev/index.css",
-    "build:dev:html": "DEV=true gulp html",
-    "build:dev:index": "DEV=true gulp index",
-    "build:dev:vendor": "DEV=true gulp vendor",
+    "build:dev:html": "gulp html --dev",
+    "build:dev:index": "gulp index --dev",
+    "build:dev:vendor": "gulp vendor --dev",
     "clean": "rm -rf build*",
     "install-deps": "npm install && bower install && jspm install && typings install",
     "lint:ts": "find app/ -name *.ts | xargs ./node_modules/.bin/tslint",
@@ -63,7 +63,8 @@
     "tslint": "^3.3.0",
     "typescript": "^1.7.5",
     "typings": "^1.0.2",
-    "uglify-js": "^2.6.1"
+    "uglify-js": "^2.6.1",
+    "yargs": "^4.8.1"
   },
   "jspm": {
     "dependencies": {
