@@ -1,7 +1,7 @@
 'use strict';
 import { dedent } from 'dentist';
 
-import template from './helpMarkdown.html';
+import template from './help-markdown.html';
 
 export default function(app) {
   app.component('helpMarkdown', {

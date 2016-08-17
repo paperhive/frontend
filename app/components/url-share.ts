@@ -1,4 +1,4 @@
-import template from './urlShare.html';
+import template from './url-share.html';
 
 export default function(app) {
   app.component('urlShare', {

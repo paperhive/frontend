@@ -1,6 +1,6 @@
 'use strict';
 
-import {localStorageAvailable} from '../utils/localStorage';
+import {localStorageAvailable} from '../utils/local-storage';
 
 export default function(app) {
   app.factory(
