@@ -19,6 +19,12 @@ SystemJS.config({
     "tsconfig": true,
     "typeCheck": false
   },
+  meta: {
+    'config.json': {
+      format: 'json',
+      loader: 'json'
+    }
+  },
   packages: {
     "app": {
       "defaultExtension": "ts",
