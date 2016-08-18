@@ -3,17 +3,17 @@ import attributes from './attributes';
 import attribution from './attribution';
 import confirmedClick from './confirmed-click';
 import elastic from './elastic';
-import elementPosition from './elementPosition';
-import elementSize from './elementSize';
+import elementPosition from './element-position';
+import elementSize from './element-size';
 import kramjax from './kramjax';
-import onOutside from './onOutside';
-import onRendered from './onRendered';
+import onOutside from './on-outside';
+import onRendered from './on-rendered';
 import pdf from './pdf';
 import subnav from './subnav';
 import toc from './toc';
-import validateDocumentSource from './validateDocumentSource';
+import validateDocumentSource from './validate-document-source';
 import validateUsername from './validate-username';
-import viewportHeight from './viewportHeight';
+import viewportHeight from './viewport-height';
 
 export default function(app) {
   affix(app);
