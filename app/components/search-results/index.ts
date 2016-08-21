@@ -114,7 +114,7 @@ export default function(app) {
                 restrictToLatest: true,
                 publishedAfter: $scope.search.publishedAfter,
                 publishedBefore: $scope.search.publishedBefore,
-                sortOrder: $scope.search.sortOrder,
+                sortBy: ($scope.search.sortOrder === 'asc' ? '+' : '-' ) + 'publishedAt',
                 in: [
                   ($location.search().inTitle ? 'title' : undefined),
                   ($location.search().inAuthors ? 'authors' : undefined),
