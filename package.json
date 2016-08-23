@@ -9,7 +9,7 @@
     "build:prod:js": "gulp html && jspm build app/index.ts build-tmp/index.js --skip-rollup --skip-source-maps && uglifyjs build-tmp/index.js -m -c -o build/index.js",
     "build:prod:static": "gulp static",
     "build:prod:vendor": "gulp vendor",
-    "build:dev:css": "lessc less/index.less build-dev/index.css",
+    "build:dev:css": "lessc --source-map less/index.less build-dev/index.css",
     "build:dev:html": "gulp html --dev",
     "build:dev:index": "gulp index --dev",
     "build:dev:vendor": "gulp vendor --dev",
