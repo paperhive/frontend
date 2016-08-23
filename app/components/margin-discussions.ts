@@ -42,7 +42,7 @@ export default function(app) {
           const promise = $ctrl.onDiscussionSubmit({discussion});
           promise.then(newDiscussion => $ctrl.showShareMessageId = newDiscussion.id);
           return promise;
-        }
+        };
 
         $ctrl.tour = tourService;
         // scroll to discussion tour popover
