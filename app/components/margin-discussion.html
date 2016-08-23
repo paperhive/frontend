@@ -37,15 +37,18 @@
               popover-is-open="$ctrl.showShareMessage"
               popover-trigger="none"
             >
-              <button class="btn btn-link btn-xs"
+              <a class="btn btn-link btn-xs"
                 uib-tooltip="Share URL"
                 tooltip-class="tooltip-nowrap"
                 uib-popover-template="'html/directives/margin-discussion-url-popover.html'"
                 popover-placement="bottom-right"
                 popover-trigger="outsideClick"
+                role="button"
+                ng-href="{{'documents' | routeSegmentUrl}}?a=d:{{$ctrl.discussion.id}}"
+                ng-click="$event.preventDefault()"
               >
                 <i class="fa fa-fw fa-lg fa-share-alt"></i>
-              </button>
+              </a>
             </div>
             <div class="btn-group" uib-dropdown>
               <button class="btn btn-link btn-xs"
