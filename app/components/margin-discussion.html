@@ -30,16 +30,25 @@
             <kramjax body="$ctrl.discussion.body"></kramjax>
           </div>
           <div class="pull-right">
-            <div class="btn-group">
-              <button class="btn btn-link btn-xs"
+            <div class="btn-group"
+              uib-popover="Invite colleagues to this discussion by sharing this link."
+              popover-placement="bottom-right"
+              popover-enable="$ctrl.showShareMessage"
+              popover-is-open="$ctrl.showShareMessage"
+              popover-trigger="none"
+            >
+              <a class="btn btn-link btn-xs"
                 uib-tooltip="Share URL"
                 tooltip-class="tooltip-nowrap"
                 uib-popover-template="'html/directives/margin-discussion-url-popover.html'"
                 popover-placement="bottom-right"
                 popover-trigger="outsideClick"
+                role="button"
+                ng-href="{{'documents' | routeSegmentUrl}}?a=d:{{$ctrl.discussion.id}}"
+                ng-click="$event.preventDefault()"
               >
                 <i class="fa fa-fw fa-lg fa-share-alt"></i>
-              </button>
+              </a>
             </div>
             <div class="btn-group" uib-dropdown>
               <button class="btn btn-link btn-xs"
