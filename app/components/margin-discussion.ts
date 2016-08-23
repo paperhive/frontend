@@ -8,6 +8,7 @@ export default function(app) {
   app.component('marginDiscussion', {
     bindings: {
       discussion: '<',
+      showShareMessage: '<',
       onDiscussionUpdate: '&',
       onDiscussionDelete: '&',
       onReplySubmit: '&',

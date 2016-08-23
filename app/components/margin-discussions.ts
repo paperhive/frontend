@@ -27,9 +27,22 @@ export default function(app) {
     },
     template,
     controller: [
-      '$scope', '$timeout', '$window', 'smoothScroll', 'distangleService', 'tourService',
-      function($scope, $timeout, $window, smoothScroll, distangleService, tourService) {
+      '$document', '$scope', '$timeout', '$window', 'smoothScroll', 'distangleService', 'tourService',
+      function($document, $scope, $timeout, $window, smoothScroll, distangleService, tourService) {
         const $ctrl = this;
+
+        // show popover with share message?
+        function resetShowShareMessageId() {
+          $ctrl.showShareMessageId = undefined;
+        }
+        $document.on('click', resetShowShareMessageId);
+        $scope.$on('$destroy', () => $document.off('click', resetShowShareMessageId));
+
+        $ctrl.submitDiscussion = discussion => {
+          const promise = $ctrl.onDiscussionSubmit({discussion});
+          promise.then(newDiscussion => $ctrl.showShareMessageId = newDiscussion.id);
+          return promise;
+        }
 
         $ctrl.tour = tourService;
         // scroll to discussion tour popover

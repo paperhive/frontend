@@ -16,6 +16,7 @@
   ng-repeat="discussion in $ctrl.discussions"
 
   discussion="discussion"
+  show-share-message="discussion.id === $ctrl.showShareMessageId"
   on-discussion-update="$ctrl.onDiscussionUpdate({discussion: discussion})"
   on-discussion-delete="$ctrl.onDiscussionDelete({discussion: discussion})"
   on-reply-submit="$ctrl.onReplySubmit({discussion: discussion, reply: reply})"
@@ -37,7 +38,7 @@
 ></margin-discussion>
 <margin-discussion-draft
   selectors="$ctrl.draftSelectors"
-  on-submit="$ctrl.onDiscussionSubmit({discussion: discussion})"
+  on-submit="$ctrl.submitDiscussion(discussion)"
   on-discard="$ctrl.onDraftDiscard()"
 
   element-size="$ctrl.draftSize"
