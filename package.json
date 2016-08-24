@@ -127,7 +127,7 @@
           }
         }
       },
-      "github:angular/bower-angular-animate@1.5.7": {
+      "github:angular/bower-angular-animate@1.5.8": {
         "main": "angular-animate",
         "registry": "jspm",
         "dependencies": {
@@ -141,7 +141,7 @@
           }
         }
       },
-      "github:angular/bower-angular-route@1.5.7": {
+      "github:angular/bower-angular-route@1.5.8": {
         "main": "angular-route",
         "registry": "jspm",
         "dependencies": {
@@ -155,7 +155,7 @@
           }
         }
       },
-      "github:angular/bower-angular-sanitize@1.5.7": {
+      "github:angular/bower-angular-sanitize@1.5.8": {
         "main": "angular-sanitize",
         "registry": "jspm",
         "dependencies": {
@@ -169,7 +169,7 @@
           }
         }
       },
-      "github:angular/bower-angular@1.5.7": {
+      "github:angular/bower-angular@1.5.8": {
         "main": "angular",
         "meta": {
           "angular.js": {
