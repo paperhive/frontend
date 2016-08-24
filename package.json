@@ -137,8 +137,7 @@
           "angular-animate.js": {
             "deps": [
               "angular"
-            ],
-            "format": "global"
+            ]
           }
         }
       },
@@ -152,8 +151,7 @@
           "angular-route.js": {
             "deps": [
               "angular"
-            ],
-            "format": "global"
+            ]
           }
         }
       },
@@ -167,8 +165,7 @@
           "angular-sanitize.js": {
             "deps": [
               "angular"
-            ],
-            "format": "global"
+            ]
           }
         }
       },
