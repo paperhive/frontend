@@ -182,7 +182,10 @@
         "meta": {
           "angular.js": {
             "exports": "angular",
-            "format": "global"
+            "format": "global",
+            "globals": {
+              "jQuery": "jquery"
+            }
           }
         }
       },
