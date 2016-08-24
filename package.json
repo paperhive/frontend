@@ -25,7 +25,8 @@
     "watch:css": "nodemon -C -e less -w less -x \"npm run build:dev:css\"",
     "watch:html": "nodemon -C -e html -w html -x \"npm run build:dev:html\"",
     "watch:index": "nodemon -C -e html -w index.template.html -x \"npm run build:dev:index\"",
-    "watch:serve": "live-server --no-browser --wait=250 --watch=app --watch=jspm_packages --watch=build-dev --watch=build-tmp --mount=/:build-dev --entry-file=build-dev/index.html"
+    "watch:js": "jspm bundle app/index.ts build-dev/bundle.js -wd",
+    "watch:serve": "live-server --no-browser --wait=50 --watch=build-dev  --mount=/:build-dev --entry-file=build-dev/index.html"
   },
   "author": "André Gaul <andre@paperhive.org>",
   "license": "GPL-3.0",
