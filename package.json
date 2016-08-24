@@ -76,7 +76,7 @@
       "core-js": "npm:core-js@^2.4.0",
       "d-oliveros/ngSmoothScroll": "github:d-oliveros/ngSmoothScroll@^2.0.0",
       "dentist": "npm:dentist@^1.0.3",
-      "highlightjs": "github:components/highlightjs@^9.1.0",
+      "highlightjs": "github:components/highlightjs@^9.6.0",
       "javascript-detect-element-resize": "github:sdecima/javascript-detect-element-resize@^0.5.3",
       "kramed": "npm:kramed@^0.5.6",
       "leaflet": "github:Leaflet/Leaflet@^0.7.7",
@@ -127,20 +127,7 @@
           }
         }
       },
-      "github:angular-ui/bootstrap-bower@2.1.2": {
-        "main": "ui-bootstrap-tpls",
-        "dependencies": {
-          "angular": "^1.5.8"
-        },
-        "meta": {
-          "ui-bootstrap-tpls.js": {
-            "deps": [
-              "angular"
-            ]
-          }
-        }
-      },
-      "github:angular/bower-angular-animate@1.5.8": {
+      "github:angular/bower-angular-animate@1.5.7": {
         "main": "angular-animate",
         "registry": "jspm",
         "dependencies": {
@@ -150,11 +137,12 @@
           "angular-animate.js": {
             "deps": [
               "angular"
-            ]
+            ],
+            "format": "global"
           }
         }
       },
-      "github:angular/bower-angular-route@1.5.8": {
+      "github:angular/bower-angular-route@1.5.7": {
         "main": "angular-route",
         "registry": "jspm",
         "dependencies": {
@@ -164,11 +152,12 @@
           "angular-route.js": {
             "deps": [
               "angular"
-            ]
+            ],
+            "format": "global"
           }
         }
       },
-      "github:angular/bower-angular-sanitize@1.5.8": {
+      "github:angular/bower-angular-sanitize@1.5.7": {
         "main": "angular-sanitize",
         "registry": "jspm",
         "dependencies": {
@@ -178,11 +167,12 @@
           "angular-sanitize.js": {
             "deps": [
               "angular"
-            ]
+            ],
+            "format": "global"
           }
         }
       },
-      "github:angular/bower-angular@1.5.8": {
+      "github:angular/bower-angular@1.5.7": {
         "main": "angular",
         "meta": {
           "angular.js": {
@@ -250,10 +240,10 @@
           }
         }
       },
-      "npm:jquery@3.1.0": {
+      "npm:jquery@2.2.4": {
         "format": "amd"
       },
-      "npm:lodash@4.15.0": {
+      "npm:lodash@4.13.1": {
         "map": {
           "buffer": "@empty",
           "process": "@empty"
