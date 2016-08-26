@@ -16,7 +16,7 @@
               popover-placement="bottom"
               popover-is-open="$ctrl.tour.stages[$ctrl.tour.index] === 'hive'"
               uib-popover-template="'html/shared/tour-hive.html'"
-              popover-trigger="none"
+              popover-trigger="'none'"
               document-id="$ctrl.latestRevision.id"
               user="$ctrl.auth.user"
               title="{{$ctrl.auth.user ? 'Hive this document for receiving updates.' : 'You have to be logged in to hive the document.'}}"

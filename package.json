@@ -254,6 +254,9 @@
           "test.js"
         ]
       },
+      "npm:jquery@3.1.0": {
+        "format": "amd"
+      },
       "npm:lodash@4.15.0": {
         "map": {
           "buffer": "@empty",
