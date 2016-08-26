@@ -27,8 +27,8 @@ export default function(app) {
     },
     template,
     controller: [
-      '$document', '$scope', '$timeout', '$window', 'smoothScroll', 'distangleService', 'tourService',
-      function($document, $scope, $timeout, $window, smoothScroll, distangleService, tourService) {
+      '$document', '$scope', '$timeout', '$window', 'scroll', 'smoothScroll', 'distangleService', 'tourService',
+      function($document, $scope, $timeout, $window, scroll, smoothScroll, distangleService, tourService) {
         const $ctrl = this;
 
         // show popover with share message?
@@ -104,7 +104,10 @@ export default function(app) {
           const element = document.getElementById(`discussion:${match[1]}`);
           if (!element) return;
 
-          smoothScroll(element, {offset: ($ctrl.viewportOffsetTop || 0) + 50});
+          scroll.scrollTo(element, {
+            duration: 2000,
+            offset: ($ctrl.viewportOffsetTop || 0) + 50,
+          });
 
           $ctrl.currentScrollAnchor = $ctrl.scrollToAnchor;
         }
