@@ -1,7 +1,7 @@
 import angular from 'angular';
 import { queue } from 'async';
 import jquery from 'jquery';
-import { clone, difference, flatten, isEqual, map, pick, some } from 'lodash';
+import { clone, difference, filter, flatten, isEqual, map, pick, some } from 'lodash';
 import { PDFJS } from 'pdfjs-dist';
 import rangy from 'rangy';
 
@@ -89,7 +89,7 @@ function getRectanglesSelector(range, container) {
   range.splitBoundaries();
 
   // get TextNodes inside the range
-  const textNodes = _.filter(
+  const textNodes = filter(
     getTextNodes(range.commonAncestorContainer),
     range.containsNodeText.bind(range)
   );
