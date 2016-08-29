@@ -1,22 +1,27 @@
-<div ng-class="{hidden: !notifications.length}">
-  <uib-alert class="ph-navbar-alert" ng-repeat="notification in notifications | limitTo: 1"
-    type="{{types[notification.type]}}" close="close($index)">
-    <span ng-show="notification.type == 'error'">
-      <i class="fa fa-fw fa-warning"></i>
-    </span>
-    <span ng-show="notification.type == 'warning'">
-      <i class="fa fa-fw fa-warning"></i>
-    </span>
-    <span ng-show="notification.type == 'info'">
-      <i class="fa fa-fw fa-info-circle"></i>
-    </span>
-    <span ng-show="notification.type == 'success'">
-      <i class="fa fa-fw fa-info-circle"></i>
-    </span>
-    <span ng-bind-html="notification.message"></span>
-    <span class="pull-right label label-default" ng-show="notifications.length > 1">
-      {{notifications.length - 1}}
-      {{(notifications.length - 1) == 1 ? 'more notification' : 'more notifications'}}
-    </span>
-  </uib-alert>
+<div uib-alert class="ph-navbar-alert" ng-repeat="notification in notifications | limitTo: 1"
+  ng-class="{
+    'alert-danger': notification.type === 'error',
+    'alert-warning': notification.type === 'warning',
+    'alert-info': notification.type === 'info',
+    'alert-success': notification.type === 'success',
+  }"
+  close="close($index)"
+>
+  <span ng-show="notification.type == 'error'">
+    <i class="fa fa-fw fa-warning"></i>
+  </span>
+  <span ng-show="notification.type == 'warning'">
+    <i class="fa fa-fw fa-warning"></i>
+  </span>
+  <span ng-show="notification.type == 'info'">
+    <i class="fa fa-fw fa-info-circle"></i>
+  </span>
+  <span ng-show="notification.type == 'success'">
+    <i class="fa fa-fw fa-info-circle"></i>
+  </span>
+  <span ng-bind-html="notification.message"></span>
+  <span class="pull-right label label-default" ng-show="notifications.length > 1">
+    {{notifications.length - 1}}
+    {{(notifications.length - 1) == 1 ? 'more notification' : 'more notifications'}}
+  </span>
 </div>
