@@ -31,20 +31,20 @@
       </div>
       <div class="row ph-lg-margin-bottom">
         <div class="col-md-8">
-          <uib-pagination
+          <ul uib-pagination
             boundary-links="true"
-            total-items="search.total"
-            ng-model="search.page"
-            max-size="search.maxSize"
+            boundary-link-numbers="true"
             class="pagination-sm"
-            previous-text="&lsaquo;"
-            next-text="&rsaquo;"
             first-text="&laquo;"
             last-text="&raquo;"
-            rotate="false"
+            max-size="search.maxSize"
+            next-text="&rsaquo;"
             ng-click="scrollToTop()"
-            boundary-link-numbers="true"
-          ></uib-pagination>
+            ng-model="search.page"
+            previous-text="&lsaquo;"
+            rotate="false"
+            total-items="search.total"
+          ></ul>
         </div>
       </div>
     </div>
