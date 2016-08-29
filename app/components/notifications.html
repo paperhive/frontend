@@ -1,11 +1,13 @@
-<div uib-alert class="ph-navbar-alert" ng-repeat="notification in notifications | limitTo: 1"
+<div uib-alert
+  class="ph-navbar-alert"
+  close="close($index)"
   ng-class="{
     'alert-danger': notification.type === 'error',
     'alert-warning': notification.type === 'warning',
     'alert-info': notification.type === 'info',
     'alert-success': notification.type === 'success',
   }"
-  close="close($index)"
+  ng-repeat="notification in notifications | limitTo: 1"
 >
   <span ng-show="notification.type == 'error'">
     <i class="fa fa-fw fa-warning"></i>
