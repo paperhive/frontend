@@ -99,12 +99,16 @@ export default function(app) {
           // test if the anchor is a discussion anchor
           const match = /^d:(.*)$/.exec($ctrl.scrollToAnchor);
           if (!match) return;
+          const id = match[1];
 
           // get element
-          const element = document.getElementById(`discussion:${match[1]}`);
+          const element = document.getElementById(`discussion:${id}`);
           if (!element) return;
 
-          scroll.scrollTo(element, {
+          const top = angular.element(element.offsetParent).offset().top +
+            $ctrl.discussionPositions[id];
+
+          scroll.scrollTo(top, {
             duration: 1000,
             offset: ($ctrl.viewportOffsetTop || 0) + 50,
           });
@@ -112,16 +116,8 @@ export default function(app) {
           $ctrl.currentScrollAnchor = $ctrl.scrollToAnchor;
         }
 
+        $ctrl.updateScroll = updateScroll;
         $scope.$watch('$ctrl.scrollToAnchor', updateScroll);
-
-        // wait until pages have been initialized
-        // andre: yes, this is ugly... the problem is that we need to wait until
-        //        mathjax and all animations have finished
-        $scope.$watch('$ctrl.pageCoordinates', coordinates => {
-          if (keys(coordinates).length > 0) {
-            $timeout(updateScroll, 500);
-          }
-        }, true);
 
         // compute discussionPosititions and draftPosition
         function updatePositions() {
