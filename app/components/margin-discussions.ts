@@ -105,7 +105,7 @@ export default function(app) {
           if (!element) return;
 
           scroll.scrollTo(element, {
-            duration: 2000,
+            duration: 1000,
             offset: ($ctrl.viewportOffsetTop || 0) + 50,
           });
 
