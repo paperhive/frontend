@@ -15,7 +15,7 @@
     </ul>
     <!--span class="pull-right">Sort</span-->
   </div>
-  <ul class="list-group">
+  <ul class="clearfix list-group">
     <li class="list-group-item" ng-repeat="discussion in $ctrl.discussions">
     <a href="./{{'documents.discussions.thread' | routeSegmentUrl:
       {discussionId: discussion.id} }}"
