@@ -556,6 +556,12 @@ export default function(app) {
         // render at least once
         this.render();
 
+        // make sure that all pages have correct size
+        await this.resizePages();
+
+        // all pages have correct size
+        this.scope.$apply(() => this.scope.onAllPagesResized({}));
+
         // monitor scrollToAnchor
         this.scope.$watch('scrollToAnchor', this.scrollToAnchor.bind(this));
       }
@@ -819,6 +825,7 @@ export default function(app) {
         //                   displaySize (height and width in pixels)
         //                   originalSize (height and width in )
         onPageResized: '&',
+        onAllPagesResized: '&',
 
         // pages are rendered on demand;
         // passed arguments: pageNumber
