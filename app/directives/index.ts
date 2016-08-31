@@ -6,6 +6,7 @@ import elastic from './elastic';
 import elementPosition from './element-position';
 import elementSize from './element-size';
 import kramjax from './kramjax';
+import mathjax from './mathjax';
 import onOutside from './on-outside';
 import onRendered from './on-rendered';
 import pdf from './pdf';
@@ -24,6 +25,7 @@ export default function(app) {
   elementPosition(app);
   elementSize(app);
   kramjax(app);
+  mathjax(app);
   onOutside(app);
   onRendered(app);
   pdf(app);
