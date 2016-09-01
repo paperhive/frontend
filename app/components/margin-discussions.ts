@@ -54,7 +54,6 @@ export default function(app) {
               angular.element($window).scroll();
               $timeout(() => {
                 scroll.scrollTo('#discussionTourPopover', {
-                  duration: 1000,
                   offset: ($ctrl.viewportOffsetTop || 0) + 50
                 });
               });
