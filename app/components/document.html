@@ -3,7 +3,9 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-10">
-          <h2 class="ph-lg-margin-top">{{$ctrl.latestRevision.title}}</h2>
+          <h2 class="ph-lg-margin-top">
+            <mathjax body="$ctrl.latestRevision.title"></mathjax>
+          </h2>
           <h4 class="ph-lg-margin-bottom">
             <span ng-repeat="author in $ctrl.latestRevision.authors">
               {{author.name}}{{$last ? '' :', '}}
