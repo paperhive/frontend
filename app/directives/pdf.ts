@@ -129,7 +129,7 @@ export default function(app) {
   // directive follows a few basic rules that make it easier to switch to
   // angular2, see
   // http://teropa.info/blog/2015/10/18/refactoring-angular-apps-to-components.html
-  app.directive('pdfFull', ['$compile', '$document', '$q', 'smoothScroll', '$timeout', '$window', function($compile, $document, $q, smoothScroll, $timeout, $window) {
+  app.directive('pdfFull', ['$compile', '$document', '$q', 'scroll', '$timeout', '$window', function($compile, $document, $q, scroll, $timeout, $window) {
 
     // render a page in a canvas
     class CanvasRenderer {
@@ -793,7 +793,7 @@ export default function(app) {
         if (!element) return;
 
         // scroll
-        smoothScroll(element, {offset: 140});
+        scroll.scrollTo(element, {offset: 140});
       }
     }
 

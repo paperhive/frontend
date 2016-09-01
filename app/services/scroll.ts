@@ -1,23 +1,39 @@
 import jquery from 'jquery';
-import { defaults, isNumber } from 'lodash';
+import { defaults, isNumber, isString } from 'lodash';
 
 export default function(app) {
   app.service('scroll', class Scroll {
-    static $inject = ['$window'];
+    static $inject = ['$document', '$window'];
 
-    constructor(public $window) {}
+    constructor(public $document, public $window) {}
 
     private static preventDefault(event) {
       event.preventDefault();
     }
 
+    // the following types are supported for target:
+    //   Number: pixels from top -> scroll to given position
+    //   String: jquery selector -> scroll to first matching element
+    //   HTMLElement: scroll to given DOM element
     public async scrollTo(target, _options) {
       const options = defaults({}, _options, {
         duration: 400,
         offset: 0,
       });
 
-      const top = isNumber(target) ? target : jquery(target).offset().top;
+      let top;
+      if (isNumber(target)) {
+        top = target;
+      } else if (isString(target)) {
+        const element = jquery(target);
+        if (!element) throw new Error(`No element matching ${target}`);
+        top = element.offset().top;
+      } else {
+        if (!target) throw new Error('No element provided');
+        top = jquery(target).offset().top;
+      }
+
+      if (options.before) options.before();
 
       // disable mouse wheel scrolling while scrollTo is running
       jquery(this.$window).on('wheel', Scroll.preventDefault);
@@ -34,6 +50,8 @@ export default function(app) {
 
       // re-enable mouse wheel scrolling
       jquery(this.$window).off('wheel', Scroll.preventDefault);
+
+      if (options.after) options.after();
     }
   });
 };

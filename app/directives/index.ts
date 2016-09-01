@@ -10,6 +10,7 @@ import mathjax from './mathjax';
 import onOutside from './on-outside';
 import onRendered from './on-rendered';
 import pdf from './pdf';
+import scroll from './scroll';
 import subnav from './subnav';
 import toc from './toc';
 import validateDocumentSource from './validate-document-source';
@@ -29,6 +30,7 @@ export default function(app) {
   onOutside(app);
   onRendered(app);
   pdf(app);
+  scroll(app);
   subnav(app);
   toc(app);
   validateDocumentSource(app);

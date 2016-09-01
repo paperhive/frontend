@@ -26,7 +26,7 @@
   ng-mouseleave="$ctrl.onDiscussionMouseleave({discussion: discussion})"
 
   element-size="$ctrl.discussionSizes[discussion.id]"
-  id="discussion:{{discussion.id}}"
+  id="discussion-{{discussion.id}}"
   ng-show="$ctrl.discussionPositions[discussion.id] !== undefined"
   ng-class="{'ph-animate-top': $ctrl.discussionPositions[discussion.id] !== undefined}"
   ng-style="{'top': $ctrl.discussionPositions[discussion.id] + 'px'}"
