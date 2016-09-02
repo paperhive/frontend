@@ -157,7 +157,7 @@ gulp.task('vendor', [], function() {
   var mathjax = gulp.src(mathjaxSrc, {base: mathjaxBase})
     .pipe(gulp.dest(buildDir + '/assets/mathjax'));
 
-  var pdfjs = gulp.src('jspm_packages/github/mozilla/pdfjs-dist@1.5.389/build/pdf.worker.js')
+  var pdfjs = gulp.src('jspm_packages/github/mozilla/pdfjs-dist@1.5.415/build/pdf.worker.js')
     .pipe(dev ? gutil.noop() : streamify(uglify({
       // disable compression, otherwise pdf rendering fails!
       // see https://github.com/mozilla/pdf.js/wiki/Frequently-Asked-Questions#minified
