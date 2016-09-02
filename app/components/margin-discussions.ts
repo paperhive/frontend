@@ -27,8 +27,8 @@ export default function(app) {
     },
     template,
     controller: [
-      '$document', '$scope', '$timeout', '$window', 'smoothScroll', 'distangleService', 'tourService',
-      function($document, $scope, $timeout, $window, smoothScroll, distangleService, tourService) {
+      '$document', '$scope', '$timeout', '$window', 'scroll', 'distangleService', 'tourService',
+      function($document, $scope, $timeout, $window, scroll, distangleService, tourService) {
         const $ctrl = this;
 
         // show popover with share message?
@@ -53,8 +53,9 @@ export default function(app) {
               // trigger popover positioning
               angular.element($window).scroll();
               $timeout(() => {
-                const popover = document.getElementById('discussionTourPopover');
-                smoothScroll(popover, {offset: 140});
+                scroll.scrollTo('#discussionTourPopover', {
+                  offset: ($ctrl.viewportOffsetTop || 0) + 50
+                });
               });
             }, 400);
           }
@@ -99,26 +100,25 @@ export default function(app) {
           // test if the anchor is a discussion anchor
           const match = /^d:(.*)$/.exec($ctrl.scrollToAnchor);
           if (!match) return;
+          const id = match[1];
 
           // get element
-          const element = document.getElementById(`discussion:${match[1]}`);
+          const element = document.getElementById(`discussion-${id}`);
           if (!element) return;
 
-          smoothScroll(element, {offset: ($ctrl.viewportOffsetTop || 0) + 50});
+          const top = angular.element(element.offsetParent).offset().top +
+            $ctrl.discussionPositions[id];
+
+          scroll.scrollTo(top, {
+            duration: 1000,
+            offset: ($ctrl.viewportOffsetTop || 0) + 50,
+          });
 
           $ctrl.currentScrollAnchor = $ctrl.scrollToAnchor;
         }
 
+        $ctrl.updateScroll = updateScroll;
         $scope.$watch('$ctrl.scrollToAnchor', updateScroll);
-
-        // wait until pages have been initialized
-        // andre: yes, this is ugly... the problem is that we need to wait until
-        //        mathjax and all animations have finished
-        $scope.$watch('$ctrl.pageCoordinates', coordinates => {
-          if (keys(coordinates).length > 0) {
-            $timeout(updateScroll, 500);
-          }
-        }, true);
 
         // compute discussionPosititions and draftPosition
         function updatePositions() {

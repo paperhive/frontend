@@ -29,7 +29,6 @@ import 'angular-leaflet-directive';                   // leaflet-directive
 import 'angulartics';
 import 'angulartics-google-analytics';
 import 'javascript-detect-element-resize'; // injects resize+removeResize to jquery
-import 'ngSmoothScroll';                              // smoothScroll
 import 'pdfjs-dist/web/compatibility';
 import 'pdfjs-dist';
 import 'pdfjs-dist/web/pdf_viewer';
@@ -56,7 +55,6 @@ export const paperhive = angular
       'ngRoute',
       'route-segment',
       'view-segment',
-      'smoothScroll',
       'angularMoment',
       'leaflet-directive',
       'templates'
