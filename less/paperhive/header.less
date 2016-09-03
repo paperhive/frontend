@@ -1,8 +1,4 @@
 .ph-header {
-  //background-color: #ffffff;
-  // bottom border
-  //border-bottom: 1px solid @nav-tabs-border-color;
-
   // padding of media element
   .media {
     .ph-md-padding();
@@ -33,40 +29,37 @@
       }
     }
   }
+}
 
-
-  .ph-header-submenu-affix {
-    z-index: @zindex-navbar-fixed - 1;
+.ph-header-submenu-container {
+  background-color: #eee;
+  position: fixed;
+  width: 100%;
+  top: @navbar-height;
+  z-index: @zindex-navbar-fixed + 1;
+  .btn.btn-primary {
+    padding-top: 7px;
+    padding-bottom: 7px;
   }
-
-  // submenu
-  .ph-header-submenu-container {
-    background-color: #eee;
-    .btn.btn-primary {
-      padding-top: 7px;
-      padding-bottom: 7px;
+  @media (max-width: @screen-xs-max){
+    .navbar-collapse {
+      border: none;
     }
-    @media (max-width: @screen-xs-max){
-      .navbar-collapse {
-        border: none;
-      }
 
-      .navbar-collapse, .btn-default {
-        width: 100%;
-        min-width: 100% !important;
-      }
+    .navbar-collapse, .btn-default {
+      width: 100%;
+      min-width: 100% !important;
+    }
 
-      .btn-default {
-        border-left: none;
-        border-right: none;
-        border-color: @nav-tabs-border-color;
-        border-top: @ph-border-height solid @ph-highlight-color;
-        text-align: left;
-      }
+    .btn-default {
+      border-left: none;
+      border-right: none;
+      border-color: @nav-tabs-border-color;
+      border-top: @ph-border-height solid @ph-highlight-color;
+      text-align: left;
     }
   }
 }
-
 .ph-header-submenu {
   border: none;
   > li {
@@ -120,24 +113,4 @@
   @media (max-width: @screen-xs-max) {
     width: 100%;
   }
-}
-
-.ph-header-submenu-shadow {
-  position: absolute;
-  width: 100%;
-  height: 10px;
-  bottom: -1px;
-  z-index: -1;
-  border-bottom: @ph-border-height solid transparent;
-  transition: box-shadow ease 0.5s, border-color ease 0.5s;
-}
-
-.ph-header-submenu-affixed {
-  position: fixed;
-  width: 100%;
-}
-
-.ph-header-submenu-affixed > .ph-header-submenu-shadow {
-  box-shadow: 0 -10px 10px 10px rgba(0, 0, 0, 0.3);
-  border-bottom: @ph-border-height solid @ph-navbar-border-color;
 }
