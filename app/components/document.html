@@ -28,13 +28,12 @@
       <div class="row">
         <div class="col-md-2">           
             <div class="ph-sidenav ph-documents affix"> 
-              <h4 class="ph-lg-margin-top">{{$ctrl.latestRevision.title}}</h2>
+              <h5 class="ph-lg-margin-top">{{$ctrl.latestRevision.title}}</h2>
               <h6 class="ph-lg-margin-bottom">
                 <span ng-repeat="author in $ctrl.latestRevision.authors">
                   {{author.name}}{{$last ? '' :', '}}
                 </span>
-              </h4>
-            
+              </h4>            
               <div ng-if="$ctrl.activeRevision">
                 <div class="ph-document-info">
                   <div>
