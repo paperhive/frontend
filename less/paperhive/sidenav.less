@@ -81,12 +81,21 @@
   li {
     padding: @padding-large-vertical; 
     .border-bottom(1px, solid, @btn-default-border); 
+    &:first-child {
+      background: @gray-lighter;
+    }
     &:last-child {
       border: none; 
     }
   }
   img {
-    max-width: 50%;
+    max-width: 30%;
+  }
+  h6 {
+    margin-bottom: @padding-base-vertical;
+  }
+  span {
+    font-size: 11px;
   }
 }
 
