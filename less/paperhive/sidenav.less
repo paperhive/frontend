@@ -35,15 +35,58 @@
   }
 }
 
+.ph-columns-documents {
+  margin-top: @ph-header-height + (@grid-gutter-width/2);
+  h4,
+  h5,
+  h6 {
+    margin-top: 0;
+    margin-bottom: @padding-large-horizontal;
+  }
+  h4,
+  h5 {
+    color: @ph-base-color;
+  }
+  h6 {
+    color: darken(@ph-background-color, 40%);
+  }
+}
+
+.ph-hive-button {
+  margin-bottom: @padding-large-horizontal; 
+}
+
 .ph-document-info {
   div {
     display: inline-block;
+    margin-bottom: @padding-large-horizontal;
     &:first-child {
       padding-right: @padding-large-vertical;
     }
   }
   label {
     display: block;
+  }
+}
+
+.ph-kudos-box {
+  ul {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    .border(1px, solid, @btn-default-border); 
+    background: @ph-background-color;
+  }
+  li {
+    padding: @padding-large-vertical; 
+    .border-bottom(1px, solid, @btn-default-border); 
+    &:last-child {
+      border: none; 
+    }
+  }
+  img {
+    max-width: 50%;
   }
 }
 
