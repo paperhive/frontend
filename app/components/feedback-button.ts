@@ -10,7 +10,7 @@ export default function(app) {
 
     template:
     `<a type="link"
-       class="ph-badge-left btn btn-primary btn-sm hidden-xs hidden-sm"
+       class="ph-badge-bottom btn btn-primary btn-sm hidden-xs hidden-sm"
        ng-click="$ctrl.feedbackModal.open()"
        >
        <i class="fa fa-fw fa-envelope"></i> Feedback
