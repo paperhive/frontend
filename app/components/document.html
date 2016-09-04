@@ -33,8 +33,60 @@
                 <span ng-repeat="author in $ctrl.latestRevision.authors">
                   {{author.name}}{{$last ? '' :', '}}
                 </span>
-              </h4>            
-              <div ng-if="$ctrl.activeRevision">
+              </h4>  
+
+              <!-- <div ng-if="$ctrl.activeRevision"> -->
+                <div class="ph-document-info">
+                  <div>
+                    <label class="text-muted">Version</label>
+                    <div class="dropdown" is-open="dropdown_open" uib-dropdown>
+                      <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
+                        <span class="ph-document-journal">arXiv v4</span>,
+                        Jan 2015
+                        <i class="fa fa-fw fa-caret-down"></i>
+                      </button>
+                    </div>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a href="./documents/{{revision.id}}/revisions/{{revision.revision}}">
+                          <strong>
+                           <span class="ph-document-journal">arXiv v3</span>,
+                            Jun 2014
+                          </strong>
+                          <span>
+                            <span class="ph-document-journal">arXiv v2</span>,
+                              Sep 2013
+                          </span>
+                          <i class="fa fa-fw"></i>
+                        </a>
+                      
+                      </li>
+                    </ul>
+                  </div>
+                  <div>
+                    <div ng-if="$ctrl.activeRevision.distributor === 'Knowledge Unlatched'">
+                      <label class="text-muted">Brought to you by</label>
+                      <div>
+                        <a href="http://www.knowledgeunlatched.org/">
+                          <img src="./static/img/knowledge-unlatched.svg"
+                            title="Knowledge Unlatched"
+                            class="ph-distributor-logo"
+                          >
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="ph-document-info-download">
+                    <a class="btn btn-default" ng-href="{{$ctrl.origPdfUrl}}" download>
+                      <i class="fa fa-download"></i>
+                    </a>
+                  </div>
+                </div>
+              <!-- </div> -->
+
+             <!--  <div ng-if="$ctrl.activeRevision">
                 <div class="ph-document-info">
                   <div>
                     <label class="text-muted">Version</label>
@@ -90,7 +142,7 @@
                     </a>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
         </div>
         

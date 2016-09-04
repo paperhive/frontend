@@ -1,7 +1,16 @@
 .ph-sidenav {
   &.ph-documents {
-    background: #fff;
+    background: @ph-white;
     height: 100%;
+    .box-shadow(0 0 10px rgba(0, 0, 0, 0.3));
+    h4,
+    h5,
+    h6 {
+      margin-top: 0;
+    }
+    h5 {
+      color: @ph-base-color;
+    }
   }
   > li {
     .ph-md-margin-bottom;
