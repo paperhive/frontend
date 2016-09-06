@@ -2,7 +2,6 @@
 <div class="navbar navbar-default navbar-fixed-top"
     element-size="$root.navbarSize"
     role="navigation"
-    id="topPopover"
   >
   <div class="container-fluid">
     <div
@@ -10,7 +9,7 @@
       popover-placement="bottom-left"
       popover-is-open="tour.stages[tour.index] === 'start' && !tour.visited && $routeSegment.name !== 'main'"
       uib-popover-template="'html/shared/tour-start.html'"
-      popover-trigger="none"
+      popover-trigger="'none'"
     >
       <!-- toggle nav -->
       <button ng-click="collapsed=!collapsed" type="button" class="navbar-toggle">

@@ -51,7 +51,7 @@
         page-coordinates="$ctrl.pageCoordinates"
         viewport-offset-top="$ctrl.viewportOffsetTop"
         viewport-offset-bottom="0"
-        scroll-to-anchor="$ctrl.anchor"
+        scroll-to-anchor="$ctrl.allPagesInitialized && $ctrl.anchor"
         on-draft-discard="$ctrl.draftSelectors = undefined"
         on-discussion-submit="$ctrl.onDiscussionSubmit({discussion: $ctrl.getNewDiscussion(discussion)})"
         on-discussion-update="$ctrl.onDiscussionUpdate({discussion: discussion})"

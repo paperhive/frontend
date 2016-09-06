@@ -1,7 +1,7 @@
 import angular from 'angular';
 import { queue } from 'async';
 import jquery from 'jquery';
-import { clone, difference, flatten, isEqual, map, pick, some } from 'lodash';
+import { clone, difference, filter, flatten, isEqual, map, pick, some } from 'lodash';
 import { PDFJS } from 'pdfjs-dist';
 import rangy from 'rangy';
 
@@ -89,7 +89,7 @@ function getRectanglesSelector(range, container) {
   range.splitBoundaries();
 
   // get TextNodes inside the range
-  const textNodes = _.filter(
+  const textNodes = filter(
     getTextNodes(range.commonAncestorContainer),
     range.containsNodeText.bind(range)
   );
@@ -129,7 +129,7 @@ export default function(app) {
   // directive follows a few basic rules that make it easier to switch to
   // angular2, see
   // http://teropa.info/blog/2015/10/18/refactoring-angular-apps-to-components.html
-  app.directive('pdfFull', ['$compile', '$document', '$q', 'smoothScroll', '$timeout', '$window', function($compile, $document, $q, smoothScroll, $timeout, $window) {
+  app.directive('pdfFull', ['$compile', '$document', '$q', 'scroll', '$timeout', '$window', function($compile, $document, $q, scroll, $timeout, $window) {
 
     // render a page in a canvas
     class CanvasRenderer {
@@ -223,10 +223,13 @@ export default function(app) {
           container: this.element[0],
           textContent: this.textContent,
           viewport,
+          enhanceTextSelection: true,
         });
 
         // wait for renderTask
         await this.renderTask;
+
+        this.renderTask.expandTextDivs(true);
 
         // normalize the DOM subtree of the rendered page
         // (otherwise serialized ranges may be based on different DOM states)
@@ -556,6 +559,12 @@ export default function(app) {
         // render at least once
         this.render();
 
+        // make sure that all pages have correct size
+        await this.resizePages();
+
+        // all pages have correct size
+        this.scope.$apply(() => this.scope.onAllPagesResized({}));
+
         // monitor scrollToAnchor
         this.scope.$watch('scrollToAnchor', this.scrollToAnchor.bind(this));
       }
@@ -787,7 +796,7 @@ export default function(app) {
         if (!element) return;
 
         // scroll
-        smoothScroll(element, {offset: 140});
+        scroll.scrollTo(element, {offset: 140});
       }
     }
 
@@ -819,6 +828,7 @@ export default function(app) {
         //                   displaySize (height and width in pixels)
         //                   originalSize (height and width in )
         onPageResized: '&',
+        onAllPagesResized: '&',
 
         // pages are rendered on demand;
         // passed arguments: pageNumber

@@ -25,7 +25,9 @@
   </div><!-- ph-header -->
   <div class="ph-sidenav ph-documents affix"> 
     <div class="ph-documents-header">
-      <h5 class="ph-lg-margin-top">{{$ctrl.latestRevision.title}}</h5>
+      <h5 class="ph-lg-margin-top">
+        <mathjax body="$ctrl.latestRevision.title"></mathjax>
+      </h5>
       <h6 class="ph-lg-margin-bottom">
         <span ng-repeat="author in $ctrl.latestRevision.authors">
           {{author.name}}{{$last ? '' :', '}}
