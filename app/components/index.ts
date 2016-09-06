@@ -38,6 +38,7 @@ import newReply from './new-reply';
 import notFound from './not-found';
 import notifications from './notifications';
 import officeMap from './office-map';
+import partnerLogos from './partner-logos';
 import passwordRequest from './password-request';
 import passwordReset from './password-reset';
 import pdf from './pdf';
@@ -98,6 +99,7 @@ export default function(app) {
   notFound(app);
   notifications(app);
   officeMap(app);
+  partnerLogos(app);
   passwordRequest(app);
   passwordReset(app);
   pdf(app);
