@@ -1,52 +1,56 @@
-<div class="container">
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <ul class="list-inline">
-      <li>
-      <strong>
-        <i class="fa fa-comment"></i> {{$ctrl.discussions.length}} open
-      </strong>
-      </li>
-      <!--li>
-        <a href="#">
-          <i class="fa fa-close"></i> 0 closed
-        </a>
-      </li-->
-    </ul>
-    <!--span class="pull-right">Sort</span-->
-  </div>
-  <ul class="list-group">
-    <li class="list-group-item" ng-repeat="discussion in $ctrl.discussions">
-    <a href="./{{'documents.discussions.thread' | routeSegmentUrl:
-      {discussionId: discussion.id} }}"
-      >
-      <span
-        ng-if="discussion.replies.length > 0"
-        class="pull-right ph-discussion-replies-counter"
-        >
-        <i class="fa fa-comments"></i> {{discussion.replies.length}}
-    </span></a>
-      <h4>
-        <a href="./{{'documents.discussions.thread' | routeSegmentUrl:
-            {discussionId: discussion.id} }}">
-          {{discussion.title}}</a>
-        <ul
-          ng-if="discussion.tags.length > 0"
-          class="ph-tags list-inline"
-          >
-          <li ng-repeat="tag in discussion.tags">
-            <a href="#" class="btn btn-default">{{tag}}</a>
+<div class="container-fluid">
+  <div class="row"> 
+    <div class="col-md-10 col-md-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <ul class="list-inline">
+            <li>
+            <strong>
+              <i class="fa fa-comment"></i> {{$ctrl.discussions.length}} open
+            </strong>
+            </li>
+            <!--li>
+              <a href="#">
+                <i class="fa fa-close"></i> 0 closed
+              </a>
+            </li-->
+          </ul>
+          <!--span class="pull-right">Sort</span-->
+        </div>
+        <ul class="list-group">
+          <li class="list-group-item" ng-repeat="discussion in $ctrl.discussions">
+          <a href="./{{'documents.discussions.thread' | routeSegmentUrl:
+            {discussionId: discussion.id} }}"
+            >
+            <span
+              ng-if="discussion.replies.length > 0"
+              class="pull-right ph-discussion-replies-counter"
+              >
+              <i class="fa fa-comments"></i> {{discussion.replies.length}}
+          </span></a>
+            <h4>
+              <a href="./{{'documents.discussions.thread' | routeSegmentUrl:
+                  {discussionId: discussion.id} }}">
+                {{discussion.title}}</a>
+              <ul
+                ng-if="discussion.tags.length > 0"
+                class="ph-tags list-inline"
+                >
+                <li ng-repeat="tag in discussion.tags">
+                  <a href="#" class="btn btn-default">{{tag}}</a>
+                </li>
+              </ul>
+            </h4>
+            <span class="ph-discussion-subtitle">
+              opened <span am-time-ago="discussion.createdAt"></span>
+              by
+              <a href="./users/{{discussion.author.account.username}}">
+                {{discussion.author.displayName}}
+              </a>
+            </span>
           </li>
         </ul>
-      </h4>
-      <span class="ph-discussion-subtitle">
-        opened <span am-time-ago="discussion.createdAt"></span>
-        by
-        <a href="./users/{{discussion.author.account.username}}">
-          {{discussion.author.displayName}}
-        </a>
-      </span>
-    </li>
-  </ul>
-</div>
+      </div>
+    </div>
+  </div>
 </div>

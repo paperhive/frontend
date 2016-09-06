@@ -142,9 +142,7 @@ export default function(app) {
         })
         .within()
           .segment('activity', {
-            template: `<div class="container">
-              <activity document="$ctrl.documentId"></activity>
-            </div>`,
+            template: `<activity document="$ctrl.documentId"></activity>`,
             title: 'Activity · PaperHive'
           })
           .segment('hivers', {

@@ -1,106 +1,115 @@
-<ul class="ph-timeline">
+<div class="container-fluid">
+  <div class="row"> 
+    <div class="col-md-10 col-md-offset-2">
+      
+      <ul class="ph-timeline">
 
-  <li class="ph-timeline-item ph-lg-margin-bottom">
-    <div class="ph-timeline-badge">
-      <i class="fa fa-heartbeat" aria-hidden="true"></i>
-    </div>
-    <div class="panel panel-default ph-timeline-panel ph-activity-container">
-      <div class="ph-timeline-arrow-container">
-        <div class="ph-arrow ph-arrow-outward-left"></div>
-      </div>
-
-      <div ng-if="$ctrl.document" class="text-muted">
-        Here you can find the recent discussions, replies and hives on
-        this document.
-        <span ng-if="$ctrl.activities.length === 0">
-          Unfortunately, there is no activity yet. Be the first to hive the
-          document or start a discussion.
-        </span>
-      </div>
-
-      <div ng-if="$ctrl.person" class="text-muted">
-        <span ng-if="$ctrl.auth.user.id === $ctrl.person.id">
-          Here you can find your recent discussions, replies and hived documents.
-          <span ng-if="$ctrl.activities.length === 0">
-            A good way to get started is to search and hive a document
-            you are interested in.
-          </span>
-        </span>
-        <span ng-if="$ctrl.auth.user.id !== $ctrl.person.id">
-          Here you can find recent discussions, replies and hived documents by
-          {{$ctrl.person.displayName}}.
-          <span ng-if="$ctrl.activities.length === 0">
-            Unfortunately, {{$ctrl.person.displayName}} has no recent activity.
-          </span>
-        </span>
-      </div>
-    </div>
-  </li>
-
-  <li ng-repeat="activity in $ctrl.activities" class="ph-timeline-item ph-lg-margin-bottom">
-
-    <div class="ph-timeline-badge">
-      <i class="fa fa-reply" aria-hidden="true"
-        ng-if="activity.activityType === 'updateReply' || activity.activityType === 'createReply'"
-      ></i>
-      <i class="fa fa-comment" aria-hidden="true"
-        ng-if="activity.activityType === 'updateDiscussion' || activity.activityType === 'createDiscussion'"
-      ></i>
-      <img alt="logo white" src="./static/img/logo-hexagon-white.svg"
-        ng-if="activity.activityType === 'documentHived'"/>
-    </div>
-
-    <div class="panel panel-default ph-timeline-panel ph-activity-container">
-      <div class="ph-timeline-arrow-container">
-        <div class="ph-arrow ph-arrow-outward-left"></div>
-      </div>
-      <div class="ph-activity">
-
-        <div class="ph-timeline-date">
-          <small class="text-muted">
-            <i class="fa fa-clock-o" aria-hidden="true"></i>
-            <span am-time-ago="activity.updatedAt"></span>
-          </small>
-        </div>
-
-        <a ng-if="!$ctrl.person" class="ph-link-icon" ng-href="./users/{{activity.person.account.username}}">
-          <avatar user="activity.person" size="25" classes="img-circle"></avatar>
-        </a>
-        <a ng-href="./users/{{activity.person.account.username}}">{{activity.person.displayName}}</a>
-
-        <span ng-switch="activity.activityType">
-          <span ng-switch-when="documentHived">
-            <span ng-if="$ctrl.document">hived this document</span>
-            <span ng-if="$ctrl.person">
-              hived
-              <small>
-                <a ng-href="./documents/{{activity.document.id}}">{{activity.documentRevision.title}}</a>
-                <span class="text-muted" ng-repeat="author in activity.documentRevision.authors">
-                  {{author.name}}{{$last ? '' :', '}}
-                </span>
-              </small>
-            </span>
-          </span>
-          <span ng-switch-when="createDiscussion">started the discussion</span>
-          <span ng-switch-when="createReply">replied to the discussion</span>
-          <span ng-switch-when="updateReply">updated a reply to the discussion</span>
-          <span ng-switch-when="updateDiscussion">updated the discussion</span>
-        </span>
-
-        <span ng-if="activity.activityType !== 'documentHived'">
-          <a ng-href="./documents/{{activity.document.id}}/discussions/{{activity.discussion.id}}">{{activity.discussion.title}}</a>
-          <div ng-if="$ctrl.person">
-            <small>
-              on
-              <a ng-href="./documents/{{activity.document.id}}">{{activity.documentRevision.title}}</a>
-              <span class="text-muted" ng-repeat="author in activity.documentRevision.authors">
-                {{author.name}}{{$last ? '' :', '}}
-              </span>
-            </small>
+        <li class="ph-timeline-item ph-lg-margin-bottom">
+          <div class="ph-timeline-badge">
+            <i class="fa fa-heartbeat" aria-hidden="true"></i>
           </div>
-        </span>
+          <div class="panel panel-default ph-timeline-panel ph-activity-container">
+            <div class="ph-timeline-arrow-container">
+              <div class="ph-arrow ph-arrow-outward-left"></div>
+            </div>
 
-      </div>
+            <div ng-if="$ctrl.document" class="text-muted">
+              Here you can find the recent discussions, replies and hives on
+              this document.
+              <span ng-if="$ctrl.activities.length === 0">
+                Unfortunately, there is no activity yet. Be the first to hive the
+                document or start a discussion.
+              </span>
+            </div>
+
+            <div ng-if="$ctrl.person" class="text-muted">
+              <span ng-if="$ctrl.auth.user.id === $ctrl.person.id">
+                Here you can find your recent discussions, replies and hived documents.
+                <span ng-if="$ctrl.activities.length === 0">
+                  A good way to get started is to search and hive a document
+                  you are interested in.
+                </span>
+              </span>
+              <span ng-if="$ctrl.auth.user.id !== $ctrl.person.id">
+                Here you can find recent discussions, replies and hived documents by
+                {{$ctrl.person.displayName}}.
+                <span ng-if="$ctrl.activities.length === 0">
+                  Unfortunately, {{$ctrl.person.displayName}} has no recent activity.
+                </span>
+              </span>
+            </div>
+          </div>
+        </li>
+
+        <li ng-repeat="activity in $ctrl.activities" class="ph-timeline-item ph-lg-margin-bottom">
+
+          <div class="ph-timeline-badge">
+            <i class="fa fa-reply" aria-hidden="true"
+              ng-if="activity.activityType === 'updateReply' || activity.activityType === 'createReply'"
+            ></i>
+            <i class="fa fa-comment" aria-hidden="true"
+              ng-if="activity.activityType === 'updateDiscussion' || activity.activityType === 'createDiscussion'"
+            ></i>
+            <img alt="logo white" src="./static/img/logo-hexagon-white.svg"
+              ng-if="activity.activityType === 'documentHived'"/>
+          </div>
+
+          <div class="panel panel-default ph-timeline-panel ph-activity-container">
+            <div class="ph-timeline-arrow-container">
+              <div class="ph-arrow ph-arrow-outward-left"></div>
+            </div>
+            <div class="ph-activity">
+
+              <div class="ph-timeline-date">
+                <small class="text-muted">
+                  <i class="fa fa-clock-o" aria-hidden="true"></i>
+                  <span am-time-ago="activity.updatedAt"></span>
+                </small>
+              </div>
+
+              <a ng-if="!$ctrl.person" class="ph-link-icon" ng-href="./users/{{activity.person.account.username}}">
+                <avatar user="activity.person" size="25" classes="img-circle"></avatar>
+              </a>
+              <a ng-href="./users/{{activity.person.account.username}}">{{activity.person.displayName}}</a>
+
+              <span ng-switch="activity.activityType">
+                <span ng-switch-when="documentHived">
+                  <span ng-if="$ctrl.document">hived this document</span>
+                  <span ng-if="$ctrl.person">
+                    hived
+                    <small>
+                      <a ng-href="./documents/{{activity.document.id}}">{{activity.documentRevision.title}}</a>
+                      <span class="text-muted" ng-repeat="author in activity.documentRevision.authors">
+                        {{author.name}}{{$last ? '' :', '}}
+                      </span>
+                    </small>
+                  </span>
+                </span>
+                <span ng-switch-when="createDiscussion">started the discussion</span>
+                <span ng-switch-when="createReply">replied to the discussion</span>
+                <span ng-switch-when="updateReply">updated a reply to the discussion</span>
+                <span ng-switch-when="updateDiscussion">updated the discussion</span>
+              </span>
+
+              <span ng-if="activity.activityType !== 'documentHived'">
+                <a ng-href="./documents/{{activity.document.id}}/discussions/{{activity.discussion.id}}">{{activity.discussion.title}}</a>
+                <div ng-if="$ctrl.person">
+                  <small>
+                    on
+                    <a ng-href="./documents/{{activity.document.id}}">{{activity.documentRevision.title}}</a>
+                    <span class="text-muted" ng-repeat="author in activity.documentRevision.authors">
+                      {{author.name}}{{$last ? '' :', '}}
+                    </span>
+                  </small>
+                </div>
+              </span>
+
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
-  </li>
-</ul>
+  </div>
+</div>
+
+

@@ -1,17 +1,9 @@
-.ph-sidenav {
+.ph-sidenav {  
   &.ph-documents {
     background: @ph-white;
     height: 100%;
+    z-index: @zindex-navbar-fixed;
     .box-shadow(0 0 10px rgba(0, 0, 0, 0.3));
-    h4,
-    h5,
-    h6 {
-      margin-top: 0;
-    }
-    h5 {
-      color: @ph-base-color;
-    }
-
   }
   > li {
     .ph-md-margin-bottom;
@@ -33,10 +25,12 @@
       }
     }
   }
+  .btn {
+    font-size: @font-size-base - 2; 
+  }
 }
 
-.ph-columns-documents {
-  margin-top: @ph-header-height + (@grid-gutter-width/2);
+.ph-documents-header {
   h4,
   h5,
   h6 {
@@ -50,6 +44,7 @@
   h6 {
     color: darken(@ph-background-color, 40%);
   }
+
 }
 
 .ph-hive-button {
@@ -57,45 +52,63 @@
 }
 
 .ph-document-info {
-  div {
-    display: inline-block;
-    margin-bottom: @padding-large-horizontal;
-    &:first-child {
-      padding-right: @padding-large-vertical;
-    }
+  .btn {
+    width: 100%;
+    text-align: left;
   }
-  label {
-    display: block;
+  .fa-download,
+  .fa-history {
+    padding-right: @padding-base-horizontal;
+    .border-right(1px, solid, @gray);
+  }
+  .fa-caret-down {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -7px;
+  }
+  span {
+    padding-left: @padding-base-horizontal - 2;
+  }
+  div {
+    margin-bottom: @padding-large-horizontal;
   }
 }
 
-.ph-kudos-box {
-  ul {
-    display: inline-block;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    .border(1px, solid, @btn-default-border); 
-    background: @ph-background-color;
-  }
-  li {
-    padding: @padding-large-vertical; 
-    .border-bottom(1px, solid, @btn-default-border); 
-    &:first-child {
-      background: @gray-lighter;
-    }
-    &:last-child {
-      border: none; 
-    }
-  }
+.ph-accordion {
+  .panel-heading {
+    padding: 0; 
+  }  
   img {
-    max-width: 30%;
+    max-width: 16px;
+    margin-top: -6px;
+    margin-right: 4px;
+  }
+  a {
+
+    &.accordion-toggle {
+      display: block;
+      background: @gray-lighter; 
+      padding: @padding-large-horizontal @padding-large-vertical; 
+      font-size: @font-size-base; 
+      color: @ph-base-color;
+      outline: none;
+
+      &:hover,
+      &:active,
+      &:focus {
+        text-decoration: none; 
+        outline: none;
+      }
+    }
+  }
+    
+  
+  h4 {
+    margin-bottom: 0;
   }
   h6 {
     margin-bottom: @padding-base-vertical;
-  }
-  span {
-    font-size: 11px;
   }
 }
 
