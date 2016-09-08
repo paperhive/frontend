@@ -223,10 +223,13 @@ export default function(app) {
           container: this.element[0],
           textContent: this.textContent,
           viewport,
+          enhanceTextSelection: true,
         });
 
         // wait for renderTask
         await this.renderTask;
+
+        this.renderTask.expandTextDivs(true);
 
         // normalize the DOM subtree of the rendered page
         // (otherwise serialized ranges may be based on different DOM states)
