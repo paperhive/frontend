@@ -53,6 +53,7 @@ import settingsProfile from './settings-profile';
 import signup from './signup';
 import subscribe from './subscribe';
 import subscribed from './subscribed';
+import supporterLogos from './supporter-logos';
 import terms from './terms';
 import urlShare from './url-share';
 import user from './user';
@@ -114,6 +115,7 @@ export default function(app) {
   signup(app);
   subscribe(app);
   subscribed(app);
+  supporterLogos(app);
   terms(app);
   urlShare(app);
   user(app);

@@ -47,6 +47,7 @@ export default function(app) {
         .when('/knowledgeunlatched', 'knowledgeunlatched')
         .when('/legalnotice', 'legalnotice')
         .when('/login', 'login')
+        .when('/partners', 'partners')
         .when('/password/request', 'passwordRequest')
         .when('/password/reset', 'passwordReset')
         .when('/publishers', 'publishers')
@@ -249,6 +250,23 @@ export default function(app) {
         .segment('login', {
           template: '<login></login>',
           title: 'Log in to · Paperhive'
+        })
+
+        .segment('partners', {
+          template:
+            `<div class="container ph-xl-margin-bottom">
+              <h2>Partners</h2>
+              <partner-logos></partner-logos>
+              <h2>Supporters</h2>
+              <supporter-logos></supporter-logos>
+            </div>`,
+          title: 'Partners and supporters · PaperHive',
+          meta: [
+            {
+              name: 'description',
+              content: 'Partners and supporters'
+            }
+          ]
         })
 
         .segment('passwordRequest', {
