@@ -32,7 +32,7 @@ export default function(app) {
           if (rect.pageNumber !== this.pageNumber) return;
 
           this.rect = rect;
-        })
+        });
       }
     },
     template: `
