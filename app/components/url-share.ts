@@ -5,6 +5,7 @@ export default function(app) {
     bindings: {
       url: '@',
       label: '@',
+      help: '@',
     },
     controller: class UrlShareCtrl {
       url: string;
