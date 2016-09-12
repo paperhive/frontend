@@ -129,7 +129,7 @@ export default function(app) {
   // directive follows a few basic rules that make it easier to switch to
   // angular2, see
   // http://teropa.info/blog/2015/10/18/refactoring-angular-apps-to-components.html
-  app.directive('pdfFull', ['$compile', '$document', '$q', 'scroll', '$timeout', '$window', function($compile, $document, $q, scroll, $timeout, $window) {
+  app.directive('pdfFull', ['$compile', '$document', '$http', '$q', 'scroll', '$timeout', '$window', 'config', function($compile, $document, $http, $q, scroll, $timeout, $window, config) {
 
     // render a page in a canvas
     class CanvasRenderer {
@@ -799,6 +799,9 @@ export default function(app) {
         if (match = /^p:(\d+)$/.exec(anchor)) {
           return this.scrollToId(anchor);
         }
+        if (match = /^s:([\w-]+)$/.exec(anchor)) {
+          return this.scrollToSelection(match[1]);
+        }
         console.warn(`Anchor ${anchor} does not match.`);
       }
 
@@ -809,6 +812,13 @@ export default function(app) {
 
         // scroll
         scroll.scrollTo(element, {offset: 140});
+      }
+
+      scrollToSelection(anchorId) {
+        $http.get(`${config.apiUrl}/anchors/${anchorId}`).then(
+          response => this.onSelect(response.data.target.selectors),
+          response => console.error(response.data || `error fetching anchor ${anchorId}`) // TODO: notificationService
+        );
       }
     }
 
