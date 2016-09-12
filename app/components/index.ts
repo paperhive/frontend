@@ -44,7 +44,7 @@ import passwordReset from './password-reset';
 import pdf from './pdf';
 import pdfHighlight from './pdf-highlight';
 import pdfPopup from './pdf-popup';
-import pdfSelectionPopup from './pdfSelectionPopup';
+import pdfSelectionPopup from './pdf-selection-popup';
 import phFooter from './ph-footer';
 import publishers from './publishers';
 import searchResults from './search-results';
