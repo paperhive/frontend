@@ -6,25 +6,29 @@ export default function(app) {
       target: '<',
     },
     controller: class PdfSelectionPopupCtrl {
-      static $inject = ['$http', '$scope', 'config'];
-      constructor(public $http, public $scope, public config) {
-        $scope.$watch('$ctrl.target', target => {
-          // reset anchorId
-          this.anchorId = undefined
+      static $inject = ['$http', '$scope', 'config', 'notificationService'];
+      anchorId: string;
 
-          if (!target) return;
+      constructor(public $http, public $scope, public config, public notificationService) {
+        $scope.$watch('$ctrl.target', this.createAnchor.bind(this));
+      }
 
-          const newTarget = cloneDeep(target);
-          delete newTarget.selectors.isBackwards;
-          $http({
-            url: `${config.apiUrl}/anchors`,
-            method: 'post',
-            data: {target: newTarget},
-          }).then(
-            response => this.anchorId = response.data.id,
-            response => console.log(response) // TODO
-          );
-        });
+      createAnchor(target) {
+        // reset anchorId
+        delete this.anchorId;
+
+        if (!target) return;
+
+        const newTarget = cloneDeep(target);
+        delete newTarget.selectors.isBackwards;
+        this.$http({
+          url: `${this.config.apiUrl}/anchors`,
+          method: 'post',
+          data: {target: newTarget},
+        }).then(
+          response => this.anchorId = response.data.id,
+          this.notificationService.httpError('could not create anchor')
+        );
       }
     },
     template: `
