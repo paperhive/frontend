@@ -33,7 +33,7 @@ export default function(app) {
     },
     template: `
     <url-share
-      url="/a/{{$ctrl.anchorId}}"
+      url="/documents/{{$ctrl.target.document}}?a=s:{{$ctrl.anchorId}}"
       label="URL for this selection"
       help="Share this URL on social networks or via email to draw the attention of your colleagues and collaborators to this selection."
     ></url-share>
