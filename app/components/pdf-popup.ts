@@ -36,7 +36,7 @@ export default function(app) {
       }
     },
     template: `
-    <div ng-if="$ctrl.rect" ng-mousedown="$event.stopPropagation()">
+    <div ng-if="$ctrl.rect" ng-mousedown="$event.stopPropagation()" ng-mouseup="$event.stopPropagation()">
       <button
         ng-style="{
           top: !$ctrl.target.selectors.isBackwards && (($ctrl.rect.top + $ctrl.rect.height) * 100 + '%'),
