@@ -1,6 +1,6 @@
 'use strict';
 import * as angular from 'angular';
-import { compact, map, mapValues, keys, sortBy, sum } from 'lodash';
+import { clone, compact, map, mapValues, keys, sortBy, sum } from 'lodash';
 
 import template from './margin-discussions.html';
 
@@ -74,13 +74,15 @@ export default function(app) {
         function getRawPosition(selectors) {
           if (!selectors || !selectors.pdfRectangles) return;
 
-          // find topmost rect
-          let topRect = selectors.pdfRectangles[0];
-          selectors.pdfRectangles.forEach(rect => {
-            if (topRect.page > rect.page || topRect.top > rect.top) {
-              topRect = rect;
-            }
-          });
+          // get top rect of selection
+          const rects = clone(selectors.pdfRectangles);
+          const topRect = rects.sort((rectA, rectB) => {
+            if (rectA.pageNumber < rectB.pageNumber) return -1;
+            if (rectA.pageNumber > rectB.pageNumber) return 1;
+            if (rectA.top < rectB.top) return -1;
+            if (rectA.top > rectB.top) return 1;
+            return 0;
+          })[0];
 
           // get page offset
           const pageCoord = $ctrl.pageCoordinates[topRect.pageNumber];
