@@ -94,6 +94,7 @@
           documentRevision: $ctrl.activeRevision.revision,
           selectors: $ctrl.draftSelectors,
         }"
+        viewport-offset-top="$ctrl.viewportOffsetTop"
         scroll-to-anchor="$ctrl.allPagesInitialized && $ctrl.anchor"
         on-highlight-mouseenter="$ctrl.hoveredHighlights[highlight.id] = true"
         on-highlight-mouseleave="$ctrl.hoveredHighlights[highlight.id] = false"
