@@ -90,7 +90,7 @@ function getRectanglesSelector(range, container) {
 
   // get TextNodes inside the range
   const textNodes = filter(
-    getTextNodes(range.commonAncestorContainer),
+    getTextNodes(container),
     range.containsNodeText.bind(range)
   );
 
