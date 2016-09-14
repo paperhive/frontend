@@ -48,7 +48,7 @@ export default function(app) {
         uib-tooltip="Share text selection URL"
         tooltip-class="tooltip-nowrap"
         uib-popover-template="'html/directives/textSelectionUrlPopover.html'"
-        popover-placement="bottom-right"
+        popover-placement="auto bottom-right"
         popover-trigger="outsideClick"
       >
         <i class="fa fa-lg fa-share-alt"></i>
