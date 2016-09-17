@@ -46,7 +46,7 @@
     "gulp-template": "^4.0.0",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
-    "jasmine": "^2.4.0",
+    "jasmine": "^2.5.2",
     "jasmine-core": "^2.3.4",
     "jspm": "^0.17.0-beta.15",
     "karma": "^1.0.0",
