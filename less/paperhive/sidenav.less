@@ -52,9 +52,17 @@
 }
 
 .ph-document-info {
+  .ph-dropdown-menu {
+    width: 100%;
+  }
   .btn {
     width: 100%;
     text-align: left;
+    &:hover {
+      [class*=fa-] {
+        color: @ph-highlight-color;
+      }
+    }
   }
   .fa-download,
   .fa-history {
