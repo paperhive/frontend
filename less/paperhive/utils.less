@@ -163,3 +163,18 @@ ul.ph-ul-md-spacing {
     background-color: #eee;
   }
 }
+
+.transform(@arguments) {
+  -webkit-transform: @arguments;
+  -moz-transform: @arguments;
+  transform: @arguments;
+}
+
+.transition(@arguments) {
+  -webkit-transition: @arguments;
+  -moz-transition: @arguments;
+  transition: @arguments;
+}
+.translate(@x, @y) {
+  .transform(translate(@x, @y));
+}

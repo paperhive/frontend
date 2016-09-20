@@ -22,7 +22,12 @@
     </div>
   </div>
 </div><!-- ph-header -->
-<div class="ph-sidenav ph-documents affix"> 
+<div class="ph-sidenav ph-documents affix" ng-class="{closed: $ctrl.sidenavClosed, opened: !$ctrl.sidenavClosed}">  
+  <div class="ph-collapse">
+    <button id="nav-btn" class="navbar-toggle" ng-click="$ctrl.sidenavClosed = true">
+      <i class="fa fa-chevron-left" aria-hidden="true"></i>
+    </button>
+  </div>
   <div class="ph-documents-header">
     <h5 class="ph-lg-margin-top">
       <mathjax body="$ctrl.latestRevision.title"></mathjax>
@@ -46,32 +51,32 @@
   </div>
   <!-- <div ng-if="$ctrl.activeRevision"> -->
   <div class="ph-document-info">
-      <div class="dropdown" is-open="dropdown_open" uib-dropdown>
-        <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
-          <i class="fa fa-history" aria-hidden="true"></i>
-          <span class="ph-document-journal">arXiv v4</span>,
-          Jan 2015
-          <i class="fa fa-fw fa-caret-down"></i>
-        </button>
-        <ul class="dropdown-menu ph-dropdown-menu">
-          <li>
-            <a href="./documents/{{revision.id}}/revisions/{{revision.revision}}">
-              <strong>
-               <span class="ph-document-journal">arXiv v3</span>,
-                  Jun 2014
-              </strong>
-            </a>                      
-          </li>
-          <li>
-            <a href="./documents/{{revision.id}}/revisions/{{revision.revision}}">
-              <strong>
-                <span class="ph-document-journal">arXiv v2</span>,
-                  Sep 2013
-              </strong>
-            </a>                      
-          </li>
-        </ul>
-      </div>
+    <div class="dropdown" is-open="dropdown_open" uib-dropdown>
+      <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
+        <i class="fa fa-history" aria-hidden="true"></i>
+        <span class="ph-document-journal">arXiv v4</span>,
+        Jan 2015
+        <i class="fa fa-fw fa-caret-down"></i>
+      </button>
+      <ul class="dropdown-menu ph-dropdown-menu">
+        <li>
+          <a href="./documents/{{revision.id}}/revisions/{{revision.revision}}">
+            <strong>
+             <span class="ph-document-journal">arXiv v3</span>,
+                Jun 2014
+            </strong>
+          </a>                      
+        </li>
+        <li>
+          <a href="./documents/{{revision.id}}/revisions/{{revision.revision}}">
+            <strong>
+              <span class="ph-document-journal">arXiv v2</span>,
+                Sep 2013
+            </strong>
+          </a>                      
+        </li>
+      </ul>
+    </div>
     <div
       class="ph-document-info-download">
       <a class="btn btn-default" ng-href="{{$ctrl.origPdfUrl}}" download>
@@ -79,7 +84,7 @@
         <span>Download PDF</span>
       </a>
     </div>
-  </div>
+  </div>  
   <div class="ph-accordion">
     <uib-accordion close-others="oneAtATime">
       <div uib-accordion-group class="panel-default" is-open="status.open">
@@ -103,7 +108,57 @@
     </uib-accordion>
   </div>
 </div>
+<div class="ph-sidenav-small ph-documents affix" ng-class="{closed: !$ctrl.sidenavClosed, opened: $ctrl.sidenavClosed}"> 
+  <div class="ph-collapse">
+    <button id="nav-btn" class="navbar-toggle" ng-click="$ctrl.sidenavClosed = false">
+      <i class="fa fa-chevron-right" aria-hidden="true"></i>
+    </button>
+  </div>
+  <div class="ph-hive-button">
+    <hive-button
+      popover-placement="bottom"
+      popover-is-open="$ctrl.tour.stages[$ctrl.tour.index] === 'hive'"
+      uib-popover-template="'html/shared/tour-hive.html'"
+      popover-trigger="none"
+      document-id="$ctrl.latestRevision.id"
+      user="$ctrl.auth.user"
+      title="{{$ctrl.auth.user ? 'Hive this document for receiving updates.' : 'You have to be logged in to hive the document.'}}"
+    ></hive-button>
+  </div>
+  <!-- <div ng-if="$ctrl.activeRevision"> -->
+  <div class="ph-document-info">
+    <div class="dropdown" is-open="dropdown_open" uib-dropdown>
+      <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
+        <i class="fa fa-history" aria-hidden="true"></i>
+      </button>
+      <ul class="dropdown-menu ph-dropdown-menu hidden">
+        <li>
+          <a href="./documents/{{revision.id}}/revisions/{{revision.revision}}">
+            <strong>
+             <span class="ph-document-journal">arXiv v3</span>,
+                Jun 2014
+            </strong>
+          </a>                      
+        </li>
+        <li>
+          <a href="./documents/{{revision.id}}/revisions/{{revision.revision}}">
+            <strong>
+              <span class="ph-document-journal">arXiv v2</span>,
+                Sep 2013
+            </strong>
+          </a>                      
+        </li>
+      </ul>
+    </div>
+    <div
+      class="ph-document-info-download">
+      <a class="btn btn-default" ng-href="{{$ctrl.origPdfUrl}}" download>
+        <i class="fa fa-download"></i>
+      </a>
+    </div>
+  </div>  
+</div>
   <!-- </div> -->
-<div class="ph-columns-documents">
+<div class="ph-documents-columns">
   <div app-view-segment="1"></div> 
 </div> 

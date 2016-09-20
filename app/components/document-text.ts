@@ -234,6 +234,7 @@ export default function(app) {
       revisions: '<',
       discussions: '<',
       viewportOffsetTop: '<',
+      expanded: '<',
 
       onDiscussionSubmit: '&',
       onDiscussionUpdate: '&',

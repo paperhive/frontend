@@ -1,9 +1,8 @@
 .ph-sidenav {  
+  
   &.ph-documents {
     background: @ph-white;
     height: 100%;
-    z-index: @zindex-navbar-fixed;
-    .box-shadow(0 0 10px rgba(0, 0, 0, 0.3));
   }
   > li {
     .ph-md-margin-bottom;
@@ -45,6 +44,30 @@
     color: darken(@ph-background-color, 40%);
   }
 
+}
+
+.opened {
+  .transform(translateX(0));
+  .transition(all .8s ease-in-out .8s);
+}
+.closed {
+  .transform(translateX(-100%));
+  .transition(all .8s ease-in-out);
+}
+
+.ph-collapse {
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: right;
+  button {
+    display: block; 
+    margin: 0;
+    padding: @padding-large-vertical (@grid-gutter-width/2);
+    &:hover {
+      color: @ph-highlight-color;
+    }
+  }
 }
 
 .ph-hive-button {
