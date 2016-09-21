@@ -25,7 +25,7 @@
   ng-mouseenter="$ctrl.onDiscussionMouseenter({discussion: discussion})"
   ng-mouseleave="$ctrl.onDiscussionMouseleave({discussion: discussion})"
 
-  element-size="$ctrl.discussionSizes[discussion.id]"
+  on-resized="$ctrl.discussionSizes[discussion.id] = $size"
   id="discussion-{{discussion.id}}"
   ng-show="$ctrl.discussionPositions[discussion.id] !== undefined"
   ng-class="{'ph-animate-top': $ctrl.discussionPositions[discussion.id] !== undefined}"
@@ -41,7 +41,7 @@
   on-submit="$ctrl.submitDiscussion(discussion)"
   on-discard="$ctrl.onDraftDiscard()"
 
-  element-size="$ctrl.draftSize"
+  on-resized="$ctrl.draftSize = $size"
   ng-if="$ctrl.draftSelectors"
   ng-show="$ctrl.draftPosition !== undefined"
   ng-style="{'top': $ctrl.draftPosition + 'px'}"

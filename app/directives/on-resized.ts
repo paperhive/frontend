@@ -4,27 +4,22 @@ import * as angular from 'angular';
 
 export default function(app) {
 
-  /* Usage: <div element-size="mySize">
+  /* Usage: <div on-resized="$ctrl.mySize = $size">
    *
-   * Exposes the size of the element in the scope variable `mySize`.
    * The size is automatically updated on resize events via the
    * javascript-detect-element-resize jquery plugin.
    *
    * The size has the properties `height` and `width`.
    */
-  app.directive('elementSize', [
+  app.directive('onResized', [
     '$parse', '$window', '$timeout', function($parse, $window, $timeout) {
       return {
         restrict: 'A',
         link: function(scope, element, attrs) {
-          const size = {};
-          const setter = $parse(attrs.elementSize);
-          if (setter && setter.assign) {
-            setter.assign(scope, size);
-          } else {
-            console.warn('Cannot assign size');
-          }
-
+          let oldSize = {};
+          const onResized = $parse(attrs.onResized);
+          const onRendered = $parse(attrs.onRendered);
+          onRendered(scope, {});
           const resizeHandler = function(e) {
             const newSize = {
               height: element[0].offsetHeight,
@@ -32,17 +27,19 @@ export default function(app) {
             };
 
             // return if unchanged
-            if (angular.equals(size, newSize)) {
+            if (oldSize.height === newSize.height && oldSize.width === newSize.width) {
               return;
             }
 
-            // copy object
-            angular.copy(newSize, size);
+            oldSize = newSize;
+
+            console.log('resized');
 
             // call apply if this function has been called as an event handler
             if (e) {
-              scope.$apply();
+              scope.$apply(() => onResized(scope, {$size: newSize}));
             }
+
           };
 
           // attach event handler

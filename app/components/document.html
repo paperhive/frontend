@@ -34,7 +34,7 @@
           ng-class="{'ph-header-submenu-affixed': subnavPosition.top <= $root.navbarSize.height}"
           ng-style="{top: $root.navbarSize.height  + 'px'}"
           >
-        <div class="ph-header-submenu-container" element-size="subnavSize">
+        <div class="ph-header-submenu-container" on-resized="subnavSize = $size">
           <div class="container-fluid">
             <div class="row">
               <div class="col-sm-12">
