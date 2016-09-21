@@ -1,4 +1,5 @@
 'use strict';
+import { cloneDeep } from 'lodash';
 
 import template from './margin-discussion-draft.html';
 
@@ -20,10 +21,11 @@ export default function(app) {
 
         ctrl.submit = function() {
           const discussion = {
-            target: {selectors: ctrl.selectors},
+            target: {selectors: cloneDeep(ctrl.selectors)},
             title: $scope.comment.title,
             body: $scope.comment.body,
           };
+          delete discussion.target.selectors.isBackwards;
           ctrl.submitting = true;
 
           $q.when(ctrl.onSubmit({discussion}))

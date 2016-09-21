@@ -90,7 +90,7 @@ function getRectanglesSelector(range, container) {
 
   // get TextNodes inside the range
   const textNodes = filter(
-    getTextNodes(range.commonAncestorContainer),
+    getTextNodes(container),
     range.containsNodeText.bind(range)
   );
 
@@ -129,7 +129,7 @@ export default function(app) {
   // directive follows a few basic rules that make it easier to switch to
   // angular2, see
   // http://teropa.info/blog/2015/10/18/refactoring-angular-apps-to-components.html
-  app.directive('pdfFull', ['$compile', '$document', '$q', 'scroll', '$timeout', '$window', function($compile, $document, $q, scroll, $timeout, $window) {
+  app.directive('pdfFull', ['$compile', '$document', '$http', '$q', 'scroll', '$timeout', '$window', 'config', function($compile, $document, $http, $q, scroll, $timeout, $window, config) {
 
     // render a page in a canvas
     class CanvasRenderer {
@@ -384,6 +384,15 @@ export default function(app) {
         // const annotationsLayer = angular.element('<div class="ph-pdf-annotations"></div>');
         // this.element.append(annotationsLayer);
         // this.annotationsRenderer = new AnnotationsRenderer(annotationsLayer, this.page, this.linkService);
+
+        // add popup layer
+        const popup = $compile(`
+          <pdf-popup
+            target="popupTarget"
+            page-number="${this.page.pageNumber}"
+          ></pdf-popup>
+        `)(this.scope);
+        this.element.append(popup);
 
         this.initializedRenderers = true;
         return true;
@@ -648,6 +657,9 @@ export default function(app) {
 
               // text quote selector
               textQuote: getTextQuoteSelector(range, this.element[0]),
+
+              // is this a backwards selection (bottom to top)
+              isBackwards: selection.isBackwards(),
             };
 
             // pdf text positions selector
@@ -787,6 +799,9 @@ export default function(app) {
         if (match = /^p:(\d+)$/.exec(anchor)) {
           return this.scrollToId(anchor);
         }
+        if (match = /^s:([\w-]+)$/.exec(anchor)) {
+          return this.scrollToSelection(match[1]);
+        }
         console.warn(`Anchor ${anchor} does not match.`);
       }
 
@@ -797,6 +812,40 @@ export default function(app) {
 
         // scroll
         scroll.scrollTo(element, {offset: 140});
+      }
+
+      scrollToSelection(anchorId) {
+        $http.get(`${config.apiUrl}/anchors/${anchorId}`).then(
+          response => {
+            const rects = clone(response.data.target.selectors.pdfRectangles);
+            if (!rects) return; // TODO: error
+
+            // get top rect of selection
+            const topRect = rects.sort((rectA, rectB) => {
+              if (rectA.pageNumber < rectB.pageNumber) return -1;
+              if (rectA.pageNumber > rectB.pageNumber) return 1;
+              if (rectA.top < rectB.top) return -1;
+              if (rectA.top > rectB.top) return 1;
+              return 0;
+            })[0];
+
+            // get page
+            if (topRect.pageNumber > this.pages.length) return; // TODO: error
+            const page = this.pages[topRect.pageNumber - 1];
+
+            // scroll
+            scroll.scrollTo(
+              this.element.offset().top +
+              page.element[0].offsetTop +
+              topRect.top * page.element.height(),
+              {offset: (this.scope.viewportOffsetTop || 0) + 80}
+            );
+
+            // set selection
+            this.onSelect(response.data.target.selectors);
+          },
+          response => console.error(response.data || `error fetching anchor ${anchorId}`) // TODO: notificationService
+        );
       }
     }
 
@@ -817,7 +866,12 @@ export default function(app) {
         // object mapping highlight ids to emphasize state (boolean)
         emphasizedHighlights: '<',
 
+        // TODO: add documentation
+        popupTarget: '<',
+
         scrollToAnchor: '<',
+
+        viewportOffsetTop: '<',
 
         // Output
         // ======
