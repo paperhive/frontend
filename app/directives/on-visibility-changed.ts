@@ -63,7 +63,7 @@ export default function(app) {
           });
 
           // watch offset (calls handler once at least)
-          scope.$watch(attrs.visibilityOffset, newOffset => {
+          scope.$watchCollection(attrs.visibilityOffset, newOffset => {
             offset = defaults({}, newOffset, {top: 0, bottom: 0, left: 0, right: 0});
             $timeout(updateVisibility);
           });
