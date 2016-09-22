@@ -32,7 +32,7 @@ export default function(app) {
                 pending: true,
               }));
             }, notificationService.httpError('Could not fetch pending email addresses.'));
-        }, true);
+        });
 
         // add an email address
         ctrl.add = email => {
