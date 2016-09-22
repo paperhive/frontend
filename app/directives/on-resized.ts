@@ -17,10 +17,8 @@ export default function(app) {
         restrict: 'A',
         link: function(scope, element, attrs) {
           let oldSize = {};
-          const onResized = $parse(attrs.onResized);
-          const onRendered = $parse(attrs.onRendered);
-          onRendered(scope, {});
-          const resizeHandler = function(e) {
+
+          const resizeHandler = function() {
             const newSize = {
               height: element[0].offsetHeight,
               width: element[0].offsetWidth
@@ -33,13 +31,7 @@ export default function(app) {
 
             oldSize = newSize;
 
-            console.log('resized');
-
-            // call apply if this function has been called as an event handler
-            if (e) {
-              scope.$apply(() => onResized(scope, {$size: newSize}));
-            }
-
+            scope.$evalAsync(attrs.onResized, {$size: newSize});
           };
 
           // attach event handler

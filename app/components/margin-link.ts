@@ -82,7 +82,7 @@ export default function(app) {
 
 
         // wrap updateCount with $apply for non-angular events
-        const updateCountApply = () => $scope.$apply(updateCount);
+        const updateCountApply = () => $scope.$evalAsync(updateCount);
 
         // register/unregister updateCount on scroll and resize events
         angular.element($window).on('scroll', updateCountApply);
