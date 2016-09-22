@@ -31,11 +31,11 @@ class DocumentTextCtrl {
     this.pageCoordinates = {};
 
     // update active revision
-    $scope.$watch('$ctrl.revisions', this.updateRevisions.bind(this));
+    $scope.$watchCollection('$ctrl.revisions', this.updateRevisions.bind(this));
 
     // update highlights when discussions or draft selectors change
-    $scope.$watch('$ctrl.discussions', this.updateHighlights.bind(this), true);
-    $scope.$watch('$ctrl.draftSelectors', this.updateHighlights.bind(this), true);
+    $scope.$watchCollection('$ctrl.discussions', this.updateHighlights.bind(this));
+    $scope.$watch('$ctrl.draftSelectors', this.updateHighlights.bind(this));
 
     // update and watch anchor and query parameter
     this.updateAnchor();
