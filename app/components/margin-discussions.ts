@@ -194,13 +194,11 @@ export default function(app) {
 
         // update positions if discussions, draftSelectors, discussionSizes,
         // draftSize or page coords changed
-        [
-          '$ctrl.discussions',
-          '$ctrl.draftSelectors',
-          '$ctrl.discussionSizes',
-          '$ctrl.draftSize',
-          '$ctrl.pageCoordinates',
-        ].forEach(name => $scope.$watch(name, updatePositions, true));
+        $scope.$watchCollection('$ctrl.discussions', updatePositions);
+        $scope.$watch('$ctrl.draftSelectors', updatePositions);
+        $scope.$watch('$ctrl.draftSize', updatePositions);
+        $scope.$watchCollection('$ctrl.discussionSizes', updatePositions);
+        $scope.$watchCollection('$ctrl.pageCoordinates', updatePositions);
       }
     ],
   });
