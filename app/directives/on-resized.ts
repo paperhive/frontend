@@ -21,13 +21,13 @@ export default function(app) {
           const resizeHandler = function() {
             const newSize = {
               height: element[0].offsetHeight,
-              width: element[0].offsetWidth
+              width: element[0].offsetWidth,
+              scrollHeight: element[0].scrollHeight,
+              scrollWidth: element[0].scrollWidth,
             };
 
             // return if unchanged
-            if (oldSize.height === newSize.height && oldSize.width === newSize.width) {
-              return;
-            }
+            if (angular.equals(newSize, oldSize)) return;
 
             oldSize = newSize;
 
