@@ -105,7 +105,6 @@ margin-discussion-draft {
 
 .ph-margin-info {
   .text-muted();
-  .ph-no-margin();
   font-size: smaller;
 }
 
@@ -130,6 +129,33 @@ margin-discussion kramjax p {
 margin-discussion kramjax .MathJax_Display {
   margin: 5px 0;
 }
+
+.ph-margin-body {
+  position: relative;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+
+  > .ph-margin-body-fade {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 20px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), white);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+
+  &.ph-margin-body-collapsed {
+    max-height: 70px !important;
+
+    > .ph-margin-body-fade {
+      opacity: 1;
+    }
+  }
+}
+
 
 // includes the avatars in the collapse animation
 .ph-margin-collapse {
