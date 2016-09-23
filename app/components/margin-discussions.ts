@@ -104,7 +104,7 @@ export default function(app) {
 
           // get element
           const element = document.getElementById(`discussion-${id}`);
-          if (!element) return;
+          if (!element || !element.offsetParent) return;
 
           const top = angular.element(element.offsetParent).offset().top +
             $ctrl.discussionPositions[id];
@@ -117,8 +117,8 @@ export default function(app) {
           $ctrl.currentScrollAnchor = $ctrl.scrollToAnchor;
         }
 
-        $ctrl.updateScroll = updateScroll;
         $scope.$watch('$ctrl.scrollToAnchor', updateScroll);
+        $scope.$watchCollection('$ctrl.discussionPositions', updateScroll);
 
         // compute discussionPosititions and draftPosition
         function updatePositions() {
