@@ -29,6 +29,7 @@ import marginLink from './margin-link';
 import marginDiscussion from './margin-discussion';
 import marginDiscussionDraft from './margin-discussion-draft';
 import marginDiscussionEdit from './margin-discussion-edit';
+import marginDiscussionPlaceholder from './margin-discussion-placeholder';
 import marginDiscussions from './margin-discussions';
 import marginReplyEdit from './margin-reply-edit';
 import navbar from './navbar';
@@ -91,6 +92,7 @@ export default function(app) {
   marginDiscussion(app);
   marginDiscussionDraft(app);
   marginDiscussionEdit(app);
+  marginDiscussionPlaceholder(app);
   marginDiscussions(app);
   marginReplyEdit(app);
   navbar(app);
