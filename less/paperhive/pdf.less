@@ -10,7 +10,6 @@ pdf-full {
   margin-left: 0;
   margin-right: 0;
   background-color: white;
-  overflow: hidden;
   position: relative;
   .ph-selection(none);
 
@@ -88,5 +87,15 @@ pdf-full {
         background-color: @ph-highlight-color;
       }
     }
+  }
+}
+
+
+.ph-popup-button {
+  position: absolute;
+  margin: 2px;
+  color: @link-color;
+  &:hover {
+    color: @link-hover-color;
   }
 }
