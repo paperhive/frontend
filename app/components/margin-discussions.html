@@ -16,6 +16,7 @@
   ng-repeat="discussion in $ctrl.discussions"
   class="ph-margin-discussion"
   ng-style="{'top': $ctrl.discussionPositions[discussion.id] + 'px'}"
+  ng-show="$ctrl.discussionPositions[discussion.id] !== undefined"
   id="discussion-{{discussion.id}}"
 >
   <margin-discussion-placeholder
