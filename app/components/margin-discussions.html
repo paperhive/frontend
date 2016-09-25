@@ -12,30 +12,36 @@
   viewport-offset-top="$ctrl.viewportOffsetTop"
   viewport-offset-bottom="$ctrl.viewportOffsetBottom"
 ></margin-link>
-<margin-discussion
+<div
   ng-repeat="discussion in $ctrl.discussions"
-
-  discussion="discussion"
-  show-share-message="discussion.id === $ctrl.showShareMessageId"
-  on-discussion-update="$ctrl.onDiscussionUpdate({discussion: discussion})"
-  on-discussion-delete="$ctrl.onDiscussionDelete({discussion: discussion})"
-  on-reply-submit="$ctrl.onReplySubmit({discussion: discussion, reply: reply})"
-  on-reply-update="$ctrl.onReplyUpdate({discussion: discussion, reply: reply})"
-  on-reply-delete="$ctrl.onReplyDelete({discussion: discussion, reply: reply})"
-  ng-mouseenter="$ctrl.onDiscussionMouseenter({discussion: discussion})"
-  ng-mouseleave="$ctrl.onDiscussionMouseleave({discussion: discussion})"
-
-  on-resized="$ctrl.discussionSizes[discussion.id] = $size"
-  id="discussion-{{discussion.id}}"
-  ng-show="$ctrl.discussionPositions[discussion.id] !== undefined"
-  ng-class="{'ph-animate-top': $ctrl.discussionPositions[discussion.id] !== undefined}"
+  class="ph-margin-discussion"
   ng-style="{'top': $ctrl.discussionPositions[discussion.id] + 'px'}"
+  id="discussion-{{discussion.id}}"
+>
+  <margin-discussion-placeholder
+    ng-show="!$ctrl.discussionVisibilities[discussion.id]"
+  ></margin-discussion-placeholder>
+  <margin-discussion
+    ng-if="$ctrl.discussionVisibilities[discussion.id]"
 
-  popover-placement="top"
-  popover-is-open="$ctrl.discussionPositions[discussion.id] !== undefined && discussion.id === 'cDmUY04FkYx9' && $ctrl.tour.stages[$ctrl.tour.index] === 'margin-discussion'"
-  uib-popover-template="'html/shared/tour-margin-discussion.html'"
-  popover-trigger="'none'"
-></margin-discussion>
+    discussion="discussion"
+    show-share-message="discussion.id === $ctrl.showShareMessageId"
+    on-discussion-update="$ctrl.onDiscussionUpdate({discussion: discussion})"
+    on-discussion-delete="$ctrl.onDiscussionDelete({discussion: discussion})"
+    on-reply-submit="$ctrl.onReplySubmit({discussion: discussion, reply: reply})"
+    on-reply-update="$ctrl.onReplyUpdate({discussion: discussion, reply: reply})"
+    on-reply-delete="$ctrl.onReplyDelete({discussion: discussion, reply: reply})"
+    ng-mouseenter="$ctrl.onDiscussionMouseenter({discussion: discussion})"
+    ng-mouseleave="$ctrl.onDiscussionMouseleave({discussion: discussion})"
+
+    on-resized="$ctrl.discussionSizes[discussion.id] = $size"
+
+    popover-placement="top"
+    popover-is-open="$ctrl.discussionPositions[discussion.id] !== undefined && discussion.id === 'cDmUY04FkYx9' && $ctrl.tour.stages[$ctrl.tour.index] === 'margin-discussion'"
+    uib-popover-template="'html/shared/tour-margin-discussion.html'"
+    popover-trigger="'none'"
+  ></margin-discussion>
+</div>
 <margin-discussion-draft
   selectors="$ctrl.draftSelectors"
   on-submit="$ctrl.submitDiscussion(discussion)"
