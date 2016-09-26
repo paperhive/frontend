@@ -59,13 +59,12 @@ export default function(app) {
           };
 
           $scope.$watchGroup(['search.query', 'search.page'], (newValues) =>
-                             getSearchResults(newValues[0], newValues[1])
-                            );
+            getSearchResults(newValues[0], newValues[1])
+          );
 
-                            $scope.scrollToTop = function() {
-                              window.scrollTo(0, 0);
-                            };
-
+          $scope.scrollToTop = function() {
+            window.scrollTo(0, 0);
+          };
         }
       ]
     });

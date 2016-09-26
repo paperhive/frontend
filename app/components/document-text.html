@@ -111,6 +111,7 @@
     </div>
     <div class="col-md-3">
       <margin-discussions
+        ng-if="$ctrl.allPagesInitialized"
         discussions="$ctrl.discussions"
         draft-selectors="$ctrl.draftSelectors"
         emphasized-discussions="$ctrl.hoveredHighlights"

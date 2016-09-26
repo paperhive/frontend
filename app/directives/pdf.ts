@@ -1,7 +1,7 @@
 import angular from 'angular';
 import { queue } from 'async';
 import jquery from 'jquery';
-import { clone, difference, filter, flatten, isEqual, map, pick, some } from 'lodash';
+import { clone, difference, filter, flatten, isEqual, map, pick, some, uniq } from 'lodash';
 import { PDFJS } from 'pdfjs-dist';
 import rangy from 'rangy';
 
@@ -363,7 +363,7 @@ export default function(app) {
         const highlightsLayer = $compile(`
           <div class="ph-pdf-highlights">
             <pdf-highlight
-              ng-repeat="highlight in highlights | highlightsByPageNumber:${this.pageNumber}"
+              ng-repeat="highlight in highlightsByPage[${this.pageNumber}]"
               highlight="highlight"
               emphasized="emphasizedHighlights[highlight.id]"
               page-number="${this.page.pageNumber}"
@@ -576,6 +576,8 @@ export default function(app) {
 
         // monitor scrollToAnchor
         this.scope.$watch('scrollToAnchor', this.scrollToAnchor.bind(this));
+
+        this.scope.$watchCollection('highlights', this.updateHighlights.bind(this));
       }
 
       destroy() {
@@ -846,6 +848,22 @@ export default function(app) {
           },
           response => console.error(response.data || `error fetching anchor ${anchorId}`) // TODO: notificationService
         );
+      }
+
+      updateHighlights() {
+        this.scope.highlightsByPage = {};
+        if (!this.scope.highlights) return;
+
+        this.scope.highlights.forEach(highlight => {
+          if (!highlight.selectors || !highlight.selectors.pdfRectangles) return;
+          const pageNumbers = uniq(highlight.selectors.pdfRectangles.map(rect => rect.pageNumber));
+          pageNumbers.forEach(pageNumber => {
+            if (!this.scope.highlightsByPage[pageNumber]) {
+              this.scope.highlightsByPage[pageNumber] = [];
+            }
+            this.scope.highlightsByPage[pageNumber].push(highlight);
+          });
+        });
       }
     }
 

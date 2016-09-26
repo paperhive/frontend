@@ -27,9 +27,49 @@ export default function(app) {
     },
     template,
     controller: [
-      '$document', '$scope', '$timeout', '$window', 'scroll', 'distangleService', 'tourService',
-      function($document, $scope, $timeout, $window, scroll, distangleService, tourService) {
+      '$document', '$element', '$scope', '$timeout', '$window', 'scroll', 'distangleService', 'tourService',
+      function($document, $element, $scope, $timeout, $window, scroll, distangleService, tourService) {
         const $ctrl = this;
+
+        // viewport tracking for deciding which discussions actually need to be rendered
+        // note: unrendered discussions will be rendered with a placeholder
+        $ctrl.discussionVisibilities = {};
+        function updateDiscussionVisibilities() {
+          if (!$ctrl.discussions) return;
+
+          function getVisibleDiscussionIds(discussionIds) {
+            const parentTop = $element[0].getBoundingClientRect().top;
+            const viewportHeight = angular.element($window).height();
+            return discussionIds.filter(discussionId => {
+              const position = $ctrl.discussionPositions[discussionId];
+              const size = $ctrl.discussionSizes[discussionId];
+              if (!position || !size) return false;
+              return parentTop + position + size.height > - viewportHeight && parentTop + position < 2 * viewportHeight;
+            });
+          }
+
+          // determine which discussions are visible right now
+          const visibleDiscussionIds = getVisibleDiscussionIds($ctrl.discussions.map(discussion => discussion.id));
+
+          // reevaluate after a short delay
+          $timeout(() => {
+            // only make discussions visible that still pass the visibility test
+            const newDiscussionVisibilities = {};
+            getVisibleDiscussionIds(visibleDiscussionIds)
+              .forEach(discussionId => (newDiscussionVisibilities[discussionId] = true));
+
+            if (angular.equals(newDiscussionVisibilities, $ctrl.discussionVisibilities)) return;
+
+            angular.copy(newDiscussionVisibilities, $ctrl.discussionVisibilities);
+
+            $scope.$evalAsync();
+          }, 250, false);
+        }
+        // update discussion visibilities on scroll and resize event
+        angular.element($window).on('scroll', updateDiscussionVisibilities);
+        $element.on('$destroy', () =>
+          angular.element($window).off('scroll', updateDiscussionVisibilities)
+        );
 
         // show popover with share message?
         function resetShowShareMessageId() {
@@ -106,7 +146,7 @@ export default function(app) {
 
           // get element
           const element = document.getElementById(`discussion-${id}`);
-          if (!element) return;
+          if (!element || !element.offsetParent) return;
 
           const top = angular.element(element.offsetParent).offset().top +
             $ctrl.discussionPositions[id];
@@ -119,8 +159,8 @@ export default function(app) {
           $ctrl.currentScrollAnchor = $ctrl.scrollToAnchor;
         }
 
-        $ctrl.updateScroll = updateScroll;
         $scope.$watch('$ctrl.scrollToAnchor', updateScroll);
+        $scope.$watchCollection('$ctrl.discussionPositions', updateScroll);
 
         // compute discussionPosititions and draftPosition
         function updatePositions() {
@@ -139,6 +179,9 @@ export default function(app) {
           $ctrl.discussions.forEach(discussion => {
             discussionRawPositions[discussion.id] =
               getRawPosition(discussion.target.selectors);
+            if (!$ctrl.discussionSizes[discussion.id]) {
+              $ctrl.discussionSizes[discussion.id] = {height: 135};
+            }
           });
 
           // create array with id, offset and height for each discussion
@@ -192,17 +235,16 @@ export default function(app) {
           // update controller properties
           $ctrl.draftPosition = draftCoord ? draftCoord.position : undefined;
           angular.copy(positions, $ctrl.discussionPositions);
+          updateDiscussionVisibilities();
         }
 
         // update positions if discussions, draftSelectors, discussionSizes,
         // draftSize or page coords changed
-        [
-          '$ctrl.discussions',
-          '$ctrl.draftSelectors',
-          '$ctrl.discussionSizes',
-          '$ctrl.draftSize',
-          '$ctrl.pageCoordinates',
-        ].forEach(name => $scope.$watch(name, updatePositions, true));
+        $scope.$watchCollection('$ctrl.discussions', updatePositions);
+        $scope.$watch('$ctrl.draftSelectors', updatePositions);
+        $scope.$watch('$ctrl.draftSize', updatePositions);
+        $scope.$watchCollection('$ctrl.discussionSizes', updatePositions);
+        $scope.$watchCollection('$ctrl.pageCoordinates', updatePositions);
       }
     ],
   });

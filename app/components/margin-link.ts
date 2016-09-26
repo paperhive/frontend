@@ -74,15 +74,13 @@ export default function(app) {
         }
 
         // register updateCount on change of input data
-        [
-          '$ctrl.discussionOffsets',
-          '$ctrl.discussionSizes',
-          '$ctrl.viewportOffsetTop'
-        ].map(name => $scope.$watch(updateCount, true));
+        $scope.$watchCollection('$ctrl.discussionOffsets', updateCount);
+        $scope.$watchCollection('$ctrl.discussionSizes', updateCount);
+        $scope.$watch('$ctrl.viewportOffsetTop', updateCount);
 
 
         // wrap updateCount with $apply for non-angular events
-        const updateCountApply = () => $scope.$apply(updateCount);
+        const updateCountApply = () => $scope.$evalAsync(updateCount);
 
         // register/unregister updateCount on scroll and resize events
         angular.element($window).on('scroll', updateCountApply);

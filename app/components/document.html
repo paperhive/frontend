@@ -28,13 +28,14 @@
       </div>
     </div>
     <div class="ph-affix-container"
-        element-position="subnavPosition"
+        on-visibility-changed="$ctrl.subnavAffixed = $visibility.top !== 'visible'"
+        visibility-offset="{top: $root.navbarSize.height}"
         ng-style="{'min-height': subnavSize.height + 'px'}">
       <div class="ph-header-submenu-affix"
-          ng-class="{'ph-header-submenu-affixed': subnavPosition.top <= $root.navbarSize.height}"
+          ng-class="{'ph-header-submenu-affixed': $ctrl.subnavAffixed}"
           ng-style="{top: $root.navbarSize.height  + 'px'}"
           >
-        <div class="ph-header-submenu-container" element-size="subnavSize">
+        <div class="ph-header-submenu-container" on-resized="subnavSize = $size">
           <div class="container-fluid">
             <div class="row">
               <div class="col-sm-12">
