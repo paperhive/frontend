@@ -73,7 +73,6 @@
 .ph-hive-button {
   margin-bottom: @padding-large-horizontal; 
 }
-
 .ph-document-info {
   .ph-dropdown-menu {
     width: 100%;
@@ -86,7 +85,8 @@
         color: @ph-highlight-color;
       }
     }
-  }
+  } 
+
   .fa-download,
   .fa-history {
     padding-right: @padding-base-horizontal;
@@ -103,6 +103,37 @@
   }
   div {
     margin-bottom: @padding-large-horizontal;
+  }
+}
+.ph-sidenav-small {
+  .btn-link {
+    width: 100%;
+    display: block;
+    text-align: center;
+  }
+  .ph-hive-button {
+    margin-bottom: 0;
+    img {
+      max-width: 18px;
+    }
+  }  
+  .ph-document-info {
+    div {
+      margin-bottom: 0;
+    }
+    .fa-download,
+    .fa-history {
+      width: 100%;
+      border: none; 
+      padding-right: 0;
+    }
+  }
+  .ph-collapse {
+    width: 100%;
+    position: relative;
+    button {
+      width: 100%;
+    }
   }
 }
 

@@ -1,7 +1,7 @@
 <div class="ph-header-submenu-container">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-sm-10 col-sm-offset-2">
+      <div class="transition" ng-class="{'col-md-10 col-md-offset-2': !$ctrl.sidenavClosed, 'col-md-12 ph-margin-left': $ctrl.sidenavClosed}">
         <subnav>
           <ul class="nav nav-tabs ph-header-submenu">
             <li subnav-target="documents.text">
@@ -110,12 +110,15 @@
 </div>
 <div class="ph-sidenav-small ph-documents affix" ng-class="{closed: !$ctrl.sidenavClosed, opened: $ctrl.sidenavClosed}"> 
   <div class="ph-collapse">
-    <button id="nav-btn" class="navbar-toggle" ng-click="$ctrl.sidenavClosed = false">
+    <button id="nav-btn" class="navbar-toggle btn-link" ng-click="$ctrl.sidenavClosed = false">
       <i class="fa fa-chevron-right" aria-hidden="true"></i>
     </button>
   </div>
   <div class="ph-hive-button">
-    <hive-button
+    <button class="btn btn-link dropdown-toggle" uib-dropdown-toggle>
+      <img src="./static/img/logo-hexagon.svg">
+    </button>    
+    <!-- <hive-button
       popover-placement="bottom"
       popover-is-open="$ctrl.tour.stages[$ctrl.tour.index] === 'hive'"
       uib-popover-template="'html/shared/tour-hive.html'"
@@ -123,12 +126,12 @@
       document-id="$ctrl.latestRevision.id"
       user="$ctrl.auth.user"
       title="{{$ctrl.auth.user ? 'Hive this document for receiving updates.' : 'You have to be logged in to hive the document.'}}"
-    ></hive-button>
+    ></hive-button> -->
   </div>
   <!-- <div ng-if="$ctrl.activeRevision"> -->
   <div class="ph-document-info">
     <div class="dropdown" is-open="dropdown_open" uib-dropdown>
-      <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
+      <button class="btn btn-link dropdown-toggle" uib-dropdown-toggle>
         <i class="fa fa-history" aria-hidden="true"></i>
       </button>
       <ul class="dropdown-menu ph-dropdown-menu hidden">
@@ -152,7 +155,7 @@
     </div>
     <div
       class="ph-document-info-download">
-      <a class="btn btn-default" ng-href="{{$ctrl.origPdfUrl}}" download>
+      <a class="btn btn-link" ng-href="{{$ctrl.origPdfUrl}}" download>
         <i class="fa fa-download"></i>
       </a>
     </div>
