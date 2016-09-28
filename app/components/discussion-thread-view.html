@@ -21,11 +21,13 @@
   <div ng-if="$ctrl.discussion.target.selectors.textQuote.content">
     <hr>
     <h4>Referenced text</h4>
-    <div class="well well-lg ph-reference">
-      <blockquote>
-        {{$ctrl.discussion.target.selectors.textQuote.content}}
-      </blockquote>
-    </div>
+    <a href="./documents/{{$ctrl.discussion.target.document}}?a=d:{{$ctrl.discussion.id}}">
+      <div class="well well-lg ph-reference">
+        <blockquote>
+          {{$ctrl.discussion.target.selectors.textQuote.content}}
+        </blockquote>
+      </div>
+    </a>
   </div>
 
   <hr>
