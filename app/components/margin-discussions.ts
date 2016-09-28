@@ -43,7 +43,7 @@ export default function(app) {
             return discussionIds.filter(discussionId => {
               const position = $ctrl.discussionPositions[discussionId];
               const size = $ctrl.discussionSizes[discussionId];
-              if (!position || !size) return false;
+              if (position === undefined || size === undefined) return false;
               return parentTop + position + size.height > - viewportHeight && parentTop + position < 2 * viewportHeight;
             });
           }
