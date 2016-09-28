@@ -77,7 +77,7 @@ NOTE: ng-app is removed because angular is loaded asynchronously via
 
     <feedback-button></feedback-button>
 
-    <footer element-size="footerSize">
+    <footer on-resized="footerSize = $size">
       <ph-footer></ph-footer>
     </footer>
 

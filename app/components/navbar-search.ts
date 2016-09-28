@@ -35,9 +35,12 @@ export default function(app) {
           };
 
           $scope.goToDocument = function(item, model, label) {
-            $location.path($routeSegment.getSegmentUrl(
-              'documents', {documentId: item.id}
-            ));
+            $location
+              .path($routeSegment.getSegmentUrl(
+                'documents', {documentId: item.id}
+              ))
+              .search({});
+
             $scope.search.body = '';
           };
         }

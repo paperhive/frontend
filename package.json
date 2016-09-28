@@ -33,6 +33,7 @@
   "private": true,
   "devDependencies": {
     "bower": "^1.6.5",
+    "co": "^4.6.0",
     "del": "^2.0.2",
     "eslint": "^3.0.1",
     "gulp": "^3.9.0",
@@ -41,14 +42,13 @@
     "gulp-connect": "^5.0.0",
     "gulp-htmlmin": "^3.0.0",
     "gulp-imagemin": "^3.0.2",
-    "gulp-protractor": "^3.0.0",
     "gulp-streamify": "^1.0.2",
     "gulp-template": "^4.0.0",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
     "jasmine": "^2.4.0",
     "jasmine-core": "^2.3.4",
-    "jspm": "^0.17.0-beta.15",
+    "jspm": "^0.17.0-beta.28",
     "karma": "^1.0.0",
     "karma-jasmine": "^1.0.2",
     "karma-phantomjs-launcher": "^1.0.0",
@@ -61,6 +61,7 @@
     "nodemon": "^1.8.1",
     "npm-run-all": "^3.0.0",
     "phantomjs-prebuilt": "^2.1.3",
+    "protractor": "^4.0.9",
     "tslint": "^3.3.0",
     "typescript": "^1.7.5",
     "typings": "^1.0.2",
@@ -97,9 +98,9 @@
     },
     "devDependencies": {
       "json": "github:systemjs/plugin-json@^0.1.2",
-      "plugin-babel": "npm:systemjs-plugin-babel@^0.0.13",
+      "plugin-babel": "npm:systemjs-plugin-babel@^0.0.15",
       "text": "github:systemjs/plugin-text@^0.0.8",
-      "ts": "github:frankwallis/plugin-typescript@^4.0.16"
+      "ts": "github:frankwallis/plugin-typescript@^5.1.2"
     },
     "peerDependencies": {
       "angular": "github:angular/bower-angular@^1.5.8",
@@ -248,7 +249,7 @@
           }
         }
       },
-      "npm:inherits@2.0.1": {
+      "npm:inherits@2.0.3": {
         "ignore": [
           "test.js"
         ]
@@ -265,7 +266,7 @@
       "npm:moment@2.14.1": {
         "jspmNodeConversion": false
       },
-      "npm:typescript@1.8.10": {
+      "npm:typescript@2.0.3": {
         "browser": {},
         "map": {
           "buffer": "@empty",
