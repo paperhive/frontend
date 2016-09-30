@@ -1,5 +1,24 @@
 <div class="container ph-xl-margin-bottom">
   <h2>My channel</h2>
+  <div class="ph-md-margin-bottom">
+    <button
+      type="button"
+      ng-if="$ctrl.channel.isActive"
+      ng-click="$ctrl.deactivateChannel($ctrl.channel.id)"
+      class="btn btn-primary"
+    >
+      Deactivate
+    </button>
+    <button
+      type="button"
+      ng-if="!$ctrl.channel.isActive"
+      ng-click="$ctrl.activateChannel($ctrl.channel.id)"
+      class="btn btn-primary"
+    >
+      Activate
+    </button>
+    <button type="button" class="btn btn-primary">Edit</button>
+  </div>
   <form>
     <div class="form-group row">
       <label class="col-sm-2 col-form-label">Name:</label>
@@ -24,6 +43,14 @@
         </div>
       </div>
     </div>
+    <div class="form-group row" ng-if="$ctrl.channel.invitations.length > 0">
+      <label class="col-sm-2 col-form-label">Invitations:</label>
+      <div class="col-sm-10">
+        <div ng-repeat="invitation in $ctrl.channel.invitations">
+          {{invitation}}
+        </div>
+      </div>
+    </div>
     <div class="form-group row">
       <label class="col-sm-2 col-form-label">Active:</label>
       <div class="col-sm-10">
@@ -35,16 +62,16 @@
         </span>
       </div>
     </div>
+    <div class="form-group row" ng-if="$ctrl.channel.createdAt !== $ctrl.channel.updatedAt">
+      <label class="col-sm-2 col-form-label">Updated at:</label>
+      <div class="col-sm-10">
+        {{$ctrl.channel.updatedAt | date:'M/d/yyyy HH:mm'}}
+      </div>
+    </div>
     <div class="form-group row">
       <label class="col-sm-2 col-form-label">Created at:</label>
       <div class="col-sm-10">
         {{$ctrl.channel.createdAt | date:'M/d/yyyy HH:mm'}}
-      </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label">Updated at:</label>
-      <div class="col-sm-10">
-        {{$ctrl.channel.updatedAt | date:'M/d/yyyy HH:mm'}}
       </div>
     </div>
   </form>
