@@ -1,28 +1,44 @@
 <div class="container ph-xl-margin-bottom">
   <h2>My channels</h2>
-  <a href="./" class="btn btn-primary">
-    Create new channel
+  <a href="./" class="btn btn-primary ph-md-margin-bottom">
+    New channel
   </a>
-  <div class="row ph-md-margin-top">
-    <table class="table table-hover">
-      <tr>
-        <td>
-          TU Research Channel
-          <i class="fa fa-users" aria-hidden="true"></i>
-          <span class="label label-default">owner</span>
-          <small class="text-muted pull-right">
-            yesterday
-          </small>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          My PhD
-          <i class="fa fa-user-secret" aria-hidden="true"></i>
-          <span class="label label-default">owner</span>
-          <small class="text-muted pull-right">19/12/2015</small>
-        </td>
-      </tr>
-    </table>
-  </div>
+  <div>{{$ctrl.channels}}</div>
+  <table class="table table-hover">
+    <tr>
+      <td>
+        Reading Group
+        <span class="ph-sm-margin-left"></span>
+        <i class="fa fa-users" aria-hidden="true"></i>
+        <small class="text-muted pull-right">
+          <i class="fa fa-heartbeat" aria-hidden="true"></i>
+          15:25
+        </small>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        TU Research Channel
+        <span class="ph-sm-margin-left"></span>
+        <i class="fa fa-users" aria-hidden="true"></i>
+        <span class="label label-default ph-xs-margin-left">owner</span>
+        <small class="text-muted pull-right">
+          <i class="fa fa-heartbeat" aria-hidden="true"></i>
+          yesterday
+        </small>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        My PhD
+        <span class="ph-sm-margin-left"></span>
+        <i class="fa fa-user-secret" aria-hidden="true"></i>
+        <span class="label label-default ph-xs-margin-left">owner</span>
+        <small class="text-muted pull-right">
+          <i class="fa fa-heartbeat" aria-hidden="true"></i>
+          19/12/2015
+        </small>
+      </td>
+    </tr>
+  </table>
 </div>
