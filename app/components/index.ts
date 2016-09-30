@@ -3,6 +3,7 @@ import activity from './activity';
 import authReturn from './auth-return';
 import avatar from './avatar';
 import avatarList from './avatar-list';
+import channels from './channels';
 import comment from './comment';
 import contact from './contact';
 import discussionList from './discussion-list';
@@ -68,6 +69,7 @@ export default function(app) {
   authReturn(app);
   avatar(app);
   avatarList(app);
+  channels(app);
   comment(app);
   contact(app);
   discussionList(app);

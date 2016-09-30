@@ -27,6 +27,8 @@ export default function(app) {
         .when('/404', '404')
         .when('/about', 'about')
         .when('/auth/return/:provider', 'authReturn')
+        .when('/channels', 'channels')
+        .when('/contact', 'contact')
         // register new and redirect before id-dependent routes
         .when('/documents/new', 'documents_new')
         .when('/documents/redirect', 'documents_redirect')
@@ -41,7 +43,6 @@ export default function(app) {
         .when('/documents/:documentId/text', 'documents.text', {reloadOnSearch: false})
         .when('/documents/:documentId/revisions/:revisionId', 'documents.revisions')
         .when('/documents/:documentId/about', 'documents.about')
-        .when('/contact', 'contact')
         .when('/help/markdown', 'helpMarkdown')
         .when('/jobs', 'jobs')
         .when('/knowledgeunlatched', 'knowledgeunlatched')
@@ -136,6 +137,23 @@ export default function(app) {
           title: 'PaperHive'
         })
 
+        .segment('channels', {
+          template: '<channels></channels>',
+          title: 'My channels · PaperHive',
+        })
+
+        .segment('contact', {
+          template: '<contact></contact>',
+          title: 'Contact · PaperHive',
+          meta: [
+            {
+              name: 'description',
+              content: 'Contact PaperHive and ask us questions or send us ' +
+                'suggestions.'
+            }
+          ]
+        })
+
         .segment('documents', {
           template: '<document></document>',
           dependencies: ['documentId'],
@@ -200,18 +218,6 @@ export default function(app) {
         .segment('documents_redirect', {
           template: '<document-redirect></document-redirect>',
           title: 'Document redirect · PaperHive'
-        })
-
-        .segment('contact', {
-          template: '<contact></contact>',
-          title: 'Contact · PaperHive',
-          meta: [
-            {
-              name: 'description',
-              content: 'Contact PaperHive and ask us questions or send us ' +
-                'suggestions.'
-            }
-          ]
         })
 
         .segment('helpMarkdown', {
