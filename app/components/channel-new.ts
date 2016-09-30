@@ -19,7 +19,7 @@ export default function(app) {
         }).then(
           response => {
             this.submitting = false;
-            // this.$location.path(`/channels/${response.data.id}`);
+            this.$location.path(`/channels/${response.data.id}`);
           },
           response => {
             this.submitting = false;

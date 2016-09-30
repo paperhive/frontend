@@ -1,30 +1,27 @@
 'use strict';
-import template from './channels.html';
+import template from './channel.html';
 
 export default function(app) {
-  app.component('channels', {
-    controller: ['$http', '$location', 'authService', 'config', 'notificationService',
-      function($http, $location, authService, config, notificationService) {
+  app.component('channel', {
+    controller: ['$http', '$location', '$routeParams', 'authService', 'config', 'notificationService',
+      function($http, $location, $routeParams, authService, config, notificationService) {
         const ctrl = this;
         ctrl.$onChanges = changesObj => {
           authService.loginPromise.then(() => {
             $http.get(
-              config.apiUrl + '/channels'
+              config.apiUrl + `/channels/${$routeParams.channelId}`
             )
             .success(ret => {
-              ctrl.channels = ret.channels;
+              ctrl.channel = ret;
             })
             .error(data => {
               notificationService.notifications.push({
                 type: 'error',
                 message: data.message ? data.message :
-                  'could not fetch channels (unknown reason)'
+                  'could not fetch channel (unknown reason)'
               });
             });
           });
-        };
-        ctrl.openChannel = (id) => {
-          $location.path(`/channels/${id}`);
         };
       }
     ],

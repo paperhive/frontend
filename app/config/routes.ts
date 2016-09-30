@@ -29,6 +29,7 @@ export default function(app) {
         .when('/auth/return/:provider', 'authReturn')
         .when('/channels', 'channels')
         .when('/channels/new', 'channels_new')
+        .when('/channels/:channelId', 'channel')
         .when('/contact', 'contact')
         // register new and redirect before id-dependent routes
         .when('/documents/new', 'documents_new')
@@ -145,6 +146,10 @@ export default function(app) {
         .segment('channels_new', {
           template: '<channel-new></channel_new>',
           title: 'Add a new channel · PaperHive'
+        })
+        .segment('channel', {
+          template: '<channel></channel',
+          title: 'My channel · PaperHive'
         })
 
         .segment('contact', {
