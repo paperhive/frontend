@@ -143,7 +143,7 @@ export default function(app) {
           title: 'My channels · PaperHive',
         })
         .segment('channels_new', {
-          template: '<channels-new></channels_new>',
+          template: '<channel-new></channel_new>',
           title: 'Add a new channel · PaperHive'
         })
 

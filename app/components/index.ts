@@ -4,6 +4,7 @@ import authReturn from './auth-return';
 import avatar from './avatar';
 import avatarList from './avatar-list';
 import channels from './channels';
+import channelNew from './channel-new';
 import comment from './comment';
 import contact from './contact';
 import discussionList from './discussion-list';
@@ -70,6 +71,7 @@ export default function(app) {
   avatar(app);
   avatarList(app);
   channels(app);
+  channelNew(app);
   comment(app);
   contact(app);
   discussionList(app);
