@@ -5,10 +5,17 @@
   </a>
   <table class="table table-hover">
     <tr ng-repeat="channel in $ctrl.channels">
-      <td ng-click="$ctrl.openChannel(channel.id)" style="cursor: pointer;">
+      <td
+        ng-click="$ctrl.openChannel(channel.id)"
+        style="cursor: pointer;"
+        ng-class="{'text-muted': !channel.isActive}"
+      >
         <i class="fa fa-user-secret" aria-hidden="true"></i>
         <b class="ph-xs-margin-left">{{channel.name}}</b>
-        <span class="label label-info ph-sm-margin-left" ng-repeat="role in channel.members[0].roles">
+        <span ng-if="channel.isActive" class="label label-info ph-sm-margin-left" ng-repeat="role in channel.members[0].roles">
+          {{role}}
+        </span>
+        <span ng-if="!channel.isActive" class="label label-default ph-sm-margin-left" ng-repeat="role in channel.members[0].roles">
           {{role}}
         </span>
         <span class="label label-primary ph-sm-margin-left" ng-if="channel.isActive">

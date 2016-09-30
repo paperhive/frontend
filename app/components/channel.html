@@ -5,19 +5,24 @@
       type="button"
       ng-if="$ctrl.channel.isActive"
       ng-click="$ctrl.deactivateChannel($ctrl.channel.id)"
-      class="btn btn-primary"
+      class="btn btn-default"
     >
+      <i class="fa fa-times" aria-hidden="true"></i>
       Deactivate
     </button>
     <button
       type="button"
       ng-if="!$ctrl.channel.isActive"
       ng-click="$ctrl.activateChannel($ctrl.channel.id)"
-      class="btn btn-primary"
+      class="btn btn-default"
     >
+      <i class="fa fa-check" aria-hidden="true"></i>
       Activate
     </button>
-    <button type="button" class="btn btn-primary">Edit</button>
+    <button type="button" class="btn btn-primary ph-sm-margin-left">
+      <i class="fa fa-pencil" aria-hidden="true"></i>
+      Edit
+    </button>
   </div>
   <form>
     <div class="form-group row">
