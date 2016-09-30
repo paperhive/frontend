@@ -3,55 +3,17 @@
   <a href="./channels/new" class="btn btn-primary ph-md-margin-bottom">
     New channel
   </a>
-  <!-- <div>{{$ctrl.channels}}</div> -->
   <table class="table table-hover">
-    <tr>
-      <td>
-        <b>Reading Group</b>
-        <span class="ph-sm-margin-left"></span>
-        <i class="fa fa-users" aria-hidden="true"></i>
-        <small class="text-muted pull-right">
-          <i class="fa fa-heartbeat" aria-hidden="true"></i>
-          15:25
-        </small>
-        <div class="text-muted">
-          Description lorem ipsum lorem ipsum lorem ipsum
-        </div>
-        <div class="text-muted ph-sm-margin-top">
-          <small>created at 1/1/2016</small>
-        </div>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <b>TU Research Channel</b>
-        <span class="ph-sm-margin-left"></span>
-        <i class="fa fa-users" aria-hidden="true"></i>
-        <span class="label label-default ph-xs-margin-left">owner</span>
-        <small class="text-muted pull-right">
-          <i class="fa fa-heartbeat" aria-hidden="true"></i>
-          yesterday
-        </small>
-        <div class="text-muted">
-          Description lorem ipsum lorem ipsum lorem ipsum
-        </div>
-        <div class="text-muted ph-sm-margin-top">
-          <small>created at 10/14/2016</small>
-        </div>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <b>My PhD</b>
+    <tr ng-repeat="channel in $ctrl.channels">
+      <td ng-click="$ctrl.openChannel(channel.id)" style="cursor: pointer;">
+        <b>{{channel.name}}</b>
         <span class="ph-sm-margin-left"></span>
         <i class="fa fa-user-secret" aria-hidden="true"></i>
-        <span class="label label-default ph-xs-margin-left">owner</span>
-        <small class="text-muted pull-right">
-          <i class="fa fa-heartbeat" aria-hidden="true"></i>
-          19/12/2015
-        </small>
+        <div class="text-muted">
+          {{channel.description}}
+        </div>
         <div class="text-muted ph-sm-margin-top">
-          <small>created at 1/15/2016</small>
+          <small>created at {{channel.createdAt | date:'M/d/yyyy'}}</small>
         </div>
       </td>
     </tr>

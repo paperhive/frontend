@@ -3,8 +3,8 @@ import template from './channels.html';
 
 export default function(app) {
   app.component('channels', {
-    controller: ['$http', 'authService', 'config', 'notificationService',
-      function($http, authService, config, notificationService) {
+    controller: ['$http', '$location', 'authService', 'config', 'notificationService',
+      function($http, $location, authService, config, notificationService) {
         const ctrl = this;
         ctrl.$onChanges = changesObj => {
           authService.loginPromise.then(() => {
@@ -22,6 +22,9 @@ export default function(app) {
               });
             });
           });
+        };
+        ctrl.openChannel = (id) => {
+          $location.path('/channels/new');
         };
       }
     ],
