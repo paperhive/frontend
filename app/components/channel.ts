@@ -3,8 +3,8 @@ import template from './channel.html';
 
 export default function(app) {
   app.component('channel', {
-    controller: ['$http', '$location', '$routeParams', 'authService', 'config', 'notificationService',
-      function($http, $location, $routeParams, authService, config, notificationService) {
+    controller: ['$http', '$location', '$routeParams', '$uibModal', 'authService', 'config', 'notificationService',
+      function($http, $location, $routeParams, $uibModal, authService, config, notificationService) {
         const ctrl = this;
 
         ctrl.$onChanges = changesObj => {
@@ -54,6 +54,18 @@ export default function(app) {
               message: data.message ? data.message :
                 'could not activate channel (unknown reason)'
             });
+          });
+        };
+
+        ctrl.open = (size) => {
+          const modalInstance = $uibModal.open({
+            animation: true,
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: 'myModalContent.html',
+            controllerAs: 'ctrl',
+            size: size,
+            resolve: {}
           });
         };
 
