@@ -1,7 +1,7 @@
 import angular from 'angular';
 import { queue } from 'async';
 import jquery from 'jquery';
-import { clone, difference, filter, flatten, isEqual, map, pick, some, uniq } from 'lodash';
+import { clone, difference, filter, flatten, isArray, isEqual, isNumber, map, pick, some, uniq } from 'lodash';
 import { PDFJS } from 'pdfjs-dist';
 import rangy from 'rangy';
 
@@ -290,6 +290,60 @@ export default function(app) {
         // remove onclick handler (otherwise the link has no effect because only
         // linkService.navigateTo is called)
         this.element.find('a.internalLink').prop('onclick', null);
+
+        /*
+        this.element.find('a').on('mouseenter', event => event.stopPropagation());
+
+        // forward mouse events to underlying layer
+        ['mouseenter', 'mouseover', 'mousemove', 'mousedown', 'mouseup', 'click', 'dblclick', 'mouseleave', 'mouseout', 'select'].forEach(type => {
+          this.element[0].addEventListener(type, (event) => {
+            console.log(event.type, event);
+
+            this.element.hide();
+            const el = document.elementFromPoint(event.clientX, event.clientY);
+            this.element.show();
+            if (!el) return true;
+
+            const newEventOptions = pick(event,
+              // MouseEvent properties
+              'screenX', 'screenY', 'clientX', 'clientY',
+              'ctrlKey', 'shiftKey', 'altKey', 'metaKey', 'button', 'buttons',
+              'relatedTarget', 'region',
+              // UIEvent properties
+              'detail', 'view', 'sourceCapabilities',
+              // Event properties
+              'bubbles', 'cancelable', 'scoped'
+            );
+            const newEvent = new MouseEvent(event.type, newEventOptions);
+            jquery(el).select();
+            el.dispatchEvent(newEvent);
+
+            // this.element.css({'pointer-events': 'all'});
+
+            event.preventDefault();
+            event.stopPropagation();
+          }, true);
+        });
+        */
+
+        /*
+        this.element.on('mousedown mousemove mouseup click', (event) => {
+          this.element.hide();
+          const el = document.elementFromPoint(event.clientX, event.clientY);
+          this.element.show();
+          if (!el) return true;
+
+          const eventOpts = pick(event, 'bubbles', 'cancelable',
+            'screenX', 'screenY', 'clientX', 'clientY', 'movementX', 'movementY',
+            'ctrlKey', 'shiftKey', 'altKey', 'metaKey', 'button', 'buttons');
+          jquery(el).trigger(event.type, eventOpts);
+
+          event.preventDefault();
+          event.stopPropagation();
+
+          return false;
+        });
+        */
       }
     }
 
@@ -381,9 +435,9 @@ export default function(app) {
 
         // add annotations renderer
         // TODO: re-enable (disabled until scroll-to-dest is implemented)
-        // const annotationsLayer = angular.element('<div class="ph-pdf-annotations"></div>');
-        // this.element.append(annotationsLayer);
-        // this.annotationsRenderer = new AnnotationsRenderer(annotationsLayer, this.page, this.linkService);
+        const annotationsLayer = angular.element('<div class="ph-pdf-annotations"></div>');
+        this.element.append(annotationsLayer);
+        this.annotationsRenderer = new AnnotationsRenderer(annotationsLayer, this.page, this.linkService);
 
         // add popup layer
         const popup = $compile(`
@@ -461,7 +515,7 @@ export default function(app) {
         try {
           await this.canvasRenderer.render(deviceViewport);
           await this.textRenderer.render(viewport);
-          // await this.annotationsRenderer.render(viewport);
+          await this.annotationsRenderer.render(viewport);
 
           this.onRendered();
 
@@ -801,6 +855,9 @@ export default function(app) {
         if (match = /^p:(\d+)$/.exec(anchor)) {
           return this.scrollToId(anchor);
         }
+        if (match = /^pdfd:(.*)$/.exec(anchor)) {
+          return this.scrollToDest(match[1]);
+        }
         if (match = /^s:([\w-]+)$/.exec(anchor)) {
           return this.scrollToSelection(match[1]);
         }
@@ -814,6 +871,39 @@ export default function(app) {
 
         // scroll
         scroll.scrollTo(element, {offset: 140});
+      }
+
+      async scrollToDest(dest) {
+        const destRef = await this.pdf.getDestination(dest);
+        if (!destRef) throw new Error(`destination ${dest} not found`);
+        if (!isArray(destRef)) throw new Error('destination does not resolve to array');
+        console.log(destRef);
+
+        if (destRef[1].name !== 'XYZ') {
+          console.warn(`destination is of type ${destRef[1].name} instead of XYZ`);
+          return;
+        }
+
+        const pageNumber = await this.pdf.getPageIndex(destRef[0]);
+        if (!isNumber(pageNumber)) throw new Error('page number invalid');
+        if (pageNumber < 0 || pageNumber >= this.pdf.numPages) {
+          throw new Error('page number out of bounds');
+        }
+
+        if (destRef[2] === null || destRef[3] === null) {
+          console.warn('ignoring destination without coordinates');
+          return;
+        }
+        const page = this.pages[pageNumber];
+        if (!page.pageSize) throw new Error('pageSize not available');
+        const coords = page.pageSize.convertToViewportPoint(destRef[2], destRef[3]);
+
+        scroll.scrollTo(
+          this.element.offset().top +
+          page.element[0].offsetTop +
+          coords[1] / page.pageSize.height * page.element.height(),
+          {offset: (this.scope.viewportOffsetTop || 0) + 40}
+        );
       }
 
       scrollToSelection(anchorId) {
