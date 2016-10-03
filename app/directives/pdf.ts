@@ -533,14 +533,14 @@ export default function(app) {
       textFocus() {
         this.textFocused = true;
         if (this.initializedRenderers) {
-          this.textRenderer.element.insertAfter(this.annotationsRenderer.element);
+          this.annotationsRenderer.element.addClass('ph-no-interaction');
         }
       }
 
       textUnfocus() {
         this.textFocused = false;
         if (this.initializedRenderers) {
-          this.textRenderer.element.insertBefore(this.annotationsRenderer.element);
+          this.annotationsRenderer.element.removeClass('ph-no-interaction');
         }
       }
 
@@ -624,8 +624,14 @@ export default function(app) {
         angular.element($window).on('resize', _render);
         angular.element($window).on('scroll', _render);
 
-        // detect text selections
-        const _onTextSelect = this.onTextSelect.bind(this);
+        // focus text layer on drag
+        this.element.on('mousedown', () => this.textFocus());
+
+        // unfocus text layer and detect text selections
+        const _onTextSelect = () => {
+          this.textUnfocus();
+          this.onTextSelect();
+        };
         $document.on('mouseup keyup', _onTextSelect); // key events are not fired on PDFs
 
         // unregister event handlers
@@ -634,6 +640,9 @@ export default function(app) {
           angular.element($window).off('scroll', _render);
           $document.off('mouseup keyup', _onTextSelect);
         });
+
+
+        this.element.on('mouseup', () => this.textUnfocus());
 
         // render at least once
         this.render();
@@ -958,11 +967,13 @@ export default function(app) {
       }
 
       textFocus() {
+        if (this.textFocused) return;
         this.textFocused = true;
         this.pages.forEach(page => page.textFocus());
       }
 
       textUnfocus() {
+        if (!this.textFocused) return;
         this.textFocused = false;
         this.pages.forEach(page => page.textUnfocus());
       }
