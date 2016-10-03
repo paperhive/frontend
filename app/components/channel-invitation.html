@@ -7,19 +7,18 @@
   <form>
     <div class="form-group">
       <label>Email:</label>
-      <input type="email" class="form-control" placeholder="Enter email">
+      <input type="email" class="form-control" placeholder="Enter email" ng-model="$ctrl.email">
     </div>
     <div class="form-group">
-      <label>Example select</label>
-      <select class="form-control">
-        <option>Member</option>
-        <option>Owner</option>
-      </select>
+      <label>Role:</label>
+      <select class="form-control" ng-model="$ctrl.role" ng-options="role.id as role.name for role in $ctrl.roles"
+        ng-init="$ctrl.role=1"
+      ></select>
     </div>
   </form>
 </div>
 <div class="modal-footer">
-  <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">
+  <button class="btn btn-primary" type="button" ng-click="$ctrl.ok($ctrl.email, $ctrl.role)">
     <i class="fa fa-envelope" aria-hidden="true"></i>
     Invite
   </button>

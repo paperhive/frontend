@@ -9,15 +9,36 @@ export default function(app) {
       dismiss: '&'
     },
 
-    controller: ['$http', 'authService', 'config',
-      function($http, authService, config) {
+    controller: ['$http', '$routeParams', 'authService', 'config', 'notificationService',
+      function($http, $routeParams, authService, config, notificationService) {
         const ctrl = this;
 
-        ctrl.ok = function () {
+        ctrl.roles = [
+          {'id': 1, 'name': 'member'},
+          {'id': 2, 'name': 'owner'},
+        ];
+
+        ctrl.ok = (email, role) => {
           ctrl.close();
+
+          $http.post(
+            config.apiUrl + `/channels/${$routeParams.channelId}/invitations`,
+	            {email, roles: [ctrl.roles[role-1].name]},
+          )
+          .success(ret => {
+            console.log(ret);
+            ctrl.invitation = ret;
+          })
+          .error(data => {
+            notificationService.notifications.push({
+              type: 'error',
+              message: data.message ? data.message :
+                'invitation failed (unknown reason)'
+            });
+          });
         };
 
-        ctrl.cancel = function () {
+        ctrl.cancel = () => {
           ctrl.dismiss();
         };
       }
