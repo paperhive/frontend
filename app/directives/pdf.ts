@@ -286,60 +286,6 @@ export default function(app) {
           page: this.page,
           viewport: viewport,
         });
-
-        /*
-        this.element.find('a').on('mouseenter', event => event.stopPropagation());
-
-        // forward mouse events to underlying layer
-        ['mouseenter', 'mouseover', 'mousemove', 'mousedown', 'mouseup', 'click', 'dblclick', 'mouseleave', 'mouseout', 'select'].forEach(type => {
-          this.element[0].addEventListener(type, (event) => {
-            console.log(event.type, event);
-
-            this.element.hide();
-            const el = document.elementFromPoint(event.clientX, event.clientY);
-            this.element.show();
-            if (!el) return true;
-
-            const newEventOptions = pick(event,
-              // MouseEvent properties
-              'screenX', 'screenY', 'clientX', 'clientY',
-              'ctrlKey', 'shiftKey', 'altKey', 'metaKey', 'button', 'buttons',
-              'relatedTarget', 'region',
-              // UIEvent properties
-              'detail', 'view', 'sourceCapabilities',
-              // Event properties
-              'bubbles', 'cancelable', 'scoped'
-            );
-            const newEvent = new MouseEvent(event.type, newEventOptions);
-            jquery(el).select();
-            el.dispatchEvent(newEvent);
-
-            // this.element.css({'pointer-events': 'all'});
-
-            event.preventDefault();
-            event.stopPropagation();
-          }, true);
-        });
-        */
-
-        /*
-        this.element.on('mousedown mousemove mouseup click', (event) => {
-          this.element.hide();
-          const el = document.elementFromPoint(event.clientX, event.clientY);
-          this.element.show();
-          if (!el) return true;
-
-          const eventOpts = pick(event, 'bubbles', 'cancelable',
-            'screenX', 'screenY', 'clientX', 'clientY', 'movementX', 'movementY',
-            'ctrlKey', 'shiftKey', 'altKey', 'metaKey', 'button', 'buttons');
-          jquery(el).trigger(event.type, eventOpts);
-
-          event.preventDefault();
-          event.stopPropagation();
-
-          return false;
-        });
-        */
       }
     }
 
@@ -624,6 +570,7 @@ export default function(app) {
         angular.element($window).on('resize', _render);
         angular.element($window).on('scroll', _render);
 
+        // focus text layer on mousedown (except click on links)
         let mousedown = false;
         this.element.on('mousedown', event => {
           if (jquery(event.target).prop('tagName') === 'A') return;
@@ -637,11 +584,10 @@ export default function(app) {
         };
         $document.on('mouseup', onMouseUp);
 
-        // focus text layer on drag and ctrl+alt
+        // focus text layer while ctrl+alt is pressed
         // note: key events are not fired on PDFs
         const onKeyEvent = event => {
           const ctrlAlt = event.altKey && event.ctrlKey;
-          console.log(event);
           if (ctrlAlt) this.textFocus();
           else if (!mousedown) {
             this.textUnfocus();
