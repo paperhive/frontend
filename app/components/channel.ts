@@ -57,20 +57,19 @@ export default function(app) {
           });
         };
 
-        ctrl.open = (size) => {
+        ctrl.open = () => {
           const modalInstance = $uibModal.open({
-            animation: true,
-            ariaLabelledBy: 'modal-title',
-            ariaDescribedBy: 'modal-body',
-            templateUrl: 'myModalContent.html',
-            controllerAs: 'ctrl',
-            size: size,
-            resolve: {}
+            animation: ctrl.animationsEnabled,
+            component: 'channelInvitation',
           });
         };
 
+        ctrl.toggleAnimation = () => {
+          ctrl.animationsEnabled = !ctrl.animationsEnabled;
+        };
       }
     ],
+
     template,
   });
 };
