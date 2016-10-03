@@ -624,35 +624,38 @@ export default function(app) {
         angular.element($window).on('resize', _render);
         angular.element($window).on('scroll', _render);
 
-
-        // this.element.on('mousedown', () => this.textFocus());
-
-        // focus text layer on drag and ctrl+alt
-        const onTextFocus = (event) => {
-          if (event.type === 'mousedown' && jquery(event.target).prop('tagName') !== 'A') {
-            this.textFocus();
-            return;
-          }
-          const ctrlAlt = event.altKey && event.ctrlKey;
-          if (ctrlAlt) this.textFocus();
-          else this.textUnfocus;
-        };
-        $document.on('keydown keyup', onTextFocus);
-        this.element.on('mousedown', onTextFocus);
-
-        // unfocus text layer and detect text selections
-        const _onTextSelect = () => {
+        let mousedown = false;
+        this.element.on('mousedown', event => {
+          if (jquery(event.target).prop('tagName') === 'A') return;
+          mousedown = true;
+          this.textFocus();
+        });
+        const onMouseUp = () => {
+          mousedown = false;
           this.textUnfocus();
           this.onTextSelect();
         };
-        $document.on('mouseup keyup', _onTextSelect); // key events are not fired on PDFs
+        $document.on('mouseup', onMouseUp);
+
+        // focus text layer on drag and ctrl+alt
+        // note: key events are not fired on PDFs
+        const onKeyEvent = event => {
+          const ctrlAlt = event.altKey && event.ctrlKey;
+          console.log(event);
+          if (ctrlAlt) this.textFocus();
+          else if (!mousedown) {
+            this.textUnfocus();
+            if (event.type === 'keyup') this.onTextSelect();
+          }
+        };
+        $document.on('keydown keyup', onKeyEvent);
 
         // unregister event handlers
         this.element.on('$destroy', () => {
           angular.element($window).off('resize', _render);
           angular.element($window).off('scroll', _render);
-          $document.off('keydown keyup', onTextFocus);
-          $document.off('mouseup keyup', _onTextSelect);
+          $document.off('mouseup', onMouseUp);
+          $document.off('keydown keyup', onKeyEvent);
         });
 
 
