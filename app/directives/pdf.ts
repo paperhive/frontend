@@ -256,6 +256,7 @@ export default function(app) {
       linkService: any;
       page: PDFPageProxy;
       annotations: PDFAnnotations;
+      tooltip: JQuery;
 
       constructor(element, page, linkService) {
         this.page = page;
@@ -285,6 +286,36 @@ export default function(app) {
           linkService: this.linkService,
           page: this.page,
           viewport: viewport,
+        });
+
+        // create tooltip
+        // TODO: use angular here?
+        this.element.find('section').on('dragstart', event => {
+          if (this.tooltip) this.tooltip.remove();
+          this.tooltip = jquery(
+            `<div class="tooltip top fade" role="tooltip">
+              <div class="tooltip-arrow"></div>
+              <div class="tooltip-inner">
+                Press and hold CTRL+ALT to select text inside a link.
+              </div>
+            </div>`
+          );
+          this.tooltip.appendTo(this.element);
+          const target = jquery(event.currentTarget);
+          const position = target.position();
+          this.tooltip.css({
+            top: position.top - this.tooltip.height() - 8,
+            left: position.left + target.width() / 2 - this.tooltip.width() / 2,
+          });
+          setTimeout(() => this.tooltip.addClass('in'), 0);
+        });
+        this.element.find('a').on('dragend', event => {
+          if (this.tooltip) {
+            const tooltip = this.tooltip;
+            this.tooltip = undefined;
+            tooltip.removeClass('in');
+            setTimeout(() => tooltip.remove(), 500);
+          }
         });
       }
     }
