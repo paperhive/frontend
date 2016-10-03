@@ -350,6 +350,7 @@ export default function(app) {
       initializedPageSize: boolean;
       initializedRenderers: boolean;
       pageSize: any; // TODO: remove?
+      textFocused: boolean = false;
 
       // renderer state
       renderedSize: {height: number, width: number};
@@ -444,6 +445,10 @@ export default function(app) {
         this.element.append(popup);
 
         this.initializedRenderers = true;
+
+        // should the text layer be focused?
+        if (this.textFocused) this.textFocus();
+
         return true;
       }
 
@@ -525,6 +530,20 @@ export default function(app) {
         }
       }
 
+      textFocus() {
+        this.textFocused = true;
+        if (this.initializedRenderers) {
+          this.textRenderer.element.insertAfter(this.annotationsRenderer.element);
+        }
+      }
+
+      textUnfocus() {
+        this.textFocused = false;
+        if (this.initializedRenderers) {
+          this.textRenderer.element.insertBefore(this.annotationsRenderer.element);
+        }
+      }
+
       unrender() {
         delete this.canvasRenderer;
         delete this.textRenderer;
@@ -550,6 +569,7 @@ export default function(app) {
       lastSimpleSelection: any;
       linkService: LinkService;
       anchor: string;
+      textFocused: boolean = false;
 
       constructor(public pdf: PDFDocumentProxy, public element: JQuery,
           public scope: any) {
@@ -935,6 +955,16 @@ export default function(app) {
 
         // set selection
         this.onSelect(response.data.target.selectors);
+      }
+
+      textFocus() {
+        this.textFocused = true;
+        this.pages.forEach(page => page.textFocus());
+      }
+
+      textUnfocus() {
+        this.textFocused = false;
+        this.pages.forEach(page => page.textUnfocus());
       }
 
       updateHighlights() {
