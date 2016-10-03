@@ -237,7 +237,7 @@ export default function(app) {
       }
     }
 
-    // TODO: implement!
+    // a pdfjs-compliant linkService
     class LinkService {
       constructor(public onLinkCreate, public scrollToAnchor) {}
 
@@ -1075,8 +1075,6 @@ export default function(app) {
 
         // called when the anchor is updated
         onAnchorUpdate: '&',
-
-        // TODO: scroll interface
       },
       link: async function(scope, element, attrs) {
         let pdfFull;
