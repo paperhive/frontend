@@ -624,8 +624,21 @@ export default function(app) {
         angular.element($window).on('resize', _render);
         angular.element($window).on('scroll', _render);
 
-        // focus text layer on drag
-        this.element.on('mousedown', () => this.textFocus());
+
+        // this.element.on('mousedown', () => this.textFocus());
+
+        // focus text layer on drag and ctrl+alt
+        const onTextFocus = (event) => {
+          if (event.type === 'mousedown' && jquery(event.target).prop('tagName') !== 'A') {
+            this.textFocus();
+            return;
+          }
+          const ctrlAlt = event.altKey && event.ctrlKey;
+          if (ctrlAlt) this.textFocus();
+          else this.textUnfocus;
+        };
+        $document.on('keydown keyup', onTextFocus);
+        this.element.on('mousedown', onTextFocus);
 
         // unfocus text layer and detect text selections
         const _onTextSelect = () => {
@@ -638,6 +651,7 @@ export default function(app) {
         this.element.on('$destroy', () => {
           angular.element($window).off('resize', _render);
           angular.element($window).off('scroll', _render);
+          $document.off('keydown keyup', onTextFocus);
           $document.off('mouseup keyup', _onTextSelect);
         });
 
