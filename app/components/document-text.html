@@ -102,6 +102,7 @@
         on-all-pages-resized="$ctrl.allPagesInitialized = true"
         on-select="$ctrl.draftSelectors = selectors || $ctrl.draftSelectors"
         on-link-dest-create="$ctrl.getLinkDest(dest)"
+        on-anchor-update="$ctrl.updateAnchor(anchor)"
 
         popover-placement="top"
         popover-is-open="$ctrl.tourService.stages[$ctrl.tourService.index] === 'highlight'"

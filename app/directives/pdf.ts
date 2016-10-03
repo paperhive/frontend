@@ -239,14 +239,14 @@ export default function(app) {
 
     // TODO: implement!
     class LinkService {
-      constructor(public onLinkCreate) {}
+      constructor(public onLinkCreate, public scrollToAnchor) {}
 
       getDestinationHash(dest) {
         return this.onLinkCreate({dest});
       }
 
       navigateTo(dest) {
-        console.log(dest);
+        this.scrollToAnchor(`pdfd:${dest}`);
       }
     }
 
@@ -286,10 +286,6 @@ export default function(app) {
           page: this.page,
           viewport: viewport,
         });
-
-        // remove onclick handler (otherwise the link has no effect because only
-        // linkService.navigateTo is called)
-        this.element.find('a.internalLink').prop('onclick', null);
 
         /*
         this.element.find('a').on('mouseenter', event => event.stopPropagation());
@@ -553,6 +549,7 @@ export default function(app) {
       lastSelectors: any;
       lastSimpleSelection: any;
       linkService: LinkService;
+      anchor: string;
 
       constructor(public pdf: PDFDocumentProxy, public element: JQuery,
           public scope: any) {
@@ -565,7 +562,7 @@ export default function(app) {
         // wipe element children
         this.element.empty();
 
-        this.linkService = new LinkService(scope.onLinkDestCreate);
+        this.linkService = new LinkService(scope.onLinkDestCreate, this.scrollToAnchor.bind(this));
       }
 
       // initialize all pages
@@ -848,19 +845,25 @@ export default function(app) {
 
       async scrollToAnchor(anchor) {
         if (!anchor) return;
+        if (anchor !== this.anchor) {
+          this.anchor = anchor;
+          this.scope.onAnchorUpdate({anchor});
+        }
 
         let match;
         // match page
         if (match = /^p:(\d+)$/.exec(anchor)) {
           return this.scrollToId(anchor);
         }
+        // match pdf named destination
         if (match = /^pdfd:(.*)$/.exec(anchor)) {
           return await this.scrollToDest(match[1]);
         }
+        // match selection anchor
         if (match = /^s:([\w-]+)$/.exec(anchor)) {
           return await this.scrollToSelection(match[1]);
         }
-        console.warn(`Anchor ${anchor} does not match.`);
+        throw new Error(`Anchor ${anchor} does not match.`);
       }
 
       scrollToId(id) {
@@ -876,7 +879,6 @@ export default function(app) {
         const destRef = await this.pdf.getDestination(dest);
         if (!destRef) throw new Error(`destination ${dest} not found`);
         if (!isArray(destRef)) throw new Error('destination does not resolve to array');
-        console.log(destRef);
 
         if (destRef[1].name !== 'XYZ') {
           console.warn(`destination is of type ${destRef[1].name} instead of XYZ`);
@@ -1015,6 +1017,9 @@ export default function(app) {
 
         // called when an in-document link is created; should return the URL
         onLinkDestCreate: '&',
+
+        // called when the anchor is updated
+        onAnchorUpdate: '&',
 
         // TODO: scroll interface
       },

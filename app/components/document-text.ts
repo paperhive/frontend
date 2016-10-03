@@ -38,8 +38,9 @@ class DocumentTextCtrl {
     $scope.$watch('$ctrl.draftSelectors', this.updateHighlights.bind(this));
 
     // update and watch anchor and query parameter
-    this.updateAnchor();
-    $scope.$on('$routeUpdate', () => this.updateAnchor());
+    this.updateAnchorFromUrl();
+    $scope.$on('$routeUpdate', () => this.updateAnchorFromUrl());
+    $scope.$watch('$ctrl.anchor', anchor => this.updateAnchorToUrl(anchor));
   }
 
   getAccessiblePdfUrl(revision) {
@@ -61,12 +62,8 @@ class DocumentTextCtrl {
   // create link for pdf destinations
   getLinkDest(dest) {
     const segmentName = this.$routeSegment.name;
-    const baseUrl = this.$routeSegment.getSegmentUrl(
-      segmentName,
-      segmentName === 'documents.text' ?
-        {documentId: this.activeRevision.id} :
-        {documentId: this.activeRevision.id, revisionId: this.activeRevision.revision}
-    );
+    const baseUrl = this.$routeSegment
+      .getSegmentUrl(segmentName, this.$routeSegment.$routeParams);
     return `.${baseUrl}?a=pdfd:${encodeURIComponent(dest)}`;
   }
 
@@ -205,16 +202,17 @@ class DocumentTextCtrl {
 
   // note: a query parameter is used because a fragment identifier (hash)
   //       is *not* part of the URL.
-  updateAnchor() {
-    // transform fragment identifier (hash) into a query parameter
-    let hash = this.$location.hash();
-    if (hash) {
-      this.$location.hash('');
-      this.$location.search({a: hash});
-    }
+  updateAnchorFromUrl() {
+    // get anchor from hash or search param
+    const anchor = this.$location.hash() || this.$location.search().a;
+    // reset hash
+    this.$location.hash('');
+    // update anchor
+    this.anchor = anchor;
+  }
 
-    // use query parameter 'a' as anchor
-    this.anchor = this.$location.search().a;
+  updateAnchorToUrl(anchor) {
+    this.$location.search({a: anchor});
   }
 
   // generate highlights array
