@@ -1,62 +1,69 @@
-<div class="ph-md-margin-bottom">
-  <button
-    type="button"
-    ng-if="$ctrl.channel.isActive"
-    ng-click="$ctrl.deactivateChannel($ctrl.channel.id)"
-    class="btn btn-default"
-  >
-    <i class="fa fa-times" aria-hidden="true"></i>
-    Deactivate
-  </button>
-  <button
-    type="button"
-    ng-if="!$ctrl.channel.isActive"
-    ng-click="$ctrl.activateChannel($ctrl.channel.id)"
-    class="btn btn-default"
-  >
-    <i class="fa fa-check" aria-hidden="true"></i>
-    Activate
-  </button>
-  <button type="button" class="btn btn-primary ph-sm-margin-left">
-    <i class="fa fa-pencil" aria-hidden="true"></i>
-    Edit
-  </button>
-</div>
+<div class="col-sm-12">
+  <form>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Name:</label>
+      <div class="col-sm-10">
+        <input ng-model="$ctrl.channel.name" name="channelName"
+          type="text" class="form-control" required
+        >
+      </div>
+    </div>
 
-<form>
-  <div class="form-group row">
-    <label class="col-sm-2 col-form-label">Name:</label>
-    <div class="col-sm-10">
-      {{$ctrl.channel.name}}
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Description:</label>
+      <div class="col-sm-10">
+        <input ng-model="$ctrl.channel.description" name="channelDescription"
+          type="text" class="form-control" required
+        >
+      </div>
     </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-sm-2 col-form-label">Description:</label>
-    <div class="col-sm-10">
-      {{$ctrl.channel.description}}
+
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Active:</label>
+      <div class="col-sm-10">
+        <div class="form-check">
+          <label class="form-check-label">
+            <input
+              type="radio" class="form-check-input"
+              ng-value="true" ng-model="$ctrl.channel.isActive"
+            >
+            active
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input
+              type="radio" class="form-check-input"
+              ng-value="false" ng-model="$ctrl.channel.isActive"
+            >
+            inactive
+          </label>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-sm-2 col-form-label">Active:</label>
+
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Created at:</label>
+      <div class="col-sm-10">
+        {{$ctrl.channel.createdAt | date:'M/d/yyyy HH:mm'}}
+      </div>
+    </div>
+
+    <div class="form-group row" ng-if="$ctrl.channel.createdAt !== $ctrl.channel.updatedAt">
+      <label class="col-sm-2 col-form-label">Updated at:</label>
+      <div class="col-sm-10">
+        {{$ctrl.channel.updatedAt | date:'M/d/yyyy HH:mm'}}
+      </div>
+    </div>
+  </form>
+
+  <div class="form-group row ph-lg-margin-bottom">
+    <label class="col-sm-2 col-form-label"></label>
     <div class="col-sm-10">
-      <span ng-if="$ctrl.channel.isActive">
+      <button type="button" class="btn btn-primary">
         <i class="fa fa-check" aria-hidden="true"></i>
-      </span>
-      <span ng-if="!$ctrl.channel.isActive">
-        <i class="fa fa-times" aria-hidden="true"></i>
-      </span>
+        Save
+      </button>
     </div>
   </div>
-  <div class="form-group row" ng-if="$ctrl.channel.createdAt !== $ctrl.channel.updatedAt">
-    <label class="col-sm-2 col-form-label">Updated at:</label>
-    <div class="col-sm-10">
-      {{$ctrl.channel.updatedAt | date:'M/d/yyyy HH:mm'}}
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-sm-2 col-form-label">Created at:</label>
-    <div class="col-sm-10">
-      {{$ctrl.channel.createdAt | date:'M/d/yyyy HH:mm'}}
-    </div>
-  </div>
-</form>
+</div>
