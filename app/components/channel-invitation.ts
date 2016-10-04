@@ -20,10 +20,9 @@ export default function(app) {
 
         ctrl.ok = (email, role) => {
           ctrl.close();
-
           $http.post(
             config.apiUrl + `/channels/${$routeParams.channelId}/invitations`,
-	            {email, roles: [ctrl.roles[role-1].name]},
+              {email, roles: [ctrl.roles[role - 1].name]},
           )
           .success(ret => {
             ctrl.invitation = ret;

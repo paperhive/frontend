@@ -43,14 +43,14 @@
       <div class="col-sm-9">
         <button type="button" class="btn btn-primary"
           ng-if="!$ctrl.channel.isActive"
-81	      ng-click="$ctrl.activate()"
+	        ng-click="$ctrl.activate()"
         >
           Activate
         </button>
         <button type="button" class="btn btn-danger"
           ng-if="$ctrl.channel.isActive"
           ng-confirm-click="Really deactivate channel?"
-81	      confirmed-click="$ctrl.deactivate()"
+	        confirmed-click="$ctrl.deactivate()"
         >
           Deactivate
         </button>
