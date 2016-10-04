@@ -6,8 +6,8 @@ export default function(app) {
   app.component('channelMembers', {
     bindings: {},
     controller: [
-    '$http', '$routeParams', 'authService', 'config', 'notificationService',
-      function($http, $routeParams, authService, config, notificationService) {
+    '$http', '$routeParams', '$uibModal', 'authService', 'config', 'notificationService',
+      function($http, $routeParams, $uibModal, authService, config, notificationService) {
         const ctrl = this;
 
         ctrl.$onChanges = changesObj => {
@@ -26,6 +26,17 @@ export default function(app) {
               });
             });
           });
+        };
+
+        ctrl.open = () => {
+          const modalInstance = $uibModal.open({
+            animation: ctrl.animationsEnabled,
+            component: 'channelInvitation',
+          });
+        };
+
+        ctrl.toggleAnimation = () => {
+          ctrl.animationsEnabled = !ctrl.animationsEnabled;
         };
 
       }

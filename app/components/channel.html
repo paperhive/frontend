@@ -4,7 +4,7 @@
       <div class="col-sm-12 ph-sm-margin-top">
         <a href="./channels">Back to channels</a>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-12">
         <div class="media">
           <div class="media-left">
             <!--icon-->
@@ -18,8 +18,8 @@
             <h2 class="media-heading">{{$ctrl.channel.name}}</h2>
             <div class="text-muted">{{$ctrl.channel.description}}</div>
             <div>
-              <span class="label label-primary ph-sm-margin-right" ng-if="$ctrl.channel.isActive">
-                active
+              <span class="label label-default ph-sm-margin-right" ng-if="!$ctrl.channel.isActive">
+                inactive
               </span>
               <span class="label label-primary" ng-if="$ctrl.owner">
                 owner
@@ -27,16 +27,6 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-sm-6 ph-lg-margin-top">
-        <button
-          type="button"
-          ng-click="$ctrl.open()"
-          class="btn btn-primary"
-        >
-          <i class="fa fa-envelope" aria-hidden="true"></i>
-          Invite someone
-        </button>
       </div>
     </div>
   </div>

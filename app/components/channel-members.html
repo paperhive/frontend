@@ -1,4 +1,14 @@
 <div class="form-group">
+  <button
+    type="button"
+    ng-click="$ctrl.open()"
+    class="btn btn-primary"
+    ng-disabled="!$ctrl.channel.isActive"
+    title="{{$ctrl.channel.isActive ? '' : 'Activate the channel first to invite people'}}"
+  >
+    <i class="fa fa-envelope" aria-hidden="true"></i>
+    Invite someone
+  </button>
 
   <h2>Members</h2>
   <div class="col-sm-12 ph-lg-margin-bottom">
