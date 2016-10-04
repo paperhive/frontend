@@ -28,37 +28,56 @@ export default function(app) {
           });
         };
 
-        // ctrl.deactivateChannel = (id) => {
-        //   $http.delete(
-        //     config.apiUrl + `/channels/${id}/active`
-        //   )
-        //   .success(ret => {
-        //     ctrl.channel = ret;
-        //   })
-        //   .error(data => {
-        //     notificationService.notifications.push({
-        //       type: 'error',
-        //       message: data.message ? data.message :
-        //         'could not deactivate channel (unknown reason)'
-        //     });
-        //   });
-        // };
-        //
-        // ctrl.activateChannel = (id) => {
-        //   $http.post(
-        //     config.apiUrl + `/channels/${id}/active`
-        //   )
-        //   .success(ret => {
-        //     ctrl.channel = ret;
-        //   })
-        //   .error(data => {
-        //     notificationService.notifications.push({
-        //       type: 'error',
-        //       message: data.message ? data.message :
-        //         'could not activate channel (unknown reason)'
-        //     });
-        //   });
-        // };
+        ctrl.save = (name, description) => {
+          $http.put(
+            config.apiUrl + `/channels/${$routeParams.channelId}`,
+            {name, description},
+          )
+          .success(ret => {
+            ctrl.channel = ret;
+          })
+          .error(data => {
+            notificationService.notifications.push({
+              type: 'error',
+              message: data.message ? data.message :
+                'update failed (unknown reason)'
+            });
+          });
+        };
+
+        // deactivate
+        ctrl.deactivate = () => {
+          $http.delete(
+            config.apiUrl + `/channels/${$routeParams.channelId}/active`
+          )
+          .success(ret => {
+            ctrl.channel = ret;
+          })
+          .error(data => {
+            notificationService.notifications.push({
+              type: 'error',
+              message: data.message ? data.message :
+                'could not deactivate channel (unknown reason)'
+            });
+          });
+        };
+
+        // activate
+        ctrl.activate = () => {
+          $http.post(
+            config.apiUrl + `/channels/${$routeParams.channelId}/active`
+          )
+          .success(ret => {
+            ctrl.channel = ret;
+          })
+          .error(data => {
+            notificationService.notifications.push({
+              type: 'error',
+              message: data.message ? data.message :
+                'could not activate channel (unknown reason)'
+            });
+          });
+        };
 
       }
     ],

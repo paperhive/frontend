@@ -3,8 +3,8 @@
     <div class="form-group row">
       <label class="col-sm-2 col-form-label">Name:</label>
       <div class="col-sm-10">
-        <input ng-model="$ctrl.channel.name" name="channelName"
-          type="text" class="form-control" required
+        <input ng-model="$ctrl.channel.name" name="channelName" type="text"
+          class="form-control" required ng-disabled="!$ctrl.channel.isActive"
         >
       </div>
     </div>
@@ -12,33 +12,47 @@
     <div class="form-group row">
       <label class="col-sm-2 col-form-label">Description:</label>
       <div class="col-sm-10">
-        <input ng-model="$ctrl.channel.description" name="channelDescription"
-          type="text" class="form-control" required
+        <input ng-model="$ctrl.channel.description" type="text"
+          class="form-control" required ng-disabled="!$ctrl.channel.isActive"
         >
       </div>
     </div>
 
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label">Active:</label>
+    <div class="form-group row" ng-if="$ctrl.channel.isActive">
+      <label class="col-sm-2 col-form-label"></label>
       <div class="col-sm-10">
-        <div class="form-check">
-          <label class="form-check-label">
-            <input
-              type="radio" class="form-check-input"
-              ng-value="true" ng-model="$ctrl.channel.isActive"
-            >
-            active
-          </label>
-        </div>
-        <div class="form-check">
-          <label class="form-check-label">
-            <input
-              type="radio" class="form-check-input"
-              ng-value="false" ng-model="$ctrl.channel.isActive"
-            >
-            inactive
-          </label>
-        </div>
+        <button type="button" class="btn btn-primary"
+          ng-click="$ctrl.save($ctrl.channel.name, $ctrl.channel.description)"
+        >
+          <i class="fa fa-check" aria-hidden="true"></i>
+          Save
+        </button>
+      </div>
+    </div>
+
+    <div class="form-group row ph-lg-margin-top">
+      <label class="col-sm-2 col-form-label">Active:</label>
+      <div class="col-sm-1">
+        <span ng-if="$ctrl.channel.isActive">
+          <i class="fa fa-check" aria-hidden="true"></i>
+        </span>
+        <span ng-if="!$ctrl.channel.isActive">
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </span>
+      </div>
+      <div class="col-sm-9">
+        <button type="button" class="btn btn-danger"
+          ng-click="$ctrl.activate()" ng-if="!$ctrl.channel.isActive"
+        >
+          <i class="fa fa-check" aria-hidden="true"></i>
+          Activate
+        </button>
+        <button type="button" class="btn btn-danger"
+          ng-click="$ctrl.deactivate()" ng-if="$ctrl.channel.isActive"
+        >
+          <i class="fa fa-check" aria-hidden="true"></i>
+          Deactivate
+        </button>
       </div>
     </div>
 
@@ -57,13 +71,4 @@
     </div>
   </form>
 
-  <div class="form-group row ph-lg-margin-bottom">
-    <label class="col-sm-2 col-form-label"></label>
-    <div class="col-sm-10">
-      <button type="button" class="btn btn-primary">
-        <i class="fa fa-check" aria-hidden="true"></i>
-        Save
-      </button>
-    </div>
-  </div>
 </div>
