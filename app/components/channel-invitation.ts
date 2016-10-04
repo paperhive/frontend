@@ -1,10 +1,10 @@
 'use strict';
+
 import template from './channel-invitation.html';
 
 export default function(app) {
   app.component('channelInvitation', {
     bindings: {
-      resolve: '<',
       close: '&',
       dismiss: '&'
     },
@@ -26,7 +26,6 @@ export default function(app) {
 	            {email, roles: [ctrl.roles[role-1].name]},
           )
           .success(ret => {
-            console.log(ret);
             ctrl.invitation = ret;
           })
           .error(data => {

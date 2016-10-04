@@ -1,10 +1,13 @@
 'use strict';
-import template from './channel.html';
+
+import template from './channel-members.html!text';
 
 export default function(app) {
-  app.component('channel', {
-    controller: ['$http', '$location', '$routeParams', '$uibModal', 'authService', 'config', 'notificationService',
-      function($http, $location, $routeParams, $uibModal, authService, config, notificationService) {
+  app.component('channelMembers', {
+    bindings: {},
+    controller: [
+    '$http', '$routeParams', 'authService', 'config', 'notificationService',
+      function($http, $routeParams, authService, config, notificationService) {
         const ctrl = this;
 
         ctrl.$onChanges = changesObj => {
@@ -25,19 +28,8 @@ export default function(app) {
           });
         };
 
-        ctrl.open = () => {
-          const modalInstance = $uibModal.open({
-            animation: ctrl.animationsEnabled,
-            component: 'channelInvitation',
-          });
-        };
-
-        ctrl.toggleAnimation = () => {
-          ctrl.animationsEnabled = !ctrl.animationsEnabled;
-        };
       }
     ],
-
     template,
   });
 };

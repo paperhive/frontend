@@ -30,6 +30,9 @@ export default function(app) {
         .when('/channels', 'channels')
         .when('/channels/new', 'channels_new')
         .when('/channels/:channelId', 'channel')
+        .when('/channels/:channelId/documents', 'channel.documents')
+        .when('/channels/:channelId/members', 'channel.members')
+        .when('/channels/:channelId/settings', 'channel.settings')
         .when('/contact', 'contact')
         // register new and redirect before id-dependent routes
         .when('/documents/new', 'documents_new')
@@ -149,8 +152,22 @@ export default function(app) {
         })
         .segment('channel', {
           template: '<channel></channel',
-          title: 'My channel · PaperHive'
         })
+        .within()
+          .segment('documents', {
+            default: true,
+            template: `<channel-documents></channel-documents>`,
+            title: 'My channel · PaperHive',
+          })
+          .segment('members', {
+            template: `<channel-members></channel-members>`,
+            title: 'My channel · PaperHive',
+          })
+          .segment('settings', {
+            template: `<channel-settings></channel-settings>`,
+            title: 'My channel · PaperHive',
+          })
+        .up()
 
         .segment('contact', {
           template: '<contact></contact>',
