@@ -618,8 +618,8 @@ export default function(app) {
         // focus text layer while ctrl+alt is pressed
         // note: key events are not fired on PDFs
         const onKeyEvent = event => {
-          const ctrlAlt = event.altKey && event.ctrlKey;
-          if (ctrlAlt) this.textFocus();
+          const shouldFocus = event.altKey && event.ctrlKey || event.metaKey;
+          if (shouldFocus) this.textFocus();
           else if (!mousedown) {
             this.textUnfocus();
             if (event.type === 'keyup') this.onTextSelect();
