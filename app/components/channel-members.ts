@@ -1,5 +1,7 @@
 'use strict';
 
+import { remove } from 'lodash';
+
 import template from './channel-members.html!text';
 
 export default function(app) {
@@ -37,6 +39,22 @@ export default function(app) {
 
         ctrl.toggleAnimation = () => {
           ctrl.animationsEnabled = !ctrl.animationsEnabled;
+        };
+
+        ctrl.deleteChannelInvitation = (channelId, invitationId) => {
+          $http.delete(
+            config.apiUrl + `/channels/${channelId}/invitations/${invitationId}`
+          )
+          .success(ret => {
+            remove(ctrl.channel.invitations, {id: invitationId});
+          })
+          .error(data => {
+            notificationService.notifications.push({
+              type: 'error',
+              message: data.message ? data.message :
+                'could not delete channel invitation (unknown reason)'
+            });
+          });
         };
 
       }
