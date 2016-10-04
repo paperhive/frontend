@@ -292,11 +292,13 @@ export default function(app) {
         // TODO: use angular here?
         this.element.find('section').on('dragstart', event => {
           if (this.tooltip) this.tooltip.remove();
+          const isMac = /Mac/.test($window.navigator.platform);
           this.tooltip = jquery(
             `<div class="tooltip top fade" role="tooltip">
               <div class="tooltip-arrow"></div>
               <div class="tooltip-inner">
-                Press and hold Ctrl+Alt to select text inside a link.
+                Press and hold ${isMac ? 'Cmd' : 'Ctrl+Alt'} to select text
+                inside a link.
               </div>
             </div>`
           );
