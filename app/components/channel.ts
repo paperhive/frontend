@@ -1,4 +1,7 @@
 'use strict';
+
+import { includes } from 'lodash';
+
 import template from './channel.html';
 
 export default function(app) {
@@ -14,6 +17,11 @@ export default function(app) {
             )
             .success(ret => {
               ctrl.channel = ret;
+              function findUser(member) {
+                return member.person.id === authService.user.id;
+              }
+              const user = ret.members.find(findUser);
+              ctrl.owner = includes(user.roles, 'owner');
             })
             .error(data => {
               notificationService.notifications.push({

@@ -17,6 +17,14 @@
             <!--heading-->
             <h2 class="media-heading">{{$ctrl.channel.name}}</h2>
             <div class="text-muted">{{$ctrl.channel.description}}</div>
+            <div>
+              <span class="label label-primary ph-sm-margin-right" ng-if="$ctrl.channel.isActive">
+                active
+              </span>
+              <span class="label label-primary" ng-if="$ctrl.owner">
+                owner
+              </span>
+            </div>
           </div>
         </div>
       </div>

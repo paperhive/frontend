@@ -23,9 +23,11 @@ export default function(app) {
             });
           });
         };
+
         ctrl.openChannel = (id) => {
           $location.path(`/channels/${id}`);
         };
+
       }
     ],
     template,
