@@ -39,7 +39,7 @@ export default function(app) {
         .when('/documents/:documentId/discussions/:discussionId',
               'documents.discussions.thread')
         .when('/documents/:documentId/text', 'documents.text', {reloadOnSearch: false})
-        .when('/documents/:documentId/revisions/:revisionId', 'documents.revisions')
+        .when('/documents/:documentId/revisions/:revisionId', 'documents.revisions', {reloadOnSearch: false})
         .when('/documents/:documentId/about', 'documents.about')
         .when('/contact', 'contact')
         .when('/help/markdown', 'helpMarkdown')
