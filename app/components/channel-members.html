@@ -13,9 +13,12 @@
     <table class="table table-hover ph-md-margin-bottom">
       <tr ng-repeat="member in $ctrl.channel.members">
         <td>
-          {{member.person.displayName}},
-          {{member.person.account.email}}
-          <span class="label label-default ph-sm-margin-left" ng-repeat="role in member.roles">
+          <avatar user="member.person" size="30" classes="img-circle"></avatar>
+          {{member.person.displayName}}, {{member.person.account.email}},
+          @{{member.person.account.username}}
+          <span class="label label-default ph-sm-margin-left"
+            ng-repeat="role in member.roles"
+          >
             {{role}}
           </span>
         </td>
@@ -23,12 +26,19 @@
     </table>
 
     <div ng-if="$ctrl.channel.invitations.length > 0">
-      <h2>Invitations</h2>
+      <h2>
+        Invitees
+        <span class="badge ph-xs-margin-left">
+          {{$ctrl.channel.invitations.length}}
+        </span>
+      </h2>
       <table class="table table-hover">
         <tr ng-repeat="invitation in $ctrl.channel.invitations">
           <td>
             {{invitation.email}}
-            <span class="label label-default ph-sm-margin-left" ng-repeat="role in invitation.roles">
+            <span class="label label-default ph-sm-margin-left"
+              ng-repeat="role in invitation.roles"
+            >
               {{role}}
             </span>
             <button

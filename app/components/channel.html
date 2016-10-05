@@ -41,7 +41,19 @@
                 <a><i class="fa fa-fw fa-file-text-o"></i> Documents</a>
               </li>
               <li subnav-target="channel.members">
-                <a><i class="fa fa-fw fa-users"></i> Members</a>
+                <a>
+                  <i class="fa fa-fw fa-users"></i>
+                  Members
+                  <span class="badge ph-xs-margin-left">
+                    {{$ctrl.channel.members.length}}
+                  </span>
+                </a>
+              </li>
+              <li subnav-target="channel.activity">
+                <a>
+                  <i class="fa fa-heartbeat" aria-hidden="true"></i>
+                  Activity
+                </a>
               </li>
               <li subnav-target="channel.settings">
                 <a><i class="fa fa-fw fa-cog"></i> Settings</a>
