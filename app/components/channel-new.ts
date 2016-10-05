@@ -7,8 +7,7 @@ export default function(app) {
       error: string;
       submitting: boolean;
       static $inject = ['$http', '$location', 'config'];
-      constructor(public $http, public $location, public config) {
-      }
+      constructor(public $http, public $location, public config) {}
 
       submit() {
         this.submitting = true;
@@ -29,6 +28,7 @@ export default function(app) {
         );
       }
     },
+
     template,
   });
 };

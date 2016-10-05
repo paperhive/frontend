@@ -1,5 +1,4 @@
 'use strict';
-
 import template from './channel-invitation.html';
 
 export default function(app) {
@@ -18,16 +17,20 @@ export default function(app) {
           {'id': 2, 'name': 'owner'},
         ];
 
-        ctrl.ok = (email, role) => {
+        ctrl.submit = (email, role) => {
           ctrl.close();
+          ctrl.submitting = true;
+          ctrl.error = undefined;
           $http.post(
             config.apiUrl + `/channels/${$routeParams.channelId}/invitations`,
               {email, roles: [ctrl.roles[role - 1].name]},
           )
           .success(ret => {
+            ctrl.submitting = false;
             ctrl.invitation = ret;
           })
           .error(data => {
+            this.submitting = false;
             notificationService.notifications.push({
               type: 'error',
               message: data.message ? data.message :
