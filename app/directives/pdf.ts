@@ -297,7 +297,7 @@ export default function(app) {
             `<div class="tooltip top fade" role="tooltip">
               <div class="tooltip-arrow"></div>
               <div class="tooltip-inner">
-                Press and hold ${isMac ? 'Cmd' : 'Ctrl+Alt'} to select text
+                Press and hold ${isMac ? 'cmd (⌘)' : 'Ctrl+Alt'} to select text
                 inside a link.
               </div>
             </div>`
