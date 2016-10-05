@@ -10,7 +10,7 @@ import discussionThreadView from './discussion-thread-view';
 import document from './document';
 import documentItem from './document-item';
 import documentNew from './document-new';
-import documentRedirect from './document-redirect';
+import documentRemote from './document-remote';
 import documentText from './document-text';
 import documentsList from './documents-list';
 import extensionButtons from './extension-buttons';
@@ -75,7 +75,7 @@ export default function(app) {
   document(app);
   documentItem(app);
   documentNew(app);
-  documentRedirect(app);
+  documentRemote(app);
   documentText(app);
   documentsList(app);
   extensionButtons(app);
