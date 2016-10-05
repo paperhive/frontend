@@ -27,9 +27,9 @@ export default function(app) {
         .when('/404', '404')
         .when('/about', 'about')
         .when('/auth/return/:provider', 'authReturn')
-        // register new and redirect before id-dependent routes
+        // register new and remote before id-dependent routes
         .when('/documents/new', 'documents_new')
-        .when('/documents/redirect', 'documents_redirect')
+        .when('/documents/remote', 'documents_remote')
         .when('/documents/:documentId', 'documents', {reloadOnSearch: false})
         .when('/documents/:documentId/activity', 'documents.activity')
         .when('/documents/:documentId/discussions', 'documents.discussions')
@@ -197,9 +197,9 @@ export default function(app) {
           template: '<document-new></document-new>',
           title: 'Add a new document · PaperHive'
         })
-        .segment('documents_redirect', {
-          template: '<document-redirect></document-redirect>',
-          title: 'Document redirect · PaperHive'
+        .segment('documents_remote', {
+          template: '<document-remote></document-remote>',
+          title: 'Document remote redirect · PaperHive'
         })
 
         .segment('contact', {
