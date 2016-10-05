@@ -6,39 +6,40 @@ import template from './channel.html';
 
 export default function(app) {
   app.component('channel', {
-    controller: ['$routeParams', '$scope', 'authService', 'channelsApi',
-      function($routeParams, $scope, authService, channelsApi) {
-        const $ctrl = this;
+    controller: class ChannelCtrl {
+      isOwner: boolean;
 
-        $ctrl.$onChanges = changesObj => {
-          authService.loginPromise.then(() => {
-            channelsApi.get($routeParams.channelId)
-              .then(channel => $ctrl.channel = channel);
-          });
-        };
-
+      static $inject = ['$routeParams', '$scope', 'authService', 'channelsApi'];
+      constructor(public $routeParams, $scope, public authService, public channelsApi) {
         $scope.$watchCollection('$ctrl.channel.members', members => {
-          if (!members) $ctrl.owner = false;
+          if (!members) this.isOwner = false;
           const self = authService.user && find(members, {person: {id: authService.user.id}});
-          $ctrl.owner = self && includes(self.roles, 'owner');
+          this.isOwner = self && includes(self.roles, 'owner');
         });
-
-        $ctrl.channelUpdate = (channelId, channel) => {
-          return channelsApi.update(channelId, channel)
-            .then(channel => $ctrl.channel = channel);
-        };
-
-        $ctrl.channelActivate = (channelId) => {
-          return channelsApi.activate(channelId)
-            .then(() => $ctrl.channel.isActive = true);
-        };
-
-        $ctrl.channelDeactivate = (channelId) => {
-          return channelsApi.deactivate(channelId)
-            .then(() => $ctrl.channel.isActive = false);
-        };
       }
-    ],
+
+      $onChanges() {
+        this.authService.loginPromise.then(() => {
+          this.channelsApi.get(this.$routeParams.channelId)
+            .then(channel => this.channel = channel);
+        });
+      };
+
+      channelUpdate(channelId, channel) {
+        return this.channelsApi.update(channelId, channel)
+          .then(channel => this.channel = channel);
+      };
+
+      channelActivate(channelId) {
+        return this.channelsApi.activate(channelId)
+          .then(() => this.channel.isActive = true);
+      };
+
+      channelDeactivate(channelId) {
+        return this.channelsApi.deactivate(channelId)
+          .then(() => this.channel.isActive = false);
+      };
+    },
     template,
   });
 };
