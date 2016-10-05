@@ -4,7 +4,7 @@
       <div class="form-group row">
         <label class="col-sm-2 col-form-label">Name</label>
         <div class="col-sm-10">
-          <input ng-model="$ctrl.channel.name" name="channelName" type="text"
+          <input ng-model="$ctrl.name" name="channelName" type="text"
             class="form-control" required ng-disabled="!$ctrl.channel.isActive"
           >
         </div>
@@ -13,7 +13,7 @@
       <div class="form-group row">
         <label class="col-sm-2 col-form-label">Description</label>
         <div class="col-sm-10">
-          <input ng-model="$ctrl.channel.description" type="text"
+          <input ng-model="$ctrl.description" type="text"
             class="form-control" required ng-disabled="!$ctrl.channel.isActive"
           >
         </div>
@@ -22,8 +22,9 @@
       <div class="form-group row" ng-if="$ctrl.channel.isActive">
         <label class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
-          <button type="button" class="btn btn-primary"
-            ng-click="$ctrl.save($ctrl.channel.name, $ctrl.channel.description)"
+          <button type="submit" class="btn btn-primary"
+            ng-click="$ctrl.channelUpdate()"
+            ng-disabled="$ctrl.submitting"
           >
             <i class="fa fa-check" aria-hidden="true"></i>
             Save
@@ -44,14 +45,16 @@
         <div class="col-sm-9">
           <button type="button" class="btn btn-primary"
             ng-if="!$ctrl.channel.isActive"
-  	        ng-click="$ctrl.activate()"
+  	        ng-click="$ctrl.channelActivate()"
+            ng-disabled="$ctrl.activating"
           >
             Activate
           </button>
           <button type="button" class="btn btn-danger"
             ng-if="$ctrl.channel.isActive"
             ng-confirm-click="Really deactivate channel?"
-  	        confirmed-click="$ctrl.deactivate()"
+  	        confirmed-click="$ctrl.channelDeactivate()"
+            ng-disabled="$ctrl.deactivating"
           >
             Deactivate
           </button>

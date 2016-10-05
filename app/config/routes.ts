@@ -147,7 +147,7 @@ export default function(app) {
           title: 'My channels · PaperHive',
         })
         .segment('channels_new', {
-          template: '<channel-new></channel_new>',
+          template: '<channel-new></channel-new>',
           title: 'Add a new channel · PaperHive'
         })
         .segment('channel', {
@@ -156,15 +156,31 @@ export default function(app) {
         .within()
           .segment('documents', {
             default: true,
-            template: `<channel-documents></channel-documents>`,
+            template:
+              `<channel-documents
+                channel="$ctrl.channel"
+              ></channel-documents>`,
             title: 'My channel · PaperHive',
           })
           .segment('members', {
-            template: `<channel-members></channel-members>`,
+            template:
+              `<channel-members
+                channel="$ctrl.channel"
+                on-invitation-add="$ctrl.invitationAdd(invitation)"
+                on-invitation-remove="$ctrl.invitationRemove(invitationId)"
+                on-member-update="$ctrl.memberUpdate(member)"
+                on-member-remove="$ctrl.memberRemove(memberId)"
+              ></channel-members>`,
             title: 'My channel · PaperHive',
           })
           .segment('settings', {
-            template: `<channel-settings></channel-settings>`,
+            template:
+              `<channel-settings
+                channel="$ctrl.channel"
+                on-channel-update="$ctrl.channelUpdate(channelId, channel)"
+                on-channel-activate="$ctrl.channelActivate(channelId)"
+                on-channel-deactivate="$ctrl.channelDeactivate(channelId)"
+              ></channel-settings>`,
             title: 'My channel · PaperHive',
           })
         .up()
