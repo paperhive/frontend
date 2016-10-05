@@ -13,7 +13,9 @@
     <table class="table table-hover ph-md-margin-bottom">
       <tr ng-repeat="member in $ctrl.channel.members">
         <td>
-          <avatar user="member.person" size="30" classes="img-circle"></avatar>
+          <avatar user="member.person" size="30"
+            classes="img-circle ph-sm-margin-right"
+          ></avatar>
           {{member.person.displayName}}, {{member.person.account.email}},
           @{{member.person.account.username}}
           <span class="label label-default ph-sm-margin-left"
