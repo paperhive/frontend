@@ -11,8 +11,8 @@ export default function(app) {
         .then(response => response.data.channels);
     }
 
-    get(id) {
-      return this.$http.get(`${this.config.apiUrl}/channels/${id}`)
+    get(channelId) {
+      return this.$http.get(`${this.config.apiUrl}/channels/${channelId}`)
         .catch(this.notificationService.httpError('could not get channel'))
         .then(response => response.data);
     }
@@ -23,21 +23,43 @@ export default function(app) {
         .then(response => response.data);
     }
 
-    update(id, channel) {
-      return this.$http.put(`${this.config.apiUrl}/channels/${id}`, channel)
+    update(channelId, channel) {
+      return this.$http.put(`${this.config.apiUrl}/channels/${channelId}`, channel)
         .catch(this.notificationService.httpError('could not update channel'))
         .then(response => response.data);
     }
 
-    activate(id) {
-      return this.$http.post(`${this.config.apiUrl}/channels/${id}/active`)
+    activate(channelId) {
+      return this.$http.post(`${this.config.apiUrl}/channels/${channelId}/active`)
         .catch(this.notificationService.httpError('could not activate channel'))
     }
 
-    deactivate(id) {
-      return this.$http.delete(`${this.config.apiUrl}/channels/${id}/active`)
+    deactivate(channelId) {
+      return this.$http.delete(`${this.config.apiUrl}/channels/${channelId}/active`)
         .catch(this.notificationService.httpError('could not deactivate channel'))
     }
+
+    invitationCreate(channelId, invitation) {
+      return this.$http.post(`${this.config.apiUrl}/channels/${channelId}/invitations`, invitation)
+        .catch(this.notificationService.httpError('could not send invitation'))
+        .then(response => response.data);
+    }
+
+    invitationDelete(channelId, invitationId) {
+      return this.$http.delete(`${this.config.apiUrl}/channels/${channelId}/invitations/${invitationId}`)
+        .catch(this.notificationService.httpError('could not delete invitation'));
+    }
+
+    memberUpdate(channelId, memberId, member) {
+      return this.$http.put(`${this.config.apiUrl}/channels/${channelId}/members/${memberId}`, member)
+        .catch(this.notificationService.httpError('could not update member'))
+        .then(response => response.data); // returns channel
+    }
+
+    memberDelete(channelId, memberId) {
+      return this.$http.delete(`${this.config.apiUrl}/channels/${channelId}/members/${memberId}`)
+        .catch(this.notificationService.httpError('could not delete member'));
+      }
   });
 }
 

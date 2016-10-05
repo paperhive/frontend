@@ -1,6 +1,6 @@
 'use strict';
 
-import { find, includes } from 'lodash';
+import { find, includes, remove } from 'lodash';
 
 import template from './channel.html';
 
@@ -25,20 +25,40 @@ export default function(app) {
         });
       };
 
-      channelUpdate(channelId, channel) {
-        return this.channelsApi.update(channelId, channel)
-          .then(channel => this.channel = channel);
+      channelUpdate(channel) {
+        return this.channelsApi.update(this.channel.id, channel)
+          .then(newChannel => this.channel = newChannel);
       };
 
-      channelActivate(channelId) {
-        return this.channelsApi.activate(channelId)
+      channelActivate() {
+        return this.channelsApi.activate(this.channel.id)
           .then(() => this.channel.isActive = true);
       };
 
-      channelDeactivate(channelId) {
-        return this.channelsApi.deactivate(channelId)
+      channelDeactivate() {
+        return this.channelsApi.deactivate(this.channel.id)
           .then(() => this.channel.isActive = false);
       };
+
+      invitationCreate(invitation) {
+        return this.channelsApi.invitationCreate(this.channel.id, invitation)
+          .then(newInvitation => this.channel.invitations.push(newInvitation));
+      };
+
+      invitationDelete(invitationId) {
+        return this.channelsApi.invitationDelete(this.channel.id, invitationId)
+          .then(() => remove(this.channel.invitations, {id: invitationId}));
+      }
+
+      memberUpdate(memberId, member) {
+        return this.channelsApi.memberUpdate(this.channel.id, memberId, member)
+          .then(channel => this.channel = channel);
+      }
+
+      memberDelete(memberId) {
+        return this.channelsApi.memberDelete(this.channel.id, memberId)
+          .then(() => remove(this.channel.members, {person: {id: memberId}}));
+      }
     },
     template,
   });

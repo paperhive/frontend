@@ -166,10 +166,11 @@ export default function(app) {
             template:
               `<channel-members
                 channel="$ctrl.channel"
-                on-invitation-add="$ctrl.invitationAdd(invitation)"
-                on-invitation-remove="$ctrl.invitationRemove(invitationId)"
+                is-owner="$ctrl.isOwner"
+                on-invitation-create="$ctrl.invitationCreate(invitation)"
+                on-invitation-delete="$ctrl.invitationDelete(invitationId)"
                 on-member-update="$ctrl.memberUpdate(member)"
-                on-member-remove="$ctrl.memberRemove(memberId)"
+                on-member-delete="$ctrl.memberDelete(memberId)"
               ></channel-members>`,
             title: 'My channel · PaperHive',
           })
@@ -177,9 +178,9 @@ export default function(app) {
             template:
               `<channel-settings
                 channel="$ctrl.channel"
-                on-channel-update="$ctrl.channelUpdate(channelId, channel)"
-                on-channel-activate="$ctrl.channelActivate(channelId)"
-                on-channel-deactivate="$ctrl.channelDeactivate(channelId)"
+                on-channel-update="$ctrl.channelUpdate(channel)"
+                on-channel-activate="$ctrl.channelActivate()"
+                on-channel-deactivate="$ctrl.channelDeactivate()"
               ></channel-settings>`,
             title: 'My channel · PaperHive',
           })

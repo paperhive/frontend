@@ -6,14 +6,37 @@ import template from './channel-members.html!text';
 
 export default function(app) {
   app.component('channelMembers', {
-    bindings: {},
-    controller: [
-    '$http', '$routeParams', '$uibModal', 'authService', 'config', 'notificationService',
-      function($http, $routeParams, $uibModal, authService, config, notificationService) {
-        const ctrl = this;
+    bindings: {
+      channel: '<',
+      isOwner: '<',
+      onInvitationCreate: '&',
+      onInvitationDelete: '&',
+      onMemberUpdate: '&',
+      onMemberDelete: '&',
+    },
+    controller: class ChannelMembers {
+      static $inject = ['$uibModal', 'authService'];
+      constructor(public $uibModal, public authService) {}
 
-        ctrl.$onChanges = changesObj => {
-          authService.loginPromise.then(() => {
+      invitationDelete(invitationId) {
+        this.invitationDeleting = invitationId;
+        this.onInvitationDelete({invitationId})
+          .then(() => this.invitationDeleting = false);
+      }
+
+      memberDelete(memberId) {
+        this.memberDeleting = memberId;
+        this.onMemberDelete({memberId})
+          .then(() => this.memberDeleting = false);
+      }
+    },
+    template,
+  });
+}
+/*
+      $onChanges() {
+          this.authService.loginPromise.then(() => {
+
             $http.get(
               config.apiUrl + `/channels/${$routeParams.channelId}`
             )
@@ -82,6 +105,8 @@ export default function(app) {
 
       }
     ],
+
     template,
   });
 };
+*/
