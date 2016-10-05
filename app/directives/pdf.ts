@@ -905,9 +905,21 @@ export default function(app) {
         if (!destRef) throw new Error(`destination ${dest} not found`);
         if (!isArray(destRef)) throw new Error('destination does not resolve to array');
 
-        if (destRef[1].name !== 'XYZ') {
-          console.warn(`destination is of type ${destRef[1].name} instead of XYZ`);
-          return;
+        let top;
+        switch (destRef[1].name) {
+          case 'XYZ':
+            top = destRef[3];
+            break;
+          case 'FitH':
+          case 'FitBH':
+            top = destRef[2];
+            break;
+          case 'FitR':
+            top = destRef[5];
+            break;
+          default:
+            console.warn(`destination type ${destRef[1].name} is not supported`);
+            return;
         }
 
         const pageNumber = await this.pdf.getPageIndex(destRef[0]);
@@ -916,13 +928,13 @@ export default function(app) {
           throw new Error('page number out of bounds');
         }
 
-        if (destRef[2] === null || destRef[3] === null) {
+        if (top === null || top === undefined) {
           console.warn('ignoring destination without coordinates');
           return;
         }
         const page = this.pages[pageNumber];
         if (!page.pageSize) throw new Error('pageSize not available');
-        const coords = page.pageSize.convertToViewportPoint(destRef[2], destRef[3]);
+        const coords = page.pageSize.convertToViewportPoint(0, top);
 
         scroll.scrollTo(
           this.element.offset().top +
