@@ -8,8 +8,8 @@ export default function(app) {
       dismiss: '&'
     },
 
-    controller: ['$http', '$routeParams', '$scope', 'authService', 'config', 'notificationService',
-      function($http, $routeParams, $scope, authService, config, notificationService) {
+    controller: ['$http', '$routeParams', '$scope', 'config', 'notificationService',
+      function($http, $routeParams, $scope, config, notificationService) {
         const ctrl = this;
 
         ctrl.roles = [

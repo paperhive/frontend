@@ -18,7 +18,9 @@
             <h2 class="media-heading">{{$ctrl.channel.name}}</h2>
             <div class="text-muted">{{$ctrl.channel.description}}</div>
             <div>
-              <span class="label label-default ph-sm-margin-right" ng-if="!$ctrl.channel.isActive">
+              <span class="label label-default ph-sm-margin-right"
+                ng-if="!$ctrl.channel.isActive"
+              >
                 inactive
               </span>
               <span class="label label-primary" ng-if="$ctrl.owner">

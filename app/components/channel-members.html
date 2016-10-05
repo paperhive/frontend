@@ -21,6 +21,18 @@
           >
             {{role}}
           </span>
+          <span class="pull-right">
+            <button
+              ng-if="$ctrl.owner && !$ctrl.self"
+              type="button" class="btn btn-danger btn-sm"
+              ng-confirm-click="Really remove this member?"
+              confirmed-click="$ctrl.removeChannelMember($ctrl.channel.id, member.person.id)"
+              ng-disabled="!$ctrl.channel.isActive"
+              title="{{$ctrl.channel.isActive ? '' : 'Activate the channel first to remove members'}}"
+            >
+              Remove member
+            </button>
+          </span>
         </td>
       </tr>
     </table>
@@ -44,7 +56,7 @@
             <button
               type="button" class="btn btn-danger btn-sm pull-right"
               ng-confirm-click="Really remove invitation?"
-              confirmed-click="$ctrl.deleteChannelInvitation(invitation.channel, invitation.id)"
+              confirmed-click="$ctrl.removeChannelInvitation(invitation.channel, invitation.id)"
               ng-disabled="!$ctrl.channel.isActive"
               title="{{$ctrl.channel.isActive ? '' : 'Activate the channel first to remove invitations'}}"
             >

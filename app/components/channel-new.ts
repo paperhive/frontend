@@ -6,6 +6,9 @@ export default function(app) {
     controller: class ChannelNewCtrl {
       error: string;
       submitting: boolean;
+      name: string;
+      description: string;
+
       static $inject = ['$http', '$location', 'config'];
       constructor(public $http, public $location, public config) {}
 

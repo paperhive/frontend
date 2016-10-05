@@ -1,6 +1,6 @@
 'use strict';
 
-import { remove } from 'lodash';
+import { includes, remove } from 'lodash';
 
 import template from './channel-members.html!text';
 
@@ -19,6 +19,12 @@ export default function(app) {
             )
             .success(ret => {
               ctrl.channel = ret;
+              function findUser(member) {
+                return member.person.id === authService.user.id;
+              }
+              const user = ret.members.find(findUser);
+              ctrl.self = user;
+              ctrl.owner = includes(user.roles, 'owner');
             })
             .error(data => {
               notificationService.notifications.push({
@@ -41,7 +47,24 @@ export default function(app) {
           ctrl.animationsEnabled = !ctrl.animationsEnabled;
         };
 
-        ctrl.deleteChannelInvitation = (channelId, invitationId) => {
+        ctrl.removeChannelMember = (channelId, memberId) => {
+          $http.delete(
+            config.apiUrl + `/channels/${channelId}/members/${memberId}`
+          )
+          .success(ret => {
+            console.log(ret);
+            // remove(ctrl.channel.members, {id: memberId});
+          })
+          .error(data => {
+            notificationService.notifications.push({
+              type: 'error',
+              message: data.message ? data.message :
+                'could not delete channel invitation (unknown reason)'
+            });
+          });
+        };
+
+        ctrl.removeChannelInvitation = (channelId, invitationId) => {
           $http.delete(
             config.apiUrl + `/channels/${channelId}/invitations/${invitationId}`
           )
