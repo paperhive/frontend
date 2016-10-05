@@ -1,33 +1,35 @@
 <div class="container ph-xl-margin-bottom">
   <div class="row">
-    <div class="col-sm-12 ph-sm-margin-top">
-      <a href="./channels">Back to channels</a>
+    <div class="col-sm-12">
+      <div class="ph-sm-margin-top">
+        <a href="./channels">Back to channels</a>
+      </div>
+      <h2>New channel</h2>
+      <form
+        name="channelForm"
+        ng-submit="!$ctrl.submitting && channelForm.$valid && $ctrl.submit()"
+        novalidate
+      >
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" class="form-control" ng-model="$ctrl.name"
+            placeholder="Enter a channel name" required
+          >
+        </div>
+        <div>
+          <label>Description</label>
+          <input type="text" class="form-control" ng-model="$ctrl.description"
+            placeholder="Enter a channel description"
+          >
+        </div>
+        <button
+          type="submit"
+          class="btn btn-primary ph-lg-margin-top"
+          ng-disabled="$ctrl.submitting || channelForm.$invalid"
+        >
+          Create
+        </button>
+      </form>
     </div>
   </div>
-  <h2>New channel</h2>
-  <form
-    name="channelForm"
-    ng-submit="!$ctrl.submitting && channelForm.$valid && $ctrl.submit()"
-    novalidate
-  >
-    <div class="form-group">
-      <label>Name</label>
-      <input type="text" class="form-control" ng-model="$ctrl.name"
-        placeholder="Enter a channel name" required
-      >
-    </div>
-    <div>
-      <label>Description</label>
-      <input type="text" class="form-control" ng-model="$ctrl.description"
-        placeholder="Enter a channel description"
-      >
-    </div>
-    <button
-      type="submit"
-      class="btn btn-primary ph-lg-margin-top"
-      ng-disabled="$ctrl.submitting || channelForm.$invalid"
-    >
-      Create
-    </button>
-  </form>
 </div>
