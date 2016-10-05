@@ -8,8 +8,8 @@ export default function(app) {
       dismiss: '&'
     },
 
-    controller: ['$http', '$routeParams', 'authService', 'config', 'notificationService',
-      function($http, $routeParams, authService, config, notificationService) {
+    controller: ['$http', '$routeParams', '$scope', 'authService', 'config', 'notificationService',
+      function($http, $routeParams, $scope, authService, config, notificationService) {
         const ctrl = this;
 
         ctrl.roles = [
@@ -17,20 +17,27 @@ export default function(app) {
           {'id': 2, 'name': 'owner'},
         ];
 
+        ctrl.hasError = (field) => {
+          const form = $scope.invitationForm;
+          return form && (form.$submitted || form[field].$touched) &&
+            form[field].$invalid;
+        };
+
         ctrl.submit = (email, role) => {
           ctrl.close();
-          ctrl.submitting = true;
+          ctrl.inProgress = true;
           ctrl.error = undefined;
           $http.post(
             config.apiUrl + `/channels/${$routeParams.channelId}/invitations`,
               {email, roles: [ctrl.roles[role - 1].name]},
           )
           .success(ret => {
-            ctrl.submitting = false;
+            ctrl.inProgress = false;
+            ctrl.succeeded = true;
             ctrl.invitation = ret;
           })
           .error(data => {
-            this.submitting = false;
+            ctrl.inProgress = false;
             notificationService.notifications.push({
               type: 'error',
               message: data.message ? data.message :

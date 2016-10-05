@@ -3,17 +3,28 @@
     Channel invitation
   </h3>
 </div>
-<div class="modal-body">
-  <form
-    name="invitationForm"
-    ng-submit="!$ctrl.submitting && invitationForm.$valid && $ctrl.submit()"
-    novalidate
-  >
-    <div class="form-group">
-      <label>Email</label>
-      <input type="email" class="form-control"
+<form name="invitationForm" novalidate>
+  <div class="modal-body">
+    <div class="form-group" ng-class="{
+        'has-error': $ctrl.hasError('email'),
+        'has-success': invitationForm.email.$valid
+      }"
+    >
+      <label for="email">Email</label>
+      <input type="email" class="form-control" id="email" name="email"
         placeholder="Enter email" ng-model="$ctrl.email" required
+        pattern=".*@.+\..+" ng-disabled="$ctrl.inProgress || $ctrl.succeeded"
       >
+      <div class="help-block">
+        <span ng-if="$ctrl.hasError('email')">
+          <span ng-if="invitationForm.email.$error.required">
+            Please enter your email address.
+          </span>
+          <span ng-if="invitationForm.email.$error.email || invitationForm.email.$error.pattern">
+            The email address you provided is not valid.
+          </span>
+        </span>
+      </div>
     </div>
     <div class="form-group">
       <label>Role</label>
@@ -22,19 +33,19 @@
         ng-init="$ctrl.role=1"
       ></select>
     </div>
-  </form>
-</div>
-<div class="modal-footer">
-  <button
-    class="btn btn-primary" type="button"
-    ng-click="$ctrl.submit($ctrl.email, $ctrl.role)"
-    ng-disabled="$ctrl.submitting || invitationForm.$invalid"
-  >
-    <i class="fa fa-envelope" aria-hidden="true"></i>
-    Invite
-  </button>
-  <button class="btn btn-default" type="button" ng-click="$ctrl.cancel()">
-    <i class="fa fa-times" aria-hidden="true"></i>
-    Cancel
-  </button>
-</div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-default" type="button" ng-click="$ctrl.cancel()">
+      <i class="fa fa-times" aria-hidden="true"></i>
+      Cancel
+    </button>
+    <button
+      class="btn btn-primary" type="submit"
+      ng-click="!$ctrl.inProgress && !$ctrl.succeeded && !invitationForm.$invalid && $ctrl.submit($ctrl.email, $ctrl.role)"
+      ng-class="{disabled: invitationForm.$invalid || $ctrl.inProgress || $ctrl.succeeded}"
+    >
+      <i class="fa fa-envelope" aria-hidden="true"></i>
+      Invite
+    </button>
+  </div>
+</form>
