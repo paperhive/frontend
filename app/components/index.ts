@@ -8,6 +8,7 @@ import contact from './contact';
 import discussionList from './discussion-list';
 import discussionThreadView from './discussion-thread-view';
 import document from './document';
+import documentInfoKudos from './document-info-kudos';
 import documentItem from './document-item';
 import documentNew from './document-new';
 import documentRemote from './document-remote';
@@ -74,6 +75,7 @@ export default function(app) {
   discussionList(app);
   discussionThreadView(app);
   document(app);
+  documentInfoKudos(app);
   documentItem(app);
   documentNew(app);
   documentRemote(app);
