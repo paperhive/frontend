@@ -28,6 +28,8 @@ export default function(app) {
         .when('/about', 'about')
         .when('/auth/return/:provider', 'authReturn')
         .when('/channels', 'channels')
+        .when('/channels/channels', 'channels.channels' )
+        .when('/channels/invitations', 'channels.invitations')
         .when('/channels/new', 'channels_new')
         .when('/channels/:channelId', 'channel')
         .when('/channels/:channelId/documents', 'channel.documents')
@@ -146,10 +148,23 @@ export default function(app) {
           template: '<channels></channels>',
           title: 'My channels · PaperHive',
         })
+        .within()
+          .segment('channels', {
+            default: true,
+            template: '<channels-channels></channels-channels>',
+            title: 'My channels · PaperHive',
+          })
+          .segment('invitations', {
+            template: '<channels-invitations></channels-invitations>',
+            title: 'My invitations · PaperHive',
+          })
+        .up()
+
         .segment('channels_new', {
           template: '<channel-new></channel-new>',
           title: 'Add a new channel · PaperHive'
         })
+
         .segment('channel', {
           template: '<channel></channel',
         })

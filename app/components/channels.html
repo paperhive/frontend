@@ -1,40 +1,51 @@
-<div class="container ph-xl-margin-bottom">
-  <h2>My channels</h2>
-  <a href="./channels/new" class="btn btn-primary ph-md-margin-bottom">
-    New channel
-  </a>
-  <table class="table table-hover">
-    <tr ng-repeat="channel in $ctrl.channelService.channels">
-      <td
-        ng-click="$ctrl.openChannel(channel.id)"
-        class="ph-channel-selection"
-        ng-class="{'text-muted': !channel.isActive}"
-      >
-        <i class="fa fa-user-secret" aria-hidden="true"></i>
-        <b class="ph-xs-margin-left">{{channel.name}}</b>
-        <span ng-if="channel.isActive" class="label label-info ph-sm-margin-left"
-          ng-repeat="role in channel.members[0].roles"
-        >
-          {{role}}
-        </span>
-        <span ng-if="!channel.isActive" class="label label-default ph-sm-margin-left"
-          ng-repeat="role in channel.members[0].roles"
-        >
-          {{role}}
-        </span>
-        <span class="label label-primary ph-sm-margin-left" ng-if="channel.isActive">
-          active
-        </span>
-        <span class="label label-default ph-sm-margin-left" ng-if="!channel.isActive">
-          inactive
-        </span>
-        <div>
-          {{channel.description}}
+<div class="ph-header ph-lg-margin-bottom">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="ph-vertical-middle">
+          <h2>My channels</h2>
+          <div>
+            <a href="./channels/new" class="btn btn-primary ph-md-margin-bottom">
+              New channel
+            </a>
+          </div>
         </div>
-        <div class="ph-sm-margin-top">
-          <small>created at {{channel.createdAt | date:'M/d/yyyy HH:mm'}}</small>
+      </div>
+    </div>
+  </div>
+  <!--subnav-->
+  <div class="ph-header-submenu-container">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <subnav>
+            <ul class="nav nav-tabs ph-header-submenu">
+              <li subnav-target="channels.channels">
+                <a>
+                  <i class="fa fa-fw fa-bullhorn"></i>
+                  Channels
+                  <span class="badge ph-xs-margin-left">
+                    {{$ctrl.channelService.channels.length}}
+                  </span>
+                </a>
+              </li>
+              <li subnav-target="channels.invitations">
+                <a>
+                  <i class="fa fa-fw fa-envelope"></i>
+                  Invitations
+                  <span class="badge ph-xs-margin-left">
+                    {{$ctrl.channelService.invitations.length}}
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </subnav>
         </div>
-      </td>
-    </tr>
-  </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!--content-->
+<div class="container ph-lg-margin-bottom">
+  <div app-view-segment="1"></div>
 </div>

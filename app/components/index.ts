@@ -8,6 +8,8 @@ import channelInvitation from './channel-invitation';
 import channelMembers from './channel-members';
 import channelSettings from './channel-settings';
 import channels from './channels';
+import channelsChannels from './channels-channels';
+import channelsInvitations from './channels-invitations';
 import channelNew from './channel-new';
 import comment from './comment';
 import contact from './contact';
@@ -79,6 +81,8 @@ export default function(app) {
   channelMembers(app);
   channelSettings(app);
   channels(app);
+  channelsChannels(app);
+  channelsInvitations(app);
   channelNew(app);
   comment(app);
   contact(app);

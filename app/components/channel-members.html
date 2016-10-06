@@ -6,7 +6,6 @@
         class="btn btn-primary" ng-disabled="!$ctrl.channel.isActive"
         title="{{$ctrl.channel.isActive ? '' : 'Activate the channel first to invite people'}}"
       >
-        <i class="fa fa-envelope" aria-hidden="true"></i>
         Invite someone
       </button>
 
@@ -27,18 +26,16 @@
             >
               {{role}}
             </span>
-            <span class="pull-right">
-              <button
-                ng-if="$ctrl.isOwner && member.person.id !== $ctrl.authService.user.id"
-                type="button" class="btn btn-danger btn-sm"
-                ng-confirm-click="Really remove this member?"
-                confirmed-click="$ctrl.memberDelete(member.person.id)"
-                ng-disabled="!$ctrl.channel.isActive"
-                title="{{$ctrl.channel.isActive ? '' : 'Activate the channel first to remove members'}}"
-              >
-                Remove member
-              </button>
-            </span>
+            <button
+              ng-if="$ctrl.isOwner && member.person.id !== $ctrl.authService.user.id"
+              type="button" class="btn btn-danger btn-sm"
+              ng-confirm-click="Really remove this member?"
+              confirmed-click="$ctrl.memberDelete(member.person.id)"
+              ng-disabled="!$ctrl.channel.isActive"
+              title="{{$ctrl.channel.isActive ? '' : 'Activate the channel first to remove members'}}"
+            >
+              Remove member
+            </button>
           </td>
         </tr>
       </table>
