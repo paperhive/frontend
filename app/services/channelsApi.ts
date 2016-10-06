@@ -14,7 +14,7 @@ export default function(app) {
     getAll() {
       return this.$http.get(`${this.config.apiUrl}/channels`)
         .catch(this.notificationService.httpError('could not get channels'))
-        .then(response => response.data.channels);
+        .then(response => response.data);
     }
 
     get(channelId) {

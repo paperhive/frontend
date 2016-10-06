@@ -167,10 +167,10 @@ export default function(app) {
               `<channel-members
                 channel="$ctrl.channel"
                 is-owner="$ctrl.isOwner"
-                on-invitation-create="$ctrl.channelService.invitationCreate($ctrl.channel, invitation)"
-                on-invitation-delete="$ctrl.channelService.invitationDelete($ctrl.channel, invitationId)"
-                on-member-update="$ctrl.channelService.memberUpdate($ctrl.channel, member)"
-                on-member-delete="$ctrl.channelService.memberDelete($ctrl.channel, memberId)"
+                on-invitation-create="$ctrl.channelService.invitationCreate($ctrl.channel.id, invitation)"
+                on-invitation-delete="$ctrl.channelService.invitationDelete($ctrl.channel.id, invitationId)"
+                on-member-update="$ctrl.channelService.memberUpdate($ctrl.channel.id, member)"
+                on-member-delete="$ctrl.channelService.memberDelete($ctrl.channel.id, memberId)"
               ></channel-members>`,
             title: 'My channel · PaperHive',
           })
@@ -178,9 +178,9 @@ export default function(app) {
             template:
               `<channel-settings
                 channel="$ctrl.channel"
-                on-channel-update="$ctrl.channelService.update($ctrl.channel, channel)"
-                on-channel-activate="$ctrl.channelService.activate($ctrl.channel)"
-                on-channel-deactivate="$ctrl.channelService.deactivate($ctrl.channel)"
+                on-channel-update="$ctrl.channelService.update($ctrl.channel.id, channel)"
+                on-channel-activate="$ctrl.channelService.activate($ctrl.channel.id)"
+                on-channel-deactivate="$ctrl.channelService.deactivate($ctrl.channel.id)"
               ></channel-settings>`,
             title: 'My channel · PaperHive',
           })

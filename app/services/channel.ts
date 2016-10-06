@@ -1,52 +1,70 @@
 import angular from 'angular';
-import { remove } from 'lodash';
-
+import { find, remove } from 'lodash';
 
 export default function(app) {
   app.service('channelService', class channelService {
-    static $inject = ['channelsApi'];
-    constructor(public channelsApi) {}
+    channels: Array<any>;
+    invitations: Array<any>;
+
+    static $inject = ['$rootScope', 'authService', 'channelsApi'];
+    constructor($rootScope, public authService, public channelsApi) {
+      $rootScope.$watch(() => authService.user, user => {
+        if (!user) {
+          this.channels = undefined;
+          this.invitations = undefined;
+          return;
+        }
+        this.refresh();
+      });
+    }
+
+    refresh() {
+      this.channelsApi.getAll().then(data => {
+        this.channels = data.channels;
+        this.invitations = data.invitations;
+      });
+    }
 
     create(obj) {
-      return this.channelsApi.create(obj);
+      return this.channelsApi.create(obj)
+        .then(channel => {
+          this.channels.push(channel);
+          return channel;
+        });
     }
 
     get(id) {
-      return this.channelsApi.get(id);
+      return find(this.channels, {id});
     }
 
-    getAll() {
-      return this.channelsApi.getAll();
+    update(id, obj) {
+      return this.channelsApi.update(id, obj)
+        .then(newChannel => angular.copy(newChannel, this.get(id)));
     }
 
-    update(channel, obj) {
-      return this.channelsApi.update(channel.id, obj)
-        .then(newChannel => angular.copy(newChannel, channel));
-    }
-
-    activate(channel) {
-      return this.channelsApi.activate(channel.id)
-        .then(() => channel.isActive = true);
+    activate(id) {
+      return this.channelsApi.activate(id)
+        .then(() => this.get(id).isActive = true);
     };
 
-    deactivate(channel) {
-      return this.channelsApi.deactivate(channel.id)
-        .then(() => channel.isActive = false);
+    deactivate(id) {
+      return this.channelsApi.deactivate(id)
+        .then(() => this.get(id).isActive = false);
     };
 
-    invitationCreate(channel, invitation) {
-      return this.channelsApi.invitationCreate(channel.id, invitation)
-        .then(newInvitation => channel.invitations.push(newInvitation));
+    invitationCreate(id, invitation) {
+      return this.channelsApi.invitationCreate(id, invitation)
+        .then(newInvitation => this.get(id).invitations.push(newInvitation));
     };
 
-    invitationDelete(channel, invitationId) {
-      return this.channelsApi.invitationDelete(channel.id, invitationId)
-        .then(() => remove(channel.invitations, {id: invitationId}));
+    invitationDelete(id, invitationId) {
+      return this.channelsApi.invitationDelete(id, invitationId)
+        .then(() => remove(this.get(id).invitations, {id: invitationId}));
     }
 
-    memberUpdate(channel, memberId, member) {
-      return this.channelsApi.memberUpdate(channel.id, memberId, member)
-        .then(newChannel => angular.copy(newChannel, channel));
+    memberUpdate(id, memberId, member) {
+      return this.channelsApi.memberUpdate(id, memberId, member)
+        .then(newChannel => angular.copy(newChannel, this.get(id)));
     }
 
     memberDelete(channel, memberId) {

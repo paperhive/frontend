@@ -3,20 +3,14 @@ import template from './channels.html';
 
 export default function(app) {
   app.component('channels', {
-    controller: ['$location', 'authService', 'channelService',
-      function($location, authService, channelService) {
-        const ctrl = this;
-        ctrl.$onChanges = changesObj => {
-          authService.loginPromise.then(() => {
-            channelService.getAll().then(channels => ctrl.channels = channels);
-          });
-        };
+    controller: class ChannelsCtrl {
+      static $inject = ['$location', 'channelService'];
+      constructor(public $location, public channelService) {}
 
-        ctrl.openChannel = (id) => {
-          $location.path(`/channels/${id}`);
-        };
+      openChannel(id) {
+        this.$location.path(`/channels/${id}`);
       }
-    ],
+    },
     template,
   });
 };
