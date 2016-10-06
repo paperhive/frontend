@@ -7,9 +7,6 @@ export default function(app) {
   app.component('channelSettings', {
     bindings: {
       channel: '<',
-      onChannelUpdate: '&',
-      onChannelActivate: '&',
-      onChannelDeactivate: '&',
     },
     controller: class ChannelSettings {
       submitting = false;
@@ -17,6 +14,9 @@ export default function(app) {
       deactivating = false;
       name: string;
       description: string;
+
+      static $inject = ['channelService'];
+      constructor(public channelService) {}
 
       $onChanges() {
         if (!this.channel) return;
@@ -27,19 +27,19 @@ export default function(app) {
       channelUpdate() {
         const channel = {name: this.name, description: this.description};
         this.submitting = true;
-        this.onChannelUpdate({channelId: this.channel.id, channel})
+        this.channelService.update(this.channel.id, channel)
           .then(() => this.submitting = false);
       }
 
       channelActivate() {
         this.activating = true;
-        this.onChannelActivate({channelId: this.channel.id})
+        this.channelService.activate(this.channel.id)
           .then(() => this.activating = false);
       }
 
       channelDeactivate() {
         this.deactivating = true;
-        this.onChannelDeactivate({channelId: this.channel.id})
+        this.channelService.deactivate(this.channel.id)
           .then(() => this.deactivating = false);
       }
     },

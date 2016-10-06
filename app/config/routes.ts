@@ -174,9 +174,6 @@ export default function(app) {
             template:
               `<channel-settings
                 channel="$ctrl.channel"
-                on-channel-update="$ctrl.channelService.update($ctrl.channel.id, channel)"
-                on-channel-activate="$ctrl.channelService.activate($ctrl.channel.id)"
-                on-channel-deactivate="$ctrl.channelService.deactivate($ctrl.channel.id)"
               ></channel-settings>`,
             title: 'My channel · PaperHive',
           })
