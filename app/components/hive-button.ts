@@ -1,100 +1,76 @@
 'use strict';
-import { findIndex, map, some } from 'lodash';
+import { find, findIndex, map, remove, some } from 'lodash';
 
 export default function(app) {
     app.component('hiveButton', {
       bindings: {
         documentId: '<',
-        user: '<',
       },
-      controller: [
-        '$scope', '$element', '$attrs', '$http', 'config', 'notificationService',
-        function($scope, $element, $attrs, $http, config, notificationService) {
-          const ctrl = this;
-
-          this.doesUserHive = false;
-
-          // $watch on this?
-          async function updateHives() {
-            if (!ctrl.documentId) { return; }
-            let ret;
-            try {
-              ret = await $http.get(
-                config.apiUrl +
-                  '/documents/' + ctrl.documentId + '/hivers'
-              );
-            } catch (err) {
-              console.log(err);
-              notificationService.notifications.push({
-                type: 'error',
-                message: err.data.message ? err.data.message :
-                  'could not fetch hivers (unknown reason)'
-              });
+      controller: class HiveButtonCtrl {
+        static $inject = ['$scope', '$http', 'authService', 'config', 'notificationService'];
+        constructor($scope, public $http, public authService, public config, public notificationService) {
+          $scope.$watch('$ctrl.documentId', documentId => {
+            if (!documentId) {
+              this.hivers = undefined;
+              return;
             }
-            ctrl.hivers = ret.data.hivers;
+            this.$http.get(`${this.config.apiUrl}/documents/${documentId}/hivers`)
+              .then(
+                response => this.hivers = response.data.hivers,
+                this.notificationService.httpError('could not fetch hivers')
+              );
+          });
 
-            ctrl.doesUserHive = ctrl.user && ctrl.user.id &&
-              ctrl.hivers.map(hiver => hiver.person.id).indexOf(ctrl.user.id) !== -1;
+          $scope.$watchCollection('$ctrl.hivers', this.updateDoesUserHive.bind(this));
+          $scope.$watch('$ctrl.authService.user', this.updateDoesUserHive.bind(this));
+        }
 
-            // This is an async function, so unless we $apply, angular won't
-            // know that values have changed.
-            $scope.$apply();
+        updateDoesUserHive() {
+          console.log(this.hivers);
+          if (!this.hivers || !this.authService.user) {
+            this.doesUserHive = false;
+            return;
           }
-          $scope.$watchGroup(['$ctrl.documentId', '$ctrl.user'], updateHives);
+          this.doesUserHive = !!find(this.hivers, {person: {id: this.authService.user.id}});
+        }
 
-          ctrl.hive = async function() {
-            ctrl.submitting = true;
-            try {
-              await $http.post(
-                config.apiUrl +
-                  '/documents/' + ctrl.documentId + '/hive'
-              );
-            } catch (err) {
-              ctrl.submitting = false;
-              notificationService.httpError('could not hive document');
-            }
-            ctrl.submitting = false;
-            ctrl.hivers.push({
-              hivedAt: new Date(),
-              person: ctrl.user,
-            });
-            ctrl.doesUserHive = true;
-            // This is an async function, so unless we $apply, angular won't
-            // know that values have changed.
-            $scope.$apply();
-          };
+        hive() {
+          this.submitting = true;
+          this.$http.post(`${this.config.apiUrl}/documents/${this.documentId}/hive`)
+            .then(
+              () => {
+                this.submitting = false;
+                this.hivers.push({
+                  hivedAt: new Date(),
+                  person: this.authService.user,
+                });
+              },
+              this.notificationService.httpError('could not unhive document')
+            );
+        }
 
-          ctrl.unhive = async function() {
-            ctrl.submitting = true;
-            try {
-              await $http.delete(
-                config.apiUrl +
-                  '/documents/' + ctrl.documentId + '/hive'
-              );
-            } catch (err) {
-              ctrl.submitting = false;
-              notificationService.httpError('could not hive document');
-            }
-            ctrl.submitting = false;
-            const idx = findIndex(
-              map(ctrl.hivers, hiver => hiver.person),
-              {id: ctrl.user.id}
-              );
-            if (idx > -1) { ctrl.hivers.splice(idx, 1); }
-            ctrl.doesUserHive = false;
-            // This is an async function, so unless we $apply, angular won't
-            // know that values have changed.
-            $scope.$apply();
+        unhive() {
+          this.submitting = true;
+          this.$http.delete(`${this.config.apiUrl}/documents/${this.documentId}/hive`)
+            .then(
+              () => {
+                this.submitting = false;
+                remove(this.hivers, {person: {id: this.authService.user.id}});
+              },
+              this.notificationService.httpError('could not hive document')
+            );
           };
-        }],
+        },
         template:
-          `<span class="btn-group" role="group">
+          `<div class="btn-group" role="group"
+              title="{{$ctrl.authService.user ? 'Hive this document for receiving updates.' : 'You have to be logged in to hive the document.'}}"
+          >
             <button ng-if="$ctrl.doesUserHive" type="button" class="btn btn-default"
-              ng-disabled="!$ctrl.user" ng-click="$ctrl.unhive()">
-              <img alt="logo black" height="20px" src="./static/img/logo-hexagon-black.svg"/> Unhive
+              ng-disabled="!$ctrl.authService.user || $ctrl.submitting" ng-click="$ctrl.unhive()">
+              <img alt="logo black" height="20px" src="./static/img/logo-hexagon.svg"/> Unhive
             </button>
             <button ng-if="!$ctrl.doesUserHive" type="button" class="btn btn-default"
-              ng-disabled="!$ctrl.user" ng-click="$ctrl.hive()">
+              ng-disabled="!$ctrl.authService.user || $ctrl.submitting" ng-click="$ctrl.hive()">
               <img alt="logo black" height="20px" src="./static/img/logo-hexagon-black.svg"/> Hive
             </button>
             <a href="./documents/{{$ctrl.documentId}}/hivers" class="btn btn-default">
