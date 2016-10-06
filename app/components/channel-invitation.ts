@@ -12,8 +12,8 @@ export default function(app) {
         {'id': 1, 'name': 'member'},
         {'id': 2, 'name': 'owner'},
       ];
-      static $inject = ['$scope', 'notificationService'];
-      constructor(public $scope, notificationService) {}
+      static $inject = ['$routeParams', '$scope', 'channelService', 'notificationService'];
+      constructor(public $routeParams, public $scope, public channelService, notificationService) {}
 
       hasError(field) {
         const form = this.$scope.invitationForm;
@@ -24,8 +24,8 @@ export default function(app) {
       submit(email, role) {
         this.inProgress = true;
         // TODO: remove this ugly hack when uibModal supports custom bindings
-        this.$scope.$parent.$ctrl.onInvitationCreate({
-          invitation: {email, roles: [this.roles[role - 1].name]}
+        this.channelService.invitationCreate(this.$routeParams.channelId, {
+          email, roles: [this.roles[role - 1].name]
         }).then(() => {
           this.inProgress = false;
           this.close();

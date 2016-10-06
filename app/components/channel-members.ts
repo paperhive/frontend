@@ -9,14 +9,10 @@ export default function(app) {
     bindings: {
       channel: '<',
       isOwner: '<',
-      onInvitationCreate: '&',
-      onInvitationDelete: '&',
-      onMemberUpdate: '&',
-      onMemberDelete: '&',
     },
     controller: class ChannelMembers {
-      static $inject = ['$scope', '$uibModal', 'authService'];
-      constructor(public $scope, public $uibModal, public authService) {}
+      static $inject = ['$scope', '$uibModal', 'authService', 'channelService'];
+      constructor(public $scope, public $uibModal, public authService, public channelService) {}
 
       invitationModalOpen() {
         this.$uibModal.open({
@@ -26,16 +22,16 @@ export default function(app) {
         });
       };
 
-      invitationDelete(invitationId) {
+      invitationDelete(channelId, invitationId) {
         this.invitationDeleting = invitationId;
-        this.onInvitationDelete({invitationId})
-          .then(() => this.invitationDeleting = false);
+        this.channelService.invitationDelete(channelId, invitationId)
+          .finally(() => this.invitationDeleting = false);
       }
 
       memberDelete(memberId) {
         this.memberDeleting = memberId;
-        this.onMemberDelete({memberId})
-          .then(() => this.memberDeleting = false);
+        this.channelService.memberDelete({memberId})
+          .finally(() => this.memberDeleting = false);
       }
     },
     template,
