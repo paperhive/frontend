@@ -10,8 +10,8 @@
         'has-success': invitationForm.email.$valid
       }"
     >
-      <label for="email">Email</label>
-      <input type="email" class="form-control" id="email" name="email"
+      <label>Email</label>
+      <input type="email" class="form-control" name="email"
         placeholder="Enter email" ng-model="$ctrl.email" required
         pattern=".*@.+\..+" ng-disabled="$ctrl.inProgress || $ctrl.succeeded"
       >

@@ -9,14 +9,20 @@ export default function(app) {
       channel: '<',
     },
     controller: class ChannelSettings {
-      submitting = false;
       activating = false;
       deactivating = false;
-      name: string;
       description: string;
+      inProgress = false;
+      name: string;
 
-      static $inject = ['channelService'];
-      constructor(public channelService) {}
+      static $inject = ['$scope', 'channelService'];
+      constructor(public $scope, public channelService) {}
+
+      hasError(field) {
+        const form = this.$scope.updateChannelForm;
+        return form && (form.$submitted || form[field].$touched) &&
+          form[field].$invalid;
+      }
 
       $onChanges() {
         if (!this.channel) return;
@@ -25,10 +31,12 @@ export default function(app) {
       }
 
       channelUpdate() {
+        this.inProgress = true;
         const channel = {name: this.name, description: this.description};
-        this.submitting = true;
         this.channelService.update(this.channel.id, channel)
-          .then(() => this.submitting = false);
+          .then(() => {
+            this.inProgress = false;
+          });
       }
 
       channelActivate() {

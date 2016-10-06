@@ -1,12 +1,22 @@
 <div class="row">
   <div class="col-sm-12">
-    <form>
+    <form name="updateChannelForm" novalidate>
       <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Name</label>
-        <div class="col-sm-10">
-          <input ng-model="$ctrl.name" name="channelName" type="text"
-            class="form-control" required ng-disabled="!$ctrl.channel.isActive"
-          >
+        <div class="form-group" ng-class="{'has-error': $ctrl.hasError('channelName')}">
+          <label class="col-sm-2 col-form-label">Name</label>
+          <div class="col-sm-10">
+            <input ng-model="$ctrl.name" name="channelName" type="text"
+              class="form-control" required
+              ng-disabled="!$ctrl.channel.isActive || $ctrl.inProgress"
+            >
+            <div class="help-block">
+              <span ng-if="$ctrl.hasError('channelName')">
+                <span ng-if="updateChannelForm.channelName.$error.required">
+                  Please enter a channel name.
+                </span>
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -14,7 +24,7 @@
         <label class="col-sm-2 col-form-label">Description</label>
         <div class="col-sm-10">
           <input ng-model="$ctrl.description" type="text"
-            class="form-control" required ng-disabled="!$ctrl.channel.isActive"
+            class="form-control" ng-disabled="!$ctrl.channel.isActive"
           >
         </div>
       </div>
@@ -23,8 +33,8 @@
         <label class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
           <button type="submit" class="btn btn-primary"
-            ng-click="$ctrl.channelUpdate()"
-            ng-disabled="$ctrl.submitting"
+            ng-click="!$ctrl.inProgress && !updateChannelForm.$invalid && $ctrl.channelUpdate()"
+            ng-class="{disabled: updateChannelForm.$invalid || $ctrl.inProgress}"
           >
             <i class="fa fa-check" aria-hidden="true"></i>
             Save
