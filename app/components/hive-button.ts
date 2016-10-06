@@ -26,7 +26,6 @@ export default function(app) {
         }
 
         updateDoesUserHive() {
-          console.log(this.hivers);
           if (!this.hivers || !this.authService.user) {
             this.doesUserHive = false;
             return;
