@@ -1,0 +1,48 @@
+.ph-logo-grid {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: stretch;
+  align-content: stretch;
+
+  & > a {
+    padding: 25px;
+    margin: 10px 30px;
+    flex-basis: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.5s ease;
+
+    @media (max-width: @screen-sm-max) {
+      padding: 15px;
+      margin: 5px 10px;
+      flex-basis: 120px;
+    }
+
+    &:hover {
+      background-color: #eee;
+    }
+
+    & > img {
+      max-width: 100%;
+    }
+  }
+}
+
+.ph-logo-grid-partners > a > img{
+  max-height: 50px;
+  @media (max-width: @screen-sm-max) {
+    max-height: 33px;
+  }
+}
+
+.ph-logo-grid-supporters > a {
+  padding: 0;
+  & > img {
+    max-height: 125px;
+    @media (max-width: @screen-sm-max) {
+      max-height: 83px;
+    }
+  }
+}

@@ -15,13 +15,13 @@ export default function(app) {
           this.doesUserHive = false;
 
           // $watch on this?
-          $scope.$watch('$ctrl.documentId', async function(id) {
-            if (!id) { return; }
+          async function updateHives() {
+            if (!ctrl.documentId) { return; }
             let ret;
             try {
               ret = await $http.get(
                 config.apiUrl +
-                  '/documents/' + id + '/hivers'
+                  '/documents/' + ctrl.documentId + '/hivers'
               );
             } catch (err) {
               console.log(err);
@@ -32,18 +32,15 @@ export default function(app) {
               });
             }
             ctrl.hivers = ret.data.hivers;
-            $scope.$watch('$ctrl.user', function(user) {
-              if (user && user.id) {
-                ctrl.doesUserHive = some(
-                  map(ctrl.hivers, hiver => hiver.person),
-                    {'id': user.id}
-                );
-              }
-            });
+
+            ctrl.doesUserHive = ctrl.user && ctrl.user.id &&
+              ctrl.hivers.map(hiver => hiver.person.id).indexOf(ctrl.user.id) !== -1;
+
             // This is an async function, so unless we $apply, angular won't
             // know that values have changed.
             $scope.$apply();
-          });
+          }
+          $scope.$watchGroup(['$ctrl.documentId', '$ctrl.user'], updateHives);
 
           ctrl.hive = async function() {
             ctrl.submitting = true;

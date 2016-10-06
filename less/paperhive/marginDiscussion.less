@@ -1,11 +1,17 @@
-margin-discussion, margin-discussion-draft {
+.ph-margin-discussion, margin-discussion-draft {
   position: absolute;
   left: (@grid-gutter-width / 2);
   right: (@grid-gutter-width / 2);
 }
 
-margin-discussion.ph-animate-top {
+.ph-margin-discussion-animate {
   transition: top 0.35s ease;
+}
+
+margin-discussion {
+  position: absolute;
+  left: 0;
+  right: 0;
 }
 
 margin-discussion img {
@@ -105,7 +111,6 @@ margin-discussion-draft {
 
 .ph-margin-info {
   .text-muted();
-  .ph-no-margin();
   font-size: smaller;
 }
 
@@ -131,6 +136,33 @@ margin-discussion kramjax .MathJax_Display {
   margin: 5px 0;
 }
 
+.ph-margin-body {
+  position: relative;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+
+  > .ph-margin-body-fade {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 20px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), white);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+
+  &.ph-margin-body-collapsed {
+    max-height: 70px !important;
+
+    > .ph-margin-body-fade {
+      opacity: 1;
+    }
+  }
+}
+
+
 // includes the avatars in the collapse animation
 .ph-margin-collapse {
   margin-left: -(@ph-margin-avatar-size + @ph-margin-arrow-size +
@@ -151,4 +183,47 @@ margin-discussion kramjax .MathJax_Display {
   vertical-align: middle;
   font-size: 36px;
   line-height: 1;
+}
+
+
+@ph-margin-discussion-placeholder-color: #d6d6d6;
+.ph-margin-discussion-placeholder-avatar {
+  position: absolute;
+  left: -50px;
+  top: 0;
+  width: @ph-margin-avatar-size;
+  height: @ph-margin-avatar-size;
+  background-color: @ph-margin-discussion-placeholder-color;
+  border-radius: 50%;
+}
+
+.ph-margin-discussion-placeholder-author {
+  display: inline-block;
+  width: 30%;
+  height: 15px;
+  background-color: lighten(@link-color, 50%);
+}
+
+.ph-margin-discussion-placeholder-date {
+  display: inline-block;
+  width: 30%;
+  height: 15px;
+  background-color: @ph-margin-discussion-placeholder-color;
+}
+
+.ph-margin-discussion-placeholder-title {
+  width: 50%;
+  height: 19px;
+  background-color: @ph-margin-discussion-placeholder-color;
+}
+
+.ph-margin-discussion-placeholder-body {
+  height: 19px;
+  background-color: @ph-margin-discussion-placeholder-color;
+}
+
+.ph-margin-discussion-placeholder-more {
+  height: 15px;
+  width: 25%;
+  background-color: @ph-highlight-color;
 }

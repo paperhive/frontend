@@ -27,9 +27,9 @@ export default function(app) {
         .when('/404', '404')
         .when('/about', 'about')
         .when('/auth/return/:provider', 'authReturn')
-        // register new and redirect before id-dependent routes
+        // register new and remote before id-dependent routes
         .when('/documents/new', 'documents_new')
-        .when('/documents/redirect', 'documents_redirect')
+        .when('/documents/remote', 'documents_remote')
         .when('/documents/:documentId', 'documents', {reloadOnSearch: false})
         .when('/documents/:documentId/activity', 'documents.activity')
         .when('/documents/:documentId/discussions', 'documents.discussions')
@@ -39,7 +39,7 @@ export default function(app) {
         .when('/documents/:documentId/discussions/:discussionId',
               'documents.discussions.thread')
         .when('/documents/:documentId/text', 'documents.text', {reloadOnSearch: false})
-        .when('/documents/:documentId/revisions/:revisionId', 'documents.revisions')
+        .when('/documents/:documentId/revisions/:revisionId', 'documents.revisions', {reloadOnSearch: false})
         .when('/documents/:documentId/about', 'documents.about')
         .when('/contact', 'contact')
         .when('/help/markdown', 'helpMarkdown')
@@ -47,6 +47,7 @@ export default function(app) {
         .when('/knowledgeunlatched', 'knowledgeunlatched')
         .when('/legalnotice', 'legalnotice')
         .when('/login', 'login')
+        .when('/partners', 'partners')
         .when('/password/request', 'passwordRequest')
         .when('/password/reset', 'passwordReset')
         .when('/publishers', 'publishers')
@@ -194,9 +195,9 @@ export default function(app) {
           template: '<document-new></document-new>',
           title: 'Add a new document · PaperHive'
         })
-        .segment('documents_redirect', {
-          template: '<document-redirect></document-redirect>',
-          title: 'Document redirect · PaperHive'
+        .segment('documents_remote', {
+          template: '<document-remote></document-remote>',
+          title: 'Document remote redirect · PaperHive'
         })
 
         .segment('contact', {
@@ -247,6 +248,23 @@ export default function(app) {
         .segment('login', {
           template: '<login></login>',
           title: 'Log in to · Paperhive'
+        })
+
+        .segment('partners', {
+          template:
+            `<div class="container ph-xl-margin-bottom">
+              <h2>Partners</h2>
+              <partner-logos></partner-logos>
+              <h2>Supporters</h2>
+              <supporter-logos></supporter-logos>
+            </div>`,
+          title: 'Partners and supporters · PaperHive',
+          meta: [
+            {
+              name: 'description',
+              content: 'Partners and supporters'
+            }
+          ]
         })
 
         .segment('passwordRequest', {

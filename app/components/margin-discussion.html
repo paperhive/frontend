@@ -13,21 +13,26 @@
       <div class="ph-margin-row-content">
         <!-- view original comment -->
         <div ng-if="!$ctrl.editing" class="clearfix">
-          <div class="ph-margin-info">
-            <p class="ph-xs-margin-bottom">
-              <a href="./users/{{$ctrl.discussion.author.account.username}}">
-                {{$ctrl.discussion.author.displayName}}</a>
-              · <span am-time-ago="$ctrl.discussion.createdAt"></span>
-            </p>
-          </div>
-          <div ng-if="!$ctrl.discussion.body">
-            <mathjax body="$ctrl.discussion.title"></mathjax>
-          </div>
-          <div ng-if="$ctrl.discussion.body">
-            <p class="ph-margin-title ph-no-margin ph-xs-margin-bottom">
+          <p class="ph-xs-margin-bottom ph-margin-info">
+            <a href="./users/{{$ctrl.discussion.author.account.username}}">
+              {{$ctrl.discussion.author.displayName}}</a>
+            · <span am-time-ago="$ctrl.discussion.createdAt"></span>
+          </p>
+          <div class="ph-margin-body"
+            ng-class="{'ph-margin-body-collapsed': !$ctrl.isExpanded}"
+            ng-style="{'max-height': $ctrl.bodyHeight + 'px'}"
+            on-resized="$ctrl.bodyHeight = $size.scrollHeight"
+          >
+            <div ng-if="!$ctrl.discussion.body">
               <mathjax body="$ctrl.discussion.title"></mathjax>
-            </p>
-            <kramjax body="$ctrl.discussion.body"></kramjax>
+            </div>
+            <div ng-if="$ctrl.discussion.body">
+              <p class="ph-margin-title ph-no-margin ph-xs-margin-bottom">
+                <mathjax body="$ctrl.discussion.title"></mathjax>
+              </p>
+              <kramjax body="$ctrl.discussion.body"></kramjax>
+            </div>
+            <div ng-if="$ctrl.bodyHeight > 70" class="ph-margin-body-fade"></div>
           </div>
           <div class="pull-right">
             <div class="btn-group"
@@ -94,24 +99,22 @@
           <!-- do not move this before the options link (pull-right!) because
           this creates a newline after inserting the first reply -->
           <a
-            ng-if="$ctrl.discussion.replies.length"
             class="badge ph-margin-badge"
-            ng-click="state.showReplies = !state.showReplies"
+            ng-click="$ctrl.isExpanded = !$ctrl.isExpanded"
           >
-            {{state.showReplies ? 'Hide' : 'Show'}}
+            <span ng-if="$ctrl.isExpanded">
+              Show less
+              <i class="fa fa-fw fa-chevron-up"></i>
+            </span>
+            <span ng-if="!$ctrl.isExpanded">
+              Show more
+              <i class="fa fa-fw fa-chevron-down"></i>
+              </span>
+          </a>
+          <span class="ph-margin-info" ng-if="$ctrl.discussion.replies.length">
             {{$ctrl.discussion.replies.length}}
-            {{$ctrl.discussion.replies.length === 1 ? 'reply' : 'replies'}}
             <i class="fa fa-fw fa-comments"></i>
-          </a>
-          <a
-            ng-if="!$ctrl.discussion.replies.length"
-            class="badge ph-margin-badge"
-            ng-click="state.showReplies = !state.showReplies"
-          >
-            <span ng-if="state.showReplies">Hide reply form</span>
-            <span ng-if="!state.showReplies">Add a reply</span>
-            <i class="fa fa-fw fa-comments"></i>
-          </a>
+          </span>
         </div>
         <!-- edit original comment -->
         <margin-discussion-edit
@@ -123,7 +126,7 @@
       </div>
     </div>
   </div>
-  <div uib-collapse="!state.showReplies" class="ph-margin-collapse">
+  <div uib-collapse="!$ctrl.isExpanded" class="ph-margin-collapse">
     <!-- replies (note that ng-repeat creates a child scope!) -->
     <div ng-repeat="reply in $ctrl.discussion.replies"
         ng-controller="replyCtrl"

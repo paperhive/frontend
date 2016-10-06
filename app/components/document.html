@@ -1,5 +1,5 @@
-<div class="ph-header-submenu-container">
-  <div class="container-fluid">
+<div class="ph-header-submenu-container" ng-style="{top: $root.navbarSize.height  + 'px'}">
+  <div class="container-fluid" on-resized="subnavSize = $size">
     <div class="row">
       <div class="transition" ng-class="{'col-md-10 col-md-offset-2': !$ctrl.sidenavClosed, 'col-md-12 ph-margin-left': $ctrl.sidenavClosed}">
         <subnav>
@@ -22,7 +22,7 @@
     </div>
   </div>
 </div><!-- ph-header -->
-<div class="ph-sidenav ph-documents affix" ng-class="{closed: $ctrl.sidenavClosed, opened: !$ctrl.sidenavClosed}">  
+<div class="ph-sidenav ph-documents affix" ng-class="{closed: $ctrl.sidenavClosed, opened: !$ctrl.sidenavClosed}">
   <div class="ph-collapse">
     <button id="nav-btn" class="navbar-toggle" ng-click="$ctrl.sidenavClosed = true">
       <i class="fa fa-chevron-left" aria-hidden="true"></i>
@@ -36,7 +36,7 @@
       <span ng-repeat="author in $ctrl.latestRevision.authors">
         {{author.name}}{{$last ? '' :', '}}
       </span>
-    </h6> 
+    </h6>
   </div>
   <div class="ph-hive-button">
     <hive-button
@@ -65,7 +65,7 @@
              <span class="ph-document-journal">arXiv v3</span>,
                 Jun 2014
             </strong>
-          </a>                      
+          </a>
         </li>
         <li>
           <a href="./documents/{{revision.id}}/revisions/{{revision.revision}}">
@@ -73,18 +73,18 @@
               <span class="ph-document-journal">arXiv v2</span>,
                 Sep 2013
             </strong>
-          </a>                      
+          </a>
         </li>
       </ul>
     </div>
     <div
       class="ph-document-info-download">
       <a class="btn btn-default" ng-href="{{$ctrl.origPdfUrl}}" download>
-        <i class="fa fa-download"></i> 
+        <i class="fa fa-download"></i>
         <span>Download PDF</span>
       </a>
     </div>
-  </div>  
+  </div>
   <div class="ph-accordion">
     <uib-accordion close-others="oneAtATime">
       <div uib-accordion-group class="panel-default" is-open="status.open">
@@ -95,20 +95,20 @@
         <h5>What's it about?</h5>
           <p class="ph-kudos-info">
             The Purdue Pegboard is a standardized test to measure manual dexterity. We used this test ...</p>
-              
+
         <h5>Why is it important?</h5>
           <p class="ph-kudos-info">
             Many standardized test and their norms were developed with and for young healthy individuals. In order to ...</p>
-        
+
         <h5>Perspectives</h5>
           <p class="ph-kudos-info">
             I adored working with our older participants on this project and they have been most appreciative about our efforts to ...</p>
-        <a href="#" target="_blank">Read more on Kudos</a> 
+        <a href="#" target="_blank">Read more on Kudos</a>
       </div>
     </uib-accordion>
   </div>
 </div>
-<div class="ph-sidenav-small ph-documents affix" ng-class="{closed: !$ctrl.sidenavClosed, opened: $ctrl.sidenavClosed}"> 
+<div class="ph-sidenav-small ph-documents affix" ng-class="{closed: !$ctrl.sidenavClosed, opened: $ctrl.sidenavClosed}">
   <div class="ph-collapse">
     <button id="nav-btn" class="navbar-toggle btn-link" ng-click="$ctrl.sidenavClosed = false">
       <i class="fa fa-chevron-right" aria-hidden="true"></i>
@@ -117,7 +117,7 @@
   <div class="ph-hive-button">
     <button class="btn btn-link dropdown-toggle" uib-dropdown-toggle>
       <img src="./static/img/logo-hexagon.svg">
-    </button>    
+    </button>
     <!-- <hive-button
       popover-placement="bottom"
       popover-is-open="$ctrl.tour.stages[$ctrl.tour.index] === 'hive'"
@@ -141,7 +141,7 @@
              <span class="ph-document-journal">arXiv v3</span>,
                 Jun 2014
             </strong>
-          </a>                      
+          </a>
         </li>
         <li>
           <a href="./documents/{{revision.id}}/revisions/{{revision.revision}}">
@@ -149,7 +149,7 @@
               <span class="ph-document-journal">arXiv v2</span>,
                 Sep 2013
             </strong>
-          </a>                      
+          </a>
         </li>
       </ul>
     </div>
@@ -159,9 +159,9 @@
         <i class="fa fa-download"></i>
       </a>
     </div>
-  </div>  
+  </div>
 </div>
   <!-- </div> -->
 <div class="ph-documents-columns">
-  <div app-view-segment="1"></div> 
-</div> 
+  <div app-view-segment="1"></div>
+</div>

@@ -1,7 +1,7 @@
 import angular from 'angular';
 import { queue } from 'async';
 import jquery from 'jquery';
-import { clone, difference, filter, flatten, isEqual, map, pick, some } from 'lodash';
+import { clone, difference, filter, flatten, get, isArray, isEqual, isNumber, map, pick, some, uniq } from 'lodash';
 import { PDFJS } from 'pdfjs-dist';
 import rangy from 'rangy';
 
@@ -90,7 +90,7 @@ function getRectanglesSelector(range, container) {
 
   // get TextNodes inside the range
   const textNodes = filter(
-    getTextNodes(range.commonAncestorContainer),
+    getTextNodes(container),
     range.containsNodeText.bind(range)
   );
 
@@ -129,7 +129,7 @@ export default function(app) {
   // directive follows a few basic rules that make it easier to switch to
   // angular2, see
   // http://teropa.info/blog/2015/10/18/refactoring-angular-apps-to-components.html
-  app.directive('pdfFull', ['$compile', '$document', '$q', 'scroll', '$timeout', '$window', function($compile, $document, $q, scroll, $timeout, $window) {
+  app.directive('pdfFull', ['$compile', '$document', '$http', '$q', 'scroll', '$timeout', '$window', 'config', function($compile, $document, $http, $q, scroll, $timeout, $window, config) {
 
     // render a page in a canvas
     class CanvasRenderer {
@@ -237,16 +237,16 @@ export default function(app) {
       }
     }
 
-    // TODO: implement!
+    // a pdfjs-compliant linkService
     class LinkService {
-      constructor(public onLinkCreate) {}
+      constructor(public onLinkCreate, public scrollToAnchor) {}
 
       getDestinationHash(dest) {
         return this.onLinkCreate({dest});
       }
 
       navigateTo(dest) {
-        console.log(dest);
+        this.scrollToAnchor(`pdfd:${dest}`);
       }
     }
 
@@ -256,6 +256,7 @@ export default function(app) {
       linkService: any;
       page: PDFPageProxy;
       annotations: PDFAnnotations;
+      tooltip: JQuery;
 
       constructor(element, page, linkService) {
         this.page = page;
@@ -287,9 +288,37 @@ export default function(app) {
           viewport: viewport,
         });
 
-        // remove onclick handler (otherwise the link has no effect because only
-        // linkService.navigateTo is called)
-        this.element.find('a.internalLink').prop('onclick', null);
+        // create tooltip
+        // TODO: use angular here?
+        this.element.find('section').on('dragstart', event => {
+          if (this.tooltip) this.tooltip.remove();
+          const isMac = /Mac/.test($window.navigator.platform);
+          this.tooltip = jquery(
+            `<div class="tooltip top fade" role="tooltip">
+              <div class="tooltip-arrow"></div>
+              <div class="tooltip-inner">
+                Press and hold ${isMac ? 'cmd (⌘)' : 'Ctrl+Alt'} to select text
+                inside a link.
+              </div>
+            </div>`
+          );
+          this.tooltip.appendTo(this.element);
+          const target = jquery(event.currentTarget);
+          const position = target.position();
+          this.tooltip.css({
+            top: position.top - this.tooltip.height() - 8,
+            left: position.left + target.width() / 2 - this.tooltip.width() / 2,
+          });
+          setTimeout(() => this.tooltip.addClass('in'), 0);
+        });
+        this.element.find('a').on('dragend', event => {
+          if (this.tooltip) {
+            const tooltip = this.tooltip;
+            this.tooltip = undefined;
+            tooltip.removeClass('in');
+            setTimeout(() => tooltip.remove(), 500);
+          }
+        });
       }
     }
 
@@ -300,6 +329,7 @@ export default function(app) {
       initializedPageSize: boolean;
       initializedRenderers: boolean;
       pageSize: any; // TODO: remove?
+      textFocused: boolean = false;
 
       // renderer state
       renderedSize: {height: number, width: number};
@@ -363,7 +393,7 @@ export default function(app) {
         const highlightsLayer = $compile(`
           <div class="ph-pdf-highlights">
             <pdf-highlight
-              ng-repeat="highlight in highlights | highlightsByPageNumber:${this.pageNumber}"
+              ng-repeat="highlight in highlightsByPage[${this.pageNumber}]"
               highlight="highlight"
               emphasized="emphasizedHighlights[highlight.id]"
               page-number="${this.page.pageNumber}"
@@ -380,12 +410,24 @@ export default function(app) {
         this.textRenderer = new TextRenderer(textElement, this.page);
 
         // add annotations renderer
-        // TODO: re-enable (disabled until scroll-to-dest is implemented)
-        // const annotationsLayer = angular.element('<div class="ph-pdf-annotations"></div>');
-        // this.element.append(annotationsLayer);
-        // this.annotationsRenderer = new AnnotationsRenderer(annotationsLayer, this.page, this.linkService);
+        const annotationsLayer = angular.element('<div class="ph-pdf-annotations"></div>');
+        this.element.append(annotationsLayer);
+        this.annotationsRenderer = new AnnotationsRenderer(annotationsLayer, this.page, this.linkService);
+
+        // add popup layer
+        const popup = $compile(`
+          <pdf-popup
+            target="popupTarget"
+            page-number="${this.page.pageNumber}"
+          ></pdf-popup>
+        `)(this.scope);
+        this.element.append(popup);
 
         this.initializedRenderers = true;
+
+        // should the text layer be focused?
+        if (this.textFocused) this.textFocus();
+
         return true;
       }
 
@@ -452,7 +494,7 @@ export default function(app) {
         try {
           await this.canvasRenderer.render(deviceViewport);
           await this.textRenderer.render(viewport);
-          // await this.annotationsRenderer.render(viewport);
+          await this.annotationsRenderer.render(viewport);
 
           this.onRendered();
 
@@ -464,6 +506,20 @@ export default function(app) {
             return false;
           }
           throw error;
+        }
+      }
+
+      textFocus() {
+        this.textFocused = true;
+        if (this.initializedRenderers) {
+          this.annotationsRenderer.element.addClass('ph-no-interaction');
+        }
+      }
+
+      textUnfocus() {
+        this.textFocused = false;
+        if (this.initializedRenderers) {
+          this.annotationsRenderer.element.removeClass('ph-no-interaction');
         }
       }
 
@@ -491,6 +547,8 @@ export default function(app) {
       lastSelectors: any;
       lastSimpleSelection: any;
       linkService: LinkService;
+      anchor: string;
+      textFocused: boolean = false;
 
       constructor(public pdf: PDFDocumentProxy, public element: JQuery,
           public scope: any) {
@@ -503,7 +561,7 @@ export default function(app) {
         // wipe element children
         this.element.empty();
 
-        this.linkService = new LinkService(scope.onLinkDestCreate);
+        this.linkService = new LinkService(scope.onLinkDestCreate, this.scrollToAnchor.bind(this));
       }
 
       // initialize all pages
@@ -545,16 +603,42 @@ export default function(app) {
         angular.element($window).on('resize', _render);
         angular.element($window).on('scroll', _render);
 
-        // detect text selections
-        const _onTextSelect = this.onTextSelect.bind(this);
-        $document.on('mouseup keyup', _onTextSelect); // key events are not fired on PDFs
+        // focus text layer on mousedown (except click on links)
+        let mousedown = false;
+        this.element.on('mousedown', event => {
+          if (jquery(event.target).prop('tagName') === 'A') return;
+          mousedown = true;
+          this.textFocus();
+        });
+        const onMouseUp = () => {
+          mousedown = false;
+          this.textUnfocus();
+          this.onTextSelect();
+        };
+        $document.on('mouseup', onMouseUp);
+
+        // focus text layer while ctrl+alt is pressed
+        // note: key events are not fired on PDFs
+        const onKeyEvent = event => {
+          const shouldFocus = event.altKey && event.ctrlKey || event.metaKey;
+          if (shouldFocus) this.textFocus();
+          else if (!mousedown) {
+            this.textUnfocus();
+            if (event.type === 'keyup') this.onTextSelect();
+          }
+        };
+        $document.on('keydown keyup', onKeyEvent);
 
         // unregister event handlers
         this.element.on('$destroy', () => {
           angular.element($window).off('resize', _render);
           angular.element($window).off('scroll', _render);
-          $document.off('mouseup keyup', _onTextSelect);
+          $document.off('mouseup', onMouseUp);
+          $document.off('keydown keyup', onKeyEvent);
         });
+
+
+        this.element.on('mouseup', () => this.textUnfocus());
 
         // render at least once
         this.render();
@@ -567,6 +651,8 @@ export default function(app) {
 
         // monitor scrollToAnchor
         this.scope.$watch('scrollToAnchor', this.scrollToAnchor.bind(this));
+
+        this.scope.$watchCollection('highlights', this.updateHighlights.bind(this));
       }
 
       destroy() {
@@ -648,6 +734,9 @@ export default function(app) {
 
               // text quote selector
               textQuote: getTextQuoteSelector(range, this.element[0]),
+
+              // is this a backwards selection (bottom to top)
+              isBackwards: selection.isBackwards(),
             };
 
             // pdf text positions selector
@@ -779,15 +868,27 @@ export default function(app) {
         );
       }
 
-      scrollToAnchor(anchor) {
+      async scrollToAnchor(anchor) {
         if (!anchor) return;
+        if (anchor !== this.anchor) {
+          this.anchor = anchor;
+          this.scope.onAnchorUpdate({anchor});
+        }
 
         let match;
         // match page
         if (match = /^p:(\d+)$/.exec(anchor)) {
           return this.scrollToId(anchor);
         }
-        console.warn(`Anchor ${anchor} does not match.`);
+        // match pdf named destination
+        if (match = /^pdfd:(.*)$/.exec(anchor)) {
+          return await this.scrollToDest(match[1]);
+        }
+        // match selection anchor
+        if (match = /^s:([\w-]+)$/.exec(anchor)) {
+          return await this.scrollToSelection(match[1]);
+        }
+        throw new Error(`Anchor ${anchor} does not match.`);
       }
 
       scrollToId(id) {
@@ -797,6 +898,108 @@ export default function(app) {
 
         // scroll
         scroll.scrollTo(element, {offset: 140});
+      }
+
+      async scrollToDest(dest) {
+        const destRef = await this.pdf.getDestination(dest);
+        if (!destRef) throw new Error(`destination ${dest} not found`);
+        if (!isArray(destRef)) throw new Error('destination does not resolve to array');
+
+        let top;
+        switch (destRef[1].name) {
+          case 'XYZ':
+            top = destRef[3];
+            break;
+          case 'FitH':
+          case 'FitBH':
+            top = destRef[2];
+            break;
+          case 'FitR':
+            top = destRef[5];
+            break;
+          default:
+            console.warn(`destination type ${destRef[1].name} is not supported`);
+            return;
+        }
+
+        const pageNumber = await this.pdf.getPageIndex(destRef[0]);
+        if (!isNumber(pageNumber)) throw new Error('page number invalid');
+        if (pageNumber < 0 || pageNumber >= this.pdf.numPages) {
+          throw new Error('page number out of bounds');
+        }
+
+        if (top === null || top === undefined) {
+          console.warn('ignoring destination without coordinates');
+          return;
+        }
+        const page = this.pages[pageNumber];
+        if (!page.pageSize) throw new Error('pageSize not available');
+        const coords = page.pageSize.convertToViewportPoint(0, top);
+
+        scroll.scrollTo(
+          this.element.offset().top +
+          page.element[0].offsetTop +
+          coords[1] / page.pageSize.height * page.element.height(),
+          {offset: (this.scope.viewportOffsetTop || 0) + 40}
+        );
+      }
+
+      async scrollToSelection(anchorId) {
+        const response = await $http.get(`${config.apiUrl}/anchors/${anchorId}`);
+        const rects = get(response, 'data.target.selectors.pdfRectangles');
+        if (!rects) throw new Error('pdf rectangles missing');
+
+        // get top rect of selection
+        const topRect = rects.sort((rectA, rectB) => {
+          if (rectA.pageNumber < rectB.pageNumber) return -1;
+          if (rectA.pageNumber > rectB.pageNumber) return 1;
+          if (rectA.top < rectB.top) return -1;
+          if (rectA.top > rectB.top) return 1;
+          return 0;
+        })[0];
+
+        // get page
+        if (topRect.pageNumber > this.pages.length) return; // TODO: error
+        const page = this.pages[topRect.pageNumber - 1];
+
+        // scroll
+        scroll.scrollTo(
+          this.element.offset().top +
+          page.element[0].offsetTop +
+          topRect.top * page.element.height(),
+          {offset: (this.scope.viewportOffsetTop || 0) + 80}
+        );
+
+        // set selection
+        this.onSelect(response.data.target.selectors);
+      }
+
+      textFocus() {
+        if (this.textFocused) return;
+        this.textFocused = true;
+        this.pages.forEach(page => page.textFocus());
+      }
+
+      textUnfocus() {
+        if (!this.textFocused) return;
+        this.textFocused = false;
+        this.pages.forEach(page => page.textUnfocus());
+      }
+
+      updateHighlights() {
+        this.scope.highlightsByPage = {};
+        if (!this.scope.highlights) return;
+
+        this.scope.highlights.forEach(highlight => {
+          if (!highlight.selectors || !highlight.selectors.pdfRectangles) return;
+          const pageNumbers = uniq(highlight.selectors.pdfRectangles.map(rect => rect.pageNumber));
+          pageNumbers.forEach(pageNumber => {
+            if (!this.scope.highlightsByPage[pageNumber]) {
+              this.scope.highlightsByPage[pageNumber] = [];
+            }
+            this.scope.highlightsByPage[pageNumber].push(highlight);
+          });
+        });
       }
     }
 
@@ -817,7 +1020,12 @@ export default function(app) {
         // object mapping highlight ids to emphasize state (boolean)
         emphasizedHighlights: '<',
 
+        // TODO: add documentation
+        popupTarget: '<',
+
         scrollToAnchor: '<',
+
+        viewportOffsetTop: '<',
 
         // Output
         // ======
@@ -859,7 +1067,8 @@ export default function(app) {
         // called when an in-document link is created; should return the URL
         onLinkDestCreate: '&',
 
-        // TODO: scroll interface
+        // called when the anchor is updated
+        onAnchorUpdate: '&',
       },
       link: async function(scope, element, attrs) {
         let pdfFull;

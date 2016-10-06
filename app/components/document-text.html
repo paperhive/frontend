@@ -1,50 +1,61 @@
 <div class="container-fluid">
-  <div class="row">       
+  <div class="row">
     <div class="transition" ng-class="{'col-md-7 col-md-offset-2': !$ctrl.expanded, 'col-md-9 ph-margin-left': $ctrl.expanded}">
       <div ng-if="$ctrl.pdfUrl">
-          <div ng-if="!$ctrl.activeRevision" class="text-center">
-            <i class="fa fa-spinner fa-3x fa-spin"></i>
-          </div>
-          <pdf url="$ctrl.pdfUrl" on-update="$ctrl.pdfStatus = status"></pdf>
+        <div ng-if="!$ctrl.activeRevision" class="text-center">
+          <i class="fa fa-spinner fa-3x fa-spin"></i>
+        </div>
+        <pdf url="$ctrl.pdfUrl" on-update="$ctrl.pdfStatus = status"></pdf>
 
-          <div ng-if="$ctrl.pdfStatus.downloading">
-            <div ng-if="$ctrl.pdfStatus.bytesLoaded === undefined ||
-                $ctrl.pdfStatus.bytesTotal === undefined">
-              <uib-progressbar class="progress-striped active" value="1" max="1">
-                Loading PDF
-              </uib-progressbar>
-            </div>
-            <div ng-if="$ctrl.pdfStatus.bytesLoaded !== undefined &&
-                $ctrl.pdfStatus.bytesTotal !== undefined">
-              <uib-progressbar class="progress-striped active"
-                value="$ctrl.pdfStatus.bytesLoaded / $ctrl.pdfStatus.bytesTotal"
-                max="1">
-                Loading PDF
-                ({{$ctrl.pdfStatus.bytesLoaded / 1024 | number:0}} KB /
-                {{$ctrl.pdfStatus.bytesTotal / 1024 | number:0}} KB)
-              </uib-progressbar>
-            </div>
+        <div ng-if="$ctrl.pdfStatus.downloading">
+          <div ng-if="$ctrl.pdfStatus.bytesLoaded === undefined ||
+              $ctrl.pdfStatus.bytesTotal === undefined">
+            <uib-progressbar class="progress-striped active" value="1" max="1">
+              Loading PDF
+            </uib-progressbar>
           </div>
+          <div ng-if="$ctrl.pdfStatus.bytesLoaded !== undefined &&
+              $ctrl.pdfStatus.bytesTotal !== undefined">
+            <uib-progressbar class="progress-striped active"
+              value="$ctrl.pdfStatus.bytesLoaded / $ctrl.pdfStatus.bytesTotal"
+              max="1">
+              Loading PDF
+              ({{$ctrl.pdfStatus.bytesLoaded / 1024 | number:0}} KB /
+              {{$ctrl.pdfStatus.bytesTotal / 1024 | number:0}} KB)
+            </uib-progressbar>
+          </div>
+        </div>
 
-          <pdf-full
-            pdf="$ctrl.pdfStatus.pdf"
-            highlights="$ctrl.highlights"
-            emphasized-highlights="$ctrl.hoveredMarginDiscussions"
-            scroll-to-anchor="$ctrl.anchor"
-            on-highlight-mouseenter="$ctrl.hoveredHighlights[highlight.id] = true"
-            on-highlight-mouseleave="$ctrl.hoveredHighlights[highlight.id] = false"
-            on-page-resized="$ctrl.pageCoordinates[pageNumber] = {offset: offset, size: displaySize}"
-            on-select="$ctrl.draftSelectors = selectors || $ctrl.draftSelectors"
-            on-link-dest-create="$ctrl.getLinkDest(dest)"
-            popover-placement="top"
-            popover-is-open="$ctrl.tourService.stages[$ctrl.tourService.index] === 'highlight'"
-            uib-popover-template="'html/shared/tour-highlight.html'"
-            popover-trigger="none"
-          ></pdf-full>      
+        <pdf-full
+          pdf="$ctrl.pdfStatus.pdf"
+          highlights="$ctrl.highlights"
+          emphasized-highlights="$ctrl.hoveredMarginDiscussions"
+          popup-target="{
+            document: $ctrl.activeRevision.id,
+            documentRevision: $ctrl.activeRevision.revision,
+            selectors: $ctrl.draftSelectors,
+          }"
+          scroll-to-anchor="$ctrl.allPagesInitialized && $ctrl.anchor"
+          viewport-offset-top="$ctrl.viewportOffsetTop"
+
+          on-highlight-mouseenter="$ctrl.hoveredHighlights[highlight.id] = true"
+          on-highlight-mouseleave="$ctrl.hoveredHighlights[highlight.id] = false"
+          on-page-resized="$ctrl.pageCoordinates[pageNumber] = {offset: offset, size: displaySize}"
+          on-all-pages-resized="$ctrl.allPagesInitialized = true"
+          on-select="$ctrl.draftSelectors = selectors || $ctrl.draftSelectors"
+          on-link-dest-create="$ctrl.getLinkDest(dest)"
+          on-anchor-update="$ctrl.anchor = anchor"
+
+          popover-placement="top"
+          popover-is-open="$ctrl.tourService.stages[$ctrl.tourService.index] === 'highlight'"
+          uib-popover-template="'html/shared/tour-highlight.html'"
+          popover-trigger="none"
+        ></pdf-full>
       </div>
     </div>
     <div class="col-md-3">
       <margin-discussions
+        ng-if="$ctrl.allPagesInitialized"
         discussions="$ctrl.discussions"
         draft-selectors="$ctrl.draftSelectors"
         emphasized-discussions="$ctrl.hoveredHighlights"
@@ -63,7 +74,6 @@
         on-discussion-mouseleave="$ctrl.hoveredMarginDiscussions[discussion.id] = false"
       ></margin-discussions>
     </div>
-
   </div>
 </div>
 <div class="container" ng-if="$ctrl.activeRevision && !$ctrl.pdfUrl">
