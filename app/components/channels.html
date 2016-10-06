@@ -7,7 +7,7 @@
     <tr ng-repeat="channel in $ctrl.channelService.channels">
       <td
         ng-click="$ctrl.openChannel(channel.id)"
-        style="cursor: pointer;"
+        class="ph-channel-selection"
         ng-class="{'text-muted': !channel.isActive}"
       >
         <i class="fa fa-user-secret" aria-hidden="true"></i>
