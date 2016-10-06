@@ -41,7 +41,7 @@
     </button>
     <button
       class="btn btn-primary" type="submit"
-      ng-click="!$ctrl.inProgress && !$ctrl.succeeded && !invitationForm.$invalid && $ctrl.submit($ctrl.email, $ctrl.role)"
+      ng-click="!$ctrl.inProgress && !$ctrl.succeeded && !invitationForm.$invalid && $ctrl.submit()"
       ng-class="{disabled: invitationForm.$invalid || $ctrl.inProgress || $ctrl.succeeded}"
     >
       <i class="fa fa-envelope" aria-hidden="true"></i>

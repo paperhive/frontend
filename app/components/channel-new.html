@@ -5,16 +5,24 @@
         <a href="./channels">Back to channels</a>
       </div>
       <h2>New channel</h2>
-      <form
-        name="channelForm"
-        ng-submit="!$ctrl.submitting && channelForm.$valid && $ctrl.submit()"
-        novalidate
-      >
-        <div class="form-group">
+      <form name="channelForm" novalidate>
+        <div class="form-group" ng-class="{
+            'has-error': $ctrl.hasError('name'),
+            'has-success': channelForm.name.$valid
+         }"
+         >
           <label>Name</label>
-          <input type="text" class="form-control" ng-model="$ctrl.name"
-            placeholder="Enter a channel name" required
+          <input type="text" class="form-control" name="name"
+            ng-model="$ctrl.name" placeholder="Enter a channel name" required
+            ng-disabled="$ctrl.inProgress || $ctrl.succeeded"
           >
+          <div class="help-block">
+            <span ng-if="$ctrl.hasError('name')">
+              <span ng-if="channelForm.name.$error.required">
+                Please enter a channel name.
+              </span>
+            </span>
+          </div>
         </div>
         <div>
           <label>Description</label>
@@ -25,7 +33,8 @@
         <button
           type="submit"
           class="btn btn-primary ph-lg-margin-top"
-          ng-disabled="$ctrl.submitting || channelForm.$invalid"
+          ng-click="!$ctrl.inProgress && !$ctrl.succeeded && !channelForm.$invalid && $ctrl.submit()"
+          ng-class="{disabled: channelForm.$invalid || $ctrl.inProgress || $ctrl.succeeded}"
         >
           Create
         </button>

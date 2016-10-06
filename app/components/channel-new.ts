@@ -4,20 +4,29 @@ import template from './channel-new.html';
 export default function(app) {
   app.component('channelNew', {
     controller: class ChannelNewCtrl {
-      submitting: boolean;
-      name: string;
+      inProgress: boolean;
       description: string;
+      name: string;
+      succeeded: boolean;
 
-      static $inject = ['$location', 'channelService'];
-      constructor(public $location, public channelService) {}
+      static $inject = ['$location', '$scope', 'channelService'];
+      constructor(public $location, public $scope, public channelService) {}
+
+      hasError(field) {
+        const form = this.$scope.channelForm;
+        return form && (form.$submitted || form[field].$touched) &&
+          form[field].$invalid;
+      }
 
       submit() {
-        this.submitting = true;
+        this.inProgress = true;
+        this.succeeded = false;
         this.channelService.create({
           name: this.name,
           description: this.description,
         }).then(channel => {
-          this.submitting = false;
+          this.inProgress = false;
+          this.succeeded = true;
           this.$location.path(`/channels/${channel.id}`);
         });
       }

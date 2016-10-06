@@ -8,10 +8,14 @@ export default function(app) {
       dismiss: '&'
     },
     controller: class ChannelInvitationCtrl {
+      inProgress: boolean;
+      succeeded: boolean;
+
       roles = [
         {'id': 1, 'name': 'member'},
         {'id': 2, 'name': 'owner'},
       ];
+
       static $inject = ['$routeParams', '$scope', 'channelService', 'notificationService'];
       constructor(public $routeParams, public $scope, public channelService, notificationService) {}
 
@@ -21,12 +25,15 @@ export default function(app) {
           form[field].$invalid;
       }
 
-      submit(email, role) {
+      submit() {
         this.inProgress = true;
+        this.succeeded = false;
         // TODO: remove this ugly hack when uibModal supports custom bindings
         this.channelService.invitationCreate(this.$routeParams.channelId, {
-          email, roles: [this.roles[role - 1].name]
+          email: this.email,
+          roles: [this.roles[this.role - 1].name],
         }).then(() => {
+          this.succeeded = true;
           this.inProgress = false;
           this.close();
         });
