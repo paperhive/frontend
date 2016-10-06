@@ -46,10 +46,11 @@
           on-link-dest-create="$ctrl.getLinkDest(dest)"
           on-anchor-update="$ctrl.anchor = anchor"
 
-          popover-placement="top"
+          popover-placement="right-top"
+          popover-append-to-body="true"
           popover-is-open="$ctrl.tourService.stages[$ctrl.tourService.index] === 'highlight'"
           uib-popover-template="'html/shared/tour-highlight.html'"
-          popover-trigger="none"
+          popover-trigger="'none'"
         ></pdf-full>
       </div>
     </div>
