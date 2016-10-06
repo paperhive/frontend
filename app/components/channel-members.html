@@ -2,8 +2,8 @@
   <div class="col-sm-12">
     <div class="form-group">
       <button
-        type="button" ng-click="$ctrl.invitationModalOpen()" class="btn btn-primary"
-        ng-disabled="!$ctrl.channel.isActive"
+        type="button" ng-click="$ctrl.invitationModalOpen()"
+        class="btn btn-primary" ng-disabled="!$ctrl.channel.isActive"
         title="{{$ctrl.channel.isActive ? '' : 'Activate the channel first to invite people'}}"
       >
         <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -17,7 +17,10 @@
             <avatar user="member.person" size="30"
               classes="img-circle ph-sm-margin-right"
             ></avatar>
-            {{member.person.displayName}}, {{member.person.account.email}},
+            {{member.person.displayName}},
+            <span ng-if="member.person.account.email">
+              {{member.person.account.email}},
+            </span>
             @{{member.person.account.username}}
             <span class="label label-default ph-sm-margin-left"
               ng-repeat="role in member.roles"
