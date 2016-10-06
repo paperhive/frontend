@@ -4,31 +4,22 @@ import template from './channel-new.html';
 export default function(app) {
   app.component('channelNew', {
     controller: class ChannelNewCtrl {
-      error: string;
       submitting: boolean;
       name: string;
       description: string;
 
-      static $inject = ['$http', '$location', 'config'];
-      constructor(public $http, public $location, public config) {}
+      static $inject = ['$location', 'channelService'];
+      constructor(public $location, public channelService) {}
 
       submit() {
         this.submitting = true;
-        this.error = undefined;
-        this.$http.post(`${this.config.apiUrl}/channels`, {
+        this.channelService.create({
           name: this.name,
           description: this.description,
-        }).then(
-          response => {
-            this.submitting = false;
-            this.$location.path(`/channels/${response.data.id}`);
-          },
-          response => {
-            this.submitting = false;
-            this.error = response.data && response.data.message ||
-              'unknown reason';
-          }
-        );
+        }).then(channel => {
+          this.submitting = false;
+          this.$location.path(`/channels/${channel.id}`);
+        });
       }
     },
 

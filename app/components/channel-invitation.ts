@@ -27,9 +27,9 @@ export default function(app) {
         this.$scope.$parent.$ctrl.onInvitationCreate({
           invitation: {email, roles: [this.roles[role - 1].name]}
         }).then(() => {
-            this.inProgress = false;
-            this.close();
-          })
+          this.inProgress = false;
+          this.close();
+        });
       }
     },
     template,

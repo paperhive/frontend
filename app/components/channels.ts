@@ -3,12 +3,12 @@ import template from './channels.html';
 
 export default function(app) {
   app.component('channels', {
-    controller: ['$location', 'authService', 'channelsApi',
-      function($location, authService, channelsApi) {
+    controller: ['$location', 'authService', 'channelService',
+      function($location, authService, channelService) {
         const ctrl = this;
         ctrl.$onChanges = changesObj => {
           authService.loginPromise.then(() => {
-            channelsApi.getAll().then(channels => ctrl.channels = channels);
+            channelService.getAll().then(channels => ctrl.channels = channels);
           });
         };
 

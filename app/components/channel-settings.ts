@@ -20,12 +20,12 @@ export default function(app) {
 
       $onChanges() {
         if (!this.channel) return;
-        this.name = this.channel.name
+        this.name = this.channel.name;
         this.description = this.channel.description;
       }
 
       channelUpdate() {
-        const channel = {name: this.name, description: this.description}
+        const channel = {name: this.name, description: this.description};
         this.submitting = true;
         this.onChannelUpdate({channelId: this.channel.id, channel})
           .then(() => this.submitting = false);

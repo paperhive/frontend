@@ -167,10 +167,10 @@ export default function(app) {
               `<channel-members
                 channel="$ctrl.channel"
                 is-owner="$ctrl.isOwner"
-                on-invitation-create="$ctrl.invitationCreate(invitation)"
-                on-invitation-delete="$ctrl.invitationDelete(invitationId)"
-                on-member-update="$ctrl.memberUpdate(member)"
-                on-member-delete="$ctrl.memberDelete(memberId)"
+                on-invitation-create="$ctrl.channelService.invitationCreate($ctrl.channel, invitation)"
+                on-invitation-delete="$ctrl.channelService.invitationDelete($ctrl.channel, invitationId)"
+                on-member-update="$ctrl.channelService.memberUpdate($ctrl.channel, member)"
+                on-member-delete="$ctrl.channelService.memberDelete($ctrl.channel, memberId)"
               ></channel-members>`,
             title: 'My channel · PaperHive',
           })
@@ -178,9 +178,9 @@ export default function(app) {
             template:
               `<channel-settings
                 channel="$ctrl.channel"
-                on-channel-update="$ctrl.channelUpdate(channel)"
-                on-channel-activate="$ctrl.channelActivate()"
-                on-channel-deactivate="$ctrl.channelDeactivate()"
+                on-channel-update="$ctrl.channelService.update($ctrl.channel, channel)"
+                on-channel-activate="$ctrl.channelService.activate($ctrl.channel)"
+                on-channel-deactivate="$ctrl.channelService.deactivate($ctrl.channel)"
               ></channel-settings>`,
             title: 'My channel · PaperHive',
           })
