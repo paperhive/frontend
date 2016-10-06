@@ -64,11 +64,15 @@
   </div>
   <div class="ph-accordion">
     <uib-accordion close-others="oneAtATime">
-      <div uib-accordion-group class="panel-default ph-document-info-kudos" is-open="true">
+      <div ng-if="$ctrl.kudosDoi" uib-accordion-group class="panel-default ph-document-info-kudos" is-open="$ctrl.kudosOpen">
         <uib-accordion-heading>
-          <img src="./static/img/kudos-icon.svg" alt="Kudos"> Kudos explanation <i class="pull-right fa" ng-class="{'fa-chevron-down': status.open, 'fa-chevron-right': !status.open}"></i>
+          <img src="./static/img/kudos-icon.svg" alt="Kudos"> Kudos explanation
+          <i class="pull-right fa" ng-class="{
+            'fa-chevron-down': $ctrl.kudosOpen,
+            'fa-chevron-right': !$ctrl.kudosOpen
+          }"></i>
         </uib-accordion-heading>
-        <document-info-kudos revisions="$ctrl.revisions"></document-info-kudos>
+        <document-info-kudos doi="$ctrl.kudosDoi"></document-info-kudos>
       </div>
     </uib-accordion>
   </div>

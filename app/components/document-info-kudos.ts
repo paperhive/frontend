@@ -3,25 +3,18 @@ import angular from 'angular';
 export default function(app) {
   app.component('documentInfoKudos', {
     bindings: {
-      revisions: '<',
+      doi: '<',
     },
     controller: class DocumentInfoKudosCtrl {
-      static $inject = ['$http', '$element'];
-      constructor(public $http, public $element) {}
-
-      getDoi() {
-        if (!this.revisions) return;
-        for (const revision of this.revisions) {
-          if (revision.doi) return revision.doi;
-        }
-      }
+      static $inject = ['$element'];
+      constructor(public $element) {}
 
       $onChanges() {
         this.$element.empty();
-        const doi = this.getDoi();
-        if (!doi) return;
 
-        // create empty iframe
+        if (!this.doi) return;
+
+        // create empty iframe and insert into DOM
         const iframe = angular.element(`
           <iframe
             width="100%"
@@ -33,18 +26,23 @@ export default function(app) {
         );
         this.$element.append(iframe);
 
-        // insert basic html with kudos script
+        // inject basic html with kudos script (and a few style overrides)
         iframe[0].contentDocument.write(`
           <html>
             <head>
               <style>
-                .kudos-widget .kudos-widget-article {
+                body {
+                  margin: 0;
+                }
+                .kudos-widget .kudos-widget-article,
+                .kudos-widget .kudos-widget-use-kudos {
                   border: none !important;
                 }
               </style>
             </head>
             <body>
-              <script src="https://api.growkudos.com/widgets/article/${doi}"></script>
+              <script src="https://api.growkudos.com/widgets/article/${this.doi}"></script>
+              <script src="https://api.growkudos.com/widgets/use_kudos/${this.doi}"></script>
             </body>
           </html>`
         );
