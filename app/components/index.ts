@@ -11,6 +11,7 @@ import document from './document';
 import documentItem from './document-item';
 import documentNew from './document-new';
 import documentRemote from './document-remote';
+import documentSidenav from './document-sidenav';
 import documentText from './document-text';
 import documentsList from './documents-list';
 import extensionButtons from './extension-buttons';
@@ -76,6 +77,7 @@ export default function(app) {
   documentItem(app);
   documentNew(app);
   documentRemote(app);
+  documentSidenav(app);
   documentText(app);
   documentsList(app);
   extensionButtons(app);

@@ -195,11 +195,11 @@ export default function(app) {
     controller: [
       '$scope', '$route', '$routeSegment', '$document', '$http', 'config',
       '$rootScope', '$filter', 'authService', 'notificationService',
-      'metaService', 'websocketService', '$window', 'tourService',
+      'metaService', 'websocketService', '$timeout', '$window', 'tourService',
       function(
         $scope, $route, $routeSegment, $document, $http, config, $rootScope,
         $filter, authService, notificationService, metaService, websocketService,
-        $window, tourService
+        $timeout, $window, tourService
       ) {
         const $ctrl = this;
 
@@ -213,6 +213,11 @@ export default function(app) {
         $ctrl.tour = tourService;
 
         $ctrl.documentId = $routeSegment.$routeParams.documentId;
+
+        $ctrl.sidenavOpen = true;
+        $scope.$watch('$ctrl.sidenavOpen', () => {
+          $timeout(() => angular.element($window).triggerHandler('resize'), 850);
+        });
 
         // fetch document
         $http.get(`${config.apiUrl}/documents/${$ctrl.documentId}/revisions/`)

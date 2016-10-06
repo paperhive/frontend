@@ -1,0 +1,145 @@
+<div class="ph-sidenav-large ph-sidenav-open"
+  ng-class="{'ph-sidenav-open': $ctrl.open, 'ph-sidenav-closed': !$ctrl.open}"
+  ng-style="{top: $ctrl.viewportOffsetTop + 'px'}"
+>
+  <div class="ph-collapse">
+    <button id="nav-btn" class="navbar-toggle" ng-click="$ctrl.onToggle({open: false})">
+      <i class="fa fa-chevron-left" aria-hidden="true"></i>
+    </button>
+  </div>
+  <div class="ph-documents-header">
+    <h5 class="ph-lg-margin-top">
+      <mathjax body="$ctrl.latestRevision.title"></mathjax>
+    </h5>
+    <h6 class="ph-lg-margin-bottom">
+      <span ng-repeat="author in $ctrl.latestRevision.authors">
+        {{author.name}}{{$last ? '' :', '}}
+      </span>
+    </h6>
+  </div>
+  <div class="ph-hive-button">
+    <hive-button
+      popover-placement="bottom"
+      popover-is-open="$ctrl.tour.stages[$ctrl.tour.index] === 'hive'"
+      uib-popover-template="'html/shared/tour-hive.html'"
+      popover-trigger="none"
+      document-id="$ctrl.latestRevision.id"
+      user="$ctrl.auth.user"
+      title="{{$ctrl.auth.user ? 'Hive this document for receiving updates.' : 'You have to be logged in to hive the document.'}}"
+    ></hive-button>
+  </div>
+  <!-- <div ng-if="$ctrl.activeRevision"> -->
+  <div class="ph-document-info">
+    <div class="dropdown" is-open="dropdown_open" uib-dropdown>
+      <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
+        <i class="fa fa-history" aria-hidden="true"></i>
+        <span class="ph-document-journal">arXiv v4</span>,
+        Jan 2015
+        <i class="fa fa-fw fa-caret-down"></i>
+      </button>
+      <ul class="dropdown-menu ph-dropdown-menu">
+        <li>
+          <a href="./documents/{{revision.id}}/revisions/{{revision.revision}}">
+            <strong>
+             <span class="ph-document-journal">arXiv v3</span>,
+                Jun 2014
+            </strong>
+          </a>
+        </li>
+        <li>
+          <a href="./documents/{{revision.id}}/revisions/{{revision.revision}}">
+            <strong>
+              <span class="ph-document-journal">arXiv v2</span>,
+                Sep 2013
+            </strong>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div
+      class="ph-document-info-download">
+      <a class="btn btn-default" ng-href="{{$ctrl.origPdfUrl}}" download>
+        <i class="fa fa-download"></i>
+        <span>Download PDF</span>
+      </a>
+    </div>
+  </div>
+  <div class="ph-accordion">
+    <uib-accordion close-others="oneAtATime">
+      <div uib-accordion-group class="panel-default" is-open="status.open">
+        <uib-accordion-heading>
+          <img src="./static/img/kudos-logo.svg" alt="Kudos"> Kudos explanation <i class="pull-right fa" ng-class="{'fa-chevron-down': status.open, 'fa-chevron-right': !status.open}"></i>
+        </uib-accordion-heading>
+
+        <h5>What's it about?</h5>
+          <p class="ph-kudos-info">
+            The Purdue Pegboard is a standardized test to measure manual dexterity. We used this test ...</p>
+
+        <h5>Why is it important?</h5>
+          <p class="ph-kudos-info">
+            Many standardized test and their norms were developed with and for young healthy individuals. In order to ...</p>
+
+        <h5>Perspectives</h5>
+          <p class="ph-kudos-info">
+            I adored working with our older participants on this project and they have been most appreciative about our efforts to ...</p>
+        <a href="#" target="_blank">Read more on Kudos</a>
+      </div>
+    </uib-accordion>
+  </div>
+</div>
+<div class="ph-sidenav-small ph-sidenav-closed"
+  ng-class="{'ph-sidenav-open': !$ctrl.open, 'ph-sidenav-closed': $ctrl.open}"
+  ng-style="{top: $ctrl.viewportOffsetTop + 'px'}"
+>
+  <div class="ph-collapse">
+    <button id="nav-btn" class="navbar-toggle btn-link" ng-click="$ctrl.onToggle({open: true})">
+      <i class="fa fa-chevron-right" aria-hidden="true"></i>
+    </button>
+  </div>
+  <div class="ph-hive-button">
+    <button class="btn btn-link dropdown-toggle" uib-dropdown-toggle>
+      <img src="./static/img/logo-hexagon.svg">
+    </button>
+    <!-- <hive-button
+      popover-placement="bottom"
+      popover-is-open="$ctrl.tour.stages[$ctrl.tour.index] === 'hive'"
+      uib-popover-template="'html/shared/tour-hive.html'"
+      popover-trigger="none"
+      document-id="$ctrl.latestRevision.id"
+      user="$ctrl.auth.user"
+      title="{{$ctrl.auth.user ? 'Hive this document for receiving updates.' : 'You have to be logged in to hive the document.'}}"
+    ></hive-button> -->
+  </div>
+  <!-- <div ng-if="$ctrl.activeRevision"> -->
+  <div class="ph-document-info">
+    <div class="dropdown" is-open="dropdown_open" uib-dropdown>
+      <button class="btn btn-link dropdown-toggle" uib-dropdown-toggle>
+        <i class="fa fa-history" aria-hidden="true"></i>
+      </button>
+      <ul class="dropdown-menu ph-dropdown-menu hidden">
+        <li>
+          <a href="./documents/{{revision.id}}/revisions/{{revision.revision}}">
+            <strong>
+             <span class="ph-document-journal">arXiv v3</span>,
+                Jun 2014
+            </strong>
+          </a>
+        </li>
+        <li>
+          <a href="./documents/{{revision.id}}/revisions/{{revision.revision}}">
+            <strong>
+              <span class="ph-document-journal">arXiv v2</span>,
+                Sep 2013
+            </strong>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div
+      class="ph-document-info-download">
+      <a class="btn btn-link" ng-href="{{$ctrl.origPdfUrl}}" download>
+        <i class="fa fa-download"></i>
+      </a>
+    </div>
+  </div>
+</div>

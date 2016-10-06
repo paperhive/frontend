@@ -1,6 +1,11 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="transition" ng-class="{'col-md-7 col-md-offset-2': !$ctrl.expanded, 'col-md-9 ph-margin-left': $ctrl.expanded}">
+    <div class="transition col-md-7 col-md-offset-2"
+      ng-class="{
+        'col-md-7 col-md-offset-2': !$ctrl.expanded,
+        'col-md-9 ph-margin-left': $ctrl.expanded
+      }"
+    >
       <div ng-if="$ctrl.pdfUrl">
         <div ng-if="!$ctrl.activeRevision" class="text-center">
           <i class="fa fa-spinner fa-3x fa-spin"></i>
