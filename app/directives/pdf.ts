@@ -171,9 +171,12 @@ export default function(app) {
 
         // compensate for zoom and device pixel ratio
         // important: do not round here!
+        /*
+        TODO: remove? we now have width,height: 100%
         const pixelRatio = $window.devicePixelRatio || 1;
         this.canvas.style.width = (size.width / pixelRatio) + 'px';
         this.canvas.style.height = (size.height / pixelRatio) + 'px';
+        */
 
         // kick off canvas rendering
         this.renderTask = this.page.render({
@@ -386,7 +389,9 @@ export default function(app) {
         if (this.initializedRenderers) return false;
 
         // add canvas renderer
-        this.canvasRenderer = new CanvasRenderer(this.element, this.page);
+        const canvasContainer = angular.element('<div class="ph-pdf-canvas"></div>');
+        this.element.append(canvasContainer);
+        this.canvasRenderer = new CanvasRenderer(canvasContainer, this.page);
 
         // add highlights layer
         // TODO: sort more efficiently (e.g., in pdfFull directive)!
@@ -439,7 +444,8 @@ export default function(app) {
         const height = Math.floor(size.height / size.width * width);
 
         // set new height
-        this.element.height(height);
+        this.element.css({'padding-top': 100 * (height / width) + '%'});
+        this.height = height;
 
         return true;
       }
@@ -448,7 +454,7 @@ export default function(app) {
         this.scope.onPageResized({
           pageNumber: this.pageNumber,
           displaySize: {
-            height: this.element.height(),
+            height: this.height,
             width: this.element.width(),
           },
           originalSize: this.pageSize && {
@@ -939,7 +945,7 @@ export default function(app) {
         scroll.scrollTo(
           this.element.offset().top +
           page.element[0].offsetTop +
-          coords[1] / page.pageSize.height * page.element.height(),
+          coords[1] / page.pageSize.height * page.height,
           {offset: (this.scope.viewportOffsetTop || 0) + 40}
         );
       }
@@ -966,7 +972,7 @@ export default function(app) {
         scroll.scrollTo(
           this.element.offset().top +
           page.element[0].offsetTop +
-          topRect.top * page.element.height(),
+          topRect.top * page.height,
           {offset: (this.scope.viewportOffsetTop || 0) + 80}
         );
 

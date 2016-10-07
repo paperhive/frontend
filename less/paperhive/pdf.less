@@ -13,17 +13,26 @@ pdf-full {
   position: relative;
   .ph-selection(none);
 
-  & > canvas {
-    max-width: 100%;
+  & > .ph-pdf-canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right:0;
+    bottom: 0;
+    overflow: hidden;
+    > canvas {
+      width: 100%;
+      height: 100%;
+    }
   }
 
   & > .ph-pdf-text {
-    overflow: hidden;
     position: absolute;
     left: 0;
     top: 0;
     right: 0;
     bottom: 0;
+    overflow: hidden;
     /* set opacity instead of transparent background color because the
      * ::selection selector is not yet standardized and not fully supported
      * see https://developer.mozilla.org/en-US/docs/Web/CSS/::selection
@@ -64,15 +73,30 @@ pdf-full {
   }
 
   & > .ph-pdf-annotations {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+
+    // TODO: this may hide the selection tooltip (ctrl+alt/cmd)
+    overflow: hidden;
+
     .ph-selection(none);
     & > section {
       position: absolute;
+      pointer-events: all;
       box-sizing: content-box;
       & > a {
         position: absolute;
         width: 100%;
         height: 100%;
       }
+    }
+
+    &.ph-no-interaction > section {
+      pointer-events: none;
     }
   }
 
@@ -95,9 +119,6 @@ pdf-full {
   }
 }
 
-.ph-no-interaction {
-  pointer-events: none;
-}
 
 
 .ph-popup-button {
