@@ -1,5 +1,5 @@
 <div class="ph-sidenav-large"
-  ng-class="{'ph-sidenav-open': $ctrl.open, 'ph-sidenav-closed': !$ctrl.open}"
+  ng-show="$ctrl.open"
   ng-style="{top: $ctrl.viewportOffsetTop + 'px'}"
 >
   <div class="ph-collapse">
@@ -78,7 +78,7 @@
   </div>
 </div>
 <div class="ph-sidenav-small"
-  ng-class="{'ph-sidenav-open': !$ctrl.open, 'ph-sidenav-closed': $ctrl.open}"
+  ng-show="!$ctrl.open"
   ng-style="{top: $ctrl.viewportOffsetTop + 'px'}"
 >
   <div class="ph-collapse">
