@@ -6,6 +6,13 @@ export default function(app) {
     controller: class ChannelsInvitationsCtrl {
       static $inject = ['channelService'];
       constructor(public channelService) {}
+
+      invitationConfirm(channelId, invitationId) {
+        this.channelInviting = invitationId;
+        this.channelService.invitationConfirm(channelId, invitationId)
+          .finally(() => this.channelInviting = false);
+      }
+
     },
     template,
   });

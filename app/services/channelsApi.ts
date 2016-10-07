@@ -50,6 +50,12 @@ export default function(app) {
         .catch(this.notificationService.httpError('could not delete invitation'));
     }
 
+    invitationConfirm(channelId, invitationId) {
+      return this.$http.post(`${this.config.apiUrl}/channels/${channelId}/invitations/${invitationId}/confirm`)
+        .catch(this.notificationService.httpError('could not confirm invitation'))
+        .then(response => response.data);
+    }
+
     memberUpdate(channelId, memberId, member) {
       return this.$http.put(`${this.config.apiUrl}/channels/${channelId}/members/${memberId}`, member)
         .catch(this.notificationService.httpError('could not update member'))

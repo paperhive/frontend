@@ -45,17 +45,22 @@ export default function(app) {
     activate(id) {
       return this.channelsApi.activate(id)
         .then(() => this.get(id).isActive = true);
-    };
+    }
 
     deactivate(id) {
       return this.channelsApi.deactivate(id)
         .then(() => this.get(id).isActive = false);
-    };
+    }
 
     invitationCreate(id, invitation) {
       return this.channelsApi.invitationCreate(id, invitation)
         .then(newInvitation => this.get(id).invitations.push(newInvitation));
-    };
+    }
+
+    invitationConfirm(id, invitationId) {
+      return this.channelsApi.invitationConfirm(id, invitationId)
+        .then(response => console.log(response));
+    }
 
     invitationDelete(id, invitationId) {
       return this.channelsApi.invitationDelete(id, invitationId)
