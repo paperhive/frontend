@@ -13,21 +13,6 @@ document-sidenav {
   }
 }
 
-.ph-sidenav-open {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  // .transform(translateX(0));
-  transition:
-    transform @ph-sidenav-animation-duration ease-in-out @ph-sidenav-animation-duration,
-    box-shadow @ph-sidenav-animation-duration ease-in-out @ph-sidenav-animation-duration;
-}
-
-.ph-sidenav-closed {
-  transform: translateX(-100%);
-  transition:
-    transform @ph-sidenav-animation-duration ease-in-out,
-    box-shadow @ph-sidenav-animation-duration ease-in-out;
-}
-
 .ph-sidenav-large {
   width: 25%; // TODO
   min-width: 250px;
@@ -38,6 +23,25 @@ document-sidenav {
 
 .ph-sidenav-small {
   width: @ph-sidenav-small-width;
+}
+
+// animation for sidenav
+.ph-sidenav-large, .ph-sidenav-small {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  &.ng-hide {
+    box-shadow: none;
+    transform: translateX(-100%);
+  }
+  &.ng-hide-add {
+    transition:
+      transform @ph-sidenav-animation-duration ease-in-out,
+      box-shadow @ph-sidenav-animation-duration ease-in-out;
+  }
+  &.ng-hide-remove {
+    transition:
+      transform @ph-sidenav-animation-duration ease-in-out @ph-sidenav-animation-duration,
+      box-shadow @ph-sidenav-animation-duration ease-in-out @ph-sidenav-animation-duration;
+  }
 }
 
 .ph-document-info-kudos .panel-body {
