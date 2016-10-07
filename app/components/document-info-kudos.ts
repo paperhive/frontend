@@ -38,11 +38,14 @@ export default function(app) {
                 .kudos-widget .kudos-widget-use-kudos {
                   border: none !important;
                 }
+                .kudos-widget .kudos-widget-intro-and-logo {
+                  display: none;
+                }
               </style>
             </head>
             <body>
-              <script src="https://api.growkudos.com/widgets/article/${this.doi}"></script>
-              <script src="https://api.growkudos.com/widgets/use_kudos/${this.doi}"></script>
+              <script src="https://api.growkudos.com/widgets/article/${this.doi}?omit_icons=true"></script>
+              <script src="https://api.growkudos.com/widgets/use_kudos/${this.doi}?omit_icons=true"></script>
             </body>
           </html>`
         );
