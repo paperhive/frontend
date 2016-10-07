@@ -189,6 +189,7 @@ export default function(app) {
             template:
               `<channel-settings
                 channel="$ctrl.channel"
+                is-owner="$ctrl.isOwner"
               ></channel-settings>`,
             title: 'My channel · PaperHive',
           })

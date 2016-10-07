@@ -7,7 +7,7 @@
           <div class="col-sm-10">
             <input ng-model="$ctrl.name" name="channelName" type="text"
               class="form-control" required
-              ng-disabled="!$ctrl.channel.isActive || $ctrl.inProgress"
+              ng-disabled="!$ctrl.channel.isActive || $ctrl.inProgress || !$ctrl.isOwner"
             >
             <div class="help-block">
               <span ng-if="$ctrl.hasError('channelName')">
@@ -24,12 +24,12 @@
         <label class="col-sm-2 col-form-label">Description</label>
         <div class="col-sm-10">
           <input ng-model="$ctrl.description" type="text"
-            class="form-control" ng-disabled="!$ctrl.channel.isActive"
+            class="form-control" ng-disabled="!$ctrl.channel.isActive || !$ctrl.isOwner"
           >
         </div>
       </div>
 
-      <div class="form-group row" ng-if="$ctrl.channel.isActive">
+      <div class="form-group row" ng-if="$ctrl.channel.isActive && $ctrl.isOwner">
         <label class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
           <button type="submit" class="btn btn-primary"
@@ -51,7 +51,7 @@
             <i class="fa fa-times text-danger" aria-hidden="true"></i>
           </span>
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-9" ng-if="$ctrl.isOwner">
           <button type="button" class="btn btn-primary"
             ng-if="!$ctrl.channel.isActive"
   	        ng-click="$ctrl.channelActivate()"
@@ -71,14 +71,14 @@
       </div>
 
       <div class="form-group row" ng-if="$ctrl.channel.createdAt !== $ctrl.channel.updatedAt">
-        <label class="col-sm-2 col-form-label">Updated at</label>
+        <label class="col-sm-2 col-form-label">Updated on</label>
         <div class="col-sm-10">
           {{$ctrl.channel.updatedAt | date:'M/d/yyyy HH:mm'}}
         </div>
       </div>
 
       <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Created at</label>
+        <label class="col-sm-2 col-form-label">Created on</label>
         <div class="col-sm-10">
           {{$ctrl.channel.createdAt | date:'M/d/yyyy HH:mm'}}
         </div>

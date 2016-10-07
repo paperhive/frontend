@@ -2,6 +2,7 @@
   <div class="col-sm-12">
     <div class="form-group">
       <button
+        ng-if="$ctrl.isOwner"
         type="button" ng-click="$ctrl.invitationModalOpen()"
         class="btn btn-primary" ng-disabled="!$ctrl.channel.isActive"
         title="{{$ctrl.channel.isActive ? '' : 'Activate the channel first to invite people'}}"
@@ -58,6 +59,7 @@
                 {{role}}
               </span>
               <button
+                ng-if="$ctrl.isOwner"
                 type="button" class="btn btn-danger btn-sm pull-right"
                 ng-confirm-click="Really remove invitation?"
                 confirmed-click="$ctrl.invitationDelete($ctrl.channel.id, invitation.id)"
@@ -87,6 +89,7 @@
                 {{role}}
               </span>
               <button
+                ng-if="$ctrl.isOwner"
                 type="button" class="btn btn-danger btn-sm pull-right"
                 ng-confirm-click="Really remove invitation?"
                 confirmed-click="$ctrl.invitationDelete($ctrl.channel.id, invitation.id)"

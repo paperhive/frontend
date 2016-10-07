@@ -7,6 +7,7 @@ export default function(app) {
   app.component('channelSettings', {
     bindings: {
       channel: '<',
+      isOwner: '<',
     },
     controller: class ChannelSettings {
       activating = false;
