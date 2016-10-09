@@ -14,7 +14,7 @@ document-sidenav {
 }
 
 .ph-sidenav-large {
-  width: 25%; // TODO
+  width: 25%; // TODO: via bootstrap mixin?
   min-width: 250px;
   overflow-x: hidden;
   overflow-y: auto;;
@@ -41,6 +41,23 @@ document-sidenav {
     transition:
       transform @ph-sidenav-animation-duration ease-in-out @ph-sidenav-animation-duration,
       box-shadow @ph-sidenav-animation-duration ease-in-out @ph-sidenav-animation-duration;
+  }
+}
+
+// mixin for content that should not be hidden beneath the sidenav
+.ph-sidenav-content(@columns, @columns-sidenav-open) {
+  .make-md-column(@columns);
+  margin-left: @ph-sidenav-small-width;
+
+  &.ph-sidenav-open {
+    .make-md-column(@columns-sidenav-open);
+    .make-md-column-offset(3);
+  }
+
+  &.ph-sidenav-open-add, &.ph-sidenav-open-remove {
+    transition:
+      margin-left @ph-sidenav-animation-duration ease-in-out,
+      width @ph-sidenav-animation-duration ease-in-out;
   }
 }
 

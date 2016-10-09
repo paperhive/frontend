@@ -1,11 +1,6 @@
 <div class="container-fluid">
   <div class="row">
-    <div
-      ng-class="{
-        'col-md-6 col-md-offset-3': !$ctrl.expanded,
-        'col-md-9 ph-document-expanded': $ctrl.expanded
-      }"
-    >
+    <div class="ph-document-text" ng-class="{'ph-sidenav-open': !$ctrl.expanded}">
       <div ng-if="$ctrl.pdfUrl">
         <div ng-if="!$ctrl.activeRevision" class="text-center">
           <i class="fa fa-spinner fa-3x fa-spin"></i>

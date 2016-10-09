@@ -1,12 +1,7 @@
 <div class="ph-header-submenu-container" ng-style="{top: $root.navbarSize.height  + 'px'}">
   <div class="container-fluid" on-resized="subnavSize = $size">
     <div class="row">
-      <div
-        ng-class="{
-          'col-md-9 col-md-offset-3': $ctrl.sidenavOpen,
-          'col-md-12 ph-document-expanded': !$ctrl.sidenavOpen
-        }"
-      >
+      <div class="ph-document-subnav" ng-class="{'ph-sidenav-open': $ctrl.sidenavOpen}">
         <subnav>
           <ul class="nav nav-tabs ph-header-submenu">
             <li subnav-target="documents.text">
