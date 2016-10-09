@@ -2,22 +2,31 @@
   <div class="container-fluid" on-resized="subnavSize = $size">
     <div class="row">
       <div class="ph-document-subnav" ng-class="{'ph-sidenav-open': $ctrl.sidenavOpen}">
-        <subnav>
+        <button ng-click="$ctrl.subnavOpen = !$ctrl.subnavOpen" type="button" class="btn btn-default visible-xs">
+          <i class="fa fa-fw fa-bars"></i> Toggle Navigation
+        </button>
+        <div class="navbar-collapse ph-no-padding" uib-collapse="!$ctrl.subnavOpen">
           <ul class="nav nav-tabs ph-header-submenu">
-            <li subnav-target="documents.text">
-              <a><i class="fa fa-fw fa-file-pdf-o"></i> Document</a>
+            <li ng-class="{active: ('documents.text' | routeSegmentStartsWith)}">
+              <a href=".{{'documents.text' | routeSegmentUrl}}" ng-click="$ctrl.subnavOpen = false">
+                <i class="fa fa-fw fa-file-pdf-o"></i> Document
+              </a>
             </li>
-            <li subnav-target="documents.discussions">
-              <a><i class="fa fa-fw fa-comments"></i> Discussions
+            <li ng-class="{active: ('documents.discussions' | routeSegmentStartsWith)}">
+              <a href=".{{'documents.discussions' | routeSegmentUrl}}" ng-click="$ctrl.subnavOpen = false">
+                <i class="fa fa-fw fa-comments"></i> Discussions
                 <span class="badge" ng-if="$ctrl.discussionsCtrl.discussions.length > 0">
                   {{$ctrl.discussionsCtrl.discussions.length}}
-                </span></a>
+                </span>
+              </a>
             </li>
-            <li subnav-target="documents.activity">
-              <a><i class="fa fa-heartbeat" aria-hidden="true"></i> Activity</a>
+            <li ng-class="{active: ('documents.activity' | routeSegmentStartsWith)}">
+              <a href=".{{'documents.activity' | routeSegmentUrl}}" ng-click="$ctrl.subnavOpen = false">
+                <i class="fa fa-heartbeat" aria-hidden="true"></i> Activity
+              </a>
             </li>
           </ul>
-        </subnav>
+        </div>
       </div>
     </div>
   </div>
