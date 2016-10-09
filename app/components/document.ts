@@ -192,80 +192,54 @@ class DiscussionsController {
 export default function(app) {
   app.component('document', {
     template,
-    controller: [
-      '$scope', '$route', '$routeSegment', '$document', '$http', 'config',
-      '$rootScope', '$filter', 'authService', 'notificationService',
-      'metaService', 'websocketService', '$timeout', '$window', 'tourService',
-      function(
-        $scope, $route, $routeSegment, $document, $http, config, $rootScope,
-        $filter, authService, notificationService, metaService, websocketService,
-        $timeout, $window, tourService
-      ) {
-        const $ctrl = this;
+    controller: class DocumentCtrl {
+      subnavOpen = false;
+      sidenavOpen = true;
+      revisions: Array<any>;
+      latestRevision: any;
+      discussionsCtrl: DiscussionsController;
 
-        // expose authService
-        $ctrl.auth = authService;
+      static $inject = ['$http', '$routeSegment', '$scope', 'config',
+        'metaService', 'notificationService', 'websocketService'];
 
-        // expose the routeSegment to be able to determine the active tab in the
-        // template.
-        $ctrl.$routeSegment = $routeSegment;
+      constructor($http, public $routeSegment, $scope, config,
+        metaService, notificationService, websocketService) {
+          const documentId = $routeSegment.$routeParams.documentId;
 
-        $ctrl.tour = tourService;
+          // fetch document
+          $http.get(`${config.apiUrl}/documents/${documentId}/revisions/`)
+            .success(response => {
+              this.revisions = response.revisions;
 
-        $ctrl.documentId = $routeSegment.$routeParams.documentId;
+              if (!this.revisions) {
+                notificationService.notifications.push({
+                  type: 'error',
+                  message: 'Document has no revisions – magic!'
+                });
+                return;
+              }
 
-        $ctrl.sidenavOpen = true;
+              // use latest revision for metadata
+              this.latestRevision = orderBy(this.revisions, 'publishedAt', 'desc')[0];
 
-        // fetch document
-        $http.get(`${config.apiUrl}/documents/${$ctrl.documentId}/revisions/`)
-          .success(response => {
-            $ctrl.revisions = response.revisions;
-
-            if (!$ctrl.revisions) {
-              notificationService.notifications.push({
-                type: 'error',
-                message: 'Document has no revisions – magic!'
+              const metadata = getRevisionMetadata(this.latestRevision);
+              metaService.set({
+                title: this.latestRevision.title + ' · PaperHive',
+                meta: metadata
               });
-              return;
-            }
+            })
+            .error(notificationService.httpError('could not fetch document'));
 
-            // use latest revision for metadata
-            $ctrl.latestRevision = orderBy($ctrl.revisions, 'publishedAt', 'desc')[0];
+          // instanciate and init controller for discussions
+          this.discussionsCtrl = new DiscussionsController(
+            documentId, config, $scope, $http, websocketService
+          );
 
-            const metadata = getRevisionMetadata($ctrl.latestRevision);
-            metaService.set({
-              title: $ctrl.latestRevision.title + ' · PaperHive',
-              meta: metadata
-            });
-          })
-          .error(data => {
-            notificationService.notifications.push({
-              type: 'error',
-              message: data.message ? data.message :
-                'could not fetch document revisions (unknown reason)'
-            });
-          });
-
-        // execute async function and display errors as notifications
-        async function asyncExec(asyncFun, context, errorMessage) {
-          try {
-            await asyncFun.bind(context)();
-          } catch (error) {
-            console.error(error);
-            notificationService.notifications.push({
-              type: 'error',
-              message: `${errorMessage} (${error.message || error.data.message || 'unknown reason'}).`,
-            });
-          }
+          this.discussionsCtrl.init().catch(error => notificationService.notifications.push({
+            type: 'error',
+            message: error.message
+          }));
         }
-
-        // instanciate and init controller for discussions
-        $ctrl.discussionsCtrl = new DiscussionsController(
-          $ctrl.documentId, config, $scope, $http, websocketService
-        );
-        asyncExec($ctrl.discussionsCtrl.init, $ctrl.discussionsCtrl,
-                  'Could not initialize discussions');
-      }
-    ],
+    },
   });
 };
