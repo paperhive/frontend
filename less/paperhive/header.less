@@ -33,10 +33,14 @@
 
 .ph-header-submenu-container {
   background-color: #eee;
-  position: fixed;
   width: 100%;
-  top: @navbar-height;
-  z-index: @zindex-navbar-fixed - 1;
+
+  &.ph-header-submenu-container-fixed {
+    top: @navbar-height;
+    z-index: @zindex-navbar-fixed - 1;
+    position: fixed;
+  }
+
   .btn.btn-primary {
     padding-top: 7px;
     padding-bottom: 7px;
