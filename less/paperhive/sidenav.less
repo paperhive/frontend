@@ -47,7 +47,8 @@ document-sidenav {
 // mixin for content that should not be hidden beneath the sidenav
 .ph-sidenav-content(@columns, @columns-sidenav-open) {
   .make-md-column(@columns);
-  margin-left: @ph-sidenav-small-width;
+  margin-left: 0;
+  padding-left: @ph-sidenav-small-width + @grid-gutter-width / 2;
 
   &.ph-sidenav-open {
     .make-md-column(@columns-sidenav-open);
@@ -57,6 +58,7 @@ document-sidenav {
   &.ph-sidenav-open-add, &.ph-sidenav-open-remove {
     transition:
       margin-left @ph-sidenav-animation-duration ease-in-out,
+      padding-left @ph-sidenav-animation-duration ease-in-out,
       width @ph-sidenav-animation-duration ease-in-out;
   }
 }
