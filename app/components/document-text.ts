@@ -21,10 +21,10 @@ class DocumentTextCtrl {
   pageCoordinates: any;
   anchor: string;
 
-  static $inject = ['$http', '$location', '$routeSegment', '$scope', 'config',
+  static $inject = ['$animate', '$element', '$http', '$location', '$routeSegment', '$scope', '$window', 'config',
     'notificationService', 'tourService'];
-  constructor(public $http, public $location, public $routeSegment,
-      public $scope, public config, public notificationService,
+  constructor($animate, $element, public $http, public $location, public $routeSegment,
+      public $scope, $window, public config, public notificationService,
       public tourService) {
     this.hoveredHighlights = {};
     this.hoveredMarginDiscussions = {draft: true};
@@ -41,6 +41,14 @@ class DocumentTextCtrl {
     this.updateAnchorFromUrl();
     $scope.$on('$routeUpdate', () => this.updateAnchorFromUrl());
     $scope.$watch('$ctrl.anchor', anchor => this.updateAnchorToUrl(anchor));
+
+    // trigger resize event when animation of .ph-document-text finishes
+    function triggerResize(element, phase) {
+      if (!element.hasClass('ph-document-text') || phase !== 'close') return;
+      angular.element($window).triggerHandler('resize');
+    }
+    $animate.on('addClass', $element, triggerResize);
+    $animate.on('removeClass', $element, triggerResize);
   }
 
   getAccessiblePdfUrl(revision) {

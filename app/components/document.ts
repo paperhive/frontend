@@ -215,9 +215,6 @@ export default function(app) {
         $ctrl.documentId = $routeSegment.$routeParams.documentId;
 
         $ctrl.sidenavOpen = true;
-        $scope.$watch('$ctrl.sidenavOpen', () => {
-          $timeout(() => angular.element($window).triggerHandler('resize'), 850);
-        });
 
         // fetch document
         $http.get(`${config.apiUrl}/documents/${$ctrl.documentId}/revisions/`)
