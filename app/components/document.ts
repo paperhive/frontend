@@ -203,7 +203,7 @@ export default function(app) {
         'DocumentController', 'metaService', 'notificationService', 'websocketService'];
 
       constructor($http, public $routeSegment, $scope, config,
-        DocumentController, metaService, notificationService, websocketService) {
+        DocumentController, public metaService, notificationService, websocketService) {
         const documentId = $routeSegment.$routeParams.documentId;
 
         this.documentCtrl = new DocumentController(documentId);
@@ -217,6 +217,8 @@ export default function(app) {
           '$ctrl.documentCtrl.latestRevision',
           '$ctrl.documentCtrl.latestAccessibleRevision',
         ], this.updateActiveRevision.bind(this));
+
+        $scope.$watch('$ctrl.activeRevision', this.updateMetadata.bind(this));
 
         // instanciate and init controller for discussions
         this.discussionsCtrl = new DiscussionsController(
@@ -248,6 +250,14 @@ export default function(app) {
         this.activeRevision =
           this.documentCtrl.latestAccessibleRevision ||
           this.documentCtrl.latestRevision;
+      }
+
+      updateMetadata() {
+        const metadata = getRevisionMetadata(this.activeRevision);
+        this.metaService.set({
+          title: this.activeRevision.title + ' · PaperHive',
+          meta: metadata,
+        });
       }
     },
   });
