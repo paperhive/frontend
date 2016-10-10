@@ -2,12 +2,10 @@
   ng-show="$ctrl.open"
   ng-style="{top: $ctrl.viewportOffsetTop + 'px'}"
 >
-  <div class="ph-collapse">
-    <button id="nav-btn" class="navbar-toggle" ng-click="$ctrl.onToggle({open: false})">
-      <i class="fa fa-chevron-left" aria-hidden="true"></i>
-    </button>
-  </div>
-  <div class="ph-documents-header">
+  <button class="btn btn-link ph-sidenav-btn-collapse" ng-click="$ctrl.onToggle({open: false})">
+    <i class="fa fa-chevron-left" aria-hidden="true"></i>
+  </button>
+  <div class="ph-sidenav-header">
     <h5 class="ph-lg-margin-top">
       <mathjax body="$ctrl.activeRevision.title"></mathjax>
     </h5>
@@ -29,14 +27,14 @@
     ></hive-button>
   </div>
   <!-- <div ng-if="$ctrl.activeRevision"> -->
-  <div class="ph-document-info">
+  <div class="ph-sidenav-info">
     <div class="dropdown ph-sidenav-item" is-open="$ctrl.revisionDropdownOpen" uib-dropdown>
       <button class="btn btn-default ph-split-container ph-split-container-icon-right dropdown-toggle" uib-dropdown-toggle
         title="{{$ctrl.documentCtrl.getRevisionDescription($ctrl.activeRevision)}}, {{$ctrl.activeRevision.publishedAt | date:'MMM yyyy'}}"
       >
         <span class="ph-split-icon"><i class="fa fa-history" aria-hidden="true"></i></span>
         <span class="ph-split-text">
-          <span class="ph-document-journal">{{$ctrl.documentCtrl.getRevisionDescription($ctrl.activeRevision)}}</span>,
+          <span class="ph-sidenav-journal">{{$ctrl.documentCtrl.getRevisionDescription($ctrl.activeRevision)}}</span>,
           {{$ctrl.activeRevision.publishedAt | date:'MMM yyyy'}}
         </span>
         <i class="fa fa-fw fa-caret-down ph-split-icon-right"></i>
@@ -53,7 +51,7 @@
             <span class="ph-split-text"
               ng-class="{'ph-dropdown-menu-active': revision === $ctrl.activeRevision}"
             >
-              <span class="ph-document-journal">{{$ctrl.documentCtrl.getRevisionDescription(revision)}}</span>,
+              <span class="ph-sidenav-journal">{{$ctrl.documentCtrl.getRevisionDescription(revision)}}</span>,
               {{revision.publishedAt | date:'MMM yyyy'}}
             </span>
             <i class="fa fa-fw"></i>
@@ -63,7 +61,7 @@
             class="ph-split-container ph-split-container-no-icon ph-split-container-icon-right"
           >
             <span class="ph-split-text">
-              <span class="ph-document-journal">{{$ctrl.documentCtrl.getRevisionDescription(revision)}}</span>,
+              <span class="ph-sidenav-journal">{{$ctrl.documentCtrl.getRevisionDescription(revision)}}</span>,
               {{revision.publishedAt | date:'MMM yyyy'}}
             </span>
             <i class="fa fa-fw fa-lock ph-split-icon-right"></i>
@@ -71,17 +69,10 @@
         </li>
       </ul>
     </div>
-    <!--div
-      class="ph-document-info-download">
-      <a class="btn btn-default" ng-href="{{$ctrl.origPdfUrl}}" download>
-        <i class="fa fa-download"></i>
-        <span>Download PDF</span>
-      </a>
-    </div-->
   </div>
-  <div class="ph-accordion">
+  <div class="ph-sidenav-accordion">
     <uib-accordion close-others="oneAtATime">
-      <div ng-if="$ctrl.kudosDoi" uib-accordion-group class="panel-default ph-document-info-kudos" is-open="$ctrl.kudosOpen">
+      <div ng-if="$ctrl.kudosDoi" uib-accordion-group class="panel-default ph-sidenav-info-kudos" is-open="$ctrl.kudosOpen">
         <uib-accordion-heading>
           <img src="./static/img/kudos-icon.svg" alt="Kudos"> Kudos explanation
           <i class="pull-right fa" ng-class="{
@@ -98,46 +89,8 @@
   ng-show="!$ctrl.open"
   ng-style="{top: $ctrl.viewportOffsetTop + 'px'}"
 >
-  <div class="ph-collapse">
-    <button class="navbar-toggle btn-link" ng-click="$ctrl.onToggle({open: true})">
-      <i class="fa fa-chevron-right" aria-hidden="true"></i>
-    </button>
-  </div>
+  <button class="btn btn-link" ng-click="$ctrl.onToggle({open: true})">
+    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+  </button>
   <hive-button document-ctrl="$ctrl.documentCtrl" large="false"></hive-button>
-    <!--button class="btn btn-link dropdown-toggle" uib-dropdown-toggle>
-      <img src="./static/img/logo-hexagon.svg">
-      <img src="./static/img/logo-hexagon.svg" ng-if="$ctrl.documentCtrl.isUserHiver">
-    </button>
-  </div-->
-  <!--div class="ph-document-info">
-    <div class="dropdown" is-open="dropdown_open" uib-dropdown>
-      <button class="btn btn-link dropdown-toggle" uib-dropdown-toggle>
-        <i class="fa fa-history" aria-hidden="true"></i>
-      </button>
-      <ul class="dropdown-menu ph-dropdown-menu hidden">
-        <li>
-          <a href="./documents/{{revision.id}}/revisions/{{revision.revision}}">
-            <strong>
-             <span class="ph-document-journal">arXiv v3</span>,
-                Jun 2014
-            </strong>
-          </a>
-        </li>
-        <li>
-          <a href="./documents/{{revision.id}}/revisions/{{revision.revision}}">
-            <strong>
-              <span class="ph-document-journal">arXiv v2</span>,
-                Sep 2013
-            </strong>
-          </a>
-        </li>
-      </ul>
-    </div>
-    <div
-      class="ph-document-info-download">
-      <a class="btn btn-link" ng-href="{{$ctrl.origPdfUrl}}" download>
-        <i class="fa fa-download"></i>
-      </a>
-    </div>
-  </div-->
 </div>

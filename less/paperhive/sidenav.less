@@ -8,6 +8,14 @@ document-sidenav {
 
     background: @ph-white;
   }
+
+  .btn, .dropdown-menu {
+    font-size: @font-size-base - 2;
+  }
+
+  .btn:focus, .btn:active:focus {
+    outline: none;
+  }
 }
 
 .ph-sidenav-large {
@@ -15,7 +23,7 @@ document-sidenav {
   min-width: 250px;
   overflow-x: hidden;
   overflow-y: auto;;
-  padding: 40px (@grid-gutter-width/2) 30px;
+  padding: @ph-sidenav-small-width (@grid-gutter-width/2) 30px;
 }
 
 .ph-sidenav-small {
@@ -60,13 +68,30 @@ document-sidenav {
   }
 }
 
-// override padding for kudos so the iframe can fill the entire panel body
-.ph-document-info-kudos .panel-body {
-  padding: 0;
+.ph-sidenav-btn-collapse {
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: center;
+  width: @ph-sidenav-small-width;
+  height: @ph-sidenav-small-btn-height;
 }
 
 .ph-sidenav-item {
   margin-bottom: @padding-large-horizontal;
+}
+
+.ph-sidenav-header {
+  h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: @padding-large-horizontal;
+  }
+  h4, h5 {
+    color: @ph-base-color;
+  }
+  h6 {
+    color: darken(@ph-background-color, 40%);
+  }
 }
 
 @ph-split-icon-width: 18px;
@@ -120,132 +145,23 @@ document-sidenav {
   font-weight: bold;
 }
 
-/*
-.ph-sidenav {
-  &.ph-documents {
-    background: @ph-white;
-    height: 100%;
-  }
-  > li {
-    .ph-md-margin-bottom;
-
-    &.active > a, {
-      border-left-color: @ph-highlight-color;
-      color: @link-hover-color;
-    }
-
-    > a {
-      border-left: @ph-border-height/2 solid transparent;
-      padding: @padding-base-vertical/2 @padding-base-horizontal/2;
-      font-size: 110%;
-      .ph-sm-margin-bottom;
-
-      &:hover, &:focus {
-        border-left-color: @ph-highlight-color;
-        background: none;
-      }
-    }
-  }
-  .btn {
-    font-size: @font-size-base - 2;
-  }
+.ph-sidenav-journal {
+  max-width: 100%;
+  overflow: hidden;
+  display: inline-block;
+  text-overflow: ellipsis;
+  vertical-align: top;
 }
 
-.ph-documents-header {
-  h4,
-  h5,
-  h6 {
-    margin-top: 0;
-    margin-bottom: @padding-large-horizontal;
-  }
-  h4,
-  h5 {
-    color: @ph-base-color;
-  }
-  h6 {
-    color: darken(@ph-background-color, 40%);
-  }
-
-}
-
-.ph-collapse {
-  position: absolute;
-  top: 0;
-  right: 0;
-  text-align: right;
-  button {
-    display: block;
-    margin: 0;
-    padding: @padding-large-vertical (@grid-gutter-width/2);
-    &:hover {
-      color: @ph-highlight-color;
-    }
-  }
-}
-
-.ph-hive-button {
-  margin-bottom: @padding-large-horizontal;
-}
-.ph-document-info {
-  .ph-dropdown-menu {
-    width: 100%;
-  }
-  .btn {
-    width: 100%;
-    text-align: left;
-    &:hover {
-      color: @ph-highlight-color;
-    }
-  }
-
-  .fa-caret-down {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    margin-top: -7px;
-  }
-}
-.ph-sidenav-small {
-  .btn-link {
-    width: 100%;
-    display: block;
-    text-align: center;
-    text-decoration: none;
-    outline: none;
-  }
-
-  .ph-document-info {
-    div {
-      margin-bottom: 0;
-    }
-    .fa-download,
-    .fa-history {
-      width: 100%;
-      border: none;
-      padding-right: 0;
-    }
-  }
-  .ph-collapse {
-    width: 100%;
-    position: relative;
-    button {
-      width: 100%;
-    }
-  }
-}
-
-.ph-accordion {
+.ph-sidenav-accordion {
   .panel-heading {
     padding: 0;
-  }
-  img {
-    max-height: 20px;
-    margin-top: -6px;
-    margin-right: 4px;
-  }
-  a {
-
-    &.accordion-toggle {
+    img {
+      max-height: 20px;
+      margin-top: -6px;
+      margin-right: 4px;
+    }
+    a.accordion-toggle {
       display: block;
       background: @gray-lighter;
       padding: @padding-large-horizontal @padding-large-vertical;
@@ -259,44 +175,37 @@ document-sidenav {
         text-decoration: none;
         outline: none;
       }
+
     }
-  }
 
-
-  h4 {
-    margin-bottom: 0;
-  }
-  h6 {
-    margin-bottom: @padding-base-vertical;
   }
 }
 
-.ph-sidenav-sub {
-  margin-left: @line-height-computed;
+// override padding for kudos so the iframe can fill the entire panel body
+.ph-ph-sidenav-info-info-kudos .panel-body {
+  padding: 0;
+}
 
-  > li {
-
-    &.active > a {
-      color: @link-hover-color;
-      .fa {
-        display: inline-block;
-      }
-    }
-
-    > a {
-      padding: @padding-base-vertical/3 0;
-
-      .fa {
-        display: none;
-        font-size: 12px;
-        .ph-sm-margin-left;
-      }
-
-      &:hover, &:focus {
-        background: none;
-      }
-    }
+.ph-sidenav-small {
+  > .btn, .ph-hive-button-small .btn  {
+    height: @ph-sidenav-small-btn-height;
+    width: 100%;
+    padding: 6px 10px;
   }
 }
 
-*/
+// overrides for hive-button
+hive-button button:hover img {
+  opacity: 0.7;
+}
+.ph-hive-button-large {
+  img {
+    margin-top: -4px;
+    margin-bottom: -4px;
+    height: 24px;
+    vertical-align: text-bottom;
+  }
+}
+.ph-hive-button-small img {
+  width: 100%;
+}

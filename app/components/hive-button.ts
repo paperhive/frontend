@@ -28,11 +28,11 @@ export default function(app) {
           <div ng-if="$ctrl.large" class="ph-hive-button-large btn-group" role="group">
             <button ng-if="$ctrl.documentCtrl.isUserHiver" type="button" class="btn btn-default"
               ng-disabled="$ctrl.submitting" ng-click="$ctrl.unhive()">
-              <img alt="logo black" height="20px" src="./static/img/logo-hexagon.svg"/> Unhive
+              <img alt="logo black" src="./static/img/logo-hexagon.svg"/> Unhive
             </button>
             <button ng-if="!$ctrl.documentCtrl.isUserHiver" type="button" class="btn btn-default"
               ng-disabled="!$ctrl.authService.user || $ctrl.submitting" ng-click="$ctrl.hive()">
-              <img alt="logo black" height="20px" src="./static/img/logo-hexagon-black.svg"/> Hive
+              <img alt="logo black" src="./static/img/logo-hexagon-black.svg"/> Hive
             </button>
             <a href="./documents/{{$ctrl.documentCtrl.documentId}}/hivers" class="btn btn-default">
               <span ng-if="$ctrl.documentCtrl.hivers">{{$ctrl.documentCtrl.hivers.length}}</span>
