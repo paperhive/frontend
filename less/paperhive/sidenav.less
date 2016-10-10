@@ -60,13 +60,63 @@ document-sidenav {
   }
 }
 
+// override padding for kudos so the iframe can fill the entire panel body
 .ph-document-info-kudos .panel-body {
   padding: 0;
 }
 
+.ph-sidenav-item {
+  margin-bottom: @padding-large-horizontal;
+}
 
+@ph-split-icon-width: 18px;
+@ph-split-date-width: 66px;
+.ph-split-container {
+  text-align: left;
+  width: 100%;
+  position: relative;
 
+  &.ph-split-container-no-icon {
+    padding-left: 3 * @padding-base-horizontal + @ph-split-icon-width + 1px;
+  }
 
+  &.ph-split-container-icon-right {
+    padding-right: 2 * @padding-base-horizontal + @ph-split-icon-width;
+  }
+
+  .ph-split-icon {
+    display: inline-block;
+    width: @ph-split-icon-width + @padding-base-horizontal;
+    text-align: center;
+    padding-right: @padding-base-horizontal;
+    .border-right(1px, solid, @gray);
+    margin-right: @padding-base-horizontal;
+  }
+
+  // compensate for left and right icons
+  // notice: width is relative to inner of button
+  .ph-split-text {
+    display: inline-block;
+    max-width: 100%;
+    padding-right: 2 * @padding-base-horizontal + @ph-split-icon-width + @ph-split-date-width;
+  }
+  &.ph-split-container-no-icon .ph-split-text {
+    padding-right: @ph-split-date-width;
+  }
+
+  .ph-split-icon-right {
+    position: absolute;
+    right: @padding-base-horizontal;
+    top: 50%;
+    margin-top: -8px;
+  }
+}
+
+.ph-dropdown-menu-full {
+  width: 100%;
+}
+
+/*
 .ph-sidenav {
   &.ph-documents {
     background: @ph-white;
@@ -140,28 +190,15 @@ document-sidenav {
     width: 100%;
     text-align: left;
     &:hover {
-      [class*=fa-] {
-        color: @ph-highlight-color;
-      }
+      color: @ph-highlight-color;
     }
   }
 
-  .fa-download,
-  .fa-history {
-    padding-right: @padding-base-horizontal;
-    .border-right(1px, solid, @gray);
-  }
   .fa-caret-down {
     position: absolute;
     right: 10px;
     top: 50%;
     margin-top: -7px;
-  }
-  button span, a span {
-    padding-left: @padding-base-horizontal - 2;
-  }
-  div {
-    margin-bottom: @padding-large-horizontal;
   }
 }
 .ph-sidenav-small {
@@ -172,11 +209,7 @@ document-sidenav {
     text-decoration: none;
     outline: none;
   }
-  .ph-hive-button-small {
-    img {
-      max-width: 100%
-    }
-  }
+
   .ph-document-info {
     div {
       margin-bottom: 0;
@@ -261,3 +294,5 @@ document-sidenav {
     }
   }
 }
+
+*/

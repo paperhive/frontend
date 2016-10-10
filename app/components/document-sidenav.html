@@ -17,7 +17,7 @@
       </span>
     </h6>
   </div>
-  <div class="ph-hive-button">
+  <div class="ph-sidenav-item">
     <hive-button
       document-ctrl="$ctrl.documentCtrl"
       large="true"
@@ -30,26 +30,34 @@
   </div>
   <!-- <div ng-if="$ctrl.activeRevision"> -->
   <div class="ph-document-info">
-    <div class="dropdown" is-open="$ctrl.revisionDropdownOpen" uib-dropdown>
-      <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
-        <i class="fa fa-history" aria-hidden="true"></i>
-        <span class="ph-document-journal">{{$ctrl.documentCtrl.getRevisionDescription($ctrl.activeRevision)}}</span>,
-        {{$ctrl.activeRevision.publishedAt | date:'MMM yyyy'}}
-        <i class="fa fa-fw fa-caret-down"></i>
+    <div class="dropdown ph-sidenav-item" is-open="$ctrl.revisionDropdownOpen" uib-dropdown>
+      <button class="btn btn-default ph-split-container ph-split-container-icon-right dropdown-toggle" uib-dropdown-toggle
+        title="{{$ctrl.documentCtrl.getRevisionDescription($ctrl.activeRevision)}}, {{$ctrl.activeRevision.publishedAt | date:'MMM yyyy'}}"
+      >
+        <span class="ph-split-icon"><i class="fa fa-history" aria-hidden="true"></i></span>
+        <span class="ph-split-text">
+          <span class="ph-document-journal">{{$ctrl.documentCtrl.getRevisionDescription($ctrl.activeRevision)}}</span>,
+          {{$ctrl.activeRevision.publishedAt | date:'MMM yyyy'}}
+        </span>
+        <i class="fa fa-fw fa-caret-down ph-split-icon-right"></i>
       </button>
-      <ul class="dropdown-menu ph-dropdown-menu">
+      <ul class="dropdown-menu ph-dropdown-menu-full">
         <li ng-repeat="revision in $ctrl.documentCtrl.revisions | orderBy:'publishedAt':true"
             ng-class="{'disabled': !$ctrl.documentCtrl.revisionAccess[revision.revision]}"
             ng-click="$ctrl.revisionDropdownOpen = false">
           <a ng-if="$ctrl.documentCtrl.revisionAccess[revision.revision]"
-             href="./documents/{{revision.id}}/revisions/{{revision.revision}}">
-            <strong ng-if="revision === $ctrl.activeRevision">
-              <span class="ph-document-journal">{{$ctrl.documentCtrl.getRevisionDescription(revision)}}</span>,
-              {{revision.publishedAt | date:'MMM yyyy'}}
-            </strong>
-            <span ng-if="revision !== $ctrl.activeRevision">
-              <span class="ph-document-journal">{{$ctrl.documentCtrl.getRevisionDescription(revision)}}</span>,
-              {{revision.publishedAt | date:'MMM yyyy'}}
+            class="ph-split-container ph-split-container-no-icon"
+            href="./documents/{{revision.id}}/revisions/{{revision.revision}}"
+          >
+            <span class="ph-split-text">
+              <strong ng-if="revision === $ctrl.activeRevision">
+                <span class="ph-document-journal">{{$ctrl.documentCtrl.getRevisionDescription(revision)}}</span>,
+                {{revision.publishedAt | date:'MMM yyyy'}}
+              </strong>
+              <span ng-if="revision !== $ctrl.activeRevision">
+                <span class="ph-document-journal">{{$ctrl.documentCtrl.getRevisionDescription(revision)}}</span>,
+                {{revision.publishedAt | date:'MMM yyyy'}}
+              </span>
             </span>
             <i class="fa fa-fw"></i>
           </a>
