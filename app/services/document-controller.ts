@@ -3,12 +3,12 @@ import { parse as urlParse } from 'url';
 
 export default function(app) {
   app.factory('DocumentController', [
-    '$http', '$rootScope', 'authService', 'config', 'notificationService',
-    ($http, $rootScope, auth, config, notificationService) => {
+    '$http', '$rootScope', '$timeout', 'authService', 'config', 'notificationService',
+    ($http, $rootScope, $timeout, auth, config, notificationService) => {
       // controller for one document
       return class DocumentController {
         revisions: Array<any>;
-        revisionAccess: any;
+        revisionAccess = {};
         latestRevision: any;
         latestAccessibleRevision: any;
         hivers: Array<any>;
@@ -101,10 +101,11 @@ export default function(app) {
           if (!this.revisions) return;
 
           // get accessibility information for all revisions
-          this.revisionAccess = {};
+          const revisionAccess = {};
           for (const revision of this.revisions) {
-            this.revisionAccess[revision.revision] = await DocumentController.isRevisionAccessible(revision);
+            revisionAccess[revision.revision] = await DocumentController.isRevisionAccessible(revision);
           }
+          this.revisionAccess = revisionAccess;
 
           // order revisions by date: newest first
           const sortedRevisions = reverse(sortBy(this.revisions, 'publishedAt'));
