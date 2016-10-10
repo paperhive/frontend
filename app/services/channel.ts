@@ -74,9 +74,9 @@ export default function(app) {
         });
     }
 
-    memberUpdate(id, memberId, member) {
-      return this.channelsApi.memberUpdate(id, memberId, member)
-        .then(newChannel => angular.copy(newChannel, this.get(id)));
+    memberUpdate(channelId, memberId, member) {
+      return this.channelsApi.memberUpdate(channelId, memberId, member)
+        .then(newChannel => angular.copy(newChannel, this.get(channelId)));
     }
 
     memberDelete(channel, memberId) {
