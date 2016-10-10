@@ -203,8 +203,7 @@ export default function(app) {
         'DocumentController', 'metaService', 'notificationService', 'websocketService'];
 
       constructor($http, public $routeSegment, $scope, config,
-        DocumentController, metaService, notificationService, websocketService)
-      {
+        DocumentController, metaService, notificationService, websocketService) {
         const documentId = $routeSegment.$routeParams.documentId;
 
         this.documentCtrl = new DocumentController(documentId);
