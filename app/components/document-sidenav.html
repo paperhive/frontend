@@ -27,7 +27,6 @@
       popover-trigger="'none'"
     ></hive-button>
   </div>
-  <!-- <div ng-if="$ctrl.activeRevision"> -->
   <div class="ph-sidenav-info">
     <div class="dropdown ph-sidenav-item" is-open="$ctrl.revisionDropdownOpen" uib-dropdown
       ng-if="$ctrl.documentCtrl.revisions && $ctrl.documentCtrl.revisionAccess && $ctrl.activeRevision"
@@ -72,6 +71,11 @@
         </li>
       </ul>
     </div>
+  </div>
+  <div class="ph-sidenav-item" ng-if="$ctrl.publisherLink">
+    <a href="{{$ctrl.publisherLink}}" class="ph-sidenav-publisher-link">
+      Visit publisher's publication page
+    </a>
   </div>
   <div class="ph-sidenav-accordion">
     <uib-accordion close-others="oneAtATime">

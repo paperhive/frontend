@@ -10,11 +10,16 @@ export default function(app) {
       onToggle: '&',
     },
     controller: class DocumentSidenavCtrl {
+      kudosOpen = true;
+      kudosDoi: string;
+      kudosTestedDoi: string;
+      publisherLink: string;
+
       static $inject = ['$http', '$scope'];
       constructor(public $http, $scope) {
-        this.kudosOpen = true;
 
         $scope.$watchCollection('$ctrl.documentCtrl.revisions', this.updateKudos.bind(this));
+        $scope.$watchCollection('$ctrl.activeRevision', this.updatePublisherLink.bind(this));
       }
 
       getDoi() {
@@ -48,6 +53,11 @@ export default function(app) {
               }
             }
           );
+      }
+
+      updatePublisherLink() {
+        this.publisherLink = this.activeRevision &&
+          this.documentCtrl.getRevisionPublisherLink(this.activeRevision);
       }
     },
     template,

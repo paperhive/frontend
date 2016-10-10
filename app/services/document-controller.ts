@@ -96,6 +96,23 @@ export default function(app) {
           return `${revision.remote.type}, ${revision.remote.id}`;
         }
 
+        getRevisionPublisherLink(revision) {
+          if (!revision) return;
+
+          switch (revision.remote.type) {
+            case 'arxiv':
+              return `https://arxiv.org/abs/${revision.remote.id}${revision.remote.revision}`;
+            case 'elsevier':
+              return `https://dx.doi.org/${revision.remote.id}`;
+            case 'langsci':
+              return `http://langsci-press.org/catalog/book/${revision.remote.id}`;
+            case 'oapen':
+              return `https://oapen.org/search?identifier=${revision.remote.id}`;
+            default:
+              throw new Error('unknown remote type');
+          }
+        }
+
 
         async updateRevisionAccess() {
           if (!this.revisions) return;
