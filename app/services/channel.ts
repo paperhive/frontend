@@ -59,7 +59,10 @@ export default function(app) {
 
     invitationConfirm(id, invitationId) {
       return this.channelsApi.invitationConfirm(id, invitationId)
-        .then(response => console.log(response));
+        .then(invitation => {
+          this.channels.push(invitation.channel);
+          remove(this.invitations, {id: invitationId});
+        });
     }
 
     invitationDelete(id, invitationId) {

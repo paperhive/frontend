@@ -26,7 +26,9 @@
       <div class="ph-sm-margin-top">
         <small>
           invited by {{invitation.invitedBy.displayName}}
-          (@{{invitation.invitedBy.account.username}})
+          <a href="./users/{{invitation.invitedBy.account.username}}">
+            @{{invitation.invitedBy.account.username}}
+          </a>
         </small>
       </div>
       <div>
