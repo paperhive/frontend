@@ -253,6 +253,7 @@ export default function(app) {
       }
 
       updateMetadata() {
+        if (!this.activeRevision) return;
         const metadata = getRevisionMetadata(this.activeRevision);
         this.metaService.set({
           title: this.activeRevision.title + ' · PaperHive',
