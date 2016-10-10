@@ -1,69 +1,6 @@
 <div class="container-fluid">
-  <div ng-if="!$ctrl.activeRevision" class="text-center">
-    <i class="fa fa-spinner fa-3x fa-spin"></i>
-  </div>
-  <div ng-if="$ctrl.activeRevision" class="row ph-md-margin-bottom">
-    <div class="col-md-9 ph-document-info">
-      <div>
-        <label class="text-muted">Version</label>
-        <div class="dropdown" is-open="dropdown_open" uib-dropdown>
-          <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
-            <span class="ph-document-journal">{{$ctrl.getRevisionDescription($ctrl.activeRevision)}}</span>,
-            {{$ctrl.activeRevision.publishedAt | date:'MMM yyyy'}}
-            <i class="fa fa-fw fa-caret-down"></i>
-          </button>
-          <ul class="dropdown-menu">
-            <li ng-repeat="revision in $ctrl.revisions | orderBy:'publishedAt':true"
-                ng-class="{'disabled': !$ctrl.revisionAccess[revision.revision]}">
-              <a ng-if="$ctrl.revisionAccess[revision.revision]"
-                 href="./documents/{{revision.id}}/revisions/{{revision.revision}}">
-                <strong ng-if="revision === $ctrl.activeRevision">
-                  <span class="ph-document-journal">{{$ctrl.getRevisionDescription(revision)}}</span>,
-                  {{revision.publishedAt | date:'MMM yyyy'}}
-                </strong>
-                <span ng-if="revision !== $ctrl.activeRevision">
-                  <span class="ph-document-journal">{{$ctrl.getRevisionDescription(revision)}}</span>,
-                  {{revision.publishedAt | date:'MMM yyyy'}}
-                </span>
-                <i class="fa fa-fw"></i>
-              </a>
-              <a ng-if="!$ctrl.revisionAccess[revision.revision]" title="This document is not accessible and cannot be displayed yet.">
-                <span class="ph-document-journal">{{$ctrl.getRevisionDescription(revision)}}</span>,
-                {{revision.publishedAt | date:'MMM yyyy'}}
-                <i class="fa fa-fw fa-lock"></i>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div>
-        <div ng-if="$ctrl.activeRevision.distributor === 'Knowledge Unlatched'">
-          <label class="text-muted">Brought to you by</label>
-          <div>
-            <a href="http://www.knowledgeunlatched.org/">
-              <img src="./static/img/knowledge-unlatched.svg"
-                title="Knowledge Unlatched"
-                class="ph-distributor-logo"
-              >
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div
-        ng-if="$ctrl.revisionAccess[$ctrl.activeRevision.revision]"
-        class="ph-docoument-info-download text-right"
-      >
-        <a class="btn btn-default" ng-href="{{$ctrl.origPdfUrl}}" download>
-          Download PDF
-        </a>
-      </div>
-    </div>
-  </div>
-
   <div class="row" ng-if="$ctrl.pdfUrl">
-    <div class="col-md-9">
+    <div class="ph-document-text" ng-class="{'ph-sidenav-open': !$ctrl.expanded}">
       <pdf url="$ctrl.pdfUrl" on-update="$ctrl.pdfStatus = status"></pdf>
 
       <div ng-if="$ctrl.pdfStatus.downloading">
@@ -90,12 +27,13 @@
         highlights="$ctrl.highlights"
         emphasized-highlights="$ctrl.hoveredMarginDiscussions"
         popup-target="{
-          document: $ctrl.activeRevision.id,
-          documentRevision: $ctrl.activeRevision.revision,
+          document: $ctrl.revision.id,
+          documentRevision: $ctrl.revision.revision,
           selectors: $ctrl.draftSelectors,
         }"
-        viewport-offset-top="$ctrl.viewportOffsetTop"
         scroll-to-anchor="$ctrl.allPagesInitialized && $ctrl.anchor"
+        viewport-offset-top="$ctrl.viewportOffsetTop"
+
         on-highlight-mouseenter="$ctrl.hoveredHighlights[highlight.id] = true"
         on-highlight-mouseleave="$ctrl.hoveredHighlights[highlight.id] = false"
         on-page-resized="$ctrl.pageCoordinates[pageNumber] = {offset: offset, size: displaySize}"
@@ -104,7 +42,8 @@
         on-link-dest-create="$ctrl.getLinkDest(dest)"
         on-anchor-update="$ctrl.anchor = anchor"
 
-        popover-placement="top"
+        popover-placement="right-top"
+        popover-append-to-body="true"
         popover-is-open="$ctrl.tourService.stages[$ctrl.tourService.index] === 'highlight'"
         uib-popover-template="'html/shared/tour-highlight.html'"
         popover-trigger="'none'"
@@ -132,42 +71,44 @@
       ></margin-discussions>
     </div>
   </div>
-</div>
 
-<div class="container" ng-if="$ctrl.activeRevision && !$ctrl.pdfUrl">
-  <div class="row">
+  <div class="row" ng-if="!$ctrl.pdfUrl">
     <div class="col-md-4 col-md-offset-4 text-center ph-lg-margin-top ph-lg-margin-bottom">
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <p>
-          <i class="fa fa-lock fa-5x" aria-hidden="true"></i>
 
+      <i ng-if="$ctrl.access === undefined" class="fa fa-spinner fa-spin fa-3x"></i>
+
+      <div ng-if="$ctrl.access === false" class="panel panel-default">
+        <div class="panel-body">
+          <p><i class="fa fa-lock fa-5x" aria-hidden="true"></i></p>
+
+          <h3>No access to PDF :(</h3>
+          <p>
+            PaperHive relies on the publisher's access control and,
+            unfortunately, you currently don't have access to this document.
           </p>
-          <div ng-if="!$ctrl.revisionAccess[$ctrl.activeRevision.revision]">
-            <h3>No access to PDF :(</h3>
-            <p>
-              PaperHive relies on the publisher's access control and,
-              unfortunately, you currently don't have access to this document.
-            </p>
-            <p>
-              It might be worthwhile to check if you can open it from your
-              institutional network.
-            </p>
-            <p ng-if="$ctrl.latestAccessibleRevision">
-              You can also access
-              <a href="./documents/{{$ctrl.latestAccessibleRevision.id}}/revisions/{{$ctrl.latestAccessibleRevision.revision}}">another version of the document</a>.
-            </p>
-          </div>
-          <div ng-if="$ctrl.revisionAccess[$ctrl.activeRevision.revision]">
-            <h3>No PDF location known :(</h3>
-            <p>
-              Unfortunately, this document version cannot be displayed because we
-              don't know a URL for the PDF. <a href="./contact">Let us know</a> if
-              you know where it can be found!
-            </p>
-          </div>
+          <p>
+            It might be worthwhile to check if you can open it from your
+            institutional network.
+          </p>
+          <p ng-if="$ctrl.latestAccessibleRevision">
+            You can also access
+            <a href="./documents/{{$ctrl.latestAccessibleRevision.id}}/revisions/{{$ctrl.latestAccessibleRevision.revision}}">another version of the document</a>.
+          </p>
         </div>
       </div>
+
+      <div ng-if="$ctrl.access" class="panel panel-default">
+        <div class="panel-body">
+          <p><i class="fa fa-warn fa-5x" aria-hidden="true"></i></p>
+          <h3>No PDF location known :(</h3>
+          <p>
+            Unfortunately, this document version cannot be displayed because we
+            don't know a URL for the PDF. <a href="./contact">Let us know</a> if
+            you know where it can be found!
+          </p>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

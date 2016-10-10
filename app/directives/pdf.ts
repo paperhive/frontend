@@ -386,7 +386,9 @@ export default function(app) {
         if (this.initializedRenderers) return false;
 
         // add canvas renderer
-        this.canvasRenderer = new CanvasRenderer(this.element, this.page);
+        const canvasContainer = angular.element('<div class="ph-pdf-canvas"></div>');
+        this.element.append(canvasContainer);
+        this.canvasRenderer = new CanvasRenderer(canvasContainer, this.page);
 
         // add highlights layer
         // TODO: sort more efficiently (e.g., in pdfFull directive)!
@@ -439,7 +441,8 @@ export default function(app) {
         const height = Math.floor(size.height / size.width * width);
 
         // set new height
-        this.element.height(height);
+        this.element.css({'padding-top': 100 * (height / width) + '%'});
+        this.height = height;
 
         return true;
       }
@@ -448,7 +451,7 @@ export default function(app) {
         this.scope.onPageResized({
           pageNumber: this.pageNumber,
           displaySize: {
-            height: this.element.height(),
+            height: this.height,
             width: this.element.width(),
           },
           originalSize: this.pageSize && {
@@ -599,8 +602,12 @@ export default function(app) {
         this.scope.$apply(() => this.pages.forEach(page => page.onResized()));
 
         // re-render on resize and scroll events
+        const _resizeRender = () => {
+          this.element.addClass('ph-pdf-resize-active');
+          this.render();
+        };
         const _render = this.render.bind(this);
-        angular.element($window).on('resize', _render);
+        angular.element($window).on('resize', _resizeRender);
         angular.element($window).on('scroll', _render);
 
         // focus text layer on mousedown (except click on links)
@@ -631,7 +638,7 @@ export default function(app) {
 
         // unregister event handlers
         this.element.on('$destroy', () => {
-          angular.element($window).off('resize', _render);
+          angular.element($window).off('resize', _resizeRender);
           angular.element($window).off('scroll', _render);
           $document.off('mouseup', onMouseUp);
           $document.off('keydown keyup', onKeyEvent);
@@ -780,6 +787,8 @@ export default function(app) {
         if (sizeChanged) {
           // no page => resize
           this.renderQueue.push(undefined);
+        } else {
+          this.element.removeClass('ph-pdf-resize-active');
         }
 
         // get currently running render tasks
@@ -855,6 +864,9 @@ export default function(app) {
           // re-evaluate what needs to be rendered and force re-rendering
           this.render(true);
         }
+
+        // remove resize-active class (used for animations)
+        this.element.removeClass('ph-pdf-resize-active');
       }
 
       renderPage(page, callback) {
@@ -939,7 +951,7 @@ export default function(app) {
         scroll.scrollTo(
           this.element.offset().top +
           page.element[0].offsetTop +
-          coords[1] / page.pageSize.height * page.element.height(),
+          coords[1] / page.pageSize.height * page.height,
           {offset: (this.scope.viewportOffsetTop || 0) + 40}
         );
       }
@@ -966,7 +978,7 @@ export default function(app) {
         scroll.scrollTo(
           this.element.offset().top +
           page.element[0].offsetTop +
-          topRect.top * page.element.height(),
+          topRect.top * page.height,
           {offset: (this.scope.viewportOffsetTop || 0) + 80}
         );
 

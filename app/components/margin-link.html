@@ -1,5 +1,4 @@
-<div class="container-fluid"
-  ng-if="$ctrl.position === 'top' && $ctrl.parentTop < $ctrl.viewportOffsetTop || $ctrl.position === 'bottom'"
+<div class="container-fluid ph-margin-top"
   ng-style="{
     top: ($ctrl.position === 'top' || undefined) && ($ctrl.viewportOffsetTop || 0),
     bottom: ($ctrl.position === 'bottom' || undefined) && ($ctrl.viewportOffsetBottom || 0),

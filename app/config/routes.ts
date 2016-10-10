@@ -143,13 +143,27 @@ export default function(app) {
         })
         .within()
           .segment('activity', {
-            template: `<div class="container">
-              <activity document="$ctrl.documentId"></activity>
-            </div>`,
+            template: `
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-9 col-md-offset-3">
+                    <activity document="$ctrl.documentCtrl.documentId"></activity>
+                  </div>
+                </div>
+              </div>
+            `,
             title: 'Activity · PaperHive'
           })
           .segment('hivers', {
-            template: '<hivers document-id="$ctrl.documentId"></hivers>',
+            template: `
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-9 col-md-offset-3">
+                    <hivers hivers="$ctrl.documentCtrl.hivers"></hivers>
+                  </div>
+                </div>
+              </div>
+            `,
             title: 'Hivers · PaperHive'
           })
           .segment('discussions', {

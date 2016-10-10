@@ -1,23 +1,21 @@
-<div class="container">
-  <h4>Hivers</h4>
-  <span class="list-group">
-    <span class="col-sm-3 ph-sm-padding"
-        ng-repeat="hiver in $ctrl.hivers"
-        >
-      <a
-        ng-href="./users/{{hiver.person.account.username}}"
-        class="list-group-item"
-        >
-          <span class="media">
-            <div class="media-left">
-              <avatar user="hiver.person" size="60" classes="img-circle"></avatar>
-            </div>
-            <div class="media-body">
-              <h4 class="media-heading">{{hiver.person.displayName}}</h4>
-              @{{hiver.person.account.username}}
-            </div>
-          </span>
-      </a>
-    </span>
+<h4>Hivers</h4>
+<span class="list-group">
+  <span class="col-sm-3 ph-sm-padding"
+      ng-repeat="hiver in $ctrl.hivers"
+      >
+    <a
+      ng-href="./users/{{hiver.person.account.username}}"
+      class="list-group-item"
+      >
+        <span class="media">
+          <div class="media-left">
+            <avatar user="hiver.person" size="60" classes="img-circle"></avatar>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">{{hiver.person.displayName}}</h4>
+            @{{hiver.person.account.username}}
+          </div>
+        </span>
+    </a>
   </span>
-</div>
+</span>
