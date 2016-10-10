@@ -15,8 +15,8 @@ export default function(app) {
       kudosTestedDoi: string;
       publisherLink: string;
 
-      static $inject = ['$http', '$scope'];
-      constructor(public $http, $scope) {
+      static $inject = ['$http', '$scope', 'tourService'];
+      constructor(public $http, $scope, public tour) {
 
         $scope.$watchCollection('$ctrl.documentCtrl.revisions', this.updateKudos.bind(this));
         $scope.$watchCollection('$ctrl.activeRevision', this.updatePublisherLink.bind(this));
