@@ -171,12 +171,9 @@ export default function(app) {
 
         // compensate for zoom and device pixel ratio
         // important: do not round here!
-        /*
-        TODO: remove? we now have width,height: 100%
         const pixelRatio = $window.devicePixelRatio || 1;
         this.canvas.style.width = (size.width / pixelRatio) + 'px';
         this.canvas.style.height = (size.height / pixelRatio) + 'px';
-        */
 
         // kick off canvas rendering
         this.renderTask = this.page.render({
