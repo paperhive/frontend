@@ -5,7 +5,9 @@ import template from './document-text.html';
 
 class DocumentTextCtrl {
   // input
-  revisions: Array<any>;
+  revision: any;
+  access: boolean;
+  latestAccessibleRevision: any;
   discussions: Array<any>;
 
   draftSelectors: any;
@@ -121,6 +123,7 @@ export default function(app) {
     bindings: {
       revision: '<',
       access: '<',
+      latestAccessibleRevision: '<',
       discussions: '<',
       viewportOffsetTop: '<',
       expanded: '<',

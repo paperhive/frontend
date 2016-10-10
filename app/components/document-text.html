@@ -1,58 +1,53 @@
 <div class="container-fluid">
-  <div class="row">
+  <div class="row" ng-if="$ctrl.pdfUrl">
     <div class="ph-document-text" ng-class="{'ph-sidenav-open': !$ctrl.expanded}">
-      <div ng-if="$ctrl.pdfUrl">
-        <div ng-if="!$ctrl.revision" class="text-center">
-          <i class="fa fa-spinner fa-3x fa-spin"></i>
+      <pdf url="$ctrl.pdfUrl" on-update="$ctrl.pdfStatus = status"></pdf>
+
+      <div ng-if="$ctrl.pdfStatus.downloading">
+        <div ng-if="$ctrl.pdfStatus.bytesLoaded === undefined ||
+            $ctrl.pdfStatus.bytesTotal === undefined">
+          <uib-progressbar class="progress-striped active" value="1" max="1">
+            Loading PDF
+          </uib-progressbar>
         </div>
-        <pdf url="$ctrl.pdfUrl" on-update="$ctrl.pdfStatus = status"></pdf>
-
-        <div ng-if="$ctrl.pdfStatus.downloading">
-          <div ng-if="$ctrl.pdfStatus.bytesLoaded === undefined ||
-              $ctrl.pdfStatus.bytesTotal === undefined">
-            <uib-progressbar class="progress-striped active" value="1" max="1">
-              Loading PDF
-            </uib-progressbar>
-          </div>
-          <div ng-if="$ctrl.pdfStatus.bytesLoaded !== undefined &&
-              $ctrl.pdfStatus.bytesTotal !== undefined">
-            <uib-progressbar class="progress-striped active"
-              value="$ctrl.pdfStatus.bytesLoaded / $ctrl.pdfStatus.bytesTotal"
-              max="1">
-              Loading PDF
-              ({{$ctrl.pdfStatus.bytesLoaded / 1024 | number:0}} KB /
-              {{$ctrl.pdfStatus.bytesTotal / 1024 | number:0}} KB)
-            </uib-progressbar>
-          </div>
+        <div ng-if="$ctrl.pdfStatus.bytesLoaded !== undefined &&
+            $ctrl.pdfStatus.bytesTotal !== undefined">
+          <uib-progressbar class="progress-striped active"
+            value="$ctrl.pdfStatus.bytesLoaded / $ctrl.pdfStatus.bytesTotal"
+            max="1">
+            Loading PDF
+            ({{$ctrl.pdfStatus.bytesLoaded / 1024 | number:0}} KB /
+            {{$ctrl.pdfStatus.bytesTotal / 1024 | number:0}} KB)
+          </uib-progressbar>
         </div>
-
-        <pdf-full
-          pdf="$ctrl.pdfStatus.pdf"
-          highlights="$ctrl.highlights"
-          emphasized-highlights="$ctrl.hoveredMarginDiscussions"
-          popup-target="{
-            document: $ctrl.revision.id,
-            documentRevision: $ctrl.revision.revision,
-            selectors: $ctrl.draftSelectors,
-          }"
-          scroll-to-anchor="$ctrl.allPagesInitialized && $ctrl.anchor"
-          viewport-offset-top="$ctrl.viewportOffsetTop"
-
-          on-highlight-mouseenter="$ctrl.hoveredHighlights[highlight.id] = true"
-          on-highlight-mouseleave="$ctrl.hoveredHighlights[highlight.id] = false"
-          on-page-resized="$ctrl.pageCoordinates[pageNumber] = {offset: offset, size: displaySize}"
-          on-all-pages-resized="$ctrl.allPagesInitialized = true"
-          on-select="$ctrl.draftSelectors = selectors || $ctrl.draftSelectors"
-          on-link-dest-create="$ctrl.getLinkDest(dest)"
-          on-anchor-update="$ctrl.anchor = anchor"
-
-          popover-placement="right-top"
-          popover-append-to-body="true"
-          popover-is-open="$ctrl.tourService.stages[$ctrl.tourService.index] === 'highlight'"
-          uib-popover-template="'html/shared/tour-highlight.html'"
-          popover-trigger="'none'"
-        ></pdf-full>
       </div>
+
+      <pdf-full
+        pdf="$ctrl.pdfStatus.pdf"
+        highlights="$ctrl.highlights"
+        emphasized-highlights="$ctrl.hoveredMarginDiscussions"
+        popup-target="{
+          document: $ctrl.revision.id,
+          documentRevision: $ctrl.revision.revision,
+          selectors: $ctrl.draftSelectors,
+        }"
+        scroll-to-anchor="$ctrl.allPagesInitialized && $ctrl.anchor"
+        viewport-offset-top="$ctrl.viewportOffsetTop"
+
+        on-highlight-mouseenter="$ctrl.hoveredHighlights[highlight.id] = true"
+        on-highlight-mouseleave="$ctrl.hoveredHighlights[highlight.id] = false"
+        on-page-resized="$ctrl.pageCoordinates[pageNumber] = {offset: offset, size: displaySize}"
+        on-all-pages-resized="$ctrl.allPagesInitialized = true"
+        on-select="$ctrl.draftSelectors = selectors || $ctrl.draftSelectors"
+        on-link-dest-create="$ctrl.getLinkDest(dest)"
+        on-anchor-update="$ctrl.anchor = anchor"
+
+        popover-placement="right-top"
+        popover-append-to-body="true"
+        popover-is-open="$ctrl.tourService.stages[$ctrl.tourService.index] === 'highlight'"
+        uib-popover-template="'html/shared/tour-highlight.html'"
+        popover-trigger="'none'"
+      ></pdf-full>
     </div>
     <div class="col-md-3">
       <margin-discussions
@@ -76,41 +71,44 @@
       ></margin-discussions>
     </div>
   </div>
-</div>
-<div class="container" ng-if="$ctrl.revision && !$ctrl.pdfUrl">
-  <div class="row">
-    <div class="col-md-4 col-md-offset-4 text-center ph-lg-margin-top ph-lg-margin-bottom">
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <p>
-          <i class="fa fa-lock fa-5x" aria-hidden="true"></i>
 
+  <div class="row" ng-if="!$ctrl.pdfUrl">
+    <div class="col-md-4 col-md-offset-4 text-center ph-lg-margin-top ph-lg-margin-bottom">
+
+      <i ng-if="$ctrl.access === undefined" class="fa fa-spinner fa-spin fa-3x"></i>
+
+      <div ng-if="$ctrl.access === false" class="panel panel-default">
+        <div class="panel-body">
+          <p><i class="fa fa-lock fa-5x" aria-hidden="true"></i></p>
+
+          <h3>No access to PDF :(</h3>
+          <p>
+            PaperHive relies on the publisher's access control and,
+            unfortunately, you currently don't have access to this document.
           </p>
-          <div ng-if="!$ctrl.access">
-            <h3>No access to PDF :(</h3>
-            <p>
-              PaperHive relies on the publisher's access control and,
-              unfortunately, you currently don't have access to this document.
-            </p>
-            <p>
-              It might be worthwhile to check if you can open it from your
-              institutional network.
-            </p>
-            <p ng-if="$ctrl.latestAccessibleRevision">
-              You can also access
-              <a href="./documents/{{$ctrl.latestAccessibleRevision.id}}/revisions/{{$ctrl.latestAccessibleRevision.revision}}">another version of the document</a>.
-            </p>
-          </div>
-          <div ng-if="$ctrl.access">
-            <h3>No PDF location known :(</h3>
-            <p>
-              Unfortunately, this document version cannot be displayed because we
-              don't know a URL for the PDF. <a href="./contact">Let us know</a> if
-              you know where it can be found!
-            </p>
-          </div>
+          <p>
+            It might be worthwhile to check if you can open it from your
+            institutional network.
+          </p>
+          <p ng-if="$ctrl.latestAccessibleRevision">
+            You can also access
+            <a href="./documents/{{$ctrl.latestAccessibleRevision.id}}/revisions/{{$ctrl.latestAccessibleRevision.revision}}">another version of the document</a>.
+          </p>
         </div>
       </div>
+
+      <div ng-if="$ctrl.access" class="panel panel-default">
+        <div class="panel-body">
+          <p><i class="fa fa-warn fa-5x" aria-hidden="true"></i></p>
+          <h3>No PDF location known :(</h3>
+          <p>
+            Unfortunately, this document version cannot be displayed because we
+            don't know a URL for the PDF. <a href="./contact">Let us know</a> if
+            you know where it can be found!
+          </p>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
