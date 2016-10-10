@@ -31,7 +31,7 @@
               ng-if="$ctrl.isOwner && member.person.id !== $ctrl.authService.user.id"
               type="button" class="btn btn-danger btn-sm pull-right"
               ng-confirm-click="Really remove this member?"
-              confirmed-click="$ctrl.memberDelete(member.person.id)"
+              confirmed-click="$ctrl.memberDelete($ctrl.channel, member.person.id)"
               ng-disabled="!$ctrl.channel.isActive"
               title="{{$ctrl.channel.isActive ? '' : 'Activate the channel first to remove members'}}"
             >

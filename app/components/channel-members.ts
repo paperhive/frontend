@@ -28,11 +28,11 @@ export default function(app) {
           .finally(() => this.invitationDeleting = false);
       }
 
-      // memberDelete(memberId) {
-      //   this.memberDeleting = memberId;
-      //   this.channelService.memberDelete({memberId})
-      //     .finally(() => this.memberDeleting = false);
-      // }
+      memberDelete(channel, memberId) {
+        this.memberDeleting = memberId;
+        this.channelService.memberDelete(channel, memberId)
+          .finally(() => this.memberDeleting = false);
+      }
     },
     template,
   });
