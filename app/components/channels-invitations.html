@@ -1,4 +1,3 @@
-<!-- TODO invitation.channel.isActive -->
 <table class="table table-hover">
   <tr ng-repeat="invitation in $ctrl.channelService.invitations">
     <td ng-if="invitation.channel.isActive">
@@ -8,12 +7,23 @@
       >
         {{role}}
       </span>
-      <button
-        type="button" class="btn btn-primary btn-sm pull-right"
-        ng-click="$ctrl.invitationConfirm(invitation.channel.id, invitation.id)"
-      >
-        Confirm
-      </button>
+      <span class="pull-right">
+        <button
+          type="button" class="btn btn-danger btn-sm"
+          ng-confirm-click="Really discard this invitation?"
+          confirmed-click="$ctrl.invitationDelete(invitation.channel.id, invitation.id)"
+        >
+          Discard
+        </button>
+        <span class="ph-sm-margin-left">
+          <button
+            type="button" class="btn btn-primary btn-sm"
+            ng-click="$ctrl.invitationConfirm(invitation.channel.id, invitation.id)"
+          >
+            Confirm
+          </button>
+        </span>
+      </span>
       <div>
         {{invitation.channel.description}}
       </div>

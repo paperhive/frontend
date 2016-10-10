@@ -13,6 +13,12 @@ export default function(app) {
           .finally(() => this.channelInviting = false);
       }
 
+      invitationDelete(channelId, invitationId) {
+        this.invitationDeleting = invitationId;
+        this.channelService.invitationDelete(channelId, invitationId)
+          .finally(() => this.invitationDeleting = false);
+      }
+
     },
     template,
   });
