@@ -790,6 +790,8 @@ export default function(app) {
         if (sizeChanged) {
           // no page => resize
           this.renderQueue.push(undefined);
+        } else {
+          this.element.removeClass('ph-pdf-resize-active');
         }
 
         // get currently running render tasks
