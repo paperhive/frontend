@@ -199,24 +199,27 @@ export default function(app) {
       activeRevision: any;
       discussionsCtrl: DiscussionsController;
 
-      static $inject = ['$http', '$routeSegment', '$scope', 'config',
+      // note: do *not* use $routeSegment.$routeParams because they still
+      // use the old state in $routeChangeSuccess events
+      static $inject = ['$http', '$routeParams', '$scope', 'config',
         'DocumentController', 'metaService', 'notificationService', 'websocketService'];
 
-      constructor($http, public $routeSegment, $scope, config,
+      constructor($http, public $routeParams, $scope, config,
         DocumentController, public metaService, notificationService, websocketService) {
-        const documentId = $routeSegment.$routeParams.documentId;
+        const documentId = $routeParams.documentId;
 
         this.documentCtrl = new DocumentController(documentId);
         this.documentCtrl.fetchRevisions(); // TODO: error handling
         this.documentCtrl.fetchHivers(); // TODO: error handling
 
         $scope.$watchGroup([
-          () => $routeSegment.$routeParams.revisionId,
           '$ctrl.documentCtrl.revisions',
           '$ctrl.documentCtrl.revisionAccess',
           '$ctrl.documentCtrl.latestRevision',
           '$ctrl.documentCtrl.latestAccessibleRevision',
         ], this.updateActiveRevision.bind(this));
+
+        $scope.$on('$routeChangeSuccess', this.updateActiveRevision.bind(this));
 
         $scope.$watch('$ctrl.activeRevision', this.updateMetadata.bind(this));
 
@@ -237,7 +240,7 @@ export default function(app) {
 
         // don't overwrite if we already got one
         // (only if url changed)
-        const urlRevisionId = this.$routeSegment.$routeParams.revisionId;
+        const urlRevisionId = this.$routeParams.revisionId;
         if (this.activeRevision && (!urlRevisionId || urlRevisionId && this.activeRevision.revision === urlRevisionId)) return;
 
         // prefer revision id from url
