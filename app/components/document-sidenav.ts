@@ -10,9 +10,11 @@ export default function(app) {
       onToggle: '&',
     },
     controller: class DocumentSidenavCtrl {
-      static $inject = ['$http'];
-      constructor(public $http) {
+      static $inject = ['$http', '$scope'];
+      constructor(public $http, $scope) {
         this.kudosOpen = true;
+
+        $scope.$watchCollection('$ctrl.documentCtrl.revisions', this.updateKudos.bind(this));
       }
 
       getDoi() {
@@ -46,10 +48,6 @@ export default function(app) {
               }
             }
           );
-      }
-
-      $onChanges() {
-        this.updateKudos();
       }
     },
     template,
