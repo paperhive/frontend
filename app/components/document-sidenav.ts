@@ -3,8 +3,8 @@ import template from './document-sidenav.html';
 export default function(app) {
   app.component('documentSidenav', {
     bindings: {
-      revisions: '<',
-      latestRevision: '<', // TODO: replace!
+      activeRevision: '<',
+      documentCtrl: '<',
       open: '<',
       viewportOffsetTop: '<',
       onToggle: '&',
@@ -16,8 +16,8 @@ export default function(app) {
       }
 
       getDoi() {
-        if (!this.revisions) return;
-        for (const revision of this.revisions) {
+        if (!this.documentCtrl.revisions) return;
+        for (const revision of this.documentCtrl.revisions) {
           if (revision.doi) return revision.doi;
         }
       }

@@ -1,6 +1,5 @@
 import * as angular from 'angular';
 import { filter, find, get, last, merge, reverse, sortBy } from 'lodash';
-import { parse as urlParse } from 'url';
 
 import template from './document-text.html';
 
@@ -8,11 +7,6 @@ class DocumentTextCtrl {
   // input
   revisions: Array<any>;
   discussions: Array<any>;
-
-  // internal
-  activeRevision: any;
-  latestAccessibleRevision: any;
-  revisionAccess: any;
 
   draftSelectors: any;
   highlights: Array<any>;
@@ -30,8 +24,7 @@ class DocumentTextCtrl {
     this.hoveredMarginDiscussions = {draft: true};
     this.pageCoordinates = {};
 
-    // update active revision
-    $scope.$watchCollection('$ctrl.revisions', this.updateRevisions.bind(this));
+    $scope.$watchGroup(['$ctrl.revision', '$ctrl.access'], this.updatePdfUrl.bind(this));
 
     // update highlights when discussions or draft selectors change
     $scope.$watchCollection('$ctrl.discussions', this.updateHighlights.bind(this));
@@ -51,22 +44,6 @@ class DocumentTextCtrl {
     $animate.on('removeClass', $element, triggerResize);
   }
 
-  getAccessiblePdfUrl(revision) {
-    if (!this.revisionAccess[revision.revision]) return undefined;
-
-    // if the file available via HTTPS with enabled CORS then just use it
-    if (/^https/.test(revision.file.url) && revision.file.hasCors) {
-      return revision.file;
-    }
-
-    // No HTTPS/Cors? PaperHive can proxy the document if it's open access.
-    if (revision.isOpenAccess) {
-      const encodedUrl = encodeURIComponent(revision.file.url);
-      return `${this.config.apiUrl}/proxy?url=${encodedUrl}`;
-    }
-    return undefined;
-  }
-
   // create link for pdf destinations
   getLinkDest(dest) {
     const segmentName = this.$routeSegment.name;
@@ -81,131 +58,30 @@ class DocumentTextCtrl {
       discussion,
       {
         target: {
-          document: this.activeRevision.id,
-          documentRevision: this.activeRevision.revision,
+          document: this.revision.id,
+          documentRevision: this.revision.revision,
         }
       }
     );
   }
 
-  // Construct strings for display in revision selection dropdown.
-  getRevisionDescription(revision) {
-    if (!revision) return;
-
-    // prefer short/shortened journal name
-    if (revision.journal && revision.journal.nameShort) {
-      return revision.journal.nameShort;
-    }
-    if (revision.journal && revision.journal.nameLong) {
-      return revision.journal.nameLong.substring(0, 20);
+  updatePdfUrl() {
+    if (!this.revision || !this.access) {
+      this.pdfUrl = undefined;
+      return;
     }
 
-    // arxiv
-    if (revision.remote.type === 'arxiv') {
-      // For arXiv, concatenate the remote name and the version
-      // without comma.
-      return `arXiv ${revision.remote.revision}`;
+    // if the file available via HTTPS with enabled CORS then just use it
+    if (/^https/.test(this.revision.file.url) && this.revision.file.hasCors) {
+      this.pdfUrl = this.revision.file;
+      return;
     }
 
-    if (revision.remote.type === 'oapen') return 'OAPEN';
-
-    if (revision.remote.type === 'langsci') {
-      const rev = revision.remote.revision === 'openreview' ?
-        'open review' : revision.remote.revision;
-      return `LangSci ${rev}`;
+    // No HTTPS/Cors? PaperHive can proxy the document if it's open access.
+    if (this.revision.isOpenAccess) {
+      const encodedUrl = encodeURIComponent(revision.file.url);
+      this.pdfUrl = `${this.config.apiUrl}/proxy?url=${encodedUrl}`;
     }
-
-    // isbn
-    if (revision.isbn) {
-      return `ISBN ${revision.isbn}`;
-    }
-
-    // fallback: remote with revision or id
-    if (revision.remote.revision) {
-      return `${revision.remote.type}, ${revision.remote.revision}`;
-    }
-    return `${revision.remote.type}, ${revision.remote.id}`;
-  }
-
-  async isRevisionAccessible(revision) {
-    if (revision.isOpenAccess) {
-      return true;
-    }
-    try {
-      if (revision.remote.type === 'elsevier') {
-        // extract apiKey from file.url
-        const parsedUrl = urlParse(revision.file.url, true);
-        const apiKey = parsedUrl.query.apiKey;
-
-        const id = revision.pii ? `pii/${revision.pii}` : `doi/${revision.doi}`;
-
-        const result = await this.$http.get(
-          `https://api.elsevier.com/content/article/entitlement/${id}`,
-          {params: {apiKey, httpAccept: 'application/json'}}
-        );
-        if (get(result, 'data.entitlement-response.document-entitlement.entitled')) {
-          return true;
-        }
-      }
-    } catch (err) {
-      this.notificationService.notifications.push({
-        type: 'error',
-        message: `Access check error for revision ${revision.revision}: ` +
-          ((err.status && err.statusText) ?
-          `request to ${err.config.url} failed (${err.status} ${err.statusText})` :
-          err.message),
-      });
-    }
-
-    return false;
-  }
-
-  async updateRevisions(revisions) {
-    if (!revisions) return;
-
-    // get accessibility information for all revisions
-    this.revisionAccess = {};
-    for (const revision of revisions) {
-      this.revisionAccess[revision.revision] = await this.isRevisionAccessible(revision);
-    }
-
-    // order revisions by date: newest first
-    const sortedRevisions = reverse(sortBy(revisions, 'publishedAt'));
-
-    // filter accessible revisions
-    const accessibleRevisions =
-      sortedRevisions.filter(revision => this.revisionAccess[revision.revision]);
-
-    // use latest accessible revision (or undefined)
-    this.latestAccessibleRevision = accessibleRevisions[0];
-
-    // explicitly provided revision id?
-    const revisionId = this.$routeSegment.$routeParams.revisionId;
-    if (revisionId) {
-      this.activeRevision = find(revisions, {revision: revisionId});
-      if (!this.activeRevision) {
-        this.notificationService.notifications.push({
-          type: 'error',
-          message: `Unknown revision ID ${revisionId}.`
-        });
-      }
-    } else {
-      // use latest accessible revision (or latest revision if none are accessible)
-      this.activeRevision = accessibleRevisions.length > 0 ?
-        accessibleRevisions[0] : sortedRevisions[0];
-    }
-
-    // get pdf url
-    try {
-      this.origPdfUrl = this.activeRevision.file.url;
-      this.pdfUrl = this.getAccessiblePdfUrl(this.activeRevision);
-    } catch (e) {
-      this.notificationService.notifications.push({
-        type: 'error',
-        message: 'PDF cannot be displayed: ' + e.message
-      });
-    }
-    this.$scope.$apply();
   }
 
   // note: a query parameter is used because a fragment identifier (hash)
@@ -243,7 +119,8 @@ class DocumentTextCtrl {
 export default function(app) {
   app.component('documentText', {
     bindings: {
-      revisions: '<',
+      revision: '<',
+      access: '<',
       discussions: '<',
       viewportOffsetTop: '<',
       expanded: '<',

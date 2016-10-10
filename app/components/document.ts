@@ -196,50 +196,60 @@ export default function(app) {
       subnavOpen = false;
       sidenavOpen = true;
       revisions: Array<any>;
-      latestRevision: any;
+      activeRevision: any;
       discussionsCtrl: DiscussionsController;
 
       static $inject = ['$http', '$routeSegment', '$scope', 'config',
-        'metaService', 'notificationService', 'websocketService'];
+        'DocumentController', 'metaService', 'notificationService', 'websocketService'];
 
       constructor($http, public $routeSegment, $scope, config,
-        metaService, notificationService, websocketService) {
-          const documentId = $routeSegment.$routeParams.documentId;
+        DocumentController, metaService, notificationService, websocketService)
+      {
+        const documentId = $routeSegment.$routeParams.documentId;
 
-          // fetch document
-          $http.get(`${config.apiUrl}/documents/${documentId}/revisions/`)
-            .success(response => {
-              this.revisions = response.revisions;
+        this.documentCtrl = new DocumentController(documentId);
+        this.documentCtrl.fetchRevisions(); // TODO: error handling
+        this.documentCtrl.fetchHivers(); // TODO: error handling
 
-              if (!this.revisions) {
-                notificationService.notifications.push({
-                  type: 'error',
-                  message: 'Document has no revisions – magic!'
-                });
-                return;
-              }
+        $scope.$watchGroup([
+          () => $routeSegment.$routeParams.revisionId,
+          '$ctrl.documentCtrl.revisions',
+          '$ctrl.documentCtrl.revisionAccess',
+          '$ctrl.documentCtrl.latestRevision',
+          '$ctrl.documentCtrl.latestAccessibleRevision',
+        ], this.updateActiveRevision.bind(this));
 
-              // use latest revision for metadata
-              this.latestRevision = orderBy(this.revisions, 'publishedAt', 'desc')[0];
+        // instanciate and init controller for discussions
+        this.discussionsCtrl = new DiscussionsController(
+          documentId, config, $scope, $http, websocketService
+        );
 
-              const metadata = getRevisionMetadata(this.latestRevision);
-              metaService.set({
-                title: this.latestRevision.title + ' · PaperHive',
-                meta: metadata
-              });
-            })
-            .error(notificationService.httpError('could not fetch document'));
+        this.discussionsCtrl.init().catch(error => notificationService.notifications.push({
+          type: 'error',
+          message: error.message
+        }));
+      }
 
-          // instanciate and init controller for discussions
-          this.discussionsCtrl = new DiscussionsController(
-            documentId, config, $scope, $http, websocketService
-          );
+      updateActiveRevision() {
+        // nothing to do if there are no revisions or no revision access information
+        if (!this.documentCtrl.revisions || !this.documentCtrl.revisionAccess) return;
 
-          this.discussionsCtrl.init().catch(error => notificationService.notifications.push({
-            type: 'error',
-            message: error.message
-          }));
+        // don't overwrite if we already got one
+        // (only if url changed)
+        const urlRevisionId = this.$routeSegment.$routeParams.revisionId;
+        if (this.activeRevision && (!urlRevisionId || urlRevisionId && this.activeRevision.revision === urlRevisionId)) return;
+
+        // prefer revision id from url
+        if (urlRevisionId) {
+          this.activeRevision = find(this.documentCtrl.revisions, {revision: urlRevisionId});
+          return;
         }
+
+        // then latest accessible or latest revision
+        this.activeRevision =
+          this.documentCtrl.latestAccessibleRevision ||
+          this.documentCtrl.latestRevision;
+      }
     },
   });
 };

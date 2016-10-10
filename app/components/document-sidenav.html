@@ -9,47 +9,54 @@
   </div>
   <div class="ph-documents-header">
     <h5 class="ph-lg-margin-top">
-      <mathjax body="$ctrl.latestRevision.title"></mathjax>
+      <mathjax body="$ctrl.activeRevision.title"></mathjax>
     </h5>
     <h6 class="ph-lg-margin-bottom">
-      <span ng-repeat="author in $ctrl.latestRevision.authors">
+      <span ng-repeat="author in $ctrl.activeRevision.authors">
         {{author.name}}{{$last ? '' :', '}}
       </span>
     </h6>
   </div>
   <div class="ph-hive-button">
     <hive-button
+      document-ctrl="$ctrl.documentCtrl"
+      large="true"
+
       popover-placement="right"
       popover-is-open="$ctrl.tour.stages[$ctrl.tour.index] === 'hive'"
       uib-popover-template="'html/shared/tour-hive.html'"
       popover-trigger="'none'"
-      document-id="$ctrl.latestRevision.id"
     ></hive-button>
   </div>
   <!-- <div ng-if="$ctrl.activeRevision"> -->
   <div class="ph-document-info">
-    <div class="dropdown" is-open="dropdown_open" uib-dropdown>
+    <div class="dropdown" is-open="$ctrl.revisionDropdownOpen" uib-dropdown>
       <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
         <i class="fa fa-history" aria-hidden="true"></i>
-        <span class="ph-document-journal">arXiv v4</span>,
-        Jan 2015
+        <span class="ph-document-journal">{{$ctrl.documentCtrl.getRevisionDescription($ctrl.activeRevision)}}</span>,
+        {{$ctrl.activeRevision.publishedAt | date:'MMM yyyy'}}
         <i class="fa fa-fw fa-caret-down"></i>
       </button>
       <ul class="dropdown-menu ph-dropdown-menu">
-        <li>
-          <a href="./documents/{{revision.id}}/revisions/{{revision.revision}}">
-            <strong>
-             <span class="ph-document-journal">arXiv v3</span>,
-                Jun 2014
+        <li ng-repeat="revision in $ctrl.documentCtrl.revisions | orderBy:'publishedAt':true"
+            ng-class="{'disabled': !$ctrl.documentCtrl.revisionAccess[revision.revision]}"
+            ng-click="$ctrl.revisionDropdownOpen = false">
+          <a ng-if="$ctrl.documentCtrl.revisionAccess[revision.revision]"
+             href="./documents/{{revision.id}}/revisions/{{revision.revision}}">
+            <strong ng-if="revision === $ctrl.activeRevision">
+              <span class="ph-document-journal">{{$ctrl.documentCtrl.getRevisionDescription(revision)}}</span>,
+              {{revision.publishedAt | date:'MMM yyyy'}}
             </strong>
+            <span ng-if="revision !== $ctrl.activeRevision">
+              <span class="ph-document-journal">{{$ctrl.documentCtrl.getRevisionDescription(revision)}}</span>,
+              {{revision.publishedAt | date:'MMM yyyy'}}
+            </span>
+            <i class="fa fa-fw"></i>
           </a>
-        </li>
-        <li>
-          <a href="./documents/{{revision.id}}/revisions/{{revision.revision}}">
-            <strong>
-              <span class="ph-document-journal">arXiv v2</span>,
-                Sep 2013
-            </strong>
+          <a ng-if="!$ctrl.documentCtrl.revisionAccess[revision.revision]" title="This document is not accessible and cannot be displayed yet.">
+            <span class="ph-document-journal">{{$ctrl.documentCtrl.getRevisionDescription(revision)}}</span>,
+            {{revision.publishedAt | date:'MMM yyyy'}}
+            <i class="fa fa-fw fa-lock"></i>
           </a>
         </li>
       </ul>
@@ -82,26 +89,17 @@
   ng-style="{top: $ctrl.viewportOffsetTop + 'px'}"
 >
   <div class="ph-collapse">
-    <button id="nav-btn" class="navbar-toggle btn-link" ng-click="$ctrl.onToggle({open: true})">
+    <button class="navbar-toggle btn-link" ng-click="$ctrl.onToggle({open: true})">
       <i class="fa fa-chevron-right" aria-hidden="true"></i>
     </button>
   </div>
-  <div class="ph-hive-button">
-    <button class="btn btn-link dropdown-toggle" uib-dropdown-toggle>
+  <hive-button document-ctrl="$ctrl.documentCtrl" large="false"></hive-button>
+    <!--button class="btn btn-link dropdown-toggle" uib-dropdown-toggle>
       <img src="./static/img/logo-hexagon.svg">
+      <img src="./static/img/logo-hexagon.svg" ng-if="$ctrl.documentCtrl.isUserHiver">
     </button>
-    <!-- <hive-button
-      popover-placement="bottom"
-      popover-is-open="$ctrl.tour.stages[$ctrl.tour.index] === 'hive'"
-      uib-popover-template="'html/shared/tour-hive.html'"
-      popover-trigger="none"
-      document-id="$ctrl.latestRevision.id"
-      user="$ctrl.auth.user"
-      title="{{$ctrl.auth.user ? 'Hive this document for receiving updates.' : 'You have to be logged in to hive the document.'}}"
-    ></hive-button> -->
-  </div>
-  <!-- <div ng-if="$ctrl.activeRevision"> -->
-  <div class="ph-document-info">
+  </div-->
+  <!--div class="ph-document-info">
     <div class="dropdown" is-open="dropdown_open" uib-dropdown>
       <button class="btn btn-link dropdown-toggle" uib-dropdown-toggle>
         <i class="fa fa-history" aria-hidden="true"></i>
@@ -131,5 +129,5 @@
         <i class="fa fa-download"></i>
       </a>
     </div>
-  </div>
+  </div-->
 </div>

@@ -1,5 +1,6 @@
 <document-text
-  revisions="$ctrl.revisions"
+  revision="$ctrl.activeRevision"
+  access="$ctrl.documentCtrl.revisionAccess[$ctrl.activeRevision.revision]"
   discussions="$ctrl.discussionsCtrl.discussions"
   viewport-offset-top="$root.navbarSize.height + subnavSize.height"
   expanded="!$ctrl.sidenavOpen"

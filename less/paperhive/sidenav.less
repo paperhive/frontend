@@ -157,7 +157,7 @@ document-sidenav {
     top: 50%;
     margin-top: -7px;
   }
-  span {
+  button span, a span {
     padding-left: @padding-base-horizontal - 2;
   }
   div {
@@ -169,11 +169,12 @@ document-sidenav {
     width: 100%;
     display: block;
     text-align: center;
+    text-decoration: none;
+    outline: none;
   }
-  .ph-hive-button {
-    margin-bottom: 0;
+  .ph-hive-button-small {
     img {
-      max-width: 18px;
+      max-width: 100%
     }
   }
   .ph-document-info {

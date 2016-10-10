@@ -7,7 +7,7 @@
         </button>
         <div class="navbar-collapse ph-no-padding" uib-collapse="!$ctrl.subnavOpen">
           <ul class="nav nav-tabs ph-header-submenu">
-            <li ng-class="{active: ('documents.text' | routeSegmentStartsWith)}">
+            <li ng-class="{active: ('documents.text' | routeSegmentStartsWith) || ('documents.revisions' | routeSegmentStartsWith)}">
               <a href=".{{'documents.text' | routeSegmentUrl}}" ng-click="$ctrl.subnavOpen = false">
                 <i class="fa fa-fw fa-file-pdf-o"></i> Document
               </a>
@@ -31,12 +31,11 @@
     </div>
   </div>
 </div>
+
 <document-sidenav
-  latest-revision="$ctrl.latestRevision"
-  active-revision="TODO"
+  active-revision="$ctrl.activeRevision"
+  document-ctrl="$ctrl.documentCtrl"
   open="$ctrl.sidenavOpen"
-  revisions="$ctrl.revisions"
-  revision-access="TODO"
   viewport-offset-top="$root.navbarSize.height + subnavSize.height"
 
   on-toggle="$ctrl.sidenavOpen = open"

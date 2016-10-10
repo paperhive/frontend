@@ -147,7 +147,7 @@ export default function(app) {
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-md-9 col-md-offset-3">
-                    <activity document="$ctrl.documentId"></activity>
+                    <activity document="$ctrl.documentCtrl.documentId"></activity>
                   </div>
                 </div>
               </div>
@@ -159,7 +159,7 @@ export default function(app) {
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-md-9 col-md-offset-3">
-                    <hivers document-id="$ctrl.documentId"></hivers>
+                    <hivers hivers="$ctrl.documentCtrl.hivers"></hivers>
                   </div>
                 </div>
               </div>
