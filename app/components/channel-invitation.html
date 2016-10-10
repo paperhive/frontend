@@ -1,5 +1,8 @@
 <div class="modal-header">
-  <h3 class="modal-title text-center">
+  <button type="button" class="close" aria-label="Close" title="Close" ng-click="$ctrl.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <h3 class="modal-title">
     Channel invitation
   </h3>
 </div>
@@ -35,10 +38,6 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-default" type="button" ng-click="$ctrl.dismiss()">
-      <i class="fa fa-times" aria-hidden="true"></i>
-      Cancel
-    </button>
     <button
       class="btn btn-primary" type="submit"
       ng-click="!$ctrl.inProgress && !$ctrl.succeeded && !invitationForm.$invalid && $ctrl.submit()"

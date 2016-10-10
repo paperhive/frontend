@@ -40,6 +40,7 @@ import marginDiscussionEdit from './margin-discussion-edit';
 import marginDiscussionPlaceholder from './margin-discussion-placeholder';
 import marginDiscussions from './margin-discussions';
 import marginReplyEdit from './margin-reply-edit';
+import memberUpdate from './member-update';
 import navbar from './navbar';
 import navbarSearch from './navbar-search';
 import navbarUser from './navbar-user';
@@ -113,6 +114,7 @@ export default function(app) {
   marginDiscussionPlaceholder(app);
   marginDiscussions(app);
   marginReplyEdit(app);
+  memberUpdate(app);
   navbar(app);
   navbarSearch(app);
   navbarUser(app);

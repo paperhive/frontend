@@ -27,16 +27,27 @@
             >
               {{role}}
             </span>
-            <button
-              ng-if="$ctrl.isOwner && member.person.id !== $ctrl.authService.user.id"
-              type="button" class="btn btn-danger btn-sm pull-right"
-              ng-confirm-click="Really remove this member?"
-              confirmed-click="$ctrl.memberDelete($ctrl.channel, member.person.id)"
-              ng-disabled="!$ctrl.channel.isActive"
-              title="{{$ctrl.channel.isActive ? '' : 'Activate the channel first to remove members'}}"
-            >
-              Remove member
-            </button>
+            <span class="pull-right">
+              <button
+                ng-if="$ctrl.isOwner && member.person.id !== $ctrl.authService.user.id"
+                type="button" class="btn btn-primary btn-sm"
+                ng-click="$ctrl.updateModalOpen()"
+                ng-disabled="!$ctrl.channel.isActive"
+                title="{{$ctrl.channel.isActive ? '' : 'Activate the channel first to update membership'}}"
+              >
+                Change status
+              </button>
+              <button
+                ng-if="$ctrl.isOwner && member.person.id !== $ctrl.authService.user.id"
+                type="button" class="btn btn-danger btn-sm ph-sm-margin-left"
+                ng-confirm-click="Really remove this member?"
+                confirmed-click="$ctrl.memberDelete($ctrl.channel, member.person.id)"
+                ng-disabled="!$ctrl.channel.isActive"
+                title="{{$ctrl.channel.isActive ? '' : 'Activate the channel first to remove members'}}"
+              >
+                Remove member
+              </button>
+            </span>
           </td>
         </tr>
       </table>

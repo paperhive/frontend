@@ -33,6 +33,14 @@ export default function(app) {
         this.channelService.memberDelete(channel, memberId)
           .finally(() => this.memberDeleting = false);
       }
+
+      updateModalOpen() {
+        this.$uibModal.open({
+          component: 'memberUpdate',
+          // TODO: remove this ugly hack when uibModal supports custom bindings
+          scope: this.$scope,
+        });
+      };
     },
     template,
   });
