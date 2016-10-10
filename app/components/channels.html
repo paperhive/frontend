@@ -34,7 +34,7 @@
                   <i class="fa fa-fw fa-envelope"></i>
                   My invitations
                   <span class="badge ph-xs-margin-left">
-                    {{$ctrl.channelService.invitations.length}}
+                    {{($ctrl.channelService.invitations | filter: {channel: {isActive: true} }).length}}
                   </span>
                 </a>
               </li>
