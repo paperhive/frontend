@@ -8,7 +8,7 @@
       <i class="fa fa-user-secret" aria-hidden="true"></i>
       <b class="ph-xs-margin-left">{{channel.name}}</b>
       <span ng-class="{'label label-info ph-sm-margin-left': channel.isActive, 'label label-default': !channel.isActive}"
-        ng-repeat="role in channel.members[0].roles"
+        ng-repeat="role in $ctrl.getMyRoles(channel)"
       >
         {{role}}
       </span>
