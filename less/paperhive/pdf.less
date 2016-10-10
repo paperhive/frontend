@@ -20,10 +20,6 @@ pdf-full {
     right:0;
     bottom: 0;
     overflow: hidden;
-    > canvas {
-      width: 100%;
-      height: 100%;
-    }
   }
 
   & > .ph-pdf-text {
@@ -119,7 +115,14 @@ pdf-full {
   }
 }
 
-
+// animation helper
+// makes sure that the canvas is properly scaled during the animation
+.ph-document-text.ph-sidenav-open-add .ph-pdf-canvas canvas,
+.ph-document-text.ph-sidenav-open-remove .ph-pdf-canvas canvas,
+pdf-full.ph-pdf-resize-active .ph-pdf-canvas canvas {
+  width: 100%;
+  height: 100%;
+}
 
 .ph-popup-button {
   position: absolute;
