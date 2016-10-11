@@ -1,12 +1,14 @@
 <div class="modal-header">
-  <button type="button" class="close" aria-label="Close" title="Close" ng-click="$ctrl.dismiss()">
+  <button type="button" class="close" aria-label="Close" title="Close"
+    ng-click="$ctrl.dismiss()"
+  >
     <span aria-hidden="true">&times;</span>
   </button>
   <h3 class="modal-title">
     Member update
   </h3>
 </div>
-<form name="updateForm" novalidate>
+<form>
   <div class="modal-body">
     <div class="form-group">
       <label>Member data</label>
@@ -15,9 +17,6 @@
           classes="img-circle ph-sm-margin-right"
         ></avatar>
         {{$ctrl.resolve.member.person.displayName}},
-        <span ng-if="$ctrl.resolve.member.person.account.email">
-          {{$ctrl.resolve.member.person.account.email}},
-        </span>
         @{{$ctrl.resolve.member.person.account.username}}
         <span class="label label-default ph-sm-margin-left"
           ng-repeat="role in $ctrl.resolve.member.roles"
@@ -30,7 +29,7 @@
       <label>Role</label>
       <select class="form-control" ng-model="$ctrl.role"
         ng-options="role.id as role.name for role in $ctrl.roles"
-        ng-init="$ctrl.role=1"
+        ng-init="{{($ctrl.resolve.member.roles.indexOf('member') !== -1 ) ? $ctrl.role=2 : $ctrl.role=1}}"
       ></select>
     </div>
   </div>
