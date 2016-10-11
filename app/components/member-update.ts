@@ -4,6 +4,7 @@ import template from './member-update.html';
 export default function(app) {
   app.component('memberUpdate', {
     bindings: {
+      resolve: '<',
       close: '&',
       dismiss: '&'
     },
@@ -19,8 +20,7 @@ export default function(app) {
       static $inject = ['$routeParams', '$scope', 'channelService'];
       constructor(public $routeParams, public $scope, public channelService) {}
 
-      submit() {
-        const memberId = '1N8Gdt8-rzjL';
+      submit(memberId) {
         this.inProgress = true;
         this.succeeded = false;
         this.channelService.memberUpdate(this.$routeParams.channelId, memberId, {

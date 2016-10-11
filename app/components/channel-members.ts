@@ -34,11 +34,13 @@ export default function(app) {
           .finally(() => this.memberDeleting = false);
       }
 
-      updateModalOpen() {
+      updateModalOpen(member) {
         this.$uibModal.open({
           component: 'memberUpdate',
-          // TODO: remove this ugly hack when uibModal supports custom bindings
-          scope: this.$scope,
+          resolve: {
+            member: () => member,
+            channel: () => this.channel,
+          },
         });
       };
     },

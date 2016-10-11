@@ -10,10 +10,21 @@
   <div class="modal-body">
     <div class="form-group">
       <label>Member data</label>
-      <input type="text" class="form-control" name="email"
-        ng-model="$ctrl.email" ng-disabled="$ctrl.inProgress || $ctrl.succeeded"
-        ng-readonly="true"
-      >
+      <div>
+        <avatar user="$ctrl.resolve.member.person" size="30"
+          classes="img-circle ph-sm-margin-right"
+        ></avatar>
+        {{$ctrl.resolve.member.person.displayName}},
+        <span ng-if="$ctrl.resolve.member.person.account.email">
+          {{$ctrl.resolve.member.person.account.email}},
+        </span>
+        @{{$ctrl.resolve.member.person.account.username}}
+        <span class="label label-default ph-sm-margin-left"
+          ng-repeat="role in $ctrl.resolve.member.roles"
+        >
+          {{role}}
+        </span>
+      </div>
     </div>
     <div class="form-group">
       <label>Role</label>
@@ -26,8 +37,8 @@
   <div class="modal-footer">
     <button
       class="btn btn-primary" type="submit"
-      ng-click="!$ctrl.inProgress && !$ctrl.succeeded && !invitationForm.$invalid && $ctrl.submit()"
-      ng-class="{disabled: invitationForm.$invalid || $ctrl.inProgress || $ctrl.succeeded}"
+      ng-click="!$ctrl.inProgress && !$ctrl.succeeded && $ctrl.submit($ctrl.resolve.member.person.id)"
+      ng-class="{disabled: $ctrl.inProgress || $ctrl.succeeded}"
     >
       <i class="fa fa-check" aria-hidden="true"></i>
       Save

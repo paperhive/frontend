@@ -31,7 +31,7 @@
               <button
                 ng-if="$ctrl.isOwner && member.person.id !== $ctrl.authService.user.id"
                 type="button" class="btn btn-primary btn-sm"
-                ng-click="$ctrl.updateModalOpen()"
+                ng-click="$ctrl.updateModalOpen(member)"
                 ng-disabled="!$ctrl.channel.isActive"
                 title="{{$ctrl.channel.isActive ? '' : 'Activate the channel first to update membership'}}"
               >
