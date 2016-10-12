@@ -45,14 +45,17 @@ export default function(app) {
         .then(response => response.data);
     }
 
-    invitationDelete(channelId, invitationId) {
+    invitationDelete(channelId, invitationId, token) {
+      if (token) {
+        return this.$http.delete(`${this.config.apiUrl}/channels/${channelId}/invitations/${invitationId}?token=${token}`)
+          .catch(this.notificationService.httpError('could not delete invitation'));
+      }
       return this.$http.delete(`${this.config.apiUrl}/channels/${channelId}/invitations/${invitationId}`)
         .catch(this.notificationService.httpError('could not delete invitation'));
     }
 
     invitationConfirm(channelId, invitationId, token, password) {
       if (token) {
-        console.log(password);
         return this.$http.post(`${this.config.apiUrl}/channels/${channelId}/invitations/${invitationId}/confirm?token=${token}`, password)
           .catch(this.notificationService.httpError('could not confirm invitation'))
           .then(response => response.data);

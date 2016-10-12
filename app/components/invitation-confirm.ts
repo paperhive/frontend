@@ -41,7 +41,8 @@ export default function(app) {
 
       invitationDelete(channelId, invitationId) {
         this.invitationDeleting = invitationId;
-        this.channelService.invitationDelete(channelId, invitationId)
+        this.channelService.invitationDelete(channelId, invitationId, this.token)
+          .then(() => this.$location.url('/'))
           .finally(() => this.invitationDeleting = false);
       }
 

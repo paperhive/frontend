@@ -69,7 +69,11 @@ export default function(app) {
         });
     }
 
-    invitationDelete(id, invitationId) {
+    invitationDelete(id, invitationId, token) {
+      if (token) {
+        return this.channelsApi.invitationDelete(id, invitationId, token)
+          .then();
+      }
       return this.channelsApi.invitationDelete(id, invitationId)
         .then(() => {
           const channel = this.get(id);
