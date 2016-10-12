@@ -30,6 +30,7 @@ import hivedDocs from './hived-docs';
 import hivers from './hivers';
 import jobs from './jobs';
 import inlineEditable from './inline-editable';
+import invitationConfirm from './invitation-confirm';
 import legalNotice from './legal-notice';
 import login from './login';
 import mainPage from './main-page';
@@ -102,6 +103,7 @@ export default function(app) {
   hiveButton(app);
   hivedDocs(app);
   hivers(app);
+  invitationConfirm(app);
   jobs(app);
   inlineEditable(app);
   legalNotice(app);

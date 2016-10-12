@@ -59,6 +59,7 @@ export default function(app) {
         .when('/password/request', 'passwordRequest')
         .when('/password/reset', 'passwordReset')
         .when('/publishers', 'publishers')
+        .when('/return/channelInvitation', 'invitationConfirm')
         .when('/search', 'search')
         .when('/settings', 'settings')
         .when('/settings/profile', 'settings.profile')
@@ -276,6 +277,11 @@ export default function(app) {
         .segment('helpMarkdown', {
           template: '<help-markdown></help-markdown>',
           title: 'Markdown cheat sheet',
+        })
+
+        .segment('invitationConfirm', {
+          template: '<invitation-confirm></invitation-confirm>',
+          title: 'Confirm your invitation · PaperHive',
         })
 
         .segment('jobs', {
