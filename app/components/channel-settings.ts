@@ -1,5 +1,4 @@
 'use strict';
-import { cloneDeep } from 'lodash';
 
 import template from './channel-settings.html!text';
 

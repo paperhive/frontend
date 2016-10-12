@@ -17,11 +17,8 @@
             <avatar user="member.person" size="30"
               classes="img-circle ph-sm-margin-right"
             ></avatar>
-            {{member.person.displayName}},
-            <span ng-if="member.person.account.email">
-              {{member.person.account.email}},
-            </span>
-            <a href="./users/{{invitation.person.account.username}}"><small>@{{member.person.account.username}}</small></a>
+            {{member.person.displayName}}
+            <a href="./users/{{member.person.account.username}}"><small>@{{member.person.account.username}}</small></a>
             <span class="label label-default ph-sm-margin-left"
               ng-repeat="role in member.roles"
             >

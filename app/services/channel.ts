@@ -57,7 +57,11 @@ export default function(app) {
         .then(newInvitation => this.get(id).invitations.push(newInvitation));
     }
 
-    invitationConfirm(id, invitationId) {
+    invitationConfirm(id, invitationId, token, password) {
+      if (token) {
+        return this.channelsApi.invitationConfirm(id, invitationId, token, password)
+          .then(data => this.invitations = data);
+      }
       return this.channelsApi.invitationConfirm(id, invitationId)
         .then(invitation => {
           this.channels.push(invitation.channel);
