@@ -13,42 +13,44 @@
       <h2>Members</h2>
       <table class="table table-hover ph-md-margin-bottom">
         <tr ng-repeat="member in $ctrl.channel.members"
-          ng-mouseover="showButtons=true"
-          ng-mouseout="showButtons=false"
-          class="table-active"
+          ng-mouseenter="showButtons=true"
+          ng-mouseleave="showButtons=false"
+          ng-class="{'active': member.person.id === $ctrl.authService.user.id}"
         >
           <td>
-            <avatar user="member.person" size="30"
-              classes="img-circle ph-sm-margin-right"
-            ></avatar>
-            {{member.person.displayName}}
-            <a href="./users/{{member.person.account.username}}"><small>@{{member.person.account.username}}</small></a>
-            <span class="label label-default ph-sm-margin-left"
-              ng-repeat="role in member.roles"
-            >
-              {{role}}
-            </span>
-            <span class="pull-right" ng-show="showButtons">
-              <button
-                ng-if="$ctrl.isOwner && member.person.id !== $ctrl.authService.user.id"
-                type="button" class="btn btn-primary btn-sm"
-                ng-click="$ctrl.updateModalOpen(member)"
-                ng-disabled="!$ctrl.channel.isActive"
-                title="{{$ctrl.channel.isActive ? '' : 'Activate the channel first to update membership'}}"
+            <p>
+              <avatar user="member.person" size="30"
+                classes="img-circle ph-sm-margin-right"
+              ></avatar>
+              {{member.person.displayName}}
+              <a href="./users/{{member.person.account.username}}"><small>@{{member.person.account.username}}</small></a>
+              <span class="label label-default ph-sm-margin-left"
+                ng-repeat="role in member.roles"
               >
-                Change status
-              </button>
-              <button
-                ng-if="$ctrl.isOwner && member.person.id !== $ctrl.authService.user.id"
-                type="button" class="btn btn-danger btn-sm ph-sm-margin-left"
-                ng-confirm-click="Really remove this member?"
-                confirmed-click="$ctrl.memberDelete($ctrl.channel, member.person.id)"
-                ng-disabled="!$ctrl.channel.isActive"
-                title="{{$ctrl.channel.isActive ? '' : 'Activate the channel first to remove members'}}"
-              >
-                Remove member
-              </button>
-            </span>
+                {{role}}
+              </span>
+              <span class="pull-right ph-fade-in ph-fade-out" ng-show="showButtons">
+                <button
+                  ng-if="$ctrl.isOwner && member.person.id !== $ctrl.authService.user.id"
+                  type="button" class="btn btn-primary btn-sm"
+                  ng-click="$ctrl.updateModalOpen(member)"
+                  ng-disabled="!$ctrl.channel.isActive"
+                  title="{{$ctrl.channel.isActive ? '' : 'Activate the channel first to update membership'}}"
+                >
+                  Change status
+                </button>
+                <button
+                  ng-if="$ctrl.isOwner && member.person.id !== $ctrl.authService.user.id"
+                  type="button" class="btn btn-danger btn-sm ph-sm-margin-left"
+                  ng-confirm-click="Really remove this member?"
+                  confirmed-click="$ctrl.memberDelete($ctrl.channel, member.person.id)"
+                  ng-disabled="!$ctrl.channel.isActive"
+                  title="{{$ctrl.channel.isActive ? '' : 'Activate the channel first to remove members'}}"
+                >
+                  Remove member
+                </button>
+              </span>
+            </p>
           </td>
         </tr>
       </table>
@@ -62,7 +64,10 @@
         </h2>
         <table class="table table-hover">
           <!-- email invitation -->
-          <tr ng-repeat="invitation in $ctrl.channel.invitations" ng-mouseover="showButtons=true" ng-mouseout="showButtons=false">
+          <tr ng-repeat="invitation in $ctrl.channel.invitations"
+            ng-mouseenter="showButtons=true"
+            ng-mouseleave="showButtons=false"
+          >
             <td ng-if="invitation.email">
               {{invitation.email}}
               <span class="label label-default ph-sm-margin-left"
