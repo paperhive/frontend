@@ -69,23 +69,25 @@
             ng-mouseleave="showButtons=false"
           >
             <td ng-if="invitation.email">
-              {{invitation.email}}
-              <span class="label label-default ph-sm-margin-left"
-                ng-repeat="role in invitation.roles"
-              >
-                {{role}}
-              </span>
-              <button
-                ng-show="showButtons"
-                ng-if="$ctrl.isOwner"
-                type="button" class="btn btn-danger btn-sm pull-right"
-                ng-confirm-click="Really remove invitation?"
-                confirmed-click="$ctrl.invitationDelete($ctrl.channel.id, invitation.id)"
-                ng-disabled="!$ctrl.channel.isActive"
-                title="{{$ctrl.channel.isActive ? '' : 'Activate the channel first to remove invitations'}}"
-              >
-                Remove invitation
-              </button>
+              <div class="ph-xs-margin-bottom">
+                {{invitation.email}}
+                <span class="label label-default ph-sm-margin-left"
+                  ng-repeat="role in invitation.roles"
+                >
+                  {{role}}
+                </span>
+                <button
+                  ng-show="showButtons"
+                  ng-if="$ctrl.isOwner"
+                  type="button" class="btn btn-danger btn-sm pull-right"
+                  ng-confirm-click="Really remove invitation?"
+                  confirmed-click="$ctrl.invitationDelete($ctrl.channel.id, invitation.id)"
+                  ng-disabled="!$ctrl.channel.isActive"
+                  title="{{$ctrl.channel.isActive ? '' : 'Activate the channel first to remove invitations'}}"
+                >
+                  Remove invitation
+                </button>
+              </div>
               <div class="text-muted">
                 <small>
                   invited by {{invitation.invitedBy.displayName}}

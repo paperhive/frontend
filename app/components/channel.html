@@ -9,7 +9,10 @@
           <div class="media-left">
             <!--icon-->
             <span class="fa-stack ph-icon">
-              <i class="fa fa-circle fa-stack-2x ph-channel-icon-color"></i>
+              <i ng-class="{
+                'fa fa-circle fa-stack-2x ph-channel-icon-color': $ctrl.channel.isActive,
+                'fa fa-circle fa-stack-2x text-muted': !$ctrl.channel.isActive
+              }"></i>
               <i class="fa fa-bullhorn fa-stack-1x fa-inverse"></i>
             </span>
           </div>
