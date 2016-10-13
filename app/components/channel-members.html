@@ -12,7 +12,11 @@
 
       <h2>Members</h2>
       <table class="table table-hover ph-md-margin-bottom">
-        <tr ng-repeat="member in $ctrl.channel.members">
+        <tr ng-repeat="member in $ctrl.channel.members"
+          ng-mouseover="showButtons=true"
+          ng-mouseout="showButtons=false"
+          class="table-active"
+        >
           <td>
             <avatar user="member.person" size="30"
               classes="img-circle ph-sm-margin-right"
@@ -24,7 +28,7 @@
             >
               {{role}}
             </span>
-            <span class="pull-right">
+            <span class="pull-right" ng-show="showButtons">
               <button
                 ng-if="$ctrl.isOwner && member.person.id !== $ctrl.authService.user.id"
                 type="button" class="btn btn-primary btn-sm"
@@ -58,7 +62,7 @@
         </h2>
         <table class="table table-hover">
           <!-- email invitation -->
-          <tr ng-repeat="invitation in $ctrl.channel.invitations">
+          <tr ng-repeat="invitation in $ctrl.channel.invitations" ng-mouseover="showButtons=true" ng-mouseout="showButtons=false">
             <td ng-if="invitation.email">
               {{invitation.email}}
               <span class="label label-default ph-sm-margin-left"
@@ -67,6 +71,7 @@
                 {{role}}
               </span>
               <button
+                ng-show="showButtons"
                 ng-if="$ctrl.isOwner"
                 type="button" class="btn btn-danger btn-sm pull-right"
                 ng-confirm-click="Really remove invitation?"
@@ -97,6 +102,7 @@
                 {{role}}
               </span>
               <button
+                ng-show="showButtons"
                 ng-if="$ctrl.isOwner"
                 type="button" class="btn btn-danger btn-sm pull-right"
                 ng-confirm-click="Really remove invitation?"
