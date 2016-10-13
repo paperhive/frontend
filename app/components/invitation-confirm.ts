@@ -9,8 +9,8 @@ export default function(app) {
       succeeded = false;
       error = false;
 
-      static $inject = ['$http', '$location', '$scope', 'authService', 'channelService', 'config'];
-      constructor(public $http, public $location, public $scope, public authService, public channelService, public config) {
+      static $inject = ['$http', '$location', '$scope', 'authService', 'channelService', 'config', 'notificationService'];
+      constructor(public $http, public $location, public $scope, public authService, public channelService, public config, public notificationService) {
         this.token = $location.search().token;
         $http
           .get(`${config.apiUrl}/channels/token/${this.token}`)
@@ -31,7 +31,18 @@ export default function(app) {
             this.inProgress = false;
             this.succeeded = true;
             this.authService.loginToken(data.authToken)
-              .then(() => this.$location.url(`/channels/${channelId}`));
+              .then(() => {
+                this.$location.url(`/channels/${channelId}`);
+                if (this.password) {
+                  setTimeout(() => {
+                    this.notificationService.notifications.push({
+                      type: 'info',
+                      message: `Welcome to PaperHive! You can set your username
+                        <a href="./settings" class="alert-link">here</a>.`
+                    });
+                  }, 100);
+                }
+              });
           })
           .finally(() => {
             this.inProgress = false;
