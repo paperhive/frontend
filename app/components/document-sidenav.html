@@ -1,0 +1,111 @@
+<div class="ph-sidenav-large"
+  ng-show="$ctrl.open"
+  ng-style="{top: $ctrl.viewportOffsetTop + 'px'}"
+>
+  <button class="btn btn-link ph-sidenav-btn-collapse" ng-click="$ctrl.onToggle({open: false})">
+    <i class="fa fa-chevron-left" aria-hidden="true"></i>
+  </button>
+  <div class="ph-sidenav-header">
+    <h5 class="ph-lg-margin-top">
+      <mathjax body="$ctrl.activeRevision.title"></mathjax>
+    </h5>
+    <h6 class="ph-lg-margin-bottom">
+      <span ng-repeat="author in $ctrl.activeRevision.authors">
+        {{author.name}}{{$last ? '' :', '}}
+      </span>
+    </h6>
+  </div>
+  <div class="ph-sidenav-item">
+    <hive-button
+      ng-if="$ctrl.documentCtrl.hivers !== undefined"
+      document-ctrl="$ctrl.documentCtrl"
+      large="true"
+
+      popover-placement="bottom-left"
+      popover-is-open="$ctrl.tour.stages[$ctrl.tour.index] === 'hive'"
+      uib-popover-template="'html/shared/tour-hive.html'"
+      popover-trigger="'none'"
+    ></hive-button>
+  </div>
+  <div class="ph-sidenav-info">
+    <div class="dropdown ph-sidenav-item" is-open="$ctrl.revisionDropdownOpen" uib-dropdown
+      ng-if="$ctrl.documentCtrl.revisions && $ctrl.documentCtrl.revisionAccess && $ctrl.activeRevision"
+    >
+      <button class="btn btn-default ph-split-container ph-split-container-icon-right dropdown-toggle" uib-dropdown-toggle
+        title="{{$ctrl.documentCtrl.getRevisionDescription($ctrl.activeRevision)}}, {{$ctrl.activeRevision.publishedAt | date:'MMM yyyy'}}"
+      >
+        <span class="ph-split-icon"><i class="fa fa-history" aria-hidden="true"></i></span>
+        <span class="ph-split-text">
+          <span class="ph-sidenav-journal">{{$ctrl.documentCtrl.getRevisionDescription($ctrl.activeRevision)}}</span>,
+          {{$ctrl.activeRevision.publishedAt | date:'MMM yyyy'}}
+        </span>
+        <i class="fa fa-fw fa-caret-down ph-split-icon-right"></i>
+      </button>
+      <ul class="dropdown-menu ph-dropdown-menu-full">
+        <li ng-repeat="revision in $ctrl.documentCtrl.revisions | orderBy:'publishedAt':true"
+            ng-class="{disabled: !$ctrl.documentCtrl.revisionAccess[revision.revision]}"
+            ng-click="$ctrl.revisionDropdownOpen = false">
+          <a ng-if="$ctrl.documentCtrl.revisionAccess[revision.revision]"
+            class="ph-split-container ph-split-container-no-icon"
+            href="./documents/{{revision.id}}/revisions/{{revision.revision}}"
+            title="{{$ctrl.documentCtrl.getRevisionDescription(revision)}}, {{revision.publishedAt | date:'MMM yyyy'}}"
+          >
+            <span class="ph-split-text"
+              ng-class="{'ph-dropdown-menu-active': revision === $ctrl.activeRevision}"
+            >
+              <span class="ph-sidenav-journal">{{$ctrl.documentCtrl.getRevisionDescription(revision)}}</span>,
+              {{revision.publishedAt | date:'MMM yyyy'}}
+            </span>
+          </a>
+          <a ng-if="$ctrl.documentCtrl.revisionAccess[revision.revision] === undefined"
+            class="ph-split-container ph-split-container-no-icon ph-split-container-icon-right"
+          >
+            <span class="ph-split-text">
+              <span class="ph-sidenav-journal">{{$ctrl.documentCtrl.getRevisionDescription(revision)}}</span>,
+              {{revision.publishedAt | date:'MMM yyyy'}}
+            </span>
+            <i class="fa fa-fw fa-spinner fa-spin ph-split-icon-right"></i>
+          </a>
+          <a ng-if="$ctrl.documentCtrl.revisionAccess[revision.revision] === false"
+            title="This document is currently not accessible and cannot be displayed."
+            class="ph-split-container ph-split-container-no-icon ph-split-container-icon-right"
+          >
+            <span class="ph-split-text">
+              <span class="ph-sidenav-journal">{{$ctrl.documentCtrl.getRevisionDescription(revision)}}</span>,
+              {{revision.publishedAt | date:'MMM yyyy'}}
+            </span>
+            <i class="fa fa-fw fa-lock ph-split-icon-right"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="ph-sidenav-item" ng-if="$ctrl.publisherLink">
+    <a href="{{$ctrl.publisherLink}}" class="ph-sidenav-publisher-link">
+      Visit publisher's publication page
+    </a>
+  </div>
+  <div class="ph-sidenav-accordion">
+    <uib-accordion close-others="oneAtATime">
+      <div ng-if="$ctrl.kudosDoi" uib-accordion-group class="panel-default ph-sidenav-info-kudos" is-open="$ctrl.kudosOpen">
+        <uib-accordion-heading>
+          <img src="./static/img/kudos-icon.svg" alt="Kudos"> Kudos explanation
+          <i class="pull-right fa" ng-class="{
+            'fa-chevron-down': $ctrl.kudosOpen,
+            'fa-chevron-right': !$ctrl.kudosOpen
+          }"></i>
+        </uib-accordion-heading>
+        <document-info-kudos doi="$ctrl.kudosDoi"></document-info-kudos>
+      </div>
+    </uib-accordion>
+  </div>
+</div>
+<div class="ph-sidenav-small"
+  ng-show="!$ctrl.open"
+  ng-style="{top: $ctrl.viewportOffsetTop + 'px'}"
+>
+  <button class="btn btn-link" ng-click="$ctrl.onToggle({open: true})">
+    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+  </button>
+  <hive-button document-ctrl="$ctrl.documentCtrl" large="false"></hive-button>
+</div>

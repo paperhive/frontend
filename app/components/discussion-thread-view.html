@@ -1,111 +1,115 @@
-<div class="container">
-  <h3 class="ph-no-margin-top">
-    <inline-editable
-      content="$ctrl.discussion.title"
-      can-edit="auth.user.id === $ctrl.discussion.author.id"
-      on-submit="$ctrl.updateDiscussion({title: content})"
-      >
-    </inline-editable>
-  </h3>
-  <a href="./users/{{$ctrl.discussion.author.account.username}}">
-    {{$ctrl.discussion.author.displayName}}</a>
-  opened this discussion
-  <span am-time-ago="$ctrl.discussion.createdAt"></span>
-  <span ng-if="$ctrl.discussion.replies.length == 1">
-    &middot; {{$ctrl.discussion.replies.length}} reply
-  </span>
-  <span ng-if="$ctrl.discussion.replies.length > 1">
-    &middot; {{$ctrl.discussion.replies.length}} replies
-  </span>
-
-  <div ng-if="$ctrl.discussion.target.selectors.textQuote.content">
-    <hr>
-    <h4>Referenced text</h4>
-    <a href="./documents/{{$ctrl.discussion.target.document}}?a=d:{{$ctrl.discussion.id}}">
-      <div class="well well-lg ph-reference">
-        <blockquote>
-          {{$ctrl.discussion.target.selectors.textQuote.content}}
-        </blockquote>
-      </div>
-    </a>
-  </div>
-
-  <hr>
+<div class="container-fluid">
   <div class="row">
-
-    <div class="col-md-2 col-md-push-10 ph-lg-margin-bottom">
-      <!--a href="#">
-        <h5>
-          Labels <span class="pull-right"><i class="fa fa-gear"></i></span>
-        </h5>
-      </a-->
-      <!--ul class="ph-tags">
-        <li ng-repeat="label in $ctrl.discussion.tags">
-        <a href="#" class="btn btn-default {{label}}">{{label}}</a>
-        </li>
-      </ul>
-      <hr-->
-      <!--h5>Notifications</h5>
-      <button type="button" class="btn btn-default ph-subscription-button"
-        ng-disabled="!auth.user" ng-click="toggleSubscribe()">
-        <span ng-show="isSubscribed">
-          <i class="fa fa-bell-slash"></i> Unsubscribe
-        </span>
-        <span ng-show="!isSubscribed">
-          <i class="fa fa-bell"></i> Subscribe
-        </span>
-      </button>
-      <span ng-show="isSubscribed" class="ph-subscription-text">
-        You're receiving notifications because you're subscribed to this thread.
+    <div class="col-md-9 col-md-offset-3">
+      <h3 class="ph-no-margin-top">
+        <inline-editable
+          content="$ctrl.discussion.title"
+          can-edit="auth.user.id === $ctrl.discussion.author.id"
+          on-submit="$ctrl.updateDiscussion({title: content})"
+          >
+        </inline-editable>
+      </h3>
+      <a href="./users/{{$ctrl.discussion.author.account.username}}">
+        {{$ctrl.discussion.author.displayName}}</a>
+      opened this discussion
+      <span am-time-ago="$ctrl.discussion.createdAt"></span>
+      <span ng-if="$ctrl.discussion.replies.length == 1">
+        &middot; {{$ctrl.discussion.replies.length}} reply
       </span>
-      <span ng-show="!isSubscribed" class="ph-subscription-text">
-        You're ignoring this thread.
+      <span ng-if="$ctrl.discussion.replies.length > 1">
+        &middot; {{$ctrl.discussion.replies.length}} replies
       </span>
-      <hr-->
-      <h5>Participants</h5>
-      <avatar-list discussion="$ctrl.discussion"></avatar-list>
-    </div>
 
-    <div class="col-md-10 col-md-pull-2">
-      <comment
-        content="$ctrl.discussion"
-        on-update="$ctrl.updateDiscussion({body: $comment.body})"
-        requires-body="false"
-        deletable="false"
-        class="ph-md-margin-bottom"
-        >
-      </comment>
+      <div ng-if="$ctrl.discussion.target.selectors.textQuote.content">
+        <hr>
+        <h4>Referenced text</h4>
+        <a href="./documents/{{$ctrl.discussion.target.document}}?a=d:{{$ctrl.discussion.id}}">
+          <div class="well well-lg ph-reference">
+            <blockquote>
+              {{$ctrl.discussion.target.selectors.textQuote.content}}
+            </blockquote>
+          </div>
+        </a>
+      </div>
 
-      <comment ng-repeat="reply in $ctrl.discussion.replies"
-        content="reply"
-        on-delete="$ctrl.onReplyDelete({reply: reply})"
-        on-update="$ctrl.onReplyUpdate({reply: $comment})"
-        requires-body="true"
-        deletable="true"
-        id="reply.id"
-        class="ph-md-margin-bottom"
-      ></comment>
+      <hr>
+      <div class="row">
 
-      <new-reply
-        ng-if="auth.user"
-        on-submit="addReply(reply)"
-        class="ph-md-margin-bottom"
-      ></new-reply>
-
-      <div ng-if="!auth.user" class="ph-md-margin-bottom ph-comment-row">
-        <div class="ph-discussion-not-auth-user">
-          <i class="fa fa-user fa-4x"></i>
+        <div class="col-md-2 col-md-push-10 ph-lg-margin-bottom">
+          <!--a href="#">
+            <h5>
+              Labels <span class="pull-right"><i class="fa fa-gear"></i></span>
+            </h5>
+          </a-->
+          <!--ul class="ph-tags">
+            <li ng-repeat="label in $ctrl.discussion.tags">
+            <a href="#" class="btn btn-default {{label}}">{{label}}</a>
+            </li>
+          </ul>
+          <hr-->
+          <!--h5>Notifications</h5>
+          <button type="button" class="btn btn-default ph-subscription-button"
+            ng-disabled="!auth.user" ng-click="toggleSubscribe()">
+            <span ng-show="isSubscribed">
+              <i class="fa fa-bell-slash"></i> Unsubscribe
+            </span>
+            <span ng-show="!isSubscribed">
+              <i class="fa fa-bell"></i> Subscribe
+            </span>
+          </button>
+          <span ng-show="isSubscribed" class="ph-subscription-text">
+            You're receiving notifications because you're subscribed to this thread.
+          </span>
+          <span ng-show="!isSubscribed" class="ph-subscription-text">
+            You're ignoring this thread.
+          </span>
+          <hr-->
+          <h5>Participants</h5>
+          <avatar-list discussion="$ctrl.discussion"></avatar-list>
         </div>
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <a href="./signup?returnPath={{auth.returnPath}}">Sign up</a>
-            or
-            <a href="./login?returnPath={{auth.returnPath}}">log in</a>
-            to join this discussion on PaperHive.
+
+        <div class="col-md-10 col-md-pull-2">
+          <comment
+            content="$ctrl.discussion"
+            on-update="$ctrl.updateDiscussion({body: $comment.body})"
+            requires-body="false"
+            deletable="false"
+            class="ph-md-margin-bottom"
+            >
+          </comment>
+
+          <comment ng-repeat="reply in $ctrl.discussion.replies"
+            content="reply"
+            on-delete="$ctrl.onReplyDelete({reply: reply})"
+            on-update="$ctrl.onReplyUpdate({reply: $comment})"
+            requires-body="true"
+            deletable="true"
+            id="reply.id"
+            class="ph-md-margin-bottom"
+          ></comment>
+
+          <new-reply
+            ng-if="auth.user"
+            on-submit="addReply(reply)"
+            class="ph-md-margin-bottom"
+          ></new-reply>
+
+          <div ng-if="!auth.user" class="ph-md-margin-bottom ph-comment-row">
+            <div class="ph-discussion-not-auth-user">
+              <i class="fa fa-user fa-4x"></i>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <a href="./signup?returnPath={{auth.returnPath}}">Sign up</a>
+                or
+                <a href="./login?returnPath={{auth.returnPath}}">log in</a>
+                to join this discussion on PaperHive.
+              </div>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
-
   </div>
 </div>

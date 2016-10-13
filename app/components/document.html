@@ -1,67 +1,43 @@
-<div>
-  <div class="ph-header ph-header-large ph-lg-margin-bottom">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-10">
-          <h2 class="ph-lg-margin-top">
-            <mathjax body="$ctrl.latestRevision.title"></mathjax>
-          </h2>
-          <h4 class="ph-lg-margin-bottom">
-            <span ng-repeat="author in $ctrl.latestRevision.authors">
-              {{author.name}}{{$last ? '' :', '}}
-            </span>
-          </h4>
-        </div>
-        <div class="col-sm-2 text-right">
-          <h2 class="ph-lg-margin-top">
-            <hive-button
-              popover-placement="bottom"
-              popover-is-open="$ctrl.tour.stages[$ctrl.tour.index] === 'hive'"
-              uib-popover-template="'html/shared/tour-hive.html'"
-              popover-trigger="'none'"
-              document-id="$ctrl.latestRevision.id"
-              user="$ctrl.auth.user"
-              title="{{$ctrl.auth.user ? 'Hive this document for receiving updates.' : 'You have to be logged in to hive the document.'}}"
-            ></hive-button>
-          </h2>
+<div class="ph-header-submenu-container ph-header-submenu-container-fixed" ng-style="{top: $root.navbarSize.height  + 'px'}">
+  <div class="container-fluid" on-resized="subnavSize = $size">
+    <div class="row">
+      <div class="ph-document-subnav" ng-class="{'ph-sidenav-open': $ctrl.sidenavOpen}">
+        <button ng-click="$ctrl.subnavOpen = !$ctrl.subnavOpen" type="button" class="btn btn-default visible-xs">
+          <i class="fa fa-fw fa-bars"></i> Toggle Navigation
+        </button>
+        <div class="navbar-collapse ph-no-padding" uib-collapse="!$ctrl.subnavOpen">
+          <ul class="nav nav-tabs ph-header-submenu">
+            <li ng-class="{active: ('documents.text' | routeSegmentStartsWith) || ('documents.revisions' | routeSegmentStartsWith)}">
+              <a href=".{{'documents.text' | routeSegmentUrl}}" ng-click="$ctrl.subnavOpen = false">
+                <i class="fa fa-fw fa-file-pdf-o"></i> Document
+              </a>
+            </li>
+            <li ng-class="{active: ('documents.discussions' | routeSegmentStartsWith)}">
+              <a href=".{{'documents.discussions' | routeSegmentUrl}}" ng-click="$ctrl.subnavOpen = false">
+                <i class="fa fa-fw fa-comments"></i> Discussions
+                <span class="badge" ng-if="$ctrl.discussionsCtrl.discussions.length > 0">
+                  {{$ctrl.discussionsCtrl.discussions.length}}
+                </span>
+              </a>
+            </li>
+            <li ng-class="{active: ('documents.activity' | routeSegmentStartsWith)}">
+              <a href=".{{'documents.activity' | routeSegmentUrl}}" ng-click="$ctrl.subnavOpen = false">
+                <i class="fa fa-heartbeat" aria-hidden="true"></i> Activity
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
-    <div class="ph-affix-container"
-        on-visibility-changed="$ctrl.subnavAffixed = $visibility.top !== 'visible'"
-        visibility-offset="{top: $root.navbarSize.height}"
-        ng-style="{'min-height': subnavSize.height + 'px'}">
-      <div class="ph-header-submenu-affix"
-          ng-class="{'ph-header-submenu-affixed': $ctrl.subnavAffixed}"
-          ng-style="{top: $root.navbarSize.height  + 'px'}"
-          >
-        <div class="ph-header-submenu-container" on-resized="subnavSize = $size">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-sm-12">
-                <subnav>
-                  <ul class="nav nav-tabs ph-header-submenu">
-                    <li subnav-target="documents.text">
-                      <a><i class="fa fa-fw fa-file-pdf-o"></i> Document</a>
-                    </li>
-                    <li subnav-target="documents.discussions">
-                      <a><i class="fa fa-fw fa-comments"></i> Discussions
-                        <span class="badge" ng-if="$ctrl.discussionsCtrl.discussions.length > 0">
-                          {{$ctrl.discussionsCtrl.discussions.length}}
-                        </span></a>
-                    </li>
-                    <li subnav-target="documents.activity">
-                      <a><i class="fa fa-heartbeat" aria-hidden="true"></i> Activity</a>
-                    </li>
-                  </ul>
-                </subnav>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="ph-header-submenu-shadow"></div>
-      </div>
-    </div>
-  </div> <!-- ph-header -->
-  <div app-view-segment="1"></div>
+  </div>
 </div>
+
+<document-sidenav
+  active-revision="$ctrl.activeRevision"
+  document-ctrl="$ctrl.documentCtrl"
+  open="$ctrl.sidenavOpen"
+  viewport-offset-top="$root.navbarSize.height + subnavSize.height"
+
+  on-toggle="$ctrl.sidenavOpen = open"
+></document-sidenav>
+<div app-view-segment="1" class="ph-documents-columns"></div>

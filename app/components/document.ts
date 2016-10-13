@@ -192,78 +192,77 @@ class DiscussionsController {
 export default function(app) {
   app.component('document', {
     template,
-    controller: [
-      '$scope', '$route', '$routeSegment', '$document', '$http', 'config',
-      '$rootScope', '$filter', 'authService', 'notificationService',
-      'metaService', 'websocketService', '$window', 'tourService',
-      function(
-        $scope, $route, $routeSegment, $document, $http, config, $rootScope,
-        $filter, authService, notificationService, metaService, websocketService,
-        $window, tourService
-      ) {
-        const $ctrl = this;
+    controller: class DocumentCtrl {
+      subnavOpen = false;
+      sidenavOpen = true;
+      revisions: Array<any>;
+      activeRevision: any;
+      discussionsCtrl: DiscussionsController;
 
-        // expose authService
-        $ctrl.auth = authService;
+      // note: do *not* use $routeSegment.$routeParams because they still
+      // use the old state in $routeChangeSuccess events
+      static $inject = ['$http', '$routeParams', '$scope', 'config',
+        'DocumentController', 'metaService', 'notificationService', 'websocketService'];
 
-        // expose the routeSegment to be able to determine the active tab in the
-        // template.
-        $ctrl.$routeSegment = $routeSegment;
+      constructor($http, public $routeParams, $scope, config,
+        DocumentController, public metaService, notificationService, websocketService) {
+        const documentId = $routeParams.documentId;
 
-        $ctrl.tour = tourService;
+        this.documentCtrl = new DocumentController(documentId);
+        this.documentCtrl.fetchRevisions(); // TODO: error handling
+        this.documentCtrl.fetchHivers(); // TODO: error handling
 
-        $ctrl.documentId = $routeSegment.$routeParams.documentId;
+        $scope.$watchGroup([
+          '$ctrl.documentCtrl.revisions',
+          '$ctrl.documentCtrl.revisionAccess',
+          '$ctrl.documentCtrl.latestRevision',
+          '$ctrl.documentCtrl.latestAccessibleRevision',
+        ], this.updateActiveRevision.bind(this));
 
-        // fetch document
-        $http.get(`${config.apiUrl}/documents/${$ctrl.documentId}/revisions/`)
-          .success(response => {
-            $ctrl.revisions = response.revisions;
+        $scope.$on('$routeChangeSuccess', this.updateActiveRevision.bind(this));
 
-            if (!$ctrl.revisions) {
-              notificationService.notifications.push({
-                type: 'error',
-                message: 'Document has no revisions – magic!'
-              });
-              return;
-            }
-
-            // use latest revision for metadata
-            $ctrl.latestRevision = orderBy($ctrl.revisions, 'publishedAt', 'desc')[0];
-
-            const metadata = getRevisionMetadata($ctrl.latestRevision);
-            metaService.set({
-              title: $ctrl.latestRevision.title + ' · PaperHive',
-              meta: metadata
-            });
-          })
-          .error(data => {
-            notificationService.notifications.push({
-              type: 'error',
-              message: data.message ? data.message :
-                'could not fetch document revisions (unknown reason)'
-            });
-          });
-
-        // execute async function and display errors as notifications
-        async function asyncExec(asyncFun, context, errorMessage) {
-          try {
-            await asyncFun.bind(context)();
-          } catch (error) {
-            console.error(error);
-            notificationService.notifications.push({
-              type: 'error',
-              message: `${errorMessage} (${error.message || error.data.message || 'unknown reason'}).`,
-            });
-          }
-        }
+        $scope.$watch('$ctrl.activeRevision', this.updateMetadata.bind(this));
 
         // instanciate and init controller for discussions
-        $ctrl.discussionsCtrl = new DiscussionsController(
-          $ctrl.documentId, config, $scope, $http, websocketService
+        this.discussionsCtrl = new DiscussionsController(
+          documentId, config, $scope, $http, websocketService
         );
-        asyncExec($ctrl.discussionsCtrl.init, $ctrl.discussionsCtrl,
-                  'Could not initialize discussions');
+
+        this.discussionsCtrl.init().catch(error => notificationService.notifications.push({
+          type: 'error',
+          message: error.message
+        }));
       }
-    ],
+
+      updateActiveRevision() {
+        // nothing to do if there are no revisions or no revision access information
+        if (!this.documentCtrl.revisions || !this.documentCtrl.revisionAccess) return;
+
+        // don't overwrite if we already got one
+        // (only if url changed)
+        const urlRevisionId = this.$routeParams.revisionId;
+        if (this.activeRevision && (!urlRevisionId || urlRevisionId && this.activeRevision.revision === urlRevisionId)) return;
+
+        // prefer revision id from url
+        if (urlRevisionId) {
+          this.activeRevision = find(this.documentCtrl.revisions, {revision: urlRevisionId});
+          return;
+        }
+
+        // then latest accessible or latest revision
+        this.activeRevision =
+          this.documentCtrl.latestAccessibleRevision ||
+          this.documentCtrl.latestRevision;
+      }
+
+      updateMetadata() {
+        if (!this.activeRevision) return;
+        const metadata = getRevisionMetadata(this.activeRevision);
+        this.metaService.set({
+          title: this.activeRevision.title + ' · PaperHive',
+          meta: metadata,
+        });
+      }
+    },
   });
 };

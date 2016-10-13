@@ -7,3 +7,16 @@
 .ph-affix-container {
   position: relative;
 }
+
+.affix {
+	max-width: 16.66666667%;
+	height: 100%;
+	background: @ph-white;
+	padding: 40px (@grid-gutter-width/2) (@grid-gutter-width/2);
+	z-index: @zindex-navbar-fixed - 2;
+  .box-shadow(0 0 10px rgba(0, 0, 0, 0.3));
+
+  &.ph-sidenav-small {
+		padding: @padding-large-vertical 0 0;
+  }
+}

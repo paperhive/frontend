@@ -54,7 +54,7 @@ SystemJS.config({
     "Leaflet/Leaflet": "github:Leaflet/Leaflet@0.7.7",
     "angular": "github:angular/bower-angular@1.5.8",
     "angular-animate": "github:angular/bower-angular-animate@1.5.8",
-    "angular-bootstrap": "github:angular-ui/bootstrap-bower@2.1.2",
+    "angular-bootstrap": "github:angular-ui/bootstrap-bower@2.1.4",
     "angular-leaflet-directive": "github:tombatossals/angular-leaflet-directive@0.10.0",
     "angular-moment": "npm:angular-moment@1.0.0-beta.6",
     "angular-route": "github:angular/bower-angular-route@1.5.8",

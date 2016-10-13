@@ -36,9 +36,9 @@ export default function(app) {
         .when('/channels/:channelId/members', 'channel.members')
         .when('/channels/:channelId/settings', 'channel.settings')
         .when('/contact', 'contact')
-        // register new and redirect before id-dependent routes
+        // register new and remote before id-dependent routes
         .when('/documents/new', 'documents_new')
-        .when('/documents/redirect', 'documents_redirect')
+        .when('/documents/remote', 'documents_remote')
         .when('/documents/:documentId', 'documents', {reloadOnSearch: false})
         .when('/documents/:documentId/activity', 'documents.activity')
         .when('/documents/:documentId/discussions', 'documents.discussions')
@@ -48,7 +48,7 @@ export default function(app) {
         .when('/documents/:documentId/discussions/:discussionId',
               'documents.discussions.thread')
         .when('/documents/:documentId/text', 'documents.text', {reloadOnSearch: false})
-        .when('/documents/:documentId/revisions/:revisionId', 'documents.revisions')
+        .when('/documents/:documentId/revisions/:revisionId', 'documents.revisions', {reloadOnSearch: false})
         .when('/documents/:documentId/about', 'documents.about')
         .when('/help/markdown', 'helpMarkdown')
         .when('/jobs', 'jobs')
@@ -215,13 +215,27 @@ export default function(app) {
         })
         .within()
           .segment('activity', {
-            template: `<div class="container">
-              <activity document="$ctrl.documentId"></activity>
-            </div>`,
+            template: `
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-9 col-md-offset-3">
+                    <activity document="$ctrl.documentCtrl.documentId"></activity>
+                  </div>
+                </div>
+              </div>
+            `,
             title: 'Activity · PaperHive'
           })
           .segment('hivers', {
-            template: '<hivers document-id="$ctrl.documentId"></hivers>',
+            template: `
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-9 col-md-offset-3">
+                    <hivers hivers="$ctrl.documentCtrl.hivers"></hivers>
+                  </div>
+                </div>
+              </div>
+            `,
             title: 'Hivers · PaperHive'
           })
           .segment('discussions', {
@@ -269,9 +283,9 @@ export default function(app) {
           template: '<document-new></document-new>',
           title: 'Add a new document · PaperHive'
         })
-        .segment('documents_redirect', {
-          template: '<document-redirect></document-redirect>',
-          title: 'Document redirect · PaperHive'
+        .segment('documents_remote', {
+          template: '<document-remote></document-remote>',
+          title: 'Document remote redirect · PaperHive'
         })
 
         .segment('helpMarkdown', {
