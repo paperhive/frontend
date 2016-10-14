@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import * as angular from 'angular';
-import { cloneDeep, find, findLastIndex, merge, orderBy, pick, remove, some } from 'lodash';
+import { cloneDeep, find, findIndex, findLastIndex, merge, orderBy, pick, remove, some } from 'lodash';
 
 import template from './document.html';
 import { getRevisionMetadata } from '../utils/documents';
@@ -30,9 +30,7 @@ class DiscussionsController {
     const response = await this.$http({
       url: `${this.config.apiUrl}/documents/${this.document}/discussions`,
     });
-    this.$scope.$apply(() => {
-      this.discussions = response.data.discussions;
-    });
+    this.$scope.$apply(() => this.discussions = response.data.discussions);
     this.websocketInit();
   }
 
@@ -42,7 +40,7 @@ class DiscussionsController {
       method: 'POST',
       data: discussion,
     });
-    this._discussionCreate(response.data);
+    this.$scope.$apply(() => this._discussionCreate(response.data));
     return response.data;
   }
 
@@ -53,7 +51,7 @@ class DiscussionsController {
       method: 'PUT',
       data: _discussion,
     });
-    this._discussionUpdate(response.data);
+    this.$scope.$apply(() => this._discussionUpdate(response.data));
     return response.data;
   }
 
@@ -63,7 +61,7 @@ class DiscussionsController {
       method: 'DELETE',
       headers: {'If-Match': `"${discussion.revision}"`},
     });
-    this._discussionDelete(discussion);
+    this.$scope.$apply(() => this._discussionDelete(discussion));
   }
 
   async replySubmit(reply) {
@@ -72,7 +70,7 @@ class DiscussionsController {
       method: 'POST',
       data: reply,
     });
-    this._replyCreate(response.data);
+    this.$scope.$apply(() => this._replyCreate(response.data));
     return response.data;
   }
 
@@ -84,7 +82,7 @@ class DiscussionsController {
       data: _reply,
       headers: {'If-Match': `"${reply.revision}"`},
     });
-    this._replyUpdate(response.data);
+    this.$scope.$apply(() => this._replyUpdate(response.data));
     return response.data;
   }
 
@@ -94,11 +92,11 @@ class DiscussionsController {
       method: 'DELETE',
       headers: {'If-Match': `"${reply.revision}"`},
     });
-    this._replyDelete(merge(
+    this.$scope.$apply(() => this._replyDelete(merge(
       {},
       reply,
       {discussionRevision: response.data.discussionRevision}
-    ));
+    )));
   }
 
   // subscribe to push notifications
@@ -150,11 +148,11 @@ class DiscussionsController {
   }
 
   _discussionUpdate(updatedDiscussion) {
-    const existingDiscussion = find(this.discussions, {id: updatedDiscussion.id});
-    if (!existingDiscussion) {
+    const discussionIndex = findIndex(this.discussions, {id: updatedDiscussion.id});
+    if (discussionIndex === -1) {
       throw new Error('Could not find discussion for updating.');
     }
-    angular.copy(updatedDiscussion, existingDiscussion);
+    this.discussions[discussionIndex] = updatedDiscussion;
   }
 
   _discussionDelete(deletedDiscussion) {
@@ -176,11 +174,11 @@ class DiscussionsController {
 
   _replyUpdate(updatedReply) {
     const discussion = this._discussionGet(updatedReply.discussion);
-    const existingReply = find(discussion.replies, {id: updatedReply.id});
-    if (!existingReply) {
+    const replyIndex = findIndex(discussion.replies, {id: updatedReply.id});
+    if (replyIndex === -1) {
       throw new Error('Could not find reply for updating.');
     }
-    angular.copy(updatedReply, existingReply);
+    discussion.replies[replyIndex] = updatedReply;
     discussion.revision = updatedReply.discussionRevision;
   }
 
