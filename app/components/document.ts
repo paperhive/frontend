@@ -30,7 +30,9 @@ class DiscussionsController {
     const response = await this.$http({
       url: `${this.config.apiUrl}/documents/${this.document}/discussions`,
     });
-    this.discussions = response.data.discussions;
+    this.$scope.$apply(() => {
+      this.discussions = response.data.discussions;
+    });
     this.websocketInit();
   }
 
