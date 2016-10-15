@@ -22,7 +22,7 @@ export default function(app) {
 
           $scope.auth = authService;
 
-          $scope.$watch('$ctrl.discussions', discussions => {
+          $scope.$watchCollection('$ctrl.discussions', discussions => {
             // discussion with ID $routeSegment.$routeParams.discussionId
             $ctrl.discussion =
               find(discussions, {id: $routeSegment.$routeParams.discussionId});
