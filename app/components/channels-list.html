@@ -1,4 +1,7 @@
-<table class="table table-hover">
+<p ng-if="!$ctrl.channelService.channels.length">
+  <a href="./channels/new">Create a channel</a> and invite your colleagues to discuss privately.
+</p>
+<table class="table table-hover" ng-if="$ctrl.channelService.channels.length">
   <thead>
     <tr>
       <th>Name</th>
@@ -12,7 +15,7 @@
       ng-class="{'text-muted': !channel.isActive}"
     >
       <td>
-        <h5 class="ph-sm-margin-top ph-xs-margin-bottom">
+        <h5 class="ph-xs-margin-top ph-xs-margin-bottom">
           <a href="./channels/{{channel.id}}">{{channel.name}}</a>
         </h5>
         <small class="text-muted">{{channel.description}}</small>

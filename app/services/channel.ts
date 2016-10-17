@@ -21,7 +21,7 @@ export default function(app) {
     refresh() {
       this.channelsApi.getAll().then(data => {
         this.channels = data.channels;
-        this.invitations = data.invitations;
+        this.invitations = data.invitations.filter(invitation => invitation.channel.isActive);
       });
     }
 

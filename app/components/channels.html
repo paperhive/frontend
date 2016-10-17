@@ -3,10 +3,13 @@
     <div class="row">
       <div class="col-sm-12">
         <div class="ph-vertical-middle">
-          <h2>My channels</h2>
+          <h2>Channel overview</h2>
+          <p>
+            Channels allow you to discuss privately with your colleagues.
+          </p>
           <div>
             <a href="./channels/new" class="btn btn-primary ph-md-margin-bottom">
-              New channel
+              <i class="fa fa-fw fa-plus"></i> New channel
             </a>
           </div>
         </div>
@@ -17,11 +20,14 @@
   <div class="ph-header-submenu-container">
     <div class="container">
       <div class="row">
-        <div class="col-sm-12">
-          <subnav>
+        <div class="col-md-12">
+          <button ng-click="$ctrl.subnavOpen = !$ctrl.subnavOpen" type="button" class="btn btn-default visible-xs">
+            <i class="fa fa-fw fa-bars"></i> Toggle Navigation
+          </button>
+          <div class="navbar-collapse ph-no-padding" uib-collapse="!$ctrl.subnavOpen">
             <ul class="nav nav-tabs ph-header-submenu">
-              <li subnav-target="channels.channels">
-                <a>
+              <li ng-class="{active: ('channels.list' | routeSegmentStartsWith)}">
+                <a href=".{{'channels.list' | routeSegmentUrl}}" ng-click="$ctrl.subnavOpen = false">
                   <i class="fa fa-fw fa-bullhorn"></i>
                   My channels
                   <span class="badge ph-xs-margin-left">
@@ -29,17 +35,17 @@
                   </span>
                 </a>
               </li>
-              <li subnav-target="channels.invitations">
-                <a>
+              <li ng-class="{active: ('channels.invitations' | routeSegmentStartsWith)}">
+                <a href=".{{'channels.invitations' | routeSegmentUrl}}" ng-click="$ctrl.subnavOpen = false">
                   <i class="fa fa-fw fa-envelope"></i>
                   My invitations
                   <span class="badge ph-xs-margin-left">
-                    {{($ctrl.channelService.invitations | filter: {channel: {isActive: true} }).length}}
+                    {{$ctrl.channelService.invitations.length}}
                   </span>
                 </a>
               </li>
             </ul>
-          </subnav>
+          </div>
         </div>
       </div>
     </div>

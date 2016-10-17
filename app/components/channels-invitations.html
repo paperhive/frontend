@@ -1,4 +1,7 @@
-<table class="table table-hover">
+<p ng-if="!$ctrl.channelService.invitations.length">
+  You have no pending channel invitations.
+</p>
+<table class="table table-hover" ng-if="$ctrl.channelService.invitations.length">
   <tr ng-repeat="invitation in $ctrl.channelService.invitations">
     <td ng-if="invitation.channel.isActive">
       <b>{{invitation.channel.name}}</b>
