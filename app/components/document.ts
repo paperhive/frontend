@@ -49,6 +49,7 @@ class DiscussionsController {
     const response = await this.$http({
       url: `${this.config.apiUrl}/discussions/${discussion.id}`,
       method: 'PUT',
+      headers: {'If-Match': `"${discussion.revision}"`},
       data: _discussion,
     });
     this.$scope.$apply(() => this._discussionUpdate(response.data));
@@ -148,11 +149,13 @@ class DiscussionsController {
   }
 
   _discussionUpdate(updatedDiscussion) {
-    const discussionIndex = findIndex(this.discussions, {id: updatedDiscussion.id});
-    if (discussionIndex === -1) {
+    const discussion = find(this.discussions, {id: updatedDiscussion.id});
+    if (!discussion) {
       throw new Error('Could not find discussion for updating.');
     }
-    this.discussions[discussionIndex] = updatedDiscussion;
+    const replies = discussion.replies;
+    angular.copy(updatedDiscussion, discussion);
+    discussion.replies = replies;
   }
 
   _discussionDelete(deletedDiscussion) {
