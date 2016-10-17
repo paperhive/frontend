@@ -2,11 +2,11 @@
 
 import { find } from 'lodash';
 
-import template from './channels-channels.html';
+import template from './channels-list.html';
 
 export default function(app) {
-  app.component('channelsChannels', {
-    controller: class ChannelsChannelsCtrl {
+  app.component('channelsList', {
+    controller: class ChannelsListCtrl {
       static $inject = ['$location', 'authService', 'channelService'];
       constructor(public $location, public authService, public channelService) {}
 

@@ -28,7 +28,7 @@ export default function(app) {
         .when('/about', 'about')
         .when('/auth/return/:provider', 'authReturn')
         .when('/channels', 'channels')
-        .when('/channels/channels', 'channels.channels' )
+        .when('/channels/list', 'channels.list' )
         .when('/channels/invitations', 'channels.invitations')
         .when('/channels/new', 'channels_new')
         .when('/channels/:channelId', 'channel')
@@ -150,9 +150,9 @@ export default function(app) {
           title: 'My channels · PaperHive',
         })
         .within()
-          .segment('channels', {
+          .segment('list', {
             default: true,
-            template: '<channels-channels></channels-channels>',
+            template: '<channels-list></channels-list>',
             title: 'My channels · PaperHive',
           })
           .segment('invitations', {

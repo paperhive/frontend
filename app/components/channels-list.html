@@ -1,0 +1,39 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Role</th>
+      <th>Active</th>
+      <th>Created</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="channel in $ctrl.channelService.channels | orderBy:['-isActive','-createdAt']"
+      ng-class="{'text-muted': !channel.isActive}"
+    >
+      <td>
+        <h5 class="ph-sm-margin-top ph-xs-margin-bottom">
+          <a href="./channels/{{channel.id}}">{{channel.name}}</a>
+        </h5>
+        <small class="text-muted">{{channel.description}}</small>
+      </td>
+      <td>
+        <span
+          ng-repeat="role in $ctrl.getMyRoles(channel)"
+          class="label" ng-class="{
+            'label-primary': channel.isActive && role === 'owner',
+            'label-info': channel.isActive && role !== 'owner',
+            'label-default': !channel.isActive
+          }"
+        >
+          {{role}}
+        </span>
+        <!--div>
+          {{channel.description}}
+        </div-->
+      </td>
+      <td><i class="fa fa-check" ng-show="channel.isActive"></i></td>
+      <td am-time-ago="channel.createdAt"></td>
+    </tr>
+  </tbody>
+</table>
