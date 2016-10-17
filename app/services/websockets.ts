@@ -35,7 +35,7 @@ class WebsocketService {
         }
       );
 
-      socket.emit('join', {id: room});
+      socket.emit('join', {documentId: room});
 
       socket.on('update', observable.onNext.bind(observable));
 
