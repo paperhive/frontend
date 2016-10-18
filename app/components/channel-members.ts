@@ -11,8 +11,8 @@ export default function(app) {
       isOwner: '<',
     },
     controller: class ChannelMembers {
-      static $inject = ['channelService'];
-      constructor(public channelService) {}
+      static $inject = ['authService', 'channelService'];
+      constructor(public authService, public channelService) {}
 
       memberDelete(channel, memberId) {
         this.memberDeleting = memberId;
