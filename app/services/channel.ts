@@ -6,6 +6,7 @@ export default function(app) {
     channels: Array<any>;
     invitations: Array<any>;
     selectedChannel: any;
+    showAllChannels = true;
 
     static $inject = ['$rootScope', 'authService', 'channelsApi'];
     constructor($rootScope, public authService, public channelsApi) {
@@ -95,6 +96,10 @@ export default function(app) {
 
     selectChannel(channel) {
       this.selectedChannel = channel;
+    }
+
+    toggleShowAllChannels() {
+      this.showAllChannels = !this.showAllChannels;
     }
   });
 }
