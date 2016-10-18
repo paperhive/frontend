@@ -1,5 +1,9 @@
-<div class="container ph-lg-margin-bottom">
-  <h2 class="text-center">Confirm your invitation</h2>
+<div class="container ph-lg-margin-bottom" ng-if="!$ctrl.invitation.channel.isActive">
+  <h2 class="text-center">The channel you were invited to is not active anymore.</h2>
+</div>
+
+<div class="container ph-lg-margin-bottom" ng-if="$ctrl.invitation.channel.isActive">
+  <h2 class="text-center">Confirm your channel invitation</h2>
 
   <div class="row ph-lg-margin-top">
 
@@ -8,43 +12,44 @@
       <div class="panel panel-default">
         <div class="panel-body">
           <b>{{$ctrl.invitation.channel.name}}</b>
-          <span class="label label-info ph-sm-margin-left"
-            ng-repeat="role in $ctrl.invitation.roles"
-          >
-            {{role}}
-          </span>
           <span class="pull-right">
             <button
               type="button" class="btn btn-danger btn-sm"
               ng-confirm-click="Really discard this invitation?"
               confirmed-click="$ctrl.invitationDelete($ctrl.invitation.channel.id, $ctrl.invitation.id)"
             >
+              <i class="fa fa-times"></i>
               Discard
             </button>
-            <span class="ph-sm-margin-left">
-              <button
-                type="button" class="btn btn-primary btn-sm"
-                ng-click="$ctrl.invitationConfirm($ctrl.invitation.channel.id, $ctrl.invitation.id)"
-              >
-                Confirm
-              </button>
-            </span>
+            <button
+              type="button" class="btn btn-primary btn-sm"
+              ng-click="$ctrl.invitationConfirm($ctrl.invitation.channel.id, $ctrl.invitation.id)"
+            >
+              <i class="fa fa-check"></i>
+              Confirm
+            </button>
           </span>
           <div>
             {{$ctrl.invitation.channel.description}}
           </div>
           <div class="ph-sm-margin-top text-muted">
             <small>
-              invited by {{$ctrl.invitation.invitedBy.displayName}}
-              <a href="./users/{{$ctrl.invitation.invitedBy.account.username}}">
-                @{{$ctrl.invitation.invitedBy.account.username}}
-              </a>
+              <a href="./users/{{$ctrl.invitation.invitedBy.account.username}}">{{$ctrl.invitation.invitedBy.displayName}}</a>
+              invited you as
+              <span class="label ph-sm-margin-left ph-sm-margin-right"
+                ng-repeat="role in $ctrl.invitation.roles"
+                ng-class="{
+                  'label-primary': role === 'owner',
+                  'label-info': role !== 'owner',
+                }"
+              >
+                {{role}}
+              </span>
+              of this channel.
             </small>
           </div>
           <div class="text-muted">
-            <small>
-              on {{$ctrl.invitation.createdAt | date:'M/d/yyyy HH:mm'}}
-            </small>
+            <small am-time-ago="$ctrl.invitation.createdAt"></small>
           </div>
         </div>
       </div>
@@ -55,17 +60,13 @@
       <div class="panel panel-default">
         <div class="panel-body">
           <b>{{$ctrl.invitation.channel.name}}</b>
-          <span class="label label-info ph-sm-margin-left"
-            ng-repeat="role in $ctrl.invitation.roles"
-          >
-            {{role}}
-          </span>
           <span class="pull-right">
             <button
               type="button" class="btn btn-danger btn-sm"
               ng-confirm-click="Really discard this invitation?"
               confirmed-click="$ctrl.invitationDelete($ctrl.invitation.channel.id, $ctrl.invitation.id)"
             >
+              <i class="fa fa-times"></i>
               Discard
             </button>
           </span>
@@ -74,16 +75,22 @@
           </div>
           <div class="ph-sm-margin-top text-muted">
             <small>
-              invited by {{$ctrl.invitation.invitedBy.displayName}}
-              <a href="./users/{{$ctrl.invitation.invitedBy.account.username}}">
-                @{{$ctrl.invitation.invitedBy.account.username}}
-              </a>
+              <a href="./users/{{$ctrl.invitation.invitedBy.account.username}}">{{$ctrl.invitation.invitedBy.displayName}}</a>
+              invited you as
+              <span class="label ph-sm-margin-left ph-sm-margin-right"
+                ng-repeat="role in $ctrl.invitation.roles"
+                ng-class="{
+                  'label-primary': role === 'owner',
+                  'label-info': role !== 'owner',
+                }"
+              >
+                {{role}}
+              </span>
+              of this channel.
             </small>
           </div>
           <div class="text-muted">
-            <small>
-              on {{$ctrl.invitation.createdAt | date:'M/d/yyyy HH:mm'}}
-            </small>
+            <small am-time-ago="$ctrl.invitation.createdAt"></small>
           </div>
         </div>
       </div>
@@ -138,6 +145,7 @@
               ng-class="{disabled: confirmationForm.$invalid || $ctrl.inProgress || $ctrl.succeeded}"
             >
               <i ng-if="$ctrl.inProgress" class="fa fa-fw fa-spinner fa-spin"></i>
+              <i ng-if="!$ctrl.inProgress" class="fa fa-check"></i>
               Confirm and sign up
             </button>
           </div>
