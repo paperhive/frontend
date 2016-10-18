@@ -7,6 +7,7 @@
         class="btn btn-primary" ng-disabled="!$ctrl.channel.isActive"
         title="{{$ctrl.channel.isActive ? '' : 'Activate the channel first to invite people'}}"
       >
+        <i class="fa fa-envelope" aria-hidden="true"></i>
         Invite someone
       </button>
 
@@ -37,6 +38,7 @@
                   ng-disabled="!$ctrl.channel.isActive"
                   title="{{$ctrl.channel.isActive ? '' : 'Activate the channel first to update membership'}}"
                 >
+                  <i class="fa fa-user" aria-hidden="true"></i>
                   Change status
                 </button>
                 <button
@@ -47,6 +49,7 @@
                   ng-disabled="!$ctrl.channel.isActive"
                   title="{{$ctrl.channel.isActive ? '' : 'Activate the channel first to remove members'}}"
                 >
+                  <i class="fa fa-times" aria-hidden="true"></i>
                   Remove member
                 </button>
               </span>
@@ -85,6 +88,7 @@
                   ng-disabled="!$ctrl.channel.isActive"
                   title="{{$ctrl.channel.isActive ? '' : 'Activate the channel first to remove invitations'}}"
                 >
+                  <i class="fa fa-times" aria-hidden="true"></i>
                   Remove invitation
                 </button>
               </div>
@@ -117,6 +121,7 @@
                 ng-disabled="!$ctrl.channel.isActive"
                 title="{{$ctrl.channel.isActive ? '' : 'Activate the channel first to remove invitations'}}"
               >
+                <i class="fa fa-times" aria-hidden="true"></i>
                 Remove invitation
               </button>
               <div class="text-muted">

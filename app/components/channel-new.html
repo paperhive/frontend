@@ -36,6 +36,7 @@
           ng-click="!$ctrl.inProgress && !$ctrl.succeeded && !channelForm.$invalid && $ctrl.submit()"
           ng-class="{disabled: channelForm.$invalid || $ctrl.inProgress || $ctrl.succeeded}"
         >
+          <i class="fa fa-check" aria-hidden="true"></i>
           Create
         </button>
       </form>
