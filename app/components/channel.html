@@ -30,6 +30,15 @@
                 owner
               </span>
             </div>
+            <button
+              ng-if="$ctrl.isOwner"
+              type="button" ng-click="$ctrl.invitationModalOpen()"
+              class="btn btn-primary" ng-disabled="!$ctrl.channel.isActive"
+              title="{{$ctrl.channel.isActive ? '' : 'Activate the channel first to invite people'}}"
+            >
+              <i class="fa fa-envelope" aria-hidden="true"></i>
+              Invite someone
+            </button>
           </div>
         </div>
       </div>
@@ -57,6 +66,15 @@
                   Members
                   <span class="badge ph-xs-margin-left">
                     {{$ctrl.channel.members.length}}
+                  </span>
+                </a>
+              </li>
+              <li ng-class="{active: ('channel.invitations' | routeSegmentStartsWith)}">
+                <a href=".{{'channel.invitations' | routeSegmentUrl}}" ng-click="$ctrl.subnavOpen = false">
+                  <i class="fa fa-fw fa-envelope"></i>
+                  Invitations
+                  <span class="badge ph-xs-margin-left">
+                    {{$ctrl.channel.invitations.length}}
                   </span>
                 </a>
               </li>

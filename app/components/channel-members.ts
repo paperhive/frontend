@@ -11,22 +11,8 @@ export default function(app) {
       isOwner: '<',
     },
     controller: class ChannelMembers {
-      static $inject = ['$scope', '$uibModal', 'authService', 'channelService'];
-      constructor(public $scope, public $uibModal, public authService, public channelService) {}
-
-      invitationModalOpen() {
-        this.$uibModal.open({
-          component: 'channelInvitation',
-          // TODO: remove this ugly hack when uibModal supports custom bindings
-          scope: this.$scope,
-        });
-      };
-
-      invitationDelete(channelId, invitationId) {
-        this.invitationDeleting = invitationId;
-        this.channelService.invitationDelete(channelId, invitationId)
-          .finally(() => this.invitationDeleting = false);
-      }
+      static $inject = ['channelService'];
+      constructor(public channelService) {}
 
       memberDelete(channel, memberId) {
         this.memberDeleting = memberId;
@@ -34,15 +20,6 @@ export default function(app) {
           .finally(() => this.memberDeleting = false);
       }
 
-      updateModalOpen(member) {
-        this.$uibModal.open({
-          component: 'memberUpdate',
-          resolve: {
-            member: () => member,
-            channel: () => this.channel,
-          },
-        });
-      };
     },
     template,
   });
