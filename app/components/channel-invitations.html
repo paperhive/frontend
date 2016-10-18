@@ -1,10 +1,10 @@
 <div class="row">
   <div class="col-sm-12">
     <div class="form-group">
-      <h2>
-        Pending invitations
-      </h2>
-      <table class="table table-hover">
+      <p ng-if="$ctrl.channel.invitations.length === 0">
+        There are no pending channel invitations.
+      </p>
+      <table class="table table-hover" ng-if="$ctrl.channel.invitations.length > 0">
         <thead>
           <th>Name/Email</th>
           <th>Role</th>
@@ -15,8 +15,6 @@
         <tbody>
           <!-- email invitation -->
           <tr ng-repeat="invitation in $ctrl.channel.invitations"
-            ng-mouseenter="showButtons=true"
-            ng-mouseleave="showButtons=false"
             ng-if="invitation.email"
           >
             <td>
@@ -41,13 +39,12 @@
             <td am-time-ago="invitation.createdAt"></td>
             <td>
               <button
-                ng-show="showButtons"
                 ng-if="$ctrl.isOwner"
                 type="button" class="btn btn-danger btn-sm pull-right"
                 ng-confirm-click="Really remove invitation?"
                 confirmed-click="$ctrl.invitationDelete($ctrl.channel.id, invitation.id)"
                 ng-disabled="!$ctrl.channel.isActive"
-                title="{{$ctrl.channel.isActive ? '' : 'Activate the channel first to remove invitations'}}"
+                title="{{$ctrl.channel.isActive ? '' : 'Reactivate the channel to remove invitations'}}"
               >
                 <i class="fa fa-times" aria-hidden="true"></i>
                 Remove invitation
@@ -56,8 +53,6 @@
           </tr>
 
           <tr ng-repeat="invitation in $ctrl.channel.invitations"
-            ng-mouseenter="showButtons=true"
-            ng-mouseleave="showButtons=false"
             ng-if="!invitation.email"
           >
             <!-- person invitation -->
@@ -88,13 +83,12 @@
             <td am-time-ago="invitation.createdAt"></td>
             <td>
               <button
-                ng-show="showButtons"
                 ng-if="$ctrl.isOwner"
                 type="button" class="btn btn-danger btn-sm pull-right"
                 ng-confirm-click="Really remove invitation?"
                 confirmed-click="$ctrl.invitationDelete($ctrl.channel.id, invitation.id)"
                 ng-disabled="!$ctrl.channel.isActive"
-                title="{{$ctrl.channel.isActive ? '' : 'Activate the channel first to remove invitations'}}"
+                title="{{$ctrl.channel.isActive ? '' : 'Reactivate the channel to remove invitations'}}"
               >
                 <i class="fa fa-times" aria-hidden="true"></i>
                 Remove invitation

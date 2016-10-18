@@ -39,7 +39,7 @@
           ng-if="$ctrl.isOwner"
           type="button" ng-click="$ctrl.invitationModalOpen()"
           class="btn btn-primary ph-md-margin-bottom" ng-disabled="!$ctrl.channel.isActive"
-          title="{{$ctrl.channel.isActive ? '' : 'Activate the channel first to invite people'}}"
+          title="{{$ctrl.channel.isActive ? '' : 'Reactivate the channel to invite people'}}"
         >
           <i class="fa fa-envelope" aria-hidden="true"></i>
           Invite someone
@@ -59,7 +59,7 @@
             <ul class="nav nav-tabs ph-header-submenu">
               <li ng-class="{active: ('channel.documents' | routeSegmentStartsWith)}">
                 <a href=".{{'channel.documents' | routeSegmentUrl}}" ng-click="$ctrl.subnavOpen = false">
-                  <i class="fa fa-fw fa-file-text-o"></i>
+                  <i class="fa fa-fw fa-file-o"></i>
                   Documents
                 </a>
               </li>
@@ -72,7 +72,7 @@
                   </span>
                 </a>
               </li>
-              <li ng-class="{active: ('channel.invitations' | routeSegmentStartsWith)}">
+              <li ng-if="$ctrl.isOwner" ng-class="{active: ('channel.invitations' | routeSegmentStartsWith)}">
                 <a href=".{{'channel.invitations' | routeSegmentUrl}}" ng-click="$ctrl.subnavOpen = false">
                   <i class="fa fa-fw fa-envelope"></i>
                   Invitations
