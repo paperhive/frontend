@@ -275,9 +275,11 @@ export default function(app) {
 
         // filter by channel if showAllChannels is false
         if (!this.channelService.showAllChannels) {
-          discussions = discussions.filter(
-            discussion => discussion.channel === this.channelService.selectedChannel
-          );
+          discussions = discussions.filter(discussion => {
+            const channelId = this.channelService.selectedChannel &&
+              this.channelService.selectedChannel.id;
+            return discussion.channel === channelId;
+          });
         }
 
         angular.copy(discussions, this.filteredDiscussions);
