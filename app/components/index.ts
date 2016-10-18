@@ -6,6 +6,7 @@ import avatarList from './avatar-list';
 import channel from './channel';
 import channelInvitation from './channel-invitation';
 import channelMembers from './channel-members';
+import channelSelector from './channel-selector';
 import channelSettings from './channel-settings';
 import channels from './channels';
 import channelsInvitations from './channels-invitations';
@@ -83,6 +84,7 @@ export default function(app) {
   channel(app);
   channelInvitation(app);
   channelMembers(app);
+  channelSelector(app);
   channelSettings(app);
   channels(app);
   channelsInvitations(app);

@@ -5,6 +5,7 @@ export default function(app) {
   app.service('channelService', class channelService {
     channels: Array<any>;
     invitations: Array<any>;
+    selectedChannel: any;
 
     static $inject = ['$rootScope', 'authService', 'channelsApi'];
     constructor($rootScope, public authService, public channelsApi) {
@@ -90,6 +91,10 @@ export default function(app) {
     memberDelete(channel, memberId) {
       return this.channelsApi.memberDelete(channel.id, memberId)
         .then(() => remove(channel.members, {person: {id: memberId}}));
+    }
+
+    selectChannel(channel) {
+      this.selectedChannel = channel;
     }
   });
 }

@@ -91,12 +91,15 @@ document-sidenav {
   }
 }
 
-@ph-split-icon-width: 18px;
+@ph-split-icon-width: 20px;
 @ph-split-date-width: 70px;
+.dropdown-menu > li > a.ph-split-container,
 .ph-split-container {
   text-align: left;
   width: 100%;
   position: relative;
+  padding-left: @padding-base-horizontal;
+  padding-right: @padding-base-horizontal;
 
   &.ph-split-container-no-icon {
     padding-left: 3 * @padding-base-horizontal + @ph-split-icon-width + 1px;

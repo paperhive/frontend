@@ -1,0 +1,49 @@
+<div class="dropdown ph-sidenav-item" is-open="$ctrl.isOpen" uib-dropdown>
+  <button class="btn btn-default ph-split-container ph-split-container-icon-right dropdown-toggle" uib-dropdown-toggle
+    title="{{$ctrl.getChannelDescription($ctrl.channelService.selectedChannel)}}"
+  >
+    <span class="ph-split-icon"><i class="fa fa-bullhorn" aria-hidden="true"></i></span>
+    <span class="ph-split-text">
+      {{$ctrl.getChannelDescription($ctrl.channelService.selectedChannel)}}
+      <span class="badge" ng-if="$ctrl.channelService.selectedChannel">
+        {{$ctrl.channelService.selectedChannel.members.length}}
+      </span>
+    </span>
+    <i class="fa fa-fw fa-caret-down ph-split-icon-right"></i>
+  </button>
+  <ul class="dropdown-menu ph-dropdown-menu-full">
+    <li ng-click="$ctrl.isOpen = false">
+      <a href=""
+        class="ph-split-container ph-split-container-no-icon"
+        ng-click="$ctrl.channelService.selectChannel(undefined)"
+        title="Public channel"
+      >
+        <span class="ph-split-text">Public channel</span>
+      </a>
+    </li>
+    <li
+      ng-repeat="channel in $ctrl.channelService.channels"
+      ng-click="$ctrl.isOpen = false"
+    >
+      <a href=""
+        class="ph-split-container ph-split-container-no-icon"
+        ng-click="$ctrl.channelService.selectChannel(channel)"
+        title="{{$ctrl.getChannelDescription(channel)}}"
+      >
+        <span class="ph-split-text">
+          {{$ctrl.getChannelDescription(channel)}}
+          <span class="badge">{{channel.members.length}}</span>
+        </span>
+      </a>
+    </li>
+    <li role="separator" class="divider"></li>
+    <li ng-class="{disabled: !$ctrl.authService.user}">
+      <a href="./channels/new"
+        ng-click="!$ctrl.authService.user && ($event.preventDefault() || $event.stopPropagation())"
+        class="ph-split-container ph-split-container-no-icon"
+      >
+        <span class="ph-split-text">Create channel</span>
+      </a>
+    </li>
+  </ul>
+</div>
