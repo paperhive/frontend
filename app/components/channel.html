@@ -40,16 +40,19 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-12">
-          <subnav>
+          <button ng-click="$ctrl.subnavOpen = !$ctrl.subnavOpen" type="button" class="btn btn-default visible-xs">
+            <i class="fa fa-fw fa-bars"></i> Toggle Navigation
+          </button>
+          <div class="navbar-collapse ph-no-padding" uib-collapse="!$ctrl.subnavOpen">
             <ul class="nav nav-tabs ph-header-submenu">
-              <li subnav-target="channel.documents">
-                <a>
+              <li ng-class="{active: ('channel.documents' | routeSegmentStartsWith)}">
+                <a href=".{{'channel.documents' | routeSegmentUrl}}" ng-click="$ctrl.subnavOpen = false">
                   <i class="fa fa-fw fa-file-text-o"></i>
                   Documents
                 </a>
               </li>
-              <li subnav-target="channel.members">
-                <a>
+              <li ng-class="{active: ('channel.members' | routeSegmentStartsWith)}">
+                <a href=".{{'channel.members' | routeSegmentUrl}}" ng-click="$ctrl.subnavOpen = false">
                   <i class="fa fa-fw fa-users"></i>
                   Members
                   <span class="badge ph-xs-margin-left">
@@ -57,14 +60,14 @@
                   </span>
                 </a>
               </li>
-              <!-- <li subnav-target="channel.activity">
-                <a><i class="fa fa-heartbeat"></i> Activity</a>
-              </li> -->
-              <li subnav-target="channel.settings">
-                <a><i class="fa fa-fw fa-cog"></i> Settings</a>
+              <li ng-class="{active: ('channel.settings' | routeSegmentStartsWith)}">
+                <a href=".{{'channel.settings' | routeSegmentUrl}}" ng-click="$ctrl.subnavOpen = false">
+                  <i class="fa fa-fw fa-cog"></i>
+                  Settings
+                </a>
               </li>
             </ul>
-          </subnav>
+          </div>
         </div>
       </div>
     </div>

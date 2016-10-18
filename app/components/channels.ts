@@ -1,4 +1,5 @@
 'use strict';
+
 import template from './channels.html';
 
 export default function(app) {
