@@ -11,14 +11,24 @@ export default function(app) {
       isOwner: '<',
     },
     controller: class ChannelMembers {
-      static $inject = ['authService', 'channelService'];
-      constructor(public authService, public channelService) {}
+      static $inject = ['$uibModal', 'authService', 'channelService'];
+      constructor(public $uibModal, public authService, public channelService) {}
 
       memberDelete(channel, memberId) {
         this.memberDeleting = memberId;
         this.channelService.memberDelete(channel, memberId)
           .finally(() => this.memberDeleting = false);
       }
+
+      updateModalOpen(member) {
+        this.$uibModal.open({
+          component: 'memberUpdate',
+          resolve: {
+            member: () => member,
+            channel: () => this.channel,
+          },
+        });
+      };
 
     },
     template,

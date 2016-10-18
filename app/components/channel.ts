@@ -24,23 +24,12 @@ export default function(app) {
       }
 
       invitationModalOpen() {
-        console.log(this.channel);
         this.$uibModal.open({
           component: 'channelInvitation',
           // TODO: remove this ugly hack when uibModal supports custom bindings
           scope: this.$scope,
         });
       };
-
-      // updateModalOpen(member) {
-      //   this.$uibModal.open({
-      //     component: 'memberUpdate',
-      //     resolve: {
-      //       member: () => member,
-      //       channel: () => this.channel,
-      //     },
-      //   });
-      // };
 
     },
     template,
