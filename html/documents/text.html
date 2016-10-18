@@ -2,7 +2,7 @@
   revision="$ctrl.activeRevision"
   access="$ctrl.documentCtrl.revisionAccess[$ctrl.activeRevision.revision]"
   latest-accessible-revision="$ctrl.documentCtrl.latestAccessibleRevision"
-  discussions="$ctrl.discussionsCtrl.discussions"
+  discussions="$ctrl.filteredDiscussions"
   viewport-offset-top="$root.navbarSize.height + subnavSize.height"
   expanded="!$ctrl.sidenavOpen"
   on-discussion-submit="$ctrl.discussionsCtrl.discussionSubmit(discussion)"

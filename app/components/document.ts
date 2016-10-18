@@ -201,13 +201,14 @@ export default function(app) {
       revisions: Array<any>;
       activeRevision: any;
       discussionsCtrl: DiscussionsController;
+      filteredDiscussions: Array<any>;
 
       // note: do *not* use $routeSegment.$routeParams because they still
       // use the old state in $routeChangeSuccess events
-      static $inject = ['$http', '$routeParams', '$scope', 'config',
+      static $inject = ['$http', '$routeParams', '$scope', 'channelService', 'config',
         'DocumentController', 'metaService', 'notificationService', 'websocketService'];
 
-      constructor($http, public $routeParams, $scope, config,
+      constructor($http, public $routeParams, $scope, public channelService, config,
         DocumentController, public metaService, notificationService, websocketService) {
         const documentId = $routeParams.documentId;
 
@@ -235,6 +236,11 @@ export default function(app) {
           type: 'error',
           message: error.message
         }));
+
+        // update filtered discussions if discussions, channel or showAllChannels changed
+        $scope.$watchCollection('$ctrl.discussionsCtrl.discussions', this.updateFilteredDiscussions.bind(this));
+        $scope.$watch('$ctrl.channelService.selectedChannel', this.updateFilteredDiscussions.bind(this));
+        $scope.$watch('$ctrl.channelService.showAllChannels', this.updateFilteredDiscussions.bind(this));
       }
 
       updateActiveRevision() {
@@ -256,6 +262,25 @@ export default function(app) {
         this.activeRevision =
           this.documentCtrl.latestAccessibleRevision ||
           this.documentCtrl.latestRevision;
+      }
+
+      updateFilteredDiscussions() {
+        if (this.filteredDiscussions === undefined) this.filteredDiscussions = [];
+
+        let discussions = this.discussionsCtrl.discussions;
+        if (!discussions) {
+          angular.copy([], this.filteredDiscussions);
+          return;
+        }
+
+        // filter by channel if showAllChannels is false
+        if (!this.channelService.showAllChannels) {
+          discussions = discussions.filter(
+            discussion => discussion.channel === this.channelService.selectedChannel
+          );
+        }
+
+        angular.copy(discussions, this.filteredDiscussions);
       }
 
       updateMetadata() {
