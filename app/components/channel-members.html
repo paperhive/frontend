@@ -4,24 +4,41 @@
       <h2>
         Members
       </h2>
+
       <table class="table table-hover ph-md-margin-bottom">
-        <tr ng-repeat="member in $ctrl.channel.members"
-          ng-mouseenter="showButtons=true"
-          ng-mouseleave="showButtons=false"
-          ng-class="{'active': member.person.id === $ctrl.authService.user.id}"
-        >
-          <td>
-            <p>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="member in $ctrl.channel.members"
+            ng-mouseenter="showButtons=true"
+            ng-mouseleave="showButtons=false"
+            ng-class="{'active': member.person.id === $ctrl.authService.user.id}"
+          >
+            <td>
               <avatar user="member.person" size="30"
                 classes="img-circle ph-sm-margin-right"
               ></avatar>
-              {{member.person.displayName}}
-              <a href="./users/{{member.person.account.username}}"><small>@{{member.person.account.username}}</small></a>
-              <span class="label label-default ph-sm-margin-left"
-                ng-repeat="role in member.roles"
+              <a href="./users/{{member.person.account.username}}">
+                {{member.person.displayName}}
+              </a>
+            </td>
+            <td>
+              <span class="label"
+                ng-repeat="role in member.roles" ng-class="{
+                  'label-primary': $ctrl.channel.isActive && role === 'owner',
+                  'label-info': $ctrl.channel.isActive && role !== 'owner',
+                  'label-default': !$ctrl.channel.isActive
+                }"
               >
                 {{role}}
               </span>
+            </td>
+            <td>
               <span class="pull-right ph-fade-in ph-fade-out" ng-show="showButtons">
                 <button
                   ng-if="$ctrl.isOwner && member.person.id !== $ctrl.authService.user.id"
@@ -45,9 +62,9 @@
                   Remove member
                 </button>
               </span>
-            </p>
-          </td>
-        </tr>
+            </td>
+          </tr>
+        </tbody>
       </table>
 
     </div>
