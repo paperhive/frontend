@@ -43,7 +43,8 @@
       ng-click="!$ctrl.inProgress && !$ctrl.succeeded && !invitationForm.$invalid && $ctrl.submit()"
       ng-class="{disabled: invitationForm.$invalid || $ctrl.inProgress || $ctrl.succeeded}"
     >
-      <i class="fa fa-envelope" aria-hidden="true"></i>
+      <i ng-if="$ctrl.inProgress" class="fa fa-fw fa-spinner fa-spin"></i>
+      <i ng-if="!$ctrl.inProgress" class="fa fa-fw fa-envelope" aria-hidden="true"></i>
       Invite
     </button>
   </div>

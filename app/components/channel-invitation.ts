@@ -36,6 +36,10 @@ export default function(app) {
           this.inProgress = false;
           this.close();
           this.$location.path(`/channels/${this.$routeParams.channelId}/invitations`);
+        }).finally(() => {
+          this.succeeded = false;
+          this.inProgress = false;
+          this.close();
         });
       }
     },

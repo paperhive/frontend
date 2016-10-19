@@ -37,7 +37,8 @@
             ng-click="!$ctrl.inProgress && !updateChannelForm.$invalid && $ctrl.channelUpdate()"
             ng-class="{disabled: updateChannelForm.$invalid || $ctrl.inProgress}"
           >
-            <i class="fa fa-check" aria-hidden="true"></i>
+            <i ng-if="$ctrl.inProgress" class="fa fa-fw fa-spinner fa-spin"></i>
+            <i ng-if="!$ctrl.inProgress" class="fa fa-check" aria-hidden="true"></i>
             Save
           </button>
         </div>
@@ -58,7 +59,8 @@
                 confirmed-click="$ctrl.channelDeactivate()"
                 ng-disabled="$ctrl.deactivating"
               >
-                <i class="fa fa-times" aria-hidden="true"></i>
+                <i ng-if="$ctrl.deactivating" class="fa fa-fw fa-spinner fa-spin"></i>
+                <i ng-if="!$ctrl.deactivating" class="fa fa-times" aria-hidden="true"></i>
                 Deactivate
               </button>
             </div>
@@ -75,7 +77,8 @@
                 ng-click="$ctrl.channelActivate()"
                 ng-disabled="$ctrl.activating"
               >
-                <i class="fa fa-check" aria-hidden="true"></i>
+                <i ng-if="$ctrl.activating" class="fa fa-fw fa-spinner fa-spin"></i>
+                <i ng-if="!$ctrl.activating" class="fa fa-check" aria-hidden="true"></i>
                 Reactivate
               </button>
             </div>

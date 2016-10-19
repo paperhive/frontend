@@ -18,21 +18,23 @@
               ng-confirm-click="Really discard this invitation?"
               confirmed-click="$ctrl.invitationDelete($ctrl.invitation.channel.id, $ctrl.invitation.id)"
             >
-              <i class="fa fa-times"></i>
+              <i ng-if="$ctrl.invitationDeleting" class="fa fa-fw fa-spinner fa-spin"></i>
+              <i ng-if="!$ctrl.invitationDeleting" class="fa fa-times"></i>
               Discard
             </button>
             <button
               type="button" class="btn btn-primary btn-sm"
               ng-click="$ctrl.invitationConfirm($ctrl.invitation.channel.id, $ctrl.invitation.id)"
             >
-              <i class="fa fa-check"></i>
+              <i ng-if="$ctrl.inProgress" class="fa fa-fw fa-spinner fa-spin"></i>
+              <i ng-if="!$ctrl.inProgress" class="fa fa-check"></i>
               Confirm
             </button>
           </span>
           <div>
             {{$ctrl.invitation.channel.description}}
           </div>
-          <div class="ph-sm-margin-top text-muted">
+          <p class="ph-lg-margin-top text-muted">
             <a href="./users/{{$ctrl.invitation.invitedBy.account.username}}">{{$ctrl.invitation.invitedBy.displayName}}</a>
             invited you as a channel
             <span class="label ph-xs-margin-left"
@@ -44,7 +46,7 @@
             >
               {{role}}
             </span>
-          </div>
+          </p>
         </div>
       </div>
     </div>
@@ -67,7 +69,7 @@
           <div>
             {{$ctrl.invitation.channel.description}}
           </div>
-          <p class="ph-md-margin-top text-muted">
+          <p class="ph-lg-margin-top text-muted">
             <a href="./users/{{$ctrl.invitation.invitedBy.account.username}}">{{$ctrl.invitation.invitedBy.displayName}}</a>
             invited you as a channel
             <span class="label ph-xs-margin-left"
