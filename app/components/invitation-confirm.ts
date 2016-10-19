@@ -18,8 +18,8 @@ export default function(app) {
       }
 
       hasError(field) {
-        const form = this.$scope.confirmationForm;
-        return form && (form.$submitted || form[field].$touched) &&
+        const form = this.$scope.$$childHead.confirmationForm;
+        return (form.$submitted || form[field].$touched) &&
           form[field].$invalid;
       }
 

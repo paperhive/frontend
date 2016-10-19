@@ -33,20 +33,17 @@
             {{$ctrl.invitation.channel.description}}
           </div>
           <div class="ph-sm-margin-top text-muted">
-            <small>
-              <a href="./users/{{$ctrl.invitation.invitedBy.account.username}}">{{$ctrl.invitation.invitedBy.displayName}}</a>
-              invited you <span am-time-ago="$ctrl.invitation.createdAt"></span> as
-              <span class="label ph-sm-margin-left ph-sm-margin-right"
-                ng-repeat="role in $ctrl.invitation.roles"
-                ng-class="{
-                  'label-primary': role === 'owner',
-                  'label-info': role !== 'owner',
-                }"
-              >
-                {{role}}
-              </span>
-              of this channel.
-            </small>
+            <a href="./users/{{$ctrl.invitation.invitedBy.account.username}}">{{$ctrl.invitation.invitedBy.displayName}}</a>
+            invited you as a channel
+            <span class="label ph-xs-margin-left"
+              ng-repeat="role in $ctrl.invitation.roles"
+              ng-class="{
+                'label-primary': role === 'owner',
+                'label-info': role !== 'owner',
+              }"
+            >
+              {{role}}
+            </span>
           </div>
         </div>
       </div>
@@ -71,20 +68,17 @@
             {{$ctrl.invitation.channel.description}}
           </div>
           <p class="ph-md-margin-top text-muted">
-            <small>
-              <a href="./users/{{$ctrl.invitation.invitedBy.account.username}}">{{$ctrl.invitation.invitedBy.displayName}}</a>
-              invited you <span am-time-ago="$ctrl.invitation.createdAt"></span> as
-              <span class="label ph-sm-margin-left ph-sm-margin-right"
-                ng-repeat="role in $ctrl.invitation.roles"
-                ng-class="{
-                  'label-primary': role === 'owner',
-                  'label-info': role !== 'owner',
-                }"
-              >
-                {{role}}
-              </span>
-              of this channel.
-            </small>
+            <a href="./users/{{$ctrl.invitation.invitedBy.account.username}}">{{$ctrl.invitation.invitedBy.displayName}}</a>
+            invited you as a channel
+            <span class="label ph-xs-margin-left"
+              ng-repeat="role in $ctrl.invitation.roles"
+              ng-class="{
+                'label-primary': role === 'owner',
+                'label-info': role !== 'owner',
+              }"
+            >
+              {{role}}
+            </span>
           </p>
         </div>
       </div>
@@ -117,19 +111,6 @@
                 </span>
               </span>
             </div>
-          </div>
-
-          <div ng-class="{'has-success': confirmationForm.$valid}">
-            <span class="help-block">
-              <span ng-if="$ctrl.succeeded">
-                <i class="fa fa-fw fa-check"></i>
-                Check your emails to confirm your sign-up.
-              </span>
-              <span ng-if="$ctrl.error" class="text-danger">
-                <i class="fa fa-fw fa-times"></i>
-                {{$ctrl.error}}
-              </span>
-            </span>
           </div>
 
           <div class="ph-md-padding-top">
