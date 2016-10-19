@@ -5,6 +5,7 @@ import template from './activity.html!text';
 export default function(app) {
   app.component('activity', {
     bindings: {
+      channel: '<',
       document: '<',
       person: '<',
     },
@@ -21,6 +22,7 @@ export default function(app) {
           $http.get(
             config.apiUrl + `/activities/`, {
               params: {
+                channel: ctrl.channel,
                 document: ctrl.document,
                 person: personId,
               }

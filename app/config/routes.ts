@@ -32,7 +32,7 @@ export default function(app) {
         .when('/channels/invitations', 'channels.invitations')
         .when('/channels/new', 'channels_new')
         .when('/channels/:channelId', 'channel')
-        .when('/channels/:channelId/documents', 'channel.documents')
+        .when('/channels/:channelId/activity', 'channel.activity')
         .when('/channels/:channelId/invitations', 'channel.invitations')
         .when('/channels/:channelId/members', 'channel.members')
         .when('/channels/:channelId/settings', 'channel.settings')
@@ -171,12 +171,12 @@ export default function(app) {
           template: '<channel></channel',
         })
         .within()
-          .segment('documents', {
+          .segment('activity', {
             default: true,
             template:
-              `<channel-documents
-                channel="$ctrl.channel"
-              ></channel-documents>`,
+              `<activity
+                channel="$ctrl.channel.id"
+              ></activity>`,
             title: 'My channel · PaperHive',
           })
           .segment('invitations', {

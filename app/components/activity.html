@@ -9,6 +9,15 @@
         <div class="ph-arrow ph-arrow-outward-left"></div>
       </div>
 
+      <div ng-if="$ctrl.channel" class="text-muted">
+        Here you can find the recent discussions, replies and hives of
+        this channel.
+        <span ng-if="$ctrl.activities.length === 0">
+          Unfortunately, there is no activity yet. Be the first to hive a
+          document or start a discussion. Go to a document and select this channel.
+        </span>
+      </div>
+
       <div ng-if="$ctrl.document" class="text-muted">
         Here you can find the recent discussions, replies and hives on
         this document.
@@ -38,7 +47,6 @@
   </li>
 
   <li ng-repeat="activity in $ctrl.activities" class="ph-timeline-item ph-lg-margin-bottom">
-
     <div class="ph-timeline-badge">
       <i class="fa fa-reply" aria-hidden="true"
         ng-if="activity.activityType === 'updateReply' || activity.activityType === 'createReply'"

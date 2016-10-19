@@ -60,13 +60,13 @@
           </button>
           <div class="navbar-collapse ph-no-padding" uib-collapse="!$ctrl.subnavOpen">
             <ul class="nav nav-tabs ph-header-submenu">
-              <li ng-class="{active: ('channel.documents' | routeSegmentStartsWith)}">
+              <li ng-class="{active: ('channel.activity' | routeSegmentStartsWith)}">
                 <a
-                  href=".{{'channel.documents' | routeSegmentUrl}}"
+                  href=".{{'channel.activity' | routeSegmentUrl}}"
                   ng-click="$ctrl.subnavOpen = false"
                 >
-                  <i class="fa fa-fw fa-file-o"></i>
-                  Documents
+                  <i class="fa fa-fw fa-heartbeat"></i>
+                  Activity
                 </a>
               </li>
               <li ng-class="{active: ('channel.members' | routeSegmentStartsWith)}">
