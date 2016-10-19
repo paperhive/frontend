@@ -35,7 +35,7 @@
           <div class="ph-sm-margin-top text-muted">
             <small>
               <a href="./users/{{$ctrl.invitation.invitedBy.account.username}}">{{$ctrl.invitation.invitedBy.displayName}}</a>
-              invited you as
+              invited you <span am-time-ago="$ctrl.invitation.createdAt"></span> as
               <span class="label ph-sm-margin-left ph-sm-margin-right"
                 ng-repeat="role in $ctrl.invitation.roles"
                 ng-class="{
@@ -47,9 +47,6 @@
               </span>
               of this channel.
             </small>
-          </div>
-          <div class="text-muted">
-            <small am-time-ago="$ctrl.invitation.createdAt"></small>
           </div>
         </div>
       </div>
@@ -73,10 +70,10 @@
           <div>
             {{$ctrl.invitation.channel.description}}
           </div>
-          <div class="ph-sm-margin-top text-muted">
+          <p class="ph-md-margin-top text-muted">
             <small>
               <a href="./users/{{$ctrl.invitation.invitedBy.account.username}}">{{$ctrl.invitation.invitedBy.displayName}}</a>
-              invited you as
+              invited you <span am-time-ago="$ctrl.invitation.createdAt"></span> as
               <span class="label ph-sm-margin-left ph-sm-margin-right"
                 ng-repeat="role in $ctrl.invitation.roles"
                 ng-class="{
@@ -88,10 +85,7 @@
               </span>
               of this channel.
             </small>
-          </div>
-          <div class="text-muted">
-            <small am-time-ago="$ctrl.invitation.createdAt"></small>
-          </div>
+          </p>
         </div>
       </div>
     </div>
