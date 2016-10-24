@@ -34,27 +34,26 @@
         <span class="badge">{{channel.members.length}}</span>
       </a>
     </li>
-    <li role="separator" class="divider"></li>
-    <li>
+    <li ng-if="$ctrl.authService.user" role="separator" class="divider"></li>
+    <li ng-if="$ctrl.authService.user">
       <a href=""
         ng-click="$ctrl.channelService.toggleShowAllChannels(); $event.stopPropagation()"
         title="Show discussions from all channels instead of just from the selected one?"
       >
-        <span ng-class="{'text-muted': !$ctrl.channelService.showAllChannels}">
-          <i class="fa fa-fw ph-dropdown-icon-left"
-            ng-class="{
-              'fa-square-o': !$ctrl.channelService.showAllChannels,
-              'fa-check-square-o': $ctrl.channelService.showAllChannels,
-            }"
-          ></i>
-          Show discussions from all channels
-        </span>
+        <i class="fa fa-fw ph-dropdown-icon-left"
+          ng-class="{
+            'fa-square-o': !$ctrl.channelService.showAllChannels,
+            'fa-check-square-o': $ctrl.channelService.showAllChannels,
+          }"
+        ></i>
+        Show discussions from all channels
       </a>
     </li>
     <li role="separator" class="divider"></li>
     <li ng-class="{disabled: !$ctrl.authService.user}">
       <a href="./channels/new"
         ng-click="!$ctrl.authService.user && ($event.preventDefault() || $event.stopPropagation())"
+        title="You have to be logged in to create a private discussion channel."
       >
         <i class="fa fa-fw ph-dropdown-icon-left fa-plus"></i>
         Create channel
