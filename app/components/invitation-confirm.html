@@ -19,7 +19,7 @@
               confirmed-click="$ctrl.invitationDelete($ctrl.invitation.channel.id, $ctrl.invitation.id)"
             >
               <i ng-if="$ctrl.invitationDeleting" class="fa fa-fw fa-spinner fa-spin"></i>
-              <i ng-if="!$ctrl.invitationDeleting" class="fa fa-times"></i>
+              <i ng-if="!$ctrl.invitationDeleting" class="fa fa-fw fa-times"></i>
               Discard
             </button>
             <button
@@ -27,7 +27,7 @@
               ng-click="$ctrl.invitationConfirm($ctrl.invitation.channel.id, $ctrl.invitation.id)"
             >
               <i ng-if="$ctrl.inProgress" class="fa fa-fw fa-spinner fa-spin"></i>
-              <i ng-if="!$ctrl.inProgress" class="fa fa-check"></i>
+              <i ng-if="!$ctrl.inProgress" class="fa fa-fw fa-check"></i>
               Confirm
             </button>
           </span>
@@ -62,7 +62,7 @@
               ng-confirm-click="Really discard this invitation?"
               confirmed-click="$ctrl.invitationDelete($ctrl.invitation.channel.id, $ctrl.invitation.id)"
             >
-              <i class="fa fa-times"></i>
+              <i class="fa fa-fw fa-times"></i>
               Discard
             </button>
           </span>
@@ -122,7 +122,7 @@
               ng-class="{disabled: confirmationForm.$invalid || $ctrl.inProgress || $ctrl.succeeded}"
             >
               <i ng-if="$ctrl.inProgress" class="fa fa-fw fa-spinner fa-spin"></i>
-              <i ng-if="!$ctrl.inProgress" class="fa fa-check"></i>
+              <i ng-if="!$ctrl.inProgress" class="fa fa-fw fa-check"></i>
               Confirm and sign up
             </button>
           </div>
