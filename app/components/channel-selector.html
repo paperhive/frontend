@@ -1,10 +1,10 @@
 <div class="dropdown ph-sidenav-item" is-open="$ctrl.isOpen" uib-dropdown>
   <button class="btn btn-default ph-split-container ph-split-container-icon-right dropdown-toggle" uib-dropdown-toggle
-    title="{{$ctrl.getChannelDescription($ctrl.channelService.selectedChannel)}}"
+    title="{{$ctrl.channelService.getDescription($ctrl.channelService.selectedChannel)}}"
   >
     <span class="ph-split-icon"><i class="fa fa-fw fa-bullhorn" aria-hidden="true"></i></span>
     <span class="ph-split-text">
-      {{$ctrl.getChannelDescription($ctrl.channelService.selectedChannel)}}
+      {{$ctrl.channelService.getDescription($ctrl.channelService.selectedChannel)}}
       <span class="badge" ng-if="$ctrl.channelService.selectedChannel">
         {{$ctrl.channelService.selectedChannel.members.length}}
       </span>
@@ -27,10 +27,10 @@
     >
       <a href=""
         ng-click="$ctrl.channelService.selectChannel(channel)"
-        title="{{$ctrl.getChannelDescription(channel)}}"
+        title="{{$ctrl.channelService.getDescription(channel)}}"
       >
         <i class="fa fa-fw ph-dropdown-icon-left fa-lock"></i>
-        {{$ctrl.getChannelDescription(channel)}}
+        {{$ctrl.channelService.getDescription(channel)}}
         <span class="badge">{{channel.members.length}}</span>
       </a>
     </li>

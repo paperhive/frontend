@@ -101,5 +101,10 @@ export default function(app) {
     toggleShowAllChannels() {
       this.showAllChannels = !this.showAllChannels;
     }
+
+    getDescription(channel) {
+      if (!channel) return 'Public channel';
+      return channel.name;
+    }
   });
 }
