@@ -17,7 +17,6 @@
           classes="img-circle ph-sm-margin-right"
         ></avatar>
         {{$ctrl.resolve.member.person.displayName}}
-        <a href="./users/{{$ctrl.resolve.member.person.account.username}}"><small>@{{$ctrl.resolve.member.person.account.username}}</small></a>
         <span class="label label-default ph-sm-margin-left"
           ng-repeat="role in $ctrl.resolve.member.roles"
         >
@@ -29,7 +28,7 @@
       <label>Role</label>
       <select class="form-control" ng-model="$ctrl.role"
         ng-options="role.id as role.name for role in $ctrl.roles"
-        ng-init="{{($ctrl.resolve.member.roles.indexOf('member') !== -1 ) ? $ctrl.role=2 : $ctrl.role=1}}"
+        ng-init="($ctrl.resolve.member.roles.indexOf('member') !== -1) ? $ctrl.role=2 : $ctrl.role=1"
       ></select>
     </div>
   </div>
@@ -39,7 +38,8 @@
       ng-click="!$ctrl.inProgress && !$ctrl.succeeded && $ctrl.submit($ctrl.resolve.member.person.id)"
       ng-class="{disabled: $ctrl.inProgress || $ctrl.succeeded}"
     >
-      <i class="fa fa-check" aria-hidden="true"></i>
+      <i ng-if="$ctrl.inProgress" class="fa fa-fw fa-spinner fa-spin"></i>
+      <i ng-if="!$ctrl.inProgress" class="fa fa-check" aria-hidden="true"></i>
       Save
     </button>
   </div>

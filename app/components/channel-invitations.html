@@ -1,0 +1,103 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <p ng-if="$ctrl.channel.invitations.length === 0">
+        There are no pending channel invitations.
+      </p>
+      <table class="table table-hover" ng-if="$ctrl.channel.invitations.length > 0">
+        <thead>
+          <th>Name/email</th>
+          <th>Role</th>
+          <th>Invited by</th>
+          <th>Created</th>
+          <th></th>
+        </thead>
+        <tbody>
+          <!-- email invitation -->
+          <tr ng-repeat="invitation in $ctrl.channel.invitations"
+            ng-if="invitation.email"
+          >
+            <td>
+              {{invitation.email}}
+            </td>
+            <td>
+              <span class="label label-default"
+                ng-repeat="role in invitation.roles" ng-class="{
+                  'label-primary': $ctrl.channel.isActive && role === 'owner',
+                  'label-info': $ctrl.channel.isActive && role !== 'owner',
+                  'label-default': !$ctrl.channel.isActive
+                }"
+              >
+                {{role}}
+              </span>
+            </td>
+            <td>
+              <a href="./users/{{invitation.invitedBy.account.username}}">
+                {{invitation.invitedBy.displayName}}
+              </a>
+            </td>
+            <td am-time-ago="invitation.createdAt"></td>
+            <td>
+              <button
+                ng-if="$ctrl.isOwner"
+                type="button" class="btn btn-danger btn-sm pull-right"
+                ng-confirm-click="Really remove invitation?"
+                confirmed-click="$ctrl.invitationDelete($ctrl.channel.id, invitation.id)"
+                ng-disabled="!$ctrl.channel.isActive"
+                title="{{$ctrl.channel.isActive ? '' : 'Reactivate the channel to remove invitations'}}"
+              >
+                <i class="fa fa-times" aria-hidden="true"></i>
+                Remove invitation
+              </button>
+            </td>
+          </tr>
+
+          <tr ng-repeat="invitation in $ctrl.channel.invitations"
+            ng-if="!invitation.email"
+          >
+            <!-- person invitation -->
+            <td>
+              <avatar user="invitation.person" size="30"
+                classes="img-circle ph-sm-margin-right"
+              ></avatar>
+              <a href="./users/{{invitation.person.account.username}}">
+                {{invitation.person.displayName}}
+              </a>
+            </td>
+            <td>
+              <span class="label"
+                ng-repeat="role in invitation.roles" ng-class="{
+                  'label-primary': $ctrl.channel.isActive && role === 'owner',
+                  'label-info': $ctrl.channel.isActive && role !== 'owner',
+                  'label-default': !$ctrl.channel.isActive
+                }"
+              >
+                {{role}}
+              </span>
+            </td>
+            <td>
+              <a href="./users/{{invitation.invitedBy.account.username}}">
+                {{invitation.invitedBy.displayName}}
+              </a>
+            </td>
+            <td am-time-ago="invitation.createdAt"></td>
+            <td>
+              <button
+                ng-if="$ctrl.isOwner"
+                type="button" class="btn btn-danger btn-sm pull-right"
+                ng-confirm-click="Really remove invitation?"
+                confirmed-click="$ctrl.invitationDelete($ctrl.channel.id, invitation.id)"
+                ng-disabled="!$ctrl.channel.isActive"
+                title="{{$ctrl.channel.isActive ? '' : 'Reactivate the channel to remove invitations'}}"
+              >
+                <i class="fa fa-times" aria-hidden="true"></i>
+                Remove invitation
+              </button>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -11,15 +11,16 @@ export default function(app) {
 
       static $inject = ['$http', '$location', '$scope', 'authService', 'channelService', 'config', 'notificationService'];
       constructor(public $http, public $location, public $scope, public authService, public channelService, public config, public notificationService) {
-        this.token = $location.search().token;
+        this.token = $location.hash();
+        $location.hash(null);
         $http
           .get(`${config.apiUrl}/channels/token/${this.token}`)
           .then(response => this.invitation = response.data);
       }
 
       hasError(field) {
-        const form = this.$scope.confirmationForm;
-        return form && (form.$submitted || form[field].$touched) &&
+        const form = this.$scope.$$childHead.confirmationForm;
+        return (form.$submitted || form[field].$touched) &&
           form[field].$invalid;
       }
 

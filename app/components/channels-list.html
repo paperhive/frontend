@@ -11,7 +11,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="channel in $ctrl.channelService.channels | orderBy:['-isActive','-createdAt']"
+    <tr ng-repeat="channel in $ctrl.channelService.channels | orderBy: ['-isActive','-createdAt']"
       ng-class="{'text-muted': !channel.isActive}"
     >
       <td>
@@ -31,11 +31,8 @@
         >
           {{role}}
         </span>
-        <!--div>
-          {{channel.description}}
-        </div-->
       </td>
-      <td><i class="fa fa-check" ng-show="channel.isActive"></i></td>
+      <td><i class="fa fa-check" aria-hidden="true" ng-show="channel.isActive"></i></td>
       <td am-time-ago="channel.createdAt"></td>
     </tr>
   </tbody>

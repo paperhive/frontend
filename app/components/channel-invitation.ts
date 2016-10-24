@@ -16,8 +16,8 @@ export default function(app) {
         {'id': 2, 'name': 'owner'},
       ];
 
-      static $inject = ['$routeParams', '$scope', 'channelService'];
-      constructor(public $routeParams, public $scope, public channelService) {}
+      static $inject = ['$location', '$routeParams', '$scope', 'channelService'];
+      constructor(public $location, public $routeParams, public $scope, public channelService) {}
 
       hasError(field) {
         const form = this.$scope.invitationForm;
@@ -33,6 +33,11 @@ export default function(app) {
           roles: [this.roles[this.role - 1].name],
         }).then(() => {
           this.succeeded = true;
+          this.inProgress = false;
+          this.close();
+          this.$location.path(`/channels/${this.$routeParams.channelId}/invitations`);
+        }).finally(() => {
+          this.succeeded = false;
           this.inProgress = false;
           this.close();
         });
