@@ -41,7 +41,6 @@ export default function(app) {
 
     invitationCreate(channelId, invitation) {
       return this.$http.post(`${this.config.apiUrl}/channels/${channelId}/invitations`, invitation)
-        .catch(this.notificationService.httpError('could not send invitation'))
         .then(response => response.data);
     }
 

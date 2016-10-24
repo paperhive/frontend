@@ -8,6 +8,7 @@ export default function(app) {
       dismiss: '&'
     },
     controller: class ChannelInvitationCtrl {
+      error: boolean;
       inProgress: boolean;
       succeeded: boolean;
 
@@ -26,6 +27,7 @@ export default function(app) {
       }
 
       submit() {
+        this.error = false;
         this.inProgress = true;
         this.succeeded = false;
         this.channelService.invitationCreate(this.$routeParams.channelId, {
@@ -36,10 +38,10 @@ export default function(app) {
           this.inProgress = false;
           this.close();
           this.$location.path(`/channels/${this.$routeParams.channelId}/invitations`);
-        }).finally(() => {
+        }, (error) => {
           this.succeeded = false;
           this.inProgress = false;
-          this.close();
+          this.error = error.data.message;
         });
       }
     },
