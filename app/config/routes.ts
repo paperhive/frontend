@@ -175,7 +175,8 @@ export default function(app) {
             default: true,
             template:
               `<activity
-                channel="$ctrl.channel.id"
+                filter-mode="channel"
+                filter-id="$ctrl.channel.id"
               ></activity>`,
             title: 'My channel · PaperHive',
           })
@@ -228,7 +229,10 @@ export default function(app) {
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-md-9 col-md-offset-3">
-                    <activity document="$ctrl.documentCtrl.documentId"></activity>
+                    <activity
+                      filter-mode="document"
+                      filter-id="$ctrl.documentCtrl.documentId"
+                    ></activity>
                   </div>
                 </div>
               </div>
@@ -421,7 +425,11 @@ export default function(app) {
             dependencies: ['username']
           })
           .segment('activity', {
-            template: `<activity person="user"></activity>`
+            template:
+              `<activity
+                filter-mode="person"
+                filter-id="user.id"
+              ></activity>`
           })
         .up()
         ;

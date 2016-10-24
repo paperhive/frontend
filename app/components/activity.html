@@ -4,44 +4,50 @@
     <div class="ph-timeline-badge">
       <i class="fa fa-heartbeat" aria-hidden="true"></i>
     </div>
-    <div class="panel panel-default ph-timeline-panel ph-activity-container">
+    <div class="panel panel-default ph-timeline-panel ph-activity-container text-muted">
       <div class="ph-timeline-arrow-container">
         <div class="ph-arrow ph-arrow-outward-left"></div>
       </div>
 
-      <div ng-if="$ctrl.channel" class="text-muted">
-        Here you can find the recent discussions, replies and hives of
-        this channel.
-        <span ng-if="$ctrl.activities.length === 0">
-          Unfortunately, there is no activity yet. Be the first to hive a
-          document or start a discussion. Go to a document and select this channel.
-        </span>
+      <div ng-if="$ctrl.activities === undefined" class="ph-activity-loading">
+        <i class="fa fa-spin fa-spinner"></i>
       </div>
 
-      <div ng-if="$ctrl.document" class="text-muted">
-        Here you can find the recent discussions, replies and hives on
-        this document.
-        <span ng-if="$ctrl.activities.length === 0">
-          Unfortunately, there is no activity yet. Be the first to hive the
-          document or start a discussion.
-        </span>
-      </div>
+      <div ng-if="$ctrl.activities !== undefined">
+        <div ng-if="$ctrl.filterMode === 'channel'">
+          Here you can find the recent discussions, replies and hives of
+          this channel.
+          <span ng-if="$ctrl.activities.length === 0">
+            Unfortunately, there is no activity yet. Be the first to start a discussion.
+            Go to a document and select this channel.
+          </span>
+        </div>
 
-      <div ng-if="$ctrl.person" class="text-muted">
-        <span ng-if="$ctrl.auth.user.id === $ctrl.person.id">
-          Here you can find your recent discussions, replies and hived documents.
+        <div ng-if="$ctrl.filterMode === 'document'">
+          Here you can find the recent discussions, replies and hives on
+          this document.
           <span ng-if="$ctrl.activities.length === 0">
-            A good way to get started is to search and hive a document
-            you are interested in.
+            Unfortunately, there is no activity yet. Be the first to hive the
+            document or start a discussion.
           </span>
-        </span>
-        <span ng-if="$ctrl.auth.user.id !== $ctrl.person.id">
-          Here you can find recent discussions, replies and hived documents by
-          {{$ctrl.person.displayName}}.
-          <span ng-if="$ctrl.activities.length === 0">
-            Unfortunately, {{$ctrl.person.displayName}} has no recent activity.
+        </div>
+
+        <div ng-if="$ctrl.filterMode === 'person'">
+          <span ng-if="$ctrl.auth.user.id === $ctrl.filterId">
+            Here you can find your recent discussions, replies and hived documents.
+            <span ng-if="$ctrl.activities.length === 0">
+              A good way to get started is to search and hive a document
+              you are interested in.
+            </span>
           </span>
-        </span>
+          <span ng-if="$ctrl.auth.user.id !== $ctrl.filterId">
+            Here you can find recent discussions, replies and hived documents by
+            {{$ctrl.person.displayName}}.
+            <span ng-if="$ctrl.activities.length === 0">
+              Unfortunately, {{$ctrl.person.displayName}} has no recent activity.
+            </span>
+          </span>
+        </div>
       </div>
     </div>
   </li>
