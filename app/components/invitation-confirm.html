@@ -1,8 +1,8 @@
-<div class="container ph-lg-margin-bottom" ng-if="!$ctrl.invitation.channel.isActive">
-  <h2 class="text-center">The channel you were invited to is not active anymore.</h2>
+<div class="container ph-lg-margin-bottom" ng-if="!$ctrl.invitation">
+  <h2 class="text-center">This invitation is invalid.</h2>
 </div>
 
-<div class="container ph-lg-margin-bottom" ng-if="$ctrl.invitation.channel.isActive">
+<div class="container ph-lg-margin-bottom" ng-if="$ctrl.invitation">
   <h2 class="text-center">Confirm your channel invitation</h2>
 
   <div class="row ph-lg-margin-top">
