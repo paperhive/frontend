@@ -6,6 +6,7 @@
           <tr>
             <th>Name</th>
             <th>Role</th>
+            <th>Joined</th>
             <th></th>
           </tr>
         </thead>
@@ -32,6 +33,7 @@
                 {{role}}
               </span>
             </td>
+            <td am-time-ago="member.createdAt"></td>
             <td>
               <span class="pull-right ph-fade-in ph-fade-out">
                 <button
