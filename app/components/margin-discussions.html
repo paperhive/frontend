@@ -13,7 +13,7 @@
   viewport-offset-bottom="$ctrl.viewportOffsetBottom"
 ></margin-link>
 <div
-  ng-repeat="discussion in $ctrl.discussions"
+  ng-repeat="discussion in $ctrl.discussions track by discussion.id"
   class="ph-margin-discussion"
   ng-style="{'top': $ctrl.discussionPositions[discussion.id] + 'px'}"
   ng-class="{'ph-margin-discussion-animate': $ctrl.discussionPositions[discussion.id] !== undefined}"
