@@ -63,7 +63,7 @@
     "phantomjs-prebuilt": "^2.1.3",
     "protractor": "^4.0.9",
     "tslint": "^3.3.0",
-    "typescript": "^2.0.3",
+    "typescript": "^2.0.6",
     "typings": "^1.0.2",
     "uglify-js": "^2.6.1",
     "yargs": "^6.0.0"
@@ -97,30 +97,32 @@
       "socket.io-client": "github:socketio/socket.io-client@^1.4.5"
     },
     "devDependencies": {
+      "http": "npm:jspm-nodelibs-http@^0.2.0",
       "json": "github:systemjs/plugin-json@^0.1.2",
+      "net": "npm:jspm-nodelibs-net@^0.2.0",
       "plugin-babel": "npm:systemjs-plugin-babel@^0.0.15",
       "text": "github:systemjs/plugin-text@^0.0.8",
-      "ts": "github:frankwallis/plugin-typescript@^5.1.2"
+      "ts": "github:frankwallis/plugin-typescript@^5.2.7"
     },
     "peerDependencies": {
       "angular": "github:angular/bower-angular@^1.5.8",
       "angulartics": "npm:angulartics@^1.1.3",
-      "assert": "github:jspm/nodelibs-assert@^0.2.0-alpha",
-      "buffer": "github:jspm/nodelibs-buffer@^0.2.0-alpha",
-      "child_process": "github:jspm/nodelibs-child_process@^0.2.0-alpha",
-      "constants": "github:jspm/nodelibs-constants@^0.2.0-alpha",
-      "crypto": "github:jspm/nodelibs-crypto@^0.2.0-alpha",
-      "events": "github:jspm/nodelibs-events@^0.2.0-alpha",
-      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha",
-      "os": "github:jspm/nodelibs-os@^0.2.0-alpha",
-      "path": "github:jspm/nodelibs-path@^0.2.0-alpha",
-      "process": "github:jspm/nodelibs-process@^0.2.0-alpha",
-      "readline": "github:jspm/nodelibs-readline@^0.2.0-alpha",
-      "stream": "github:jspm/nodelibs-stream@^0.2.0-alpha",
-      "string_decoder": "github:jspm/nodelibs-string_decoder@^0.2.0-alpha",
-      "url": "github:jspm/nodelibs-url@^0.2.0-alpha",
-      "util": "github:jspm/nodelibs-util@^0.2.0-alpha",
-      "vm": "github:jspm/nodelibs-vm@^0.2.0-alpha"
+      "assert": "npm:jspm-nodelibs-assert@^0.2.0",
+      "buffer": "npm:jspm-nodelibs-buffer@^0.2.0",
+      "child_process": "npm:jspm-nodelibs-child_process@^0.2.0",
+      "constants": "npm:jspm-nodelibs-constants@^0.2.0",
+      "crypto": "npm:jspm-nodelibs-crypto@^0.2.0",
+      "events": "npm:jspm-nodelibs-events@^0.2.0",
+      "fs": "npm:jspm-nodelibs-fs@^0.2.0",
+      "os": "npm:jspm-nodelibs-os@^0.2.0",
+      "path": "npm:jspm-nodelibs-path@^0.2.0",
+      "process": "npm:jspm-nodelibs-process@^0.2.0",
+      "readline": "npm:jspm-nodelibs-readline@^0.2.0",
+      "stream": "npm:jspm-nodelibs-stream@^0.2.0",
+      "string_decoder": "npm:jspm-nodelibs-string_decoder@^0.2.0",
+      "url": "npm:jspm-nodelibs-url@^0.2.0",
+      "util": "npm:jspm-nodelibs-util@^0.2.0",
+      "vm": "npm:jspm-nodelibs-vm@^0.2.0"
     },
     "overrides": {
       "github:Leaflet/Leaflet@0.7.7": {
@@ -266,7 +268,7 @@
       "npm:moment@2.14.1": {
         "jspmNodeConversion": false
       },
-      "npm:typescript@2.0.3": {
+      "npm:typescript@2.0.6": {
         "browser": {},
         "map": {
           "buffer": "@empty",

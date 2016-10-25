@@ -44,14 +44,14 @@
             ng-confirm-click="Really discard this invitation?"
             confirmed-click="$ctrl.invitationDelete(invitation.channel.id, invitation.id)"
           >
-            <i class="fa fa-times" aria-hidden="true"></i>
+            <i class="fa fa-fw fa-times" aria-hidden="true"></i>
             Discard
           </button>
           <button
             type="button" class="btn btn-primary btn-sm"
             ng-click="$ctrl.invitationConfirm(invitation.channel.id, invitation.id)"
           >
-            <i class="fa fa-check" aria-hidden="true"></i>
+            <i class="fa fa-fw fa-check" aria-hidden="true"></i>
             Confirm
           </button>
         </span>

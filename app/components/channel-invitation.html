@@ -14,8 +14,8 @@
       }"
     >
       <label>Email</label>
-      <input type="email" class="form-control" name="email"
-        placeholder="Enter email" ng-model="$ctrl.email" required
+      <input
+        type="email" class="form-control" name="email" ng-model="$ctrl.email" required
         pattern=".*@.+\..+" ng-disabled="$ctrl.inProgress || $ctrl.succeeded"
       >
       <div class="help-block">
@@ -38,6 +38,14 @@
     </div>
   </div>
   <div class="modal-footer">
+    <div ng-if="$ctrl.error">
+      <span class="help-block">
+        <span ng-if="$ctrl.error" class="text-danger">
+          <i class="fa fa-fw fa-times"></i>
+          {{$ctrl.error}}
+        </span>
+      </span>
+    </div>
     <button
       class="btn btn-primary" type="submit"
       ng-click="!$ctrl.inProgress && !$ctrl.succeeded && !invitationForm.$invalid && $ctrl.submit()"

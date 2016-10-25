@@ -5,9 +5,8 @@ import template from './activity.html!text';
 export default function(app) {
   app.component('activity', {
     bindings: {
-      channel: '<',
-      document: '<',
-      person: '<',
+      filterMode: '@',
+      filterId: '<',
     },
     controller: [
     '$http', 'authService', 'config', 'notificationService',
@@ -15,29 +14,38 @@ export default function(app) {
         const ctrl = this;
         ctrl.auth = authService;
         ctrl.$onChanges = changesObj => {
-          let personId;
-          if (ctrl.person) {
-            personId = ctrl.person.id;
+          ctrl.activities = undefined;
+          ctrl.person = undefined;
+
+          const params = {};
+          switch (ctrl.filterMode) {
+            case 'channel':
+            case 'document':
+            case 'person':
+              // don't do anything if the filterId is falsy
+              if (!ctrl.filterId) return;
+              params[ctrl.filterMode] = ctrl.filterId;
+              break;
+            case undefined:
+              break;
+            default:
+              throw new Error(`unknown filter mode ${ctrl.filterMode}`);
           }
-          $http.get(
-            config.apiUrl + `/activities/`, {
-              params: {
-                channel: ctrl.channel,
-                document: ctrl.document,
-                person: personId,
-              }
-            }
-          )
-          .success(ret => {
-            ctrl.activities = ret.activities;
-          })
-          .error(data => {
-            notificationService.notifications.push({
-              type: 'error',
-              message: data.message ? data.message :
-              'could not fetch activities (unknown reason)'
-            });
-          });
+
+          $http.get(`${config.apiUrl}/activities/`, {params})
+            .then(
+              response => ctrl.activities = response.data.activities,
+              notificationService.httpError('could not fetch activities (unknown reason)')
+            );
+
+          // fetch person if person filter is active
+          if (ctrl.filterMode === 'person') {
+            $http.get(`${config.apiUrl}/people/${ctrl.filterId}`)
+              .then(
+                response => ctrl.person = response.data,
+                notificationService.httpError('could not fetch person (unknown reason)')
+              );
+          }
         };
       }
     ],
