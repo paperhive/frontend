@@ -28,6 +28,7 @@ import documentsList from './documents-list';
 import extensionButtons from './extension-buttons';
 import feedback from './feedback';
 import feedbackButton from './feedback-button';
+import filterButton from './filter-button';
 import helpMarkdown from './help-markdown';
 import hiveButton from './hive-button';
 import hivedDocs from './hived-docs';
@@ -107,6 +108,7 @@ export default function(app) {
   extensionButtons(app);
   feedback(app);
   feedbackButton(app);
+  filterButton(app);
   helpMarkdown(app);
   hiveButton(app);
   hivedDocs(app);
