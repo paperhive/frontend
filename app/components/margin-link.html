@@ -11,7 +11,7 @@
   scroll-duration="500"
   scroll-before="$ctrl.scrolling = true"
   scroll-after="$ctrl.scrolling = false"
-  title="{{$ctrl.count}} more {{$ctrl.count === 1 ? 'discussion' : 'discussions'}}"
+  title="{{$ctrl.count}} more {{$ctrl.count === 1 ? 'discussion' : 'discussions'}} {{$ctrl.position === 'top' ? 'above' : 'below'}}"
 >
   <i ng-if="$ctrl.position === 'top'" class="fa fa-chevron-up"></i>
   <i ng-if="$ctrl.position === 'bottom'" class="fa fa-chevron-down"></i>
