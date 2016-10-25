@@ -52,7 +52,7 @@
     "karma": "^1.0.0",
     "karma-jasmine": "^1.0.2",
     "karma-phantomjs-launcher": "^1.0.0",
-    "less": "^2.6.0",
+    "less": "^2.6.1",
     "less-plugin-clean-css": "^1.5.1",
     "live-server": "^1.0.0",
     "lodash": "^4.3.0",
