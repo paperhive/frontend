@@ -9,6 +9,12 @@
     viewport-offset-top="$ctrl.viewportOffsetTop"
     viewport-offset-bottom="$ctrl.viewportOffsetBottom"
   ></margin-link>
+  <div class="ph-margin-controls-permanent">
+    <channel-selector
+      on-channel-select="$ctrl.channelService.currentChannel = $channel"
+    ></channel-selector>
+    <filter-button></filter-button>
+  </div>
 </div>
 <div class="ph-margin-controls ph-margin-controls-bottom"
   ng-style="{bottom: $ctrl.viewportOffsetBottom || 0}"
