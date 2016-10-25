@@ -1,55 +1,87 @@
-margin-link > div {
+@ph-margin-controls-height: 40px;
+
+.ph-margin-controls {
   position: fixed;
-  left: 0;
   right: 0;
   z-index: 1001;
+  height: @ph-margin-controls-height;
+  width: 25%;
+  padding-left: @grid-gutter-width / 2;
+  padding-right: @grid-gutter-width / 2;
+
+  &.ph-margin-controls-top {
+    margin-top: @grid-gutter-width / 2;
+  }
+
+  &.ph-margin-controls-bottom {
+    margin-bottom: @grid-gutter-width / 2;
+  }
+
+  // disable pointer events on the controls container
   pointer-events: none;
 
-  & .ph-margin-link {
-    padding: 7px;
-    background: fade(@ph-background-color, 90%);
-    text-align: center;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  // re-enable pointer events on children
+  & > * {
     pointer-events: all;
+  }
+}
 
-    // animation basics
-    position: relative;
-    transition: opacity ease 0.5s, top ease 0.5s, bottom ease 0.5s;
+.ph-margin-link {
+  position: relative;
+  width: @ph-margin-controls-height;
+  height: @ph-margin-controls-height;
+  border-radius: @ph-margin-controls-height / 2;
 
-    /* Note: opacity animation is disabled because it leads to flickering
-             elements with `position: fixed` in Chrome. Probably related to
-             https://bugs.chromium.org/p/chromium/issues/detail?id=438179
-    // animate opacity
-    opacity: 1;
+  // center icon
+  padding: 0;
+  line-height: @ph-margin-controls-height;
+
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+
+  transition: opacity ease 0.5s, top ease 0.5s, bottom ease 0.5s;
+
+  // animate top
+  &.ph-margin-link-top {
+    top: 0;
     &.ng-hide {
-      opacity: 0;
-    }
-    */
-
-    // animate top
-    &.ph-margin-link-top {
-      top: 0;
-      &.ng-hide {
-        top: -40px;
-      }
-    }
-
-    // animate bottom
-    &.ph-margin-link-bottom {
-      bottom: 0;
-      &.ng-hide {
-        bottom: -40px;
-      }
-    }
-
-    // display old value when hiding (includes animation)
-    &.ng-hide .ph-margin-link-current {
-      display: none;
-    }
-
-    // display current value when not hiding
-    &:not(.ng-hide) .ph-margin-link-previous {
-      display: none;
+      top: -@ph-margin-controls-height - @grid-gutter-width;
     }
   }
+
+  // animate bottom
+  &.ph-margin-link-bottom {
+    bottom: 0;
+    &.ng-hide {
+      bottom: -@ph-margin-controls-height - @grid-gutter-width;
+    }
+  }
+
+  // display old value when hiding (includes animation)
+  &.ng-hide-add .ph-margin-link-current {
+    display: none;
+  }
+
+  // display current value when not hiding
+  &:not(.ng-hide-add) .ph-margin-link-previous {
+    display: none;
+  }
+}
+
+@ph-badge-font-size: 12px;
+@ph-badge-padding: 3px;
+
+.ph-margin-link-badge {
+  background-color: #ff7f2a;
+  border-radius: (@ph-badge-font-size + 2 * @ph-badge-padding) / 2;
+  color: white;
+  font-size: @ph-badge-font-size;
+  font-weight: bold;
+  line-height: 1;
+  min-width: @ph-badge-font-size + 2 * @ph-badge-padding;
+  padding: @ph-badge-padding;
+  position: absolute;
+  right: -2px;
+  text-align: center;
+  top: -2px;
+  vertical-align: middle;
 }
