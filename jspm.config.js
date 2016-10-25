@@ -100,7 +100,7 @@ SystemJS.config({
     "paperhive-sources": "npm:paperhive-sources@4.0.2",
     "path": "npm:jspm-nodelibs-path@0.2.0",
     "pdfjs-dist": "github:mozilla/pdfjs-dist@1.5.415",
-    "process": "github:jspm/nodelibs-process@0.2.0-alpha",
+    "process": "npm:jspm-nodelibs-process@0.2.0",
     "rangy": "github:timdown/rangy-release@1.3.0",
     "readline": "npm:jspm-nodelibs-readline@0.2.0",
     "rx": "npm:rx@4.1.0",
