@@ -3,13 +3,29 @@ SystemJS.config({
     "map": {
       "text": "github:systemjs/plugin-text@0.0.8",
       "json": "github:systemjs/plugin-json@0.1.2",
-      "ts": "github:frankwallis/plugin-typescript@5.1.2",
-      "plugin-babel": "npm:systemjs-plugin-babel@0.0.15"
+      "ts": "github:frankwallis/plugin-typescript@5.2.7",
+      "plugin-babel": "npm:systemjs-plugin-babel@0.0.15",
+      "http": "npm:jspm-nodelibs-http@0.2.0",
+      "net": "npm:jspm-nodelibs-net@0.2.0"
     },
     "packages": {
-      "github:frankwallis/plugin-typescript@5.1.2": {
+      "github:frankwallis/plugin-typescript@5.2.7": {
         "map": {
-          "typescript": "npm:typescript@2.0.3"
+          "typescript": "npm:typescript@2.0.6"
+        }
+      },
+      "npm:jspm-nodelibs-http@0.2.0": {
+        "map": {
+          "http-browserify": "npm:stream-http@2.4.0"
+        }
+      },
+      "npm:stream-http@2.4.0": {
+        "map": {
+          "inherits": "npm:inherits@2.0.3",
+          "xtend": "npm:xtend@4.0.1",
+          "to-arraybuffer": "npm:to-arraybuffer@1.0.1",
+          "builtin-status-codes": "npm:builtin-status-codes@2.0.0",
+          "readable-stream": "npm:readable-stream@2.1.5"
         }
       }
     }
@@ -62,17 +78,17 @@ SystemJS.config({
     "angular-sanitize": "github:angular/bower-angular-sanitize@1.5.8",
     "angulartics": "npm:angulartics@1.1.3",
     "angulartics-google-analytics": "npm:angulartics-google-analytics@0.2.1",
-    "assert": "github:jspm/nodelibs-assert@0.2.0-alpha",
+    "assert": "npm:jspm-nodelibs-assert@0.2.0",
     "async": "npm:async@2.0.1",
-    "buffer": "github:jspm/nodelibs-buffer@0.2.0-alpha",
-    "child_process": "github:jspm/nodelibs-child_process@0.2.0-alpha",
+    "buffer": "npm:jspm-nodelibs-buffer@0.2.0",
+    "child_process": "npm:jspm-nodelibs-child_process@0.2.0",
     "components/highlightjs": "github:components/highlightjs@9.6.0",
-    "constants": "github:jspm/nodelibs-constants@0.2.0-alpha",
+    "constants": "npm:jspm-nodelibs-constants@0.2.0",
     "core-js": "npm:core-js@2.4.1",
-    "crypto": "github:jspm/nodelibs-crypto@0.2.0-alpha",
+    "crypto": "npm:jspm-nodelibs-crypto@0.2.0",
     "dentist": "npm:dentist@1.0.3",
-    "events": "github:jspm/nodelibs-events@0.2.0-alpha",
-    "fs": "github:jspm/nodelibs-fs@0.2.0-alpha",
+    "events": "npm:jspm-nodelibs-events@0.2.0",
+    "fs": "npm:jspm-nodelibs-fs@0.2.0",
     "highlightjs": "github:components/highlightjs@9.6.0",
     "javascript-detect-element-resize": "github:sdecima/javascript-detect-element-resize@0.5.3",
     "jquery": "npm:jquery@3.1.0",
@@ -80,37 +96,22 @@ SystemJS.config({
     "leaflet": "github:Leaflet/Leaflet@0.7.7",
     "lodash": "npm:lodash@4.15.0",
     "mozilla/pdfjs-dist": "github:mozilla/pdfjs-dist@1.5.415",
-    "os": "github:jspm/nodelibs-os@0.2.0-alpha",
+    "os": "npm:jspm-nodelibs-os@0.2.0",
     "paperhive-sources": "npm:paperhive-sources@4.0.2",
-    "path": "github:jspm/nodelibs-path@0.2.0-alpha",
+    "path": "npm:jspm-nodelibs-path@0.2.0",
     "pdfjs-dist": "github:mozilla/pdfjs-dist@1.5.415",
     "process": "github:jspm/nodelibs-process@0.2.0-alpha",
     "rangy": "github:timdown/rangy-release@1.3.0",
-    "readline": "github:jspm/nodelibs-readline@0.2.0-alpha",
+    "readline": "npm:jspm-nodelibs-readline@0.2.0",
     "rx": "npm:rx@4.1.0",
     "socket.io-client": "github:socketio/socket.io-client@1.4.8",
-    "stream": "github:jspm/nodelibs-stream@0.2.0-alpha",
-    "string_decoder": "github:jspm/nodelibs-string_decoder@0.2.0-alpha",
-    "url": "github:jspm/nodelibs-url@0.2.0-alpha",
-    "util": "github:jspm/nodelibs-util@0.2.0-alpha",
-    "vm": "github:jspm/nodelibs-vm@0.2.0-alpha"
+    "stream": "npm:jspm-nodelibs-stream@0.2.0",
+    "string_decoder": "npm:jspm-nodelibs-string_decoder@0.2.0",
+    "url": "npm:jspm-nodelibs-url@0.2.0",
+    "util": "npm:jspm-nodelibs-util@0.2.0",
+    "vm": "npm:jspm-nodelibs-vm@0.2.0"
   },
   packages: {
-    "github:jspm/nodelibs-buffer@0.2.0-alpha": {
-      "map": {
-        "buffer-browserify": "npm:buffer@4.9.1"
-      }
-    },
-    "github:jspm/nodelibs-os@0.2.0-alpha": {
-      "map": {
-        "os-browserify": "npm:os-browserify@0.2.1"
-      }
-    },
-    "github:jspm/nodelibs-url@0.2.0-alpha": {
-      "map": {
-        "url-browserify": "npm:url@0.11.0"
-      }
-    },
     "github:sdecima/javascript-detect-element-resize@0.5.3": {
       "map": {
         "jquery": "npm:jquery@3.1.0"
@@ -145,8 +146,8 @@ SystemJS.config({
     "npm:buffer@4.9.1": {
       "map": {
         "isarray": "npm:isarray@1.0.0",
-        "base64-js": "npm:base64-js@1.1.2",
-        "ieee754": "npm:ieee754@1.1.6"
+        "base64-js": "npm:base64-js@1.2.0",
+        "ieee754": "npm:ieee754@1.1.8"
       }
     },
     "github:angular/bower-angular-sanitize@1.5.8": {
@@ -164,11 +165,6 @@ SystemJS.config({
         "angular": "github:angular/bower-angular@1.5.8"
       }
     },
-    "github:jspm/nodelibs-crypto@0.2.0-alpha": {
-      "map": {
-        "crypto-browserify": "npm:crypto-browserify@3.11.0"
-      }
-    },
     "npm:crypto-browserify@3.11.0": {
       "map": {
         "browserify-cipher": "npm:browserify-cipher@1.0.0",
@@ -176,7 +172,7 @@ SystemJS.config({
         "create-hash": "npm:create-hash@1.1.2",
         "create-hmac": "npm:create-hmac@1.1.4",
         "create-ecdh": "npm:create-ecdh@4.0.0",
-        "pbkdf2": "npm:pbkdf2@3.0.8",
+        "pbkdf2": "npm:pbkdf2@3.0.9",
         "randombytes": "npm:randombytes@2.0.3",
         "public-encrypt": "npm:public-encrypt@4.0.0",
         "inherits": "npm:inherits@2.0.3",
@@ -254,7 +250,7 @@ SystemJS.config({
         "browserify-aes": "npm:browserify-aes@1.0.6",
         "create-hash": "npm:create-hash@1.1.2",
         "evp_bytestokey": "npm:evp_bytestokey@1.0.0",
-        "pbkdf2": "npm:pbkdf2@3.0.8",
+        "pbkdf2": "npm:pbkdf2@3.0.9",
         "asn1.js": "npm:asn1.js@4.8.1"
       }
     },
@@ -295,16 +291,6 @@ SystemJS.config({
         "inherits": "npm:inherits@2.0.3"
       }
     },
-    "github:jspm/nodelibs-string_decoder@0.2.0-alpha": {
-      "map": {
-        "string_decoder-browserify": "npm:string_decoder@0.10.31"
-      }
-    },
-    "github:jspm/nodelibs-stream@0.2.0-alpha": {
-      "map": {
-        "stream-browserify": "npm:stream-browserify@2.0.1"
-      }
-    },
     "npm:stream-browserify@2.0.1": {
       "map": {
         "inherits": "npm:inherits@2.0.3",
@@ -320,11 +306,6 @@ SystemJS.config({
         "process-nextick-args": "npm:process-nextick-args@1.0.7",
         "buffer-shims": "npm:buffer-shims@1.0.0",
         "util-deprecate": "npm:util-deprecate@1.0.2"
-      }
-    },
-    "npm:pbkdf2@3.0.8": {
-      "map": {
-        "create-hmac": "npm:create-hmac@1.1.4"
       }
     },
     "npm:elliptic@6.3.2": {
@@ -345,6 +326,41 @@ SystemJS.config({
         "bn.js": "npm:bn.js@4.11.6",
         "inherits": "npm:inherits@2.0.3",
         "minimalistic-assert": "npm:minimalistic-assert@1.0.0"
+      }
+    },
+    "npm:jspm-nodelibs-buffer@0.2.0": {
+      "map": {
+        "buffer-browserify": "npm:buffer@4.9.1"
+      }
+    },
+    "npm:jspm-nodelibs-crypto@0.2.0": {
+      "map": {
+        "crypto-browserify": "npm:crypto-browserify@3.11.0"
+      }
+    },
+    "npm:jspm-nodelibs-os@0.2.0": {
+      "map": {
+        "os-browserify": "npm:os-browserify@0.2.1"
+      }
+    },
+    "npm:jspm-nodelibs-stream@0.2.0": {
+      "map": {
+        "stream-browserify": "npm:stream-browserify@2.0.1"
+      }
+    },
+    "npm:jspm-nodelibs-url@0.2.0": {
+      "map": {
+        "url-browserify": "npm:url@0.11.0"
+      }
+    },
+    "npm:jspm-nodelibs-string_decoder@0.2.0": {
+      "map": {
+        "string_decoder-browserify": "npm:string_decoder@0.10.31"
+      }
+    },
+    "npm:pbkdf2@3.0.9": {
+      "map": {
+        "create-hmac": "npm:create-hmac@1.1.4"
       }
     }
   }
