@@ -14,8 +14,8 @@
       }"
     >
       <label>Email</label>
-      <input type="email" class="form-control" name="email"
-        placeholder="Enter email" ng-model="$ctrl.email" required
+      <input
+        type="email" class="form-control" name="email" ng-model="$ctrl.email" required
         pattern=".*@.+\..+" ng-disabled="$ctrl.inProgress || $ctrl.succeeded"
       >
       <div class="help-block">
