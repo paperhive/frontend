@@ -7,127 +7,98 @@
 
   <div class="row ph-lg-margin-top">
 
-    <!-- Person invitation -->
-    <div class="col-sm-offset-3 col-sm-6" ng-show="$ctrl.invitation.person">
+    <div class="col-sm-offset-2 col-sm-8">
       <div class="panel panel-default">
         <div class="panel-body">
-          <b>{{$ctrl.invitation.channel.name}}</b>
-          <span class="pull-right">
-            <button
-              type="button" class="btn btn-danger btn-sm"
-              ng-confirm-click="Really discard this invitation?"
-              confirmed-click="$ctrl.invitationDelete($ctrl.invitation.channel.id, $ctrl.invitation.id)"
-            >
-              <i ng-if="$ctrl.invitationDeleting" class="fa fa-fw fa-spinner fa-spin"></i>
-              <i ng-if="!$ctrl.invitationDeleting" class="fa fa-fw fa-times"></i>
-              Discard
-            </button>
-            <button
-              type="button" class="btn btn-primary btn-sm"
-              ng-click="$ctrl.invitationConfirm($ctrl.invitation.channel.id, $ctrl.invitation.id)"
-            >
-              <i ng-if="$ctrl.inProgress" class="fa fa-fw fa-spinner fa-spin"></i>
-              <i ng-if="!$ctrl.inProgress" class="fa fa-fw fa-check"></i>
-              Confirm
-            </button>
-          </span>
-          <div>
-            {{$ctrl.invitation.channel.description}}
-          </div>
-          <p class="ph-lg-margin-top text-muted">
-            <a href="./users/{{$ctrl.invitation.invitedBy.account.username}}">{{$ctrl.invitation.invitedBy.displayName}}</a>
-            invited you as a channel
-            <span class="label ph-xs-margin-left"
-              ng-repeat="role in $ctrl.invitation.roles"
-              ng-class="{
-                'label-primary': role === 'owner',
-                'label-info': role !== 'owner',
-              }"
-            >
-              {{role}}
-            </span>
-          </p>
-        </div>
-      </div>
-    </div>
+          <form name="confirmationForm" novalidate>
 
-    <!-- Email invitation -->
-    <div class="col-sm-offset-3 col-sm-6" ng-show="!$ctrl.invitation.person">
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <b>{{$ctrl.invitation.channel.name}}</b>
-          <span class="pull-right">
-            <button
-              type="button" class="btn btn-danger btn-sm"
-              ng-confirm-click="Really discard this invitation?"
-              confirmed-click="$ctrl.invitationDelete($ctrl.invitation.channel.id, $ctrl.invitation.id)"
-            >
-              <i class="fa fa-fw fa-times"></i>
-              Discard
-            </button>
-          </span>
-          <div>
-            {{$ctrl.invitation.channel.description}}
-          </div>
-          <p class="ph-lg-margin-top text-muted">
-            <a href="./users/{{$ctrl.invitation.invitedBy.account.username}}">{{$ctrl.invitation.invitedBy.displayName}}</a>
-            invited you as a channel
-            <span class="label ph-xs-margin-left"
-              ng-repeat="role in $ctrl.invitation.roles"
-              ng-class="{
-                'label-primary': role === 'owner',
-                'label-info': role !== 'owner',
-              }"
-            >
-              {{role}}
-            </span>
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- use ng-show because ng-if creates a child scope! -->
-    <div class="ph-md-padding-top" ng-show="!$ctrl.invitation.person">
-      <div class="col-sm-offset-3 col-sm-6">
-        <form name="confirmationForm" novalidate>
-
-          <div class="form-group" ng-class="{
-            'has-error': $ctrl.hasError('password'),
-            'has-success': confirmationForm.password.$valid
-          }">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password"
-              name="password" ng-model="$ctrl.password" ng-minlength="8"
-              ng-disabled="$ctrl.inProgress || $ctrl.succeeded"
-              ng-model-options="{updateOn: 'default blur', debounce: { 'default': 800, 'blur': 0 } }"
-              required>
-            <div class="help-block">
-              <span ng-if="$ctrl.hasError('password')">
-                <span ng-if="confirmationForm.password.$error.required">
-                  Please enter a password.
-                </span>
-                <span ng-if="confirmationForm.password.$error.password
-                  || confirmationForm.password.$error.minlength"
-                >
-                  Please enter a password with at least 8 characters.
-                </span>
-              </span>
+            <div class="form-group">
+              <label for="name" class="col-sm-3">
+                Channel name
+              </label>
+              <div class="col-sm-9">
+                <p>
+                  {{$ctrl.invitation.channel.name}}
+                </p>
+              </div>
             </div>
-          </div>
 
-          <div class="ph-md-padding-top">
-            <button class="btn btn-primary btn-block"
-              type="submit"
-              ng-click="!$ctrl.inProgress && !$ctrl.succeeded && !confirmationForm.$invalid && $ctrl.invitationConfirm($ctrl.invitation.channel.id, $ctrl.invitation.id)"
-              ng-class="{disabled: confirmationForm.$invalid || $ctrl.inProgress || $ctrl.succeeded}"
-            >
-              <i ng-if="$ctrl.inProgress" class="fa fa-fw fa-spinner fa-spin"></i>
-              <i ng-if="!$ctrl.inProgress" class="fa fa-fw fa-check"></i>
-              Confirm and sign up
-            </button>
-          </div>
+            <div class="form-group" ng-if="$ctrl.invitation.channel.description">
+              <label for="description" class="col-sm-3">
+                Channel description
+              </label>
+              <div class="col-sm-9">
+                <p>
+                  {{$ctrl.invitation.channel.description}}
+                </p>
+              </div>
+            </div>
 
-        </form>
+            <div class="form-group" ng-if="!$ctrl.invitation.person" ng-class="{
+              'has-error': $ctrl.hasError('password'),
+              'has-success': confirmationForm.password.$valid
+            }">
+              <p class="col-sm-12">
+                Create an account to join this channel.
+              </p>
+              <label for="password" class="col-sm-3">
+                Password
+              </label>
+              <div class="col-sm-9">
+                <input type="password" class="form-control" id="password"
+                  name="password" ng-model="$ctrl.password" ng-minlength="8"
+                  ng-disabled="$ctrl.inProgress || $ctrl.succeeded"
+                  ng-model-options="{updateOn: 'default blur', debounce: { 'default': 800, 'blur': 0 } }"
+                  required
+                >
+
+                <div class="help-block">
+                  <span ng-if="$ctrl.hasError('password')">
+                    <span ng-if="confirmationForm.password.$error.required">
+                      Please enter a password.
+                    </span>
+                    <span ng-if="confirmationForm.password.$error.password
+                      || confirmationForm.password.$error.minlength"
+                    >
+                      Please enter a password with at least 8 characters.
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-right col-sm-12 ph-md-margin-top">
+              <button
+                type="button" class="btn btn-danger btn-sm"
+                ng-confirm-click="Really discard this invitation?"
+                confirmed-click="$ctrl.invitationDelete($ctrl.invitation.channel.id, $ctrl.invitation.id)"
+              >
+                <i class="fa fa-fw fa-times"></i>
+                Discard
+              </button>
+              <button
+                ng-if="!$ctrl.invitation.person"
+                type="submit" class="btn btn-primary btn-sm"
+                ng-click="!$ctrl.inProgress && !$ctrl.succeeded && !confirmationForm.$invalid && $ctrl.invitationConfirm($ctrl.invitation.channel.id, $ctrl.invitation.id)"
+                ng-class="{disabled: confirmationForm.$invalid || $ctrl.inProgress || $ctrl.succeeded}"
+              >
+                <i ng-if="$ctrl.inProgress" class="fa fa-fw fa-spinner fa-spin"></i>
+                <i ng-if="!$ctrl.inProgress" class="fa fa-fw fa-check"></i>
+                Confirm and sign up
+              </button>
+              <button
+                ng-if="$ctrl.invitation.person"
+                type="button" class="btn btn-primary btn-sm"
+                ng-click="$ctrl.invitationConfirm($ctrl.invitation.channel.id, $ctrl.invitation.id)"
+              >
+                <i ng-if="$ctrl.inProgress" class="fa fa-fw fa-spinner fa-spin"></i>
+                <i ng-if="!$ctrl.inProgress" class="fa fa-fw fa-check"></i>
+                Confirm
+              </button>
+            </div>
+
+          </form>
+        </div>
       </div>
     </div>
 
