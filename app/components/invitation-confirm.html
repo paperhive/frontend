@@ -34,6 +34,22 @@
               </div>
             </div>
 
+            <div class="form-group">
+              <label for="description" class="col-sm-3">
+                Invited by
+              </label>
+              <div class="col-sm-9">
+                <p>
+                  <a
+                    href="./users/{{$ctrl.invitation.invitedBy.account.username}}"
+                    target="_blank"
+                  >
+                    {{$ctrl.invitation.invitedBy.displayName}}
+                  </a>
+                </p>
+              </div>
+            </div>
+
             <div class="form-group" ng-if="!$ctrl.invitation.person" ng-class="{
               'has-error': $ctrl.hasError('password'),
               'has-success': confirmationForm.password.$valid
@@ -89,7 +105,8 @@
               <button
                 ng-if="$ctrl.invitation.person"
                 type="button" class="btn btn-primary btn-sm"
-                ng-click="$ctrl.invitationConfirm($ctrl.invitation.channel.id, $ctrl.invitation.id)"
+                ng-click="!$ctrl.inProgress && !$ctrl.succeeded && $ctrl.invitationConfirm($ctrl.invitation.channel.id, $ctrl.invitation.id)"
+                ng-class="{disabled: $ctrl.inProgress || $ctrl.succeeded}"
               >
                 <i ng-if="$ctrl.inProgress" class="fa fa-fw fa-spinner fa-spin"></i>
                 <i ng-if="!$ctrl.inProgress" class="fa fa-fw fa-check"></i>
