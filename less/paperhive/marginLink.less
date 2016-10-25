@@ -1,4 +1,4 @@
-@ph-margin-controls-height: 40px;
+@ph-margin-controls-height: @ph-margin-avatar-size;
 
 .ph-margin-controls {
   position: fixed;
@@ -31,12 +31,13 @@
   width: @ph-margin-controls-height;
   height: @ph-margin-controls-height;
   border-radius: @ph-margin-controls-height / 2;
+  border: none;
 
   // center icon
   padding: 0;
   line-height: @ph-margin-controls-height;
 
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: @ph-shadow;
 
   transition: opacity ease 0.5s, top ease 0.5s, bottom ease 0.5s;
 
@@ -84,4 +85,38 @@
   text-align: center;
   top: -3px;
   vertical-align: middle;
+}
+
+.ph-margin-controls > .ph-margin-controls-permanent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  padding-left: @grid-gutter-width / 2 + @ph-margin-avatar-size + @ph-margin-avatar-arrow-padding + @ph-margin-arrow-size;
+  padding-right: @grid-gutter-width / 2;
+  display: flex;
+  align-items: center;
+
+  pointer-events: none;
+  > * {
+    pointer-events: all;
+  }
+}
+
+.ph-margin-controls-permanent > channel-selector {
+  flex-grow: 1;
+}
+
+.ph-channel-selector-group {
+  display: flex;
+}
+
+.ph-channel-selector-channel {
+  flex-grow: 1;
+}
+
+.ph-margin-controls-permanent > filter-button {
+  margin-left: @grid-gutter-width / 2;
 }
