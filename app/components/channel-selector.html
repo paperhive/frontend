@@ -1,63 +1,53 @@
-<div class="dropdown ph-sidenav-item" is-open="$ctrl.isOpen" uib-dropdown>
-  <button class="btn btn-default ph-split-container ph-split-container-icon-right dropdown-toggle" uib-dropdown-toggle
-    title="{{$ctrl.channelService.getDescription($ctrl.channelService.selectedChannel)}}"
-  >
-    <span class="ph-split-icon"><i class="fa fa-fw fa-bullhorn" aria-hidden="true"></i></span>
-    <span class="ph-split-text">
-      {{$ctrl.channelService.getDescription($ctrl.channelService.selectedChannel)}}
-      <span class="badge" ng-if="$ctrl.channelService.selectedChannel">
-        {{$ctrl.channelService.selectedChannel.members.length}}
-      </span>
-    </span>
-    <i class="fa fa-fw fa-caret-down ph-split-icon-right"></i>
-  </button>
-  <ul class="dropdown-menu ph-dropdown-menu-full">
-    <li ng-click="$ctrl.isOpen = false">
-      <a href=""
-        ng-click="$ctrl.channelService.selectChannel(undefined)"
-        title="Public channel"
-      >
-        <i class="fa fa-fw ph-dropdown-icon-left fa-globe"></i>
-        Public channel
-      </a>
-    </li>
-    <li
-      ng-repeat="channel in $ctrl.channelService.channels"
-      ng-click="$ctrl.isOpen = false"
+<div class="dropdown"  uib-dropdown>
+  <div class="btn-group ph-channel-selector-group" role="group" is-open="$ctrl.isOpen" uib-dropdown>
+    <a
+      href="{{
+        $ctrl.channelService.selectedChannel ?
+        './channels/' + $ctrl.channelService.selectedChannel.id :
+        ''
+      }}"
+      class="btn btn-default ph-channel-selector-channel"
+      ng-class="{disabled: !$ctrl.channelService.selectedChannel}"
     >
-      <a href=""
-        ng-click="$ctrl.channelService.selectChannel(channel)"
-        title="{{$ctrl.channelService.getDescription(channel)}}"
+      {{$ctrl.channelService.getDescription($ctrl.channelService.selectedChannel)}}
+    </a>
+    <button class="btn btn-default" uib-dropdown-toggle>
+      <i class="fa fa-bullhorn"></i>
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu>
+      <li ng-click="$ctrl.isOpen = false">
+        <a href=""
+          ng-click="$ctrl.channelService.selectChannel(undefined)"
+          title="Public channel"
+        >
+          <i class="fa fa-fw ph-dropdown-icon-left fa-globe"></i>
+          Public channel
+        </a>
+      </li>
+      <li
+        ng-repeat="channel in $ctrl.channelService.channels"
+        ng-click="$ctrl.isOpen = false"
       >
-        <i class="fa fa-fw ph-dropdown-icon-left fa-lock"></i>
-        {{$ctrl.channelService.getDescription(channel)}}
-        <span class="badge">{{channel.members.length}}</span>
-      </a>
-    </li>
-    <li ng-if="$ctrl.authService.user" role="separator" class="divider"></li>
-    <li ng-if="$ctrl.authService.user">
-      <a href=""
-        ng-click="$ctrl.channelService.toggleShowAllChannels(); $event.stopPropagation()"
-        title="Show discussions from all channels instead of just from the selected one?"
-      >
-        <i class="fa fa-fw ph-dropdown-icon-left"
-          ng-class="{
-            'fa-square-o': !$ctrl.channelService.showAllChannels,
-            'fa-check-square-o': $ctrl.channelService.showAllChannels,
-          }"
-        ></i>
-        Show discussions from all channels
-      </a>
-    </li>
-    <li role="separator" class="divider"></li>
-    <li ng-class="{disabled: !$ctrl.authService.user}">
-      <a href="./channels/new"
-        ng-click="!$ctrl.authService.user && ($event.preventDefault() || $event.stopPropagation())"
-        title="You have to be logged in to create a private discussion channel."
-      >
-        <i class="fa fa-fw ph-dropdown-icon-left fa-plus"></i>
-        Create channel
-      </a>
-    </li>
-  </ul>
+        <a href=""
+          ng-click="$ctrl.channelService.selectChannel(channel)"
+          title="{{$ctrl.channelService.getDescription(channel)}}"
+        >
+          <i class="fa fa-fw ph-dropdown-icon-left fa-lock"></i>
+          {{$ctrl.channelService.getDescription(channel)}}
+          <span class="badge">{{channel.members.length}}</span>
+        </a>
+      </li>
+      <li role="separator" class="divider"></li>
+      <li ng-class="{disabled: !$ctrl.authService.user}">
+        <a href="./channels/new"
+          ng-click="!$ctrl.authService.user && ($event.preventDefault() || $event.stopPropagation())"
+          title="You have to be logged in to create a private discussion channel."
+        >
+          <i class="fa fa-fw ph-dropdown-icon-left fa-plus"></i>
+          Create channel
+        </a>
+      </li>
+    </ul>
+  </div>
 </div>
