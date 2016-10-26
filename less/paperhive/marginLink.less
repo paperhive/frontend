@@ -108,10 +108,17 @@
 
 .ph-margin-controls-permanent > channel-selector {
   flex-grow: 1;
+  box-shadow: @ph-shadow;
 }
 
 .ph-channel-selector-group {
   display: flex;
+  > .btn {
+    border: none;
+  }
+  > .btn.dropdown-toggle {
+    border-left: 1px solid @btn-default-border;
+  }
 }
 
 .ph-channel-selector-channel {
@@ -120,4 +127,8 @@
 
 .ph-margin-controls-permanent > filter-button {
   margin-left: @ph-margin-controls-margin;
+  box-shadow: @ph-shadow;
+  > .btn-group > .btn {
+    border: none;
+  }
 }
