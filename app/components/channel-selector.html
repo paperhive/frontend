@@ -9,6 +9,8 @@
       class="btn btn-default ph-channel-selector-channel"
       ng-class="{disabled: !$ctrl.channelService.selectedChannel}"
     >
+      <i ng-if="!$ctrl.channelService.selectedChannel" class="fa fa-fw fa-globe"></i>
+      <i ng-if="$ctrl.channelService.selectedChannel" class="fa fa-fw fa-lock"></i>
       {{$ctrl.channelService.getDescription($ctrl.channelService.selectedChannel)}}
     </a>
     <button class="btn btn-default" uib-dropdown-toggle>
@@ -16,26 +18,35 @@
       <i class="fa fa-caret-down"></i>
     </button>
     <ul class="dropdown-menu dropdown-menu-right ph-dropdown-menu-full" uib-dropdown-menu>
-      <li ng-click="$ctrl.isOpen = false">
+      <li ng-click="$ctrl.isOpen = false" ng-class="{active: !$ctrl.channelService.selectedChannel}">
         <a href=""
           ng-click="$ctrl.channelService.selectChannel(undefined)"
           title="Public channel"
         >
           <i class="fa fa-fw ph-dropdown-icon-left fa-globe"></i>
           Public channel
+          <span class="pull-right" ng-if="$ctrl.publicDiscussions">
+            {{$ctrl.publicDiscussions}}
+            <i class="fa fa-comments"></i>
+          </span>
         </a>
       </li>
       <li
         ng-repeat="channel in $ctrl.channelService.channels"
         ng-click="$ctrl.isOpen = false"
+        ng-class="{active: channel.id === $ctrl.channelService.selectedChannel.id}"
       >
         <a href=""
           ng-click="$ctrl.channelService.selectChannel(channel)"
           title="{{$ctrl.channelService.getDescription(channel)}}"
+          class="clearfix"
         >
           <i class="fa fa-fw ph-dropdown-icon-left fa-lock"></i>
           {{$ctrl.channelService.getDescription(channel)}}
-          <span class="badge">{{channel.members.length}}</span>
+          <span class="pull-right" ng-if="$ctrl.channelDiscussions[channel.id]">
+            {{$ctrl.channelDiscussions[channel.id]}}
+            <i class="fa fa-comments"></i>
+          </span>
         </a>
       </li>
       <li ng-show="$ctrl.authService.user" role="separator" class="divider"></li>

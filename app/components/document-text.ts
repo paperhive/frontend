@@ -9,6 +9,7 @@ class DocumentTextCtrl {
   access: boolean;
   latestAccessibleRevision: any;
   discussions: Array<any>;
+  filteredDiscussions: Array<any>;
 
   draftSelectors: any;
   highlights: Array<any>;
@@ -29,7 +30,7 @@ class DocumentTextCtrl {
     $scope.$watchGroup(['$ctrl.revision', '$ctrl.access'], this.updatePdfUrl.bind(this));
 
     // update highlights when discussions or draft selectors change
-    $scope.$watchCollection('$ctrl.discussions', this.updateHighlights.bind(this));
+    $scope.$watchCollection('$ctrl.filteredDiscussions', this.updateHighlights.bind(this));
     $scope.$watch('$ctrl.draftSelectors', this.updateHighlights.bind(this));
 
     // update and watch anchor and query parameter
@@ -103,9 +104,9 @@ class DocumentTextCtrl {
 
   // generate highlights array
   updateHighlights() {
-    if (!this.discussions) return;
+    if (!this.filteredDiscussions) return;
 
-    const highlights = this.discussions.map(discussion => {
+    const highlights = this.filteredDiscussions.map(discussion => {
       return {id: discussion.id, selectors: discussion.target.selectors};
     });
 
@@ -125,6 +126,7 @@ export default function(app) {
       access: '<',
       latestAccessibleRevision: '<',
       discussions: '<',
+      filteredDiscussions: '<',
       viewportOffsetTop: '<',
       expanded: '<',
 

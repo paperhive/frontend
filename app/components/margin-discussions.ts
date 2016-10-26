@@ -8,6 +8,7 @@ export default function(app) {
   app.component('marginDiscussions', {
     bindings: {
       discussions: '<',
+      filteredDiscussions: '<',
       draftSelectors: '<',
       emphasizedDiscussions: '<',
       pageCoordinates: '<',
@@ -37,7 +38,7 @@ export default function(app) {
         // note: unrendered discussions will be rendered with a placeholder
         $ctrl.discussionVisibilities = {};
         function updateDiscussionVisibilities() {
-          if (!$ctrl.discussions) return;
+          if (!$ctrl.filteredDiscussions) return;
 
           function getVisibleDiscussionIds(discussionIds) {
             const parentTop = $element[0].getBoundingClientRect().top;
@@ -51,7 +52,7 @@ export default function(app) {
           }
 
           // determine which discussions are visible right now
-          const visibleDiscussionIds = getVisibleDiscussionIds($ctrl.discussions.map(discussion => discussion.id));
+          const visibleDiscussionIds = getVisibleDiscussionIds($ctrl.filteredDiscussions.map(discussion => discussion.id));
 
           // reevaluate after a short delay
           $timeout(() => {
@@ -166,7 +167,7 @@ export default function(app) {
 
         // compute discussionPosititions and draftPosition
         function updatePositions() {
-          if (!$ctrl.discussions) return;
+          if (!$ctrl.filteredDiscussions) return;
 
           // get raw draft position
           const draftRawPosition = getRawPosition($ctrl.draftSelectors);
@@ -178,7 +179,7 @@ export default function(app) {
 
           // get raw discussion positions
           const discussionRawPositions = {};
-          $ctrl.discussions.forEach(discussion => {
+          $ctrl.filteredDiscussions.forEach(discussion => {
             discussionRawPositions[discussion.id] =
               getRawPosition(discussion.target.selectors);
             if (!$ctrl.discussionSizes[discussion.id]) {
@@ -243,7 +244,7 @@ export default function(app) {
 
         // update positions if discussions, draftSelectors, discussionSizes,
         // draftSize or page coords changed
-        $scope.$watchCollection('$ctrl.discussions', updatePositions);
+        $scope.$watchCollection('$ctrl.filteredDiscussions', updatePositions);
         $scope.$watch('$ctrl.draftSelectors', updatePositions);
         $scope.$watch('$ctrl.draftSize', updatePositions);
         $scope.$watchCollection('$ctrl.discussionSizes', updatePositions);
