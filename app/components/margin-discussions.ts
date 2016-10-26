@@ -94,7 +94,7 @@ export default function(app) {
               angular.element($window).scroll();
               $timeout(() => {
                 scroll.scrollTo('#discussionTourPopover', {
-                  offset: ($ctrl.viewportOffsetTop || 0) + 50
+                  offset: ($ctrl.viewportOffsetTop || 0) + 85
                 });
               });
             }, 400);
@@ -153,7 +153,7 @@ export default function(app) {
 
           scroll.scrollTo(top, {
             duration: 1000,
-            offset: ($ctrl.viewportOffsetTop || 0) + 50,
+            offset: ($ctrl.viewportOffsetTop || 0) + 85,
           });
 
           $ctrl.currentScrollAnchor = $ctrl.scrollToAnchor;
