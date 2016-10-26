@@ -193,6 +193,7 @@ export default function(app) {
 
           // padding between elements
           const padding = 8;
+          const offsetTop = 70;
 
           // treat above and below separately
           const coordsAbove = draftCoord &&
@@ -205,7 +206,7 @@ export default function(app) {
           function getTotalHeight(coords) {
             return sum(map(coords, 'height')) + coords.length * padding;
           }
-          while (draftCoord && getTotalHeight(coordsAbove) > draftCoord.position) {
+          while (draftCoord && getTotalHeight(coordsAbove) + offsetTop > draftCoord.position) {
             // remove last one in above
             const last = coordsAbove.splice(-1, 1);
             // insert to beginning of below
@@ -226,10 +227,10 @@ export default function(app) {
 
           // place discussions
           if (draftCoord) {
-            place(coordsAbove, 0, draftCoord.position);
+            place(coordsAbove, offsetTop, draftCoord.position);
             place(coordsBelow, draftCoord.position + draftCoord.height + padding, undefined);
           } else {
-            place(coordsBelow, 0, undefined);
+            place(coordsBelow, offsetTop, undefined);
           }
 
           // update controller properties
