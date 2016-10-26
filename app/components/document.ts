@@ -6,23 +6,12 @@ import template from './document.html';
 import { getRevisionMetadata } from '../utils/documents';
 
 class DiscussionsController {
-  // dependencies
-  config: any;
-  $scope: any;
-  $http: any;
-  websocketService: any;
-
   // data
-  document: string;
   discussions: Array<any>;
+  documentUpdatesSubscription: any;
 
-  constructor(document: string, config: any, $scope: any, $http: any, websocketService) {
-    this.config = config;
-    this.$scope = $scope;
-    this.$http = $http;
-    this.websocketService = websocketService;
-
-    this.document = document;
+  constructor(public document: string, public config: any, public $scope: any,
+      public $http: any, public websocketService) {
     this.discussions = [];
   }
 
@@ -103,7 +92,7 @@ class DiscussionsController {
   // subscribe to push notifications
   websocketInit() {
     const documentUpdates = this.websocketService.join('documents', this.document);
-    const documentUpdatesSubscriber = documentUpdates.subscribe((update) => {
+    this.documentUpdatesSubscription = documentUpdates.subscribe((update) => {
       const data = update.data;
       this.$scope.$apply(() => {
         switch (update.resource) {
@@ -126,7 +115,14 @@ class DiscussionsController {
     });
 
     // dispose websocket subscription when scope is destroyed
-    this.$scope.$on('$destroy', () => documentUpdatesSubscriber.dispose());
+    this.$scope.$on('$destroy', () => this.websocketDestroy());
+  }
+
+  websocketDestroy() {
+    if (this.documentUpdatesSubscription) {
+      this.documentUpdatesSubscription.dispose();
+      this.documentUpdatesSubscription = undefined;
+    }
   }
 
   _discussionGet(discussionId) {
@@ -231,6 +227,7 @@ export default function(app) {
         this.discussionsCtrl = new DiscussionsController(
           documentId, config, $scope, $http, websocketService
         );
+
 
         this.discussionsCtrl.init().catch(error => notificationService.notifications.push({
           type: 'error',
