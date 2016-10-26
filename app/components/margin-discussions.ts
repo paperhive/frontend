@@ -27,9 +27,11 @@ export default function(app) {
     },
     template,
     controller: [
-      '$document', '$element', '$scope', '$timeout', '$window', 'scroll', 'distangleService', 'tourService',
-      function($document, $element, $scope, $timeout, $window, scroll, distangleService, tourService) {
+      '$document', '$element', '$scope', '$timeout', '$window', 'scroll', 'channelService', 'distangleService', 'tourService',
+      function($document, $element, $scope, $timeout, $window, scroll, channelService, distangleService, tourService) {
         const $ctrl = this;
+
+        $ctrl.channelService = channelService;
 
         // viewport tracking for deciding which discussions actually need to be rendered
         // note: unrendered discussions will be rendered with a placeholder

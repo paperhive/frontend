@@ -10,9 +10,7 @@
     viewport-offset-bottom="$ctrl.viewportOffsetBottom"
   ></margin-link>
   <div class="ph-margin-controls-permanent">
-    <channel-selector
-      on-channel-select="$ctrl.channelService.currentChannel = $channel"
-    ></channel-selector>
+    <channel-selector></channel-selector>
     <!--filter-button></filter-button-->
   </div>
 </div>
@@ -30,7 +28,10 @@
 <div
   ng-repeat="discussion in $ctrl.discussions track by discussion.id"
   class="ph-margin-discussion"
-  ng-style="{'top': $ctrl.discussionPositions[discussion.id] + 'px'}"
+  ng-style="{
+    top: $ctrl.discussionPositions[discussion.id] + 'px',
+    opacity: $ctrl.channelService.selectedChannel.id === discussion.channel ? 1 : 0.5,
+  }"
   ng-class="{'ph-margin-discussion-animate': $ctrl.discussionPositions[discussion.id] !== undefined}"
   id="discussion-{{discussion.id}}"
 >
