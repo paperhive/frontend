@@ -11,15 +11,16 @@ class DiscussionsController {
   documentUpdatesSubscription: any;
 
   constructor(public document: string, public config: any, public $scope: any,
-      public $http: any, public websocketService) {
+      public $http: any, public authService, public websocketService) {
     this.discussions = [];
   }
 
-  async init() {
+  async refresh() {
     const response = await this.$http({
       url: `${this.config.apiUrl}/documents/${this.document}/discussions`,
     });
     this.$scope.$apply(() => this.discussions = response.data.discussions);
+    this.websocketDestroy();
     this.websocketInit();
   }
 
@@ -91,7 +92,10 @@ class DiscussionsController {
 
   // subscribe to push notifications
   websocketInit() {
-    const documentUpdates = this.websocketService.join('documents', this.document);
+    const documentUpdates = this.websocketService.join('documents', {
+      authToken: this.authService.token,
+      documentId: this.document,
+    });
     this.documentUpdatesSubscription = documentUpdates.subscribe((update) => {
       const data = update.data;
       this.$scope.$apply(() => {
@@ -201,10 +205,10 @@ export default function(app) {
 
       // note: do *not* use $routeSegment.$routeParams because they still
       // use the old state in $routeChangeSuccess events
-      static $inject = ['$http', '$routeParams', '$scope', 'channelService', 'config',
+      static $inject = ['$http', '$routeParams', '$scope', 'authService', 'channelService', 'config',
         'DocumentController', 'metaService', 'notificationService', 'websocketService'];
 
-      constructor($http, public $routeParams, $scope, public channelService, config,
+      constructor($http, public $routeParams, $scope, public authService, public channelService, config,
         DocumentController, public metaService, notificationService, websocketService) {
         const documentId = $routeParams.documentId;
 
@@ -225,14 +229,16 @@ export default function(app) {
 
         // instanciate and init controller for discussions
         this.discussionsCtrl = new DiscussionsController(
-          documentId, config, $scope, $http, websocketService
+          documentId, config, $scope, $http, authService, websocketService
         );
 
 
-        this.discussionsCtrl.init().catch(error => notificationService.notifications.push({
-          type: 'error',
-          message: error.message
-        }));
+        $scope.$watch('$ctrl.authService.user', () => {
+          this.discussionsCtrl.refresh().catch(error => notificationService.notifications.push({
+            type: 'error',
+            message: error.message
+          }));
+        });
 
         // update filtered discussions if discussions, channel or showAllChannels changed
         $scope.$watchCollection('$ctrl.discussionsCtrl.discussions', this.updateFilteredDiscussions.bind(this));
