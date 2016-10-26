@@ -108,6 +108,7 @@
 
 .ph-margin-controls-permanent > channel-selector {
   flex-grow: 1;
+  max-width: 100%;
   box-shadow: @ph-shadow;
 }
 
@@ -123,6 +124,8 @@
 
 .ph-channel-selector-channel {
   flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .ph-margin-controls-permanent > filter-button {

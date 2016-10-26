@@ -8,6 +8,7 @@
       }}"
       class="btn btn-default ph-channel-selector-channel"
       ng-class="{disabled: !$ctrl.channelService.selectedChannel}"
+      title="{{$ctrl.channelService.getDescription($ctrl.channelService.selectedChannel)}}"
     >
       <i ng-if="!$ctrl.channelService.selectedChannel" class="fa fa-fw fa-globe"></i>
       <i ng-if="$ctrl.channelService.selectedChannel" class="fa fa-fw fa-lock"></i>
@@ -23,12 +24,16 @@
           ng-click="$ctrl.channelService.selectChannel(undefined)"
           title="Public channel"
         >
-          <i class="fa fa-fw ph-dropdown-icon-left fa-globe"></i>
-          Public channel
-          <span class="pull-right" ng-if="$ctrl.publicDiscussions">
-            {{$ctrl.publicDiscussions}}
-            <i class="fa fa-comments"></i>
-          </span>
+          <div class="ph-grow-container">
+            <div class="ph-grow-item">
+              <i class="fa fa-fw ph-dropdown-icon-left fa-globe"></i>
+              Public channel
+            </div>
+            <div class="pull-right" ng-if="$ctrl.publicDiscussions">
+              {{$ctrl.publicDiscussions}}
+              <i class="fa fa-comments"></i>
+            </div>
+          </div>
         </a>
       </li>
       <li
@@ -39,14 +44,17 @@
         <a href=""
           ng-click="$ctrl.channelService.selectChannel(channel)"
           title="{{$ctrl.channelService.getDescription(channel)}}"
-          class="clearfix"
         >
-          <i class="fa fa-fw ph-dropdown-icon-left fa-lock"></i>
-          {{$ctrl.channelService.getDescription(channel)}}
-          <span class="pull-right" ng-if="$ctrl.channelDiscussions[channel.id]">
-            {{$ctrl.channelDiscussions[channel.id]}}
-            <i class="fa fa-comments"></i>
-          </span>
+          <div class="ph-grow-container">
+            <div class="ph-grow-item">
+              <i class="fa fa-fw ph-dropdown-icon-left fa-lock"></i>
+              {{$ctrl.channelService.getDescription(channel)}}
+            </div>
+            <div ng-if="$ctrl.channelDiscussions[channel.id]">
+              {{$ctrl.channelDiscussions[channel.id]}}
+              <i class="fa fa-comments"></i>
+            </div>
+          </div>
         </a>
       </li>
       <li ng-show="$ctrl.authService.user" role="separator" class="divider"></li>
@@ -54,6 +62,7 @@
         <a href=""
           ng-click="$ctrl.channelService.toggleShowAllChannels(); $event.stopPropagation()"
           title="Show discussions from all channels instead of just from the selected one?"
+          class="ph-text-overflow"
         >
           <i class="fa fa-fw ph-dropdown-icon-left"
             ng-class="{
@@ -61,7 +70,7 @@
               'fa-check-square-o': $ctrl.channelService.showAllChannels,
             }"
           ></i>
-          Show discussions from all channels
+          Show all discussions
         </a>
       </li>
       <li role="separator" class="divider"></li>
@@ -69,6 +78,7 @@
         <a href="./channels/new"
           ng-click="!$ctrl.authService.user && ($event.preventDefault() || $event.stopPropagation())"
           title="You have to be logged in to create a private discussion channel."
+          class="ph-text-overflow"
         >
           <i class="fa fa-fw ph-dropdown-icon-left fa-plus"></i>
           Create channel
