@@ -285,7 +285,8 @@ export default function(app) {
           });
         }
 
-        angular.copy(discussions, this.filteredDiscussions);
+        this.filteredDiscussions.splice(0, this.filteredDiscussions.length);
+        discussions.forEach(discussion => this.filteredDiscussions.push(discussion));
       }
 
       updateMetadata() {
