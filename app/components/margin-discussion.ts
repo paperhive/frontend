@@ -17,12 +17,15 @@ export default function(app) {
     },
     template,
     controller: [
-      '$scope', '$q', '$location', 'authService',
-      function($scope, $q, $location, authService) {
+      '$scope', '$q', '$location', 'authService', 'channelService',
+      function($scope, $q, $location, authService, channelService) {
         const ctrl = this;
 
         // expose discussion in template
         $scope.discussion = this.discussion;
+        if (this.discussion && this.discussion.channel) {
+          this.channel = channelService.get(this.discussion.channel);
+        }
 
         $scope.state = {};
         $scope.replyDraft = {};
