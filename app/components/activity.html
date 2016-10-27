@@ -105,7 +105,7 @@
           <a ng-href="./documents/{{activity.document.id}}/discussions/{{activity.discussion.id}}">
             <mathjax body="activity.discussion.title"></mathjax>
           </a>
-          <div ng-if="$ctrl.person">
+          <div ng-if="$ctrl.person || $ctrl.filterMode === 'channel'">
             <small>
               on
               <a ng-href="./documents/{{activity.document.id}}">{{activity.documentRevision.title}}</a>
