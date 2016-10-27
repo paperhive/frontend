@@ -16,8 +16,7 @@
             <a href="./{{'documents.discussions.thread' | routeSegmentUrl:
               {discussionId: discussion.id} }}"
             >
-              <span
-                ng-if="discussion.replies.length > 0"
+              <span ng-if="discussion.replies.length > 0"
                 class="pull-right ph-discussion-replies-counter"
               >
                 <i class="fa fa-comments"></i> {{discussion.replies.length}}
@@ -26,13 +25,18 @@
             <h4>
               <a href="./{{'documents.discussions.thread' | routeSegmentUrl:
                 {discussionId: discussion.id} }}"
-              >
-                <mathjax body="discussion.title"></mathjax>
-              </a>
-              <ul
-                ng-if="discussion.tags.length > 0"
-                class="ph-tags list-inline"
-              >
+              ><mathjax body="discussion.title"></mathjax></a>
+              <small>
+                <i ng-show="!discussion.channel"
+                  class="fa fa-globe"
+                  uib-tooltip="Public channel"
+                ></i>
+                <i ng-show="discussion.channel"
+                  class="fa fa-lock"
+                  uib-tooltip="TODO"
+                ></i>
+              </small>
+              <ul ng-if="discussion.tags.length > 0" class="ph-tags list-inline">
                 <li ng-repeat="tag in discussion.tags">
                   <a href="#" class="btn btn-default">{{tag}}</a>
                 </li>
