@@ -12,8 +12,8 @@ export default function(app) {
         discussions: '<',
         documentRevision: '<',
       },
-      controller: ['$scope', 'authService', 'channelService', 'metaService',
-        function($scope, authService, channelService, metaService) {
+      controller: ['$scope', 'channelService', 'metaService',
+        function($scope, channelService, metaService) {
 
           this.channelService = channelService;
 
