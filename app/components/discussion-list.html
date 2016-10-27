@@ -33,7 +33,7 @@
                 ></i>
                 <i ng-show="discussion.channel"
                   class="fa fa-lock"
-                  uib-tooltip="TODO"
+                  uib-tooltip="{{$ctrl.channelService.channelsById[discussion.channel].name}}"
                 ></i>
               </small>
               <ul ng-if="discussion.tags.length > 0" class="ph-tags list-inline">

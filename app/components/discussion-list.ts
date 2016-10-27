@@ -9,25 +9,30 @@ export default function(app) {
     'discussionList', {
       template,
       bindings: {
-        documentRevision: '<',
         discussions: '<',
+        documentRevision: '<',
       },
-      controller: ['$scope', 'metaService', function($scope, metaService) {
-        // set meta data
-        $scope.$watch('$ctrl.documentRevision', revision => {
-          if (revision) {
-            const metadata = getRevisionMetadata(revision);
-            const description = find(metadata, {name: 'description'});
+      controller: ['$scope', 'authService', 'channelService', 'metaService',
+        function($scope, authService, channelService, metaService) {
 
-            description.content =
-              `Discussions overview for ${revision.title} by ${revision.authors.join(', ')}`;
+          this.channelService = channelService;
 
-            metaService.set({
-              title: 'Discussions · ' + document.title + ' · PaperHive',
-              meta: metadata
-            });
-          }
-        });
-      }]
+          // set meta data
+          $scope.$watch('$ctrl.documentRevision', revision => {
+            if (revision) {
+              const metadata = getRevisionMetadata(revision);
+              const description = find(metadata, {name: 'description'});
+
+              description.content =
+                `Discussions overview for ${revision.title} by ${revision.authors.join(', ')}`;
+
+              metaService.set({
+                title: 'Discussions · ' + document.title + ' · PaperHive',
+                meta: metadata
+              });
+            }
+          });
+        }
+      ]
     });
 };
