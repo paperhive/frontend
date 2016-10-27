@@ -5,38 +5,34 @@
         <div class="panel-heading">
           <ul class="list-inline">
             <li>
-            <strong>
-              <i class="fa fa-comment"></i> {{$ctrl.discussions.length}} open
-            </strong>
+              <strong>
+                <i class="fa fa-comment"></i> {{$ctrl.discussions.length}} open
+              </strong>
             </li>
-            <!--li>
-              <a href="#">
-                <i class="fa fa-close"></i> 0 closed
-              </a>
-            </li-->
           </ul>
-          <!--span class="pull-right">Sort</span-->
         </div>
         <ul class="list-group">
           <li class="list-group-item" ng-repeat="discussion in $ctrl.discussions">
-          <a href="./{{'documents.discussions.thread' | routeSegmentUrl:
-            {discussionId: discussion.id} }}"
+            <a href="./{{'documents.discussions.thread' | routeSegmentUrl:
+              {discussionId: discussion.id} }}"
             >
-            <span
-              ng-if="discussion.replies.length > 0"
-              class="pull-right ph-discussion-replies-counter"
+              <span
+                ng-if="discussion.replies.length > 0"
+                class="pull-right ph-discussion-replies-counter"
               >
-              <i class="fa fa-comments"></i> {{discussion.replies.length}}
-          </span></a>
+                <i class="fa fa-comments"></i> {{discussion.replies.length}}
+              </span>
+            </a>
             <h4>
               <a href="./{{'documents.discussions.thread' | routeSegmentUrl:
-                  {discussionId: discussion.id} }}">
+                {discussionId: discussion.id} }}"
+              >
                 <mathjax body="discussion.title"></mathjax>
               </a>
               <ul
                 ng-if="discussion.tags.length > 0"
                 class="ph-tags list-inline"
-                >
+              >
                 <li ng-repeat="tag in discussion.tags">
                   <a href="#" class="btn btn-default">{{tag}}</a>
                 </li>
