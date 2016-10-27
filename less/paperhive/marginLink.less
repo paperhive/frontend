@@ -40,21 +40,9 @@
   }
 }
 
-@ph-badge-font-size: 12px;
-@ph-badge-padding: 3px;
-
 .ph-margin-link-badge {
-  background-color: #ff7f2a;
-  border-radius: (@ph-badge-font-size + 2 * @ph-badge-padding) / 2;
-  color: white;
-  font-size: @ph-badge-font-size;
-  font-weight: bold;
-  line-height: 1;
-  min-width: @ph-badge-font-size + 2 * @ph-badge-padding;
-  padding: @ph-badge-padding;
+  .badge(@ph-badge-font-size, @ph-badge-padding, @ph-badge-bg-color, @ph-badge-color);
   position: absolute;
   right: -3px;
-  text-align: center;
   top: -3px;
-  vertical-align: middle;
 }
