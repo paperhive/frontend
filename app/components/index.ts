@@ -86,6 +86,7 @@ export default function(app) {
   channelInvitationNew(app);
   channelInvitations(app);
   channelMembers(app);
+  channelMemberUpdate(app);
   channelSettings(app);
   channels(app);
   channelsInvitations(app);
@@ -122,7 +123,6 @@ export default function(app) {
   marginDiscussionPlaceholder(app);
   marginDiscussions(app);
   marginReplyEdit(app);
-  memberUpdate(app);
   navbar(app);
   navbarSearch(app);
   navbarUser(app);
