@@ -27,6 +27,16 @@ export default function(app) {
         .when('/404', '404')
         .when('/about', 'about')
         .when('/auth/return/:provider', 'authReturn')
+        .when('/channels', 'channels')
+        .when('/channels/list', 'channels.list' )
+        .when('/channels/invitations', 'channels.invitations')
+        .when('/channels/new', 'channelsNew')
+        .when('/channels/:channelId', 'channel')
+        .when('/channels/:channelId/activity', 'channel.activity')
+        .when('/channels/:channelId/invitations', 'channel.invitations')
+        .when('/channels/:channelId/members', 'channel.members')
+        .when('/channels/:channelId/settings', 'channel.settings')
+        .when('/contact', 'contact')
         // register new and remote before id-dependent routes
         .when('/documents/new', 'documents_new')
         .when('/documents/remote', 'documents_remote')
@@ -41,7 +51,6 @@ export default function(app) {
         .when('/documents/:documentId/text', 'documents.text', {reloadOnSearch: false})
         .when('/documents/:documentId/revisions/:revisionId', 'documents.revisions', {reloadOnSearch: false})
         .when('/documents/:documentId/about', 'documents.about')
-        .when('/contact', 'contact')
         .when('/help/markdown', 'helpMarkdown')
         .when('/jobs', 'jobs')
         .when('/knowledgeunlatched', 'knowledgeunlatched')
@@ -51,6 +60,7 @@ export default function(app) {
         .when('/password/request', 'passwordRequest')
         .when('/password/reset', 'passwordReset')
         .when('/publishers', 'publishers')
+        .when('/return/channelInvitation', 'channelInvitationConfirm')
         .when('/search', 'search')
         .when('/settings', 'settings')
         .when('/settings/profile', 'settings.profile')
@@ -136,6 +146,82 @@ export default function(app) {
           title: 'PaperHive'
         })
 
+        .segment('channelInvitationConfirm', {
+          template: '<channel-invitation-confirm></channel-invitation-confirm>',
+          title: 'Confirm your invitation · PaperHive',
+        })
+        .segment('channels', {
+          template: '<channels></channels>',
+          title: 'My channels · PaperHive',
+        })
+        .within()
+          .segment('list', {
+            default: true,
+            template: '<channels-list></channels-list>',
+            title: 'My channels · PaperHive',
+          })
+          .segment('invitations', {
+            template: '<channels-invitations></channels-invitations>',
+            title: 'My invitations · PaperHive',
+          })
+        .up()
+
+        .segment('channelsNew', {
+          template: '<channel-new></channel-new>',
+          title: 'Add a new channel · PaperHive'
+        })
+
+        .segment('channel', {
+          template: '<channel></channel',
+        })
+        .within()
+          .segment('activity', {
+            default: true,
+            template:
+              `<activity
+                filter-mode="channel"
+                filter-id="$ctrl.channel.id"
+              ></activity>`,
+            title: 'Channel activity · PaperHive',
+          })
+          .segment('invitations', {
+            template:
+              `<channel-invitations
+                channel="$ctrl.channel"
+                is-owner="$ctrl.isOwner"
+              ></channel-invitations>`,
+            title: 'Channel invitations · PaperHive',
+          })
+          .segment('members', {
+            template:
+              `<channel-members
+                channel="$ctrl.channel"
+                is-owner="$ctrl.isOwner"
+              ></channel-members>`,
+            title: 'Channel members · PaperHive',
+          })
+          .segment('settings', {
+            template:
+              `<channel-settings
+                channel="$ctrl.channel"
+                is-owner="$ctrl.isOwner"
+              ></channel-settings>`,
+            title: 'Channel settings · PaperHive',
+          })
+        .up()
+
+        .segment('contact', {
+          template: '<contact></contact>',
+          title: 'Contact · PaperHive',
+          meta: [
+            {
+              name: 'description',
+              content: 'Contact PaperHive and ask us questions or send us ' +
+                'suggestions.'
+            }
+          ]
+        })
+
         .segment('documents', {
           template: '<document></document>',
           dependencies: ['documentId'],
@@ -147,7 +233,10 @@ export default function(app) {
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-md-9 col-md-offset-3">
-                    <activity document="$ctrl.documentCtrl.documentId"></activity>
+                    <activity
+                      filter-mode="document"
+                      filter-id="$ctrl.documentCtrl.documentId"
+                    ></activity>
                   </div>
                 </div>
               </div>
@@ -214,18 +303,6 @@ export default function(app) {
         .segment('documents_remote', {
           template: '<document-remote></document-remote>',
           title: 'Document remote redirect · PaperHive'
-        })
-
-        .segment('contact', {
-          template: '<contact></contact>',
-          title: 'Contact · PaperHive',
-          meta: [
-            {
-              name: 'description',
-              content: 'Contact PaperHive and ask us questions or send us ' +
-                'suggestions.'
-            }
-          ]
         })
 
         .segment('helpMarkdown', {
@@ -347,7 +424,11 @@ export default function(app) {
             dependencies: ['username']
           })
           .segment('activity', {
-            template: `<activity person="user"></activity>`
+            template:
+              `<activity
+                filter-mode="person"
+                filter-id="user.id"
+              ></activity>`
           })
         .up()
         ;

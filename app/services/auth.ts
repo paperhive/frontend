@@ -81,6 +81,7 @@ export default function(app) {
         // log in
         loginFun()
           .success(function(data, status) {
+            // TODO think about better way for login waiting
             authService.loginPromise = undefined;
             authService.user = data.person;
             authService.token = data.token;

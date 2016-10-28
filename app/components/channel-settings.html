@@ -1,0 +1,92 @@
+<div class="row">
+  <div class="col-sm-12">
+
+    <form name="updateChannelForm" novalidate>
+      <div class="form-group row" ng-if="$ctrl.channel.isActive">
+        <div ng-class="{'has-error': $ctrl.hasError('channelName')}">
+          <label class="col-sm-2 col-form-label">Name</label>
+          <div class="col-sm-10">
+            <input ng-model="$ctrl.name" name="channelName" type="text"
+              class="form-control" required
+              ng-disabled="!$ctrl.channel.isActive || $ctrl.inProgress || !$ctrl.isOwner"
+            >
+            <div class="help-block">
+              <span ng-if="$ctrl.hasError('channelName')">
+                <span ng-if="updateChannelForm.channelName.$error.required">
+                  Please enter a channel name.
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row" ng-if="$ctrl.channel.isActive">
+        <label class="col-sm-2 col-form-label">Description</label>
+        <div class="col-sm-10">
+          <input ng-model="$ctrl.description" type="text"
+            class="form-control" ng-disabled="!$ctrl.channel.isActive || !$ctrl.isOwner"
+          >
+        </div>
+      </div>
+
+      <div class="form-group row" ng-if="$ctrl.channel.isActive && $ctrl.isOwner">
+        <label class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+          <button type="submit" class="btn btn-primary"
+            ng-click="!$ctrl.inProgress && !updateChannelForm.$invalid && $ctrl.channelUpdate()"
+            ng-class="{disabled: updateChannelForm.$invalid || $ctrl.inProgress}"
+          >
+            <i ng-if="$ctrl.inProgress" class="fa fa-fw fa-spinner fa-spin"></i>
+            <i ng-if="!$ctrl.inProgress" class="fa fa-fw fa-check" aria-hidden="true"></i>
+            Save
+          </button>
+        </div>
+      </div>
+
+      <div class="form-group row ph-lg-margin-top">
+        <div class="col-sm-12">
+
+          <div class="panel panel-danger" ng-if="$ctrl.isOwner && $ctrl.channel.isActive">
+            <div class="panel-heading">Deactivate channel</div>
+            <div class="panel-body">
+              <p>
+                Deactivating a channel makes it read-only and allows no new
+                member invitations. Channel owners can reactivate a channel at any time.
+              </p>
+              <button type="button" class="btn btn-danger"
+                ng-confirm-click="Really deactivate channel?"
+                confirmed-click="$ctrl.channelDeactivate()"
+                ng-disabled="$ctrl.deactivating"
+              >
+                <i ng-if="$ctrl.deactivating" class="fa fa-fw fa-spinner fa-spin"></i>
+                <i ng-if="!$ctrl.deactivating" class="fa fa-fw fa-times" aria-hidden="true"></i>
+                Deactivate
+              </button>
+            </div>
+          </div>
+
+          <div class="panel panel-info" ng-if="$ctrl.isOwner && !$ctrl.channel.isActive">
+            <div class="panel-heading">Reactivate channel</div>
+            <div class="panel-body">
+              <p>
+                This channel has been deactivated.
+                No new discussions or new member invitations can be added.
+              </p>
+              <button type="button" class="btn btn-primary"
+                ng-click="$ctrl.channelActivate()"
+                ng-disabled="$ctrl.activating"
+              >
+                <i ng-if="$ctrl.activating" class="fa fa-fw fa-spinner fa-spin"></i>
+                <i ng-if="!$ctrl.activating" class="fa fa-fw fa-check" aria-hidden="true"></i>
+                Reactivate
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>

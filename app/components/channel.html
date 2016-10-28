@@ -1,0 +1,121 @@
+<div class="ph-header ph-lg-margin-bottom">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 ph-sm-margin-top">
+        <a href="./channels">Back to <em>channel overview</em></a>
+      </div>
+      <div class="col-sm-12">
+        <div class="media">
+          <div class="media-left">
+            <!--icon-->
+            <span class="fa-stack ph-icon">
+              <i class="fa fa-circle fa-stack-2x" ng-class="{
+                'ph-channel-icon-active': $ctrl.channel.isActive,
+                'text-muted': !$ctrl.channel.isActive
+              }"></i>
+              <i class="fa fa-bullhorn fa-stack-1x fa-inverse"></i>
+            </span>
+          </div>
+          <div class="media-body ph-vertical-middle">
+            <!--heading-->
+            <h2 class="media-heading">{{$ctrl.channel.name}}</h2>
+            <div class="text-muted">{{$ctrl.channel.description}}</div>
+            <div>
+              <span class="label label-default ph-sm-margin-right"
+                ng-if="!$ctrl.channel.isActive"
+              >
+                inactive
+              </span>
+              <span class="label" ng-if="$ctrl.isOwner" ng-class="{
+                'label-primary': $ctrl.channel.isActive,
+                'label-default': !$ctrl.channel.isActive
+              }">
+                owner
+              </span>
+            </div>
+          </div>
+        </div>
+        <button
+          ng-if="$ctrl.isOwner"
+          type="button" ng-click="$ctrl.invitationModalOpen()"
+          class="btn btn-primary ph-md-margin-bottom" ng-disabled="!$ctrl.channel.isActive"
+          title="{{$ctrl.channel.isActive ? '' : 'Reactivate the channel to invite people'}}"
+        >
+          <i class="fa fa-fw fa-envelope" aria-hidden="true"></i>
+          Invite someone
+        </button>
+      </div>
+    </div>
+  </div>
+  <!--subnav-->
+  <div class="ph-header-submenu-container">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <button
+            ng-click="$ctrl.subnavOpen = !$ctrl.subnavOpen"
+            type="button" class="btn btn-default visible-xs"
+          >
+            <i class="fa fa-fw fa-bars"></i> Toggle Navigation
+          </button>
+          <div class="navbar-collapse ph-no-padding" uib-collapse="!$ctrl.subnavOpen">
+            <ul class="nav nav-tabs ph-header-submenu">
+              <li ng-class="{active: ('channel.activity' | routeSegmentStartsWith)}">
+                <a
+                  href=".{{'channel.activity' | routeSegmentUrl}}"
+                  ng-click="$ctrl.subnavOpen = false"
+                >
+                  <i class="fa fa-fw fa-heartbeat"></i>
+                  Activity
+                </a>
+              </li>
+              <li ng-class="{active: ('channel.members' | routeSegmentStartsWith)}">
+                <a
+                  href=".{{'channel.members' | routeSegmentUrl}}"
+                  ng-click="$ctrl.subnavOpen = false"
+                >
+                  <i class="fa fa-fw fa-users"></i>
+                  Members
+                  <span class="badge ph-xs-margin-left">
+                    {{$ctrl.channel.members.length}}
+                  </span>
+                </a>
+              </li>
+              <li
+                ng-if="$ctrl.isOwner"
+                ng-class="{active: ('channel.invitations' | routeSegmentStartsWith)}"
+              >
+                <a
+                  href=".{{'channel.invitations' | routeSegmentUrl}}"
+                  ng-click="$ctrl.subnavOpen = false"
+                >
+                  <i class="fa fa-fw fa-envelope"></i>
+                  Invitations
+                  <span class="badge ph-xs-margin-left">
+                    {{$ctrl.channel.invitations.length}}
+                  </span>
+                </a>
+              </li>
+              <li
+                ng-if="$ctrl.isOwner"
+                ng-class="{active: ('channel.settings' | routeSegmentStartsWith)}"
+              >
+                <a
+                  href=".{{'channel.settings' | routeSegmentUrl}}"
+                  ng-click="$ctrl.subnavOpen = false"
+                >
+                  <i class="fa fa-fw fa-cog"></i>
+                  Settings
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--content-->
+<div class="container ph-lg-margin-bottom">
+  <div app-view-segment="1"></div>
+</div>

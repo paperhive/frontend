@@ -1,0 +1,57 @@
+<div class="ph-header ph-lg-margin-bottom">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="ph-vertical-middle">
+          <h2>Channel overview</h2>
+          <p>
+            Channels allow you to discuss privately with your colleagues.
+          </p>
+          <div>
+            <a href="./channels/new" class="btn btn-primary ph-md-margin-bottom">
+              <i class="fa fa-fw fa-plus"></i> New channel
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--subnav-->
+  <div class="ph-header-submenu-container">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <button ng-click="$ctrl.subnavOpen = !$ctrl.subnavOpen" type="button" class="btn btn-default visible-xs">
+            <i class="fa fa-fw fa-bars"></i> Toggle Navigation
+          </button>
+          <div class="navbar-collapse ph-no-padding" uib-collapse="!$ctrl.subnavOpen">
+            <ul class="nav nav-tabs ph-header-submenu">
+              <li ng-class="{active: ('channels.list' | routeSegmentStartsWith)}">
+                <a href=".{{'channels.list' | routeSegmentUrl}}" ng-click="$ctrl.subnavOpen = false">
+                  <i class="fa fa-fw fa-bullhorn"></i>
+                  My channels
+                  <span class="badge ph-xs-margin-left">
+                    {{$ctrl.channelService.channels.length}}
+                  </span>
+                </a>
+              </li>
+              <li ng-class="{active: ('channels.invitations' | routeSegmentStartsWith)}">
+                <a href=".{{'channels.invitations' | routeSegmentUrl}}" ng-click="$ctrl.subnavOpen = false">
+                  <i class="fa fa-fw fa-envelope"></i>
+                  My invitations
+                  <span class="badge ph-xs-margin-left">
+                    {{$ctrl.channelService.invitations.length}}
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--content-->
+<div class="container ph-lg-margin-bottom">
+  <div app-view-segment="1"></div>
+</div>

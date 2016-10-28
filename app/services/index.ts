@@ -1,5 +1,7 @@
 'use strict';
 import auth from './auth';
+import channel from './channel';
+import channelsApi from './channelsApi';
 import distangle from './distangle';
 import documentController from './document-controller';
 import feedbackModal from './feedback-modal';
@@ -11,6 +13,8 @@ import websockets from './websockets';
 
 export default function(app) {
   auth(app);
+  channel(app);
+  channelsApi(app);
   distangle(app);
   documentController(app);
   feedbackModal(app);

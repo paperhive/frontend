@@ -1,0 +1,68 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <table class="table table-hover ph-md-margin-bottom">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Joined</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="member in $ctrl.channel.members"
+            ng-class="{'active': member.person.id === $ctrl.authService.user.id}"
+          >
+            <td>
+              <avatar user="member.person" size="30"
+                classes="img-circle ph-sm-margin-right"
+              ></avatar>
+              <a href="./users/{{member.person.account.username}}">
+                {{member.person.displayName}}
+              </a>
+            </td>
+            <td>
+              <span class="label"
+                ng-repeat="role in member.roles" ng-class="{
+                  'label-primary': $ctrl.channel.isActive && role === 'owner',
+                  'label-info': $ctrl.channel.isActive && role !== 'owner',
+                  'label-default': !$ctrl.channel.isActive
+                }"
+              >
+                {{role}}
+              </span>
+            </td>
+            <td am-time-ago="member.createdAt"></td>
+            <td>
+              <span class="pull-right ph-fade-in ph-fade-out">
+                <button
+                  ng-show="$ctrl.isOwner && member.person.id !== $ctrl.authService.user.id"
+                  type="button" class="btn btn-primary btn-sm"
+                  ng-click="$ctrl.updateModalOpen(member)"
+                  ng-disabled="!$ctrl.channel.isActive"
+                  title="{{$ctrl.channel.isActive ? '' : 'Reactivate the channel to update membership'}}"
+                >
+                  <i class="fa fa-fw fa-user" aria-hidden="true"></i>
+                  Change status
+                </button>
+                <button
+                  ng-show="$ctrl.isOwner && member.person.id !== $ctrl.authService.user.id"
+                  type="button" class="btn btn-danger btn-sm"
+                  ng-confirm-click="Really remove this member?"
+                  confirmed-click="$ctrl.memberDelete($ctrl.channel, member.person.id)"
+                  ng-disabled="!$ctrl.channel.isActive"
+                  title="{{$ctrl.channel.isActive ? '' : 'Reactivate the channel to remove members'}}"
+                >
+                  <i class="fa fa-fw fa-times" aria-hidden="true"></i>
+                  Remove member
+                </button>
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>
