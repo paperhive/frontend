@@ -25,7 +25,7 @@ export default function(app) {
 
       invitationModalOpen() {
         this.$uibModal.open({
-          component: 'channelInvitation',
+          component: 'channelInvitationNew',
           resolve: {
             channelId: () => this.$routeParams.channelId,
           },
