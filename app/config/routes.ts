@@ -30,7 +30,7 @@ export default function(app) {
         .when('/channels', 'channels')
         .when('/channels/list', 'channels.list' )
         .when('/channels/invitations', 'channels.invitations')
-        .when('/channels/new', 'channels_new')
+        .when('/channels/new', 'channelsNew')
         .when('/channels/:channelId', 'channel')
         .when('/channels/:channelId/activity', 'channel.activity')
         .when('/channels/:channelId/invitations', 'channel.invitations')
@@ -60,7 +60,7 @@ export default function(app) {
         .when('/password/request', 'passwordRequest')
         .when('/password/reset', 'passwordReset')
         .when('/publishers', 'publishers')
-        .when('/return/channelInvitation', 'invitationConfirm')
+        .when('/return/channelInvitation', 'channelInvitationConfirm')
         .when('/search', 'search')
         .when('/settings', 'settings')
         .when('/settings/profile', 'settings.profile')
@@ -146,6 +146,10 @@ export default function(app) {
           title: 'PaperHive'
         })
 
+        .segment('channelInvitationConfirm', {
+          template: '<channel-invitation-confirm></channel-invitation-confirm>',
+          title: 'Confirm your invitation · PaperHive',
+        })
         .segment('channels', {
           template: '<channels></channels>',
           title: 'My channels · PaperHive',
@@ -162,7 +166,7 @@ export default function(app) {
           })
         .up()
 
-        .segment('channels_new', {
+        .segment('channelsNew', {
           template: '<channel-new></channel-new>',
           title: 'Add a new channel · PaperHive'
         })
@@ -178,7 +182,7 @@ export default function(app) {
                 filter-mode="channel"
                 filter-id="$ctrl.channel.id"
               ></activity>`,
-            title: 'My channel · PaperHive',
+            title: 'Channel activity · PaperHive',
           })
           .segment('invitations', {
             template:
@@ -186,7 +190,7 @@ export default function(app) {
                 channel="$ctrl.channel"
                 is-owner="$ctrl.isOwner"
               ></channel-invitations>`,
-            title: 'My channel · PaperHive',
+            title: 'Channel invitations · PaperHive',
           })
           .segment('members', {
             template:
@@ -194,7 +198,7 @@ export default function(app) {
                 channel="$ctrl.channel"
                 is-owner="$ctrl.isOwner"
               ></channel-members>`,
-            title: 'My channel · PaperHive',
+            title: 'Channel members · PaperHive',
           })
           .segment('settings', {
             template:
@@ -202,7 +206,7 @@ export default function(app) {
                 channel="$ctrl.channel"
                 is-owner="$ctrl.isOwner"
               ></channel-settings>`,
-            title: 'My channel · PaperHive',
+            title: 'Channel settings · PaperHive',
           })
         .up()
 
@@ -304,11 +308,6 @@ export default function(app) {
         .segment('helpMarkdown', {
           template: '<help-markdown></help-markdown>',
           title: 'Markdown cheat sheet',
-        })
-
-        .segment('invitationConfirm', {
-          template: '<invitation-confirm></invitation-confirm>',
-          title: 'Confirm your invitation · PaperHive',
         })
 
         .segment('jobs', {

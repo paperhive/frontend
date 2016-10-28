@@ -10,10 +10,6 @@ export default function(app) {
       static $inject = ['$location', 'authService', 'channelService'];
       constructor(public $location, public authService, public channelService) {}
 
-      openChannel(id) {
-        this.$location.path(`/channels/${id}`);
-      }
-
       getMyRoles(channel) {
         const self = find(channel.members, {person: {id: this.authService.user.id}});
         if (!self) throw new Error('user not found in members');

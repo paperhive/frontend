@@ -9,6 +9,9 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var htmlmin = require('gulp-htmlmin');
 var imagemin = require('gulp-imagemin');
+var imageminJpegtran = require('imagemin-jpegtran');
+var imageminOptipng = require('imagemin-optipng');
+var imageminSvgo = require('imagemin-svgo');
 var merge = require('merge-stream');
 var rename = require('gulp-rename');
 var streamify = require('gulp-streamify');
@@ -82,9 +85,9 @@ gulp.task('html', function() {
 gulp.task('static', [], function() {
   return gulp.src(paths.staticFiles)
     .pipe(imagemin([
-      imagemin.jpegtran(),
-      imagemin.optipng(),
-      imagemin.svgo({plugins: [{removeViewBox: false}, {minifyStyles: false}]}),
+      imageminJpegtran(),
+      imageminOptipng(),
+      imageminSvgo({plugins: [{removeViewBox: false}, {minifyStyles: false}]}),
     ], {verbose: true}))
     //.pipe(dev ? gutil.noop() : cachebust.resources())
     .pipe(gulp.dest(buildDir + '/static'));
