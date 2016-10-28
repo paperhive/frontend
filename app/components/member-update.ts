@@ -12,19 +12,18 @@ export default function(app) {
       inProgress: boolean;
       succeeded: boolean;
 
-      roles = [
-        {'id': 1, 'name': 'member'},
-        {'id': 2, 'name': 'owner'},
-      ];
+      roles = ['member', 'owner'];
 
       static $inject = ['$routeParams', '$scope', 'channelService'];
-      constructor(public $routeParams, public $scope, public channelService) {}
+      constructor(public $routeParams, public $scope, public channelService) {
+        this.role = this.resolve.member.roles[0];
+      }
 
       submit(memberId) {
         this.inProgress = true;
         this.succeeded = false;
         this.channelService.memberUpdate(this.$routeParams.channelId, memberId, {
-          roles: [this.roles[this.role - 1].name],
+          roles: [this.role],
         }).then(() => {
           this.succeeded = true;
           this.inProgress = false;

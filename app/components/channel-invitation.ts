@@ -12,10 +12,8 @@ export default function(app) {
       inProgress: boolean;
       succeeded: boolean;
 
-      roles = [
-        {'id': 1, 'name': 'member'},
-        {'id': 2, 'name': 'owner'},
-      ];
+      roles = ['member', 'owner'];
+      role = 'member';
 
       static $inject = ['$location', '$routeParams', '$scope', 'channelService'];
       constructor(public $location, public $routeParams, public $scope, public channelService) {}
@@ -32,7 +30,7 @@ export default function(app) {
         this.succeeded = false;
         this.channelService.invitationCreate(this.$routeParams.channelId, {
           email: this.email,
-          roles: [this.roles[this.role - 1].name],
+          roles: [this.role],
         }).then(() => {
           this.succeeded = true;
           this.inProgress = false;
