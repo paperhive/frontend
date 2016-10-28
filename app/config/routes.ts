@@ -182,7 +182,7 @@ export default function(app) {
                 filter-mode="channel"
                 filter-id="$ctrl.channel.id"
               ></activity>`,
-            title: 'My channel · PaperHive',
+            title: 'Channel activity · PaperHive',
           })
           .segment('invitations', {
             template:
@@ -190,7 +190,7 @@ export default function(app) {
                 channel="$ctrl.channel"
                 is-owner="$ctrl.isOwner"
               ></channel-invitations>`,
-            title: 'My channel · PaperHive',
+            title: 'Channel invitations · PaperHive',
           })
           .segment('members', {
             template:
@@ -198,7 +198,7 @@ export default function(app) {
                 channel="$ctrl.channel"
                 is-owner="$ctrl.isOwner"
               ></channel-members>`,
-            title: 'My channel · PaperHive',
+            title: 'Channel members · PaperHive',
           })
           .segment('settings', {
             template:
@@ -206,7 +206,7 @@ export default function(app) {
                 channel="$ctrl.channel"
                 is-owner="$ctrl.isOwner"
               ></channel-settings>`,
-            title: 'My channel · PaperHive',
+            title: 'Channel settings · PaperHive',
           })
         .up()
 
