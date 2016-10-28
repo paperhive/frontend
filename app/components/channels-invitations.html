@@ -5,7 +5,6 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Role</th>
       <th>Invited by</th>
       <th>Created</th>
       <th></th>
@@ -20,16 +19,6 @@
           {{invitation.channel.name}}
         </h5>
         <small class="text-muted">{{invitation.channel.description}}</small>
-      </td>
-      <td>
-        <span ng-repeat="role in invitation.roles"
-          class="label" ng-class="{
-            'label-primary': role === 'owner',
-            'label-info': role !== 'owner'
-          }"
-        >
-          {{role}}
-        </span>
       </td>
       <td>
         <a href="./users/{{invitation.invitedBy.account.username}}">
