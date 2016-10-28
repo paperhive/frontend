@@ -71,8 +71,7 @@ export default function(app) {
 
     invitationDelete(id, invitationId, token) {
       if (token) {
-        return this.channelsApi.invitationDelete(id, invitationId, token)
-          .then();
+        return this.channelsApi.invitationDelete(id, invitationId, token);
       }
       return this.channelsApi.invitationDelete(id, invitationId)
         .then(() => {
