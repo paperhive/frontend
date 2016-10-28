@@ -1,14 +1,14 @@
 'use strict';
-import template from './channel-invitation.html';
+import template from './channel-invitation-new.html';
 
 export default function(app) {
-  app.component('channelInvitation', {
+  app.component('channelInvitationNew', {
     bindings: {
       close: '&',
       dismiss: '&',
       resolve: '<',
     },
-    controller: class ChannelInvitationCtrl {
+    controller: class ChannelInvitationNewCtrl {
       error: boolean;
       inProgress: boolean;
       succeeded: boolean;

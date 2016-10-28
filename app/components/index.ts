@@ -4,7 +4,7 @@ import authReturn from './auth-return';
 import avatar from './avatar';
 import avatarList from './avatar-list';
 import channel from './channel';
-import channelInvitation from './channel-invitation';
+import channelInvitationNew from './channel-invitation-new';
 import channelInvitations from './channel-invitations';
 import channelMembers from './channel-members';
 import channelSettings from './channel-settings';
@@ -82,7 +82,7 @@ export default function(app) {
   avatar(app);
   avatarList(app);
   channel(app);
-  channelInvitation(app);
+  channelInvitationNew(app);
   channelInvitations(app);
   channelMembers(app);
   channelSettings(app);
