@@ -22,7 +22,7 @@ export default function(app) {
 
       updateModalOpen(member) {
         this.$uibModal.open({
-          component: 'memberUpdate',
+          component: 'channelMemberUpdate',
           resolve: {
             member: () => member,
             channelId: () => this.channel.id,
