@@ -1,9 +1,9 @@
 'use strict';
-import template from './invitation-confirm.html';
+import template from './channel-invitation-confirm.html';
 
 export default function(app) {
-  app.component('invitationConfirm', {
-    controller: class InvitationConfirmCtrl {
+  app.component('channelInvitationConfirm', {
+    controller: class ChannelInvitationConfirmCtrl {
       invitation: string;
       inProgress = false;
       succeeded = false;

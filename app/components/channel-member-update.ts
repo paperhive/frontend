@@ -1,14 +1,14 @@
 'use strict';
-import template from './member-update.html';
+import template from './channel-member-update.html';
 
 export default function(app) {
-  app.component('memberUpdate', {
+  app.component('channelMemberUpdate', {
     bindings: {
       resolve: '<',
       close: '&',
       dismiss: '&'
     },
-    controller: class MemberUpdateCtrl {
+    controller: class ChannelMemberUpdateCtrl {
       inProgress: boolean;
       succeeded: boolean;
 
