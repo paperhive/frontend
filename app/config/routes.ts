@@ -30,7 +30,7 @@ export default function(app) {
         .when('/channels', 'channels')
         .when('/channels/list', 'channels.list' )
         .when('/channels/invitations', 'channels.invitations')
-        .when('/channels/new', 'channels_new')
+        .when('/channels/new', 'channelsNew')
         .when('/channels/:channelId', 'channel')
         .when('/channels/:channelId/activity', 'channel.activity')
         .when('/channels/:channelId/invitations', 'channel.invitations')
@@ -166,7 +166,7 @@ export default function(app) {
           })
         .up()
 
-        .segment('channels_new', {
+        .segment('channelsNew', {
           template: '<channel-new></channel-new>',
           title: 'Add a new channel · PaperHive'
         })
