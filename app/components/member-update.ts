@@ -14,15 +14,15 @@ export default function(app) {
 
       roles = ['member', 'owner'];
 
-      static $inject = ['$routeParams', '$scope', 'channelService'];
-      constructor(public $routeParams, public $scope, public channelService) {
+      static $inject = ['channelService'];
+      constructor(public channelService) {
         this.role = this.resolve.member.roles[0];
       }
 
       submit(memberId) {
         this.inProgress = true;
         this.succeeded = false;
-        this.channelService.memberUpdate(this.$routeParams.channelId, memberId, {
+        this.channelService.memberUpdate(this.resolve.channelId, memberId, {
           roles: [this.role],
         }).then(() => {
           this.succeeded = true;

@@ -5,7 +5,8 @@ export default function(app) {
   app.component('channelInvitation', {
     bindings: {
       close: '&',
-      dismiss: '&'
+      dismiss: '&',
+      resolve: '<',
     },
     controller: class ChannelInvitationCtrl {
       error: boolean;
@@ -15,8 +16,8 @@ export default function(app) {
       roles = ['member', 'owner'];
       role = 'member';
 
-      static $inject = ['$location', '$routeParams', '$scope', 'channelService'];
-      constructor(public $location, public $routeParams, public $scope, public channelService) {}
+      static $inject = ['$location', '$scope', 'channelService'];
+      constructor(public $location, public $scope, public channelService) {}
 
       hasError(field) {
         const form = this.$scope.invitationForm;
@@ -28,14 +29,14 @@ export default function(app) {
         this.error = false;
         this.inProgress = true;
         this.succeeded = false;
-        this.channelService.invitationCreate(this.$routeParams.channelId, {
+        this.channelService.invitationCreate(this.resolve.channelId, {
           email: this.email,
           roles: [this.role],
         }).then(() => {
           this.succeeded = true;
           this.inProgress = false;
           this.close();
-          this.$location.path(`/channels/${this.$routeParams.channelId}/invitations`);
+          this.$location.path(`/channels/${this.resolve.channelId}/invitations`);
         }, (error) => {
           this.succeeded = false;
           this.inProgress = false;

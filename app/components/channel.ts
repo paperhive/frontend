@@ -26,8 +26,9 @@ export default function(app) {
       invitationModalOpen() {
         this.$uibModal.open({
           component: 'channelInvitation',
-          // TODO: remove this ugly hack when uibModal supports custom bindings
-          scope: this.$scope,
+          resolve: {
+            channelId: () => this.$routeParams.channelId,
+          },
         });
       };
 

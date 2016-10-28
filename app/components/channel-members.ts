@@ -25,7 +25,7 @@ export default function(app) {
           component: 'memberUpdate',
           resolve: {
             member: () => member,
-            channel: () => this.channel,
+            channelId: () => this.channel.id,
           },
         });
       };
