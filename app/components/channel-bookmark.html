@@ -1,0 +1,34 @@
+<div class="dropdown ph-sidenav-item" uib-dropdown>
+  <button id="btn-bookmark" type="button" uib-dropdown-toggle
+    class="btn btn-default ph-split-container ph-split-container-icon-right dropdown-toggle"
+  >
+    <span class="ph-split-icon">
+      <i class="fa fa-bullhorn" aria-hidden="true"></i>
+    </span>
+    <span class="ph-split-text">
+      Add to channel
+    </span>
+    <i class="fa fa-fw fa-caret-down ph-split-icon-right"></i>
+  </button>
+  <ul class="dropdown-menu ph-dropdown-menu-full" role="menu" aria-labelledby="btn-bookmark">
+    <li ng-repeat="channel in $ctrl.channelService.channels">
+      <a href="" class="ph-split-container ph-split-container"
+        ng-click="$event.stopPropagation()"
+      >
+        <i class="fa fa-fw fa-user ph-dropdown-icon-left" aria-hidden="true"></i>
+          {{$ctrl.channelService.getDescription(channel)}}
+        <i class="fa fa-fw ph-split-icon-right fa-star" ng-class="{
+          'fa-star-o': !$ctrl.channelService.showAllChannels,
+          'fa-star': $ctrl.channelService.showAllChannels,
+        }"></i>
+      </a>
+    </li>
+    <li role="separator" class="divider"></li>
+    <li>
+      <a href="/" class="ph-text-overflow">
+        <i class="fa fa-fw ph-dropdown-icon-left fa-cog"></i>
+        Manage bookmarks
+      </a>
+    </li>
+  </ul>
+</div>
