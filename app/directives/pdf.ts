@@ -909,7 +909,7 @@ export default function(app) {
         if (!element) return;
 
         // scroll
-        scroll.scrollTo(element, {offset: (this.scope.viewportOffsetTop || 0) + 85});
+        scroll.scrollTo(element, {offset: (this.scope.viewportOffsetTop || 0) + 130});
       }
 
       async scrollToDest(dest) {
@@ -952,7 +952,7 @@ export default function(app) {
           this.element.offset().top +
           page.element[0].offsetTop +
           coords[1] / page.pageSize.height * page.height,
-          {offset: (this.scope.viewportOffsetTop || 0) + 85}
+          {offset: (this.scope.viewportOffsetTop || 0) + 130}
         );
       }
 
@@ -979,7 +979,7 @@ export default function(app) {
           this.element.offset().top +
           page.element[0].offsetTop +
           topRect.top * page.height,
-          {offset: (this.scope.viewportOffsetTop || 0) + 85}
+          {offset: (this.scope.viewportOffsetTop || 0) + 130}
         );
 
         // set selection
