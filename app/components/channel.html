@@ -69,6 +69,15 @@
                   Activity
                 </a>
               </li>
+              <li ng-class="{active: ('channel.bookmarks' | routeSegmentStartsWith)}">
+                <a
+                  href=".{{'channel.bookmarks' | routeSegmentUrl}}"
+                  ng-click="$ctrl.subnavOpen = false"
+                >
+                  <i class="fa fa-fw fa-star"></i>
+                  Bookmarks
+                </a>
+              </li>
               <li ng-class="{active: ('channel.members' | routeSegmentStartsWith)}">
                 <a
                   href=".{{'channel.members' | routeSegmentUrl}}"

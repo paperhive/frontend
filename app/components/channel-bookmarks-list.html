@@ -1,0 +1,6 @@
+<p ng-repeat="document in $ctrl.bookmarks.documents">
+  <a ng-href="./documents/{{document.id}}">{{document.title}}</a>
+  <small class="text-muted" ng-repeat="author in document.authors">
+    {{author.name}}{{$last ? '' :', '}}
+  </small>
+</p>

@@ -33,6 +33,7 @@ export default function(app) {
         .when('/channels/new', 'channelsNew')
         .when('/channels/:channelId', 'channel')
         .when('/channels/:channelId/activity', 'channel.activity')
+        .when('/channels/:channelId/bookmarks', 'channel.bookmarks')
         .when('/channels/:channelId/invitations', 'channel.invitations')
         .when('/channels/:channelId/members', 'channel.members')
         .when('/channels/:channelId/settings', 'channel.settings')
@@ -183,6 +184,13 @@ export default function(app) {
                 filter-id="$ctrl.channel.id"
               ></activity>`,
             title: 'Channel activity · PaperHive',
+          })
+          .segment('bookmarks', {
+            template:
+              `<channel-bookmarks-list
+                channel="$ctrl.channel"
+              ></channel-bookmarks-list>`,
+            title: 'Channel bookmarks · PaperHive',
           })
           .segment('invitations', {
             template:
