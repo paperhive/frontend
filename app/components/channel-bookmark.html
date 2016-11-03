@@ -14,7 +14,7 @@
     <li ng-repeat="channel in $ctrl.channelService.channels">
 
       <a href="" class="ph-split-container ph-split-container"
-        ng-click="$ctrl.removeBookmark(channel.id)"
+        ng-click="$ctrl.removeBookmark(channel.id); $event.stopPropagation()"
         ng-if="$ctrl.documentCtrl.bookmarks.indexOf(channel.id) > -1"
       >
         <i class="fa fa-fw fa-user ph-dropdown-icon-left" aria-hidden="true"></i>
@@ -26,7 +26,7 @@
       </a>
 
       <a href="" class="ph-split-container ph-split-container"
-        ng-click="$ctrl.bookmark(channel.id)"
+        ng-click="$ctrl.bookmark(channel.id); $event.stopPropagation()"
         ng-if="$ctrl.documentCtrl.bookmarks.indexOf(channel.id) === -1"
       >
         <i class="fa fa-fw fa-user ph-dropdown-icon-left" aria-hidden="true"></i>
