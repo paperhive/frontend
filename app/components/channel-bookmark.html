@@ -12,16 +12,31 @@
   </button>
   <ul class="dropdown-menu ph-dropdown-menu-full" role="menu" aria-labelledby="btn-bookmark">
     <li ng-repeat="channel in $ctrl.channelService.channels">
+
       <a href="" class="ph-split-container ph-split-container"
-        ng-click="$event.stopPropagation()"
+        ng-click="$ctrl.removeBookmark(channel.id)"
+        ng-if="$ctrl.documentCtrl.bookmarks.indexOf(channel.id) > -1"
       >
         <i class="fa fa-fw fa-user ph-dropdown-icon-left" aria-hidden="true"></i>
           {{$ctrl.channelService.getDescription(channel)}}
         <i class="fa fa-fw ph-split-icon-right fa-star" ng-class="{
-          'fa-star-o': !$ctrl.channelService.showAllChannels,
-          'fa-star': $ctrl.channelService.showAllChannels,
+          'fa-star-o': ($ctrl.documentCtrl.bookmarks.indexOf(channel.id) === -1),
+          'fa-star': ($ctrl.documentCtrl.bookmarks.indexOf(channel.id) > -1),
         }"></i>
       </a>
+
+      <a href="" class="ph-split-container ph-split-container"
+        ng-click="$ctrl.bookmark(channel.id)"
+        ng-if="$ctrl.documentCtrl.bookmarks.indexOf(channel.id) === -1"
+      >
+        <i class="fa fa-fw fa-user ph-dropdown-icon-left" aria-hidden="true"></i>
+          {{$ctrl.channelService.getDescription(channel)}}
+        <i class="fa fa-fw ph-split-icon-right fa-star" ng-class="{
+          'fa-star-o': ($ctrl.documentCtrl.bookmarks.indexOf(channel.id) === -1),
+          'fa-star': ($ctrl.documentCtrl.bookmarks.indexOf(channel.id) > -1),
+        }"></i>
+      </a>
+
     </li>
     <li role="separator" class="divider"></li>
     <li>

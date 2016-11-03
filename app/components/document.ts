@@ -215,6 +215,7 @@ export default function(app) {
         this.documentCtrl = new DocumentController(documentId);
         this.documentCtrl.fetchRevisions(); // TODO: error handling
         this.documentCtrl.fetchHivers(); // TODO: error handling
+        this.documentCtrl.fetchBookmarks(); // TODO: error handling
 
         $scope.$watchGroup([
           '$ctrl.documentCtrl.revisions',

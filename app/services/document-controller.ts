@@ -13,6 +13,7 @@ export default function(app) {
         latestAccessibleRevision: any;
         hivers: Array<any>;
         isUserHiver: boolean;
+        bookmarks: Array<any>;
 
         constructor(public documentId) {
           $rootScope.$watchCollection(() => this.revisions, this.updateRevisionAccess.bind(this));
@@ -169,6 +170,36 @@ export default function(app) {
           else
             this.isUserHiver = !!find(this.hivers, {person: {id: auth.user.id}});
         }
+
+        fetchBookmarks() {
+          return $http
+            .get(`${config.apiUrl}/documents/${this.documentId}/bookmarks`)
+            .then(response => {
+              this.bookmarks = [];
+              response.data.bookmarks.forEach((bookmark) => {
+                this.bookmarks.push(bookmark.channel.id);
+              })
+            });
+        }
+
+        bookmark(channel) {
+          return $http
+            .post(`${config.apiUrl}/documents/${this.documentId}/bookmarks?channel=${channel}`)
+            .then(response => this.bookmarks.push(channel));
+        }
+
+        removeBookmark(channel) {
+          return $http
+            .delete(`${config.apiUrl}/documents/${this.documentId}/bookmarks?channel=${channel}`)
+            .then(response => {
+              const index = this.bookmarks.indexOf(channel);
+              if (index > -1) {
+                this.bookmarks.splice(index, 1);
+              }
+              console.log(this.bookmarks);
+            });
+        }
+
       };
     }
   ]);

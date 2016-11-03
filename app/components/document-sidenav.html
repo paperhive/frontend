@@ -29,7 +29,9 @@
   </div>
   <div class="ph-sidenav-info">
 
-    <channel-bookmark></channel-bookmark>
+    <channel-bookmark
+      document-ctrl="$ctrl.documentCtrl"
+    ></channel-bookmark>
 
     <div class="dropdown ph-sidenav-item" is-open="$ctrl.revisionDropdownOpen" uib-dropdown
       ng-if="$ctrl.documentCtrl.revisions && $ctrl.documentCtrl.revisionAccess && $ctrl.activeRevision"
