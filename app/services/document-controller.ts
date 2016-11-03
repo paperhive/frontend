@@ -178,7 +178,7 @@ export default function(app) {
               this.bookmarks = [];
               response.data.bookmarks.forEach((bookmark) => {
                 this.bookmarks.push(bookmark.channel.id);
-              })
+              });
             });
         }
 
