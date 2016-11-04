@@ -11,7 +11,7 @@ export default function(app) {
       static $inject = ['config', '$http'];
       constructor(public config, public $http) {
         $http.get(`${this.config.apiUrl}/channels/${this.channel.id}/bookmarks`)
-          .then(response => this.bookmarks = response.data);
+          .then(response => this.bookmarks = response.data.bookmarks);
       }
 
     },
