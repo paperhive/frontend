@@ -3,10 +3,10 @@
     class="btn btn-default ph-split-container ph-split-container-icon-right dropdown-toggle"
   >
     <span class="ph-split-icon">
-      <i class="fa fa-bullhorn" aria-hidden="true"></i>
+      <i class="fa fa-star" aria-hidden="true"></i>
     </span>
     <span class="ph-split-text">
-      Add to channel
+      Bookmark in channel
     </span>
     <i class="fa fa-fw fa-caret-down ph-split-icon-right"></i>
   </button>
@@ -38,11 +38,23 @@
       </a>
 
     </li>
-    <li role="separator" class="divider"></li>
-    <li>
-      <a href="/" class="ph-text-overflow">
-        <i class="fa fa-fw ph-dropdown-icon-left fa-cog"></i>
-        Manage bookmarks
+    <li ng-if="$ctrl.channelService.channels.length > 0" role="separator" class="divider"></li>
+    <li ng-if="$ctrl.channelService.channels.length > 0">
+      <a href="/channels" class="ph-text-overflow">
+        <i class="fa fa-fw ph-dropdown-icon-left fa-bullhorn"></i>
+        Channel overview
+      </a>
+    </li>
+    <li ng-if="$ctrl.channelService.channels.length === 0 || !$ctrl.authService.user"
+      ng-class="{disabled: !$ctrl.authService.user}"
+    >
+      <a href="/channels/new" class="ph-text-overflow"
+        ng-click="!$ctrl.authService.user && ($event.preventDefault() || $event.stopPropagation())"
+        title="You have to be logged in to create a private discussion channel."
+        ng-disabled="true"
+      >
+        <i class="fa fa-fw ph-dropdown-icon-left fa-plus"></i>
+        Create channel
       </a>
     </li>
   </ul>

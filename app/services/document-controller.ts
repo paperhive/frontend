@@ -193,10 +193,7 @@ export default function(app) {
             .delete(`${config.apiUrl}/documents/${this.documentId}/bookmarks?channel=${channel}`)
             .then(response => {
               const index = this.bookmarks.indexOf(channel);
-              if (index > -1) {
-                this.bookmarks.splice(index, 1);
-              }
-              console.log(this.bookmarks);
+              if (index > -1) this.bookmarks.splice(index, 1);
             });
         }
 

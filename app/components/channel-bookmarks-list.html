@@ -1,6 +1,41 @@
-<p ng-repeat="document in $ctrl.bookmarks.documents">
-  <a ng-href="./documents/{{document.id}}">{{document.title}}</a>
-  <small class="text-muted" ng-repeat="author in document.authors">
-    {{author.name}}{{$last ? '' :', '}}
-  </small>
+<p ng-if="!$ctrl.bookmarks.documents">
+  You have no bookmarks yet. Search for a relevant document and bookmark this in your channel.
 </p>
+<div ng-if="$ctrl.bookmarks.documents" class="row">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <table class="table ph-md-margin-bottom">
+        <thead>
+          <tr>
+            <th>Document</th>
+            <th>Bookmarked by</th>
+            <th>Bookmarked at</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="document in $ctrl.bookmarks.documents">
+            <td>
+              <a ng-href="./documents/{{document.id}}">{{document.title}}</a>
+              <div>
+                <small class="text-muted" ng-repeat="author in document.authors">
+                  {{author.name}}{{$last ? '' :', '}}
+                </small>
+              </div>
+            </td>
+            <td>
+              <avatar user="member.person" size="30"
+                classes="img-circle ph-sm-margin-right"
+              ></avatar>
+              <a href="./users/{{member.person.account.username}}">
+                TODO
+              </a>
+            </td>
+            <td>
+              TODO
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
