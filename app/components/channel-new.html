@@ -29,16 +29,18 @@
           <label>Description</label>
           <input type="text" class="form-control" ng-model="$ctrl.description">
         </div>
-        <button
-          type="submit"
-          class="btn btn-primary ph-lg-margin-top"
-          ng-click="!$ctrl.inProgress && !$ctrl.succeeded && !channelForm.$invalid && $ctrl.submit()"
-          ng-class="{disabled: channelForm.$invalid || $ctrl.inProgress || $ctrl.succeeded}"
-        >
-          <i ng-if="$ctrl.inProgress" class="fa fa-fw fa-spinner fa-spin"></i>
-          <i ng-if="!$ctrl.inProgress" class="fa fa-fw fa-check" aria-hidden="true"></i>
-          Create
-        </button>
+        <div class="text-right">
+          <button
+            type="submit"
+            class="btn btn-primary ph-lg-margin-top"
+            ng-click="!$ctrl.inProgress && !$ctrl.succeeded && !channelForm.$invalid && $ctrl.submit()"
+            ng-class="{disabled: channelForm.$invalid || $ctrl.inProgress || $ctrl.succeeded}"
+          >
+            <i ng-if="$ctrl.inProgress" class="fa fa-fw fa-spinner fa-spin"></i>
+            <i ng-if="!$ctrl.inProgress" class="fa fa-fw fa-check" aria-hidden="true"></i>
+            Create
+          </button>
+        </div>
       </form>
     </div>
   </div>
