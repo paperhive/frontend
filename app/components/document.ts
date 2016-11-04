@@ -215,7 +215,6 @@ export default function(app) {
         this.documentCtrl = new DocumentController(documentId);
         this.documentCtrl.fetchRevisions(); // TODO: error handling
         this.documentCtrl.fetchHivers(); // TODO: error handling
-        this.documentCtrl.fetchBookmarks(); // TODO: error handling
 
         $scope.$watchGroup([
           '$ctrl.documentCtrl.revisions',
@@ -239,6 +238,7 @@ export default function(app) {
             type: 'error',
             message: error.message
           }));
+          this.documentCtrl.fetchBookmarks(); // TODO: error handling
         });
 
         // update filtered discussions if discussions, channel or showAllChannels changed
