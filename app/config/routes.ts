@@ -188,6 +188,7 @@ export default function(app) {
           .segment('bookmarks', {
             template:
               `<channel-bookmarks-list
+                bookmarks="$ctrl.bookmarks"
                 channel="$ctrl.channel"
               ></channel-bookmarks-list>`,
             title: 'Channel bookmarks · PaperHive',
