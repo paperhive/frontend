@@ -40,7 +40,7 @@
     </li>
     <li ng-if="$ctrl.channelService.channels.length > 0" role="separator" class="divider"></li>
     <li ng-if="$ctrl.channelService.channels.length > 0">
-      <a href="/channels" class="ph-text-overflow">
+      <a href="./channels" class="ph-text-overflow">
         <i class="fa fa-fw ph-dropdown-icon-left fa-bullhorn"></i>
         Channel overview
       </a>
@@ -48,7 +48,7 @@
     <li ng-if="$ctrl.channelService.channels.length === 0 || !$ctrl.authService.user"
       ng-class="{disabled: !$ctrl.authService.user}"
     >
-      <a href="/channels/new" class="ph-text-overflow"
+      <a href="./channels/new" class="ph-text-overflow"
         ng-click="!$ctrl.authService.user && ($event.preventDefault() || $event.stopPropagation())"
         title="You have to be logged in to create a private discussion channel."
         ng-disabled="true"
