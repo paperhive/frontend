@@ -36,7 +36,8 @@
     <div class="dropdown ph-sidenav-item" is-open="$ctrl.revisionDropdownOpen" uib-dropdown
       ng-if="$ctrl.documentCtrl.revisions && $ctrl.documentCtrl.revisionAccess && $ctrl.activeRevision"
     >
-      <button id="btn-version" class="btn btn-default ph-split-container ph-split-container-icon-right dropdown-toggle" uib-dropdown-toggle ng-disabled="disabled"
+      <button uib-dropdown-toggle
+        class="btn btn-default ph-split-container ph-split-container-icon-right dropdown-toggle"
         title="{{$ctrl.documentCtrl.getRevisionDescription($ctrl.activeRevision)}}, {{$ctrl.activeRevision.publishedAt | date:'MMM yyyy'}}"
       >
         <span class="ph-split-icon"><i class="fa fa-history" aria-hidden="true"></i></span>
@@ -46,7 +47,7 @@
         </span>
         <i class="fa fa-fw fa-caret-down ph-split-icon-right"></i>
       </button>
-      <ul class="dropdown-menu ph-dropdown-menu-full" aria-labelledby="btn-version">
+      <ul class="dropdown-menu ph-dropdown-menu-full">
         <li ng-repeat="revision in $ctrl.documentCtrl.revisions | orderBy:'publishedAt':true"
             ng-class="{disabled: !$ctrl.documentCtrl.revisionAccess[revision.revision]}"
             ng-click="$ctrl.revisionDropdownOpen = false">
