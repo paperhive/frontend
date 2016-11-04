@@ -5,6 +5,9 @@ export default function(app) {
   app.service('channelService', class channelService {
     channels: Array<any>;
     invitations: Array<any>;
+    channelsById: any;
+    selectedChannel: any;
+    showAllChannels = true;
 
     static $inject = ['$rootScope', 'authService', 'channelsApi'];
     constructor($rootScope, public authService, public channelsApi) {
@@ -12,6 +15,7 @@ export default function(app) {
         if (!user) {
           this.channels = undefined;
           this.invitations = undefined;
+          this.channelsById = undefined;
           return;
         }
         this.refresh();
@@ -22,6 +26,10 @@ export default function(app) {
       this.channelsApi.getAll().then(data => {
         this.channels = data.channels;
         this.invitations = data.invitations.filter(invitation => invitation.channel.isActive);
+        this.channelsById = {};
+        this.channels.forEach(channel => {
+          this.channelsById[channel.id] = channel;
+        });
       });
     }
 
@@ -89,6 +97,19 @@ export default function(app) {
     memberDelete(channel, memberId) {
       return this.channelsApi.memberDelete(channel.id, memberId)
         .then(() => remove(channel.members, {person: {id: memberId}}));
+    }
+
+    selectChannel(channel) {
+      this.selectedChannel = channel;
+    }
+
+    toggleShowAllChannels() {
+      this.showAllChannels = !this.showAllChannels;
+    }
+
+    getDescription(channel) {
+      if (!channel) return 'Public channel';
+      return channel.name;
     }
   });
 }

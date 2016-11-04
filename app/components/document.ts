@@ -6,31 +6,21 @@ import template from './document.html';
 import { getRevisionMetadata } from '../utils/documents';
 
 class DiscussionsController {
-  // dependencies
-  config: any;
-  $scope: any;
-  $http: any;
-  websocketService: any;
-
   // data
-  document: string;
   discussions: Array<any>;
+  documentUpdatesSubscription: any;
 
-  constructor(document: string, config: any, $scope: any, $http: any, websocketService) {
-    this.config = config;
-    this.$scope = $scope;
-    this.$http = $http;
-    this.websocketService = websocketService;
-
-    this.document = document;
+  constructor(public document: string, public config: any, public $scope: any,
+      public $http: any, public authService, public websocketService) {
     this.discussions = [];
   }
 
-  async init() {
+  async refresh() {
     const response = await this.$http({
       url: `${this.config.apiUrl}/documents/${this.document}/discussions`,
     });
     this.$scope.$apply(() => this.discussions = response.data.discussions);
+    this.websocketDestroy();
     this.websocketInit();
   }
 
@@ -45,7 +35,7 @@ class DiscussionsController {
   }
 
   async discussionUpdate(discussion) {
-    const _discussion = pick(discussion, 'title', 'body', 'target', 'tags');
+    const _discussion = pick(discussion, 'channel', 'title', 'body', 'target', 'tags');
     const response = await this.$http({
       url: `${this.config.apiUrl}/discussions/${discussion.id}`,
       method: 'PUT',
@@ -102,8 +92,11 @@ class DiscussionsController {
 
   // subscribe to push notifications
   websocketInit() {
-    const documentUpdates = this.websocketService.join('documents', this.document);
-    const documentUpdatesSubscriber = documentUpdates.subscribe((update) => {
+    const documentUpdates = this.websocketService.join('documents', {
+      authToken: this.authService.token,
+      documentId: this.document,
+    });
+    this.documentUpdatesSubscription = documentUpdates.subscribe((update) => {
       const data = update.data;
       this.$scope.$apply(() => {
         switch (update.resource) {
@@ -126,7 +119,14 @@ class DiscussionsController {
     });
 
     // dispose websocket subscription when scope is destroyed
-    this.$scope.$on('$destroy', () => documentUpdatesSubscriber.dispose());
+    this.$scope.$on('$destroy', () => this.websocketDestroy());
+  }
+
+  websocketDestroy() {
+    if (this.documentUpdatesSubscription) {
+      this.documentUpdatesSubscription.dispose();
+      this.documentUpdatesSubscription = undefined;
+    }
   }
 
   _discussionGet(discussionId) {
@@ -201,13 +201,14 @@ export default function(app) {
       revisions: Array<any>;
       activeRevision: any;
       discussionsCtrl: DiscussionsController;
+      filteredDiscussions: Array<any>;
 
       // note: do *not* use $routeSegment.$routeParams because they still
       // use the old state in $routeChangeSuccess events
-      static $inject = ['$http', '$routeParams', '$scope', 'config',
+      static $inject = ['$http', '$routeParams', '$scope', 'authService', 'channelService', 'config',
         'DocumentController', 'metaService', 'notificationService', 'websocketService'];
 
-      constructor($http, public $routeParams, $scope, config,
+      constructor($http, public $routeParams, $scope, public authService, public channelService, config,
         DocumentController, public metaService, notificationService, websocketService) {
         const documentId = $routeParams.documentId;
 
@@ -228,13 +229,21 @@ export default function(app) {
 
         // instanciate and init controller for discussions
         this.discussionsCtrl = new DiscussionsController(
-          documentId, config, $scope, $http, websocketService
+          documentId, config, $scope, $http, authService, websocketService
         );
 
-        this.discussionsCtrl.init().catch(error => notificationService.notifications.push({
-          type: 'error',
-          message: error.message
-        }));
+
+        $scope.$watch('$ctrl.authService.user', () => {
+          this.discussionsCtrl.refresh().catch(error => notificationService.notifications.push({
+            type: 'error',
+            message: error.message
+          }));
+        });
+
+        // update filtered discussions if discussions, channel or showAllChannels changed
+        $scope.$watchCollection('$ctrl.discussionsCtrl.discussions', this.updateFilteredDiscussions.bind(this));
+        $scope.$watch('$ctrl.channelService.selectedChannel', this.updateFilteredDiscussions.bind(this));
+        $scope.$watch('$ctrl.channelService.showAllChannels', this.updateFilteredDiscussions.bind(this));
       }
 
       updateActiveRevision() {
@@ -256,6 +265,28 @@ export default function(app) {
         this.activeRevision =
           this.documentCtrl.latestAccessibleRevision ||
           this.documentCtrl.latestRevision;
+      }
+
+      updateFilteredDiscussions() {
+        if (this.filteredDiscussions === undefined) this.filteredDiscussions = [];
+
+        let discussions = this.discussionsCtrl.discussions;
+        if (!discussions) {
+          angular.copy([], this.filteredDiscussions);
+          return;
+        }
+
+        // filter by channel if showAllChannels is false
+        if (!this.channelService.showAllChannels) {
+          discussions = discussions.filter(discussion => {
+            const channelId = this.channelService.selectedChannel &&
+              this.channelService.selectedChannel.id;
+            return discussion.channel === channelId;
+          });
+        }
+
+        this.filteredDiscussions.splice(0, this.filteredDiscussions.length);
+        discussions.forEach(discussion => this.filteredDiscussions.push(discussion));
       }
 
       updateMetadata() {

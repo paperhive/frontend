@@ -32,7 +32,7 @@ document-sidenav {
 
 // animation for sidenav
 .ph-sidenav-large, .ph-sidenav-small {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  box-shadow: @ph-shadow;
   &.ng-hide {
     box-shadow: none;
     transform: translateX(-100%);
@@ -91,12 +91,14 @@ document-sidenav {
   }
 }
 
-@ph-split-icon-width: 18px;
+@ph-split-icon-width: 20px;
 @ph-split-date-width: 70px;
 .ph-split-container {
   text-align: left;
   width: 100%;
   position: relative;
+  padding-left: @padding-base-horizontal;
+  padding-right: @padding-base-horizontal;
 
   &.ph-split-container-no-icon {
     padding-left: 3 * @padding-base-horizontal + @ph-split-icon-width + 1px;
@@ -136,6 +138,10 @@ document-sidenav {
 
 .ph-dropdown-menu-full {
   width: 100%;
+  .ph-dropdown-icon-left.fa.fa-fw {
+    width: @ph-split-icon-width;
+    margin-right: @padding-base-horizontal;
+  }
 }
 
 .ph-dropdown-menu-active {

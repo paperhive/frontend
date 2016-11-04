@@ -1,38 +1,22 @@
-<div class="container-fluid ph-margin-top"
-  ng-style="{
-    top: ($ctrl.position === 'top' || undefined) && ($ctrl.viewportOffsetTop || 0),
-    bottom: ($ctrl.position === 'bottom' || undefined) && ($ctrl.viewportOffsetBottom || 0),
+<a href=""
+  class="btn btn-default ph-margin-link"
+  ng-class="{
+    'ph-margin-link-top': $ctrl.position === 'top',
+    'ph-margin-link-bottom': $ctrl.position === 'bottom',
   }"
+  ng-show="$ctrl.count > 0"
+  scroll
+  scroll-to="$ctrl.scrolling ? '' : ('#discussion-' + $ctrl.nextDiscussionId)"
+  scroll-offset="$ctrl.viewportOffsetTop + 130"
+  scroll-duration="500"
+  scroll-before="$ctrl.scrolling = true"
+  scroll-after="$ctrl.scrolling = false"
+  title="{{$ctrl.count}} more {{$ctrl.count === 1 ? 'discussion' : 'discussions'}} {{$ctrl.position === 'top' ? 'above' : 'below'}}"
 >
-  <div class="row">
-    <div class="col-md-3 col-md-offset-9">
-      <div class="ph-margin-link animate-show"
-        ng-class="{
-          'ph-margin-link-top': $ctrl.position === 'top',
-          'ph-margin-link-bottom': $ctrl.position === 'bottom',
-        }"
-        ng-show="$ctrl.count > 0"
-      >
-        <a href="" class="ph-link-icon"
-          scroll
-          scroll-to="$ctrl.scrolling ? '' : ('#discussion-' + $ctrl.nextDiscussionId)"
-          scroll-offset="$ctrl.viewportOffsetTop + 50"
-          scroll-duration="500"
-          scroll-before="$ctrl.scrolling = true"
-          scroll-after="$ctrl.scrolling = false"
-        >
-          <span class="ph-margin-link-current">
-            {{$ctrl.count}} more
-            {{$ctrl.count === 1 ? 'discussion' : 'discussions'}}
-          </span>
-          <span class="ph-margin-link-previous">
-            {{$ctrl.countPrevious}} more
-            {{$ctrl.countPrevious === 1 ? 'discussion' : 'discussions'}}
-          </span>
-          <i ng-if="$ctrl.position === 'top'" class="fa fa-arrow-circle-up"></i>
-          <i ng-if="$ctrl.position === 'bottom'" class="fa fa-arrow-circle-down"></i>
-        </a>
-      </div>
-    </div>
+  <i ng-if="$ctrl.position === 'top'" class="fa fa-chevron-up"></i>
+  <i ng-if="$ctrl.position === 'bottom'" class="fa fa-chevron-down"></i>
+  <div class="ph-margin-link-badge">
+    <span class="ph-margin-link-current">{{$ctrl.count}}</span>
+    <span class="ph-margin-link-previous">{{$ctrl.countPrevious}}</span>
   </div>
-</div>
+</a>

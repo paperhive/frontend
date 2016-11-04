@@ -8,6 +8,7 @@ export default function(app) {
   app.component('marginDiscussions', {
     bindings: {
       discussions: '<',
+      filteredDiscussions: '<',
       draftSelectors: '<',
       emphasizedDiscussions: '<',
       pageCoordinates: '<',
@@ -27,15 +28,17 @@ export default function(app) {
     },
     template,
     controller: [
-      '$document', '$element', '$scope', '$timeout', '$window', 'scroll', 'distangleService', 'tourService',
-      function($document, $element, $scope, $timeout, $window, scroll, distangleService, tourService) {
+      '$document', '$element', '$scope', '$timeout', '$window', 'scroll', 'channelService', 'distangleService', 'tourService',
+      function($document, $element, $scope, $timeout, $window, scroll, channelService, distangleService, tourService) {
         const $ctrl = this;
+
+        $ctrl.channelService = channelService;
 
         // viewport tracking for deciding which discussions actually need to be rendered
         // note: unrendered discussions will be rendered with a placeholder
         $ctrl.discussionVisibilities = {};
         function updateDiscussionVisibilities() {
-          if (!$ctrl.discussions) return;
+          if (!$ctrl.filteredDiscussions) return;
 
           function getVisibleDiscussionIds(discussionIds) {
             const parentTop = $element[0].getBoundingClientRect().top;
@@ -49,7 +52,7 @@ export default function(app) {
           }
 
           // determine which discussions are visible right now
-          const visibleDiscussionIds = getVisibleDiscussionIds($ctrl.discussions.map(discussion => discussion.id));
+          const visibleDiscussionIds = getVisibleDiscussionIds($ctrl.filteredDiscussions.map(discussion => discussion.id));
 
           // reevaluate after a short delay
           $timeout(() => {
@@ -94,7 +97,7 @@ export default function(app) {
               angular.element($window).scroll();
               $timeout(() => {
                 scroll.scrollTo('#discussionTourPopover', {
-                  offset: ($ctrl.viewportOffsetTop || 0) + 50
+                  offset: ($ctrl.viewportOffsetTop || 0) + 130
                 });
               });
             }, 400);
@@ -153,7 +156,7 @@ export default function(app) {
 
           scroll.scrollTo(top, {
             duration: 1000,
-            offset: ($ctrl.viewportOffsetTop || 0) + 50,
+            offset: ($ctrl.viewportOffsetTop || 0) + 130,
           });
 
           $ctrl.currentScrollAnchor = $ctrl.scrollToAnchor;
@@ -164,7 +167,7 @@ export default function(app) {
 
         // compute discussionPosititions and draftPosition
         function updatePositions() {
-          if (!$ctrl.discussions) return;
+          if (!$ctrl.filteredDiscussions) return;
 
           // get raw draft position
           const draftRawPosition = getRawPosition($ctrl.draftSelectors);
@@ -176,7 +179,7 @@ export default function(app) {
 
           // get raw discussion positions
           const discussionRawPositions = {};
-          $ctrl.discussions.forEach(discussion => {
+          $ctrl.filteredDiscussions.forEach(discussion => {
             discussionRawPositions[discussion.id] =
               getRawPosition(discussion.target.selectors);
             if (!$ctrl.discussionSizes[discussion.id]) {
@@ -193,6 +196,7 @@ export default function(app) {
 
           // padding between elements
           const padding = 8;
+          const offsetTop = 70;
 
           // treat above and below separately
           const coordsAbove = draftCoord &&
@@ -205,7 +209,7 @@ export default function(app) {
           function getTotalHeight(coords) {
             return sum(map(coords, 'height')) + coords.length * padding;
           }
-          while (draftCoord && getTotalHeight(coordsAbove) > draftCoord.position) {
+          while (draftCoord && getTotalHeight(coordsAbove) + offsetTop > draftCoord.position) {
             // remove last one in above
             const last = coordsAbove.splice(-1, 1);
             // insert to beginning of below
@@ -226,10 +230,10 @@ export default function(app) {
 
           // place discussions
           if (draftCoord) {
-            place(coordsAbove, 0, draftCoord.position);
+            place(coordsAbove, offsetTop, draftCoord.position);
             place(coordsBelow, draftCoord.position + draftCoord.height + padding, undefined);
           } else {
-            place(coordsBelow, 0, undefined);
+            place(coordsBelow, offsetTop, undefined);
           }
 
           // update controller properties
@@ -240,7 +244,7 @@ export default function(app) {
 
         // update positions if discussions, draftSelectors, discussionSizes,
         // draftSize or page coords changed
-        $scope.$watchCollection('$ctrl.discussions', updatePositions);
+        $scope.$watchCollection('$ctrl.filteredDiscussions', updatePositions);
         $scope.$watch('$ctrl.draftSelectors', updatePositions);
         $scope.$watch('$ctrl.draftSize', updatePositions);
         $scope.$watchCollection('$ctrl.discussionSizes', updatePositions);

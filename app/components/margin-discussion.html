@@ -17,6 +17,15 @@
             <a href="./users/{{$ctrl.discussion.author.account.username}}">
               {{$ctrl.discussion.author.displayName}}</a>
             · <span am-time-ago="$ctrl.discussion.createdAt"></span>
+            ·
+            <i ng-show="!$ctrl.discussion.channel"
+              class="fa fa-globe"
+              uib-tooltip="Public channel"
+            ></i>
+            <i ng-show="$ctrl.discussion.channel"
+              class="fa fa-lock"
+              uib-tooltip="{{$ctrl.channel.name}}"
+            ></i>
           </p>
           <div class="ph-margin-body"
             ng-class="{'ph-margin-body-collapsed': !$ctrl.isExpanded}"
@@ -113,7 +122,7 @@
           </a>
           <span class="ph-margin-info" ng-if="$ctrl.discussion.replies.length">
             {{$ctrl.discussion.replies.length}}
-            <i class="fa fa-fw fa-comments"></i>
+            <i class="fa fa-comments"></i>
           </span>
         </div>
         <!-- edit original comment -->

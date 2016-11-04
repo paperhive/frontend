@@ -77,15 +77,14 @@
           </small>
         </div>
 
-        <a ng-if="!$ctrl.person" class="ph-link-icon" ng-href="./users/{{activity.person.account.username}}">
+        <a ng-if="$ctrl.filterMode !== 'person'" class="ph-link-icon" ng-href="./users/{{activity.person.account.username}}">
           <avatar user="activity.person" size="25" classes="img-circle"></avatar>
         </a>
         <a ng-href="./users/{{activity.person.account.username}}">{{activity.person.displayName}}</a>
-
         <span ng-switch="activity.activityType">
           <span ng-switch-when="documentHived">
-            <span ng-if="$ctrl.document">hived this document</span>
-            <span ng-if="$ctrl.person">
+            <span ng-if="$ctrl.filterMode === 'document'">hived this document</span>
+            <span ng-if="$ctrl.filterMode === 'person'">
               hived
               <small>
                 <a ng-href="./documents/{{activity.document.id}}">{{activity.documentRevision.title}}</a>
@@ -105,7 +104,7 @@
           <a ng-href="./documents/{{activity.document.id}}/discussions/{{activity.discussion.id}}">
             <mathjax body="activity.discussion.title"></mathjax>
           </a>
-          <div ng-if="$ctrl.person">
+          <div ng-if="$ctrl.filterMode === 'person' || $ctrl.filterMode === 'channel'">
             <small>
               on
               <a ng-href="./documents/{{activity.document.id}}">{{activity.documentRevision.title}}</a>

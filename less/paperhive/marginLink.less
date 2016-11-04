@@ -1,55 +1,52 @@
-margin-link > div {
-  position: fixed;
-  left: 0;
-  right: 0;
-  z-index: 1001;
-  pointer-events: none;
+margin-link {
+  display: inline-block;
+}
 
-  & .ph-margin-link {
-    padding: 7px;
-    background: fade(@ph-background-color, 90%);
-    text-align: center;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
-    pointer-events: all;
+.ph-margin-link {
+  position: relative;
+  width: @ph-margin-controls-height;
+  height: @ph-margin-controls-height;
+  border-radius: @ph-margin-controls-height / 2;
+  border: none;
 
-    // animation basics
-    position: relative;
-    transition: opacity ease 0.5s, top ease 0.5s, bottom ease 0.5s;
+  // center icon
+  padding: 0;
+  line-height: @ph-margin-controls-height;
 
-    /* Note: opacity animation is disabled because it leads to flickering
-             elements with `position: fixed` in Chrome. Probably related to
-             https://bugs.chromium.org/p/chromium/issues/detail?id=438179
-    // animate opacity
-    opacity: 1;
+  box-shadow: @ph-shadow;
+
+  transition: opacity ease 0.5s, top ease 0.5s, bottom ease 0.5s;
+
+  // animate top
+  &.ph-margin-link-top {
+    top: 0;
     &.ng-hide {
-      opacity: 0;
-    }
-    */
-
-    // animate top
-    &.ph-margin-link-top {
-      top: 0;
-      &.ng-hide {
-        top: -40px;
-      }
-    }
-
-    // animate bottom
-    &.ph-margin-link-bottom {
-      bottom: 0;
-      &.ng-hide {
-        bottom: -40px;
-      }
-    }
-
-    // display old value when hiding (includes animation)
-    &.ng-hide .ph-margin-link-current {
-      display: none;
-    }
-
-    // display current value when not hiding
-    &:not(.ng-hide) .ph-margin-link-previous {
-      display: none;
+      top: -@ph-margin-controls-height - @grid-gutter-width;
     }
   }
+
+  // animate bottom
+  &.ph-margin-link-bottom {
+    bottom: 0;
+    &.ng-hide {
+      bottom: -@ph-margin-controls-height - @grid-gutter-width;
+    }
+  }
+
+  // display old value when hiding (includes animation)
+  &.ng-hide-add .ph-margin-link-current {
+    display: none;
+  }
+
+  // display current value when not hiding
+  &:not(.ng-hide-add) .ph-margin-link-previous {
+    display: none;
+  }
+}
+
+.ph-margin-link-badge {
+  .badge(@ph-badge-font-size, @ph-badge-padding, @ph-badge-bg-color, @ph-badge-color);
+  position: absolute;
+  right: -3px;
+  top: -3px;
 }

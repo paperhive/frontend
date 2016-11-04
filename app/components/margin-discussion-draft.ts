@@ -13,17 +13,21 @@ export default function(app) {
     },
     template,
     controller: [
-      '$scope', '$q', 'authService',
-      function($scope, $q, authService) {
+      '$scope', '$q', 'authService', 'channelService',
+      function($scope, $q, authService, channelService) {
         const ctrl = this;
         $scope.auth = authService;
         $scope.comment = {};
 
         ctrl.submit = function() {
+
+          const channel = channelService.selectedChannel &&
+            channelService.selectedChannel.id;
           const discussion = {
             target: {selectors: cloneDeep(ctrl.selectors)},
             title: $scope.comment.title,
             body: $scope.comment.body,
+            channel,
           };
           delete discussion.target.selectors.isBackwards;
           ctrl.submitting = true;

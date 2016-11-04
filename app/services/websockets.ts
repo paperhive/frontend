@@ -23,7 +23,7 @@ class WebsocketService {
     return url.format(parsedUrl);
   }
 
-  join(namespace, room) {
+  join(namespace, payload) {
     return Observable.create((observable) => {
       // connect to socketio endpoint
       const socket = socketio.connect(
@@ -35,7 +35,7 @@ class WebsocketService {
         }
       );
 
-      socket.emit('join', {documentId: room});
+      socket.emit('join', payload);
 
       socket.on('update', observable.onNext.bind(observable));
 

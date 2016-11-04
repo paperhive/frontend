@@ -1,0 +1,52 @@
+.ph-margin-controls {
+  position: fixed;
+  right: 0;
+  z-index: 1001;
+  width: 25%;
+
+  // disable pointer events on the controls container
+  pointer-events: none;
+
+  // re-enable pointer events on children
+  & > * {
+    pointer-events: all;
+  }
+}
+
+.ph-margin-controls > .ph-margin-controls-permanent {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+
+  padding: @grid-gutter-width / 2;
+
+  background: @ph-background-color;
+  box-shadow: 0 5px 5px -5px rgba(64, 64, 64, 0.3);
+}
+
+.ph-margin-controls-top > margin-link {
+  margin: @grid-gutter-width / 2;
+}
+
+.ph-margin-controls-bottom > margin-link {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  margin: @grid-gutter-width / 2;
+}
+
+.ph-margin-controls-permanent > channel-selector {
+  flex-grow: 1;
+  max-width: 100%;
+  box-shadow: @ph-shadow;
+}
+
+.ph-margin-controls-permanent > filter-button {
+  margin-left: @ph-margin-controls-margin;
+  box-shadow: @ph-shadow;
+  > .btn-group > .btn {
+    border: none;
+  }
+}

@@ -1,0 +1,22 @@
+<div class="btn-group" role="group" is-open="$ctrl.isFilterOpen" uib-dropdown>
+  <button class="btn btn-default" uib-dropdown-toggle>
+    <i class="fa fa-filter"></i>
+    <i class="fa fa-caret-down"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu>
+    <li ng-class="{disabled: !$ctrl.authService.user}">
+      <a href=""
+        ng-click="$ctrl.channelService.toggleShowAllChannels(); $event.stopPropagation()"
+        title="Show discussions from all channels instead of just from the selected one?"
+      >
+        <i class="fa fa-fw ph-dropdown-icon-left"
+          ng-class="{
+            'fa-square-o': !$ctrl.channelService.showAllChannels,
+            'fa-check-square-o': $ctrl.channelService.showAllChannels,
+          }"
+        ></i>
+        Show discussions from all channels
+      </a>
+    </li>
+  </ul>
+</div>

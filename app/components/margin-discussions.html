@@ -1,21 +1,37 @@
-<margin-link
-  position="top"
-  discussion-offsets="$ctrl.discussionPositions"
-  discussion-sizes="$ctrl.discussionSizes"
-  viewport-offset-top="$ctrl.viewportOffsetTop"
-  viewport-offset-bottom="$ctrl.viewportOffsetBottom"
-></margin-link>
-<margin-link
-  position="bottom"
-  discussion-offsets="$ctrl.discussionPositions"
-  discussion-sizes="$ctrl.discussionSizes"
-  viewport-offset-top="$ctrl.viewportOffsetTop"
-  viewport-offset-bottom="$ctrl.viewportOffsetBottom"
-></margin-link>
 <div
-  ng-repeat="discussion in $ctrl.discussions"
+  class="ph-margin-controls ph-margin-controls-top"
+  ng-style="{top: $ctrl.viewportOffsetTop || 0}"
+>
+  <div class="ph-margin-controls-permanent">
+    <channel-selector discussions="$ctrl.discussions"></channel-selector>
+    <!--filter-button></filter-button-->
+  </div>
+  <margin-link
+    position="top"
+    discussion-offsets="$ctrl.discussionPositions"
+    discussion-sizes="$ctrl.discussionSizes"
+    viewport-offset-top="$ctrl.viewportOffsetTop"
+    viewport-offset-bottom="$ctrl.viewportOffsetBottom"
+  ></margin-link>
+</div>
+<div class="ph-margin-controls ph-margin-controls-bottom"
+  ng-style="{bottom: $ctrl.viewportOffsetBottom || 0}"
+>
+  <margin-link
+    position="bottom"
+    discussion-offsets="$ctrl.discussionPositions"
+    discussion-sizes="$ctrl.discussionSizes"
+    viewport-offset-top="$ctrl.viewportOffsetTop"
+    viewport-offset-bottom="$ctrl.viewportOffsetBottom"
+  ></margin-link>
+</div>
+<div
+  ng-repeat="discussion in $ctrl.filteredDiscussions track by discussion.id"
   class="ph-margin-discussion"
-  ng-style="{'top': $ctrl.discussionPositions[discussion.id] + 'px'}"
+  ng-style="{
+    top: $ctrl.discussionPositions[discussion.id] + 'px',
+    opacity: $ctrl.channelService.selectedChannel.id === discussion.channel ? 1 : 0.5,
+  }"
   ng-class="{'ph-margin-discussion-animate': $ctrl.discussionPositions[discussion.id] !== undefined}"
   id="discussion-{{discussion.id}}"
 >

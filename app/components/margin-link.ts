@@ -34,8 +34,11 @@ export default function(app) {
 
           // get position of parent element
           // (may be null when the element is detached/destroyed)
-          if (!$element[0].parentElement) return;
-          const parentBoundingRect = $element[0].parentElement.getBoundingClientRect();
+          let parent = $element[0].parentElement;
+          if (!parent) return;
+          parent = parent.parentElement;
+          if (!parent) return;
+          const parentBoundingRect = parent.getBoundingClientRect();
 
           ctrl.parentTop = parentBoundingRect.top;
 
