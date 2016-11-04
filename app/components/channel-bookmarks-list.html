@@ -1,7 +1,7 @@
-<p ng-if="!$ctrl.bookmarks.documents">
+<p ng-if="!$ctrl.bookmarks.documents.length">
   You have no bookmarks yet. Search for a relevant document and bookmark this in your channel.
 </p>
-<div ng-if="$ctrl.bookmarks.documents" class="row">
+<div ng-if="$ctrl.bookmarks.documents.length" class="row">
   <div class="col-sm-12">
     <div class="form-group">
       <table class="table ph-md-margin-bottom">
