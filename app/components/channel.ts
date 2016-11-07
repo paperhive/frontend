@@ -9,8 +9,8 @@ export default function(app) {
     controller: class ChannelCtrl {
       isOwner: boolean;
 
-      static $inject = ['$routeParams', '$scope', '$uibModal', 'authService', 'channelService'];
-      constructor(public $routeParams, public $scope, public $uibModal, public authService, public channelService) {
+      static $inject = ['$http', '$routeParams', '$scope', '$uibModal', 'authService', 'channelService', 'config'];
+      constructor(public $http, public $routeParams, public $scope, public $uibModal, public authService, public channelService, public config) {
         $scope.$watchCollection('$ctrl.channel.members', members => {
           if (!members) this.isOwner = false;
           const self = authService.user && find(members, {person: {id: authService.user.id}});
@@ -21,13 +21,20 @@ export default function(app) {
           () => channelService.get($routeParams.channelId),
           channel => this.channel = channel
         );
+
+        $scope.$watch('$ctrl.authService.user', user => {
+          if (!user) return;
+          $http.get(`${this.config.apiUrl}/channels/${this.$routeParams.channelId}/bookmarks`)
+            .then(response => this.bookmarks = response.data.bookmarks);
+        });
       }
 
       invitationModalOpen() {
         this.$uibModal.open({
-          component: 'channelInvitation',
-          // TODO: remove this ugly hack when uibModal supports custom bindings
-          scope: this.$scope,
+          component: 'channelInvitationNew',
+          resolve: {
+            channelId: () => this.$routeParams.channelId,
+          },
         });
       };
 

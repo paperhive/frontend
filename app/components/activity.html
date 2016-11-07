@@ -60,6 +60,9 @@
       <i class="fa fa-comment" aria-hidden="true"
         ng-if="activity.activityType === 'updateDiscussion' || activity.activityType === 'createDiscussion'"
       ></i>
+      <i class="fa fa-star" aria-hidden="true"
+        ng-if="activity.activityType === 'documentBookmarked'"
+      ></i>
       <img alt="logo white" src="./static/img/logo-hexagon-white.svg"
         ng-if="activity.activityType === 'documentHived'"/>
     </div>
@@ -98,10 +101,22 @@
           <span ng-switch-when="createReply">replied to the discussion</span>
           <span ng-switch-when="updateReply">updated a reply to the discussion</span>
           <span ng-switch-when="updateDiscussion">updated the discussion</span>
+          <span ng-switch-when="documentBookmarked">
+            <span ng-if="$ctrl.filterMode === 'document'">bookmarked this document</span>
+            <span ng-if="$ctrl.filterMode === 'person' || $ctrl.filterMode === 'channel'">
+              bookmarked
+              <small>
+                <a ng-href="./documents/{{activity.document.id}}">{{activity.documentRevision.title}}</a>
+                <span class="text-muted" ng-repeat="author in activity.documentRevision.authors">
+                  {{author.name}}{{$last ? '' :', '}}
+                </span>
+              </small>
+            </span>
+          </span>
         </span>
 
-        <span ng-if="activity.activityType !== 'documentHived'">
-          <a ng-href="./documents/{{activity.document.id}}?a=d:{{activity.discussion.id}}">
+        <span ng-if="activity.activityType !== 'documentHived' && activity.activityType !== 'documentBookmarked'">
+          <a ng-href="./documents/{{activity.document.id}}/discussions/{{activity.discussion.id}}">
             <mathjax body="activity.discussion.title"></mathjax>
           </a>
           <div ng-if="$ctrl.filterMode === 'person' || $ctrl.filterMode === 'channel'">

@@ -2,6 +2,10 @@
   class="ph-margin-controls ph-margin-controls-top"
   ng-style="{top: $ctrl.viewportOffsetTop || 0}"
 >
+  <div class="ph-margin-controls-permanent">
+    <channel-selector discussions="$ctrl.discussions"></channel-selector>
+    <!--filter-button></filter-button-->
+  </div>
   <margin-link
     position="top"
     discussion-offsets="$ctrl.discussionPositions"
@@ -9,10 +13,6 @@
     viewport-offset-top="$ctrl.viewportOffsetTop"
     viewport-offset-bottom="$ctrl.viewportOffsetBottom"
   ></margin-link>
-  <div class="ph-margin-controls-permanent">
-    <channel-selector discussions="$ctrl.discussions"></channel-selector>
-    <!--filter-button></filter-button-->
-  </div>
 </div>
 <div class="ph-margin-controls ph-margin-controls-bottom"
   ng-style="{bottom: $ctrl.viewportOffsetBottom || 0}"
