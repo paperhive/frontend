@@ -4,7 +4,7 @@
       <h3 class="ph-no-margin-top">
         <inline-editable
           content="$ctrl.discussion.title"
-          can-edit="auth.user.id === $ctrl.discussion.author.id"
+          can-edit="$ctrl.auth.user.id === $ctrl.discussion.author.id"
           on-submit="$ctrl.updateDiscussion({title: content})"
           >
         </inline-editable>
@@ -19,6 +19,18 @@
       <span ng-if="$ctrl.discussion.replies.length > 1">
         &middot; {{$ctrl.discussion.replies.length}} replies
       </span>
+
+      &middot;
+      <small>
+        <i ng-show="!$ctrl.discussion.channel"
+          class="fa fa-globe"
+          uib-tooltip="Public channel"
+        ></i>
+        <i ng-show="$ctrl.discussion.channel"
+          class="fa fa-lock"
+          uib-tooltip="{{$ctrl.channelService.channelsById[$ctrl.discussion.channel].name}}"
+        ></i>
+      </small>
 
       <div ng-if="$ctrl.discussion.target.selectors.textQuote.content">
         <hr>
@@ -36,34 +48,6 @@
       <div class="row">
 
         <div class="col-md-2 col-md-push-10 ph-lg-margin-bottom">
-          <!--a href="#">
-            <h5>
-              Labels <span class="pull-right"><i class="fa fa-gear"></i></span>
-            </h5>
-          </a-->
-          <!--ul class="ph-tags">
-            <li ng-repeat="label in $ctrl.discussion.tags">
-            <a href="#" class="btn btn-default {{label}}">{{label}}</a>
-            </li>
-          </ul>
-          <hr-->
-          <!--h5>Notifications</h5>
-          <button type="button" class="btn btn-default ph-subscription-button"
-            ng-disabled="!auth.user" ng-click="toggleSubscribe()">
-            <span ng-show="isSubscribed">
-              <i class="fa fa-bell-slash"></i> Unsubscribe
-            </span>
-            <span ng-show="!isSubscribed">
-              <i class="fa fa-bell"></i> Subscribe
-            </span>
-          </button>
-          <span ng-show="isSubscribed" class="ph-subscription-text">
-            You're receiving notifications because you're subscribed to this thread.
-          </span>
-          <span ng-show="!isSubscribed" class="ph-subscription-text">
-            You're ignoring this thread.
-          </span>
-          <hr-->
           <h5>Participants</h5>
           <avatar-list discussion="$ctrl.discussion"></avatar-list>
         </div>
@@ -89,20 +73,20 @@
           ></comment>
 
           <new-reply
-            ng-if="auth.user"
-            on-submit="addReply(reply)"
+            ng-if="$ctrl.auth.user"
+            on-submit="$ctrl.addReply(reply)"
             class="ph-md-margin-bottom"
           ></new-reply>
 
-          <div ng-if="!auth.user" class="ph-md-margin-bottom ph-comment-row">
+          <div ng-if="!$ctrl.auth.user" class="ph-md-margin-bottom ph-comment-row">
             <div class="ph-discussion-not-auth-user">
               <i class="fa fa-user fa-4x"></i>
             </div>
             <div class="panel panel-default">
               <div class="panel-body">
-                <a href="./signup?returnPath={{auth.returnPath}}">Sign up</a>
+                <a href="./signup?returnPath={{$ctrl.auth.returnPath}}">Sign up</a>
                 or
-                <a href="./login?returnPath={{auth.returnPath}}">log in</a>
+                <a href="./login?returnPath={{$ctrl.auth.returnPath}}">log in</a>
                 to join this discussion on PaperHive.
               </div>
             </div>
