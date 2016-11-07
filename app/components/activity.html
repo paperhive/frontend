@@ -116,7 +116,7 @@
         </span>
 
         <span ng-if="activity.activityType !== 'documentHived' && activity.activityType !== 'documentBookmarked'">
-          <a ng-href="./documents/{{activity.document.id}}/discussions/{{activity.discussion.id}}">
+          <a ng-href="./documents/{{activity.document.id}}?a=d:{{activity.discussion.id}}">
             <mathjax body="activity.discussion.title"></mathjax>
           </a>
           <div ng-if="$ctrl.filterMode === 'person' || $ctrl.filterMode === 'channel'">
