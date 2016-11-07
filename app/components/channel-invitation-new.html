@@ -21,7 +21,7 @@
       <div class="help-block">
         <span ng-if="$ctrl.hasError('email')">
           <span ng-if="invitationForm.email.$error.required">
-            Please enter your email address.
+            Please enter the email address of the person you want to invite.
           </span>
           <span ng-if="invitationForm.email.$error.email || invitationForm.email.$error.pattern">
             The email address you provided is not valid.
@@ -32,8 +32,7 @@
     <div class="form-group">
       <label>Role</label>
       <select class="form-control" ng-model="$ctrl.role"
-        ng-options="role.id as role.name for role in $ctrl.roles"
-        ng-init="$ctrl.role=1"
+        ng-options="role as role for role in $ctrl.roles"
       ></select>
     </div>
   </div>
