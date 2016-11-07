@@ -238,6 +238,7 @@ export default function(app) {
             type: 'error',
             message: error.message
           }));
+          this.documentCtrl.fetchBookmarks(); // TODO: error handling
         });
 
         // update filtered discussions if discussions, channel or showAllChannels changed

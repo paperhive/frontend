@@ -1,0 +1,39 @@
+<p ng-if="!$ctrl.bookmarks.length">
+  You have no bookmarks yet. Search for a relevant document and bookmark this in your channel.
+</p>
+<div ng-if="$ctrl.bookmarks.length" class="row">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <table class="table ph-md-margin-bottom">
+        <thead>
+          <tr>
+            <th>Document</th>
+            <th>Bookmarked by</th>
+            <th>Bookmarked</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="bookmark in $ctrl.bookmarks | orderBy: '-bookmarkedAt'">
+            <td>
+              <a ng-href="./documents/{{bookmark.document.id}}">{{bookmark.document.title}}</a>
+              <div>
+                <small class="text-muted" ng-repeat="author in bookmark.document.authors">
+                  {{author.name}}{{$last ? '' :', '}}
+                </small>
+              </div>
+            </td>
+            <td>
+              <avatar user="bookmark.person" size="30"
+                classes="img-circle ph-sm-margin-right"
+              ></avatar>
+              <a href="./users/{{bookmark.person.account.username}}">
+                {{bookmark.person.displayName}}
+              </a>
+            </td>
+            <td am-time-ago="bookmark.bookmarkedAt"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
