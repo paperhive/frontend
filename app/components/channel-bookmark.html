@@ -3,7 +3,12 @@
     class="btn btn-default ph-split-container ph-split-container-icon-right dropdown-toggle"
   >
     <span class="ph-split-icon">
-      <i class="fa fa-star"></i>
+      <i class="fa"
+        ng-class="{
+          'fa-star-o': $ctrl.documentCtrl.bookmarks.length === 0,
+          'fa-star': $ctrl.documentCtrl.bookmarks.length !== 0,
+        }"
+      ></i>
     </span>
     <span class="ph-split-text">
       Bookmark in channel
@@ -19,14 +24,11 @@
       >
         <div class="ph-grow-container">
           <div class="ph-grow-item">
-            <i class="fa fa-fw fa-user ph-dropdown-icon-left"></i>
-            {{$ctrl.channelService.getDescription(channel)}}
-          </div>
-          <div class="pull-right">
-            <i class="fa fa-fw fa-star" ng-class="{
+            <i class="fa fa-fw ph-dropdown-icon-left" ng-class="{
               'fa-star-o': ($ctrl.documentCtrl.bookmarks.indexOf(channel.id) === -1),
               'fa-star': ($ctrl.documentCtrl.bookmarks.indexOf(channel.id) > -1),
             }"></i>
+            {{$ctrl.channelService.getDescription(channel)}}
           </div>
         </div>
       </a>
