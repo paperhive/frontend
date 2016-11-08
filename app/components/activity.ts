@@ -8,47 +8,52 @@ export default function(app) {
       filterMode: '@',
       filterId: '<',
     },
-    controller: [
-    '$http', 'authService', 'config', 'notificationService',
-      function($http, authService, config, notificationService) {
-        const ctrl = this;
-        ctrl.auth = authService;
-        ctrl.$onChanges = changesObj => {
-          ctrl.activities = undefined;
-          ctrl.person = undefined;
-
-          const params = {};
-          switch (ctrl.filterMode) {
-            case 'channel':
-            case 'document':
-            case 'person':
-              // don't do anything if the filterId is falsy
-              if (!ctrl.filterId) return;
-              params[ctrl.filterMode] = ctrl.filterId;
-              break;
-            case undefined:
-              break;
-            default:
-              throw new Error(`unknown filter mode ${ctrl.filterMode}`);
-          }
-
-          $http.get(`${config.apiUrl}/activities/`, {params})
-            .then(
-              response => ctrl.activities = response.data.activities,
-              notificationService.httpError('could not fetch activities (unknown reason)')
-            );
-
-          // fetch person if person filter is active
-          if (ctrl.filterMode === 'person') {
-            $http.get(`${config.apiUrl}/people/${ctrl.filterId}`)
-              .then(
-                response => ctrl.person = response.data,
-                notificationService.httpError('could not fetch person (unknown reason)')
-              );
-          }
-        };
+    controller: class Activity {
+      static $inject = ['$http', '$routeParams', '$scope', 'authService', 'config', 'notificationService'];
+      constructor(public $http, public $routeParams, public $scope, public authService, public config, public notificationService) {
+        $scope.$watch('$ctrl.authService.user', this.refresh.bind(this));
       }
-    ],
+
+      refresh() {
+        this.activities = undefined;
+        this.person = undefined;
+
+        const params = {};
+        switch (this.filterMode) {
+          case 'channel':
+          case 'document':
+          case 'person':
+            // don't do anything if the filterId is falsy
+            if (!this.filterId) return;
+            params[this.filterMode] = this.filterId;
+            break;
+          case undefined:
+            break;
+          default:
+            throw new Error(`unknown filter mode ${this.filterMode}`);
+        }
+
+        this.$http.get(`${this.config.apiUrl}/activities/`, {params})
+          .then(
+            response => this.activities = response.data.activities,
+            this.notificationService.httpError('could not fetch activities (unknown reason)')
+          );
+
+        // fetch person if person filter is active
+        if (this.filterMode === 'person') {
+          this.$http.get(`${this.config.apiUrl}/people/${this.filterId}`)
+            .then(
+              response => this.person = response.data,
+              this.notificationService.httpError('could not fetch person (unknown reason)')
+            );
+        }
+      }
+
+      $onChanges() {
+        this.refresh();
+      }
+
+    },
     template,
   });
 };

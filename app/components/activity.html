@@ -33,14 +33,14 @@
         </div>
 
         <div ng-if="$ctrl.filterMode === 'person'">
-          <span ng-if="$ctrl.auth.user.id === $ctrl.filterId">
+          <span ng-if="$ctrl.authService.user.id === $ctrl.filterId">
             Here you can find your recent discussions, replies and hived documents.
             <span ng-if="$ctrl.activities.length === 0">
               A good way to get started is to search and hive a document
               you are interested in.
             </span>
           </span>
-          <span ng-if="$ctrl.auth.user.id !== $ctrl.filterId">
+          <span ng-if="$ctrl.authService.user.id !== $ctrl.filterId">
             Here you can find recent discussions, replies and hived documents by
             {{$ctrl.person.displayName}}.
             <span ng-if="$ctrl.activities.length === 0">
