@@ -95,21 +95,6 @@
               </li>
               <li
                 ng-if="$ctrl.isOwner"
-                ng-class="{active: ('channel.invitations' | routeSegmentStartsWith)}"
-              >
-                <a
-                  href=".{{'channel.invitations' | routeSegmentUrl}}"
-                  ng-click="$ctrl.subnavOpen = false"
-                >
-                  <i class="fa fa-fw fa-envelope"></i>
-                  Invitations
-                  <span class="badge ph-xs-margin-left">
-                    {{$ctrl.channel.invitations.length}}
-                  </span>
-                </a>
-              </li>
-              <li
-                ng-if="$ctrl.isOwner"
                 ng-class="{active: ('channel.settings' | routeSegmentStartsWith)}"
               >
                 <a
