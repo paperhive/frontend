@@ -34,7 +34,6 @@ export default function(app) {
         .when('/channels/:channelId', 'channel')
         .when('/channels/:channelId/activity', 'channel.activity')
         .when('/channels/:channelId/bookmarks', 'channel.bookmarks')
-        .when('/channels/:channelId/invitations', 'channel.invitations')
         .when('/channels/:channelId/members', 'channel.members')
         .when('/channels/:channelId/settings', 'channel.settings')
         .when('/contact', 'contact')
@@ -193,20 +192,24 @@ export default function(app) {
               ></channel-bookmarks-list>`,
             title: 'Channel bookmarks · PaperHive',
           })
-          .segment('invitations', {
+          .segment('members', {
             template:
-              `<channel-invitations
+              `<h3>Channel members</h3>
+              <channel-members
+                channel="$ctrl.channel"
+                is-owner="$ctrl.isOwner"
+              ></channel-members>
+              <h3 ng-if="$ctrl.channel.invitations.length !== 0 && $ctrl.isOwner" class="ph-lg-margin-top">
+                Pending invitations
+                <span class="badge ph-xs-margin-left">
+                  {{$ctrl.channel.invitations.length}}
+                </span>
+              </h3>
+              <channel-invitations
+                ng-if="$ctrl.isOwner"
                 channel="$ctrl.channel"
                 is-owner="$ctrl.isOwner"
               ></channel-invitations>`,
-            title: 'Channel invitations · PaperHive',
-          })
-          .segment('members', {
-            template:
-              `<channel-members
-                channel="$ctrl.channel"
-                is-owner="$ctrl.isOwner"
-              ></channel-members>`,
             title: 'Channel members · PaperHive',
           })
           .segment('settings', {
