@@ -67,7 +67,6 @@
 
 /* Creatin Box-Shadow */
 .box-shadow(@style, @c) when (iscolor(@c)) {
-  -webkit-box-shadow: @style @c;
   box-shadow: @style @c;
 }
 .box-shadow(@style, @alpha: 50%) when (isnumber(@alpha)) {
@@ -106,12 +105,8 @@
 .generate-vertical(bottom);
 
 .ph-selection(@value) {
-  -webkit-touch-callout: @value;
-  -webkit-user-select: @value;
-  -khtml-user-select: @value;
-  -moz-user-select: @value;
-  -ms-user-select: @value;
   user-select: @value;
+  -webkit-touch-callout: @value;
 }
 
 .ph-full-width {
