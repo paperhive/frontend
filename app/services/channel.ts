@@ -16,6 +16,7 @@ export default function(app) {
           this.channels = undefined;
           this.invitations = undefined;
           this.channelsById = undefined;
+          this.selectedChannel = undefined;
           return;
         }
         this.refresh();
