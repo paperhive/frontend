@@ -8,11 +8,11 @@
       }}"
       class="btn btn-default ph-channel-selector-channel"
       ng-class="{disabled: !$ctrl.channelService.selectedChannel}"
-      title="{{$ctrl.channelService.getDescription($ctrl.channelService.selectedChannel)}}"
+      title="{{$ctrl.channelService.getName($ctrl.channelService.selectedChannel)}}: {{$ctrl.channelService.getDescription($ctrl.channelService.selectedChannel)}}"
     >
       <i ng-if="!$ctrl.channelService.selectedChannel" class="fa fa-fw fa-globe"></i>
       <i ng-if="$ctrl.channelService.selectedChannel" class="fa fa-fw fa-lock"></i>
-      {{$ctrl.channelService.getDescription($ctrl.channelService.selectedChannel)}}
+      {{$ctrl.channelService.getName($ctrl.channelService.selectedChannel)}}
     </a>
     <button class="btn btn-default" uib-dropdown-toggle>
       <i class="fa fa-bullhorn"></i>
@@ -43,12 +43,13 @@
       >
         <a href=""
           ng-click="$ctrl.channelService.selectChannel(channel)"
-          title="{{$ctrl.channelService.getDescription(channel)}}"
+          title="{{$ctrl.channelService.getName(channel)}}: {{$ctrl.channelService.getDescription(channel)}}"
         >
           <div class="ph-grow-container">
             <div class="ph-grow-item">
               <i class="fa fa-fw ph-dropdown-icon-left fa-lock"></i>
-              {{$ctrl.channelService.getDescription(channel)}}
+              {{$ctrl.channelService.getName(channel)}}
+              <small class="text-muted">{{$ctrl.channelService.getDescription(channel)}}</small>
             </div>
             <div ng-if="$ctrl.channelDiscussions[channel.id]">
               {{$ctrl.channelDiscussions[channel.id]}}
