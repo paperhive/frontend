@@ -43,8 +43,8 @@
     <li ng-if="$ctrl.channelService.channels.length === 0 || !$ctrl.authService.user"
       ng-class="{disabled: !$ctrl.authService.user}"
     >
-      <a href="./channels/new" class="ph-text-overflow"
-        ng-click="!$ctrl.authService.user && ($event.preventDefault() || $event.stopPropagation())"
+      <a href="" class="ph-text-overflow"
+        ng-click="(!$ctrl.authService.user && ($event.preventDefault() || $event.stopPropagation())) || ($ctrl.authService.user && $ctrl.newChannelModalOpen())"
         title="You have to be logged in to create a private discussion channel."
         ng-disabled="true"
       >
