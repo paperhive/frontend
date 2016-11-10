@@ -108,9 +108,14 @@ export default function(app) {
       this.showAllChannels = !this.showAllChannels;
     }
 
-    getDescription(channel) {
+    getName(channel) {
       if (!channel) return 'Public channel';
       return channel.name;
+    }
+
+    getDescription(channel) {
+      if (!channel) return '';
+      return channel.description;
     }
   });
 }
