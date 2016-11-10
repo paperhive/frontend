@@ -30,7 +30,6 @@ export default function(app) {
         .when('/channels', 'channels')
         .when('/channels/list', 'channels.list' )
         .when('/channels/invitations', 'channels.invitations')
-        .when('/channels/new', 'channelsNew')
         .when('/channels/:channelId', 'channel')
         .when('/channels/:channelId/activity', 'channel.activity')
         .when('/channels/:channelId/bookmarks', 'channel.bookmarks')
@@ -165,11 +164,6 @@ export default function(app) {
             title: 'My invitations · PaperHive',
           })
         .up()
-
-        .segment('channelsNew', {
-          template: '<channel-new></channel-new>',
-          title: 'Add a new channel · PaperHive'
-        })
 
         .segment('channel', {
           template: '<channel></channel',

@@ -3,6 +3,11 @@ import template from './channel-new.html';
 
 export default function(app) {
   app.component('channelNew', {
+    bindings: {
+      close: '&',
+      dismiss: '&',
+      resolve: '<',
+    },
     controller: class ChannelNewCtrl {
       inProgress: boolean;
       description: string;
@@ -27,7 +32,10 @@ export default function(app) {
         }).then(channel => {
           this.inProgress = false;
           this.succeeded = true;
-          this.$location.path(`/channels/${channel.id}`);
+          this.close();
+          if (this.resolve.redirect) {
+            this.$location.path(`/channels/${channel.id}`);
+          }
         });
       }
     },

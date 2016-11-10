@@ -1,47 +1,49 @@
-<div class="container ph-xl-margin-bottom">
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="ph-sm-margin-top">
-        <a href="./channels">Back to <em>channel overview</em></a>
-      </div>
-      <h2>New channel</h2>
-      <p>You can invite members to this channel after creating it.</p>
-      <form name="channelForm" novalidate>
-        <div class="form-group" ng-class="{
-            'has-error': $ctrl.hasError('name'),
-            'has-success': channelForm.name.$valid
-         }"
-         >
-          <label>Name</label>
-          <input
-            type="text" class="form-control" name="name" ng-model="$ctrl.name"
-            required ng-disabled="$ctrl.inProgress || $ctrl.succeeded"
-          >
-          <div class="help-block">
-            <span ng-if="$ctrl.hasError('name')">
-              <span ng-if="channelForm.name.$error.required">
-                Please enter a channel name.
-              </span>
-            </span>
-          </div>
-        </div>
-        <div>
-          <label>Description</label>
-          <input type="text" class="form-control" ng-model="$ctrl.description">
-        </div>
-        <div class="text-right">
-          <button
-            type="submit"
-            class="btn btn-primary ph-lg-margin-top"
-            ng-click="!$ctrl.inProgress && !$ctrl.succeeded && !channelForm.$invalid && $ctrl.submit()"
-            ng-class="{disabled: channelForm.$invalid || $ctrl.inProgress || $ctrl.succeeded}"
-          >
-            <i ng-if="$ctrl.inProgress" class="fa fa-fw fa-spinner fa-spin"></i>
-            <i ng-if="!$ctrl.inProgress" class="fa fa-fw fa-check" aria-hidden="true"></i>
-            Create
-          </button>
-        </div>
-      </form>
-    </div>
+<div class="modal-header">
+  <button type="button" class="close" aria-label="Close" title="Close" ng-click="$ctrl.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <div class="modal-title">
+    <h3>New channel</h3>
+    <p>You can invite members to this channel after creating it.</p>
   </div>
 </div>
+<form name="channelForm" novalidate>
+  <div class="modal-body">
+    <div class="form-group" ng-class="{
+        'has-error': $ctrl.hasError('name'),
+        'has-success': channelForm.name.$valid
+     }"
+     >
+      <label>Name</label>
+      <input
+        type="text" class="form-control" name="name" ng-model="$ctrl.name"
+        required ng-disabled="$ctrl.inProgress || $ctrl.succeeded"
+      >
+      <div class="help-block">
+        <span ng-if="$ctrl.hasError('name')">
+          <span ng-if="channelForm.name.$error.required">
+            Please enter a channel name.
+          </span>
+        </span>
+      </div>
+    </div>
+    <div>
+      <label>Description</label>
+      <input type="text" class="form-control" ng-model="$ctrl.description">
+    </div>
+    <div class="modal-footer">
+      <div class="text-right">
+        <button
+          type="submit"
+          class="btn btn-primary ph-lg-margin-top"
+          ng-click="!$ctrl.inProgress && !$ctrl.succeeded && !channelForm.$invalid && $ctrl.submit()"
+          ng-class="{disabled: channelForm.$invalid || $ctrl.inProgress || $ctrl.succeeded}"
+        >
+          <i ng-if="$ctrl.inProgress" class="fa fa-fw fa-spinner fa-spin"></i>
+          <i ng-if="!$ctrl.inProgress" class="fa fa-fw fa-check" aria-hidden="true"></i>
+          Create
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
