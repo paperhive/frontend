@@ -76,7 +76,7 @@
       <li role="separator" class="divider"></li>
       <li ng-class="{disabled: !$ctrl.authService.user}">
         <a href=""
-          ng-click="(!$ctrl.authService.user && ($event.preventDefault() || $event.stopPropagation())) || ($ctrl.authService.user && $ctrl.newChannelModalOpen())"
+          ng-click="$ctrl.authService.user ? $ctrl.newChannelModalOpen() : ($event.preventDefault() || $event.stopPropagation())"
           title="You have to be logged in to create a private discussion channel."
           class="ph-text-overflow"
         >
