@@ -13,13 +13,13 @@
           </button>
         </span>
       </div>
-      <span class="help-block">
+      <small class="help-block">
         <i class="fa fa-fw fa-info-circle"></i>
         Search
         <i ng-if="$ctrl.updatingTotal" class="fa fa-spin fa-spinner"></i>
         <span ng-if="!$ctrl.updatingTotal">{{$ctrl.total}}</span>
         documents by title, author, DOI or arxiv id.
-      </span>
+      </small>
     </div>
   </form>
 </div>
