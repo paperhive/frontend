@@ -382,7 +382,7 @@ export default function(app) {
         })
 
         .segment('search', {
-          template: '<search-results></search-results>',
+          template: '<search></search>',
           title: 'Search results',
         })
 

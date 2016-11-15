@@ -1,10 +1,10 @@
 'use strict';
 
-import template from './search-results.html';
+import template from './search.html';
 
 export default function(app) {
   app.component(
-    'searchResults',
+    'search',
     {
       template,
       controller: [

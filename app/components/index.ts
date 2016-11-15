@@ -65,7 +65,7 @@ import pdfPopup from './pdf-popup';
 import pdfSelectionPopup from './pdf-selection-popup';
 import phFooter from './ph-footer';
 import publishers from './publishers';
-import searchResults from './search-results';
+import search from './search';
 import settings from './settings';
 import settingsAccounts from './settings-accounts';
 import settingsEmail from './settings-email';
@@ -147,7 +147,7 @@ export default function(app) {
   pdfSelectionPopup(app);
   phFooter(app);
   publishers(app);
-  searchResults(app);
+  search(app);
   settings(app);
   settingsAccounts(app);
   settingsEmail(app);
