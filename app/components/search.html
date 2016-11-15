@@ -1,15 +1,42 @@
 <div class="container">
-  <div ng-if="$ctrl.documents !== undefined">
-    <h2 ng-if="!$ctrl.documents.length">No results for <em>{{search.query}}</em></h2>
-    <h2 ng-if="$ctrl.documents.length">Results for <em>{{search.query}}</em></h2>
+  <form novalidate ng-submit="$ctrl.submitQuery()" class="ph-xl-margin-top ph-xl-margin-bottom">
+    <div class="form-group">
+      <div class="input-group input-group-lg">
+        <input
+          ng-model="$ctrl.queryModel"
+          class="form-control"
+          placeholder="Search documents"
+        >
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="submit">
+            <i class="fa fa-fw fa-search"></i>
+          </button>
+        </span>
+      </div>
+      <span class="help-block">
+        <i class="fa fa-fw fa-info-circle"></i>
+        Search
+        <i ng-if="$ctrl.updatingTotal" class="fa fa-spin fa-spinner"></i>
+        <span ng-if="!$ctrl.updatingTotal">{{$ctrl.total}}</span>
+        documents by title, author, DOI or arxiv id.
+      </span>
+    </div>
+  </form>
+</div>
+<div class="ph-search-filters">
+</div>
+<div class="container">
+  <div ng-if="$ctrl.results !== undefined">
+    <h2 ng-if="!$ctrl.results.length">No results for <em>{{$ctrl.query}}</em></h2>
+    <h2 ng-if="$ctrl.results.length">Results for <em>{{$ctrl.query}}</em></h2>
     <small class="text-muted">
       Couldn't find what you are looking for? <a href ng-click="feedbackModal.open()">Send us feedback</a> with
       suggestions for content that you miss on PaperHive.
     </small>
-    <div ng-if="$ctrl.documents.length">
+    <div ng-if="$ctrl.results.length">
       <div class="row ph-lg-margin-bottom row ph-lg-margin-top">
         <div class="col-md-8">
-          <div class="ph-lg-margin-top media" ng-repeat="document in $ctrl.documents">
+          <div class="ph-lg-margin-top media" ng-repeat="document in $ctrl.results">
             <h4>
               <a href="./documents/{{document.id}}" title="{{document.title}}">
                 <mathjax body="document.title"></mathjax>
@@ -34,7 +61,7 @@
       <div class="row ph-lg-margin-bottom">
         <div class="col-md-8">
           <ul uib-pagination
-            ng-if="$ctrl.documentsTotal > $ctrl.maxPerPage"
+            ng-if="$ctrl.resultsTotal > $ctrl.maxPerPage"
             boundary-links="true"
             boundary-link-numbers="true"
             class="pagination-sm"
@@ -47,7 +74,7 @@
             ng-model="$ctrl.page"
             previous-text="&lsaquo;"
             rotate="false"
-            total-items="$ctrl.documentsTotal"
+            total-items="$ctrl.resultsTotal"
           ></ul>
         </div>
       </div>

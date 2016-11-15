@@ -22,16 +22,24 @@ export default function(app) {
           this.updateLocation();
           this.updateResults();
         });
+
+        this.updateTotal();
       }
 
       scrollToTop() {
         window.scrollTo(0, 0);
       }
 
+      submitQuery() {
+        this.query = this.queryModel;
+      }
+
       // update controller variables from location
       updateFromLocation() {
         this.query = this.$location.search().query;
         this.page = this.$location.search().page || 1;
+
+        this.queryModel = this.query;
       }
 
       // update location from controller
@@ -44,8 +52,9 @@ export default function(app) {
 
 
       updateResults() {
-        this.documentsTotal = undefined;
-        this.documents = undefined;
+        this.resultsTotal = undefined;
+        this.results = undefined;
+        this.updatingResults = true;
 
         return this.$http.get(`${this.config.apiUrl}/documents/search`, {
           params: {
@@ -57,16 +66,28 @@ export default function(app) {
         })
         .then(
           response => {
-            this.documentsTotal = response.data.total;
-            this.documents = response.data.documents;
+            this.resultsTotal = response.data.total;
+            this.results = response.data.documents;
           },
-          response => {
-            this.notificationService.notifications.push({
-              type: 'error',
-              message: 'Could not fetch documents'
-            });
-          }
-        );
+          response => this.notificationService.notifications.push({
+            type: 'error',
+            message: 'Could not fetch documents'
+          })
+        )
+        .finally(() => this.updatingResults = false);
+      }
+
+      updateTotal() {
+        this.updatingTotal = true;
+        return this.$http.get(`${this.config.apiUrl}/documents/search`, {
+          restrictToLatest: true,
+        }).then(
+          response => this.total = response.data.total,
+          response => this.notificationService.notifications.push({
+            type: 'error',
+            message: 'Could not fetch documents'
+          })
+        ).finally(() => this.updatingTotal = false);
       }
     },
   });
