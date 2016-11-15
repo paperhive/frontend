@@ -7,7 +7,7 @@ export default function(app) {
     template,
     controller: class SearchCtrl {
       maxPerPage = 10;
-      page = 1
+      page = 1;
 
       static $inject = ['config', '$http', '$location', '$scope',
         'feedbackModal', 'notificationService'];
