@@ -3,69 +3,71 @@
 import template from './search.html';
 
 export default function(app) {
-  app.component(
-    'search',
-    {
-      template,
-      controller: [
-        'config', '$http', '$location', '$scope', 'feedbackModal', 'notificationService',
-        function(config, $http, $location, $scope, feedbackModal, notificationService) {
-          const maxPerPage = 10;
+  app.component('search', {
+    template,
+    controller: class SearchCtrl {
+      maxPerPage = 10;
+      page = 1
 
-          $scope.search = {
-            page: 1,
-            maxSize: 7,
-          };
+      static $inject = ['config', '$http', '$location', '$scope',
+        'feedbackModal', 'notificationService'];
 
-          $scope.feedbackModal = feedbackModal;
+      constructor(public config, public $http, public $location, $scope,
+          public feedbackModal, public notificationService) {
 
-          // update scope variables from location
-          function updateFromLocation() {
-            $scope.search.query = $location.search().query;
-            $scope.search.page = $location.search().page || 1;
+        $scope.$on('$locationChangeSuccess', this.updateFromLocation.bind(this));
+        this.updateFromLocation();
+
+        $scope.$watchGroup(['$ctrl.query', '$ctrl.page'], () => {
+          this.updateLocation();
+          this.updateResults();
+        });
+      }
+
+      scrollToTop() {
+        window.scrollTo(0, 0);
+      }
+
+      // update controller variables from location
+      updateFromLocation() {
+        this.query = this.$location.search().query;
+        this.page = this.$location.search().page || 1;
+      }
+
+      // update location from controller
+      updateLocation() {
+        this.$location.search({
+          query: this.query,
+          page: this.page > 1 ? this.page : undefined,
+        });
+      }
+
+
+      updateResults() {
+        this.documentsTotal = undefined;
+        this.documents = undefined;
+
+        return this.$http.get(`${this.config.apiUrl}/documents/search`, {
+          params: {
+            q: this.query,
+            limit: this.maxPerPage,
+            skip: (this.page - 1) * this.maxPerPage,
+            restrictToLatest: true,
+          },
+        })
+        .then(
+          response => {
+            this.documentsTotal = response.data.total;
+            this.documents = response.data.documents;
+          },
+          response => {
+            this.notificationService.notifications.push({
+              type: 'error',
+              message: 'Could not fetch documents'
+            });
           }
-          updateFromLocation();
-          $scope.$on('$locationChangeSuccess', updateFromLocation);
-
-          // update location from scope variables
-          function updateFromScope(page) {
-            $location.search({query: $scope.search.query, page: page});
-          }
-          $scope.$watch('search.page', updateFromScope);
-
-          function getSearchResults(query, page) {
-            $scope.search.total = undefined;
-            $scope.search.documents = undefined;
-            return $http.get(config.apiUrl + '/documents/search', {
-              params: {
-                q: query,
-                limit: maxPerPage,
-                skip: (page - 1) * maxPerPage,
-                restrictToLatest: true,
-              }
-            })
-            .then(
-              function(response) {
-                $scope.search.total = response.data.total;
-                $scope.search.documents = response.data.documents;
-              },
-              function(response) {
-                notificationService.notifications.push({
-                  type: 'error',
-                  message: 'Could not fetch documents'
-                });
-              }
-            );
-          };
-
-          $scope.$watchGroup(['search.query', 'search.page'], (newValues) =>
-            getSearchResults(newValues[0], newValues[1])
-          );
-
-          $scope.scrollToTop = function() {
-            window.scrollTo(0, 0);
-          };
-        }
-      ]
-    });
+        );
+      }
+    },
+  });
 };

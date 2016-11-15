@@ -1,15 +1,15 @@
 <div class="container">
-  <div ng-if="search.documents !== undefined">
-    <h2 ng-if="!search.documents.length">No results for <em>{{search.query}}</em></h2>
-    <h2 ng-if="search.documents.length">Results for <em>{{search.query}}</em></h2>
+  <div ng-if="$ctrl.documents !== undefined">
+    <h2 ng-if="!$ctrl.documents.length">No results for <em>{{search.query}}</em></h2>
+    <h2 ng-if="$ctrl.documents.length">Results for <em>{{search.query}}</em></h2>
     <small class="text-muted">
       Couldn't find what you are looking for? <a href ng-click="feedbackModal.open()">Send us feedback</a> with
       suggestions for content that you miss on PaperHive.
     </small>
-    <div ng-if="search.documents.length">
+    <div ng-if="$ctrl.documents.length">
       <div class="row ph-lg-margin-bottom row ph-lg-margin-top">
         <div class="col-md-8">
-          <div class="ph-lg-margin-top media" ng-repeat="document in search.documents">
+          <div class="ph-lg-margin-top media" ng-repeat="document in $ctrl.documents">
             <h4>
               <a href="./documents/{{document.id}}" title="{{document.title}}">
                 <mathjax body="document.title"></mathjax>
@@ -34,19 +34,20 @@
       <div class="row ph-lg-margin-bottom">
         <div class="col-md-8">
           <ul uib-pagination
-            ng-if="search.total > 10"
+            ng-if="$ctrl.documentsTotal > $ctrl.maxPerPage"
             boundary-links="true"
             boundary-link-numbers="true"
             class="pagination-sm"
             first-text="&laquo;"
             last-text="&raquo;"
-            max-size="search.maxSize"
+            max-size="7"
             next-text="&rsaquo;"
-            ng-click="scrollToTop()"
-            ng-model="search.page"
+            ng-click="$ctrl.scrollToTop()"
+            items-per-page="$ctrl.maxPerPage"
+            ng-model="$ctrl.page"
             previous-text="&lsaquo;"
             rotate="false"
-            total-items="search.total"
+            total-items="$ctrl.documentsTotal"
           ></ul>
         </div>
       </div>
