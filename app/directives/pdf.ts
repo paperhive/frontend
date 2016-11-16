@@ -364,6 +364,11 @@ export default function(app) {
         };
       }
 
+      async getText() {
+        const textContent = await this.page.getTextContent();
+        return textContent.items.map(text => text.str).join(' ');
+      }
+
       async initPageSize(_width = undefined) {
         if (this.initializedPageSize) return false;
 
@@ -660,6 +665,18 @@ export default function(app) {
         this.scope.$watch('scrollToAnchor', this.scrollToAnchor.bind(this));
 
         this.scope.$watchCollection('highlights', this.updateHighlights.bind(this));
+
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        const entireText = await this.getText();
+        console.log(entireText);
+      }
+
+      async getText() {
+        const texts = await Promise.all(this.pages.map(page => page.getText()));
+        return {
+          str: texts.join(' ').concat(' '),
+          pageLengths: texts.map(text => text.length + 1),
+        };
       }
 
       destroy() {
