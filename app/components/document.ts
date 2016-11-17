@@ -4,6 +4,7 @@ import { cloneDeep, find, findIndex, findLastIndex, merge, orderBy, pick, remove
 
 import template from './document.html';
 import { getRevisionMetadata } from '../utils/documents';
+import { SearchIndex } from '../utils/search';
 
 class DiscussionsController {
   // data
@@ -245,6 +246,8 @@ export default function(app) {
         $scope.$watchCollection('$ctrl.discussionsCtrl.discussions', this.updateFilteredDiscussions.bind(this));
         $scope.$watch('$ctrl.channelService.selectedChannel', this.updateFilteredDiscussions.bind(this));
         $scope.$watch('$ctrl.channelService.showAllChannels', this.updateFilteredDiscussions.bind(this));
+
+        $scope.$watch('$ctrl.pdfText', this.updateSearchIndex.bind(this));
       }
 
       updateActiveRevision() {
@@ -297,6 +300,16 @@ export default function(app) {
           title: this.activeRevision.title + ' · PaperHive',
           meta: metadata,
         });
+      }
+
+      updateSearchIndex() {
+        this.searchIndex = undefined;
+        if (!this.pdfText) return;
+        this.searchIndex = new SearchIndex(this.pdfText);
+
+        // test
+        const positions = this.searchIndex.search('Liesen');
+        console.log(positions);
       }
     },
   });
