@@ -119,8 +119,9 @@ export default function(app) {
     }
 
     getNameDescription(channel) {
+      if (!channel) return '';
       const name = this.getName(channel);
-      if (channel.description) return `${name} – ${this.getDescription(channel)}`;
+      if (channel.description) return `${name} – ${channel.description}`;
       return name;
     }
   });
