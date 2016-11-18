@@ -21,6 +21,8 @@ export default function(app) {
       function($scope, $q, $location, authService, channelService) {
         const ctrl = this;
 
+        this.channelService = channelService;
+
         // expose discussion in template
         $scope.discussion = this.discussion;
         if (this.discussion && this.discussion.channel) {

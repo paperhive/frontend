@@ -1,5 +1,23 @@
-<div class="ph-margin-container">
+<div class="ph-margin-container"
+  ng-class="{'ph-private-channel': $ctrl.discussion.channel}"
+>
   <!-- original comment -->
+
+  <div ng-show="!$ctrl.discussion.channel" class="ph-channel-description">
+    <i class="fa fa-fw fa-globe" uib-tooltip="Public channel"></i>
+    Public channel
+  </div>
+  <div ng-show="$ctrl.discussion.channel" class="ph-channel-description">
+    <i class="fa fa-fw fa-lock" uib-tooltip="{{$ctrl.channel.name}}"></i>
+    <a
+      href="./channels/{{$ctrl.discussion.channel}}"
+      class="ph-channel-selector-channel"
+      title="{{$ctrl.channelService.getDescription($ctrl.discussion.channel)}}"
+    >
+      {{$ctrl.channel.name}}
+    </a>
+  </div>
+
   <div class="ph-margin-row">
     <!-- avatar -->
     <avatar user="$ctrl.discussion.author" size="38"

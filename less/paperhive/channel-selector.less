@@ -1,22 +1,26 @@
 channel-selector {
   .btn, .dropdown-menu {
     font-size: @font-size-base - 2;
+    width: 100%;
   }
 }
 
 .ph-dropdown-flex {
   .ph-selected-channel {
     flex-grow: 1;
-    
-    > a {
+    overflow: hidden;
+    padding-right: @padding-base-vertical;
+    > div {      
       overflow: hidden;
       text-overflow: ellipsis;
-    }
+      white-space: nowrap;
+    }    
   }
   .ph-channel-selector-channel { 
     &.btn-group {
       box-shadow: @ph-shadow;
       display: flex;
+      position: initial;
     }
     > .btn {     
       border: none;
