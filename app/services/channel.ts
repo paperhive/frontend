@@ -16,6 +16,7 @@ export default function(app) {
           this.channels = undefined;
           this.invitations = undefined;
           this.channelsById = undefined;
+          this.selectedChannel = undefined;
           return;
         }
         this.refresh();
@@ -107,9 +108,20 @@ export default function(app) {
       this.showAllChannels = !this.showAllChannels;
     }
 
-    getDescription(channel) {
+    getName(channel) {
       if (!channel) return 'Public channel';
       return channel.name;
+    }
+
+    getDescription(channel) {
+      if (!channel) return '';
+      return channel.description;
+    }
+
+    getNameDescription(channel) {
+      const name = this.getName(channel);
+      if (channel.description) return `${name} – ${this.getDescription(channel)}`;
+      return name;
     }
   });
 }

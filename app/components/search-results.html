@@ -34,6 +34,7 @@
       <div class="row ph-lg-margin-bottom">
         <div class="col-md-8">
           <ul uib-pagination
+            ng-if="search.total > 10"
             boundary-links="true"
             boundary-link-numbers="true"
             class="pagination-sm"

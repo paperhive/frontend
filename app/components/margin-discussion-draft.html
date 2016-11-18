@@ -9,13 +9,13 @@
     Public channel
   </div>
   <div ng-show="$ctrl.channelService.selectedChannel" class="ph-channel-description ph-channel-description-sticky">
-    <i class="fa fa-fw fa-lock" uib-tooltip="{{$ctrl.channelService.getDescription($ctrl.channelService.selectedChannel)}}"></i>
+    <i class="fa fa-fw fa-lock" uib-tooltip="{{$ctrl.channelService.getNameDescription($ctrl.channelService.selectedChannel)}}"></i>
     <a
       href="./channels/{{$ctrl.channelService.selectedChannel.id}}"
       class="ph-channel-selector-channel"
-      title="{{$ctrl.channelService.getDescription($ctrl.channelService.selectedChannel)}}"
+      title="{{$ctrl.channelService.getNameDescription($ctrl.channelService.selectedChannel)}}"
     >
-      {{$ctrl.channelService.getDescription($ctrl.channelService.selectedChannel)}}
+      {{$ctrl.channelService.getName($ctrl.channelService.selectedChannel)}}
     </a>
   </div>
   <div ng-if="auth.user" class="ph-margin-row">

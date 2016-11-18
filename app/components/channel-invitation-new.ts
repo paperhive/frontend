@@ -36,7 +36,7 @@ export default function(app) {
           this.succeeded = true;
           this.inProgress = false;
           this.close();
-          this.$location.path(`/channels/${this.resolve.channelId}/invitations`);
+          this.$location.path(`/channels/${this.resolve.channelId}/members`);
         }, (error) => {
           this.succeeded = false;
           this.inProgress = false;

@@ -11,8 +11,8 @@ export default function(app) {
     controller: class channelBookmarkCtrl {
       submitting = false;
 
-      static $inject = ['authService', 'channelService'];
-      constructor(public authService, public channelService) {}
+      static $inject = ['$uibModal', 'authService', 'channelService'];
+      constructor(public $uibModal, public authService, public channelService) {}
 
       bookmark(channel) {
         this.submitting = true;
@@ -23,6 +23,10 @@ export default function(app) {
         this.submitting = true;
         this.documentCtrl.removeBookmark(channel).then(() => this.submitting = false);
       }
+
+      newChannelModalOpen() {
+        this.$uibModal.open({component: 'channelNew'});
+      };
     },
     template,
   });

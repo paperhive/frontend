@@ -11,8 +11,8 @@ export default function(app) {
       publicDiscussions: number;
       channelDiscussions: any;
 
-      static $inject = ['$scope', 'authService', 'channelService'];
-      constructor($scope, public authService, public channelService) {
+      static $inject = ['$scope', '$uibModal', 'authService', 'channelService'];
+      constructor($scope, public $uibModal, public authService, public channelService) {
         $scope.$watchCollection('$ctrl.discussions', this.updateChannelDiscussions.bind(this));
       }
 
@@ -33,6 +33,10 @@ export default function(app) {
           this.channelDiscussions[discussion.channel]++;
         });
       }
+
+      newChannelModalOpen() {
+        this.$uibModal.open({component: 'channelNew'});
+      };
     },
     template,
   });

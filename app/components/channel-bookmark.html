@@ -21,6 +21,7 @@
         ng-click="($ctrl.documentCtrl.bookmarks.indexOf(channel.id) > -1 ?
           $ctrl.removeBookmark(channel.id) : $ctrl.bookmark(channel.id));
           $event.stopPropagation()"
+        title="{{$ctrl.channelService.getName(channel)}}{{$ctrl.channelService.getDescription(channel) ? ': ' : ''}}{{$ctrl.channelService.getDescription(channel)}}"
       >
         <div class="ph-grow-container">
           <div class="ph-grow-item">
@@ -28,7 +29,8 @@
               'fa-star-o': ($ctrl.documentCtrl.bookmarks.indexOf(channel.id) === -1),
               'fa-star': ($ctrl.documentCtrl.bookmarks.indexOf(channel.id) > -1),
             }"></i>
-            {{$ctrl.channelService.getDescription(channel)}}
+            {{$ctrl.channelService.getName(channel)}}
+            <small class="text-muted">{{$ctrl.channelService.getDescription(channel)}}</small>
           </div>
         </div>
       </a>
@@ -43,8 +45,8 @@
     <li ng-if="$ctrl.channelService.channels.length === 0 || !$ctrl.authService.user"
       ng-class="{disabled: !$ctrl.authService.user}"
     >
-      <a href="./channels/new" class="ph-text-overflow"
-        ng-click="!$ctrl.authService.user && ($event.preventDefault() || $event.stopPropagation())"
+      <a href="" class="ph-text-overflow"
+        ng-click="$ctrl.authService.user ? $ctrl.newChannelModalOpen() : ($event.preventDefault() || $event.stopPropagation())"
         title="You have to be logged in to create a private discussion channel."
         ng-disabled="true"
       >

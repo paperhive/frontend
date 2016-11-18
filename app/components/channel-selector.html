@@ -1,26 +1,22 @@
 <div class="dropdown ph-dropdown-flex" uib-dropdown>
   <div class="ph-selected-channel">
     <div ng-if="!$ctrl.channelService.selectedChannel">
-      <i class="fa fa-fw fa-globe"></i> {{$ctrl.channelService.getDescription($ctrl.channelService.selectedChannel)}}
+      <i class="fa fa-fw fa-globe"></i>
+      {{$ctrl.channelService.getName($ctrl.channelService.selectedChannel)}}
     </div>
     <div ng-if="$ctrl.channelService.selectedChannel">
       <i class="fa fa-fw fa-lock"></i>
       <a
-        href="{{
-          $ctrl.channelService.selectedChannel ?
-          './channels/' + $ctrl.channelService.selectedChannel.id :
-          ''
-        }}"
+        href="./channels/{{$ctrl.channelService.selectedChannel.id}}"
         class="ph-channel-selector-channel"
-        title="{{$ctrl.channelService.getDescription($ctrl.channelService.selectedChannel)}}"
+        title="{{$ctrl.channelService.getNameDescription($ctrl.channelService.selectedChannel)}}"
       >
-        {{$ctrl.channelService.getDescription($ctrl.channelService.selectedChannel)}}
+        {{$ctrl.channelService.getName($ctrl.channelService.selectedChannel)}}
       </a>
-    </div>    
-    
+    </div>
   </div>
-  
-  <div class="btn-group ph-channel-selector-channel" is-open="$ctrl.isOpen" uib-dropdown>    
+
+  <div class="btn-group ph-channel-selector-channel" is-open="$ctrl.isOpen" uib-dropdown>
     <button class="btn btn-default" uib-dropdown-toggle>
       <i class="fa fa-bullhorn"></i>
       <i class="fa fa-caret-down"></i>
@@ -50,12 +46,13 @@
       >
         <a href=""
           ng-click="$ctrl.channelService.selectChannel(channel)"
-          title="{{$ctrl.channelService.getDescription(channel)}}"
+          title="{{$ctrl.channelService.getName(channel)}}{{$ctrl.channelService.getDescription(channel) ? ': ' : ''}}{{$ctrl.channelService.getDescription(channel)}}"
         >
           <div class="ph-grow-container">
             <div class="ph-grow-item">
               <i class="fa fa-fw ph-dropdown-icon-left fa-lock"></i>
-              {{$ctrl.channelService.getDescription(channel)}}
+              {{$ctrl.channelService.getName(channel)}}
+              <small class="text-muted">{{$ctrl.channelService.getDescription(channel)}}</small>
             </div>
             <div ng-if="$ctrl.channelDiscussions[channel.id]">
               {{$ctrl.channelDiscussions[channel.id]}}
@@ -82,8 +79,8 @@
       </li>
       <li role="separator" class="divider"></li>
       <li ng-class="{disabled: !$ctrl.authService.user}">
-        <a href="./channels/new"
-          ng-click="!$ctrl.authService.user && ($event.preventDefault() || $event.stopPropagation())"
+        <a href=""
+          ng-click="$ctrl.authService.user ? $ctrl.newChannelModalOpen() : ($event.preventDefault() || $event.stopPropagation())"
           title="You have to be logged in to create a private discussion channel."
           class="ph-text-overflow"
         >

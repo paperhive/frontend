@@ -179,12 +179,15 @@ gulp.task('vendor', [], function() {
 // Depend on 'js' and 'style' since file names here are changed by the cache
 // buster and referenced in index.html.
 gulp.task('index', function() {
-  return gulp.src(paths.index, {base: 'src'})
-    .pipe(template({
-      config: config,
-      dev: dev
-    }))
-    .pipe(dev ? gutil.noop() : htmlmin(htmlminOpts))
-    .pipe(rename('index.html'))
-    .pipe(gulp.dest(dev ? 'build-dev' : 'build'));
+  return merge(
+    gulp.src(paths.index, {base: 'src'})
+      .pipe(template({
+        config: config,
+        dev: dev
+      }))
+      .pipe(dev ? gutil.noop() : htmlmin(htmlminOpts))
+      .pipe(rename('index.html'))
+      .pipe(gulp.dest(dev ? 'build-dev' : 'build')),
+    gulp.src('opensearch.xml').pipe(gulp.dest(dev ? 'build-dev' : 'build'))
+  );
 });
