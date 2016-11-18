@@ -247,6 +247,7 @@ export default function(app) {
         $scope.$watch('$ctrl.channelService.showAllChannels', this.updateFilteredDiscussions.bind(this));
 
         $scope.$watch('$ctrl.pdfText', this.updateSearchIndex.bind(this));
+        $scope.$watch('$ctrl.searchStr', this.search.bind(this));
       }
 
       updateActiveRevision() {
@@ -305,9 +306,11 @@ export default function(app) {
         this.searchIndex = undefined;
         if (!this.pdfText) return;
         this.searchIndex = new SearchIndex(this.pdfText);
+      }
 
-        // test
-        const positions = this.searchIndex.search('Liesen');
+      search() {
+        if (!this.searchIndex) return;
+        const positions = this.searchIndex.search(this.searchStr);
         console.log(positions);
       }
     },

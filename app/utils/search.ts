@@ -5,10 +5,12 @@ export class SearchIndex {
   mappings = [];
   transformedStr: String;
 
+  // TODO to lower case (pdfText and searchStr)
   transformations = [srch.transformSpaces];
 
   constructor(str) {
     this.transformedStr = str;
+    // TODO transform
     this.transformations.forEach(transformation => {
       const {str, mapping} = transformation(this.transformedStr);
       this.transformedStr = str;

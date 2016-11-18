@@ -27,7 +27,10 @@
       popover-trigger="'none'"
     ></hive-button>
   </div>
+
   <div class="ph-sidenav-info">
+
+    <pdf-search on-search-submit="$ctrl.onSearchSubmit({searchStr})"></pdf-search>
 
     <channel-bookmark
       document-ctrl="$ctrl.documentCtrl"

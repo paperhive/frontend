@@ -8,6 +8,7 @@ export default function(app) {
       open: '<',
       viewportOffsetTop: '<',
       onToggle: '&',
+      onSearchSubmit: '&',
     },
     controller: class DocumentSidenavCtrl {
       kudosOpen = true;
