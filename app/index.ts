@@ -24,6 +24,7 @@ import 'angular-route';                               // ngRoute module
 import 'angular-route-segment';                       // route-segment
 import 'angular-sanitize';                            // ngSanitize module
 import 'angular-bootstrap';                           // ui.bootstrap
+import angularChartist from 'angular-chartist.js';    // chartist.js
 import 'angular-moment';                              // angularMoment
 import 'angular-leaflet-directive';                   // leaflet-directive
 import 'angulartics';
@@ -43,12 +44,14 @@ import utils from './utils/index';
 import '../build-tmp/html.js';
 import configJson from '../config.json';
 
+console.log(angularChartist);
 
 export const paperhive = angular
   .module(
     'paperhive', [
       'angulartics',
       'angulartics.google.analytics',
+      angularChartist,
       'ui.bootstrap',
       'ngAnimate',
       'ngSanitize',

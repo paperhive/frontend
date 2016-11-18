@@ -17,7 +17,7 @@
         <i class="fa fa-fw fa-info-circle"></i>
         Search
         <i ng-if="$ctrl.updatingTotal" class="fa fa-spin fa-spinner"></i>
-        <span ng-if="!$ctrl.updatingTotal">{{$ctrl.total}}</span>
+        <span ng-if="!$ctrl.updatingTotal">{{$ctrl.total | number}}</span>
         documents by title, author, DOI or arxiv id.
       </small>
     </div>
@@ -26,16 +26,22 @@
 <div class="ph-search-filters">
   <div class="container">
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-3 text-center">
         <h5>Date</h5>
+        <chartist class="ct-chart ph-search-chart-date"
+          chartist-data="$ctrl.chartistData.date"
+          chartist-chart-options="$ctrl.chartistOptions"
+          chartist-chart-type="Bar"
+          chartist-events="$ctrl.chartistEvents"
+        ></chartist>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-3 text-center">
         <h5>Journal</h5>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-3 text-center">
         <h5>Access</h5>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-3 text-center">
         <h5>Document type</h5>
       </div>
     </div>
