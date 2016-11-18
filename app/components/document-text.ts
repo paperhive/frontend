@@ -136,6 +136,7 @@ export default function(app) {
       onReplySubmit: '&',
       onReplyUpdate: '&',
       onReplyDelete: '&',
+      onTextUpdate: '&',
     },
     template,
     controller: DocumentTextCtrl,

@@ -233,7 +233,6 @@ export default function(app) {
           documentId, config, $scope, $http, authService, websocketService
         );
 
-
         $scope.$watch('$ctrl.authService.user', () => {
           this.discussionsCtrl.refresh().catch(error => notificationService.notifications.push({
             type: 'error',

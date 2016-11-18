@@ -364,7 +364,7 @@ export default function(app) {
         };
       }
 
-      async getText() {
+      async getPageText() {
         const textContent = await this.page.getTextContent();
         return textContent.items.map(text => text.str).join(' ');
       }
@@ -666,17 +666,18 @@ export default function(app) {
 
         this.scope.$watchCollection('highlights', this.updateHighlights.bind(this));
 
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        const entireText = await this.getText();
-        console.log(entireText);
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        await this.updateText();
       }
 
-      async getText() {
-        const texts = await Promise.all(this.pages.map(page => page.getText()));
-        return {
-          str: texts.join(' ').concat(' '),
-          pageLengths: texts.map(text => text.length + 1),
-        };
+      async updateText() {
+        const texts = await Promise.all(this.pages.map(page => page.getPageText()));
+        this.scope.$apply(() => {
+          this.scope.onTextUpdate({
+            str: texts.join(' ').concat(' '),
+            pageLengths: texts.map(text => text.length + 1),
+          });
+        });
       }
 
       destroy() {
@@ -1098,6 +1099,8 @@ export default function(app) {
 
         // called when the anchor is updated
         onAnchorUpdate: '&',
+
+        onTextUpdate: '&',
       },
       link: async function(scope, element, attrs) {
         let pdfFull;
