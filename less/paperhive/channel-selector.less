@@ -1,23 +1,31 @@
 channel-selector {
   .btn, .dropdown-menu {
     font-size: @font-size-base - 2;
+    width: 100%;
     max-height: 345px;
     overflow-y: auto;
   }
 }
 
-.ph-channel-selector-group {
-  display: flex;
-  > .btn {
-    border: none;
+.ph-dropdown-flex {
+  .ph-selected-channel {
+    flex-grow: 1;
+    overflow: hidden;
+    padding-right: @padding-base-vertical;
+    > div {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
-  > .btn.dropdown-toggle {
-    border-left: 1px solid @btn-default-border;
+  .ph-channel-selector-channel {
+    &.btn-group {
+      box-shadow: @ph-shadow;
+      display: flex;
+      position: initial;
+    }
+    > .btn {
+      border: none;
+    }
   }
-}
-
-.ph-channel-selector-channel {
-  flex-grow: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }

@@ -117,5 +117,12 @@ export default function(app) {
       if (!channel) return '';
       return channel.description;
     }
+
+    getNameDescription(channel) {
+      if (!channel) return '';
+      const name = this.getName(channel);
+      if (channel.description) return `${name} – ${channel.description}`;
+      return name;
+    }
   });
 }

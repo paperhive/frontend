@@ -21,11 +21,13 @@ export default function(app) {
       function($scope, $q, $location, authService, channelService) {
         const ctrl = this;
 
+        this.channelService = channelService;
+
         // expose discussion in template
         $scope.discussion = this.discussion;
-        if (this.discussion && this.discussion.channel) {
-          this.channel = channelService.get(this.discussion.channel);
-        }
+        $scope.$watch('$ctrl.discussion.channel', channel => {
+          this.channel = channel && channelService.get(channel);
+        });
 
         $scope.state = {};
         $scope.replyDraft = {};

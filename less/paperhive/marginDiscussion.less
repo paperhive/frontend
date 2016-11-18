@@ -32,6 +32,7 @@ margin-discussion-draft {
 }
 
 .ph-margin-container {
+  position: relative;
   box-shadow: @ph-shadow;
   margin-left: (@ph-margin-avatar-size + @ph-margin-arrow-size +
     @ph-margin-avatar-arrow-padding);
@@ -40,6 +41,47 @@ margin-discussion-draft {
   // WARNING: disabled because it breaks dropdown menus
   //position: relative;
   //z-index: 1;
+  border-top: 3px solid @ph-highlight-color;
+  .ph-channel-description {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    font-size: @ph-badge-font-size;
+    text-align: center;
+    background: @ph-highlight-color;
+    color: #fff;
+    line-height: 20px;
+    transform-origin: bottom center; 
+    transition: all .6s ease;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    &.ph-channel-description-sticky {
+      top: -19px;
+      height: inherit;
+      max-height: 20px;
+    }
+  }
+  &:hover {
+    .ph-channel-description {
+      top: -19px;
+      height: inherit;
+      max-height: 20px;
+      transition: all .6s ease;
+    }
+  }
+  &.ph-private-channel {
+    border-top: 3px solid @ph-badge-bg-color;
+    a.ph-channel-selector-channel {
+      color: white; 
+    }
+    .ph-channel-description {
+      background: @ph-badge-bg-color;
+    }
+    .ph-margin-badge {
+      background: @ph-badge-bg-color;
+    }   
+  }
 }
 
 .ph-margin-row {
