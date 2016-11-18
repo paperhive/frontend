@@ -26,7 +26,7 @@
   ></margin-link>
 </div>
 <div
-  ng-repeat="discussion in $ctrl.filteredDiscussions track by discussion.id"
+  ng-repeat="discussion in $ctrl.sortedDiscussions track by discussion.id"
   class="ph-margin-discussion"
   ng-style="{
     top: $ctrl.discussionPositions[discussion.id] + 'px',

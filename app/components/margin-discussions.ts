@@ -240,6 +240,17 @@ export default function(app) {
           $ctrl.draftPosition = draftCoord ? draftCoord.position : undefined;
           angular.copy(positions, $ctrl.discussionPositions);
           updateDiscussionVisibilities();
+
+          // sort by position (for preventing z-index issues)
+          $ctrl.sortedDiscussions = $ctrl.filteredDiscussions
+            .filter(discussion => positions[discussion.id] !== undefined)
+            .sort((discussionA, discussionB) => {
+              const pA = positions[discussionA.id];
+              const pB = positions[discussionB.id];
+              if (pA < pB) return -1;
+              if (pA > pB) return 1;
+              return 0;
+            });
         }
 
         // update positions if discussions, draftSelectors, discussionSizes,
