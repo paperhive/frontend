@@ -1,7 +1,23 @@
 <div
     class="ph-margin-container"
+    ng-class="{'ph-private-channel': $ctrl.channelService.selectedChannel}"
+
     on-outside-mousedown="!comment.title && !comment.body && $ctrl.onDiscard()"
   >
+  <div ng-show="!$ctrl.channelService.selectedChannel" class="ph-channel-description ph-channel-description-sticky">
+    <i class="fa fa-fw fa-globe" uib-tooltip="Public channel"></i>
+    Public channel
+  </div>
+  <div ng-show="$ctrl.channelService.selectedChannel" class="ph-channel-description ph-channel-description-sticky">
+    <i class="fa fa-fw fa-lock" uib-tooltip="{{$ctrl.channelService.getDescription($ctrl.channelService.selectedChannel)}}"></i>
+    <a
+      href="./channels/{{$ctrl.channelService.selectedChannel.id}}"
+      class="ph-channel-selector-channel"
+      title="{{$ctrl.channelService.getDescription($ctrl.channelService.selectedChannel)}}"
+    >
+      {{$ctrl.channelService.getDescription($ctrl.channelService.selectedChannel)}}
+    </a>
+  </div>
   <div ng-if="auth.user" class="ph-margin-row">
     <!-- avatar -->
     <avatar user="auth.user" size="38"

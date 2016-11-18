@@ -18,6 +18,7 @@ export default function(app) {
         const ctrl = this;
         $scope.auth = authService;
         $scope.comment = {};
+        this.channelService = channelService;
 
         ctrl.submit = function() {
 
