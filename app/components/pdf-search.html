@@ -1,0 +1,10 @@
+<div class="ph-sidenav-item">
+  <div class="input-group">
+    <span class="input-group-addon">
+      <i class="fa fa-search"></i>
+    </span>
+    <input type="text" class="form-control" placeholder="Search in pdf"
+      ng-model="$ctrl.str" ng-keypress="$event.keyCode === 13 && $ctrl.submit($ctrl.str)"
+    >
+  </div>
+</div>
