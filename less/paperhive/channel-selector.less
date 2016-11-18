@@ -4,18 +4,22 @@ channel-selector {
   }
 }
 
-.ph-channel-selector-group {
-  display: flex;
-  > .btn {
-    border: none;
+.ph-dropdown-flex {
+  .ph-selected-channel {
+    flex-grow: 1;
+    
+    > a {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
-  > .btn.dropdown-toggle {
-    border-left: 1px solid @btn-default-border;
+  .ph-channel-selector-channel { 
+    &.btn-group {
+      box-shadow: @ph-shadow;
+      display: flex;
+    }
+    > .btn {     
+      border: none;
+    }
   }
-}
-
-.ph-channel-selector-channel {
-  flex-grow: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
