@@ -66,6 +66,7 @@ import pdfSelectionPopup from './pdf-selection-popup';
 import phFooter from './ph-footer';
 import publishers from './publishers';
 import search from './search';
+import searchDate from './search-date';
 import settings from './settings';
 import settingsAccounts from './settings-accounts';
 import settingsEmail from './settings-email';
@@ -148,6 +149,7 @@ export default function(app) {
   phFooter(app);
   publishers(app);
   search(app);
+  searchDate(app);
   settings(app);
   settingsAccounts(app);
   settingsEmail(app);

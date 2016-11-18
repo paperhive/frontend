@@ -1,19 +1,6 @@
 'use strict';
 
-import Chartist from 'chartist';
-import { map, max, min } from 'lodash';
-
 import template from './search.html';
-
-function getShortInteger(value) {
-  const absValue = Math.abs(value);
-  if (absValue < 1e3) return value;
-  if (absValue < 1e6) return `${Math.floor(value * 1e-3)}K`;
-  if (absValue < 1e9) return `${Math.floor(value * 1e-6)}M`;
-  if (absValue < 1e12) return `${Math.floor(value * 1e-9)}G`;
-  if (absValue < 1e15) return `${Math.floor(value * 1e-12)}T`;
-  return value;
-}
 
 export default function(app) {
   app.component('search', {
@@ -21,26 +8,6 @@ export default function(app) {
     controller: class SearchCtrl {
       maxPerPage = 10;
       page = 1;
-
-      chartistOptions = {
-        axisX: {
-          type: Chartist.AutoScaleAxis,
-          onlyInteger: true,
-        },
-        axisY: {
-          labelInterpolationFnc: getShortInteger,
-          onlyInteger: true,
-        },
-        fullWidth: true,
-      };
-
-      chartistEvents = {
-        draw: event => {
-          if (event.type === 'label' && event.axis.units.pos === 'x') {
-            event.element.attr({ x: event.x - event.width / 2 });
-          }
-        }
-      };
 
       static $inject = ['config', '$http', '$location', '$scope',
         'feedbackModal', 'notificationService'];
@@ -57,15 +24,6 @@ export default function(app) {
         });
 
         this.updateTotal();
-      }
-
-      getChartistDataByYear(facet) {
-        const maxBuckets = 100;
-        let points = map(facet, (count, date) => {
-          return {x: parseInt(date.substr(0, 4)), y: count};
-        });
-
-        return {series: [points]};
       }
 
       scrollToTop() {
@@ -111,10 +69,7 @@ export default function(app) {
           response => {
             this.resultsTotal = response.data.total;
             this.results = response.data.documents;
-            this.chartistData = {
-              date: this.getChartistDataByYear(response.data.facets.publishedByYear),
-            };
-            console.log(this.chartistData);
+            this.facets = response.data.facets;
           },
           response => this.notificationService.notifications.push({
             type: 'error',

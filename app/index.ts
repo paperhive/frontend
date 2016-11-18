@@ -44,8 +44,6 @@ import utils from './utils/index';
 import '../build-tmp/html.js';
 import configJson from '../config.json';
 
-console.log(angularChartist);
-
 export const paperhive = angular
   .module(
     'paperhive', [
