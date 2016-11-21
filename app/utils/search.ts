@@ -1,4 +1,5 @@
 import { reverse } from 'lodash';
+// import diacritics from 'diacritics';
 import srch from 'srch';
 
 function transformLowercase(str) {
@@ -6,6 +7,12 @@ function transformLowercase(str) {
     {transformed: str.length, original: str.length}],
   };
 }
+
+// function transformDiacritics(str) {
+//   return {str: diacritics.remove(str), mapping: [
+//     {transformed: str.length, original: str.length}],
+//   };
+// }
 
 function transform(transformations, str) {
   let transformedStr = str;
