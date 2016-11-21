@@ -1,25 +1,38 @@
 import { reverse } from 'lodash';
 import srch from 'srch';
 
+function transformLowercase(str) {
+  return {str: str.toLowerCase(), mapping: [
+    {transformed: str.length, original: str.length}],
+  };
+}
+
+function transform(transformations, str) {
+  let transformedStr = str;
+  let mappings = [];
+  transformations.forEach(transformation => {
+    const {str, mapping} = transformation(transformedStr);
+    transformedStr = str;
+    mappings.push(mapping);
+  });
+  return {transformedStr: transformedStr, mapping: mappings};
+}
+
 export class SearchIndex {
   mappings = [];
   transformedStr: String;
 
-  // TODO to lower case (pdfText and searchStr)
-  transformations = [srch.transformSpaces];
+  transformations = [srch.transformSpaces, transformLowercase];
 
   constructor(str) {
-    this.transformedStr = str;
-    // TODO transform
-    this.transformations.forEach(transformation => {
-      const {str, mapping} = transformation(this.transformedStr);
-      this.transformedStr = str;
-      this.mappings.push(mapping);
-    });
+    const {transformedStr, mapping} = transform(this.transformations, str);
+    this.transformedStr = transformedStr;
+    this.mappings = mapping;
   }
 
-  search(str) {
-    let positions = srch.findPositions(this.transformedStr, str);
+  search(searchStr) {
+    const {transformedStr, mapping} = transform(this.transformations, searchStr);
+    let positions = srch.findPositions(this.transformedStr, transformedStr);
     reverse(this.mappings).forEach(mapping => {
       positions = srch.backTransformPositions(positions, mapping);
     });
