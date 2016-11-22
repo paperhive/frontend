@@ -550,7 +550,6 @@ export default function(app) {
       renderedPages: Array<PdfPage>;
       renderQueue: any;
 
-
       containerWidth: number;
       lastSelectors: any;
       lastSimpleSelection: any;
@@ -663,6 +662,9 @@ export default function(app) {
 
         // monitor scrollToAnchor
         this.scope.$watch('scrollToAnchor', this.scrollToAnchor.bind(this));
+
+        // monitor searchPositions
+        this.scope.$watch('searchPositions', this.searchPositions.bind(this));
 
         this.scope.$watchCollection('highlights', this.updateHighlights.bind(this));
 
@@ -898,6 +900,11 @@ export default function(app) {
         );
       }
 
+      searchPositions(positions) {
+        if (!positions) return;
+        console.log(positions);
+      }
+
       async scrollToAnchor(anchor) {
         if (!anchor) return;
         if (anchor !== this.anchor) {
@@ -1056,6 +1063,8 @@ export default function(app) {
         scrollToAnchor: '<',
 
         viewportOffsetTop: '<',
+
+        searchPositions: '<',
 
         // Output
         // ======

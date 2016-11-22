@@ -203,6 +203,7 @@ export default function(app) {
       activeRevision: any;
       discussionsCtrl: DiscussionsController;
       filteredDiscussions: Array<any>;
+      searchPositions: Array<any>;
 
       // note: do *not* use $routeSegment.$routeParams because they still
       // use the old state in $routeChangeSuccess events
@@ -310,8 +311,7 @@ export default function(app) {
 
       search() {
         if (!this.searchIndex) return;
-        const positions = this.searchIndex.search(this.searchStr);
-        console.log(positions);
+        this.searchPositions = this.searchIndex.search(this.searchStr);
       }
     },
   });
