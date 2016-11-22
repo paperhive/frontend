@@ -1,11 +1,16 @@
 <div class="dropdown ph-dropdown-flex" uib-dropdown>
   <div class="ph-selected-channel">
     <div ng-if="!$ctrl.channelService.selectedChannel">
-      <i class="fa fa-fw fa-globe"></i>
+      <span class="fa-stack">
+        <i class="fa fa-globe fa-2x" x=""></i>
+      </span>
       {{$ctrl.channelService.getName($ctrl.channelService.selectedChannel)}}
     </div>
     <div ng-if="$ctrl.channelService.selectedChannel">
-      <i class="fa fa-fw fa-lock"></i>
+      <span class="fa-stack">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-user fa-stack-1x fa-inverse" x=""></i>
+      </span>
       <a
         href="./channels/{{$ctrl.channelService.selectedChannel.id}}"
         class="ph-channel-selector-channel"
@@ -29,7 +34,9 @@
         >
           <div class="ph-grow-container">
             <div class="ph-grow-item">
-              <i class="fa fa-fw ph-dropdown-icon-left fa-globe"></i>
+              <span class="fa-stack">
+                <i class="fa fa-2x ph-dropdown-icon-left fa-globe"></i>
+              </span>
               Public channel
             </div>
             <div class="pull-right" ng-if="$ctrl.publicDiscussions">
@@ -42,7 +49,7 @@
       <li
         ng-repeat="channel in $ctrl.channelService.channels"
         ng-click="$ctrl.isOpen = false"
-        ng-class="{active: channel.id === $ctrl.channelService.selectedChannel.id}"
+        ng-class="{'active ph-private-channel': channel.id === $ctrl.channelService.selectedChannel.id}"
       >
         <a href=""
           ng-click="$ctrl.channelService.selectChannel(channel)"
@@ -50,7 +57,10 @@
         >
           <div class="ph-grow-container">
             <div class="ph-grow-item">
-              <i class="fa fa-fw ph-dropdown-icon-left fa-lock"></i>
+              <span class="fa-stack">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-user fa-stack-1x fa-inverse ph-dropdown-icon-left"></i>
+              </span>
               {{$ctrl.channelService.getName(channel)}}
               <small class="text-muted">{{$ctrl.channelService.getDescription(channel)}}</small>
             </div>

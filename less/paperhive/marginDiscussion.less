@@ -30,7 +30,14 @@ margin-discussion-draft {
     transition-delay: 0;
   }
 }
-
+.ph-margin-discussion-channel {
+  opacity: .5;
+  transition: opacity .6s ease; 
+  &:hover {
+    opacity: 1; 
+    transition: opacity .6s ease; 
+  }
+}
 .ph-margin-container {
   position: relative;
   box-shadow: @ph-shadow;
@@ -42,6 +49,7 @@ margin-discussion-draft {
   //position: relative;
   //z-index: 1;
   border-top: 3px solid @ph-highlight-color;
+
   .ph-channel-description {
     position: absolute;
     top: 0;
