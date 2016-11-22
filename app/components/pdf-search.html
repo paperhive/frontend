@@ -1,4 +1,4 @@
-<div class="ph-sidenav-item">
+<div ng-if="$ctrl.large" class="ph-sidenav-item">
   <div class="input-group">
     <span class="input-group-addon">
       <i class="fa fa-search"></i>
@@ -7,4 +7,10 @@
       ng-model="$ctrl.str" ng-keypress="$event.keyCode === 13 && $ctrl.submit($ctrl.str)"
     >
   </div>
+</div>
+
+<div ng-if="!$ctrl.large" class="ph-sidenav-item">
+  <button class="btn btn-link">
+    <i class="fa fa-search"></i>
+  </button>
 </div>

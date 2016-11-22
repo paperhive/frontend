@@ -6,6 +6,7 @@ export default function(app) {
   app.component('pdfSearch', {
     bindings: {
       onSearchSubmit: '&',
+      large: '<',
     },
     controller: class PdfSearchController {
       constructor() {}
