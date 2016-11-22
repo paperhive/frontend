@@ -549,6 +549,7 @@ export default function(app) {
       pages: Array<PdfPage>;
       renderedPages: Array<PdfPage>;
       renderQueue: any;
+      texts: Array<any>;
 
       containerWidth: number;
       lastSelectors: any;
@@ -673,13 +674,44 @@ export default function(app) {
       }
 
       async updateText() {
-        const texts = await Promise.all(this.pages.map(page => page.getPageText()));
+        this.texts = await Promise.all(this.pages.map(page => page.getPageText()));
         this.scope.$apply(() => {
           this.scope.onTextUpdate({
-            str: texts.join(' ').concat(' '),
-            pageLengths: texts.map(text => text.length + 1),
+            str: this.texts.join(' ').concat(' '),
+            pageLengths: this.texts.map(text => text.length + 1),
           });
         });
+      }
+
+      searchPositions(positions) {
+        if (!positions) return;
+        // absolute positions (offsets) on document
+        const foundPositions = positions;
+        // store length for each page
+        const pageLengths = this.texts.map(text => text.length + 1);
+
+        // sum up all lengths
+        let pageOffsets = [0];
+        for (let i = 1; i <= pageLengths.length; i++) {
+          let sum = pageOffsets[i - 1];
+          pageOffsets[i] = pageLengths[i - 1] + sum;
+        }
+
+        // store relative position (page offset) and page number
+        let pageArray = [];
+        let pageCount = 1;
+        for (let i = 0; i < foundPositions.length; i++) {
+          // locate page number (offset) of position
+          if (foundPositions[i] >= pageOffsets[pageCount - 1] && foundPositions[i] < pageOffsets[pageCount]) {
+            // store page offset and page number
+            pageArray.push({position: foundPositions[i] - pageOffsets[pageCount - 1], page: pageCount});
+          } else {
+            // if position didn't fit in interval: shift interval and check position again
+            pageCount += 1;
+            i -= 1;
+          }
+        }
+        console.log(pageArray);
       }
 
       destroy() {
@@ -898,11 +930,6 @@ export default function(app) {
           rendered => callback(undefined, rendered),
           err => callback(err)
         );
-      }
-
-      searchPositions(positions) {
-        if (!positions) return;
-        console.log(positions);
       }
 
       async scrollToAnchor(anchor) {
