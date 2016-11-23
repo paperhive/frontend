@@ -5,7 +5,7 @@
 }
 
 .ph-margin-discussion-animate {
-  transition: top 0.35s ease;
+  transition: top 0.35s ease, opacity .6s ease;
 }
 
 margin-discussion {
@@ -30,14 +30,14 @@ margin-discussion-draft {
     transition-delay: 0;
   }
 }
-.ph-margin-discussion-channel {
-  opacity: .5;
-  transition: opacity .6s ease; 
+
+.ph-margin-discussion-fade {
+  opacity: 0.5;
   &:hover {
-    opacity: 1; 
-    transition: opacity .6s ease; 
+    opacity: 1;
   }
 }
+
 .ph-margin-container {
   position: relative;
   box-shadow: @ph-shadow;
@@ -59,7 +59,7 @@ margin-discussion-draft {
     background: @ph-highlight-color;
     color: #fff;
     line-height: 20px;
-    transform-origin: bottom center; 
+    transform-origin: bottom center;
     transition: all .6s ease;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -81,14 +81,14 @@ margin-discussion-draft {
   &.ph-private-channel {
     border-top: 3px solid @ph-badge-bg-color;
     a.ph-channel-selector-channel {
-      color: white; 
+      color: white;
     }
     .ph-channel-description {
       background: @ph-badge-bg-color;
     }
     .ph-margin-badge {
       background: @ph-badge-bg-color;
-    }   
+    }
   }
 }
 

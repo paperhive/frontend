@@ -28,11 +28,10 @@
 <div
   ng-repeat="discussion in $ctrl.sortedDiscussions track by discussion.id"
   class="ph-margin-discussion"
-  ng-style="{
-    top: $ctrl.discussionPositions[discussion.id] + 'px'}"
+  ng-style="{top: $ctrl.discussionPositions[discussion.id] + 'px'}"
   ng-class="{
     'ph-margin-discussion-animate': $ctrl.discussionPositions[discussion.id] !== undefined,
-    'ph-margin-discussion-channel' : $ctrl.channelService.selectedChannel.id !== discussion.channel
+    'ph-margin-discussion-fade': $ctrl.channelService.selectedChannel.id !== discussion.channel,
   }"
   id="discussion-{{discussion.id}}"
 >
