@@ -1,10 +1,53 @@
 channel-selector {
   .btn, .dropdown-menu {
-    font-size: @font-size-base - 2;
+    font-size: @font-size-base;
     width: 100%;
     max-height: 345px;
     overflow-y: auto;
+    box-shadow: @ph-shadow;
+
+    > li {
+      > a {
+        padding-top: @padding-base-vertical*2;
+        padding-bottom: @padding-base-vertical*2;
+      }
+      &.active {
+        > a, a:hover {
+          background: @ph-highlight-color;
+          .ph-channel-icon {
+            color: @ph-white;
+          }
+        }
+        &.ph-private-channel {
+          > a, a:hover {
+            background: @ph-badge-bg-color;
+            .ph-channel-icon > .fa-circle {
+              color: @ph-white;
+            }
+            .ph-channel-icon > .fa-inverse {
+              color: @ph-badge-bg-color;
+            }
+          }
+        }
+      }
+
+      &.divider {
+        margin: 0;
+      }
+    }
   }
+  .dropdown-menu {
+    padding: 0;
+    margin: 3px 0;
+  }
+}
+
+.ph-channel-icon-public {
+  color: @ph-highlight-color;
+}
+
+.ph-channel-icon-private > .fa-circle {
+  color: @ph-badge-bg-color;
 }
 
 .ph-dropdown-flex {
