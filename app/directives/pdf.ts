@@ -330,6 +330,7 @@ export default function(app) {
       initializedRenderers: boolean;
       pageSize: any; // TODO: remove?
       textFocused: boolean = false;
+      textContent: any;
 
       // renderer state
       renderedSize: {height: number, width: number};
@@ -365,8 +366,28 @@ export default function(app) {
       }
 
       async getPageText() {
-        const textContent = await this.page.getTextContent();
-        return textContent.items.map(text => text.str).join(' ');
+        this.textContent = await this.page.getTextContent();
+        return this.textContent.items.map(text => text.str).join(' ');
+      }
+
+      getBoxPositions(curPagePositions) {
+        if (curPagePositions.length > 0) {
+          let strSum = 0;
+          let index = 0;
+          let boxPositions = [];
+          curPagePositions.forEach(pos => {
+            while(pos.positionOnPage > strSum && index < this.textContent.items.length) {
+              strSum += this.textContent.items[index].str.length + 1;
+              index++;
+            }
+            boxPositions.push({
+              pageNumber: pos.pageNumber,
+              positionOnPage: pos.positionOnPage,
+              textObject: this.textContent.items[index - 1],
+            });
+          });
+          console.log(boxPositions);
+        }
       }
 
       async initPageSize(_width = undefined) {
@@ -649,7 +670,6 @@ export default function(app) {
           $document.off('keydown keyup', onKeyEvent);
         });
 
-
         this.element.on('mouseup', () => this.textUnfocus());
 
         // render at least once
@@ -685,8 +705,7 @@ export default function(app) {
 
       searchPositions(positions) {
         if (!positions) return;
-        // absolute positions (offsets) on document
-        const foundPositions = positions;
+
         // store length for each page
         const pageLengths = this.texts.map(text => text.length + 1);
 
@@ -698,20 +717,27 @@ export default function(app) {
         }
 
         // store relative position (page offset) and page number
-        let pageArray = [];
+        let pagePositions = [];
         let pageCount = 1;
-        for (let i = 0; i < foundPositions.length; i++) {
+        for (let i = 0; i < positions.length; i++) {
           // locate page number (offset) of position
-          if (foundPositions[i] >= pageOffsets[pageCount - 1] && foundPositions[i] < pageOffsets[pageCount]) {
+          if (positions[i] >= pageOffsets[pageCount - 1] && positions[i] < pageOffsets[pageCount]) {
             // store page offset and page number
-            pageArray.push({position: foundPositions[i] - pageOffsets[pageCount - 1], page: pageCount});
+            pagePositions.push({
+              positionOnPage: positions[i] - pageOffsets[pageCount - 1],
+              pageNumber: pageCount,
+            });
           } else {
             // if position didn't fit in interval: shift interval and check position again
             pageCount += 1;
             i -= 1;
           }
         }
-        console.log(pageArray);
+
+        for (let i = 1; i <= this.pages.length; i++) {
+          const curPagePositions = pagePositions.filter(pagePosition => pagePosition.pageNumber === i);
+          this.pages[i - 1].getBoxPositions(curPagePositions);
+        }
       }
 
       destroy() {
