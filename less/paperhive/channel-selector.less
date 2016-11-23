@@ -12,24 +12,25 @@ channel-selector {
         padding-bottom: @padding-base-vertical*2;
       }
       &.active {
-        > a {
+        > a, a:hover {
           background: @ph-highlight-color;
-          &:hover {
-            background: @ph-highlight-color;
-          }
-          .fa {
-            color: #fff;
-          }
-          .fa-inverse {
-            color: @ph-badge-bg-color;
+          .ph-channel-icon {
+            color: @ph-white;
           }
         }
         &.ph-private-channel {
-          > a {
+          > a, a:hover {
             background: @ph-badge-bg-color;
+            .ph-channel-icon > .fa-circle {
+              color: @ph-white;
+            }
+            .ph-channel-icon > .fa-inverse {
+              color: @ph-badge-bg-color;
+            }
           }
         }
       }
+
       &.divider {
         margin: 0;
       }
@@ -41,6 +42,14 @@ channel-selector {
   }
 }
 
+.ph-channel-icon-public {
+  color: @ph-highlight-color;
+}
+
+.ph-channel-icon-private > .fa-circle {
+  color: @ph-badge-bg-color;
+}
+
 .ph-dropdown-flex {
   .ph-selected-channel {
     flex-grow: 1;
@@ -50,18 +59,6 @@ channel-selector {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-    }    
-  }
-  .fa-stack {
-    font-size: .7em;
-    top: -2px;
-    padding: 1px;
-
-    .fa-globe {
-      color: @ph-highlight-color;
-    }
-    .fa-circle {
-      color: @ph-badge-bg-color;
     }
   }
   .ph-channel-selector-channel {

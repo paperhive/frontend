@@ -1,15 +1,13 @@
 <div class="dropdown ph-dropdown-flex" uib-dropdown>
   <div class="ph-selected-channel">
     <div ng-if="!$ctrl.channelService.selectedChannel">
-      <span class="fa-stack">
-        <i class="fa fa-globe fa-2x" x=""></i>
-      </span>
+      <i class="fa fa-fw fa-globe ph-channel-icon-public"></i>
       {{$ctrl.channelService.getName($ctrl.channelService.selectedChannel)}}
     </div>
     <div ng-if="$ctrl.channelService.selectedChannel">
-      <span class="fa-stack">
+      <span class="fa-stack fa-stack-sm fa-fw ph-channel-icon-private">
         <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-user fa-stack-1x fa-inverse" x=""></i>
+        <i class="fa fa-user fa-stack-1x fa-inverse"></i>
       </span>
       <a
         href="./channels/{{$ctrl.channelService.selectedChannel.id}}"
@@ -34,9 +32,7 @@
         >
           <div class="ph-grow-container">
             <div class="ph-grow-item">
-              <span class="fa-stack">
-                <i class="fa fa-2x ph-dropdown-icon-left fa-globe"></i>
-              </span>
+              <i class="fa fa-fw fa-globe ph-channel-icon ph-channel-icon-public"></i>
               Public channel
             </div>
             <div class="pull-right" ng-if="$ctrl.publicDiscussions">
@@ -57,9 +53,9 @@
         >
           <div class="ph-grow-container">
             <div class="ph-grow-item">
-              <span class="fa-stack">
+              <span class="fa-stack fa-stack-sm fa-fw ph-channel-icon ph-channel-icon-private">
                 <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-user fa-stack-1x fa-inverse ph-dropdown-icon-left"></i>
+                <i class="fa fa-user fa-stack-1x fa-inverse"></i>
               </span>
               {{$ctrl.channelService.getName(channel)}}
               <small class="text-muted">{{$ctrl.channelService.getDescription(channel)}}</small>
