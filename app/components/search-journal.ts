@@ -1,5 +1,6 @@
 import Chartist from 'chartist';
-import { forEach } from 'lodash';
+import jquery from 'jquery';
+import { map } from 'lodash';
 
 import template from './search-journal.html';
 import { getShortInteger } from '../utils/index';
@@ -8,17 +9,28 @@ export default function(app) {
   app.component('searchJournal', {
     bindings: {
       facet: '<',
+      onJournalSelect: '&',
     },
     template,
     controller: class SearchJournalCtrl {
-      chartistOptions = {
+      const chartistOptions = {
         donut: true,
         donutWidth: 30,
         fullWidth: true,
         showLabel: false,
       };
 
-      chartistEvents = {};
+      const chartistEvents = {
+        draw: event => {
+          if (event.type === 'slice') {
+            const el = jquery(event.element._node);
+            el.on('click', () => this.onSliceClick(el, event.meta));
+          }
+        },
+      };
+
+      static $inject = ['$scope'];
+      constructor(public $scope) {}
 
       $onChanges() {
         this.updateChartistData();
@@ -28,13 +40,17 @@ export default function(app) {
         this.chartistData = undefined;
         if (!this.facet) return;
 
-        this.chartistData = {series: [], labels: []};
-        forEach(this.facet, (count, journal) => {
-          this.chartistData.series.push(count);
-          this.chartistData.labels.push(journal);
-        });
+        this.chartistData = {
+          series: map(this.facet, (count, journal) => ({
+            value: count,
+            meta: journal,
+          })),
+        };
+      }
 
-        console.log(this.chartistData);
+      onSliceClick(el, journal) {
+        console.log(el, journal);
+        this.onJournalSelect(journal);
       }
     },
   });
