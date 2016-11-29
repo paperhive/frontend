@@ -1,6 +1,6 @@
 'use strict';
 
-import template from './channel-settings.html!text';
+import template from './channel-settings.html';
 
 export default function(app) {
   app.component('channelSettings', {

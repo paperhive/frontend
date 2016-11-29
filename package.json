@@ -51,6 +51,7 @@
     "gulp-template": "^4.0.0",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
+    "html-loader": "^0.4.4",
     "jasmine": "^2.4.0",
     "jasmine-core": "^2.3.4",
     "json-loader": "^0.5.4",
@@ -291,7 +292,9 @@
   },
   "dependencies": {
     "@types/jquery": "^2.0.34",
+    "@types/lodash": "^4.14.41",
     "@types/rangy": "0.0.27",
+    "@types/rx": "^2.5.34",
     "angular": "^1.5.9",
     "angular-animate": "^1.5.9",
     "angular-leaflet-directive": "^0.10.0",
@@ -304,7 +307,9 @@
     "angulartics-google-analytics": "^0.3.0",
     "javascript-detect-element-resize": "^0.5.3",
     "jquery": "^3.1.1",
+    "lodash": "^4.17.2",
     "pdfjs-dist": "^1.6.351",
-    "rangy": "^1.3.0"
+    "rangy": "^1.3.0",
+    "rx": "^4.1.0"
   }
 }

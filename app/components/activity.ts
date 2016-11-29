@@ -1,6 +1,6 @@
 'use strict';
 
-import template from './activity.html!text';
+import template from './activity.html';
 
 export default function(app) {
   app.component('activity', {

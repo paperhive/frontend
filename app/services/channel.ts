@@ -1,4 +1,4 @@
-import angular from 'angular';
+import * as angular from 'angular';
 import { find, remove } from 'lodash';
 
 export default function(app) {

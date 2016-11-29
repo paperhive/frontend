@@ -34,16 +34,15 @@ import 'angulartics-google-analytics';
 import 'javascript-detect-element-resize';       // injects resize+removeResize to jquery
 import 'pdfjs-dist/web/compatibility';
 import 'pdfjs-dist';
-import 'pdfjs-dist/web/pdf_viewer';
+// import 'pdfjs-dist/web/pdf_viewer';
 
-/*
 import config from './config/index';
 import components from './components/index';
 import directives from './directives/index';
 import filters from './filters/index';
 import services from './services/index';
 import utils from './utils/index';
-*/
+
 import '../build-tmp/html.js';
 
 
@@ -66,13 +65,12 @@ export const paperhive = module(
   )
   .constant('config', configJson)
   ;
-/*
+
 config(paperhive);
 components(paperhive);
 directives(paperhive);
 filters(paperhive);
 services(paperhive);
 utils(paperhive);
-*/
 
 bootstrap(document, ['paperhive'], {strictDi: true});

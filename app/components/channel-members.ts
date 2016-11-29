@@ -2,7 +2,7 @@
 
 import { includes, remove } from 'lodash';
 
-import template from './channel-members.html!text';
+import template from './channel-members.html';
 
 export default function(app) {
   app.component('channelMembers', {

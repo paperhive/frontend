@@ -16,12 +16,16 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.ts$/,
-        loader: 'awesome-typescript-loader',
+        test: /\.html$/,
+        loader: 'html-loader',
       },
       {
         test: /\.json$/,
         loader: 'json-loader',
+      },
+      {
+        test: /\.ts$/,
+        loader: 'awesome-typescript-loader',
       },
     ],
   },
