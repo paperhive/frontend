@@ -1,13 +1,6 @@
 {
   "compilerOptions": {
-    "module": "es6",
-    "noEmit": true,
-    "sourceMap": false,
-    "target": "es6"
+    "target": "es5"
   },
-  "files": [
-    "app/index.ts",
-    "typings/index.d.ts"
-  ],
   "compileOnSave": false
 }

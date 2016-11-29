@@ -5,7 +5,8 @@
  * Licensed under GPL3
  * (https://github.com/paperhive/paperhive-frontend/blob/master/LICENSE)
  */
-import 'core-js/shim';
+
+// import 'core-js/shim';
 
 // import jquery before angular (so angular can use it instead of jqlite)
 import 'jquery';
@@ -15,59 +16,63 @@ import 'jquery';
 // `rangy.init()` for the core rangy object to work (which is used
 // in some controllers, i.e., by angular).
 import 'rangy';
-import 'rangy/rangy-serializer';
-import 'rangy/rangy-textrange';
+import 'rangy/lib/rangy-serializer';
+import 'rangy/lib/rangy-textrange';
 
-import * as angular from 'angular';
-import 'angular-animate';                             // ngAnimate module
-import 'angular-route';                               // ngRoute module
-import 'angular-route-segment';                       // route-segment
-import 'angular-sanitize';                            // ngSanitize module
-import 'angular-bootstrap';                           // ui.bootstrap
-import 'angular-moment';                              // angularMoment
-import 'angular-leaflet-directive';                   // leaflet-directive
-import 'angulartics';
+// official angular modules
+import { bootstrap, module } from 'angular';
+import * as ngAnimate from 'angular-animate';    // ngAnimate module
+import * as ngRoute from 'angular-route';        // ngRoute module
+import * as ngSanitize from 'angular-sanitize';  // ngSanitize module
+
+import 'angular-route-segment';                  // route-segment, view-segment
+import 'angular-ui-bootstrap';                   // ui.bootstrap
+import 'angular-moment';                         // angularMoment
+import 'angular-leaflet-directive';              // leaflet-directive
+import 'angulartics';                            // angulartics
 import 'angulartics-google-analytics';
-import 'javascript-detect-element-resize'; // injects resize+removeResize to jquery
+import 'javascript-detect-element-resize';       // injects resize+removeResize to jquery
 import 'pdfjs-dist/web/compatibility';
 import 'pdfjs-dist';
 import 'pdfjs-dist/web/pdf_viewer';
 
+/*
 import config from './config/index';
 import components from './components/index';
 import directives from './directives/index';
 import filters from './filters/index';
 import services from './services/index';
 import utils from './utils/index';
-
+*/
 import '../build-tmp/html.js';
-import configJson from '../config.json';
 
 
-export const paperhive = angular
-  .module(
+const configJson = require('../config.json');
+
+export const paperhive = module(
     'paperhive', [
-      'angulartics',
-      'angulartics.google.analytics',
-      'ui.bootstrap',
-      'ngAnimate',
-      'ngSanitize',
-      'ngRoute',
+      ngAnimate,
+      ngRoute,
+      ngSanitize,
       'route-segment',
       'view-segment',
+      'ui.bootstrap',
       'angularMoment',
       'leaflet-directive',
+      'angulartics',
+      'angulartics.google.analytics',
       'templates'
     ]
   )
   .constant('config', configJson)
   ;
-
+/*
 config(paperhive);
 components(paperhive);
 directives(paperhive);
 filters(paperhive);
 services(paperhive);
 utils(paperhive);
+*/
 
-angular.bootstrap(document, ['paperhive'], {strictDi: true});
+bootstrap(document, ['paperhive'], {strictDi: true});

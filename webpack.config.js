@@ -1,8 +1,13 @@
+const path = require('path');
+
 module.exports = {
-  entry: './app/index.js',
+  entry: {
+    index: './app/index.ts',
+  },
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'index.js',
+    path: path.resolve(__dirname, 'build'),
+    filename: '[name].js',
+    chunkFilename: 'chunk.[id].js',
   },
   resolve: {
     extensions: ['.ts', '.js'],
@@ -13,6 +18,10 @@ module.exports = {
       {
         test: /\.ts$/,
         loader: 'awesome-typescript-loader',
+      },
+      {
+        test: /\.json$/,
+        loader: 'json-loader',
       },
     ],
   },

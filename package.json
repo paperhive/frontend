@@ -6,7 +6,7 @@
     "build": "rm -rf build/* && mkdirp build && npm-run-all -s build:prod:*",
     "build:prod:css": "lessc --autoprefix --clean-css=\"--skip-restructuring\" less/index.less build/index.css",
     "build:prod:index": "gulp index",
-    "build:prod:js": "gulp html && jspm build app/index.ts build-tmp/index.js --skip-rollup --skip-source-maps && uglifyjs build-tmp/index.js -m -c -o build/index.js",
+    "build:prod:js": "webpack --config webpack.config.js",
     "build:prod:static": "gulp static",
     "build:prod:vendor": "gulp vendor",
     "build:dev:css": "lessc --autoprefix --source-map less/index.less build-dev/index.css",
@@ -32,6 +32,10 @@
   "license": "GPL-3.0",
   "private": true,
   "devDependencies": {
+    "@types/angular": "^1.5.20",
+    "@types/angular-animate": "^1.5.5",
+    "@types/angular-route": "^1.3.2",
+    "@types/angular-sanitize": "^1.3.3",
     "awesome-typescript-loader": "^2.2.4",
     "bower": "^1.6.5",
     "co": "^4.6.0",
@@ -49,6 +53,7 @@
     "gulp-util": "^3.0.7",
     "jasmine": "^2.4.0",
     "jasmine-core": "^2.3.4",
+    "json-loader": "^0.5.4",
     "jspm": "^0.17.0-beta.28",
     "karma": "^1.0.0",
     "karma-jasmine": "^1.0.2",
@@ -284,5 +289,22 @@
       }
     }
   },
-  "dependencies": {}
+  "dependencies": {
+    "@types/jquery": "^2.0.34",
+    "@types/rangy": "0.0.27",
+    "angular": "^1.5.9",
+    "angular-animate": "^1.5.9",
+    "angular-leaflet-directive": "^0.10.0",
+    "angular-moment": "^1.0.0",
+    "angular-route": "^1.5.9",
+    "angular-route-segment": "^1.5.1",
+    "angular-sanitize": "^1.5.9",
+    "angular-ui-bootstrap": "^2.3.0",
+    "angulartics": "^1.3.0",
+    "angulartics-google-analytics": "^0.3.0",
+    "javascript-detect-element-resize": "^0.5.3",
+    "jquery": "^3.1.1",
+    "pdfjs-dist": "^1.6.351",
+    "rangy": "^1.3.0"
+  }
 }
