@@ -1,7 +1,4 @@
-'use strict';
 import * as angular from 'angular';
-
-import template from './margin-reply-edit.html';
 
 export default function(app) {
   app.component('marginReplyEdit', {
@@ -10,7 +7,6 @@ export default function(app) {
       onSubmit: '&',
       onDiscard: '&',
     },
-    template,
     controller: [
       '$scope', '$q',
       function($scope, $q) {
@@ -25,5 +21,6 @@ export default function(app) {
         };
       },
     ],
+    template: require('./margin-reply-edit.html'),
   });
 }

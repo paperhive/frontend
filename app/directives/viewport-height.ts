@@ -1,9 +1,6 @@
-'use strict';
-
 import * as angular from 'angular';
 
 export default function(app) {
-
   /* Usage: <div viewport-height>
    *
    * Sets the min-height of the element to the height of the viewport
@@ -24,4 +21,3 @@ export default function(app) {
     }
   ]);
 };
-

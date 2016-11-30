@@ -2,7 +2,6 @@ import * as _ from 'lodash';
 import * as angular from 'angular';
 import { cloneDeep, find, findIndex, findLastIndex, merge, orderBy, pick, remove, some } from 'lodash';
 
-import template from './document.html';
 import { getRevisionMetadata } from '../utils/documents';
 
 class DiscussionsController {
@@ -194,7 +193,6 @@ class DiscussionsController {
 
 export default function(app) {
   app.component('document', {
-    template,
     controller: class DocumentCtrl {
       subnavOpen = false;
       sidenavOpen = true;
@@ -299,5 +297,6 @@ export default function(app) {
         });
       }
     },
+    template: require('./document.html'),
   });
 };

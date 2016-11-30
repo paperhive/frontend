@@ -1,8 +1,6 @@
 import angular from 'angular';
 import { forEach } from 'lodash';
 
-import marginLinkTemplate from './margin-link.html';
-
 export default function(app) {
   app.component('marginLink', {
     bindings: {
@@ -13,7 +11,6 @@ export default function(app) {
       viewportOffsetBottom: '<',
       extraOffset: '<',
     },
-    template: marginLinkTemplate,
     controller: [
       '$scope', '$element', '$window', function($scope, $element, $window) {
         const ctrl = this;
@@ -94,5 +91,6 @@ export default function(app) {
         });
       }
     ],
+    template: require('./margin-link.html'),
   });
 }

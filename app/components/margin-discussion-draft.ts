@@ -1,17 +1,12 @@
-'use strict';
 import { cloneDeep } from 'lodash';
 
-import template from './margin-discussion-draft.html';
-
 export default function(app) {
-  app.component(
-    'marginDiscussionDraft', {
+  app.component('marginDiscussionDraft', {
     bindings: {
       selectors: '<',
       onSubmit: '&',
       onDiscard: '&',
     },
-    template,
     controller: [
       '$scope', '$q', 'authService', 'channelService',
       function($scope, $q, authService, channelService) {
@@ -37,6 +32,8 @@ export default function(app) {
             .then(data => ctrl.onDiscard())
             .finally(() => ctrl.submitting = false);
         };
-      }],
-    });
+      }
+    ],
+    template: require('./margin-discussion-draft.html'),
+  });
 };

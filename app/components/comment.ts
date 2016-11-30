@@ -1,8 +1,6 @@
 import { cloneDeep } from 'lodash';
 import * as angular from 'angular';
 
-import template from './comment.html';
-
 export default function(app) {
   app.component(
     'comment', {
@@ -13,7 +11,6 @@ export default function(app) {
         onDelete: '&',
         onUpdate: '&',
       },
-      template,
       controller: [
         '$scope', '$q', 'authService', '$window',
         function($scope, $q, authService, $window) {
@@ -80,7 +77,9 @@ export default function(app) {
               }
             }
           });
-        }]
+        }
+      ],
+      template: require('./comment.html'),
     }
   );
 };

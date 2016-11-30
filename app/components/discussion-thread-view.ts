@@ -1,10 +1,7 @@
 import { cloneDeep, find, merge } from 'lodash';
 
-import template from './discussion-thread-view.html';
-
 export default function(app) {
   app.component('discussionThreadView', {
-    template,
     bindings: {
       discussions: '<',
       onDiscussionUpdate: '&',
@@ -74,6 +71,7 @@ export default function(app) {
           return $ctrl.onReplySubmit({reply});
         };
       }
-    ]}
-  );
+    ],
+    template: require('./discussion-thread-view.html'),
+  });
 };

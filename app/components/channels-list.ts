@@ -1,8 +1,4 @@
-'use strict';
-
 import { find } from 'lodash';
-
-import template from './channels-list.html';
 
 export default function(app) {
   app.component('channelsList', {
@@ -17,6 +13,6 @@ export default function(app) {
       }
 
     },
-    template,
+    template: require('./channels-list.html'),
   });
 };

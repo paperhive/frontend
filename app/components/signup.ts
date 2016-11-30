@@ -1,10 +1,5 @@
-'use strict';
-
-import template from './signup.html';
-
 export default function(app) {
   app.component('signup', {
-    template,
     controller: [
       '$scope', '$location', 'authService', '$http', 'config',
       function($scope, $location, authService, $http, config) {
@@ -40,6 +35,7 @@ export default function(app) {
           });
         };
       }
-    ]
+    ],
+    template: require('./signup.html'),
   });
 };

@@ -1,7 +1,3 @@
-'use strict';
-
-import template from './partner-logos.html';
-
 export default function(app) {
-  app.component('partnerLogos', {template});
+  app.component('partnerLogos', {template: require('./partner-logos.html')});
 };

@@ -1,7 +1,3 @@
-'use strict';
-
-import template from './activity.html';
-
 export default function(app) {
   app.component('activity', {
     bindings: {
@@ -54,6 +50,6 @@ export default function(app) {
       }
 
     },
-    template,
+    template: require('./activity.html'),
   });
 };

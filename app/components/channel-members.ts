@@ -1,8 +1,4 @@
-'use strict';
-
 import { includes, remove } from 'lodash';
-
-import template from './channel-members.html';
 
 export default function(app) {
   app.component('channelMembers', {
@@ -31,6 +27,6 @@ export default function(app) {
       };
 
     },
-    template,
+    template: require('./channel-members.html'),
   });
 }

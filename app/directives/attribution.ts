@@ -1,6 +1,4 @@
-'use strict';
 export default function(app) {
-
   app.directive('attribution', [
     '$templateCache', '$compile', '$timeout',
     function($templateCache, $compile, $timeout) {

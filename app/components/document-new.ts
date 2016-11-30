@@ -1,10 +1,5 @@
-'use strict';
-
-import template from './document-new.html';
-
 export default function(app) {
   app.component('documentNew', {
-    template,
     controller: class DocumentNewCtrl {
       type: string;
 
@@ -32,6 +27,7 @@ export default function(app) {
           }
         );
       }
-    }
+    },
+    template: require('./document-new.html'),
   });
 };

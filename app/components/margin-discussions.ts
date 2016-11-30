@@ -1,8 +1,5 @@
-'use strict';
 import * as angular from 'angular';
 import { clone, compact, map, mapValues, keys, sortBy, sum } from 'lodash';
-
-import template from './margin-discussions.html';
 
 export default function(app) {
   app.component('marginDiscussions', {
@@ -26,7 +23,6 @@ export default function(app) {
       onDiscussionMouseenter: '&',
       onDiscussionMouseleave: '&',
     },
-    template,
     controller: [
       '$document', '$element', '$scope', '$timeout', '$window', 'scroll', 'channelService', 'distangleService', 'tourService',
       function($document, $element, $scope, $timeout, $window, scroll, channelService, distangleService, tourService) {
@@ -262,5 +258,6 @@ export default function(app) {
         $scope.$watchCollection('$ctrl.pageCoordinates', updatePositions);
       }
     ],
+    template: require('./margin-discussions.html'),
   });
 }

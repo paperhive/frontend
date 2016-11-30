@@ -1,4 +1,3 @@
-'use strict';
 import * as angular from 'angular';
 // TODO: ts complains about missing default export but this works!
 import jquery from 'jquery';

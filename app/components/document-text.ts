@@ -1,8 +1,6 @@
 import * as angular from 'angular';
 import { filter, find, get, last, merge, reverse, sortBy } from 'lodash';
 
-import template from './document-text.html';
-
 class DocumentTextCtrl {
   // input
   revision: any;
@@ -137,7 +135,7 @@ export default function(app) {
       onReplyUpdate: '&',
       onReplyDelete: '&',
     },
-    template,
     controller: DocumentTextCtrl,
+    template: require('./document-text.html'),
   });
 }

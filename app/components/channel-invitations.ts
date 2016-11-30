@@ -1,8 +1,4 @@
-'use strict';
-
 import { includes, remove } from 'lodash';
-
-import template from './channel-invitations.html';
 
 export default function(app) {
   app.component('channelInvitations', {
@@ -19,8 +15,7 @@ export default function(app) {
         this.channelService.invitationDelete(channelId, invitationId)
           .finally(() => this.invitationDeleting = false);
       }
-
     },
-    template,
+    template: require('./channel-invitations.html'),
   });
 }

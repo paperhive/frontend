@@ -1,5 +1,4 @@
 /*global MathJax*/
-'use strict';
 
 // TODO: ts complains about missing default export but this works!
 import jquery from 'jquery';

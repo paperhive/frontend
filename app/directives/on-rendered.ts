@@ -1,5 +1,3 @@
-'use strict';
-
 export default function(app) {
   app.directive('onRendered', ['$parse', '$timeout', function($parse, $timeout) {
     return {

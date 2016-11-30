@@ -1,6 +1,3 @@
-'use strict';
-import template from './channel-invitation-new.html';
-
 export default function(app) {
   app.component('channelInvitationNew', {
     bindings: {
@@ -44,6 +41,6 @@ export default function(app) {
         });
       }
     },
-    template,
+    template: require('./channel-invitation-new.html'),
   });
 };

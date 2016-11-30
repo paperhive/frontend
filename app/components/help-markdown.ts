@@ -1,11 +1,7 @@
-'use strict';
 import { dedent } from 'dentist';
-
-import template from './help-markdown.html';
 
 export default function(app) {
   app.component('helpMarkdown', {
-    template,
     controller: [
       function() {
         const ctrl = this;
@@ -91,6 +87,7 @@ export default function(app) {
         `);
 
       }
-    ]
+    ],
+    template: require('./help-markdown.html'),
   });
 };

@@ -1,7 +1,3 @@
-'use strict';
-
-import template from './feedback.html';
-
 export default function(app) {
   app.component('feedback', {
     bindings: {
@@ -40,6 +36,6 @@ export default function(app) {
           });
       }
     },
-    template
+    template: require('./feedback.html'),
   });
 };

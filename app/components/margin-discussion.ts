@@ -1,8 +1,5 @@
-'use strict';
 import * as angular from 'angular';
 import { merge } from 'lodash';
-
-import template from './margin-discussion.html';
 
 export default function(app) {
   app.component('marginDiscussion', {
@@ -15,7 +12,6 @@ export default function(app) {
       onReplyUpdate: '&',
       onReplyDelete: '&'
     },
-    template,
     controller: [
       '$scope', '$q', '$location', 'authService', 'channelService',
       function($scope, $q, $location, authService, channelService) {
@@ -94,7 +90,8 @@ export default function(app) {
               });
           };
         }];
-      }]
-    }
-  );
+      }
+    ],
+    template: require('./margin-discussion.html'),
+  });
 };

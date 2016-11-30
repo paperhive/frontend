@@ -1,8 +1,4 @@
-'use strict';
-
 import { compact, flatten, get } from 'lodash';
-
-import template from './documents-list.html';
 
 // knowledge unlatched ids
 // TODO: get rid of this!
@@ -68,6 +64,6 @@ export default function(app) {
 
       }
     },
-    template,
+    template: require('./documents-list.html'),
   });
 };

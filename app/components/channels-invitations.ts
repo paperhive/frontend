@@ -1,6 +1,3 @@
-'use strict';
-import template from './channels-invitations.html';
-
 export default function(app) {
   app.component('channelsInvitations', {
     controller: class ChannelsInvitationsCtrl {
@@ -20,6 +17,6 @@ export default function(app) {
       }
 
     },
-    template,
+    template: require('./channels-invitations.html'),
   });
 };

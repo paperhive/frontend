@@ -1,4 +1,3 @@
-'use strict';
 import { find, findIndex, map, remove, some } from 'lodash';
 
 export default function(app) {

@@ -1,7 +1,3 @@
-'use strict';
-
-import template from './channel-settings.html';
-
 export default function(app) {
   app.component('channelSettings', {
     bindings: {
@@ -51,6 +47,6 @@ export default function(app) {
           .then(() => this.deactivating = false);
       }
     },
-    template
+    template: require('./channel-settings.html'),
   });
 }

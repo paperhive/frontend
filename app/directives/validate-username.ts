@@ -1,4 +1,3 @@
-'use strict';
 export default function(app) {
   // see https://docs.angularjs.org/guide/forms
   app.directive('validateUsername', [

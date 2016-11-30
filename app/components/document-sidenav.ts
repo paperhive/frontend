@@ -1,5 +1,3 @@
-import template from './document-sidenav.html';
-
 export default function(app) {
   app.component('documentSidenav', {
     bindings: {
@@ -60,6 +58,6 @@ export default function(app) {
           this.documentCtrl.getRevisionPublisherLink(this.activeRevision);
       }
     },
-    template,
+    template: require('./document-sidenav.html'),
   });
 }

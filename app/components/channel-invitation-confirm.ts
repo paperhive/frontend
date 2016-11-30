@@ -1,6 +1,3 @@
-'use strict';
-import template from './channel-invitation-confirm.html';
-
 export default function(app) {
   app.component('channelInvitationConfirm', {
     controller: class ChannelInvitationConfirmCtrl {
@@ -59,6 +56,6 @@ export default function(app) {
       }
 
     },
-    template,
+    template: require('./channel-invitation-confirm.html'),
   });
 }

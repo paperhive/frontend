@@ -1,4 +1,3 @@
-'use strict';
 import { get } from 'lodash';
 
 export default function(app) {

@@ -1,5 +1,4 @@
 /*global MathJax*/
-'use strict';
 
 export default function(app) {
   app.directive('mathjax', ['$sanitize', 'notificationService',

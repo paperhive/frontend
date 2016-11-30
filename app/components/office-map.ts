@@ -1,4 +1,3 @@
-'use strict';
 import * as angular from 'angular';
 
 export default function(app) {

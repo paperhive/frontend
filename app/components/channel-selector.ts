@@ -1,5 +1,3 @@
-import template from './channel-selector.html';
-
 export default function(app) {
   app.component('channelSelector', {
     bindings: {
@@ -38,6 +36,6 @@ export default function(app) {
         this.$uibModal.open({component: 'channelNew'});
       };
     },
-    template,
+    template: require('./channel-selector.html'),
   });
 };

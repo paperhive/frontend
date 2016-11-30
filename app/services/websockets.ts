@@ -1,4 +1,3 @@
-'use strict';
 import { clone } from 'lodash';
 import { Observable } from 'rx';
 import socketio from 'socket.io-client';

@@ -1,4 +1,3 @@
-'use strict';
 export default function(app) {
   app.factory('notificationService', ['$rootScope',
     function($rootScope) {

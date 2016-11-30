@@ -1,13 +1,10 @@
-'use strict';
 import { find } from 'lodash';
 
-import template from './discussion-list.html';
 import { getRevisionMetadata } from '../utils/documents';
 
 export default function(app) {
   app.component(
     'discussionList', {
-      template,
       bindings: {
         discussions: '<',
         documentRevision: '<',
@@ -33,6 +30,7 @@ export default function(app) {
             }
           });
         }
-      ]
+      ],
+      template: require('./discussion-list.html'),
     });
 };

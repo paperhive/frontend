@@ -1,6 +1,3 @@
-'use strict';
-
-import template from './channel-bookmark.html';
 import { find } from 'lodash';
 
 export default function(app) {
@@ -28,6 +25,6 @@ export default function(app) {
         this.$uibModal.open({component: 'channelNew'});
       };
     },
-    template,
+    template: require('./channel-bookmark.html'),
   });
 };

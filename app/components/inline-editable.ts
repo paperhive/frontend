@@ -1,7 +1,3 @@
-'use strict';
-
-import template from './inline-editable.html';
-
 export default function(app) {
   app.component('inlineEditable', {
     bindings: {
@@ -9,7 +5,6 @@ export default function(app) {
       canEdit: '<',
       onSubmit: '&'
     },
-    template,
     controller: ['$scope', '$q', function($scope, $q) {
       const $ctrl = this;
 
@@ -28,5 +23,6 @@ export default function(app) {
           .finally(() => $ctrl.submitting = false);
       };
     }],
+    template: require('./inline-editable.html'),
   });
 };
