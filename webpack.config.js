@@ -14,17 +14,22 @@ module.exports = {
   },
   devtool: 'source-map',
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.html$/,
         loader: 'html-loader',
       },
       {
         test: /\.(jpg|png|svg)$/,
-        loader: 'file-loader',
-        query: {
-          name: '[path][name].[md5:hash:hex:8].[ext]',
-        }
+        use: [
+          {
+            loader: 'file-loader',
+            query: {
+              name: '[path][name].[md5:hash:hex:8].[ext]',
+            }
+          },
+          'image-webpack-loader',
+        ],
       },
       {
         test: /\.json$/,
