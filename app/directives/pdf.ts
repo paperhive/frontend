@@ -388,6 +388,7 @@ export default function(app) {
               pageNumber: pos.pageNumber,
               positionOnPage: pos.positionOnPage,
               textObject: this.textContent.items[index - 1],
+              length: pos.length,
             });
           });
           console.log(boxPositions);
@@ -707,8 +708,8 @@ export default function(app) {
         });
       }
 
-      searchPositions(positions) {
-        if (!positions) return;
+      searchPositions(ranges) {
+        if (!ranges) return;
 
         // store length for each page
         const pageLengths = this.texts.map(text => text.length + 1);
@@ -723,13 +724,14 @@ export default function(app) {
         // store relative position (page offset) and page number
         let pagePositions = [];
         let pageCount = 1;
-        for (let i = 0; i < positions.length; i++) {
+        for (let i = 0; i < ranges.length; i++) {
           // locate page number (offset) of position
-          if (positions[i].position >= pageOffsets[pageCount - 1] && positions[i].position < pageOffsets[pageCount]) {
+          if (ranges[i].position >= pageOffsets[pageCount - 1] && ranges[i].position < pageOffsets[pageCount]) {
             // store page offset and page number
             pagePositions.push({
-              positionOnPage: positions[i].position - pageOffsets[pageCount - 1],
+              positionOnPage: ranges[i].position - pageOffsets[pageCount - 1],
               pageNumber: pageCount,
+              length: ranges[i].length,
             });
           } else {
             // if position didn't fit in interval: shift interval and check position again
@@ -740,6 +742,7 @@ export default function(app) {
 
         for (let i = 1; i <= this.pages.length; i++) {
           const curPagePositions = pagePositions.filter(pagePosition => pagePosition.pageNumber === i);
+          // call getBoxPositions() for every page
           this.pages[i - 1].getBoxPositions(curPagePositions);
         }
       }

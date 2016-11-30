@@ -311,6 +311,7 @@ export default function(app) {
 
       search() {
         if (!this.searchIndex) return;
+        // returns array of objects (position, length)
         this.searchPositions = this.searchIndex.search(this.searchStr);
       }
     },
