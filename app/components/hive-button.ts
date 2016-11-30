@@ -29,7 +29,7 @@ export default function(app) {
               ng-disabled="$ctrl.submitting" ng-click="$ctrl.unhive()"
               title="Cancel notifications by unhiving this document."
             >
-              <img alt="logo black" src="./static/img/logo-hexagon.svg"/> Unhive
+              <img alt="logo black" src="../../static/img/logo-hexagon.svg"/> Unhive
             </button>
             <button ng-if="!$ctrl.documentCtrl.isUserHiver" type="button" class="btn btn-default"
               title="{{
@@ -40,7 +40,7 @@ export default function(app) {
               ng-disabled="!$ctrl.authService.user || $ctrl.submitting"
               ng-click="$ctrl.hive()"
             >
-              <img alt="logo black" src="./static/img/logo-hexagon-black.svg"/> Hive
+              <img alt="logo black" src="../../static/img/logo-hexagon-black.svg"/> Hive
             </button>
             <a href="./documents/{{$ctrl.documentCtrl.documentId}}/hivers"
               class="btn btn-default"
@@ -55,7 +55,7 @@ export default function(app) {
               ng-disabled="$ctrl.submitting" ng-click="$ctrl.unhive()"
               title="Cancel notifications by unhiving this document."
             >
-              <img alt="logo black" src="./static/img/logo-hexagon.svg"/>
+              <img alt="logo black" src="../../static/img/logo-hexagon.svg"/>
             </button>
             <button ng-if="!$ctrl.documentCtrl.isUserHiver" type="button" class="btn btn-link"
               title="{{
@@ -65,7 +65,7 @@ export default function(app) {
               }}"
               ng-disabled="!$ctrl.authService.user || $ctrl.submitting" ng-click="$ctrl.hive()"
             >
-              <img alt="logo black" src="./static/img/logo-hexagon-black.svg"/>
+              <img alt="logo black" src="../../static/img/logo-hexagon-black.svg"/>
             </button>
           </div>
         </div>`,

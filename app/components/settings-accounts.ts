@@ -29,13 +29,13 @@ export default function(app) {
         <tr ng-repeat="account in $ctrl.person.externalIds | filter:{type: '!email'}">
           <td ng-switch="account.type">
             <span ng-switch-when="google">
-              <img class="ph-login-icon" src="./static/img/google.svg">
+              <img class="ph-login-icon" src="../../static/img/google.svg">
               <a ng-href="https://plus.google.com/{{account.id}}" target="_blank">
                 Google profile
               </a>
             </span>
             <span ng-switch-when="orcid">
-              <img class="ph-login-icon" src="./static/img/orcid.svg">
+              <img class="ph-login-icon" src="../../static/img/orcid.svg">
               <a ng-href="http://orcid.org/{{account.id}}" target="_blank">
                 ORCID account
               </a>
@@ -51,7 +51,7 @@ export default function(app) {
     <p>
       <a href="" ng-click="$ctrl.auth.oauthInitiate('google')"
           class="btn btn-primary btn-block">
-        <img class="ph-login-icon" src="./static/img/google.svg">
+        <img class="ph-login-icon" src="../../static/img/google.svg">
         Connect your Google account
       </a>
     <p>
@@ -59,7 +59,7 @@ export default function(app) {
     <p class="text-muted">
       <a href="" ng-click="$ctrl.auth.oauthInitiate('orcid')"
           class="btn btn-primary btn-block ph-sm-margin-bottom">
-        <img class="ph-login-icon" src="./static/img/orcid.svg">
+        <img class="ph-login-icon" src="../../static/img/orcid.svg">
         Connect your ORCID account
       </a>
       <span class="ph-text-smaller">

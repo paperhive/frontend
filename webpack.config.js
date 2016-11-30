@@ -23,7 +23,7 @@ module.exports = {
         test: /\.(jpg|png|svg)$/,
         loader: 'file-loader',
         query: {
-          name: '[path]/[name].[md5:hash:hex:8].[ext]',
+          name: '[path][name].[md5:hash:hex:8].[ext]',
           context: './',
         }
       },
