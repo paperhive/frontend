@@ -1,10 +1,10 @@
 import * as _ from 'lodash';
 import * as angular from 'angular';
 import { cloneDeep, find, findIndex, findLastIndex, merge, orderBy, pick, remove, some } from 'lodash';
+import srch from 'srch';
 
 import template from './document.html';
 import { getRevisionMetadata } from '../utils/documents';
-import { SearchIndex } from '../utils/search';
 
 class DiscussionsController {
   // data
@@ -306,7 +306,7 @@ export default function(app) {
       updateSearchIndex() {
         this.searchIndex = undefined;
         if (!this.pdfText) return;
-        this.searchIndex = new SearchIndex(this.pdfText);
+        this.searchIndex = new srch.SearchIndex(this.pdfText);
       }
 
       search() {

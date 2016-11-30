@@ -105,7 +105,7 @@ SystemJS.config({
     "readline": "npm:jspm-nodelibs-readline@0.2.0",
     "rx": "npm:rx@4.1.0",
     "socket.io-client": "github:socketio/socket.io-client@1.4.8",
-    "srch": "npm:srch@1.1.0",
+    "srch": "npm:srch@1.2.0",
     "stream": "npm:jspm-nodelibs-stream@0.2.0",
     "string_decoder": "npm:jspm-nodelibs-string_decoder@0.2.0",
     "url": "npm:jspm-nodelibs-url@0.2.0",

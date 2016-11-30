@@ -378,7 +378,7 @@ export default function(app) {
           let boxPositions = [];
           curPagePositions.forEach(pos => {
             // sum up all string fragments of every page as long as position is not located
-            while(pos.positionOnPage > strSum && index < this.textContent.items.length) {
+            while (pos.positionOnPage > strSum && index < this.textContent.items.length) {
               // take account of added space while joining strings
               strSum += this.textContent.items[index].str.length + 1;
               index++;
