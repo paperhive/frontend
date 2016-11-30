@@ -725,10 +725,10 @@ export default function(app) {
         let pageCount = 1;
         for (let i = 0; i < positions.length; i++) {
           // locate page number (offset) of position
-          if (positions[i] >= pageOffsets[pageCount - 1] && positions[i] < pageOffsets[pageCount]) {
+          if (positions[i].position >= pageOffsets[pageCount - 1] && positions[i].position < pageOffsets[pageCount]) {
             // store page offset and page number
             pagePositions.push({
-              positionOnPage: positions[i] - pageOffsets[pageCount - 1],
+              positionOnPage: positions[i].position - pageOffsets[pageCount - 1],
               pageNumber: pageCount,
             });
           } else {
