@@ -24,7 +24,6 @@ module.exports = {
         loader: 'file-loader',
         query: {
           name: '[path][name].[md5:hash:hex:8].[ext]',
-          context: './',
         }
       },
       {
