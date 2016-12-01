@@ -105,7 +105,12 @@ module.exports = {
       context: 'node_modules/mathjax',
       from: {glob: path},
       to: 'assets/mathjax',
-    }))),
+    })).concat([
+      {
+        from: 'node_modules/pdfjs-dist/build/pdf.worker.js',
+        to: 'assets/pdfjs/',
+      },
+    ])),
     new HtmlWebpackPlugin({
       template: './app/index.html',
       config,
