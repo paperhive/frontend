@@ -19,9 +19,6 @@
     "angular-mocks": "^1.5.8"
   },
   "dependencies": {
-    "bootstrap": "^3.3.6",
-    "fontawesome": "^4.5.0",
-    "MathJax": "^2.6.0",
-    "roboto-fontface": "^0.4.3"
+    "MathJax": "^2.6.0"
   }
 }

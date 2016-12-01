@@ -6,6 +6,8 @@
  * (https://github.com/paperhive/paperhive-frontend/blob/master/LICENSE)
  */
 
+require('../less/index.less');
+
 // import 'core-js/shim';
 
 // import jquery before angular (so angular can use it instead of jqlite)
