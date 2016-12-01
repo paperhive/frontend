@@ -1,5 +1,3 @@
-import { includes, remove } from 'lodash';
-
 export default function(app) {
   app.component('channelInvitations', {
     bindings: {

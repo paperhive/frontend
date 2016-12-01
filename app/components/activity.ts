@@ -1,8 +1,8 @@
 export default function(app) {
   app.component('activity', {
     bindings: {
-      filterMode: '@',
       filterId: '<',
+      filterMode: '@',
     },
     controller: class Activity {
       static $inject = ['$http', '$scope', 'authService', 'config', 'notificationService'];

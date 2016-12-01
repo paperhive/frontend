@@ -1,5 +1,3 @@
-import { get } from 'lodash';
-
 class DocumentRemoteCtrl {
   static $inject =
     ['$http', '$location', '$routeSegment', 'config', 'notificationService'];

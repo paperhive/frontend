@@ -33,7 +33,7 @@ import 'angular-moment';                         // angularMoment
 import 'angular-leaflet-directive';              // leaflet-directive
 import 'angulartics';                            // angulartics
 import 'angulartics-google-analytics';
-import 'javascript-detect-element-resize';       // injects resize+removeResize to jquery
+import 'javascript-detect-element-resize/jquery.resize.js';       // injects resize+removeResize to jquery
 import 'pdfjs-dist/web/compatibility';
 import 'pdfjs-dist';
 // import 'pdfjs-dist/web/pdf_viewer';
@@ -46,7 +46,6 @@ import services from './services/index';
 import utils from './utils/index';
 
 import '../build-tmp/html.js';
-
 
 const configJson = require('../config.json');
 

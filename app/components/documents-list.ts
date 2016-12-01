@@ -1,4 +1,4 @@
-import { compact, flatten, get } from 'lodash';
+import { compact, flatten } from 'lodash';
 
 // knowledge unlatched ids
 // TODO: get rid of this!

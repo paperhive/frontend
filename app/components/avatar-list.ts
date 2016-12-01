@@ -3,7 +3,7 @@ import { map, uniqBy } from 'lodash';
 export default function(app) {
   app.component('avatarList', {
     bindings: {
-      discussion: '<'
+      discussion: '<',
     },
     controller: ['$scope', function($scope) {
       const $ctrl = this;
@@ -25,6 +25,6 @@ export default function(app) {
         >
           <avatar user="user" size="30" classes="img-circle"></avatar>
         </a>
-      </span>`
+      </span>`,
   });
 };

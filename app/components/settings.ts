@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import { find } from 'lodash';
 
 export default function(app) {
   app.component('settings', {
@@ -31,8 +31,8 @@ export default function(app) {
           });
           };*/
 
-        $scope.find = _.find;
-      }
+        $scope.find = find;
+      },
     ],
     template: require('./settings.html'),
   });

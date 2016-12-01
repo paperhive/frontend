@@ -1,5 +1,5 @@
 import * as angular from 'angular';
-import { clone, defaults } from 'lodash';
+import { defaults } from 'lodash';
 
 export default function(app) {
 

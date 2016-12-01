@@ -1,5 +1,3 @@
-import { find } from 'lodash';
-
 export default function(app) {
   app.component('channelBookmark', {
     bindings: {

@@ -1,5 +1,5 @@
 import * as angular from 'angular';
-import { filter, find, get, last, merge, reverse, sortBy } from 'lodash';
+import { merge } from 'lodash';
 
 class DocumentTextCtrl {
   // input

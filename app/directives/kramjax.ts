@@ -1,7 +1,7 @@
 /*global MathJax*/
 
 // TODO: ts complains about missing default export but this works!
-import jquery from 'jquery';
+import * as jquery from 'jquery';
 import * as kramed from 'kramed';
 import {highlightAuto} from 'highlightjs';
 // TODO: const MathJax = require('MathJax');
@@ -12,7 +12,7 @@ export default function(app) {
   kramed.setOptions({
     highlight: function(code) {
       return highlightAuto(code).value;
-    }
+    },
   });
 
   app.directive(

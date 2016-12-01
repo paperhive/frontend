@@ -1,4 +1,4 @@
-import { cloneDeep, last } from 'lodash';
+import { cloneDeep } from 'lodash';
 
 export default function(app) {
   app.component('pdfSelectionPopup', {

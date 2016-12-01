@@ -1,6 +1,5 @@
-import * as _ from 'lodash';
 import * as angular from 'angular';
-import { cloneDeep, find, findIndex, findLastIndex, merge, orderBy, pick, remove, some } from 'lodash';
+import { find, findIndex, merge, pick, remove } from 'lodash';
 
 import { getRevisionMetadata } from '../utils/documents';
 

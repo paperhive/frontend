@@ -1,5 +1,3 @@
-import { compact } from 'lodash';
-
 export default function(app) {
   app.component('settingsAccounts', {
     bindings: {

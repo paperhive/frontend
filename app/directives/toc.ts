@@ -1,6 +1,5 @@
 import * as _ from 'lodash';
-// TODO: ts complains about missing default export but this works!
-import jquery from 'jquery';
+import * as jquery from 'jquery';
 
 export default function(app) {
 

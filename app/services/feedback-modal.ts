@@ -1,5 +1,3 @@
-import * as angular from 'angular';
-
 export default function(app) {
   app.service('feedbackModal', class FeedbackModal {
     static $inject = ['$uibModal'];
