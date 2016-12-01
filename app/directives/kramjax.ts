@@ -2,7 +2,7 @@
 
 // TODO: ts complains about missing default export but this works!
 import jquery from 'jquery';
-import kramed from 'kramed';
+import * as kramed from 'kramed';
 import {highlightAuto} from 'highlightjs';
 // TODO: const MathJax = require('MathJax');
 
