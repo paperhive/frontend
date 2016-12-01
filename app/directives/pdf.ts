@@ -371,14 +371,16 @@ export default function(app) {
         this.textSnippetTransformations = [];
         this.textContent.items.forEach(item => {
           this.textSnippetTransformations.push(
-            {original: item.str.length, transformed: item.str.length}
+            {original: item.str.length, transformed: item.str.length, textObject: item}
           );
           this.textSnippetTransformations.push(
             {original: 0, transformed: 1}
           );
         });
         // remove last element (there is no space)
-        this.textSnippetTransformations.pop();
+        if (this.textSnippetTransformations.length > 0) {
+          this.textSnippetTransformations.pop();
+        }
         return this.textContent.items.map(text => text.str).join(' ');
       }
 
@@ -702,8 +704,8 @@ export default function(app) {
         // monitor scrollToAnchor
         this.scope.$watch('scrollToAnchor', this.scrollToAnchor.bind(this));
 
-        // monitor searchPositions
-        this.scope.$watch('searchPositions', this.searchPositions.bind(this));
+        // monitor searchRanges
+        this.scope.$watch('searchRanges', this.searchRanges.bind(this));
 
         this.scope.$watchCollection('highlights', this.updateHighlights.bind(this));
 
@@ -715,17 +717,19 @@ export default function(app) {
         this.texts = await Promise.all(this.pages.map(page => page.getPageText()));
         this.scope.$apply(() => {
           this.textTransformations = [];
-          this.texts.forEach(text => {
-            this.textTransformations.push({original: text.length, transformed: text.length});
+          this.texts.forEach((text, index) => {
+            this.textTransformations.push(
+              {original: text.length, transformed: text.length, pageNumber: index + 1}
+            );
             this.textTransformations.push({original: 0, transformed: 1});
           });
           // remove last element (there is no space)
-          this.textTransformations.pop();
+          if (this.textTransformations.length > 0) this.textTransformations.pop();
           this.scope.onTextUpdate({str: this.texts.join(' ')});
         });
       }
 
-      searchPositions(ranges) {
+      searchRanges(ranges) {
         if (!ranges) return;
 
         // store length for each page
@@ -1141,7 +1145,7 @@ export default function(app) {
 
         viewportOffsetTop: '<',
 
-        searchPositions: '<',
+        searchRanges: '<',
 
         // Output
         // ======

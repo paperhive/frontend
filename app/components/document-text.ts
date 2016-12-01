@@ -129,7 +129,7 @@ export default function(app) {
       filteredDiscussions: '<',
       viewportOffsetTop: '<',
       expanded: '<',
-      searchPositions: '<',
+      searchRanges: '<',
 
       onDiscussionSubmit: '&',
       onDiscussionUpdate: '&',
