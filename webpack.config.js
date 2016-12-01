@@ -111,5 +111,9 @@ module.exports = {
       config,
       dev: process.env.NODE_ENV !== 'production'
     }),
+    new webpack.ProvidePlugin({
+      'jQuery': 'jquery', // for javascript-detect-element-resize
+      'window.jQuery': 'jquery', // for angular
+    }),
   ],
 };
