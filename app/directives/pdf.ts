@@ -331,6 +331,7 @@ export default function(app) {
       pageSize: any; // TODO: remove?
       textFocused: boolean = false;
       textContent: any;
+      textSnippetTransformations: Array<any>;
 
       // renderer state
       renderedSize: {height: number, width: number};
@@ -367,6 +368,17 @@ export default function(app) {
 
       async getPageText() {
         this.textContent = await this.page.getTextContent();
+        this.textSnippetTransformations = [];
+        this.textContent.items.forEach(item => {
+          this.textSnippetTransformations.push(
+            {original: item.str.length, transformed: item.str.length}
+          );
+          this.textSnippetTransformations.push(
+            {original: 0, transformed: 1}
+          );
+        });
+        // remove last element (there is no space)
+        this.textSnippetTransformations.pop();
         return this.textContent.items.map(text => text.str).join(' ');
       }
 
