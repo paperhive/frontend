@@ -1,6 +1,9 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
+
+const config = require('./config.json');
 
 const extractCss = new ExtractTextPlugin('index.css');
 
@@ -40,9 +43,18 @@ module.exports = {
       },
       {
         test: /\.html$/,
+        exclude: [path.resolve(__dirname, 'app/index.html')],
         loader: 'html-loader',
       },
       {
+        // files that only need to be copied
+        exclude: [path.resolve(__dirname, 'node_modules')],
+        test: /\.(ico|xml)?$/,
+        loader: "file-loader",
+        query: {name: '[path][name].[md5:hash:hex:8].[ext]'},
+      },
+      {
+        // images that can be optimized
         exclude: [path.resolve(__dirname, 'node_modules')],
         test: /\.(jpg|png|svg)$/,
         use: [
@@ -80,5 +92,10 @@ module.exports = {
   },
   plugins: [
     extractCss,
+    new HtmlWebpackPlugin({
+      template: './app/index.html',
+      config,
+      dev: process.env.NODE_ENV !== 'production'
+    }),
   ],
 };
