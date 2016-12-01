@@ -583,6 +583,7 @@ export default function(app) {
       linkService: LinkService;
       anchor: string;
       textFocused: boolean = false;
+      textTransformations: Array<any>;
 
       constructor(public pdf: PDFDocumentProxy, public element: JQuery,
           public scope: any) {
@@ -701,10 +702,14 @@ export default function(app) {
       async updateText() {
         this.texts = await Promise.all(this.pages.map(page => page.getPageText()));
         this.scope.$apply(() => {
-          this.scope.onTextUpdate({
-            str: this.texts.join(' ').concat(' '),
-            pageLengths: this.texts.map(text => text.length + 1),
+          this.textTransformations = [];
+          this.texts.forEach(text => {
+            this.textTransformations.push({original: text.length, transformed: text.length});
+            this.textTransformations.push({original: 0, transformed: 1});
           });
+          // remove last element (there is no space)
+          this.textTransformations.pop();
+          this.scope.onTextUpdate({str: this.texts.join(' ')});
         });
       }
 
