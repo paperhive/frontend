@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   entry: {
@@ -37,8 +38,20 @@ module.exports = {
       },
       {
         test: /\.ts$/,
-        loader: 'awesome-typescript-loader',
+        use: [
+          {
+            loader: 'babel-loader',
+            query: {
+              presets: ['es2015'],
+              plugins: ['transform-runtime']
+            }
+          },
+          'awesome-typescript-loader',
+        ],
       },
     ],
   },
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin(),
+  ],
 };
