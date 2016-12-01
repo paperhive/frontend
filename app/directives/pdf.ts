@@ -4,6 +4,7 @@ import jquery from 'jquery';
 import { clone, difference, filter, flatten, get, isArray, isEqual, isNumber, map, pick, some, uniq } from 'lodash';
 import { PDFJS } from 'pdfjs-dist';
 import rangy from 'rangy';
+import srch from 'srch';
 
 // test if height and width properties of 2 objects are equal
 function isSameSize(obj1, obj2) {
@@ -384,6 +385,13 @@ export default function(app) {
         return this.textContent.items.map(text => text.str).join(' ');
       }
 
+      searchRanges(ranges) {
+        if (!ranges) return;
+
+        const transformedRanges = ranges.map(range => srch.backTransformRange(range, this.textSnippetTransformations));
+        console.log(transformedRanges);
+      }
+
       getBoxPositions(curPagePositions) {
         // check if there is a located position on current page
         if (curPagePositions.length > 0) {
@@ -732,40 +740,62 @@ export default function(app) {
       searchRanges(ranges) {
         if (!ranges) return;
 
-        // store length for each page
-        const pageLengths = this.texts.map(text => text.length + 1);
+        const transformedRanges = ranges.map(range => srch.backTransformRange(range, this.textTransformations));
+        console.log(transformedRanges);
 
-        // sum up all lengths
-        let pageOffsets = [0];
-        for (let i = 1; i <= pageLengths.length; i++) {
-          let sum = pageOffsets[i - 1];
-          pageOffsets[i] = pageLengths[i - 1] + sum;
-        }
+        // get ranges by page
+        const pageRanges = this.pages.map(() => []);
+        transformedRanges.forEach((ranges, matchIndex) => {
+          ranges.forEach(range => {
+            const pageNumber = range.transformation.pageNumber;
+            if (pageNumber === undefined) {
+              throw new Error('no page number in transformation!');
+            }
 
-        // store relative position (page offset) and page number
-        let pagePositions = [];
-        let pageCount = 1;
-        for (let i = 0; i < ranges.length; i++) {
-          // locate page number (offset) of position
-          if (ranges[i].position >= pageOffsets[pageCount - 1] && ranges[i].position < pageOffsets[pageCount]) {
-            // store page offset and page number
-            pagePositions.push({
-              positionOnPage: ranges[i].position - pageOffsets[pageCount - 1],
-              pageNumber: pageCount,
-              length: ranges[i].length,
+            pageRanges[pageNumber - 1].push({
+              matchIndex,
+              position: range.position,
+              length: range.length,
             });
-          } else {
-            // if position didn't fit in interval: shift interval and check position again
-            pageCount += 1;
-            i -= 1;
-          }
-        }
+          });
+        });
 
-        for (let i = 1; i <= this.pages.length; i++) {
-          const curPagePositions = pagePositions.filter(pagePosition => pagePosition.pageNumber === i);
-          // call getBoxPositions() for every page
-          this.pages[i - 1].getBoxPositions(curPagePositions);
-        }
+        this.pages.forEach((page, index) => page.searchRanges(pageRanges[index]));
+
+        // // store length for each page
+        // const pageLengths = this.texts.map(text => text.length + 1);
+        //
+        // // sum up all lengths
+        // let pageOffsets = [0];
+        // for (let i = 1; i <= pageLengths.length; i++) {
+        //   let sum = pageOffsets[i - 1];
+        //   pageOffsets[i] = pageLengths[i - 1] + sum;
+        // }
+        //
+        // // store relative position (page offset) and page number
+        // let pagePositions = [];
+        // let pageCount = 1;
+        // for (let i = 0; i < ranges.length; i++) {
+        //   // locate page number (offset) of position
+        //   if (ranges[i].position >= pageOffsets[pageCount - 1] && ranges[i].position < pageOffsets[pageCount]) {
+        //     // store page offset and page number
+        //     pagePositions.push({
+        //       positionOnPage: ranges[i].position - pageOffsets[pageCount - 1],
+        //       pageNumber: pageCount,
+        //       length: ranges[i].length,
+        //     });
+        //   } else {
+        //     // if position didn't fit in interval: shift interval and check position again
+        //     pageCount += 1;
+        //     i -= 1;
+        //   }
+        // }
+        //
+        // for (let i = 1; i <= this.pages.length; i++) {
+        //   const curPagePositions = transformedRanges.filter(pagePosition => pagePosition.transformation.pageNumber === i);
+        //   // call getBoxPositions() for every page
+        //   this.pages[i - 1].getBoxPositions(curPagePositions);
+        // }
       }
 
       destroy() {
