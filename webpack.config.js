@@ -1,3 +1,4 @@
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
@@ -92,6 +93,19 @@ module.exports = {
   },
   plugins: [
     extractCss,
+    new CopyWebpackPlugin([
+      'MathJax.js',
+      'config/TeX-AMS_HTML-full.js',
+      'config/Safe.js',
+      'extensions/Safe.js',
+      'fonts/HTML-CSS/**/woff/*.woff',
+      'jax/element/**',
+      'jax/output/HTML-CSS/**'
+    ].map(path => ({
+      context: 'node_modules/mathjax',
+      from: {glob: path},
+      to: 'assets/mathjax',
+    }))),
     new HtmlWebpackPlugin({
       template: './app/index.html',
       config,
