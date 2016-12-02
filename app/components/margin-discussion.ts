@@ -1,6 +1,8 @@
 import * as angular from 'angular';
 import { merge } from 'lodash';
 
+const marginDiscussionUrlPopoverUrl = require('!ngtemplate-loader?relativeTo=/app!html-loader!./margin-discussion-url-popover.html');
+
 export default function(app) {
   app.component('marginDiscussion', {
     bindings: {
@@ -17,6 +19,7 @@ export default function(app) {
       function($scope, $q, $location, authService, channelService) {
         const ctrl = this;
 
+        this.marginDiscussionUrlPopoverUrl = marginDiscussionUrlPopoverUrl;
         this.channelService = channelService;
 
         // expose discussion in template
