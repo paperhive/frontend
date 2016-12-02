@@ -18,7 +18,7 @@
       ng-model="search.body"
       uib-typeahead="result as result.title for result in phSearch($viewValue, 5)"
       typeahead-on-select="goToDocument($item, $model, $label)"
-      typeahead-template-url="navbarSearchItemUrl"
+      typeahead-template-url="{{navbarSearchItemUrl}}"
       ng-keypress="($event.which === 13) && showAllResults(search.body)"
       typeahead-focus-first="false"
       autocomplete="off"
