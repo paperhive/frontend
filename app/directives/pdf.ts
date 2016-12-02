@@ -370,9 +370,9 @@ export default function(app) {
       async getPageText() {
         this.textContent = await this.page.getTextContent();
         this.textSnippetTransformations = [];
-        this.textContent.items.forEach(item => {
+        this.textContent.items.forEach((item, index) => {
           this.textSnippetTransformations.push(
-            {original: item.str.length, transformed: item.str.length, textObject: item}
+            {original: item.str.length, transformed: item.str.length, textObject: item, index}
           );
           this.textSnippetTransformations.push(
             {original: 0, transformed: 1}
@@ -387,9 +387,24 @@ export default function(app) {
 
       searchRanges(ranges) {
         if (!ranges) return;
-
         const transformedRanges = ranges.map(range => srch.backTransformRange(range, this.textSnippetTransformations));
-        console.log(transformedRanges);
+        let index = 0;
+        if (!transformedRanges) return;
+        transformedRanges.forEach(range => {
+          range.forEach(singleRange => {
+            if (this.page.pageIndex === 0) {
+              index = singleRange.transformation.index;
+              // get ph-pdf-text element
+              const textElement = this.element[0].firstElementChild.nextSibling.nextSibling;
+              let elem = textElement.firstChild;
+              while (index != 0) {
+                elem = elem.nextSibling;
+                index --;
+              }
+              console.log(elem);
+            }
+          });
+        });
       }
 
       async initPageSize(_width = undefined) {
@@ -716,7 +731,7 @@ export default function(app) {
         if (!ranges) return;
 
         const transformedRanges = ranges.map(range => srch.backTransformRange(range, this.textTransformations));
-        console.log(transformedRanges);
+        // console.log(transformedRanges);
 
         // get ranges by page
         const pageRanges = this.pages.map(() => []);
