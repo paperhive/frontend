@@ -761,41 +761,6 @@ export default function(app) {
         });
 
         this.pages.forEach((page, index) => page.searchRanges(pageRanges[index]));
-
-        // // store length for each page
-        // const pageLengths = this.texts.map(text => text.length + 1);
-        //
-        // // sum up all lengths
-        // let pageOffsets = [0];
-        // for (let i = 1; i <= pageLengths.length; i++) {
-        //   let sum = pageOffsets[i - 1];
-        //   pageOffsets[i] = pageLengths[i - 1] + sum;
-        // }
-        //
-        // // store relative position (page offset) and page number
-        // let pagePositions = [];
-        // let pageCount = 1;
-        // for (let i = 0; i < ranges.length; i++) {
-        //   // locate page number (offset) of position
-        //   if (ranges[i].position >= pageOffsets[pageCount - 1] && ranges[i].position < pageOffsets[pageCount]) {
-        //     // store page offset and page number
-        //     pagePositions.push({
-        //       positionOnPage: ranges[i].position - pageOffsets[pageCount - 1],
-        //       pageNumber: pageCount,
-        //       length: ranges[i].length,
-        //     });
-        //   } else {
-        //     // if position didn't fit in interval: shift interval and check position again
-        //     pageCount += 1;
-        //     i -= 1;
-        //   }
-        // }
-        //
-        // for (let i = 1; i <= this.pages.length; i++) {
-        //   const curPagePositions = transformedRanges.filter(pagePosition => pagePosition.transformation.pageNumber === i);
-        //   // call getBoxPositions() for every page
-        //   this.pages[i - 1].getBoxPositions(curPagePositions);
-        // }
       }
 
       destroy() {
