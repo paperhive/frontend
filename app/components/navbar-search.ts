@@ -1,3 +1,5 @@
+const navbarSearchItemUrl = require('!ngtemplate-loader?relativeTo=/app!html-loader!./navbar-search-item.html');
+
 export default function(app) {
   app.component('navbarSearch', {
     controller: ['$scope', '$http', '$location', '$routeSegment', 'config',
@@ -6,6 +8,7 @@ export default function(app) {
         $scope, $http, $location, $routeSegment, config,
         notificationService, tourService
       ) {
+        $scope.navbarSearchItemUrl = navbarSearchItemUrl;
         $scope.tour = tourService;
 
         $scope.showAllResults = function(input) {
