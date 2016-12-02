@@ -36,7 +36,6 @@ import 'angulartics-google-analytics';
 import 'javascript-detect-element-resize/jquery.resize.js';       // injects resize+removeResize to jquery
 import 'pdfjs-dist/web/compatibility';
 import 'pdfjs-dist';
-// import 'pdfjs-dist/web/pdf_viewer';
 
 import config from './config/index';
 import components from './components/index';
@@ -44,8 +43,6 @@ import directives from './directives/index';
 import filters from './filters/index';
 import services from './services/index';
 import utils from './utils/index';
-
-// import '../build-tmp/html.js';
 
 const configJson = require('../config.json');
 
