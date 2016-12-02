@@ -46,6 +46,9 @@ module.exports = {
         test: /\.html$/,
         exclude: [path.resolve(__dirname, 'app/index.html')],
         loader: 'html-loader',
+        query: {
+          interpolate: 'require', // allow ${require(...)} in html
+        },
       },
       {
         // files that only need to be copied
@@ -93,24 +96,30 @@ module.exports = {
   },
   plugins: [
     extractCss,
-    new CopyWebpackPlugin([
-      'MathJax.js',
-      'config/TeX-AMS_HTML-full.js',
-      'config/Safe.js',
-      'extensions/Safe.js',
-      'fonts/HTML-CSS/**/woff/*.woff',
-      'jax/element/**',
-      'jax/output/HTML-CSS/**'
-    ].map(path => ({
-      context: 'node_modules/mathjax',
-      from: {glob: path},
-      to: 'assets/mathjax',
-    })).concat([
-      {
-        from: 'node_modules/pdfjs-dist/build/pdf.worker.js',
-        to: 'assets/pdfjs/',
-      },
-    ])),
+    new CopyWebpackPlugin(
+      [
+        {
+          from: 'node_modules/pdfjs-dist/build/pdf.worker.js',
+          to: 'assets/pdfjs/',
+        },
+        {
+          from: 'static/favicons/favicon.ico',
+          to: '.',
+        },
+      ].concat([
+        'MathJax.js',
+        'config/TeX-AMS_HTML-full.js',
+        'config/Safe.js',
+        'extensions/Safe.js',
+        'fonts/HTML-CSS/**/woff/*.woff',
+        'jax/element/**',
+        'jax/output/HTML-CSS/**'
+      ].map(path => ({
+        context: 'node_modules/mathjax',
+        from: {glob: path},
+        to: 'assets/mathjax',
+      })))
+    ),
     new HtmlWebpackPlugin({
       template: './app/index.html',
       config,

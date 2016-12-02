@@ -1,0 +1,11 @@
+<span ng-if="$ctrl.workUrl"><a href="{{$ctrl.workUrl}}">{{workName}}</a>,</span>
+<span ng-if="!$ctrlworkUrl">{{$ctrl.workName}},</span>
+
+<span ng-if="$ctrl.attributionName">
+  by
+  <span ng-if="$ctrl.attributionUrl"><a href="{{$ctrl.attributionUrl}}">{{$ctrl.attributionName}}</a>,</span>
+  <span ng-if="!$ctrl.attributionUrl">{{$ctrl.attributionName}},</span>
+</span>
+
+<a ng-if="$ctrl.licenseUrl" href="{{$ctrl.licenseUrl}}">{{$ctrl.licenseName}}</a>
+<span ng-if="!$ctrl.licenseUrl">{{$ctrl.licenseName}}</span>

@@ -45,7 +45,7 @@ import filters from './filters/index';
 import services from './services/index';
 import utils from './utils/index';
 
-import '../build-tmp/html.js';
+// import '../build-tmp/html.js';
 
 const configJson = require('../config.json');
 
@@ -61,7 +61,6 @@ export const paperhive = module(
       'leaflet-directive',
       'angulartics',
       'angulartics.google.analytics',
-      'templates'
     ]
   )
   .constant('config', configJson)
