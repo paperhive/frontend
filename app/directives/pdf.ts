@@ -392,31 +392,6 @@ export default function(app) {
         console.log(transformedRanges);
       }
 
-      getBoxPositions(curPagePositions) {
-        // check if there is a located position on current page
-        if (curPagePositions.length > 0) {
-          let strSum = 0;
-          let index = 0;
-          let boxPositions = [];
-          curPagePositions.forEach(pos => {
-            // sum up all string fragments of every page as long as position is not located
-            while (pos.positionOnPage > strSum && index < this.textContent.items.length) {
-              // take account of added space while joining strings
-              strSum += this.textContent.items[index].str.length + 1;
-              index++;
-            }
-            // if position is located: store textObject containing transformation matrix
-            boxPositions.push({
-              pageNumber: pos.pageNumber,
-              positionOnPage: pos.positionOnPage,
-              textObject: this.textContent.items[index - 1],
-              length: pos.length,
-            });
-          });
-          console.log(boxPositions);
-        }
-      }
-
       async initPageSize(_width = undefined) {
         if (this.initializedPageSize) return false;
 
