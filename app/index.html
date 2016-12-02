@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta ng-repeat="meta in metaService.data.meta" attributes="meta">
 
-    <link rel="search" type="application/opensearchdescription+xml" href="./opensearch.xml" title="PaperHive search" />
+    <link rel="search" type="application/opensearchdescription+xml" href="<% require('./opensearch.xml') %>" title="PaperHive search" />
     <!-- favicons -->
     <link rel="apple-touch-icon" sizes="57x57" href="<%= require('../static/favicons/apple-touch-icon-57x57.png') %>">
     <link rel="apple-touch-icon" sizes="60x60" href="<%= require('../static/favicons/apple-touch-icon-60x60.png') %>">
@@ -28,7 +28,7 @@
     <link rel="icon" type="image/png" href="<%= require('../static/favicons/android-chrome-192x192.png') %>" sizes="192x192">
     <link rel="icon" type="image/png" href="<%= require('../static/favicons/favicon-96x96.png') %>" sizes="96x96">
     <link rel="icon" type="image/png" href="<%= require('../static/favicons/favicon-16x16.png') %>" sizes="16x16">
-    <!--link rel="manifest" href="<%= require('file-loader?name=[path][name].[md5:hash:hex:8].[ext]!../static/favicons/manifest.json') %>"-->
+    <link rel="manifest" href="<%= require('!file-loader?name=[path][name].[md5:hash:hex:8].[ext]!../static/favicons/manifest.json') %>">
     <link rel="shortcut icon" href="<%= require('../static/favicons/favicon.ico') %>">
     <meta name="msapplication-TileColor" content="#00addc">
     <meta name="msapplication-TileImage" content="<%= require('../static/favicons/mstile-144x144.png') %>">

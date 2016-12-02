@@ -17,7 +17,7 @@ ENV BOWER_ALLOW_ROOT="true"
 
 # copy dependency definitions and install them (may be cached!)
 COPY package.json bower.json jspm.*.js typings.json /paperhive-frontend/
-RUN npm run install-deps
+RUN npm install
 
 # copy and build src
 COPY . /paperhive-frontend
