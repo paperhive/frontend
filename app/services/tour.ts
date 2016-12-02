@@ -1,5 +1,14 @@
 import {localStorageAvailable} from '../utils/local-storage';
 
+const urls = {
+  start: require('!ngtemplate-loader?relativeTo=/app!html-loader!./tour-start.html'),
+  marginDiscussion: require('!ngtemplate-loader?relativeTo=/app!html-loader!./tour-margin-discussion.html'),
+  highlight: require('!ngtemplate-loader?relativeTo=/app!html-loader!./tour-highlight.html'),
+  search: require('!ngtemplate-loader?relativeTo=/app!html-loader!./tour-search.html'),
+  hive: require('!ngtemplate-loader?relativeTo=/app!html-loader!./tour-hive.html'),
+  signup: require('!ngtemplate-loader?relativeTo=/app!html-loader!./tour-signup.html'),
+};
+
 export default function(app) {
   app.factory(
     'tourService',
@@ -15,6 +24,7 @@ export default function(app) {
             'signup'
           ],
           index: 0,
+          urls,
           visited: false,
         };
 

@@ -293,11 +293,11 @@ export default function(app) {
           .up()
           .segment('text', {
             default: true,
-            template: require('../../html/documents/text.html'),
+            template: require('./routes-document-text.html'),
             title: 'Document · PaperHive',
           })
           .segment('revisions', {
-            template: require('../../html/documents/text.html'),
+            template: require('./routes-document-text.html'),
             dependencies: ['revisionId'],
             title: 'Document at revision · PaperHive'
           })
