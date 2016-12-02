@@ -1,5 +1,7 @@
 import { last } from 'lodash';
 
+const pdfPopupPopoverUrl = require('!ngtemplate-loader?relativeTo=/app!html-loader!./pdf-popup-popover.html');
+
 export default function(app) {
   app.component('pdfPopup', {
     bindings: {
@@ -47,7 +49,7 @@ export default function(app) {
         class="btn btn-default btn-xs ph-popup-button"
         uib-tooltip="Share text selection URL"
         tooltip-class="tooltip-nowrap"
-        uib-popover-template="'html/directives/textSelectionUrlPopover.html'"
+        uib-popover-template="'${pdfPopupPopoverUrl}'"
         popover-placement="auto bottom-right"
         popover-trigger="outsideClick"
       >
