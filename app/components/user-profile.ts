@@ -3,6 +3,6 @@ export default function(app) {
     template: require('./user-profile.html'),
     bindings: {
       'user': '<',
-    }
+    },
   });
 };

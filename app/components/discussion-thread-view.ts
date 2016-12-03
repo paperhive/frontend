@@ -28,7 +28,7 @@ export default function(app) {
               meta: [
                 {
                   name: 'author',
-                  content: $ctrl.discussion.author.displayName
+                  content: $ctrl.discussion.author.displayName,
                 },
                 // TODO rather use title here?
                 {
@@ -36,14 +36,14 @@ export default function(app) {
                   content: 'Annotation by ' +
                     $ctrl.discussion.author.displayName + ': ' +
                     ($ctrl.discussion.body ?
-                    $ctrl.discussion.body.substring(0, 150) : '')
+                    $ctrl.discussion.body.substring(0, 150) : ''),
                 },
                 {
                   name: 'keywords',
                   content: $ctrl.discussion.tags ?
-                    $ctrl.discussion.tags.join(', ') : undefined
-                }
-              ]
+                    $ctrl.discussion.tags.join(', ') : undefined,
+                },
+              ],
             });
           }
         });
@@ -60,7 +60,7 @@ export default function(app) {
           const discussion = merge(
             {},
             $ctrl.discussion,
-            _discussion
+            _discussion,
           );
           return $ctrl.onDiscussionUpdate({discussion});
         };
@@ -70,7 +70,7 @@ export default function(app) {
           reply.discussion = $ctrl.discussion.id;
           return $ctrl.onReplySubmit({reply});
         };
-      }
+      },
     ],
     template: require('./discussion-thread-view.html'),
   });

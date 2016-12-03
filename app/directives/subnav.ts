@@ -47,7 +47,7 @@ export default function(app) {
 
             // add link
             angular.element(a).attr(
-              'href', './' + $filter('routeSegmentUrl')(target)
+              'href', './' + $filter('routeSegmentUrl')(target),
             );
 
             // add click event
@@ -63,11 +63,11 @@ export default function(app) {
                 } else {
                   el.removeClass('active');
                 }
-              }
+              },
             );
           });
-        }
+        },
       };
-    }
+    },
   ]);
 };

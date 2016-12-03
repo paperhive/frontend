@@ -24,7 +24,7 @@ export default function(app) {
             this.submitting = false;
             this.error = response.data && response.data.message ||
               'unknown reason';
-          }
+          },
         );
       }
     },

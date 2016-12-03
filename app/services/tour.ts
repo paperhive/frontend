@@ -21,7 +21,7 @@ export default function(app) {
             'highlight',
             'search',
             'hive',
-            'signup'
+            'signup',
           ],
           index: 0,
           urls,
@@ -73,6 +73,6 @@ export default function(app) {
         };
 
         return service;
-      }
+      },
     ]);
 };

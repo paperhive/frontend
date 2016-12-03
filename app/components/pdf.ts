@@ -62,7 +62,7 @@ export default function(app) {
                 message: error.message || 'Could not download PDF.',
               });
               ctrl.onUpdate({status: {}});
-            })
+            }),
           );
         });
 
@@ -72,7 +72,7 @@ export default function(app) {
             ctrl.pdf.destroy();
           }
         });
-      }
+      },
     ],
   });
 };

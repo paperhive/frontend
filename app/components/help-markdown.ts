@@ -86,7 +86,7 @@ export default function(app) {
           Also check out this [LaTeX introduction](https://en.wikibooks.org/wiki/LaTeX/Mathematics).
         `);
 
-      }
+      },
     ],
     template: require('./help-markdown.html'),
   });

@@ -22,7 +22,7 @@ export default function(app) {
             frameborder="0"
             scrolling="yes"
             style="border:none; overflow:hidden; width:100%;"
-          ></iframe>`
+          ></iframe>`,
         );
         this.$element.append(iframe);
 
@@ -47,9 +47,9 @@ export default function(app) {
               <script src="https://api.growkudos.com/widgets/article/${this.doi}?omit_icons=true"></script>
               <script src="https://api.growkudos.com/widgets/use_kudos/${this.doi}?omit_icons=true"></script>
             </body>
-          </html>`
+          </html>`,
         );
       }
-    }
+    },
   });
 }

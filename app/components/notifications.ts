@@ -10,9 +10,9 @@ export default function(app) {
           'error': 'danger',
           'info': 'info',
           'warning': 'warning',
-          'success': 'success'
+          'success': 'success',
         };
-      }
+      },
     ],
     template: require('./notifications.html'),
   });

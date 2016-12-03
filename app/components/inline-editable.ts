@@ -3,7 +3,7 @@ export default function(app) {
     bindings: {
       content: '<',
       canEdit: '<',
-      onSubmit: '&'
+      onSubmit: '&',
     },
     controller: ['$scope', '$q', function($scope, $q) {
       const $ctrl = this;

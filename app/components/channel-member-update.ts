@@ -3,7 +3,7 @@ export default function(app) {
     bindings: {
       resolve: '<',
       close: '&',
-      dismiss: '&'
+      dismiss: '&',
     },
     controller: class ChannelMemberUpdateCtrl {
       inProgress: boolean;

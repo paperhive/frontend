@@ -49,8 +49,8 @@ export default function(app) {
 
           // call handler once
           $timeout(resizeHandler);
-        }
+        },
       };
-    }
+    },
   ]);
 };

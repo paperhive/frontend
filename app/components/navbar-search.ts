@@ -6,7 +6,7 @@ export default function(app) {
       'notificationService', 'tourService',
       function(
         $scope, $http, $location, $routeSegment, config,
-        notificationService, tourService
+        notificationService, tourService,
       ) {
         $scope.navbarSearchItemUrl = navbarSearchItemUrl;
         $scope.tour = tourService;
@@ -18,7 +18,7 @@ export default function(app) {
         $scope.search = {};
         $scope.phSearch = function(query, limit) {
           return $http.get(config.apiUrl + '/documents/prefix_search', {
-            params: {q: query, limit}
+            params: {q: query, limit},
           })
           .then(
             function(response) {
@@ -27,22 +27,22 @@ export default function(app) {
             function(response) {
               notificationService.notifications.push({
                 type: 'error',
-                message: 'Could not fetch documents'
+                message: 'Could not fetch documents',
               });
-            }
+            },
           );
         };
 
         $scope.goToDocument = function(item, model, label) {
           $location
             .path($routeSegment.getSegmentUrl(
-              'documents', {documentId: item.id}
+              'documents', {documentId: item.id},
             ))
             .search({});
 
           $scope.search.body = '';
         };
-      }
+      },
     ],
     template: require('./navbar-search.html'),
   });

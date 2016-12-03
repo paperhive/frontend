@@ -1,5 +1,5 @@
-import { clone, min} from 'lodash';
 import * as jquery from 'jquery';
+import { clone, min} from 'lodash';
 
 export default function(app) {
   app.directive(
@@ -21,7 +21,7 @@ export default function(app) {
             const height = min([
               jquery($window).innerHeight() - params.offsetTop -
                 params.offsetBottom - 1,
-              element[0].scrollHeight
+              element[0].scrollHeight,
             ]);
             element.css({height: height > 0 ? height + 'px' : 'auto'});
 
@@ -75,12 +75,12 @@ export default function(app) {
                 params.offsetBottom = vals[1] || paramsDefault.offsetBottom;
                 params.useParentHeight = vals[2] !== undefined ?
                   vals[2] : paramsDefault.useParentHeight;
-              }
+              },
             );
           });
-        }
+        },
       };
-    }]
+    }],
   );
 
 };

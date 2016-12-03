@@ -34,9 +34,9 @@ export default function(app) {
               $document.off(eventName, handler);
             });
 
-          }
+          },
         };
-      }
+      },
     ]);
   }
 

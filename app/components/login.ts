@@ -28,7 +28,7 @@ export default function(app) {
             $scope.login.error = data || {message: 'Unknown error'};
           });
         };
-      }
+      },
     ],
     template: require('./login.html'),
   });

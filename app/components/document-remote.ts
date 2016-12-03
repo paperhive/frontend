@@ -8,7 +8,7 @@ class DocumentRemoteCtrl {
     if (!type || !id) {
       notificationService.notifications.push({
         type: 'error',
-        message: 'type or id parameter is missing.'
+        message: 'type or id parameter is missing.',
       });
       return;
     }
@@ -34,15 +34,15 @@ class DocumentRemoteCtrl {
         notificationService.notifications.push({
           type: 'error',
           message: response.data && response.data.message ||
-            `Document with type ${type} and id ${id} could not be retrieved for an unknown reason.`
+            `Document with type ${type} and id ${id} could not be retrieved for an unknown reason.`,
         });
-      }
+      },
     );
   }
 }
 
 export default function(app) {
   app.component('documentRemote', {
-    controller: DocumentRemoteCtrl
+    controller: DocumentRemoteCtrl,
   });
 }

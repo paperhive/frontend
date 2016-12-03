@@ -2,7 +2,7 @@ export default function(app) {
   app.run([
     '$rootScope', '$routeSegment', 'metaService',
     function(
-      $rootScope, $routeSegment, metaService
+      $rootScope, $routeSegment, metaService,
     ) {
       // event listener for title change
       $rootScope.$on('routeSegmentChange', function(event, current, previous) {
@@ -12,9 +12,9 @@ export default function(app) {
         metaService.set({
           title: (params && params.title) || 'PaperHive',
           meta: params && params.meta,
-          jsonld: params && params.jsonld
+          jsonld: params && params.jsonld,
         });
       });
-    }
+    },
   ]);
 }

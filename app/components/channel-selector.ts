@@ -4,7 +4,7 @@ export default function(app) {
       discussions: '<',
     },
     controller: class ChannelSelectorCtrl {
-      discussions: Array<any>;
+      discussions: any[];
 
       publicDiscussions: number;
       channelDiscussions: any;

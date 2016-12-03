@@ -32,7 +32,7 @@ const kuCategories = [
 export default function(app) {
   app.component('documentsList', {
     controller: class DocumentsListCtrl {
-      categories: Array<any>;
+      categories: any[];
 
       static $inject = ['$http', '$scope', 'config'];
       constructor(public $http, public $scope, public config) {
@@ -50,7 +50,7 @@ export default function(app) {
             params: {type: 'oapen', id: id},
           }).then(
             response => oapenDocuments[id] = response.data,
-            response => { /* do nothing, the doc is not yet uploaded to oapen */ }
+            response => { /* do nothing, the doc is not yet uploaded to oapen */ },
           );
         }));
 

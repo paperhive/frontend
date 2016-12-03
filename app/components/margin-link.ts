@@ -89,7 +89,7 @@ export default function(app) {
           angular.element($window).off('scroll', updateCountApply);
           angular.element($window).off('resize', updateCountApply);
         });
-      }
+      },
     ],
     template: require('./margin-link.html'),
   });

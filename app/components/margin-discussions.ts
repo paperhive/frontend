@@ -67,7 +67,7 @@ export default function(app) {
         // update discussion visibilities on scroll and resize event
         angular.element($window).on('scroll', updateDiscussionVisibilities);
         $element.on('$destroy', () =>
-          angular.element($window).off('scroll', updateDiscussionVisibilities)
+          angular.element($window).off('scroll', updateDiscussionVisibilities),
         );
 
         // show popover with share message?
@@ -93,7 +93,7 @@ export default function(app) {
               angular.element($window).scroll();
               $timeout(() => {
                 scroll.scrollTo('#discussionTourPopover', {
-                  offset: ($ctrl.viewportOffsetTop || 0) + 130
+                  offset: ($ctrl.viewportOffsetTop || 0) + 130,
                 });
               });
             }, 400);
@@ -198,7 +198,7 @@ export default function(app) {
           const coordsAbove = draftCoord &&
             coords.filter(coord => coord.position <= draftCoord.position);
           const coordsBelow = coords.filter(coord =>
-            !draftCoord || coord.position > draftCoord.position
+            !draftCoord || coord.position > draftCoord.position,
           );
 
           // move bottom elements from above to below if there's not enough space
@@ -256,7 +256,7 @@ export default function(app) {
         $scope.$watch('$ctrl.draftSize', updatePositions);
         $scope.$watchCollection('$ctrl.discussionSizes', updatePositions);
         $scope.$watchCollection('$ctrl.pageCoordinates', updatePositions);
-      }
+      },
     ],
     template: require('./margin-discussions.html'),
   });

@@ -36,7 +36,7 @@ export default function(app) {
                     this.notificationService.notifications.push({
                       type: 'info',
                       message: `Welcome to PaperHive! You can set your username
-                        <a href="./settings" class="alert-link">here</a>.`
+                        <a href="./settings" class="alert-link">here</a>.`,
                     });
                   }, 100);
                 }

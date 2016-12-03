@@ -25,11 +25,11 @@ export default function(app) {
 
               metaService.set({
                 title: 'Discussions · ' + document.title + ' · PaperHive',
-                meta: metadata
+                meta: metadata,
               });
             }
           });
-        }
+        },
       ],
       template: require('./discussion-list.html'),
     });

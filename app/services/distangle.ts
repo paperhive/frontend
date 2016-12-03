@@ -120,7 +120,7 @@ export default function(app) {
 
         // shift for upper bound
         return optAnchors;
-      }
+      },
     };
   }]);
 };

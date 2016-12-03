@@ -35,7 +35,7 @@ export default function(app) {
               limit: maxPerPage,
               skip: (page - 1) * maxPerPage,
               restrictToLatest: true,
-            }
+            },
           })
           .then(
             function(response) {
@@ -45,20 +45,20 @@ export default function(app) {
             function(response) {
               notificationService.notifications.push({
                 type: 'error',
-                message: 'Could not fetch documents'
+                message: 'Could not fetch documents',
               });
-            }
+            },
           );
         };
 
         $scope.$watchGroup(['search.query', 'search.page'], (newValues) =>
-          getSearchResults(newValues[0], newValues[1])
+          getSearchResults(newValues[0], newValues[1]),
         );
 
         $scope.scrollToTop = function() {
           window.scrollTo(0, 0);
         };
-      }
+      },
     ],
     template: require('./search-results.html'),
   });

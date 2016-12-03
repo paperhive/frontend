@@ -7,7 +7,7 @@ export default function(app) {
           const onRendered = $parse(attrs.onRendered);
           onRendered(scope, {});
         });
-      }
+      },
     };
   }]);
 };

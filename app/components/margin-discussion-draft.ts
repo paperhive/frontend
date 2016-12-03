@@ -32,7 +32,7 @@ export default function(app) {
             .then(data => ctrl.onDiscard())
             .finally(() => ctrl.submitting = false);
         };
-      }
+      },
     ],
     template: require('./margin-discussion-draft.html'),
   });

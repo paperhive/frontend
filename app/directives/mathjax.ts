@@ -14,12 +14,12 @@ export default function(app) {
             } catch (e) {
               notificationService.notifications.push({
                 type: 'error',
-                message: e.message
+                message: e.message,
               });
             }
           });
-        }
+        },
       };
-    }
+    },
   ]);
 };

@@ -4,7 +4,7 @@ export default function(app) {
       function($scope, authService, tourService) {
         $scope.auth = authService;
         $scope.tour = tourService;
-      }
+      },
     ],
     template: require('./navbar-user.html'),
   });

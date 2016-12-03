@@ -49,7 +49,7 @@ export default function(app) {
               if (response.status !== 404) {
                 throw new Error(`Error testing DOI on Kudos (status ${response.status})`);
               }
-            }
+            },
           );
       }
 

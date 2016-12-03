@@ -5,7 +5,7 @@ export default function(app) {
       'notificationService', 'authService', 'metaService',
       function(
         $scope, $rootScope, $routeSegment, config, $http,
-        notificationService, authService, metaService
+        notificationService, authService, metaService,
       ) {
         // expose $routeSegment for subnav
         $scope.$routeSegment = $routeSegment;
@@ -16,7 +16,7 @@ export default function(app) {
         // fetch user
         $http.get(
           config.apiUrl + '/people/username/' +
-            $routeSegment.$routeParams.username
+            $routeSegment.$routeParams.username,
         )
         .success(function(data) {
           $scope.user = data;
@@ -27,17 +27,17 @@ export default function(app) {
               name: 'description',
               content: 'Profile of ' + data.account.username +
                 ' (' + data.displayName + ')' +
-                ' on PaperHive.'
-            }]
+                ' on PaperHive.',
+            }],
           });
         })
         .error(function(data) {
           notificationService.notifications.push({
             type: 'error',
-            message: data.message
+            message: data.message,
           });
         });
-      }
+      },
     ],
     template: require('./user.html'),
   });

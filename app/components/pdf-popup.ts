@@ -56,6 +56,6 @@ export default function(app) {
         <i class="fa fa-lg fa-share-alt"></i>
       </button>
     </div>
-    `
+    `,
   });
 }

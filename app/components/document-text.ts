@@ -6,11 +6,11 @@ class DocumentTextCtrl {
   revision: any;
   access: boolean;
   latestAccessibleRevision: any;
-  discussions: Array<any>;
-  filteredDiscussions: Array<any>;
+  discussions: any[];
+  filteredDiscussions: any[];
 
   draftSelectors: any;
-  highlights: Array<any>;
+  highlights: any[];
   hoveredHighlights: any;
   hoveredMarginDiscussions: any;
   pageCoordinates: any;
@@ -61,8 +61,8 @@ class DocumentTextCtrl {
         target: {
           document: this.revision.id,
           documentRevision: this.revision.revision,
-        }
-      }
+        },
+      },
     );
   }
 

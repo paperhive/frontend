@@ -12,7 +12,7 @@ export default function(app) {
       onDiscussionDelete: '&',
       onReplySubmit: '&',
       onReplyUpdate: '&',
-      onReplyDelete: '&'
+      onReplyDelete: '&',
     },
     controller: [
       '$scope', '$q', '$location', 'authService', 'channelService',
@@ -51,7 +51,7 @@ export default function(app) {
           const reply = merge(
             {},
             $scope.replyDraft,
-            {discussion: $scope.discussion.id}
+            {discussion: $scope.discussion.id},
           );
           $q.when(ctrl.onReplySubmit({reply: reply}))
             .then(() => $scope.replyDraft = {})
@@ -83,7 +83,7 @@ export default function(app) {
           $scope.replyUpdate = () => {
             $scope.replyState.submitting = true;
             $q.when(ctrl.onReplyUpdate(
-              {$replyOld: $scope.reply, $replyNew: $scope.copy}
+              {$replyOld: $scope.reply, $replyNew: $scope.copy},
             ))
               .then(function() {
                 $scope.replyState.editing = false;
@@ -93,7 +93,7 @@ export default function(app) {
               });
           };
         }];
-      }
+      },
     ],
     template: require('./margin-discussion.html'),
   });

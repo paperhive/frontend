@@ -1,5 +1,5 @@
-import { cloneDeep } from 'lodash';
 import * as angular from 'angular';
+import { cloneDeep } from 'lodash';
 
 export default function(app) {
   app.component(
@@ -70,16 +70,16 @@ export default function(app) {
             if ($scope.editMode && ctrl.content.body !== $scope.comment.body) {
               const answer = $window.confirm(
                 'There is unsaved content in the reply field. ' +
-                  'Are you sure you want to leave this page?'
+                  'Are you sure you want to leave this page?',
               );
               if (!answer) {
                 event.preventDefault();
               }
             }
           });
-        }
+        },
       ],
       template: require('./comment.html'),
-    }
+    },
   );
 };

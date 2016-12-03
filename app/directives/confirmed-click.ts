@@ -10,7 +10,7 @@ export default function(app) {
               scope.$apply(clickAction);
             }
           });
-        }
+        },
       };
     }]);
 };

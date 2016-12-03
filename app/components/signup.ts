@@ -34,7 +34,7 @@ export default function(app) {
               'Unknown error';
           });
         };
-      }
+      },
     ],
     template: require('./signup.html'),
   });

@@ -13,14 +13,14 @@ export default function(app) {
             try {
               const ret = await $http.get(
                 config.apiUrl +
-                  '/people/' + id + '/hives'
+                  '/people/' + id + '/hives',
               );
               ctrl.hivedDocuments = ret.data.documents;
             } catch (err) {
               notificationService.notifications.push({
                 type: 'error',
                 message: err.data.message ? err.data.message :
-                  'could not fetch hived documents (unknown reason)'
+                  'could not fetch hived documents (unknown reason)',
               });
             }
             // This is an async function, so unless we $apply, angular won't
@@ -38,6 +38,6 @@ export default function(app) {
               </span>
             </p>
           </a>
-        </div>`
+        </div>`,
     });
 };

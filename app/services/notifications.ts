@@ -11,7 +11,7 @@ export default function(app) {
         return function(data) {
           service.notifications.push({
             type: 'error',
-            message: (data && data.message) || msg || 'unknown error'
+            message: (data && data.message) || msg || 'unknown error',
           });
         };
       };
@@ -26,6 +26,6 @@ export default function(app) {
       });
 
       return service;
-    }
+    },
   ]);
 };

@@ -7,7 +7,7 @@ export default function(app) {
     skipStartupTypeset: true,
     messageStyle: 'none',
     'HTML-CSS': {
-      showMathMenu: false
+      showMathMenu: false,
     },
     extension: ['Safe.js'],
     tex2jax: {
@@ -16,7 +16,7 @@ export default function(app) {
         ['$$', '$$'],
       ],
       displayMath: [],
-    }
+    },
   });
   MathJax.Hub.Configured();
 }

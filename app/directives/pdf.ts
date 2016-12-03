@@ -91,7 +91,7 @@ function getRectanglesSelector(range, container) {
   // get TextNodes inside the range
   const textNodes = filter(
     getTextNodes(container),
-    range.containsNodeText.bind(range)
+    range.containsNodeText.bind(range),
   );
 
   // wrap each TextNode in a span to measure it
@@ -269,7 +269,7 @@ export default function(app) {
         // get a non-flipped version of the viewport
         // andré: this took me a few hours, uaaargh! :)
         const viewport = _viewport.clone({
-          dontFlip: true
+          dontFlip: true,
         });
 
         if (!this.annotations) {
@@ -300,7 +300,7 @@ export default function(app) {
                 Press and hold ${isMac ? 'cmd (⌘)' : 'Ctrl+Alt'} to select text
                 inside a link.
               </div>
-            </div>`
+            </div>`,
           );
           this.tooltip.appendTo(this.element);
           const target = jquery(event.currentTarget);
@@ -461,7 +461,7 @@ export default function(app) {
           offset: {
             top: this.element[0].offsetTop,
             left: this.element[0].offsetLeft,
-          }
+          },
         });
       }
 
@@ -541,8 +541,8 @@ export default function(app) {
 
     // render a full pdf
     class PdfFull {
-      pages: Array<PdfPage>;
-      renderedPages: Array<PdfPage>;
+      pages: PdfPage[];
+      renderedPages: PdfPage[];
       renderQueue: any;
 
 
@@ -876,7 +876,7 @@ export default function(app) {
 
         promise.then(
           rendered => callback(undefined, rendered),
-          err => callback(err)
+          err => callback(err),
         );
       }
 
@@ -952,7 +952,7 @@ export default function(app) {
           this.element.offset().top +
           page.element[0].offsetTop +
           coords[1] / page.pageSize.height * page.height,
-          {offset: (this.scope.viewportOffsetTop || 0) + 130}
+          {offset: (this.scope.viewportOffsetTop || 0) + 130},
         );
       }
 
@@ -979,7 +979,7 @@ export default function(app) {
           this.element.offset().top +
           page.element[0].offsetTop +
           topRect.top * page.height,
-          {offset: (this.scope.viewportOffsetTop || 0) + 130}
+          {offset: (this.scope.viewportOffsetTop || 0) + 130},
         );
 
         // set selection

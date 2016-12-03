@@ -20,7 +20,7 @@ export default function(app) {
             response => {
               ctrl.sending = false;
               ctrl.error = response.data;
-            }
+            },
           );
       };
     }],

@@ -7,13 +7,13 @@ export default function(app) {
       controller: ['$scope', function($scope) {
         const office = {
           lat: 52.53849,
-          lng: 13.38520
+          lng: 13.38520,
         };
         angular.extend($scope, {
           center: {
             lat: office.lat,
             lng: office.lng,
-            zoom: 12
+            zoom: 12,
           },
           markers: {
             officeMarker: {
@@ -25,10 +25,10 @@ export default function(app) {
                 '<small class="ph-newline">Room ACK390, Entrance H</small>' +
                 '</h4>' +
                 'Ackerstr. 76<br/>13355 Berlin<br/>Germany',
-              draggable: false
-            }
-          }
+              draggable: false,
+            },
+          },
         });
-      }]
+      }],
     });
 };

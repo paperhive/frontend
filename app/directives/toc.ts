@@ -1,5 +1,5 @@
-import * as _ from 'lodash';
 import * as jquery from 'jquery';
+import * as _ from 'lodash';
 
 export default function(app) {
 
@@ -36,7 +36,7 @@ export default function(app) {
               const newTocElement = {
                 id: el.attr('id'),
                 text: el.attr('toc-text') || el.text(),
-                subToc: undefined
+                subToc: undefined,
               };
               // kick out first element
               elements.shift();
@@ -57,7 +57,7 @@ export default function(app) {
                 const rect = element.getBoundingClientRect();
                 return {
                   id: jquery(element).attr('id'),
-                  offset: rect.top
+                  offset: rect.top,
                 };
               }), 'offset');
               const offset = parsedOffset(scope) || 0;
@@ -106,8 +106,8 @@ export default function(app) {
 
             parsedToc.assign(scope, toc);
           });
-        }
+        },
       };
-    }]
+    }],
   );
 };

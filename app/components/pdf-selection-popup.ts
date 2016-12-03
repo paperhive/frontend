@@ -27,7 +27,7 @@ export default function(app) {
           data: {target: newTarget},
         }).then(
           response => this.anchorId = response.data.id,
-          this.notificationService.httpError('could not create anchor')
+          this.notificationService.httpError('could not create anchor'),
         );
       }
     },
@@ -37,6 +37,6 @@ export default function(app) {
       label="URL for this selection"
       help="Share this URL on social networks or via email to draw the attention of your colleagues and collaborators to this selection."
     ></url-share>
-    `
+    `,
   });
 }

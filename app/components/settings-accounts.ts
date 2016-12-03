@@ -8,7 +8,7 @@ export default function(app) {
       function($http, authService, notificationService) {
         const ctrl = this;
         ctrl.auth = authService;
-      }
+      },
     ],
     template: require('./settings-accounts.html'),
   });

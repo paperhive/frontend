@@ -29,14 +29,14 @@ export default function(app) {
                   return defer.resolve();
                 }
                 defer.reject(
-                  'An error occured while checking if the username is available'
+                  'An error occured while checking if the username is available',
                 );
               });
 
             return defer.promise;
           };
-        }
+        },
       };
-    }
+    },
   ]);
 };

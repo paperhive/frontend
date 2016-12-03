@@ -1,9 +1,9 @@
 /*global MathJax*/
 
 // TODO: ts complains about missing default export but this works!
+import {highlightAuto} from 'highlightjs';
 import * as jquery from 'jquery';
 import * as kramed from 'kramed';
-import {highlightAuto} from 'highlightjs';
 // TODO: const MathJax = require('MathJax');
 
 export default function(app) {
@@ -54,12 +54,12 @@ export default function(app) {
           scope.$watch('body', function(newValue) {
             try {
               element.html(
-                  $sanitize(kramed(newValue || '', {renderer: renderer}))
+                  $sanitize(kramed(newValue || '', {renderer: renderer})),
               );
               // replace span/div tags with script tags
               jquery(element[0]).find('.mathjax').each(function(index, el) {
                 jquery(el).replaceWith(origMathRenderer(
-                    jquery(el).text(), 'math/tex', jquery(el).prop('tagName') === 'DIV'
+                    jquery(el).text(), 'math/tex', jquery(el).prop('tagName') === 'DIV',
                 ));
               });
               MathJax.Hub.Queue(['Typeset', MathJax.Hub, element[0]], [function() {
@@ -68,12 +68,12 @@ export default function(app) {
             } catch (e) {
               notificationService.notifications.push({
                 type: 'error',
-                message: e.message
+                message: e.message,
               });
             }
           });
-        }
+        },
       };
-    }
+    },
   ]);
 };

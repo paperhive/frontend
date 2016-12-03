@@ -19,7 +19,7 @@ export default function(app) {
             position: 'absolute',
             height: 'auto',
             display: 'none',
-            visibility: 'hidden'
+            visibility: 'hidden',
           });
 
           jquery($document[0].body).append(mirror);
@@ -64,9 +64,9 @@ export default function(app) {
           });
 
           $timeout(update, 0);
-        }
+        },
       };
-    }
+    },
   ]);
 
 };

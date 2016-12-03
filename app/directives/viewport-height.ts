@@ -16,8 +16,8 @@ export default function(app) {
         link: function(scope, element, attrs) {
           const height = angular.element($window).height();
           element.css('min-height', height + 'px');
-        }
+        },
       };
-    }
+    },
   ]);
 };

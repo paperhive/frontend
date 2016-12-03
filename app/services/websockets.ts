@@ -31,7 +31,7 @@ class WebsocketService {
           path: this.path,
           // TODO: remove for allowing fallback?
           transports: ['websocket'],
-        }
+        },
       );
 
       socket.emit('join', payload);

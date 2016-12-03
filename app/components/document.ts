@@ -5,7 +5,7 @@ import { getRevisionMetadata } from '../utils/documents';
 
 class DiscussionsController {
   // data
-  discussions: Array<any>;
+  discussions: any[];
   documentUpdatesSubscription: any;
 
   constructor(public document: string, public config: any, public $scope: any,
@@ -84,7 +84,7 @@ class DiscussionsController {
     this.$scope.$apply(() => this._replyDelete(merge(
       {},
       reply,
-      {discussionRevision: response.data.discussionRevision}
+      {discussionRevision: response.data.discussionRevision},
     )));
   }
 
@@ -195,10 +195,10 @@ export default function(app) {
     controller: class DocumentCtrl {
       subnavOpen = false;
       sidenavOpen = true;
-      revisions: Array<any>;
+      revisions: any[];
       activeRevision: any;
       discussionsCtrl: DiscussionsController;
-      filteredDiscussions: Array<any>;
+      filteredDiscussions: any[];
 
       // note: do *not* use $routeSegment.$routeParams because they still
       // use the old state in $routeChangeSuccess events
@@ -226,14 +226,14 @@ export default function(app) {
 
         // instanciate and init controller for discussions
         this.discussionsCtrl = new DiscussionsController(
-          documentId, config, $scope, $http, authService, websocketService
+          documentId, config, $scope, $http, authService, websocketService,
         );
 
 
         $scope.$watch('$ctrl.authService.user', () => {
           this.discussionsCtrl.refresh().catch(error => notificationService.notifications.push({
             type: 'error',
-            message: error.message
+            message: error.message,
           }));
           this.documentCtrl.fetchBookmarks(); // TODO: error handling
         });

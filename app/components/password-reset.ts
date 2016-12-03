@@ -31,10 +31,10 @@ export default function(app) {
               data => {
                 ctrl.sending = false;
                 ctrl.error = data;
-              }
+              },
             );
         };
-      }
+      },
     ],
     template: `
     <div class="container ph-xl-margin-bottom" disabled>

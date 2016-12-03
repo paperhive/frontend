@@ -5,7 +5,7 @@ export default function(app) {
     return {
       restrict: 'A',
       scope: {
-        attributes: '='
+        attributes: '=',
       },
       link: function(scope, element, attr) {
         scope.$watch('attributes', function(attributes, oldAttributes) {
@@ -16,7 +16,7 @@ export default function(app) {
           element.attr(angular.copy(attributes));
         });
 
-      }
+      },
     };
   }]);
 };

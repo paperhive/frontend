@@ -3,8 +3,8 @@ import { find, remove } from 'lodash';
 
 export default function(app) {
   app.service('channelService', class channelService {
-    channels: Array<any>;
-    invitations: Array<any>;
+    channels: any[];
+    invitations: any[];
     channelsById: any;
     selectedChannel: any;
     showAllChannels = true;

@@ -6,13 +6,13 @@ export function getRevisionMetadata(revision) {
   const metadata = [
     {
       name: 'description',
-      content: revision.title + ' by ' + revision.authors.join(', ') + '.'
+      content: revision.title + ' by ' + revision.authors.join(', ') + '.',
     },
     {
       name: 'author',
-      content: revision.authors.map(author => author.name).join(', ')
+      content: revision.authors.map(author => author.name).join(', '),
     },
-    {name: 'keywords', content: revision.tags.join(', ')}
+    {name: 'keywords', content: revision.tags.join(', ')},
   ];
 
   // Add some Highwire Press tags, used by Google Scholar, arXiv etc.; cf.
@@ -32,7 +32,7 @@ export function getRevisionMetadata(revision) {
   const $filter = angular.injector(['ng']).get('$filter');
   metadata.push({
     name: 'citation_publication_date',
-    content: $filter('date')(revision.publishedAt, 'yyyy/MM/dd')
+    content: $filter('date')(revision.publishedAt, 'yyyy/MM/dd'),
   });
 
   // Don't expose the DOI for all versions of the document; it really only

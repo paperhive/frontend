@@ -42,8 +42,8 @@ export default function(app) {
             null,
             {
               headers: {'Authorization': 'token ' + token},
-              timeout: 10000
-            }
+              timeout: 10000,
+            },
           );
         };
       }
@@ -68,7 +68,7 @@ export default function(app) {
             data => {
               login(loginFun).then(deferred.resolve, deferred.reject);
             },
-            deferred.reject
+            deferred.reject,
           );
           return deferred.promise;
         }
@@ -109,7 +109,7 @@ export default function(app) {
       authService.signupEmail = (email, password) => {
         return $http.post(
           config.apiUrl + '/auth/emailSignup/initiate',
-          {email, password, frontendUrl, returnUrl: authService.returnPath}
+          {email, password, frontendUrl, returnUrl: authService.returnPath},
         );
       };
 
@@ -134,7 +134,7 @@ export default function(app) {
           },
         }).then(
           response => { $window.location.href = response.data.location; },
-          response => response.data
+          response => response.data,
         );
       };
 
@@ -181,6 +181,6 @@ export default function(app) {
       }
 
       return authService;
-    }
+    },
   ]);
 };

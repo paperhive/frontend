@@ -43,7 +43,7 @@ export default function(app) {
           $http.post(`${config.apiUrl}/people/${ctrl.person.id}/emails`, {
             email: email,
             frontendUrl: authService.frontendUrl,
-            returnUrl: authService.returnPath
+            returnUrl: authService.returnPath,
           }).then(response => {
             ctrl.adding = false;
             ctrl.addSuccess = response.data;
@@ -64,11 +64,11 @@ export default function(app) {
               (error) => {
                 ctrl.updating = false;
                 ctrl.updateDefaultEmailError = error;
-              }
+              },
             );
           }
         };
-      }
+      },
     ],
     template: `
     <div class="has-feedback row has-error" ng-if="!$ctrl.person.account.email">

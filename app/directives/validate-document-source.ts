@@ -7,7 +7,7 @@ export default function(app) {
         restrict: 'A',
         require: 'ngModel',
         scope: {
-          validateDocumentSource: '='
+          validateDocumentSource: '=',
         },
         link: function(scope, elm, attrs, ctrl) {
           // allows to cancel pending requests
@@ -31,7 +31,7 @@ export default function(app) {
               const defer = $q.defer();
               $http.get(config.apiUrl + '/documents/sources', {
                 params: {handle: modelValue},
-                timeout: canceler.promise
+                timeout: canceler.promise,
               })
               .success(function(data) {
                 scope.validateDocumentSource = data;
@@ -43,13 +43,13 @@ export default function(app) {
                   defer.reject('Document source is not recognized');
                 }
                 defer.reject(
-                  'An error occured while checking the document source'
+                  'An error occured while checking the document source',
                 );
               });
               return defer.promise;
             };
-        }
+        },
       };
-    }
+    },
   ]);
 };

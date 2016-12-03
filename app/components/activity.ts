@@ -32,7 +32,7 @@ export default function(app) {
         this.$http.get(`${this.config.apiUrl}/activities/`, {params})
           .then(
             response => this.activities = response.data.activities,
-            this.notificationService.httpError('could not fetch activities (unknown reason)')
+            this.notificationService.httpError('could not fetch activities (unknown reason)'),
           );
 
         // fetch person if person filter is active
@@ -40,7 +40,7 @@ export default function(app) {
           this.$http.get(`${this.config.apiUrl}/people/${this.filterId}`)
             .then(
               response => this.person = response.data,
-              this.notificationService.httpError('could not fetch person (unknown reason)')
+              this.notificationService.httpError('could not fetch person (unknown reason)'),
             );
         }
       }
