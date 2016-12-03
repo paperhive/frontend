@@ -1,11 +1,11 @@
 {
   "extends": "tslint:recommended",
   "rules": {
+    "arrow-parens": false,
     "curly": false,
+    "no-var-requires": false,
     "object-literal-sort-keys": false,
-    "quotemark": [
-      true,
-      "single"
-    ]
+    "only-arrow-functions": false,
+    "quotemark": [true, "single"]
   }
 }
