@@ -41,7 +41,7 @@ export default function(app) {
           ctrl.addError = undefined;
 
           $http.post(`${config.apiUrl}/people/${ctrl.person.id}/emails`, {
-            email: email,
+            email,
             frontendUrl: authService.frontendUrl,
             returnUrl: authService.returnPath,
           }).then(response => {
@@ -80,7 +80,10 @@ export default function(app) {
       </span>
     </div>
 
-    <div class="row" ng-repeat="email in $ctrl.verifiedEmails.concat($ctrl.pendingEmails) | orderBy:['verified','address']">
+    <div class="row" ng-repeat="
+      email in $ctrl.verifiedEmails.concat($ctrl.pendingEmails) |
+      orderBy:['verified','address']
+    ">
       <span class="col-sm-7">
         {{email.address}}
       </span>

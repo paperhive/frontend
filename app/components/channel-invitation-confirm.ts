@@ -6,8 +6,11 @@ export default function(app) {
       succeeded = false;
       error = false;
 
-      static $inject = ['$http', '$location', '$scope', 'authService', 'channelService', 'config', 'notificationService'];
-      constructor(public $http, public $location, public $scope, public authService, public channelService, public config, public notificationService) {
+      static $inject = ['$http', '$location', '$scope', 'authService',
+        'channelService', 'config', 'notificationService'];
+      constructor(public $http, public $location, public $scope,
+                  public authService, public channelService, public config,
+                  public notificationService) {
         this.token = $location.hash();
         $location.hash(null);
         $http

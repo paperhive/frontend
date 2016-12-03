@@ -10,7 +10,7 @@ export default function(app) {
         template: require('./subnav.html'),
         transclude: true,
         scope: {},
-        link: function(scope, element, attrs) {
+        link: (scope, element, attrs) => {
           // collapsed by default
           scope.collapsed = true;
 

@@ -6,7 +6,7 @@ export default function(app) {
       return {
         restrict: 'E',
         scope: {body: '='},
-        link: function(scope, element, attrs) {
+        link: (scope, element, attrs) => {
           scope.$watch('body', function(body) {
             try {
               element.html($sanitize(body || ''));

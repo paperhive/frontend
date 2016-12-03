@@ -22,7 +22,7 @@ export default function(app) {
 
         // update location from scope variables
         function updateFromScope(page) {
-          $location.search({query: $scope.search.query, page: page});
+          $location.search({query: $scope.search.query, page});
         }
         $scope.$watch('search.page', updateFromScope);
 
@@ -49,7 +49,7 @@ export default function(app) {
               });
             },
           );
-        };
+        }
 
         $scope.$watchGroup(['search.query', 'search.page'], (newValues) =>
           getSearchResults(newValues[0], newValues[1]),

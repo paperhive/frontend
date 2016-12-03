@@ -3,7 +3,7 @@ import {cloneDeep, forEach} from 'lodash';
 export default function(app) {
   app.component('settingsProfile', {
     bindings: {
-      'user': '<',
+      user: '<',
     },
     controller: [
       '$scope', '$http', 'authService', 'config', 'notificationService',

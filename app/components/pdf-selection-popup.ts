@@ -31,6 +31,7 @@ export default function(app) {
         );
       }
     },
+    /* tslint:disable:max-line-length */
     template: `
     <url-share
       url="/documents/{{$ctrl.target.document}}?a=s:{{$ctrl.anchorId}}"
@@ -38,5 +39,6 @@ export default function(app) {
       help="Share this URL on social networks or via email to draw the attention of your colleagues and collaborators to this selection."
     ></url-share>
     `,
+    /* tslint:enable:max-line-length */
   });
 }

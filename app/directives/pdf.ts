@@ -1,7 +1,7 @@
 import * as angular from 'angular';
 import { queue } from 'async';
 import * as jquery from 'jquery';
-import { clone, difference, filter, flatten, get, isArray, isEqual, isNumber, map, pick, some, uniq } from 'lodash';
+import { clone, difference, filter, flatten, get, isArray, isEqual, isNumber, pick, some, uniq } from 'lodash';
 import { PDFJS } from 'pdfjs-dist';
 import * as rangy from 'rangy';
 
@@ -129,8 +129,9 @@ export default function(app) {
   // directive follows a few basic rules that make it easier to switch to
   // angular2, see
   // http://teropa.info/blog/2015/10/18/refactoring-angular-apps-to-components.html
-  app.directive('pdfFull', ['$compile', '$document', '$http', '$q', 'scroll', '$timeout', '$window', 'config', function($compile, $document, $http, $q, scroll, $timeout, $window, config) {
-
+  app.directive('pdfFull', [
+      '$compile', '$document', '$http', '$q', 'scroll', '$timeout', '$window', 'config',
+      function($compile, $document, $http, $q, scroll, $timeout, $window, config) {
     // render a page in a canvas
     class CanvasRenderer {
       container: JQuery;
@@ -157,7 +158,6 @@ export default function(app) {
       async render(viewport) {
         // new size
         const size = roundSize(viewport);
-
 
         // create canvas
         if (!this.canvas) {
@@ -285,7 +285,7 @@ export default function(app) {
           div: this.element[0], // layer:
           linkService: this.linkService,
           page: this.page,
-          viewport: viewport,
+          viewport,
         });
 
         // create tooltip
@@ -338,8 +338,9 @@ export default function(app) {
       annotationsRenderer: AnnotationsRenderer;
 
       constructor(public pdf: PDFDocumentProxy, public pageNumber: number,
-          public element: JQuery, public scope: any,
-          public linkService, public defaultPageSize, initialWidth: number) {
+                  public element: JQuery, public scope: any,
+                  public linkService, public defaultPageSize,
+                  initialWidth: number) {
         // update size to default size
         this.updateSize(initialWidth);
       }
@@ -505,7 +506,6 @@ export default function(app) {
         } catch (error) {
           // return if cancelled
           if (error === 'cancelled') {
-            console.log(`page ${this.pageNumber} cancelled`);
             return false;
           }
           throw error;
@@ -545,7 +545,6 @@ export default function(app) {
       renderedPages: PdfPage[];
       renderQueue: any;
 
-
       containerWidth: number;
       lastSelectors: any;
       lastSimpleSelection: any;
@@ -554,7 +553,7 @@ export default function(app) {
       textFocused: boolean = false;
 
       constructor(public pdf: PDFDocumentProxy, public element: JQuery,
-          public scope: any) {
+                  public scope: any) {
         this.pages = [];
 
         // set up render queue
@@ -590,7 +589,10 @@ export default function(app) {
           this.element.append(pageElement);
 
           // instantiate page
-          const page = new PdfPage(this.pdf, pageNumber, pageElement, this.scope, this.linkService, defaultPageSize, width);
+          const page = new PdfPage(
+            this.pdf, pageNumber, pageElement, this.scope,
+            this.linkService, defaultPageSize, width,
+          );
           this.pages.push(page);
         }
 
@@ -628,8 +630,9 @@ export default function(app) {
         // note: key events are not fired on PDFs
         const onKeyEvent = event => {
           const shouldFocus = event.altKey && event.ctrlKey || event.metaKey;
-          if (shouldFocus) this.textFocus();
-          else if (!mousedown) {
+          if (shouldFocus) {
+            this.textFocus();
+          } else if (!mousedown) {
             this.textUnfocus();
             if (event.type === 'keyup') this.onTextSelect();
           }
@@ -643,7 +646,6 @@ export default function(app) {
           $document.off('mouseup', onMouseUp);
           $document.off('keydown keyup', onKeyEvent);
         });
-
 
         this.element.on('mouseup', () => this.textUnfocus());
 
@@ -765,9 +767,9 @@ export default function(app) {
             // pdf rectangles selector
             selectors.pdfRectangles = flatten(pageRanges.map(pageRange => {
               const page = this.pages[pageRange.pageNumber - 1];
-              const selectors = getRectanglesSelector(range, page.textRenderer.element[0]);
-              selectors.forEach(selector => selector.pageNumber = pageRange.pageNumber);
-              return selectors;
+              const rectSelectors = getRectanglesSelector(range, page.textRenderer.element[0]);
+              rectSelectors.forEach(selector => selector.pageNumber = pageRange.pageNumber);
+              return rectSelectors;
             }));
 
             return this.onSelect(selectors);
@@ -819,7 +821,6 @@ export default function(app) {
         const unrenderPages = difference(this.renderedPages, running, renderPages);
         unrenderPages.forEach(page => page.unrender());
         this.renderedPages = difference(this.renderedPages, unrenderPages);
-
 
         // if not resized: remove pages that are running or already rendered
         if (!force && !sizeChanged) {
@@ -889,15 +890,18 @@ export default function(app) {
 
         let match;
         // match page
-        if (match = /^p:(\d+)$/.exec(anchor)) {
+        match = /^p:(\d+)$/.exec(anchor);
+        if (match) {
           return this.scrollToId(anchor);
         }
         // match pdf named destination
-        if (match = /^pdfd:(.*)$/.exec(anchor)) {
+        match = /^pdfd:(.*)$/.exec(anchor);
+        if (match) {
           return await this.scrollToDest(match[1]);
         }
         // match selection anchor
-        if (match = /^s:([\w-]+)$/.exec(anchor)) {
+        match = /^s:([\w-]+)$/.exec(anchor);
+        if (match) {
           return await this.scrollToSelection(match[1]);
         }
         throw new Error(`Anchor ${anchor} does not match.`);
@@ -1082,9 +1086,9 @@ export default function(app) {
         // called when the anchor is updated
         onAnchorUpdate: '&',
       },
-      link: async function(scope, element, attrs) {
+      link: async (scope, element, attrs) => {
         let pdfFull;
-        scope.$watch('pdf', async function (pdf) {
+        scope.$watch('pdf', async (pdf) => {
           // destroy current pdf
           if (pdfFull) {
             pdfFull.destroy();

@@ -9,7 +9,7 @@ export default function(app) {
         scope: {
           validateDocumentSource: '=',
         },
-        link: function(scope, elm, attrs, ctrl) {
+        link: (scope, elm, attrs, ctrl) => {
           // allows to cancel pending requests
           let canceler;
 

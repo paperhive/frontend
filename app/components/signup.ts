@@ -15,8 +15,8 @@ export default function(app) {
 
         $scope.hasErrorPassword = function() {
           const form = $scope.signupForm;
-          return (form.$submitted || form['password'].$touched
-            || !form['password'].$pristine) && form['password'].$invalid;
+          return (form.$submitted || form.password.$touched
+            || !form.password.$pristine) && form.password.$invalid;
         };
 
         $scope.sendSignup = function() {

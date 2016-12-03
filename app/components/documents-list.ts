@@ -47,7 +47,7 @@ export default function(app) {
         await Promise.all(oapenIds.map(id => {
           return this.$http({
             url: `${this.config.apiUrl}/documents/remote`,
-            params: {type: 'oapen', id: id},
+            params: {type: 'oapen', id},
           }).then(
             response => oapenDocuments[id] = response.data,
             response => { /* do nothing, the doc is not yet uploaded to oapen */ },

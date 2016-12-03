@@ -16,11 +16,12 @@ class DocumentTextCtrl {
   pageCoordinates: any;
   anchor: string;
 
-  static $inject = ['$animate', '$element', '$http', '$location', '$routeSegment', '$scope', '$window', 'config',
-    'notificationService', 'tourService'];
-  constructor($animate, $element, public $http, public $location, public $routeSegment,
-      public $scope, $window, public config, public notificationService,
-      public tourService) {
+  static $inject = ['$animate', '$element', '$http', '$location',
+    '$routeSegment', '$scope', '$window', 'config', 'notificationService',
+    'tourService'];
+  constructor($animate, $element, public $http, public $location,
+              public $routeSegment, public $scope, $window, public config,
+              public notificationService, public tourService) {
     this.hoveredHighlights = {};
     this.hoveredMarginDiscussions = {draft: true};
     this.pageCoordinates = {};

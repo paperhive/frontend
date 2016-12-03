@@ -13,7 +13,7 @@ export default function(app) {
     '$window', '$timeout', function($window, $timeout) {
       return {
         restrict: 'A',
-        link: function(scope, element, attrs) {
+        link: (scope, element, attrs) => {
           const height = angular.element($window).height();
           element.css('min-height', height + 'px');
         },

@@ -6,7 +6,7 @@ export default function(app) {
       return {
         restrict: 'A',
         require: 'ngModel',
-        link: function(scope, elm, attrs, ctrl) {
+        link: (scope, elm, attrs, ctrl) => {
           ctrl.$asyncValidators.username = function(modelValue, viewValue) {
             // TODO: blacklist
 

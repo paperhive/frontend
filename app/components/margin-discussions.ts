@@ -24,7 +24,8 @@ export default function(app) {
       onDiscussionMouseleave: '&',
     },
     controller: [
-      '$document', '$element', '$scope', '$timeout', '$window', 'scroll', 'channelService', 'distangleService', 'tourService',
+      '$document', '$element', '$scope', '$timeout', '$window', 'scroll',
+      'channelService', 'distangleService', 'tourService',
       function($document, $element, $scope, $timeout, $window, scroll, channelService, distangleService, tourService) {
         const $ctrl = this;
 
@@ -48,7 +49,9 @@ export default function(app) {
           }
 
           // determine which discussions are visible right now
-          const visibleDiscussionIds = getVisibleDiscussionIds($ctrl.filteredDiscussions.map(discussion => discussion.id));
+          const visibleDiscussionIds = getVisibleDiscussionIds(
+            $ctrl.filteredDiscussions.map(discussion => discussion.id),
+          );
 
           // reevaluate after a short delay
           $timeout(() => {
@@ -85,20 +88,24 @@ export default function(app) {
 
         $ctrl.tour = tourService;
         // scroll to discussion tour popover
-        $scope.$watch('$ctrl.discussionPositions["cDmUY04FkYx9"] !== undefined && $ctrl.tour.stages[$ctrl.tour.index] === "margin-discussion"', shouldScroll => {
-          if (shouldScroll) {
-            // wait until popover is rendered
-            $timeout(() => {
-              // trigger popover positioning
-              angular.element($window).scroll();
+        $scope.$watch(
+          '$ctrl.discussionPositions["cDmUY04FkYx9"] !== undefined ' +
+          '&& $ctrl.tour.stages[$ctrl.tour.index] === "margin-discussion"',
+          shouldScroll => {
+            if (shouldScroll) {
+              // wait until popover is rendered
               $timeout(() => {
-                scroll.scrollTo('#discussionTourPopover', {
-                  offset: ($ctrl.viewportOffsetTop || 0) + 130,
+                // trigger popover positioning
+                angular.element($window).scroll();
+                $timeout(() => {
+                  scroll.scrollTo('#discussionTourPopover', {
+                    offset: ($ctrl.viewportOffsetTop || 0) + 130,
+                  });
                 });
-              });
-            }, 400);
-          }
-        });
+              }, 400);
+            }
+          },
+        );
 
         // sizes of discussions by discussion id
         $ctrl.discussionSizes = {};
@@ -202,8 +209,8 @@ export default function(app) {
           );
 
           // move bottom elements from above to below if there's not enough space
-          function getTotalHeight(coords) {
-            return sum(map(coords, 'height')) + coords.length * padding;
+          function getTotalHeight(_coords) {
+            return sum(map(_coords, 'height')) + _coords.length * padding;
           }
           while (draftCoord && getTotalHeight(coordsAbove) + offsetTop > draftCoord.position) {
             // remove last one in above
@@ -222,7 +229,7 @@ export default function(app) {
             for (let i = 0; i < anchors.length; i++) {
               positions[ids[i]] = optAnchors[i];
             }
-          };
+          }
 
           // place discussions
           if (draftCoord) {

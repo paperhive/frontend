@@ -10,8 +10,7 @@ export default function(app) {
     function($timeout, $document) {
       return {
         restrict: 'A',
-        link: function($scope, element) {
-
+        link: ($scope, element) => {
           // TODO: determine proper type
           const mirror: any = jquery('<textarea></textarea>');
           mirror.attr('class', element.attr('class'));

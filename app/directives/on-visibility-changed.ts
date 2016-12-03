@@ -16,7 +16,7 @@ export default function(app) {
     '$parse', '$window', '$timeout', function($parse, $window, $timeout) {
       return {
         restrict: 'A',
-        link: function(scope, element, attrs) {
+        link: (scope, element, attrs) => {
           let oldVisibility;
           let offset;
 
@@ -25,17 +25,29 @@ export default function(app) {
 
             const newVisibility = {top: 'visible', bottom: 'visible', left: 'visible', right: 'visible'};
 
-            if (rect.bottom < offset.top) newVisibility.top = 'hidden';
-            else if (rect.top < offset.top) newVisibility.top = 'partial';
+            if (rect.bottom < offset.top) {
+              newVisibility.top = 'hidden';
+            } else if (rect.top < offset.top) {
+              newVisibility.top = 'partial';
+            }
 
-            if (rect.top > $window.innerHeight - offset.bottom) newVisibility.bottom = 'hidden';
-            else if (rect.bottom > $window.innerHeight - offset.bottom) newVisibility.bottom = 'partial';
+            if (rect.top > $window.innerHeight - offset.bottom) {
+              newVisibility.bottom = 'hidden';
+            } else if (rect.bottom > $window.innerHeight - offset.bottom) {
+              newVisibility.bottom = 'partial';
+            }
 
-            if (rect.right < offset.left) newVisibility.left = 'hidden';
-            else if (rect.left < offset.left) newVisibility.left = 'partial';
+            if (rect.right < offset.left) {
+              newVisibility.left = 'hidden';
+            } else if (rect.left < offset.left) {
+              newVisibility.left = 'partial';
+            }
 
-            if (rect.left > $window.innerWidth - offset.right) newVisibility.bottom = 'hidden';
-            else if (rect.right > $window.innerWidth - offset.right) newVisibility.bottom = 'partial';
+            if (rect.left > $window.innerWidth - offset.right) {
+              newVisibility.bottom = 'hidden';
+            } else if (rect.right > $window.innerWidth - offset.right) {
+              newVisibility.bottom = 'partial';
+            }
 
             // return if unchanged
             if (angular.equals(oldVisibility, newVisibility)) return;

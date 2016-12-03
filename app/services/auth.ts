@@ -31,7 +31,9 @@ export default function(app) {
 
       // get url for initiating an auth dance
       authService.getAuthUrl = (provider) => {
-        return `${config.apiUrl}/auth/${provider}/initiate?frontendUrl=${encodeURIComponent(frontendUrl)}&returnUrl=${encodeURIComponent(authService.returnPath)}`;
+        const frontendUrlEnc = encodeURIComponent(frontendUrl);
+        const returnUrl = encodeURIComponent(authService.returnPath);
+        return `${config.apiUrl}/auth/${provider}/initiate?frontendUrl=${frontendUrlEnc}&returnUrl=${returnUrl}`;
       };
 
       // log in with a token
@@ -41,7 +43,7 @@ export default function(app) {
             config.apiUrl + '/auth/token/login',
             null,
             {
-              headers: {'Authorization': 'token ' + token},
+              headers: {Authorization: 'token ' + token},
               timeout: 10000,
             },
           );

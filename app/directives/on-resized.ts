@@ -13,7 +13,7 @@ export default function(app) {
     '$parse', '$window', '$timeout', function($parse, $window, $timeout) {
       return {
         restrict: 'A',
-        link: function(scope, element, attrs) {
+        link: (scope, element, attrs) => {
           let oldSize = {};
 
           const resizeHandler = function() {

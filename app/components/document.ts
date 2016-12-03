@@ -9,7 +9,7 @@ class DiscussionsController {
   documentUpdatesSubscription: any;
 
   constructor(public document: string, public config: any, public $scope: any,
-      public $http: any, public authService, public websocketService) {
+              public $http: any, public authService, public websocketService) {
     this.discussions = [];
   }
 
@@ -45,7 +45,7 @@ class DiscussionsController {
   }
 
   async discussionDelete(discussion) {
-    const response = await this.$http({
+    await this.$http({
       url: `${this.config.apiUrl}/discussions/${discussion.id}`,
       method: 'DELETE',
       headers: {'If-Match': `"${discussion.revision}"`},
@@ -103,6 +103,7 @@ class DiscussionsController {
               case 'post': this._discussionCreate(data); break;
               case 'put': this._discussionUpdate(data); break;
               case 'delete': this._discussionDelete(data); break;
+              default: throw new Error(`method ${update.method} unknown`);
             }
             break;
           case 'reply':
@@ -110,8 +111,10 @@ class DiscussionsController {
               case 'post': this._replyCreate(data); break;
               case 'put': this._replyUpdate(data); break;
               case 'delete': this._replyDelete(data); break;
+              default: throw new Error(`method ${update.method} unknown`);
             }
             break;
+          default: throw new Error(`resource ${update.resource} unknown`);
         }
       });
     });
@@ -185,7 +188,7 @@ class DiscussionsController {
 
   _replyDelete(deletedReply) {
     const discussion = this._discussionGet(deletedReply.discussion);
-    const removed = remove(discussion.replies, {id: deletedReply.id});
+    remove(discussion.replies, {id: deletedReply.id});
     discussion.revision = deletedReply.discussionRevision;
   }
 }
@@ -205,11 +208,12 @@ export default function(app) {
       static $inject = ['$http', '$routeParams', '$scope', 'authService', 'channelService', 'config',
         'DocumentController', 'metaService', 'notificationService', 'websocketService'];
 
-      constructor($http, public $routeParams, $scope, public authService, public channelService, config,
-        DocumentController, public metaService, notificationService, websocketService) {
+      constructor($http, public $routeParams, $scope, public authService,
+                  public channelService, config, _DocumentController,
+                  public metaService, notificationService, websocketService) {
         const documentId = $routeParams.documentId;
 
-        this.documentCtrl = new DocumentController(documentId);
+        this.documentCtrl = new _DocumentController(documentId);
         this.documentCtrl.fetchRevisions(); // TODO: error handling
         this.documentCtrl.fetchHivers(); // TODO: error handling
 
@@ -228,7 +232,6 @@ export default function(app) {
         this.discussionsCtrl = new DiscussionsController(
           documentId, config, $scope, $http, authService, websocketService,
         );
-
 
         $scope.$watch('$ctrl.authService.user', () => {
           this.discussionsCtrl.refresh().catch(error => notificationService.notifications.push({
@@ -251,7 +254,10 @@ export default function(app) {
         // don't overwrite if we already got one
         // (only if url changed)
         const urlRevisionId = this.$routeParams.revisionId;
-        if (this.activeRevision && (!urlRevisionId || urlRevisionId && this.activeRevision.revision === urlRevisionId)) return;
+        if (this.activeRevision &&
+            (!urlRevisionId ||
+             urlRevisionId && this.activeRevision.revision === urlRevisionId
+           )) return;
 
         // prefer revision id from url
         if (urlRevisionId) {

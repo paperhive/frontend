@@ -5,8 +5,11 @@ export default function(app) {
     controller: class ChannelCtrl {
       isOwner: boolean;
 
-      static $inject = ['$http', '$routeParams', '$scope', '$uibModal', 'authService', 'channelService', 'config'];
-      constructor(public $http, public $routeParams, public $scope, public $uibModal, public authService, public channelService, public config) {
+      static $inject = ['$http', '$routeParams', '$scope', '$uibModal',
+        'authService', 'channelService', 'config'];
+      constructor(public $http, public $routeParams, public $scope,
+                  public $uibModal, public authService, public channelService,
+                  public config) {
         $scope.$watchCollection('$ctrl.channel.members', members => {
           if (!members) this.isOwner = false;
           const self = authService.user && find(members, {person: {id: authService.user.id}});

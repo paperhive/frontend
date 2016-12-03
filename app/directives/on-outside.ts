@@ -8,7 +8,7 @@ export default function(app) {
       function($parse, $document) {
         return {
           restrict: 'A',
-          link: function(scope, element, attrs) {
+          link: (scope, element, attrs) => {
             const handler = function(event) {
               // determine if clicked inside the element
               const clickedInside = jquery.contains(element[0], event.target);

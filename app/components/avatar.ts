@@ -23,6 +23,9 @@ export default function(app) {
             }
           });
         }],
-      template: '<img width={{$ctrl.size}} height={{$ctrl.size}} ng-src="{{$ctrl.url}}" alt="{{$ctrl.user.displayName}} avatar" class="{{$ctrl.classes}}">',
+      template: `
+        <img width={{$ctrl.size}} height={{$ctrl.size}}
+          ng-src="{{$ctrl.url}}" alt="{{$ctrl.user.displayName}} avatar"
+          class="{{$ctrl.classes}}">`,
     });
 };

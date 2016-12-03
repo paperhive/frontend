@@ -8,14 +8,13 @@ export default function(app) {
     ['$parse', '$window', '$timeout', function($parse, $window, $timeout) {
       return {
         restrict: 'A',
-        link: function(scope, element, attrs) {
+        link: (scope, element, attrs) => {
           const parsedToc = $parse(attrs.toc);
           const parsedOffset = $parse(attrs.tocScrollspyOffset);
-          let toc;
 
           function getElements() {
             return element.find('[id]').filter(function(index, el) {
-              return parseInt(jquery(el).attr('toc-level'));
+              return parseInt(jquery(el).attr('toc-level'), 10);
             }).toArray();
           }
 
@@ -29,7 +28,8 @@ export default function(app) {
             const toc = [];
             let currentLevel;
             while (elements.length &&
-                   (currentLevel = parseInt(jquery(elements[0]).attr('toc-level'))) >
+                   // tslint:disable-next-line:no-conditional-assignment
+                   (currentLevel = parseInt(jquery(elements[0]).attr('toc-level'), 10)) >
                    parentLevel
                   ) {
               const el = jquery(elements[0]);
@@ -53,10 +53,10 @@ export default function(app) {
 
           function updateScrollspy() {
             function getScrollspyId() {
-              const elements = _.sortBy(_.map(getElements(), function(element) {
-                const rect = element.getBoundingClientRect();
+              const elements = _.sortBy(_.map(getElements(), _element => {
+                const rect = _element.getBoundingClientRect();
                 return {
-                  id: jquery(element).attr('id'),
+                  id: jquery(_element).attr('id'),
                   offset: rect.top,
                 };
               }), 'offset');
@@ -65,9 +65,9 @@ export default function(app) {
               if (!elements.length) { return; }
 
               let id = elements[0].id;
-              _.forEach(elements, function(element) {
-                if (element.offset < offset) {
-                  id = element.id;
+              _.forEach(elements, function(_element) {
+                if (_element.offset < offset) {
+                  id = _element.id;
                 }
               });
 
@@ -95,7 +95,7 @@ export default function(app) {
 
           $timeout(function() {
             // set toc
-            toc = getToc(undefined, undefined);
+            const toc = getToc(undefined, undefined);
 
             // register handler
             jquery($window).on('scroll resize', updateScrollspy);

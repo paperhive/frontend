@@ -114,7 +114,6 @@ export default function(app) {
           }
         }
 
-
         async updateRevisionAccess() {
           if (!this.revisions) return;
 
@@ -165,10 +164,11 @@ export default function(app) {
         }
 
         updateIsUserHiver() {
-          if (!this.hivers || !auth.user)
+          if (!this.hivers || !auth.user) {
             this.isUserHiver = false;
-          else
+          } else {
             this.isUserHiver = !!find(this.hivers, {person: {id: auth.user.id}});
+          }
         }
 
         fetchBookmarks() {

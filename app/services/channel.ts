@@ -85,8 +85,11 @@ export default function(app) {
       return this.channelsApi.invitationDelete(id, invitationId)
         .then(() => {
           const channel = this.get(id);
-          if (channel) remove(channel.invitations, {id: invitationId});
-          else remove(this.invitations, {id: invitationId});
+          if (channel) {
+            remove(channel.invitations, {id: invitationId});
+          } else {
+            remove(this.invitations, {id: invitationId});
+          }
         });
     }
 

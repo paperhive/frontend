@@ -7,10 +7,10 @@ export default function(app) {
           notificationService.notifications.splice(index, 1);
         };
         $scope.types = {
-          'error': 'danger',
-          'info': 'info',
-          'warning': 'warning',
-          'success': 'success',
+          error: 'danger',
+          info: 'info',
+          warning: 'warning',
+          success: 'success',
         };
       },
     ],

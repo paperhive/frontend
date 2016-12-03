@@ -78,7 +78,6 @@ export default function(app) {
         $scope.$watchCollection('$ctrl.discussionSizes', updateCount);
         $scope.$watch('$ctrl.viewportOffsetTop', updateCount);
 
-
         // wrap updateCount with $apply for non-angular events
         const updateCountApply = () => $scope.$evalAsync(updateCount);
 

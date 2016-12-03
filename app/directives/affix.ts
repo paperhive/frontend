@@ -7,7 +7,7 @@ export default function(app) {
     ['$window', '$timeout', function($window, $timeout) {
       return {
         restrict: 'A',
-        link: function(scope, element, attrs) {
+        link: (scope, element, attrs) => {
           const paramsDefault = {
             offsetTop: 0,
             offsetBottom: 0,
@@ -31,7 +31,6 @@ export default function(app) {
             const parentRect = offsetParent.getBoundingClientRect();
 
             // positioned normally
-            let top = 0;
             let affixed = false;
 
             if (parentRect.top >= params.offsetTop) {
