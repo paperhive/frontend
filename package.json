@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "description": "PaperHive frontend",
   "scripts": {
-    "build": "npm run clean && npm-run-all -s build:prod:*",
+    "build": "npm run clean && npm-run-all -s build:*",
     "build:webpack": "webpack --config webpack.config.js --optimize-minimize",
-    "build:dev:webpack": "webpack --config webpack.config.js --",
     "clean": "rm -rf build*",
     "lint:ts": "tslint app/**/*.ts",
     "lint:js": "eslint test *.js",
