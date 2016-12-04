@@ -1,4 +1,4 @@
-import angular from 'angular';
+import jquery from 'jquery';
 import { merge } from 'lodash';
 
 class DocumentTextCtrl {
@@ -15,6 +15,7 @@ class DocumentTextCtrl {
   hoveredMarginDiscussions: any;
   pageCoordinates: any;
   anchor: string;
+  pdfUrl: string;
 
   static $inject = ['$animate', '$element', '$http', '$location',
     '$routeSegment', '$scope', '$window', 'config', 'notificationService',
@@ -40,7 +41,7 @@ class DocumentTextCtrl {
     // trigger resize event when animation of .ph-document-text finishes
     function triggerResize(element, phase) {
       if (!element.hasClass('ph-document-text') || phase !== 'close') return;
-      angular.element($window).triggerHandler('resize');
+      jquery($window).triggerHandler('resize');
     }
     $animate.on('addClass', $element, triggerResize);
     $animate.on('removeClass', $element, triggerResize);

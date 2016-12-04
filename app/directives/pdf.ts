@@ -3,7 +3,7 @@ import { queue } from 'async';
 import jquery from 'jquery';
 import { clone, difference, filter, flatten, get, isArray, isEqual, isNumber, pick, some, uniq } from 'lodash';
 import { PDFJS } from 'pdfjs-dist';
-import rangy from 'rangy';
+const rangy = require('rangy');
 
 // test if height and width properties of 2 objects are equal
 function isSameSize(obj1, obj2) {
@@ -191,7 +191,7 @@ export default function(app) {
       element: JQuery;
       page: PDFPageProxy;
       textContent: TextContent;
-      renderTask: PDFRenderTask; // currently running task
+      renderTask: IPDFRenderTextTask; // currently running task
 
       constructor(element, page) {
         this.element = element;
@@ -332,6 +332,7 @@ export default function(app) {
       textFocused: boolean = false;
 
       // renderer state
+      height: number;
       renderedSize: {height: number, width: number};
       canvasRenderer: CanvasRenderer;
       textRenderer: TextRenderer;
@@ -746,31 +747,31 @@ export default function(app) {
 
               // is this a backwards selection (bottom to top)
               isBackwards: selection.isBackwards(),
+
+              // pdf text positions selector
+              pdfTextQuotes: pageRanges.map(pageRange => {
+                const page = this.pages[pageRange.pageNumber - 1];
+                const selector = getTextQuoteSelector(pageRange.range, page.textRenderer.element[0]) as any;
+                selector.pageNumber = pageRange.pageNumber;
+                return selector;
+              }),
+
+              // pdf text quotes selector
+              pdfTextPositions: pageRanges.map(pageRange => {
+                const page = this.pages[pageRange.pageNumber - 1];
+                const selector = getTextPositionSelector(pageRange.range, page.textRenderer.element[0]);
+                selector.pageNumber = pageRange.pageNumber;
+                return selector;
+              }),
+
+              // pdf rectangles selector
+              pdfRectangles: flatten(pageRanges.map(pageRange => {
+                const page = this.pages[pageRange.pageNumber - 1];
+                const rectSelectors = getRectanglesSelector(range, page.textRenderer.element[0]) as any;
+                rectSelectors.forEach(selector => selector.pageNumber = pageRange.pageNumber);
+                return rectSelectors;
+              })),
             };
-
-            // pdf text positions selector
-            selectors.pdfTextQuotes = pageRanges.map(pageRange => {
-              const page = this.pages[pageRange.pageNumber - 1];
-              const selector = getTextQuoteSelector(pageRange.range, page.textRenderer.element[0]);
-              selector.pageNumber = pageRange.pageNumber;
-              return selector;
-            });
-
-            // pdf text quotes selector
-            selectors.pdfTextPositions = pageRanges.map(pageRange => {
-              const page = this.pages[pageRange.pageNumber - 1];
-              const selector = getTextPositionSelector(pageRange.range, page.textRenderer.element[0]);
-              selector.pageNumber = pageRange.pageNumber;
-              return selector;
-            });
-
-            // pdf rectangles selector
-            selectors.pdfRectangles = flatten(pageRanges.map(pageRange => {
-              const page = this.pages[pageRange.pageNumber - 1];
-              const rectSelectors = getRectanglesSelector(range, page.textRenderer.element[0]);
-              rectSelectors.forEach(selector => selector.pageNumber = pageRange.pageNumber);
-              return rectSelectors;
-            }));
 
             return this.onSelect(selectors);
           });

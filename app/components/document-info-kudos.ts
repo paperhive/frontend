@@ -1,4 +1,4 @@
-import angular from 'angular';
+import * as jquery from 'jquery';
 
 export default function(app) {
   app.component('documentInfoKudos', {
@@ -6,6 +6,8 @@ export default function(app) {
       doi: '<',
     },
     controller: class DocumentInfoKudosCtrl {
+      doi: string;
+
       static $inject = ['$element'];
       constructor(public $element) {}
 
@@ -15,7 +17,7 @@ export default function(app) {
         if (!this.doi) return;
 
         // create empty iframe and insert into DOM
-        const iframe = angular.element(`
+        const iframe = jquery(`
           <iframe
             width="100%"
             height="300"
@@ -27,7 +29,7 @@ export default function(app) {
         this.$element.append(iframe);
 
         // inject basic html with kudos script (and a few style overrides)
-        iframe[0].contentDocument.write(`
+        (iframe[0] as HTMLIFrameElement).contentDocument.write(`
           <html>
             <head>
               <style>

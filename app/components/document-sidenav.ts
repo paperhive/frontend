@@ -8,6 +8,12 @@ export default function(app) {
       onToggle: '&',
     },
     controller: class DocumentSidenavCtrl {
+      activeRevision: string;
+      documentCtrl: any;
+      open: boolean;
+      viewportOffsetTop: number;
+      onToggle: any;
+
       kudosOpen = true;
       kudosDoi: string;
       kudosTestedDoi: string;

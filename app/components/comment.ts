@@ -1,4 +1,3 @@
-import angular from 'angular';
 import { cloneDeep } from 'lodash';
 
 export default function(app) {
@@ -32,10 +31,10 @@ export default function(app) {
 
           // For a more advanced example, using promises, see
           // <https://github.com/jeff-collins/ment.io/blob/master/ment.io/scripts.js>.
-          $scope.searchUsers = function(term) {
+          $scope.searchUsers = term => {
             // Fill localItems, used as mentio-items in the respective directive.
             const results = [];
-            angular.forEach($scope.users, function(item) {
+            $scope.users.forEach(item => {
               if (item.userName.toUpperCase().indexOf(term.toUpperCase()) >= 0) {
                 results.push(item);
               }

@@ -4,6 +4,9 @@ import socketio from 'socket.io-client';
 import url from 'url';
 
 class WebsocketService {
+  parsedUrl: url.Url;
+  path: string;
+
   constructor(apiUrl) {
     // parse url for socketio
     this.parsedUrl = url.parse(apiUrl);

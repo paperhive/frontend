@@ -11,8 +11,9 @@ export default function(app) {
         link: (scope, element, attrs) => {
           const parsedToc = $parse(attrs.toc);
           const parsedOffset = $parse(attrs.tocScrollspyOffset);
+          let toc;
 
-          function getElements() {
+          function getElements(): HTMLElement[] {
             return element.find('[id]').filter(function(index, el) {
               return parseInt(jquery(el).attr('toc-level'), 10);
             }).toArray();
@@ -25,7 +26,7 @@ export default function(app) {
             }
             if (!elements.length) { return []; }
 
-            const toc = [];
+            const newToc = [];
             let currentLevel;
             while (elements.length &&
                    // tslint:disable-next-line:no-conditional-assignment
@@ -45,10 +46,10 @@ export default function(app) {
               newTocElement.subToc = getToc(elements, currentLevel);
 
               // append new element
-              toc.push(newTocElement);
+              newToc.push(newTocElement);
             }
 
-            return toc;
+            return newToc;
           }
 
           function updateScrollspy() {
@@ -74,10 +75,10 @@ export default function(app) {
               return id;
             }
 
-            function applyScrollspyId(toc, id) {
-              if (!toc) { return; }
+            function applyScrollspyId(_toc, id) {
+              if (!_toc) { return; }
               let contained = false;
-              _.forEach(toc, function(entry) {
+              _.forEach(_toc, function(entry) {
                 entry.active = false;
                 if (applyScrollspyId(entry.subToc, id) || entry.id === id) {
                   entry.active = true;
@@ -95,7 +96,7 @@ export default function(app) {
 
           $timeout(function() {
             // set toc
-            const toc = getToc(undefined, undefined);
+            toc = getToc(undefined, undefined);
 
             // register handler
             jquery($window).on('scroll resize', updateScrollspy);
