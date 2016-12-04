@@ -10,69 +10,65 @@ const urls = {
 };
 
 export default function(app) {
-  app.factory(
-    'tourService',
-    ['$location', '$window', 'authService',
-      function($location, $window, authService) {
-        const service = {
-          stages: [
-            'start',
-            'margin-discussion',
-            'highlight',
-            'search',
-            'hive',
-            'signup',
-          ],
-          index: 0,
-          urls,
-          visited: false,
-        };
+  app.service('tourService', class TourService {
+    stages = [
+      'start',
+      'margin-discussion',
+      'highlight',
+      'search',
+      'hive',
+      'signup',
+    ];
+    index = 0;
+    urls = urls;
+    visited = false;
 
-        // get tourVisited from localStorage
+    static $inject = ['$location', '$window', 'authService'];
+
+    constructor(public $location, public $window, public authService) {
+      // get tourVisited from localStorage
+      if (localStorageAvailable) {
+        this.visited = $window.localStorage.tourVisited;
+      }
+    }
+
+    increaseIndex() {
+      this.index++;
+
+      // do not show the tour next time when the last stage has been reached
+      if (this.index === this.stages.length - 1 ||
+          this.authService.user && (this.index === this.stages.length - 2)
+          ) {
+        this.visited = true;
         if (localStorageAvailable) {
-          service.visited = $window.localStorage.tourVisited;
+          this.$window.localStorage.tourVisited = true;
         }
+      }
+    }
 
-        service.increaseIndex = function() {
-          service.index++;
+    // begin with margin discussion
+    start() {
+      // reset visited flag
+      this.visited = false;
+      if (localStorageAvailable) {
+        this.$window.localStorage.tourVisited = false;
+      }
 
-          // do not show the tour next time when the last stage has been reached
-          if (service.index === service.stages.length - 1 ||
-              authService.user && (service.index === service.stages.length - 2)
-              ) {
-            service.visited = true;
-            if (localStorageAvailable) {
-              $window.localStorage.tourVisited = true;
-            }
-          }
-        };
+      this.index = 1;
+      this.$location.url('/documents/0tsHJq1-yyVZ');
+    }
 
-        // begin with margin discussion
-        service.start = function () {
-          // reset visited flag
-          service.visited = false;
-          if (localStorageAvailable) {
-            $window.localStorage.tourVisited = false;
-          }
+    setUndefined() {
+      this.index = undefined;
+    }
 
-          service.index = 1;
-          $location.url('/documents/0tsHJq1-yyVZ');
-        };
+    reject() {
+      this.visited = true;
+      if (localStorageAvailable) {
+        this.$window.localStorage.tourVisited = true;
+      }
 
-        service.setUndefined = function() {
-          service.index = undefined;
-        };
-
-        service.reject = function() {
-          service.visited = true;
-          if (localStorageAvailable) {
-            $window.localStorage.tourVisited = true;
-          }
-
-          service.index = undefined;
-        };
-
-        return service;
-      },
-    ]);
+      this.index = undefined;
+    }
+  });
 };
