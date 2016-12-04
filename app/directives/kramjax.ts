@@ -1,8 +1,8 @@
 /*global MathJax*/
 
 import {highlightAuto} from 'highlightjs';
-import * as jquery from 'jquery';
-import * as kramed from 'kramed';
+import jquery from 'jquery';
+import kramed from 'kramed';
 // TODO: const MathJax = require('MathJax');
 
 export default function(app) {

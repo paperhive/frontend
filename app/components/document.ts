@@ -1,4 +1,4 @@
-import * as angular from 'angular';
+import angular from 'angular';
 import { find, findIndex, merge, pick, remove } from 'lodash';
 
 import { getRevisionMetadata } from '../utils/documents';

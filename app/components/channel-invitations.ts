@@ -4,7 +4,9 @@ export default function(app) {
       channel: '<',
       isOwner: '<',
     },
-    controller: class ChannelInvitations {
+    controller: class ChannelInvitationsCtrl {
+      invitationDeleting = false;
+
       static $inject = ['channelService'];
       constructor(public channelService) {}
 

@@ -5,6 +5,12 @@ export default function(app) {
       filterMode: '@',
     },
     controller: class Activity {
+      filterId: string;
+      filterMode: string;
+
+      activities: any[];
+      person: any;
+
       static $inject = ['$http', '$scope', 'authService', 'config', 'notificationService'];
       constructor(public $http, public $scope, public authService, public config, public notificationService) {
         $scope.$watch('$ctrl.authService.user', this.refresh.bind(this));

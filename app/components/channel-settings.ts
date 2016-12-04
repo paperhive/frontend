@@ -5,6 +5,9 @@ export default function(app) {
       isOwner: '<',
     },
     controller: class ChannelSettings {
+      channel: any;
+      isOwner: any;
+
       activating = false;
       deactivating = false;
       description: string;

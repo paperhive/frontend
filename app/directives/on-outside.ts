@@ -1,5 +1,5 @@
 // TODO: ts complains about missing default export but this works!
-import * as jquery from 'jquery';
+import jquery from 'jquery';
 
 export default function(app) {
   function registerOutsideDirective(eventName, directiveName) {

@@ -4,6 +4,8 @@ export default function(app) {
   app.component('channel', {
     controller: class ChannelCtrl {
       isOwner: boolean;
+      channel: any;
+      bookmarks: any[];
 
       static $inject = ['$http', '$routeParams', '$scope', '$uibModal',
         'authService', 'channelService', 'config'];
@@ -12,7 +14,7 @@ export default function(app) {
                   public config) {
         $scope.$watchCollection('$ctrl.channel.members', members => {
           if (!members) this.isOwner = false;
-          const self = authService.user && find(members, {person: {id: authService.user.id}});
+          const self: any = authService.user && find(members, {person: {id: authService.user.id}});
           this.isOwner = self && includes(self.roles, 'owner');
         });
 

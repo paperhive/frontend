@@ -1,7 +1,7 @@
 import { clone } from 'lodash';
 import { Observable } from 'rx';
-import * as socketio from 'socket.io-client';
-import * as url from 'url';
+import socketio from 'socket.io-client';
+import url from 'url';
 
 class WebsocketService {
   constructor(apiUrl) {

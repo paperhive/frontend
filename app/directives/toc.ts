@@ -1,5 +1,5 @@
-import * as jquery from 'jquery';
-import * as _ from 'lodash';
+import jquery from 'jquery';
+import _ from 'lodash';
 
 export default function(app) {
 

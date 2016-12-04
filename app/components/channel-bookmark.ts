@@ -4,6 +4,8 @@ export default function(app) {
       documentCtrl: '<',
     },
     controller: class channelBookmarkCtrl {
+      documentCtrl: any;
+
       submitting = false;
 
       static $inject = ['$uibModal', 'authService', 'channelService'];

@@ -2,9 +2,12 @@ export default function(app) {
   app.component('channelInvitationConfirm', {
     controller: class ChannelInvitationConfirmCtrl {
       invitation: string;
+      token: string;
+      password: string;
       inProgress = false;
       succeeded = false;
       error = false;
+      invitationDeleting = false;
 
       static $inject = ['$http', '$location', '$scope', 'authService',
         'channelService', 'config', 'notificationService'];

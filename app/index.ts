@@ -6,9 +6,8 @@
  * (https://github.com/paperhive/paperhive-frontend/blob/master/LICENSE)
  */
 
+// include less
 require('../less/index.less');
-
-// import 'core-js/shim';
 
 // import jquery before angular (so angular can use it instead of jqlite)
 import 'jquery';
@@ -23,9 +22,9 @@ import 'rangy/lib/rangy-textrange';
 
 // official angular modules
 import { bootstrap, module } from 'angular';
-import * as ngAnimate from 'angular-animate';    // ngAnimate module
-import * as ngRoute from 'angular-route';        // ngRoute module
-import * as ngSanitize from 'angular-sanitize';  // ngSanitize module
+import ngAnimate from 'angular-animate';    // ngAnimate module
+import ngRoute from 'angular-route';        // ngRoute module
+import ngSanitize from 'angular-sanitize';  // ngSanitize module
 
 import 'angular-route-segment';                  // route-segment, view-segment
 import 'angular-ui-bootstrap';                   // ui.bootstrap

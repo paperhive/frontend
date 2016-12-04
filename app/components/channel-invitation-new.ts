@@ -6,10 +6,15 @@ export default function(app) {
       resolve: '<',
     },
     controller: class ChannelInvitationNewCtrl {
+      close: any;
+      dismiss: any;
+      resolve: any;
+
       error: boolean;
       inProgress: boolean;
       succeeded: boolean;
 
+      email: string;
       roles = ['member', 'owner'];
       role = 'member';
 

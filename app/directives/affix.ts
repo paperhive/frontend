@@ -1,4 +1,4 @@
-import * as jquery from 'jquery';
+import jquery from 'jquery';
 import { clone, min} from 'lodash';
 
 export default function(app) {

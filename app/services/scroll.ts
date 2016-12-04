@@ -1,4 +1,4 @@
-import * as jquery from 'jquery';
+import jquery from 'jquery';
 import { defaults, isNumber, isString } from 'lodash';
 
 export default function(app) {

@@ -1,4 +1,4 @@
-import * as angular from 'angular';
+import angular from 'angular';
 import { cloneDeep } from 'lodash';
 
 export default function(app) {

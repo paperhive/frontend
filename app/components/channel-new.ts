@@ -6,6 +6,10 @@ export default function(app) {
       resolve: '<',
     },
     controller: class ChannelNewCtrl {
+      close: any;
+      dismiss: any;
+      resolve: any;
+
       inProgress: boolean;
       description: string;
       name: string;

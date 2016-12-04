@@ -1,6 +1,9 @@
 export default function(app) {
   app.component('channelsInvitations', {
     controller: class ChannelsInvitationsCtrl {
+      channelInviting: string | boolean;
+      invitationDeleting: string | boolean;
+
       static $inject = ['channelService'];
       constructor(public channelService) {}
 
@@ -15,7 +18,6 @@ export default function(app) {
         this.channelService.invitationDelete(channelId, invitationId)
           .finally(() => this.invitationDeleting = false);
       }
-
     },
     template: require('./channels-invitations.html'),
   });

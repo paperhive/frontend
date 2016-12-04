@@ -1,9 +1,9 @@
-import * as angular from 'angular';
+import angular from 'angular';
 import { queue } from 'async';
-import * as jquery from 'jquery';
+import jquery from 'jquery';
 import { clone, difference, filter, flatten, get, isArray, isEqual, isNumber, pick, some, uniq } from 'lodash';
 import { PDFJS } from 'pdfjs-dist';
-import * as rangy from 'rangy';
+import rangy from 'rangy';
 
 // test if height and width properties of 2 objects are equal
 function isSameSize(obj1, obj2) {

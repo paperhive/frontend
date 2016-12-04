@@ -6,9 +6,14 @@ export default function(app) {
       dismiss: '&',
     },
     controller: class ChannelMemberUpdateCtrl {
+      resolve: any;
+      close: any;
+      dismiss: any;
+
       inProgress: boolean;
       succeeded: boolean;
 
+      role: string;
       roles = ['member', 'owner'];
 
       static $inject = ['channelService'];

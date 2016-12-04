@@ -1,4 +1,4 @@
-import * as angular from 'angular';
+import angular from 'angular';
 
 export function getRevisionMetadata(revision) {
   // TODO: Cut description down to 150 chars? cf.
