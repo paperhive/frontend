@@ -1,9 +1,7 @@
-/*global MathJax*/
-
-import {highlightAuto} from 'highlightjs';
+import { highlightAuto } from 'highlightjs';
 import jquery from 'jquery';
 import kramed from 'kramed';
-// TODO: const MathJax = require('MathJax');
+import MathJax from 'mathjax';
 
 export default function(app) {
   // syntax highlighting with highlight.js
@@ -58,9 +56,8 @@ export default function(app) {
                     jquery(el).text(), 'math/tex', jquery(el).prop('tagName') === 'DIV',
                 ));
               });
-              MathJax.Hub.Queue(['Typeset', MathJax.Hub, element[0]], [function() {
-                scope.$emit('FinishedMathJax');
-              }] );
+              MathJax.Hub.Queue(['Typeset', MathJax.Hub, element[0]]);
+              MathJax.Hub.Queue([() => scope.$emit('FinishedMathJax')]);
             } catch (e) {
               notificationService.notifications.push({
                 type: 'error',

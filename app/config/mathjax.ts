@@ -1,6 +1,4 @@
-// MathJax comes from outer space
-// TODO: how to load+configure this beast via typescript?!
-declare const MathJax: any;
+import MathJax from 'mathjax';
 
 export default function(app) {
   MathJax.Hub.Config({
@@ -9,7 +7,7 @@ export default function(app) {
     'HTML-CSS': {
       showMathMenu: false,
     },
-    extension: ['Safe.js'],
+    extensions: ['Safe.js'],
     tex2jax: {
       // just like kramed.renderer.math:
       inlineMath: [

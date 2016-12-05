@@ -1,4 +1,4 @@
-/*global MathJax*/
+import MathJax from 'mathjax';
 
 export default function(app) {
   app.directive('mathjax', ['$sanitize', 'notificationService',

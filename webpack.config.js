@@ -19,6 +19,14 @@ module.exports = {
   },
   resolve: {
     extensions: ['.ts', '.js'],
+    alias: {
+      // alias highlight.js to highlightjs
+      // see https://github.com/s-panferov/awesome-typescript-loader/issues/249
+      highlightjs: 'highlight.js',
+    },
+  },
+  externals: {
+    mathjax: 'MathJax',
   },
   devtool: 'source-map',
   module: {
