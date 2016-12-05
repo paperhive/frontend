@@ -5,6 +5,15 @@ export default function(app) {
       onSubmitted: '&',
     },
     controller: class FeedbackFormCtrl {
+      onCancel: any;
+      onSubmitted: any;
+
+      name: string;
+      email: string;
+      message: string;
+      submitting: boolean;
+      error: Error;
+
       static $inject = ['$http', '$location', '$scope', 'authService',
         'config', 'notificationService'];
       constructor(public $http, public $location, public $scope,

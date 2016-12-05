@@ -165,7 +165,7 @@ class DiscussionsController {
 
   _replyCreate(newReply) {
     const discussion = this._discussionGet(newReply.discussion);
-    const existingReply = find(discussion.replies, {id: newReply.id});
+    const existingReply = find(discussion.replies, {id: newReply.id}) as any;
     if (existingReply) {
       if (existingReply.revision !== newReply.revision) {
         throw new Error('Two replies created with same id but different revision.');
@@ -201,6 +201,7 @@ export default function(app) {
       revisions: any[];
       activeRevision: any;
       discussionsCtrl: DiscussionsController;
+      documentCtrl: any;
       filteredDiscussions: any[];
 
       // note: do *not* use $routeSegment.$routeParams because they still

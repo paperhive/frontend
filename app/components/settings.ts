@@ -1,4 +1,4 @@
-import { find } from 'lodash';
+import { cloneDeep, find } from 'lodash';
 
 export default function(app) {
   app.component('settings', {
@@ -10,7 +10,7 @@ export default function(app) {
 
         // keep user copy up to date
         $scope.$watch('auth.user', function(user) {
-          $scope.user = _.cloneDeep(user);
+          $scope.user = cloneDeep(user);
         });
 
         // sync from orcid

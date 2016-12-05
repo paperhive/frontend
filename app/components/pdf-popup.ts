@@ -9,6 +9,9 @@ export default function(app) {
       pageNumber: '<',
     },
     controller: class PdfPopupCtrl {
+      pageNumber: number;
+      rect: any;
+
       static $inject = ['$scope'];
       constructor(public $scope) {
         $scope.$watch('$ctrl.target', target => {

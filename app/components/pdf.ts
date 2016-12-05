@@ -34,15 +34,13 @@ export default function(app) {
           if (!url) return;
 
           // get PDF
-          const loadingTask = PDFJS.getDocument(url);
-
-          // update download status
-          loadingTask.onProgress = progress => {
+          const loadingTask = PDFJS.getDocument(url, undefined, undefined, progress => {
             $scope.$apply(() => {
+              // update download status
               status.bytesLoaded = progress.loaded;
               status.bytesTotal = progress.total;
             });
-          };
+          });
 
           // update when download finished
           loadingTask.then(
@@ -55,11 +53,11 @@ export default function(app) {
               ctrl.onUpdate({status});
 
             }),
-            error => $scope.$apply(() => {
+            reason => $scope.$apply(() => {
               // error downloading pdf
               notificationService.notifications.push({
                 type: 'error',
-                message: error.message || 'Could not download PDF.',
+                message: reason || 'Could not download PDF.',
               });
               ctrl.onUpdate({status: {}});
             }),

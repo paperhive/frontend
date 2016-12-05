@@ -4,13 +4,13 @@ export default function(app) {
       onSubmit: '&',
     },
     controller: class NewReplyCtrl {
+      onSubmit: any;
+
       body: string;
       submitting: boolean;
 
       static $inject = ['$q', 'authService'];
-      constructor(public $q, public authService) {
-        this.auth = authService;
-      }
+      constructor(public $q, public authService) {}
 
       submit() {
         const reply = {

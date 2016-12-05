@@ -221,9 +221,9 @@ export default function(app) {
 
           const positions = {};
           function place(_coords, lb, ub) {
-            const ids = map(_coords, 'id');
-            const anchors = map(_coords, 'position');
-            const heights = map(_coords, coord => coord.height + padding);
+            const ids = _coords.map(coord => coord.id);
+            const anchors = _coords.map(coord => coord.position);
+            const heights = _coords.map(coord => coord.height + padding);
 
             const optAnchors = distangleService.distangle(anchors, heights, lb, ub);
             for (let i = 0; i < anchors.length; i++) {

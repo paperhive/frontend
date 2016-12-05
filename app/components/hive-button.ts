@@ -5,6 +5,9 @@ export default function(app) {
         large: '<',
       },
       controller: class HiveButtonCtrl {
+        documentCtrl: any;
+        large: boolean;
+
         submitting = false;
 
         static $inject = ['authService'];
