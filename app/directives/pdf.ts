@@ -236,6 +236,36 @@ export default function(app) {
         // (otherwise serialized ranges may be based on different DOM states)
         this.element[0].normalize();
       }
+
+      getRangeSelectors(range) {
+        let output = [];
+
+        let index = range[0].transformation.index;
+        // get ph-pdf-text element
+        const textElement = this.element[0];
+        let elem = textElement.firstChild;
+        while (index !== 0) {
+          elem = elem.nextSibling;
+          index --;
+        }
+        output.push(elem);
+
+        const startOffset = range[0].position;
+        const endOffset = startOffset + range[0].length;
+        let myRange = rangy.createRange();
+        myRange.setStart(output[0].firstChild, startOffset);
+        myRange.setEnd(output[0].firstChild, endOffset);
+        // myRange.select();
+
+        // const selectors = {
+        //   pdfRectangles: range.maps(range => {
+        //     const rangyRange = myRange;
+        //     const selectors = getRectanglesSelector(rangyRange, this.element[0]);
+        //   }),
+        // };
+        // return selectors;
+
+      }
     }
 
     // a pdfjs-compliant linkService
@@ -389,22 +419,17 @@ export default function(app) {
         if (!ranges) return;
         const transformedRanges = ranges.map(range => srch.backTransformRange(range, this.textSnippetTransformations));
         let index = 0;
+        const output = [];
         if (!transformedRanges) return;
-        transformedRanges.forEach(range => {
-          range.forEach(singleRange => {
-            if (this.page.pageIndex === 0) {
-              index = singleRange.transformation.index;
-              // get ph-pdf-text element
-              const textElement = this.element[0].firstElementChild.nextSibling.nextSibling;
-              let elem = textElement.firstChild;
-              while (index != 0) {
-                elem = elem.nextSibling;
-                index --;
-              }
-              console.log(elem);
-            }
-          });
-        });
+        console.log(transformedRanges);
+
+        // debug
+        if (this.page.pageIndex !== 0) return;
+
+        const rangesSelectors = transformedRanges.map(range =>
+          this.textRenderer.getRangeSelectors(range),
+        );
+        console.log(rangesSelectors);
       }
 
       async initPageSize(_width = undefined) {
