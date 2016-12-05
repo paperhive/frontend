@@ -190,8 +190,8 @@ export default function(app) {
     class TextRenderer {
       element: JQuery;
       page: PDFPageProxy;
-      textContent: TextContent;
-      renderTask: IPDFRenderTextTask; // currently running task
+      textContent: PDFTextContent;
+      renderTask: PDFRenderTextTask; // currently running task
 
       constructor(element, page) {
         this.element = element;
@@ -921,7 +921,6 @@ export default function(app) {
         const destRef = await this.pdf.getDestination(dest);
         if (!destRef) throw new Error(`destination ${dest} not found`);
         if (!isArray(destRef)) throw new Error('destination does not resolve to array');
-
         let top;
         switch (destRef[1].name) {
           case 'XYZ':
@@ -963,7 +962,7 @@ export default function(app) {
 
       async scrollToSelection(anchorId) {
         const response = await $http.get(`${config.apiUrl}/anchors/${anchorId}`);
-        const rects = get(response, 'data.target.selectors.pdfRectangles');
+        const rects = get(response, 'data.target.selectors.pdfRectangles') as any[];
         if (!rects) throw new Error('pdf rectangles missing');
 
         // get top rect of selection
@@ -1009,7 +1008,7 @@ export default function(app) {
 
         this.scope.highlights.forEach(highlight => {
           if (!highlight.selectors || !highlight.selectors.pdfRectangles) return;
-          const pageNumbers = uniq(highlight.selectors.pdfRectangles.map(rect => rect.pageNumber));
+          const pageNumbers = uniq(highlight.selectors.pdfRectangles.map(rect => rect.pageNumber)) as number[];
           pageNumbers.forEach(pageNumber => {
             if (!this.scope.highlightsByPage[pageNumber]) {
               this.scope.highlightsByPage[pageNumber] = [];
