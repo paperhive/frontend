@@ -89,16 +89,10 @@ module.exports = {
       },
       {
         test: /\.ts$/,
-        use: [
-          {
-            loader: 'babel-loader',
-            query: {
-              presets: ['es2015'],
-              plugins: ['transform-runtime']
-            }
-          },
-          'awesome-typescript-loader',
-        ],
+        loader: 'awesome-typescript-loader',
+        query: {
+          useBabel: true,
+        },
       },
     ],
   },
