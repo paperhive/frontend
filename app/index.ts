@@ -20,6 +20,9 @@ import 'rangy';
 import 'rangy/lib/rangy-serializer';
 import 'rangy/lib/rangy-textrange';
 
+// dependency of ui-leaflet (global variable *facepalm*)
+import 'leaflet';
+
 // official angular modules
 import { bootstrap, module } from 'angular';
 import ngAnimate from 'angular-animate';    // ngAnimate module
@@ -29,7 +32,8 @@ import ngSanitize from 'angular-sanitize';  // ngSanitize module
 import 'angular-route-segment';                  // route-segment, view-segment
 import 'angular-ui-bootstrap';                   // ui.bootstrap
 import 'angular-moment';                         // angularMoment
-import 'angular-leaflet-directive';              // leaflet-directive
+import 'angular-simple-logger';                  // nemLogger (dependency of ui-leaflet)
+import 'ui-leaflet';                             // ui-leaflet
 import 'angulartics';                            // angulartics
 import 'angulartics-google-analytics';
 import 'javascript-detect-element-resize/jquery.resize.js';       // injects resize+removeResize to jquery
@@ -54,10 +58,11 @@ export const paperhive = module(
       'view-segment',
       'ui.bootstrap',
       'angularMoment',
-      'leaflet-directive',
+      'nemLogging',
+      'ui-leaflet',
       'angulartics',
       'angulartics.google.analytics',
-    ]
+    ],
   )
   .constant('config', configJson)
   ;

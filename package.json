@@ -67,7 +67,6 @@
   "dependencies": {
     "angular": "^1.5.9",
     "angular-animate": "^1.5.9",
-    "angular-leaflet-directive": "^0.10.0",
     "angular-moment": "^1.0.0",
     "angular-route": "^1.5.9",
     "angular-route-segment": "^1.5.1",
@@ -91,6 +90,7 @@
     "roboto-fontface": "^0.6.0",
     "rx": "^4.1.0",
     "socket.io-client": "^1.7.1",
+    "ui-leaflet": "^2.0.0",
     "url": "^0.11.0"
   }
 }
