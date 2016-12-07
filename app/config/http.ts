@@ -14,7 +14,7 @@ export default function (app) {
           return request;
         },
       };
-    }
+    },
   ]);
 
   app.config(['$httpProvider', function($httpProvider){

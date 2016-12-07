@@ -1,6 +1,3 @@
-'use strict';
-
-// TODO: ts complains about missing default export but this works!
 import jquery from 'jquery';
 
 export default function(app) {
@@ -13,8 +10,7 @@ export default function(app) {
     function($timeout, $document) {
       return {
         restrict: 'A',
-        link: function($scope, element) {
-
+        link: ($scope, element) => {
           // TODO: determine proper type
           const mirror: any = jquery('<textarea></textarea>');
           mirror.attr('class', element.attr('class'));
@@ -22,7 +18,7 @@ export default function(app) {
             position: 'absolute',
             height: 'auto',
             display: 'none',
-            visibility: 'hidden'
+            visibility: 'hidden',
           });
 
           jquery($document[0].body).append(mirror);
@@ -67,9 +63,9 @@ export default function(app) {
           });
 
           $timeout(update, 0);
-        }
+        },
       };
-    }
+    },
   ]);
 
 };

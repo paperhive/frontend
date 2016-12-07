@@ -7,6 +7,6 @@ export default function(app) {
         // see http://stackoverflow.com/a/28686169/1219479
         requireBase: false,
       });
-    }
+    },
   ]);
 }

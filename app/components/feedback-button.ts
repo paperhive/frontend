@@ -1,5 +1,3 @@
-'use strict';
-
 export default function(app) {
   app.component('feedbackButton', {
 
@@ -14,6 +12,6 @@ export default function(app) {
        ng-click="$ctrl.feedbackModal.open()"
        >
        <i class="fa fa-fw fa-envelope"></i> Feedback
-    </a>`
+    </a>`,
   });
 };

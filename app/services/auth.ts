@@ -1,5 +1,3 @@
-'use strict';
-
 import {localStorageAvailable} from '../utils/local-storage';
 
 export default function(app) {
@@ -33,7 +31,9 @@ export default function(app) {
 
       // get url for initiating an auth dance
       authService.getAuthUrl = (provider) => {
-        return `${config.apiUrl}/auth/${provider}/initiate?frontendUrl=${encodeURIComponent(frontendUrl)}&returnUrl=${encodeURIComponent(authService.returnPath)}`;
+        const frontendUrlEnc = encodeURIComponent(frontendUrl);
+        const returnUrl = encodeURIComponent(authService.returnPath);
+        return `${config.apiUrl}/auth/${provider}/initiate?frontendUrl=${frontendUrlEnc}&returnUrl=${returnUrl}`;
       };
 
       // log in with a token
@@ -43,9 +43,9 @@ export default function(app) {
             config.apiUrl + '/auth/token/login',
             null,
             {
-              headers: {'Authorization': 'token ' + token},
-              timeout: 10000
-            }
+              headers: {Authorization: 'token ' + token},
+              timeout: 10000,
+            },
           );
         };
       }
@@ -70,7 +70,7 @@ export default function(app) {
             data => {
               login(loginFun).then(deferred.resolve, deferred.reject);
             },
-            deferred.reject
+            deferred.reject,
           );
           return deferred.promise;
         }
@@ -111,7 +111,7 @@ export default function(app) {
       authService.signupEmail = (email, password) => {
         return $http.post(
           config.apiUrl + '/auth/emailSignup/initiate',
-          {email, password, frontendUrl, returnUrl: authService.returnPath}
+          {email, password, frontendUrl, returnUrl: authService.returnPath},
         );
       };
 
@@ -136,7 +136,7 @@ export default function(app) {
           },
         }).then(
           response => { $window.location.href = response.data.location; },
-          response => response.data
+          response => response.data,
         );
       };
 
@@ -183,6 +183,6 @@ export default function(app) {
       }
 
       return authService;
-    }
+    },
   ]);
 };

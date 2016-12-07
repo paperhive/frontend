@@ -1,10 +1,8 @@
-'use strict';
 export default function(app) {
-
   app.directive('ngConfirmClick', [
     function() {
       return {
-        link: function(scope, element, attr) {
+        link: (scope, element, attr) => {
           const msg = attr.ngConfirmClick || 'Are you sure?';
           const clickAction = attr.confirmedClick;
           element.bind('click', function(event) {
@@ -12,7 +10,7 @@ export default function(app) {
               scope.$apply(clickAction);
             }
           });
-        }
+        },
       };
     }]);
 };

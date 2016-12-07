@@ -1,8 +1,4 @@
-'use strict';
-
 import { find } from 'lodash';
-
-import template from './channels-list.html';
 
 export default function(app) {
   app.component('channelsList', {
@@ -11,12 +7,12 @@ export default function(app) {
       constructor(public $location, public authService, public channelService) {}
 
       getMyRoles(channel) {
-        const self = find(channel.members, {person: {id: this.authService.user.id}});
+        const self: any = find(channel.members, {person: {id: this.authService.user.id}});
         if (!self) throw new Error('user not found in members');
         return self.roles;
       }
 
     },
-    template,
+    template: require('./channels-list.html'),
   });
 };

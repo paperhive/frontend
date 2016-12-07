@@ -1,4 +1,4 @@
-import angular from 'angular';
+import jquery from 'jquery';
 
 export default function(app) {
   app.component('documentInfoKudos', {
@@ -6,6 +6,8 @@ export default function(app) {
       doi: '<',
     },
     controller: class DocumentInfoKudosCtrl {
+      doi: string;
+
       static $inject = ['$element'];
       constructor(public $element) {}
 
@@ -15,19 +17,19 @@ export default function(app) {
         if (!this.doi) return;
 
         // create empty iframe and insert into DOM
-        const iframe = angular.element(`
+        const iframe = jquery(`
           <iframe
             width="100%"
             height="300"
             frameborder="0"
             scrolling="yes"
             style="border:none; overflow:hidden; width:100%;"
-          ></iframe>`
+          ></iframe>`,
         );
         this.$element.append(iframe);
 
         // inject basic html with kudos script (and a few style overrides)
-        iframe[0].contentDocument.write(`
+        (iframe[0] as HTMLIFrameElement).contentDocument.write(`
           <html>
             <head>
               <style>
@@ -47,9 +49,9 @@ export default function(app) {
               <script src="https://api.growkudos.com/widgets/article/${this.doi}?omit_icons=true"></script>
               <script src="https://api.growkudos.com/widgets/use_kudos/${this.doi}?omit_icons=true"></script>
             </body>
-          </html>`
+          </html>`,
         );
       }
-    }
+    },
   });
 }

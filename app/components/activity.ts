@@ -1,14 +1,16 @@
-'use strict';
-
-import template from './activity.html!text';
-
 export default function(app) {
   app.component('activity', {
     bindings: {
-      filterMode: '@',
       filterId: '<',
+      filterMode: '@',
     },
     controller: class Activity {
+      filterId: string;
+      filterMode: string;
+
+      activities: any[];
+      person: any;
+
       static $inject = ['$http', '$scope', 'authService', 'config', 'notificationService'];
       constructor(public $http, public $scope, public authService, public config, public notificationService) {
         $scope.$watch('$ctrl.authService.user', this.refresh.bind(this));
@@ -36,7 +38,7 @@ export default function(app) {
         this.$http.get(`${this.config.apiUrl}/activities/`, {params})
           .then(
             response => this.activities = response.data.activities,
-            this.notificationService.httpError('could not fetch activities (unknown reason)')
+            this.notificationService.httpError('could not fetch activities (unknown reason)'),
           );
 
         // fetch person if person filter is active
@@ -44,7 +46,7 @@ export default function(app) {
           this.$http.get(`${this.config.apiUrl}/people/${this.filterId}`)
             .then(
               response => this.person = response.data,
-              this.notificationService.httpError('could not fetch person (unknown reason)')
+              this.notificationService.httpError('could not fetch person (unknown reason)'),
             );
         }
       }
@@ -54,6 +56,6 @@ export default function(app) {
       }
 
     },
-    template,
+    template: require('./activity.html'),
   });
 };

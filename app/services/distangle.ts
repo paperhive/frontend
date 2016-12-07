@@ -1,8 +1,7 @@
-'use strict';
 export default function(app) {
   app.factory('distangleService', [function() {
     return {
-      distangle: function(anchors, sizes, lb, ub) {
+      distangle: (anchors, sizes, lb, ub) => {
         // JS port of Robert Luce's distangle_fast in
         // https://github.com/rluce/interval-distangle/blob/master/src/distangle.py
         if (anchors.length !== sizes.length) {
@@ -121,7 +120,7 @@ export default function(app) {
 
         // shift for upper bound
         return optAnchors;
-      }
+      },
     };
   }]);
 };

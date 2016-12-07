@@ -1,6 +1,3 @@
-'use strict';
-import template from './channel-invitation-new.html';
-
 export default function(app) {
   app.component('channelInvitationNew', {
     bindings: {
@@ -9,10 +6,15 @@ export default function(app) {
       resolve: '<',
     },
     controller: class ChannelInvitationNewCtrl {
+      close: any;
+      dismiss: any;
+      resolve: any;
+
       error: boolean;
       inProgress: boolean;
       succeeded: boolean;
 
+      email: string;
       roles = ['member', 'owner'];
       role = 'member';
 
@@ -44,6 +46,6 @@ export default function(app) {
         });
       }
     },
-    template,
+    template: require('./channel-invitation-new.html'),
   });
 };

@@ -1,4 +1,3 @@
-'use strict';
 export default function(app) {
   app.component(
     'authReturn', {
@@ -18,7 +17,7 @@ export default function(app) {
               notificationService.notifications.push({
                 type: 'info',
                 message: 'Welcome to PaperHive! You can set your username ' +
-                  '<a href="./settings" class="alert-link">here</a>.'
+                  '<a href="./settings" class="alert-link">here</a>.',
               });
             }
           }
@@ -26,7 +25,7 @@ export default function(app) {
           function onLoginError(data) {
             notificationService.notifications.push({
               type: 'error',
-              message: data.message
+              message: data.message,
             });
           }
 
@@ -42,7 +41,7 @@ export default function(app) {
                   authService.user = response.data.person;
                   onLogin(response.data);
                 },
-                response => onLoginError(response.data)
+                response => onLoginError(response.data),
               );
               break;
             case 'passwordReset':
@@ -61,7 +60,7 @@ export default function(app) {
           }
 
           $scope.auth = authService;
-        }
-      ]
+        },
+      ],
     });
 };

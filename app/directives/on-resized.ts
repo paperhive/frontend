@@ -1,6 +1,4 @@
-'use strict';
-
-import * as angular from 'angular';
+import angular from 'angular';
 
 export default function(app) {
 
@@ -15,7 +13,7 @@ export default function(app) {
     '$parse', '$window', '$timeout', function($parse, $window, $timeout) {
       return {
         restrict: 'A',
-        link: function(scope, element, attrs) {
+        link: (scope, element, attrs) => {
           let oldSize = {};
 
           const resizeHandler = function() {
@@ -51,8 +49,8 @@ export default function(app) {
 
           // call handler once
           $timeout(resizeHandler);
-        }
+        },
       };
-    }
+    },
   ]);
 };

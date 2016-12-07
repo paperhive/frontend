@@ -1,13 +1,8 @@
-'use strict';
-
-import template from './hivers.html';
-
 export default function(app) {
-  app.component(
-    'hivers', {
-      template,
-      bindings: {
-        hivers: '<',
-      },
-    });
+  app.component('hivers', {
+    bindings: {
+      hivers: '<',
+    },
+    template: require('./hivers.html'),
+  });
 };

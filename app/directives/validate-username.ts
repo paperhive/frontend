@@ -1,4 +1,3 @@
-'use strict';
 export default function(app) {
   // see https://docs.angularjs.org/guide/forms
   app.directive('validateUsername', [
@@ -7,7 +6,7 @@ export default function(app) {
       return {
         restrict: 'A',
         require: 'ngModel',
-        link: function(scope, elm, attrs, ctrl) {
+        link: (scope, elm, attrs, ctrl) => {
           ctrl.$asyncValidators.username = function(modelValue, viewValue) {
             // TODO: blacklist
 
@@ -30,14 +29,14 @@ export default function(app) {
                   return defer.resolve();
                 }
                 defer.reject(
-                  'An error occured while checking if the username is available'
+                  'An error occured while checking if the username is available',
                 );
               });
 
             return defer.promise;
           };
-        }
+        },
       };
-    }
+    },
   ]);
 };

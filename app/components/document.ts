@@ -1,17 +1,15 @@
-import * as _ from 'lodash';
-import * as angular from 'angular';
-import { cloneDeep, find, findIndex, findLastIndex, merge, orderBy, pick, remove, some } from 'lodash';
+import angular from 'angular';
+import { find, findIndex, merge, pick, remove } from 'lodash';
 
-import template from './document.html';
 import { getRevisionMetadata } from '../utils/documents';
 
 class DiscussionsController {
   // data
-  discussions: Array<any>;
+  discussions: any[];
   documentUpdatesSubscription: any;
 
   constructor(public document: string, public config: any, public $scope: any,
-      public $http: any, public authService, public websocketService) {
+              public $http: any, public authService, public websocketService) {
     this.discussions = [];
   }
 
@@ -47,7 +45,7 @@ class DiscussionsController {
   }
 
   async discussionDelete(discussion) {
-    const response = await this.$http({
+    await this.$http({
       url: `${this.config.apiUrl}/discussions/${discussion.id}`,
       method: 'DELETE',
       headers: {'If-Match': `"${discussion.revision}"`},
@@ -86,7 +84,7 @@ class DiscussionsController {
     this.$scope.$apply(() => this._replyDelete(merge(
       {},
       reply,
-      {discussionRevision: response.data.discussionRevision}
+      {discussionRevision: response.data.discussionRevision},
     )));
   }
 
@@ -105,6 +103,7 @@ class DiscussionsController {
               case 'post': this._discussionCreate(data); break;
               case 'put': this._discussionUpdate(data); break;
               case 'delete': this._discussionDelete(data); break;
+              default: throw new Error(`method ${update.method} unknown`);
             }
             break;
           case 'reply':
@@ -112,8 +111,10 @@ class DiscussionsController {
               case 'post': this._replyCreate(data); break;
               case 'put': this._replyUpdate(data); break;
               case 'delete': this._replyDelete(data); break;
+              default: throw new Error(`method ${update.method} unknown`);
             }
             break;
+          default: throw new Error(`resource ${update.resource} unknown`);
         }
       });
     });
@@ -164,7 +165,7 @@ class DiscussionsController {
 
   _replyCreate(newReply) {
     const discussion = this._discussionGet(newReply.discussion);
-    const existingReply = find(discussion.replies, {id: newReply.id});
+    const existingReply = find(discussion.replies, {id: newReply.id}) as any;
     if (existingReply) {
       if (existingReply.revision !== newReply.revision) {
         throw new Error('Two replies created with same id but different revision.');
@@ -187,32 +188,33 @@ class DiscussionsController {
 
   _replyDelete(deletedReply) {
     const discussion = this._discussionGet(deletedReply.discussion);
-    const removed = remove(discussion.replies, {id: deletedReply.id});
+    remove(discussion.replies, {id: deletedReply.id});
     discussion.revision = deletedReply.discussionRevision;
   }
 }
 
 export default function(app) {
   app.component('document', {
-    template,
     controller: class DocumentCtrl {
       subnavOpen = false;
       sidenavOpen = true;
-      revisions: Array<any>;
+      revisions: any[];
       activeRevision: any;
       discussionsCtrl: DiscussionsController;
-      filteredDiscussions: Array<any>;
+      documentCtrl: any;
+      filteredDiscussions: any[];
 
       // note: do *not* use $routeSegment.$routeParams because they still
       // use the old state in $routeChangeSuccess events
       static $inject = ['$http', '$routeParams', '$scope', 'authService', 'channelService', 'config',
         'DocumentController', 'metaService', 'notificationService', 'websocketService'];
 
-      constructor($http, public $routeParams, $scope, public authService, public channelService, config,
-        DocumentController, public metaService, notificationService, websocketService) {
+      constructor($http, public $routeParams, $scope, public authService,
+                  public channelService, config, _DocumentController,
+                  public metaService, notificationService, websocketService) {
         const documentId = $routeParams.documentId;
 
-        this.documentCtrl = new DocumentController(documentId);
+        this.documentCtrl = new _DocumentController(documentId);
         this.documentCtrl.fetchRevisions(); // TODO: error handling
         this.documentCtrl.fetchHivers(); // TODO: error handling
 
@@ -229,14 +231,13 @@ export default function(app) {
 
         // instanciate and init controller for discussions
         this.discussionsCtrl = new DiscussionsController(
-          documentId, config, $scope, $http, authService, websocketService
+          documentId, config, $scope, $http, authService, websocketService,
         );
-
 
         $scope.$watch('$ctrl.authService.user', () => {
           this.discussionsCtrl.refresh().catch(error => notificationService.notifications.push({
             type: 'error',
-            message: error.message
+            message: error.message,
           }));
           this.documentCtrl.fetchBookmarks(); // TODO: error handling
         });
@@ -254,7 +255,10 @@ export default function(app) {
         // don't overwrite if we already got one
         // (only if url changed)
         const urlRevisionId = this.$routeParams.revisionId;
-        if (this.activeRevision && (!urlRevisionId || urlRevisionId && this.activeRevision.revision === urlRevisionId)) return;
+        if (this.activeRevision &&
+            (!urlRevisionId ||
+             urlRevisionId && this.activeRevision.revision === urlRevisionId
+           )) return;
 
         // prefer revision id from url
         if (urlRevisionId) {
@@ -299,5 +303,6 @@ export default function(app) {
         });
       }
     },
+    template: require('./document.html'),
   });
 };

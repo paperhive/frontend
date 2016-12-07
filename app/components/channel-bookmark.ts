@@ -1,14 +1,11 @@
-'use strict';
-
-import template from './channel-bookmark.html';
-import { find } from 'lodash';
-
 export default function(app) {
   app.component('channelBookmark', {
     bindings: {
       documentCtrl: '<',
     },
     controller: class channelBookmarkCtrl {
+      documentCtrl: any;
+
       submitting = false;
 
       static $inject = ['$uibModal', 'authService', 'channelService'];
@@ -28,6 +25,6 @@ export default function(app) {
         this.$uibModal.open({component: 'channelNew'});
       };
     },
-    template,
+    template: require('./channel-bookmark.html'),
   });
 };

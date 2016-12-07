@@ -1,10 +1,5 @@
-'use strict';
-
-import template from './signup.html';
-
 export default function(app) {
   app.component('signup', {
-    template,
     controller: [
       '$scope', '$location', 'authService', '$http', 'config',
       function($scope, $location, authService, $http, config) {
@@ -20,8 +15,8 @@ export default function(app) {
 
         $scope.hasErrorPassword = function() {
           const form = $scope.signupForm;
-          return (form.$submitted || form['password'].$touched
-            || !form['password'].$pristine) && form['password'].$invalid;
+          return (form.$submitted || form.password.$touched
+            || !form.password.$pristine) && form.password.$invalid;
         };
 
         $scope.sendSignup = function() {
@@ -39,7 +34,8 @@ export default function(app) {
               'Unknown error';
           });
         };
-      }
-    ]
+      },
+    ],
+    template: require('./signup.html'),
   });
 };

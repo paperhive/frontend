@@ -1,8 +1,5 @@
-'use strict';
-import * as angular from 'angular';
-import { clone, compact, map, mapValues, keys, sortBy, sum } from 'lodash';
-
-import template from './margin-discussions.html';
+import angular from 'angular';
+import { clone, compact, map, sortBy, sum } from 'lodash';
 
 export default function(app) {
   app.component('marginDiscussions', {
@@ -26,9 +23,9 @@ export default function(app) {
       onDiscussionMouseenter: '&',
       onDiscussionMouseleave: '&',
     },
-    template,
     controller: [
-      '$document', '$element', '$scope', '$timeout', '$window', 'scroll', 'channelService', 'distangleService', 'tourService',
+      '$document', '$element', '$scope', '$timeout', '$window', 'scroll',
+      'channelService', 'distangleService', 'tourService',
       function($document, $element, $scope, $timeout, $window, scroll, channelService, distangleService, tourService) {
         const $ctrl = this;
 
@@ -52,7 +49,9 @@ export default function(app) {
           }
 
           // determine which discussions are visible right now
-          const visibleDiscussionIds = getVisibleDiscussionIds($ctrl.filteredDiscussions.map(discussion => discussion.id));
+          const visibleDiscussionIds = getVisibleDiscussionIds(
+            $ctrl.filteredDiscussions.map(discussion => discussion.id),
+          );
 
           // reevaluate after a short delay
           $timeout(() => {
@@ -71,7 +70,7 @@ export default function(app) {
         // update discussion visibilities on scroll and resize event
         angular.element($window).on('scroll', updateDiscussionVisibilities);
         $element.on('$destroy', () =>
-          angular.element($window).off('scroll', updateDiscussionVisibilities)
+          angular.element($window).off('scroll', updateDiscussionVisibilities),
         );
 
         // show popover with share message?
@@ -89,20 +88,24 @@ export default function(app) {
 
         $ctrl.tour = tourService;
         // scroll to discussion tour popover
-        $scope.$watch('$ctrl.discussionPositions["cDmUY04FkYx9"] !== undefined && $ctrl.tour.stages[$ctrl.tour.index] === "margin-discussion"', shouldScroll => {
-          if (shouldScroll) {
-            // wait until popover is rendered
-            $timeout(() => {
-              // trigger popover positioning
-              angular.element($window).scroll();
+        $scope.$watch(
+          '$ctrl.discussionPositions["cDmUY04FkYx9"] !== undefined ' +
+          '&& $ctrl.tour.stages[$ctrl.tour.index] === "margin-discussion"',
+          shouldScroll => {
+            if (shouldScroll) {
+              // wait until popover is rendered
               $timeout(() => {
-                scroll.scrollTo('#discussionTourPopover', {
-                  offset: ($ctrl.viewportOffsetTop || 0) + 130
+                // trigger popover positioning
+                angular.element($window).scroll();
+                $timeout(() => {
+                  scroll.scrollTo('#discussionTourPopover', {
+                    offset: ($ctrl.viewportOffsetTop || 0) + 130,
+                  });
                 });
-              });
-            }, 400);
-          }
-        });
+              }, 400);
+            }
+          },
+        );
 
         // sizes of discussions by discussion id
         $ctrl.discussionSizes = {};
@@ -202,12 +205,12 @@ export default function(app) {
           const coordsAbove = draftCoord &&
             coords.filter(coord => coord.position <= draftCoord.position);
           const coordsBelow = coords.filter(coord =>
-            !draftCoord || coord.position > draftCoord.position
+            !draftCoord || coord.position > draftCoord.position,
           );
 
           // move bottom elements from above to below if there's not enough space
-          function getTotalHeight(coords) {
-            return sum(map(coords, 'height')) + coords.length * padding;
+          function getTotalHeight(_coords) {
+            return sum(map(_coords, 'height')) + _coords.length * padding;
           }
           while (draftCoord && getTotalHeight(coordsAbove) + offsetTop > draftCoord.position) {
             // remove last one in above
@@ -218,15 +221,15 @@ export default function(app) {
 
           const positions = {};
           function place(_coords, lb, ub) {
-            const ids = map(_coords, 'id');
-            const anchors = map(_coords, 'position');
-            const heights = map(_coords, coord => coord.height + padding);
+            const ids = _coords.map(coord => coord.id);
+            const anchors = _coords.map(coord => coord.position);
+            const heights = _coords.map(coord => coord.height + padding);
 
             const optAnchors = distangleService.distangle(anchors, heights, lb, ub);
             for (let i = 0; i < anchors.length; i++) {
               positions[ids[i]] = optAnchors[i];
             }
-          };
+          }
 
           // place discussions
           if (draftCoord) {
@@ -260,7 +263,8 @@ export default function(app) {
         $scope.$watch('$ctrl.draftSize', updatePositions);
         $scope.$watchCollection('$ctrl.discussionSizes', updatePositions);
         $scope.$watchCollection('$ctrl.pageCoordinates', updatePositions);
-      }
+      },
     ],
+    template: require('./margin-discussions.html'),
   });
 }

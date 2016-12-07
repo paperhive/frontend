@@ -1,4 +1,4 @@
-import { cloneDeep, last } from 'lodash';
+import { cloneDeep } from 'lodash';
 
 export default function(app) {
   app.component('pdfSelectionPopup', {
@@ -27,16 +27,18 @@ export default function(app) {
           data: {target: newTarget},
         }).then(
           response => this.anchorId = response.data.id,
-          this.notificationService.httpError('could not create anchor')
+          this.notificationService.httpError('could not create anchor'),
         );
       }
     },
+    /* tslint:disable:max-line-length */
     template: `
     <url-share
       url="/documents/{{$ctrl.target.document}}?a=s:{{$ctrl.anchorId}}"
       label="URL for this selection"
       help="Share this URL on social networks or via email to draw the attention of your colleagues and collaborators to this selection."
     ></url-share>
-    `
+    `,
+    /* tslint:enable:max-line-length */
   });
 }

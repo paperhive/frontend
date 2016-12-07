@@ -20,7 +20,7 @@ export default function(app) {
             response => {
               ctrl.sending = false;
               ctrl.error = response.data;
-            }
+            },
           );
       };
     }],
@@ -41,7 +41,9 @@ export default function(app) {
               ng-disabled="$ctrl.sending || $ctrl.success"
               required>
             <p class="help-block">
-              <span ng-if="(passwordRequestForm.$submitted || passwordRequestForm.emailOrUsername.$touched) && passwordRequestForm.emailOrUsername.$error.required"
+              <span ng-if="(passwordRequestForm.$submitted ||
+                            passwordRequestForm.emailOrUsername.$touched)
+                           && passwordRequestForm.emailOrUsername.$error.required"
                 class="text-danger"
               >
                 Please enter your email address or username.
@@ -49,7 +51,9 @@ export default function(app) {
             </p>
 
             <button class="btn btn-primary btn-block ph-md-margin-top" type="submit"
-              ng-click="!$ctrl.sending && !$ctrl.success && !passwordRequestForm.$invalid && $ctrl.send($ctrl.emailOrUsername)"
+              ng-click="!$ctrl.sending && !$ctrl.success &&
+                        !passwordRequestForm.$invalid &&
+                        $ctrl.send($ctrl.emailOrUsername)"
               ng-class="{disabled: $ctrl.sending || $ctrl.success || passwordRequestForm.$invalid}"
             >
               <i ng-if="$ctrl.sending" class="fa fa-fw fa-spinner fa-spin"></i>

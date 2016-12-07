@@ -1,8 +1,8 @@
-'use strict';
-import * as angular from 'angular';
+import angular from 'angular';
 import { merge } from 'lodash';
 
-import template from './margin-discussion.html';
+const marginDiscussionUrlPopoverUrl =
+  require('!ngtemplate-loader?relativeTo=/app!html-loader!./margin-discussion-url-popover.html');
 
 export default function(app) {
   app.component('marginDiscussion', {
@@ -13,14 +13,14 @@ export default function(app) {
       onDiscussionDelete: '&',
       onReplySubmit: '&',
       onReplyUpdate: '&',
-      onReplyDelete: '&'
+      onReplyDelete: '&',
     },
-    template,
     controller: [
       '$scope', '$q', '$location', 'authService', 'channelService',
       function($scope, $q, $location, authService, channelService) {
         const ctrl = this;
 
+        this.marginDiscussionUrlPopoverUrl = marginDiscussionUrlPopoverUrl;
         this.channelService = channelService;
 
         // expose discussion in template
@@ -52,9 +52,9 @@ export default function(app) {
           const reply = merge(
             {},
             $scope.replyDraft,
-            {discussion: $scope.discussion.id}
+            {discussion: $scope.discussion.id},
           );
-          $q.when(ctrl.onReplySubmit({reply: reply}))
+          $q.when(ctrl.onReplySubmit({reply}))
             .then(() => $scope.replyDraft = {})
             .finally(() => $scope.state.submitting = false);
         };
@@ -68,33 +68,34 @@ export default function(app) {
 
         // reply controller (for deletion)
         // TODO: remove controller!
-        $scope.replyCtrl = ['$scope', $scope => {
-          $scope.replyState = {};
-          $scope.replyDelete = reply => {
-            $scope.replyState.submitting = true;
-            $q.when(ctrl.onReplyDelete({reply: reply}))
-              .finally(() => $scope.replyState.submitting = false);
+        $scope.replyCtrl = ['$scope', _$scope => {
+          _$scope.replyState = {};
+          _$scope.replyDelete = reply => {
+            _$scope.replyState.submitting = true;
+            $q.when(ctrl.onReplyDelete({reply}))
+              .finally(() => _$scope.replyState.submitting = false);
           };
         }];
 
         // reply controller (for editing)
         // TODO: remove controller (move into new component)
-        $scope.replyEditCtrl = ['$scope', $scope => {
-          $scope.copy = angular.copy($scope.reply);
-          $scope.replyUpdate = () => {
-            $scope.replyState.submitting = true;
+        $scope.replyEditCtrl = ['$scope', _$scope => {
+          _$scope.copy = angular.copy($scope.reply);
+          _$scope.replyUpdate = () => {
+            _$scope.replyState.submitting = true;
             $q.when(ctrl.onReplyUpdate(
-              {$replyOld: $scope.reply, $replyNew: $scope.copy}
+              {$replyOld: _$scope.reply, $replyNew: _$scope.copy},
             ))
               .then(function() {
-                $scope.replyState.editing = false;
+                _$scope.replyState.editing = false;
               })
               .finally(function() {
-                $scope.replyState.submitting = false;
+                _$scope.replyState.submitting = false;
               });
           };
         }];
-      }]
-    }
-  );
+      },
+    ],
+    template: require('./margin-discussion.html'),
+  });
 };

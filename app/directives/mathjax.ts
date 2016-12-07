@@ -1,5 +1,4 @@
-/*global MathJax*/
-'use strict';
+import MathJax from 'mathjax';
 
 export default function(app) {
   app.directive('mathjax', ['$sanitize', 'notificationService',
@@ -7,7 +6,7 @@ export default function(app) {
       return {
         restrict: 'E',
         scope: {body: '='},
-        link: function(scope, element, attrs) {
+        link: (scope, element, attrs) => {
           scope.$watch('body', function(body) {
             try {
               element.html($sanitize(body || ''));
@@ -15,12 +14,12 @@ export default function(app) {
             } catch (e) {
               notificationService.notifications.push({
                 type: 'error',
-                message: e.message
+                message: e.message,
               });
             }
           });
-        }
+        },
       };
-    }
+    },
   ]);
 };

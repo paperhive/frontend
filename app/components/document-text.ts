@@ -1,28 +1,28 @@
-import * as angular from 'angular';
-import { filter, find, get, last, merge, reverse, sortBy } from 'lodash';
-
-import template from './document-text.html';
+import jquery from 'jquery';
+import { merge } from 'lodash';
 
 class DocumentTextCtrl {
   // input
   revision: any;
   access: boolean;
   latestAccessibleRevision: any;
-  discussions: Array<any>;
-  filteredDiscussions: Array<any>;
+  discussions: any[];
+  filteredDiscussions: any[];
 
   draftSelectors: any;
-  highlights: Array<any>;
+  highlights: any[];
   hoveredHighlights: any;
   hoveredMarginDiscussions: any;
   pageCoordinates: any;
   anchor: string;
+  pdfUrl: string;
 
-  static $inject = ['$animate', '$element', '$http', '$location', '$routeSegment', '$scope', '$window', 'config',
-    'notificationService', 'tourService'];
-  constructor($animate, $element, public $http, public $location, public $routeSegment,
-      public $scope, $window, public config, public notificationService,
-      public tourService) {
+  static $inject = ['$animate', '$element', '$http', '$location',
+    '$routeSegment', '$scope', '$window', 'config', 'notificationService',
+    'tourService'];
+  constructor($animate, $element, public $http, public $location,
+              public $routeSegment, public $scope, $window, public config,
+              public notificationService, public tourService) {
     this.hoveredHighlights = {};
     this.hoveredMarginDiscussions = {draft: true};
     this.pageCoordinates = {};
@@ -41,7 +41,7 @@ class DocumentTextCtrl {
     // trigger resize event when animation of .ph-document-text finishes
     function triggerResize(element, phase) {
       if (!element.hasClass('ph-document-text') || phase !== 'close') return;
-      angular.element($window).triggerHandler('resize');
+      jquery($window).triggerHandler('resize');
     }
     $animate.on('addClass', $element, triggerResize);
     $animate.on('removeClass', $element, triggerResize);
@@ -63,8 +63,8 @@ class DocumentTextCtrl {
         target: {
           document: this.revision.id,
           documentRevision: this.revision.revision,
-        }
-      }
+        },
+      },
     );
   }
 
@@ -137,7 +137,7 @@ export default function(app) {
       onReplyUpdate: '&',
       onReplyDelete: '&',
     },
-    template,
     controller: DocumentTextCtrl,
+    template: require('./document-text.html'),
   });
 }

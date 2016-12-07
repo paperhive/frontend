@@ -3,8 +3,8 @@ import { find, remove } from 'lodash';
 
 export default function(app) {
   app.service('channelService', class channelService {
-    channels: Array<any>;
-    invitations: Array<any>;
+    channels: any[];
+    invitations: any[];
     channelsById: any;
     selectedChannel: any;
     showAllChannels = true;
@@ -85,8 +85,11 @@ export default function(app) {
       return this.channelsApi.invitationDelete(id, invitationId)
         .then(() => {
           const channel = this.get(id);
-          if (channel) remove(channel.invitations, {id: invitationId});
-          else remove(this.invitations, {id: invitationId});
+          if (channel) {
+            remove(channel.invitations, {id: invitationId});
+          } else {
+            remove(this.invitations, {id: invitationId});
+          }
         });
     }
 

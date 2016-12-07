@@ -1,8 +1,6 @@
 import angular from 'angular';
 import { forEach } from 'lodash';
 
-import marginLinkTemplate from './margin-link.html';
-
 export default function(app) {
   app.component('marginLink', {
     bindings: {
@@ -13,7 +11,6 @@ export default function(app) {
       viewportOffsetBottom: '<',
       extraOffset: '<',
     },
-    template: marginLinkTemplate,
     controller: [
       '$scope', '$element', '$window', function($scope, $element, $window) {
         const ctrl = this;
@@ -81,7 +78,6 @@ export default function(app) {
         $scope.$watchCollection('$ctrl.discussionSizes', updateCount);
         $scope.$watch('$ctrl.viewportOffsetTop', updateCount);
 
-
         // wrap updateCount with $apply for non-angular events
         const updateCountApply = () => $scope.$evalAsync(updateCount);
 
@@ -92,7 +88,8 @@ export default function(app) {
           angular.element($window).off('scroll', updateCountApply);
           angular.element($window).off('resize', updateCountApply);
         });
-      }
+      },
     ],
+    template: require('./margin-link.html'),
   });
 }
