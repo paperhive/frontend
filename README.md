@@ -15,7 +15,7 @@
 ```
 git clone git@github.com:paperhive/paperhive-frontend.git --recursive
 cd paperhive-frontend
-npm run install-deps
+npm install
 cp config.json.default config.json
 ```
 Adapt `config.json` to your needs and finally run:
