@@ -1,4 +1,4 @@
-import * as jquery from 'jquery';
+import jquery from 'jquery';
 
 export default function(app) {
   app.component('documentInfoKudos', {
