@@ -65,7 +65,7 @@
     "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {
-    "angular": "^1.5.9",
+    "angular": "^1.6.0",
     "angular-animate": "^1.5.9",
     "angular-moment": "^1.0.0",
     "angular-route": "^1.5.9",
