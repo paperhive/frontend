@@ -238,33 +238,19 @@ export default function(app) {
       }
 
       getRangeSelectors(range) {
-        let output = [];
-
-        let index = range[0].transformation.index;
-        // get ph-pdf-text element
-        const textElement = this.element[0];
-        let elem = textElement.firstChild;
-        while (index !== 0) {
-          elem = elem.nextSibling;
-          index --;
-        }
-        output.push(elem);
-
-        const startOffset = range[0].position;
-        const endOffset = startOffset + range[0].length;
-        let myRange = rangy.createRange();
-        myRange.setStart(output[0].firstChild, startOffset);
-        myRange.setEnd(output[0].firstChild, endOffset);
-        // myRange.select();
-
-        // const selectors = {
-        //   pdfRectangles: range.maps(range => {
-        //     const rangyRange = myRange;
-        //     const selectors = getRectanglesSelector(rangyRange, this.element[0]);
-        //   }),
-        // };
-        // return selectors;
-
+        const selectors = {
+          pdfRectangles: range.map(range => {
+            const index = range.transformation.index;
+            // get n-th child
+            const nthChild = this.element[0].childNodes[index].firstChild;
+            let rangyRange = rangy.createRange();
+            rangyRange.setStart(nthChild, range.position);
+            rangyRange.setEnd(nthChild, range.position + range.length);
+            const selectors = getRectanglesSelector(rangyRange, this.element[0]);
+            return selectors;
+          }),
+        };
+        return selectors;
       }
     }
 
@@ -418,13 +404,11 @@ export default function(app) {
       searchRanges(ranges) {
         if (!ranges) return;
         const transformedRanges = ranges.map(range => srch.backTransformRange(range, this.textSnippetTransformations));
-        let index = 0;
-        const output = [];
         if (!transformedRanges) return;
-        console.log(transformedRanges);
 
         // debug
-        if (this.page.pageIndex !== 0) return;
+        // if (this.page.pageIndex !== 0) return;
+        if (!this.textRenderer) return;
 
         const rangesSelectors = transformedRanges.map(range =>
           this.textRenderer.getRangeSelectors(range),
