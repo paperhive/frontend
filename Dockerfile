@@ -1,4 +1,4 @@
-FROM node:6
+FROM node:7
 
 # init workspace
 RUN mkdir /paperhive-frontend
@@ -7,10 +7,6 @@ WORKDIR /paperhive-frontend
 # env var fixes excessive npm log output
 # see https://github.com/nodejs/docker-node/issues/57
 ENV NPM_CONFIG_LOGLEVEL="warn"
-
-# let bower run as root
-# http://bower.io/docs/api/#allow-root
-ENV BOWER_ALLOW_ROOT="true"
 
 # grab phantomjs from CDN (instead of rate-limited bitbucket)
 #ENV PHANTOMJS_CDNURL="http://cnpmjs.org/downloads"
