@@ -1,17 +1,19 @@
-'use strict';
-import template from './channel-member-update.html';
-
 export default function(app) {
   app.component('channelMemberUpdate', {
     bindings: {
       resolve: '<',
       close: '&',
-      dismiss: '&'
+      dismiss: '&',
     },
     controller: class ChannelMemberUpdateCtrl {
+      resolve: any;
+      close: any;
+      dismiss: any;
+
       inProgress: boolean;
       succeeded: boolean;
 
+      role: string;
       roles = ['member', 'owner'];
 
       static $inject = ['channelService'];
@@ -32,6 +34,6 @@ export default function(app) {
       }
 
     },
-    template,
+    template: require('./channel-member-update.html'),
   });
 };

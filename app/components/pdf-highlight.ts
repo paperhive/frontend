@@ -28,6 +28,6 @@ export default function(app) {
           pageNumber: $ctrl.pageNumber,
         })"
       ></div>
-    `
+    `,
   });
 }

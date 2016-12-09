@@ -12,14 +12,13 @@
     pointer-events: all;
   }
 }
-
+.ph-dropdown-flex {
+  display: flex;
+  align-items: center;
+}
 .ph-margin-controls > .ph-margin-controls-permanent {
   position: relative;
   z-index: 1;
-
-  display: flex;
-  align-items: center;
-
   padding: @grid-gutter-width / 2;
 
   background: @ph-background-color;
@@ -40,7 +39,6 @@
 .ph-margin-controls-permanent > channel-selector {
   flex-grow: 1;
   max-width: 100%;
-  box-shadow: @ph-shadow;
 }
 
 .ph-margin-controls-permanent > filter-button {

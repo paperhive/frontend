@@ -1,13 +1,10 @@
-'use strict';
 import { find } from 'lodash';
 
-import template from './discussion-list.html';
 import { getRevisionMetadata } from '../utils/documents';
 
 export default function(app) {
   app.component(
     'discussionList', {
-      template,
       bindings: {
         discussions: '<',
         documentRevision: '<',
@@ -28,11 +25,12 @@ export default function(app) {
 
               metaService.set({
                 title: 'Discussions · ' + document.title + ' · PaperHive',
-                meta: metadata
+                meta: metadata,
               });
             }
           });
-        }
-      ]
+        },
+      ],
+      template: require('./discussion-list.html'),
     });
 };

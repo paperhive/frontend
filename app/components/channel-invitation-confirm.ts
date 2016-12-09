@@ -1,16 +1,19 @@
-'use strict';
-import template from './channel-invitation-confirm.html';
-
 export default function(app) {
   app.component('channelInvitationConfirm', {
     controller: class ChannelInvitationConfirmCtrl {
       invitation: string;
+      token: string;
+      password: string;
       inProgress = false;
       succeeded = false;
       error = false;
+      invitationDeleting = false;
 
-      static $inject = ['$http', '$location', '$scope', 'authService', 'channelService', 'config', 'notificationService'];
-      constructor(public $http, public $location, public $scope, public authService, public channelService, public config, public notificationService) {
+      static $inject = ['$http', '$location', '$scope', 'authService',
+        'channelService', 'config', 'notificationService'];
+      constructor(public $http, public $location, public $scope,
+                  public authService, public channelService, public config,
+                  public notificationService) {
         this.token = $location.hash();
         $location.hash(null);
         $http
@@ -39,7 +42,7 @@ export default function(app) {
                     this.notificationService.notifications.push({
                       type: 'info',
                       message: `Welcome to PaperHive! You can set your username
-                        <a href="./settings" class="alert-link">here</a>.`
+                        <a href="./settings" class="alert-link">here</a>.`,
                     });
                   }, 100);
                 }
@@ -59,6 +62,6 @@ export default function(app) {
       }
 
     },
-    template,
+    template: require('./channel-invitation-confirm.html'),
   });
 }

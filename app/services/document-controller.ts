@@ -7,13 +7,13 @@ export default function(app) {
     ($http, $rootScope, $timeout, auth, config, notificationService) => {
       // controller for one document
       return class DocumentController {
-        revisions: Array<any>;
+        revisions: any[];
         revisionAccess = {};
         latestRevision: any;
         latestAccessibleRevision: any;
-        hivers: Array<any>;
+        hivers: any[];
         isUserHiver: boolean;
-        bookmarks: Array<any>;
+        bookmarks: any[];
 
         constructor(public documentId) {
           $rootScope.$watchCollection(() => this.revisions, this.updateRevisionAccess.bind(this));
@@ -39,7 +39,7 @@ export default function(app) {
 
               const result = await $http.get(
                 `https://api.elsevier.com/content/article/entitlement/${id}`,
-                {params: {apiKey, httpAccept: 'application/json'}}
+                {params: {apiKey, httpAccept: 'application/json'}},
               );
               if (get(result, 'data.entitlement-response.document-entitlement.entitled')) {
                 return true;
@@ -114,7 +114,6 @@ export default function(app) {
           }
         }
 
-
         async updateRevisionAccess() {
           if (!this.revisions) return;
 
@@ -165,10 +164,11 @@ export default function(app) {
         }
 
         updateIsUserHiver() {
-          if (!this.hivers || !auth.user)
+          if (!this.hivers || !auth.user) {
             this.isUserHiver = false;
-          else
+          } else {
             this.isUserHiver = !!find(this.hivers, {person: {id: auth.user.id}});
+          }
         }
 
         fetchBookmarks() {
@@ -198,6 +198,6 @@ export default function(app) {
         }
 
       };
-    }
+    },
   ]);
 }

@@ -1,7 +1,3 @@
-'use strict';
-
-import template from './channel-settings.html!text';
-
 export default function(app) {
   app.component('channelSettings', {
     bindings: {
@@ -9,6 +5,9 @@ export default function(app) {
       isOwner: '<',
     },
     controller: class ChannelSettings {
+      channel: any;
+      isOwner: any;
+
       activating = false;
       deactivating = false;
       description: string;
@@ -51,6 +50,6 @@ export default function(app) {
           .then(() => this.deactivating = false);
       }
     },
-    template
+    template: require('./channel-settings.html'),
   });
 }

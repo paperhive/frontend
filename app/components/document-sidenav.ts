@@ -1,5 +1,3 @@
-import template from './document-sidenav.html';
-
 export default function(app) {
   app.component('documentSidenav', {
     bindings: {
@@ -10,6 +8,12 @@ export default function(app) {
       onToggle: '&',
     },
     controller: class DocumentSidenavCtrl {
+      activeRevision: string;
+      documentCtrl: any;
+      open: boolean;
+      viewportOffsetTop: number;
+      onToggle: any;
+
       kudosOpen = true;
       kudosDoi: string;
       kudosTestedDoi: string;
@@ -51,7 +55,7 @@ export default function(app) {
               if (response.status !== 404) {
                 throw new Error(`Error testing DOI on Kudos (status ${response.status})`);
               }
-            }
+            },
           );
       }
 
@@ -60,6 +64,6 @@ export default function(app) {
           this.documentCtrl.getRevisionPublisherLink(this.activeRevision);
       }
     },
-    template,
+    template: require('./document-sidenav.html'),
   });
 }

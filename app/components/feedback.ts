@@ -1,7 +1,3 @@
-'use strict';
-
-import template from './feedback.html';
-
 export default function(app) {
   app.component('feedback', {
     bindings: {
@@ -9,8 +5,19 @@ export default function(app) {
       onSubmitted: '&',
     },
     controller: class FeedbackFormCtrl {
-      static $inject = ['$http', '$location', '$scope', 'authService', 'config', 'notificationService'];
-      constructor(public $http, public $location, public $scope, public authService, public config, public notificationService) {
+      onCancel: any;
+      onSubmitted: any;
+
+      name: string;
+      email: string;
+      message: string;
+      submitting: boolean;
+      error: Error;
+
+      static $inject = ['$http', '$location', '$scope', 'authService',
+        'config', 'notificationService'];
+      constructor(public $http, public $location, public $scope,
+                  public authService, public config, public notificationService) {
         if (this.authService.user) {
           this.name = this.authService.user.displayName;
           this.email = this.authService.user.account.email;
@@ -40,6 +47,6 @@ export default function(app) {
           });
       }
     },
-    template
+    template: require('./feedback.html'),
   });
 };

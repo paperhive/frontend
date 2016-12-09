@@ -1,5 +1,14 @@
 // include upstream font awesome
-@import "../../bower_components/fontawesome/less/font-awesome.less";
+@import "~font-awesome/less/font-awesome.less";
 
-// set font path
-@fa-font-path: "assets/fontawesome/fonts/";
+// fix fa-fw on fa-stack
+// https://github.com/FortAwesome/Font-Awesome/issues/2815#issuecomment-36450843
+.fa-stack.fa-fw {
+  width: 2.5714285714285716em;
+  height: 2.5714285714285716em;
+}
+
+// makes the size of the stacked icon equal to a regular icon
+.fa-stack.fa-stack-sm {
+  font-size: 0.5em;
+}

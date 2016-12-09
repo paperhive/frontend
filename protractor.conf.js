@@ -1,9 +1,7 @@
-'use strict';
+const liveServer = require('live-server');
 
-var liveServer = require('live-server');
-
-var port = process.env.HTTP_PORT || 9998;
-var server;
+const port = process.env.HTTP_PORT || 9998;
+let server;
 
 exports.config = {
   specs: ['test/protractor/**/*.spec.js'],

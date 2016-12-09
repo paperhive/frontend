@@ -1,6 +1,4 @@
-'use strict';
-import * as angular from 'angular';
-// TODO: ts complains about missing default export but this works!
+import angular from 'angular';
 import jquery from 'jquery';
 
 export default function(app) {
@@ -9,10 +7,10 @@ export default function(app) {
     function($rootScope, $routeSegment, $filter) {
       return {
         restrict: 'E',
-        templateUrl: 'html/directives/subnav.html',
+        template: require('./subnav.html'),
         transclude: true,
         scope: {},
-        link: function(scope, element, attrs) {
+        link: (scope, element, attrs) => {
           // collapsed by default
           scope.collapsed = true;
 
@@ -49,7 +47,7 @@ export default function(app) {
 
             // add link
             angular.element(a).attr(
-              'href', './' + $filter('routeSegmentUrl')(target)
+              'href', './' + $filter('routeSegmentUrl')(target),
             );
 
             // add click event
@@ -65,11 +63,11 @@ export default function(app) {
                 } else {
                   el.removeClass('active');
                 }
-              }
+              },
             );
           });
-        }
+        },
       };
-    }
+    },
   ]);
 };

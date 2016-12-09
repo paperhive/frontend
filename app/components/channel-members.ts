@@ -1,9 +1,3 @@
-'use strict';
-
-import { includes, remove } from 'lodash';
-
-import template from './channel-members.html!text';
-
 export default function(app) {
   app.component('channelMembers', {
     bindings: {
@@ -11,6 +5,11 @@ export default function(app) {
       isOwner: '<',
     },
     controller: class ChannelMembers {
+      channel: any;
+      isOwner: any;
+
+      memberDeleting = false;
+
       static $inject = ['$uibModal', 'authService', 'channelService'];
       constructor(public $uibModal, public authService, public channelService) {}
 
@@ -31,6 +30,6 @@ export default function(app) {
       };
 
     },
-    template,
+    template: require('./channel-members.html'),
   });
 }

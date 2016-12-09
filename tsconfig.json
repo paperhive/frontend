@@ -1,13 +1,11 @@
 {
   "compilerOptions": {
-    "module": "es6",
-    "noEmit": true,
-    "sourceMap": false,
-    "target": "es6"
+    "allowSyntheticDefaultImports": true,
+    "target": "es6",
+    "types": ["node"]
   },
-  "files": [
-    "app/index.ts",
-    "typings/index.d.ts"
-  ],
-  "compileOnSave": false
+  "compileOnSave": false,
+  "exclude": [
+    "node_modules"
+  ]
 }

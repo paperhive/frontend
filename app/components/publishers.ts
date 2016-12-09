@@ -1,7 +1,3 @@
-'use strict';
-
-import template from './publishers.html';
-
 export default function(app) {
-  app.component('publishers', {template});
+  app.component('publishers', {template: require('./publishers.html')});
 };

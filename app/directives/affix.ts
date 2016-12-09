@@ -1,6 +1,5 @@
-import { clone, min} from 'lodash';
-// TODO: ts complains about missing default export but this works!
 import jquery from 'jquery';
+import { clone, min} from 'lodash';
 
 export default function(app) {
   app.directive(
@@ -8,7 +7,7 @@ export default function(app) {
     ['$window', '$timeout', function($window, $timeout) {
       return {
         restrict: 'A',
-        link: function(scope, element, attrs) {
+        link: (scope, element, attrs) => {
           const paramsDefault = {
             offsetTop: 0,
             offsetBottom: 0,
@@ -22,7 +21,7 @@ export default function(app) {
             const height = min([
               jquery($window).innerHeight() - params.offsetTop -
                 params.offsetBottom - 1,
-              element[0].scrollHeight
+              element[0].scrollHeight,
             ]);
             element.css({height: height > 0 ? height + 'px' : 'auto'});
 
@@ -32,7 +31,6 @@ export default function(app) {
             const parentRect = offsetParent.getBoundingClientRect();
 
             // positioned normally
-            let top = 0;
             let affixed = false;
 
             if (parentRect.top >= params.offsetTop) {
@@ -76,12 +74,12 @@ export default function(app) {
                 params.offsetBottom = vals[1] || paramsDefault.offsetBottom;
                 params.useParentHeight = vals[2] !== undefined ?
                   vals[2] : paramsDefault.useParentHeight;
-              }
+              },
             );
           });
-        }
+        },
       };
-    }]
+    }],
   );
 
 };

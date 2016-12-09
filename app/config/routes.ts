@@ -16,10 +16,10 @@ export default function(app) {
             street: 'Ackerstr. 76',
             postalCode: '13355',
             city: 'Berlin',
-            country: 'Germany'
+            country: 'Germany',
           },
-          phone: '+493031478924'
-        }
+          phone: '+493031478924',
+        },
       };
 
       $routeSegmentProvider
@@ -88,7 +88,7 @@ export default function(app) {
             {name: 'twitter:url', content: meta.main.url},
             {name: 'twitter:title', content: meta.main.title},
             {name: 'twitter:description', content: meta.main.description},
-            {name: 'twitter:image', content: meta.main.logo}
+            {name: 'twitter:image', content: meta.main.logo},
           ],
           jsonld: [
             {
@@ -101,31 +101,31 @@ export default function(app) {
                 'https://plus.google.com/114787682678537396870',
                 'https://twitter.com/paperhive',
                 'https://github.com/paperhive/',
-                'https://www.youtube.com/channel/UCe4xC7kaff0ySd6yZuT2XYQ'
+                'https://www.youtube.com/channel/UCe4xC7kaff0ySd6yZuT2XYQ',
               ],
               address: {
                 streetAddress: meta.main.address.street,
                 postalCode: meta.main.address.postalCode,
                 addressLocality: meta.main.address.city,
-                addressCountry: meta.main.address.country
+                addressCountry: meta.main.address.country,
               },
               contactPoint: [
                 {
                   '@type': 'ContactPoint',
                   telephone: meta.main.phone,
-                  contactType: 'customer service'
-                }
-              ]
-            }
-          ]
+                  contactType: 'customer service',
+                },
+              ],
+            },
+          ],
         })
         // 404 page not found
         .segment('404', {
           template: '<not-found></not-found>',
           title: '404 · page not found · PaperHive',
           meta: [
-            {name: 'prerender-status-code', content: 404}
-          ]
+            {name: 'prerender-status-code', content: 404},
+          ],
         })
 
         .segment('about', {
@@ -135,14 +135,14 @@ export default function(app) {
             {
               name: 'description',
               content: 'PaperHive is a Berlin-based startup that enables ' +
-                'seamless discussion of research papers.'
-            }
-          ]
+                'seamless discussion of research papers.',
+            },
+          ],
         })
 
         .segment('authReturn', {
           template: '<auth-return></auth-return>',
-          title: 'PaperHive'
+          title: 'PaperHive',
         })
 
         .segment('channelInvitationConfirm', {
@@ -223,9 +223,9 @@ export default function(app) {
             {
               name: 'description',
               content: 'Contact PaperHive and ask us questions or send us ' +
-                'suggestions.'
-            }
-          ]
+                'suggestions.',
+            },
+          ],
         })
 
         .segment('documents', {
@@ -247,7 +247,7 @@ export default function(app) {
                 </div>
               </div>
             `,
-            title: 'Activity · PaperHive'
+            title: 'Activity · PaperHive',
           })
           .segment('hivers', {
             template: `
@@ -259,14 +259,14 @@ export default function(app) {
                 </div>
               </div>
             `,
-            title: 'Hivers · PaperHive'
+            title: 'Hivers · PaperHive',
           })
           .segment('discussions', {
             template: `<div
               ng-if="$ctrl.discussionsCtrl.discussions"
               app-view-segment="2"
             ></div>`,
-            title: 'Discussions · PaperHive'
+            title: 'Discussions · PaperHive',
           })
           .within()
             .segment('list', {
@@ -275,7 +275,7 @@ export default function(app) {
                 document-revision="$ctrl.latestRevision"
                 discussions="$ctrl.discussionsCtrl.discussions"
               ></discussion-list>`,
-              title: 'Discussions · PaperHive'
+              title: 'Discussions · PaperHive',
             })
             .segment('thread', {
               // Ideally, we'd already provide the exact discussion here,
@@ -288,27 +288,27 @@ export default function(app) {
                 on-reply-delete="$ctrl.discussionsCtrl.replyDelete(reply)"
               ></discussion-thread-view>`,
               dependencies: ['discussionId'],
-              title: 'Discussion · PaperHive'
+              title: 'Discussion · PaperHive',
             })
           .up()
           .segment('text', {
             default: true,
-            templateUrl: 'html/documents/text.html',
+            template: require('./routes-document-text.html'),
             title: 'Document · PaperHive',
           })
           .segment('revisions', {
-            templateUrl: 'html/documents/text.html',
+            template: require('./routes-document-text.html'),
             dependencies: ['revisionId'],
-            title: 'Document at revision · PaperHive'
+            title: 'Document at revision · PaperHive',
           })
         .up()
         .segment('documents_new', {
           template: '<document-new></document-new>',
-          title: 'Add a new document · PaperHive'
+          title: 'Add a new document · PaperHive',
         })
         .segment('documents_remote', {
           template: '<document-remote></document-remote>',
-          title: 'Document remote redirect · PaperHive'
+          title: 'Document remote redirect · PaperHive',
         })
 
         .segment('helpMarkdown', {
@@ -323,14 +323,14 @@ export default function(app) {
             {
               name: 'description',
               content: 'Join the PaperHive team and help us to make ' +
-                'research fun again.'
-            }
-          ]
+                'research fun again.',
+            },
+          ],
         })
 
         .segment('knowledgeunlatched', {
           template: '<documents-list></documents-list>',
-          title: 'Knowledge Unlatched books'
+          title: 'Knowledge Unlatched books',
         })
 
         .segment('legalnotice', {
@@ -339,14 +339,14 @@ export default function(app) {
           meta: [
             {
               name: 'description',
-              content: 'Information about the operators of PaperHive.'
-            }
-          ]
+              content: 'Information about the operators of PaperHive.',
+            },
+          ],
         })
 
         .segment('login', {
           template: '<login></login>',
-          title: 'Log in to · Paperhive'
+          title: 'Log in to · Paperhive',
         })
 
         .segment('partners', {
@@ -361,9 +361,9 @@ export default function(app) {
           meta: [
             {
               name: 'description',
-              content: 'Partners and supporters'
-            }
-          ]
+              content: 'Partners and supporters',
+            },
+          ],
         })
 
         .segment('passwordRequest', {
@@ -378,7 +378,7 @@ export default function(app) {
 
         .segment('publishers', {
           template: '<publishers></publishers>',
-          title: 'PaperHive for publishers and repositories · Paperhive'
+          title: 'PaperHive for publishers and repositories · Paperhive',
         })
 
         .segment('search', {
@@ -388,23 +388,23 @@ export default function(app) {
 
         .segment('settings', {
           template: '<settings></settings>',
-          title: 'Your profile · PaperHive'
+          title: 'Your profile · PaperHive',
         })
         .within()
           .segment('profile', {
             default: true,
-            template: `<settings-profile user="user"></settings-profile>`
+            template: `<settings-profile user="user"></settings-profile>`,
           })
         .up()
 
         .segment('signup', {
           template: '<signup></signup>',
-          title: 'Sign up for · Paperhive'
+          title: 'Sign up for · Paperhive',
         })
 
         .segment('subscribed', {
           template: '<subscribed></subscribed>',
-          title: 'Successfully subscribed · PaperHive'
+          title: 'Successfully subscribed · PaperHive',
         })
 
         .segment('terms', {
@@ -413,33 +413,33 @@ export default function(app) {
           meta: [
             {
               name: 'description',
-              content: 'Terms and privacy policy'
-            }
-          ]
+              content: 'Terms and privacy policy',
+            },
+          ],
         })
 
         .segment('users', {
           template: '<user></user>',
           dependencies: ['username'],
-          title: 'User · PaperHive'
+          title: 'User · PaperHive',
         })
         .within()
           .segment('profile', {
             default: true,
             template: '<user-profile user="user"></user-profile>',
-            dependencies: ['username']
+            dependencies: ['username'],
           })
           .segment('activity', {
             template:
               `<activity
                 filter-mode="person"
                 filter-id="user.id"
-              ></activity>`
+              ></activity>`,
           })
         .up()
         ;
 
       $routeProvider.otherwise({redirectTo: '/404'});
-    }
+    },
   ]);
 };

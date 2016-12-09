@@ -1,5 +1,3 @@
-import template from './url-share.html';
-
 export default function(app) {
   app.component('urlShare', {
     bindings: {
@@ -23,6 +21,6 @@ export default function(app) {
         this.fullUrl = `${this.baseUrl}${this.url}`;
       }
     },
-    template,
+    template: require('./url-share.html'),
   });
 };

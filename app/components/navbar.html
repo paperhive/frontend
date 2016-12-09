@@ -8,7 +8,7 @@
       class="navbar-header"
       popover-placement="bottom-left"
       popover-is-open="tour.stages[tour.index] === 'start' && !tour.visited && $routeSegment.name !== 'main'"
-      uib-popover-template="'html/shared/tour-start.html'"
+      uib-popover-template="tour.urls.start"
       popover-trigger="'none'"
     >
       <!-- toggle nav -->
@@ -20,7 +20,7 @@
       </button>
       <!-- brand -->
       <a class="navbar-brand" rel="home" href="./" title="PaperHive">
-        <img class="ph-title-logo" src="./static/img/logo.svg">
+        <img class="ph-title-logo" src="../../static/img/logo.svg">
       </a>
     </div>
 

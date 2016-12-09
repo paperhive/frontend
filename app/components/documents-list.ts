@@ -1,8 +1,4 @@
-'use strict';
-
-import { compact, flatten, get } from 'lodash';
-
-import template from './documents-list.html';
+import { compact, flatten } from 'lodash';
 
 // knowledge unlatched ids
 // TODO: get rid of this!
@@ -36,7 +32,7 @@ const kuCategories = [
 export default function(app) {
   app.component('documentsList', {
     controller: class DocumentsListCtrl {
-      categories: Array<any>;
+      categories: any[];
 
       static $inject = ['$http', '$scope', 'config'];
       constructor(public $http, public $scope, public config) {
@@ -51,10 +47,10 @@ export default function(app) {
         await Promise.all(oapenIds.map(id => {
           return this.$http({
             url: `${this.config.apiUrl}/documents/remote`,
-            params: {type: 'oapen', id: id},
+            params: {type: 'oapen', id},
           }).then(
             response => oapenDocuments[id] = response.data,
-            response => { /* do nothing, the doc is not yet uploaded to oapen */ }
+            response => { /* do nothing, the doc is not yet uploaded to oapen */ },
           );
         }));
 
@@ -68,6 +64,6 @@ export default function(app) {
 
       }
     },
-    template,
+    template: require('./documents-list.html'),
   });
 };

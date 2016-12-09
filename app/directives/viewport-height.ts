@@ -1,9 +1,6 @@
-'use strict';
-
-import * as angular from 'angular';
+import angular from 'angular';
 
 export default function(app) {
-
   /* Usage: <div viewport-height>
    *
    * Sets the min-height of the element to the height of the viewport
@@ -16,12 +13,11 @@ export default function(app) {
     '$window', '$timeout', function($window, $timeout) {
       return {
         restrict: 'A',
-        link: function(scope, element, attrs) {
+        link: (scope, element, attrs) => {
           const height = angular.element($window).height();
           element.css('min-height', height + 'px');
-        }
+        },
       };
-    }
+    },
   ]);
 };
-

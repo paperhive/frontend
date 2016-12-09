@@ -1,0 +1,79 @@
+<!doctype html>
+
+<html lang="en" ng-strict-di>
+  <head>
+    <!-- base href is the entry point of the deployed app -->
+    <base href="<%= htmlWebpackPlugin.options.config.baseHref %>">
+    <title data-ng-bind="metaService.data.title"></title>
+
+    <!-- meta tags -->
+    <meta charset="utf-8">
+    <meta name="language" content="en">
+    <meta name="application-name" content="PaperHive">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta ng-repeat="meta in metaService.data.meta" attributes="meta">
+
+    <link rel="search" type="application/opensearchdescription+xml" href="<% require('./opensearch.xml') %>" title="PaperHive search" />
+    <!-- favicons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="<%= require('../static/favicons/apple-touch-icon-57x57.png') %>">
+    <link rel="apple-touch-icon" sizes="60x60" href="<%= require('../static/favicons/apple-touch-icon-60x60.png') %>">
+    <link rel="apple-touch-icon" sizes="72x72" href="<%= require('../static/favicons/apple-touch-icon-72x72.png') %>">
+    <link rel="apple-touch-icon" sizes="76x76" href="<%= require('../static/favicons/apple-touch-icon-76x76.png') %>">
+    <link rel="apple-touch-icon" sizes="114x114" href="<%= require('../static/favicons/apple-touch-icon-114x114.png') %>">
+    <link rel="apple-touch-icon" sizes="120x120" href="<%= require('../static/favicons/apple-touch-icon-120x120.png') %>">
+    <link rel="apple-touch-icon" sizes="144x144" href="<%= require('../static/favicons/apple-touch-icon-144x144.png') %>">
+    <link rel="apple-touch-icon" sizes="152x152" href="<%= require('../static/favicons/apple-touch-icon-152x152.png') %>">
+    <link rel="apple-touch-icon" sizes="180x180" href="<%= require('../static/favicons/apple-touch-icon-180x180.png') %>">
+    <link rel="icon" type="image/png" href="<%= require('../static/favicons/favicon-32x32.png') %>" sizes="32x32">
+    <link rel="icon" type="image/png" href="<%= require('../static/favicons/android-chrome-192x192.png') %>" sizes="192x192">
+    <link rel="icon" type="image/png" href="<%= require('../static/favicons/favicon-96x96.png') %>" sizes="96x96">
+    <link rel="icon" type="image/png" href="<%= require('../static/favicons/favicon-16x16.png') %>" sizes="16x16">
+    <link rel="manifest" href="<%= require('!file-loader?name=[path][name].[md5:hash:hex:8].[ext]!../static/favicons/manifest.json') %>">
+    <link rel="shortcut icon" href="<%= require('../static/favicons/favicon.ico') %>">
+    <meta name="msapplication-TileColor" content="#00addc">
+    <meta name="msapplication-TileImage" content="<%= require('../static/favicons/mstile-144x144.png') %>">
+    <meta name="msapplication-config" content="<%= require('../static/favicons/browserconfig.xml') %>">
+    <meta name="theme-color" content="#00addc">
+
+    <!-- Chrome extension -->
+    <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/fihafdlllifbanclcjljledeifcdjbok">
+
+    <!-- JSON-LD -->
+    <script
+      ng-repeat="jsonld in metaService.data.jsonld"
+      ng-bind="jsonld | json"
+      type="application/ld+json">
+    </script>
+
+    <!-- TODO: bundle mathjax in index.js -->
+    <script src="assets/mathjax/MathJax.js?config=TeX-AMS_HTML-full,Safe&delayStartupUntil=configured">
+    </script>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new
+            Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-62775822-1', <%
+        if (htmlWebpackPlugin.options.dev) {
+          %> 'none' <%
+        } else {
+          %> 'auto' <%
+        }
+      %> );
+    </script>
+  </head>
+  <body ng-style="{'padding-bottom': footerSize.height, 'padding-top': navbarSize.height}">
+    <header>
+      <navbar></navbar>
+    </header>
+    <main app-view-segment="0"></main>
+
+    <feedback-button></feedback-button>
+
+    <footer on-resized="footerSize = $size">
+      <ph-footer></ph-footer>
+    </footer>
+  </body>
+</html>
