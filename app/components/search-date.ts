@@ -1,7 +1,6 @@
 import Chartist from 'chartist';
 import { map } from 'lodash';
 
-import template from './search-date.html';
 import { getShortInteger } from '../utils/index';
 
 export default function(app) {
@@ -9,7 +8,6 @@ export default function(app) {
     bindings: {
       facet: '<',
     },
-    template,
     controller: class SearchDateCtrl {
       chartistOptions = {
         axisX: {
@@ -22,6 +20,8 @@ export default function(app) {
         },
         fullWidth: true,
       };
+      chartistData: any;
+      facet: {};
 
       chartistEvents = {
         draw: event => {
@@ -29,7 +29,7 @@ export default function(app) {
           if (event.type === 'label' && event.axis.units.pos === 'x') {
             event.element.attr({ x: event.x - event.width / 2 });
           }
-        }
+        },
       };
 
       $onChanges() {
@@ -40,10 +40,11 @@ export default function(app) {
         this.chartistData = undefined;
         if (!this.facet) return;
         const points = map(this.facet, (count, date) => {
-          return {x: parseInt(date.substr(0, 4)), y: count};
+          return {x: parseInt(date.substr(0, 4), 10), y: count};
         });
         this.chartistData = {series: [points]};
       }
     },
+    template: require('./search-date.html'),
   });
 }

@@ -2,7 +2,6 @@ import Chartist from 'chartist';
 import jquery from 'jquery';
 import { map } from 'lodash';
 
-import template from './search-journal.html';
 import { getShortInteger } from '../utils/index';
 
 export default function(app) {
@@ -11,7 +10,6 @@ export default function(app) {
       facet: '<',
       onJournalSelect: '&',
     },
-    template,
     controller: class SearchJournalCtrl {
       const chartistOptions = {
         donut: true,
@@ -28,6 +26,10 @@ export default function(app) {
           }
         },
       };
+
+      chartistData: any;
+      facet: {};
+      onJournalSelect: any;
 
       static $inject = ['$scope'];
       constructor(public $scope) {}
@@ -49,9 +51,9 @@ export default function(app) {
       }
 
       onSliceClick(el, journal) {
-        console.log(el, journal);
         this.onJournalSelect(journal);
       }
     },
+    template: require('./search-journal.html'),
   });
 }

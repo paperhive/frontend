@@ -1,20 +1,25 @@
 'use strict';
 
-import template from './search.html';
-
 export default function(app) {
   app.component('search', {
-    template,
     controller: class SearchCtrl {
-      maxPerPage = 10;
+      const maxPerPage = 10;
       page = 1;
+      query: string;
+      queryModel: string;
+
+      facets: {};
+      resultsTotal: number;
+      results: any[];
+      total: number;
+      updatingResults: boolean;
+      updatingTotal: boolean;
 
       static $inject = ['config', '$http', '$location', '$scope',
         'feedbackModal', 'notificationService'];
 
       constructor(public config, public $http, public $location, $scope,
-          public feedbackModal, public notificationService) {
-
+                  public feedbackModal, public notificationService) {
         $scope.$on('$locationChangeSuccess', this.updateFromLocation.bind(this));
         this.updateFromLocation();
 
@@ -50,7 +55,6 @@ export default function(app) {
         });
       }
 
-
       updateResults() {
         this.resultsTotal = undefined;
         this.results = undefined;
@@ -73,8 +77,8 @@ export default function(app) {
           },
           response => this.notificationService.notifications.push({
             type: 'error',
-            message: 'Could not fetch documents'
-          })
+            message: 'Could not fetch documents',
+          }),
         )
         .finally(() => this.updatingResults = false);
       }
@@ -87,10 +91,11 @@ export default function(app) {
           response => this.total = response.data.total,
           response => this.notificationService.notifications.push({
             type: 'error',
-            message: 'Could not fetch documents'
-          })
+            message: 'Could not fetch documents',
+          }),
         ).finally(() => this.updatingTotal = false);
       }
     },
+    template: require('./search.html'),
   });
 };
