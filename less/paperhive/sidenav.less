@@ -191,6 +191,43 @@ document-sidenav {
   }
 }
 
+// Pagination 
+.ph-sidenav-pagination {
+  position: absolute;
+  background: fade(@gray-lighter, 20%);
+  width: 100%;
+  height: auto;
+  left: 0;
+  bottom: 0; 
+  .ph-sidenav-icons {
+    display: flex; 
+    flex-direction: row; 
+    justify-content: space-between;
+    align-items: center;
+    > div {
+      flex: 1;
+    }
+  }
+  .ph-sidenav-pages {
+    display: flex;
+    flex: 2;
+    > div {
+      flex: 1;
+    }
+  }
+}
+.ph-sidenav-expand {
+  position: absolute;
+  background: @ph-white;
+  box-shadow: @ph-shadow; 
+  width: 100%; 
+  bottom: 100%; 
+  left: 0;
+  &::before {
+    
+  }
+}
+
 // override padding for kudos so the iframe can fill the entire panel body
 .ph-ph-sidenav-info-info-kudos .panel-body {
   padding: 0;
