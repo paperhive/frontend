@@ -239,16 +239,17 @@ export default function(app) {
 
       getRangeSelectors(range) {
         const selectors = {
-          pdfRectangles: range.map(range => {
+          pdfRectangles: flatten(range.map(range => {
             const index = range.transformation.index;
             // get n-th child
             const nthChild = this.element[0].childNodes[index].firstChild;
             let rangyRange = rangy.createRange();
             rangyRange.setStart(nthChild, range.position);
             rangyRange.setEnd(nthChild, range.position + range.length);
-            const selectors = getRectanglesSelector(rangyRange, this.element[0]);
+            const selectors = getRectanglesSelector(rangyRange, this.element[0]) as any;
+            selectors.forEach(selector => selector.pageNumber = this.page.pageIndex + 1);
             return selectors;
-          }),
+          })),
         };
         return selectors;
       }
@@ -410,9 +411,10 @@ export default function(app) {
         // if (this.page.pageIndex !== 0) return;
         if (!this.textRenderer) return;
 
-        const rangesSelectors = transformedRanges.map(range =>
-          this.textRenderer.getRangeSelectors(range),
-        );
+        const rangesSelectors = transformedRanges.map(range => {
+          const selectors = this.textRenderer.getRangeSelectors(range);
+          return selectors;
+        });
         console.log(rangesSelectors);
       }
 
