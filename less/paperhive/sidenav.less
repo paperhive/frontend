@@ -199,24 +199,32 @@ document-sidenav {
   height: auto;
   left: 0;
   bottom: 0; 
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none; 
+    li {
+
+    }
+  }
   .ph-sidenav-icons {
     display: flex; 
     flex-direction: row; 
     justify-content: space-between;
     align-items: center;
-    > div {
+    > li {
       flex: 1;
     }
   }
   .ph-sidenav-pages {
     display: flex;
     flex: 2;
-    > div {
+    > li {
       flex: 1;
     }
   }
 }
-.ph-sidenav-expand {
+[class*="ph-sidenav-expand"] {
   position: absolute;
   background: @ph-white;
   box-shadow: @ph-shadow; 

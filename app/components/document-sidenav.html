@@ -106,28 +106,43 @@
     </uib-accordion>
   </div>
   <div class="ph-sidenav-pagination">
-    <div class="ph-sidenav-icons">
-      <div class="ph-sidenav-pages">
-        <a href="" class="ph-pages-scroll-up"><i class="fa fa-fw fa-chevron-circle-left"></i></a>
-        <input type="text" class="ph-pages-current">
-        <div class="ph-pages-total">
-          / #
-        </div>
-        <a href="" class="ph-pages-scroll-down"><i class="fa fa-fw fa-chevron-circle-right"></i></a>        
-      </div>
-      <div class="ph-sidenav-index">
+    <ul class="ph-sidenav-icons">
+      <li class="ph-sidenav-pages">
+        <ul>
+          <li class="ph-pages-scroll-up">
+            <a href=""><i class="fa fa-fw fa-chevron-circle-left"></i></a>
+          </li>
+          <li class="ph-pages-current">
+            <input type="text" class="ph-pages-current">
+          </li>
+          <li class="ph-pages-total">
+            | <span class="">#</span>
+          </li>
+          <li class="ph-pages-scroll-down">
+            <a href="" class="ph-pages-scroll-down"><i class="fa fa-fw fa-chevron-circle-right"></i></a> 
+          </li>
+        </ul>
+      </li>
+      <li class="ph-sidenav-index">
         <i class="fa fa-list-ol" aria-hidden="true"></i>
-      </div>
-      <div class="ph-sidenav-thumbnails">
+        <div class="ph-sidenav-expand__index">
+          Index
+        </div>
+      </li>
+      <li class="ph-sidenav-thumbnails">
         <i class="fa fa-file-text-o"></i>
-      </div>
-      <div class="ph-sidenav-search">
+        <div class="ph-sidenav-expand__thumb">
+          Thumbnails
+        </div>
+      </li>
+      <li class="ph-sidenav-search">
         <i class="fa fa-fw fa-search"></i>
-      </div>
-    </div>
-    <div class="ph-sidenav-expand">
-      This will expand and show information
-    </div>
+        <div class="ph-sidenav-expand__search">
+          This will expand and show information
+        </div>
+      </li>
+    </ul>
+    
   </div>
 </div>
 <div class="ph-sidenav-small"
