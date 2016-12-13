@@ -194,35 +194,41 @@ document-sidenav {
 // Pagination 
 .ph-sidenav-pagination {
   position: absolute;
-  background: fade(@gray-lighter, 20%);
+  background: fade(@gray-lighter, 60%);
   width: 100%;
   height: auto;
   left: 0;
   bottom: 0; 
+
   ul {
     padding: 0;
     margin: 0;
     list-style: none; 
-    li {
-
-    }
-  }
-  .ph-sidenav-icons {
     display: flex; 
     flex-direction: row; 
     justify-content: space-between;
     align-items: center;
-    > li {
+    li {
       flex: 1;
+      text-align: center;
+      position: relative;
+      
+      &.ph-sidenav-pages {
+        flex: 2;
+      }
+      a {
+        display: block;
+        border-bottom: 2px solid transparent;
+        padding-top: @padding-base-horizontal;
+        padding-bottom: @padding-base-horizontal;
+        &:hover {
+          background: @gray-lighter;
+          border-bottom: 2px solid @ph-base-color;
+        }
+      }
     }
   }
-  .ph-sidenav-pages {
-    display: flex;
-    flex: 2;
-    > li {
-      flex: 1;
-    }
-  }
+  
 }
 [class*="ph-sidenav-expand"] {
   position: absolute;
@@ -231,8 +237,15 @@ document-sidenav {
   width: 100%; 
   bottom: 100%; 
   left: 0;
-  &::before {
-    
+  &:before {
+    content: '';
+    position: absolute;
+    width: 0; 
+    height: 0; 
+    top: 100%;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;    
+    border-top: 5px solid @ph-white;
   }
 }
 
