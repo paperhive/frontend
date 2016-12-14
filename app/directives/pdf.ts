@@ -404,7 +404,6 @@ export default function(app) {
       getRangeSelectors(range) {
         if (!range) return;
         const transformedRange = srch.backTransformRange(range, this.textSnippetTransformations);
-        if (!transformedRange) return;
 
         if (!this.textRenderer) return;
 
@@ -737,12 +736,15 @@ export default function(app) {
         });
       }
 
+      // transforms all found ranges with absolute position and length
+      // in ranges with relative page position and pdfRectangles
       searchRanges(matches) {
         if (!matches) return;
 
+        // adds transformation to the matches
         const transformedMatches = matches.map(match => srch.backTransformRange(match, this.textTransformations));
 
-        // get matches by page
+        // get matches and positions by page
         const matchesByPage = this.pages.map(() => []);
         transformedMatches.forEach((match, matchIndex) => {
           match.forEach(match => {
@@ -759,6 +761,7 @@ export default function(app) {
           });
         });
 
+        // get corresponding selectors (pdfRectangles) for each match
         const matchHighlights = matches.map((match, index) =>
           ({matchIndex: index, selectors: {pdfRectangles: []}})
         );
@@ -781,8 +784,8 @@ export default function(app) {
 
         this.scope.searchHighlightsByPage = {};
 
+        // add selectors to this.scope.searchHighlightsByPage
         matchHighlights.forEach(highlight => {
-          console.log(highlight);
           if (!highlight.selectors || !highlight.selectors.pdfRectangles) return;
           const pageNumbers = uniq(highlight.selectors.pdfRectangles.map(rect => rect.pageNumber));
           pageNumbers.forEach(pageNumber => {
