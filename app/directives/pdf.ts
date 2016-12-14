@@ -77,14 +77,14 @@ const getTextNodes = function(node) {
   return nodes;
 };
 
-function getRectanglesSelector(range, container) {
+function getRectanglesSelector(range, container, restoreSelection = true) {
   const containerRect = container.getBoundingClientRect();
 
   // preserve current selection to work around browser bugs that result
   // in a changed selection
   // see https://github.com/timdown/rangy/issues/93
   // and https://github.com/timdown/rangy/issues/282
-  const currentSelection = rangy.serializeSelection(rangy.getSelection(), true);
+  const currentSelection = restoreSelection && rangy.serializeSelection(rangy.getSelection(), true);
 
   // split start container if necessary
   range.splitBoundaries();
@@ -116,7 +116,7 @@ function getRectanglesSelector(range, container) {
   range.normalizeBoundaries();
 
   // restore selection (see above)
-  if (currentSelection) {
+  if (restoreSelection && currentSelection) {
     rangy.deserializeSelection(currentSelection);
   }
 
@@ -249,7 +249,7 @@ export default function(app) {
           let rangyRange = rangy.createRange();
           rangyRange.setStart(nthChild, range.position);
           rangyRange.setEnd(nthChild, range.position + range.length);
-          const selectors = getRectanglesSelector(rangyRange, this.element[0]);
+          const selectors = getRectanglesSelector(rangyRange, this.element[0], false);
           selectors.forEach(selector => selector.pageNumber = this.page.pageIndex + 1);
           return selectors;
         }));
