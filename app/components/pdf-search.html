@@ -15,7 +15,7 @@
       ng-model="$ctrl.str" ng-keypress="$event.keyCode === 13 && $ctrl.submit($ctrl.str)"
       style="padding-right: 80px; font-family: FontAwesome, Roboto; font-size: 14px;"
     >
-    <a class="ph-input-item" title="Close">
+    <a class="ph-input-item" title="Close" ng-click="$ctrl.str = ''; $ctrl.removeSearch();">
       <i class="fa fa-times" style="font-size: 11px; color: gray;"></i>
     </a>
     <a class="ph-input-item" title="Next">

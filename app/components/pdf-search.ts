@@ -15,6 +15,10 @@ export default function(app) {
         this.onSearchSubmit({searchStr: str});
       }
 
+      removeSearch() {
+        // TODO remove highlight
+      }
+
     },
     template,
   });
