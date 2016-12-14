@@ -238,7 +238,7 @@ export default function(app) {
       }
 
       getRangeSelectors(range) {
-        const selectors = {
+        return {
           pdfRectangles: flatten(range.map(range => {
             const index = range.transformation.index;
             // get n-th child
@@ -246,12 +246,11 @@ export default function(app) {
             let rangyRange = rangy.createRange();
             rangyRange.setStart(nthChild, range.position);
             rangyRange.setEnd(nthChild, range.position + range.length);
-            const selectors = getRectanglesSelector(rangyRange, this.element[0]) as any;
+            const selectors = getRectanglesSelector(rangyRange, this.element[0]);
             selectors.forEach(selector => selector.pageNumber = this.page.pageIndex + 1);
             return selectors;
           })),
         };
-        return selectors;
       }
     }
 
@@ -402,20 +401,14 @@ export default function(app) {
         return this.textContent.items.map(text => text.str).join(' ');
       }
 
-      searchRanges(ranges) {
-        if (!ranges) return;
-        const transformedRanges = ranges.map(range => srch.backTransformRange(range, this.textSnippetTransformations));
-        if (!transformedRanges) return;
+      getRangeSelectors(range) {
+        if (!range) return;
+        const transformedRange = srch.backTransformRange(range, this.textSnippetTransformations);
+        if (!transformedRange) return;
 
-        // debug
-        // if (this.page.pageIndex !== 0) return;
         if (!this.textRenderer) return;
 
-        const rangesSelectors = transformedRanges.map(range => {
-          const selectors = this.textRenderer.getRangeSelectors(range);
-          return selectors;
-        });
-        console.log(rangesSelectors);
+        return this.textRenderer.getRangeSelectors(transformedRange);
       }
 
       async initPageSize(_width = undefined) {
@@ -455,6 +448,12 @@ export default function(app) {
               page-number="${this.page.pageNumber}"
               on-mouseenter="onHighlightMouseenter({highlight: highlight, pageNumber: pageNumber})"
               on-mouseleave="onHighlightMouseleave({highlight: highlight, pageNumber: pageNumber})"
+            ></pdf-highlight>
+            <pdf-highlight
+              ng-repeat="highlight in searchHighlightsByPage[${this.pageNumber}]"
+              highlight="highlight"
+              emphasized="false"
+              page-number="${this.page.pageNumber}"
             ></pdf-highlight>
           </div>
         `)(this.scope);
@@ -738,30 +737,61 @@ export default function(app) {
         });
       }
 
-      searchRanges(ranges) {
-        if (!ranges) return;
+      searchRanges(matches) {
+        if (!matches) return;
 
-        const transformedRanges = ranges.map(range => srch.backTransformRange(range, this.textTransformations));
-        // console.log(transformedRanges);
+        const transformedMatches = matches.map(match => srch.backTransformRange(match, this.textTransformations));
 
-        // get ranges by page
-        const pageRanges = this.pages.map(() => []);
-        transformedRanges.forEach((ranges, matchIndex) => {
-          ranges.forEach(range => {
-            const pageNumber = range.transformation.pageNumber;
+        // get matches by page
+        const matchesByPage = this.pages.map(() => []);
+        transformedMatches.forEach((match, matchIndex) => {
+          match.forEach(match => {
+            const pageNumber = match.transformation.pageNumber;
             if (pageNumber === undefined) {
               throw new Error('no page number in transformation!');
             }
 
-            pageRanges[pageNumber - 1].push({
+            matchesByPage[pageNumber - 1].push({
               matchIndex,
-              position: range.position,
-              length: range.length,
+              position: match.position,
+              length: match.length,
             });
           });
         });
 
-        this.pages.forEach((page, index) => page.searchRanges(pageRanges[index]));
+        const matchHighlights = matches.map((match, index) =>
+          ({matchIndex: index, selectors: {pdfRectangles: []}})
+        );
+
+        matchesByPage.forEach((pageMatches, pageIndex) => {
+          const page = this.pages[pageIndex];
+          pageMatches.forEach(match => {
+            const selectors = page.getRangeSelectors(match);
+
+            // page not rendered?
+            if (!selectors) return;
+
+            // append pdfRectangles
+            Array.prototype.push.apply(
+              matchHighlights[match.matchIndex].selectors.pdfRectangles,
+              selectors.pdfRectangles
+            );
+          });
+        });
+
+        this.scope.searchHighlightsByPage = {};
+
+        matchHighlights.forEach(highlight => {
+          console.log(highlight);
+          if (!highlight.selectors || !highlight.selectors.pdfRectangles) return;
+          const pageNumbers = uniq(highlight.selectors.pdfRectangles.map(rect => rect.pageNumber));
+          pageNumbers.forEach(pageNumber => {
+            if (!this.scope.searchHighlightsByPage[pageNumber]) {
+              this.scope.searchHighlightsByPage[pageNumber] = [];
+            }
+            this.scope.searchHighlightsByPage[pageNumber].push(highlight);
+          });
+        });
       }
 
       destroy() {
