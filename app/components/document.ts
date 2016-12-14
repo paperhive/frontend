@@ -312,7 +312,8 @@ export default function(app) {
       search() {
         if (!this.searchIndex) return;
         // returns array of objects (position, length)
-        this.searchRanges = this.searchIndex.search(this.searchStr);
+        this.searchRanges =
+          this.searchStr ? this.searchIndex.search(this.searchStr) : undefined;
       }
     },
   });

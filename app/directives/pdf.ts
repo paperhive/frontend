@@ -193,6 +193,7 @@ export default function(app) {
       page: PDFPageProxy;
       textContent: TextContent;
       renderTask: PDFRenderTask; // currently running task
+      rendered = false;
 
       constructor(element, page) {
         this.element = element;
@@ -235,22 +236,23 @@ export default function(app) {
         // normalize the DOM subtree of the rendered page
         // (otherwise serialized ranges may be based on different DOM states)
         this.element[0].normalize();
+
+        this.rendered = true;
       }
 
-      getRangeSelectors(range) {
-        return {
-          pdfRectangles: flatten(range.map(range => {
-            const index = range.transformation.index;
-            // get n-th child
-            const nthChild = this.element[0].childNodes[index].firstChild;
-            let rangyRange = rangy.createRange();
-            rangyRange.setStart(nthChild, range.position);
-            rangyRange.setEnd(nthChild, range.position + range.length);
-            const selectors = getRectanglesSelector(rangyRange, this.element[0]);
-            selectors.forEach(selector => selector.pageNumber = this.page.pageIndex + 1);
-            return selectors;
-          })),
-        };
+      getRangePdfRectangles(range) {
+        // TODO: optimize performance
+        return flatten(range.map(range => {
+          const index = range.transformation.index;
+          // get n-th child
+          const nthChild = this.element[0].childNodes[index].firstChild;
+          let rangyRange = rangy.createRange();
+          rangyRange.setStart(nthChild, range.position);
+          rangyRange.setEnd(nthChild, range.position + range.length);
+          const selectors = getRectanglesSelector(rangyRange, this.element[0]);
+          selectors.forEach(selector => selector.pageNumber = this.page.pageIndex + 1);
+          return selectors;
+        }));
       }
     }
 
@@ -349,6 +351,8 @@ export default function(app) {
       textFocused: boolean = false;
       textContent: any;
       textSnippetTransformations: Array<any>;
+      searchMatches: any[];
+      lastSearchMatches: any[];
 
       // renderer state
       renderedSize: {height: number, width: number};
@@ -399,15 +403,6 @@ export default function(app) {
           this.textSnippetTransformations.pop();
         }
         return this.textContent.items.map(text => text.str).join(' ');
-      }
-
-      getRangeSelectors(range) {
-        if (!range) return;
-        const transformedRange = srch.backTransformRange(range, this.textSnippetTransformations);
-
-        if (!this.textRenderer) return;
-
-        return this.textRenderer.getRangeSelectors(transformedRange);
       }
 
       async initPageSize(_width = undefined) {
@@ -551,6 +546,8 @@ export default function(app) {
           await this.textRenderer.render(viewport);
           await this.annotationsRenderer.render(viewport);
 
+          this.updateSearchHighlights();
+
           this.onRendered();
 
           return true;
@@ -588,6 +585,27 @@ export default function(app) {
         this.element.empty();
 
         this.initializedRenderers = false;
+      }
+
+      setSearchMatches(matches) {
+        this.searchMatches = matches;
+        this.updateSearchHighlights();
+      }
+
+      updateSearchHighlights() {
+        if (this.lastSearchMatches === this.searchMatches) return;
+        if (!this.textRenderer || !this.textRenderer.rendered) return;
+
+        this.scope.searchHighlightsByPage[this.pageNumber] = this.searchMatches.map(match => {
+          // store length, position and transformation
+          const transformedMatch = srch.backTransformRange(match, this.textSnippetTransformations);
+          // get corresponding pdfRectangles
+          const pdfRectangles = this.textRenderer.getRangePdfRectangles(transformedMatch);
+          return {matchIndex: match.matchIndex, selectors: {pdfRectangles}};
+        });
+
+        // store matches (length, matchIndex, position)
+        this.lastSearchMatches = this.searchMatches;
       }
     }
 
@@ -739,6 +757,8 @@ export default function(app) {
       // transforms all found ranges with absolute position and length
       // in ranges with relative page position and pdfRectangles
       searchRanges(matches) {
+        this.scope.searchHighlightsByPage = {};
+
         if (!matches) return;
 
         // adds transformation to the matches
@@ -761,40 +781,10 @@ export default function(app) {
           });
         });
 
-        // get corresponding selectors (pdfRectangles) for each match
-        const matchHighlights = matches.map((match, index) =>
-          ({matchIndex: index, selectors: {pdfRectangles: []}})
+        // set matches for each page
+        matchesByPage.forEach((pageMatches, pageIndex) =>
+          this.pages[pageIndex].setSearchMatches(pageMatches)
         );
-
-        matchesByPage.forEach((pageMatches, pageIndex) => {
-          const page = this.pages[pageIndex];
-          pageMatches.forEach(match => {
-            const selectors = page.getRangeSelectors(match);
-
-            // page not rendered?
-            if (!selectors) return;
-
-            // append pdfRectangles
-            Array.prototype.push.apply(
-              matchHighlights[match.matchIndex].selectors.pdfRectangles,
-              selectors.pdfRectangles
-            );
-          });
-        });
-
-        this.scope.searchHighlightsByPage = {};
-
-        // add selectors to this.scope.searchHighlightsByPage
-        matchHighlights.forEach(highlight => {
-          if (!highlight.selectors || !highlight.selectors.pdfRectangles) return;
-          const pageNumbers = uniq(highlight.selectors.pdfRectangles.map(rect => rect.pageNumber));
-          pageNumbers.forEach(pageNumber => {
-            if (!this.scope.searchHighlightsByPage[pageNumber]) {
-              this.scope.searchHighlightsByPage[pageNumber] = [];
-            }
-            this.scope.searchHighlightsByPage[pageNumber].push(highlight);
-          });
-        });
       }
 
       destroy() {
