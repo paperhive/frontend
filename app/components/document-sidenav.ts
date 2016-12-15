@@ -4,6 +4,7 @@ export default function(app) {
       activeRevision: '<',
       documentCtrl: '<',
       open: '<',
+      numberSearchResults: '<',
       viewportOffsetTop: '<',
       onToggle: '&',
       onSearchSubmit: '&',
@@ -12,6 +13,7 @@ export default function(app) {
       activeRevision: string;
       documentCtrl: any;
       open: boolean;
+      numberSearchResults: number;
       viewportOffsetTop: number;
       onToggle: any;
 

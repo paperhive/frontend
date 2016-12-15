@@ -208,6 +208,7 @@ export default function(app) {
       searchStr: string;
       searchRanges: IRange[];
       searchIndex: SearchIndex;
+      numberSearchResults: number;
 
       // note: do *not* use $routeSegment.$routeParams because they still
       // use the old state in $routeChangeSuccess events
@@ -322,6 +323,9 @@ export default function(app) {
         // returns array of objects (position, length)
         this.searchRanges =
           this.searchStr ? this.searchIndex.search(this.searchStr) : undefined;
+        if (this.searchRanges) {
+          this.numberSearchResults = this.searchRanges.length;
+        }
       }
     },
     template: require('./document.html'),
