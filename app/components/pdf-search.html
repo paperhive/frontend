@@ -1,11 +1,17 @@
 <style>
-  .ph-input-item {
+  .ph-link-input-item {
     position: relative;
     top: -30px;
     float: right;
     margin-right: 12px;
     cursor: pointer;
     text-decoration: none;
+  }
+  .ph-input-item {
+    position: relative;
+    top: -30px;
+    float: right;
+    margin-right: 12px;
   }
 </style>
 
@@ -16,15 +22,26 @@
       style="padding-right: 80px; font-family: FontAwesome, Roboto; font-size: 14px;"
       autocomplete="off"
     >
-    <a class="ph-input-item" title="Close" ng-click="$ctrl.str = ''; $ctrl.removeSearch();">
+    <a class="ph-link-input-item" title="Close" ng-click="$ctrl.str = ''; $ctrl.removeSearch();">
       <i class="fa fa-times" style="font-size: 11px; color: gray;"></i>
     </a>
-    <a class="ph-input-item" title="Next">
+    <a class="ph-link-input-item" title="Next">
       <i class="fa fa-chevron-down" style="font-size: 11px; color: gray;"></i>
     </a>
-    <a class="ph-input-item" title="Previous">
+    <a class="ph-link-input-item" title="Previous">
       <i class="fa fa-chevron-up" style="font-size: 11px; color: gray;"></i>
     </a>
+
+    <span class="ph-input-item">
+      <span style="border-right: 1px solid #555555"></span>
+    </span>
+
+    <span class="ph-input-item">
+      <span style="font-family: FontAwesome, Roboto; font-size: 11px; color: gray;">
+        0 of 0
+      </span>
+    </span>
+
   </div>
 </div>
 
