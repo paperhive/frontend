@@ -88,6 +88,13 @@ module.exports = {
         }),
       },
       {
+        // transpile ES6 dependencies with babel
+        include: ['srch']
+          .map(mod => path.resolve(__dirname, `./node_modules/${mod}`)),
+        test: /\.js/,
+        loader: 'babel-loader',
+      },
+      {
         test: /\.ts$/,
         loader: 'awesome-typescript-loader',
         query: {
