@@ -132,4 +132,5 @@ module.exports = {
       'window.jQuery': 'jquery', // for angular
     }),
   ],
+  performance: { hints: false },
 };
