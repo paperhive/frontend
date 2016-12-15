@@ -8,16 +8,30 @@ export default function(app) {
       numberSearchResults: '<',
     },
     controller: class PdfSearchController {
-      onSearchSubmit: any;
+      indexSearchResults: number;
       large: boolean;
       numberSearchResults: number;
+      onSearchSubmit: any;
 
       constructor() {
         this.numberSearchResults = 0;
+        this.indexSearchResults = 0;
       }
 
       submit(str) {
         this.onSearchSubmit({searchStr: str});
+      }
+
+      nextResult() {
+        (this.indexSearchResults !== this.numberSearchResults) ?
+          this.indexSearchResults++ : this.indexSearchResults = 1;
+        // TODO scroll to result
+      }
+
+      previousResult() {
+        (this.indexSearchResults !== 1) ?
+          this.indexSearchResults-- : this.indexSearchResults = this.numberSearchResults;
+        // TODO scroll to result
       }
 
       removeSearch() {

@@ -25,10 +25,10 @@
     <a class="ph-link-input-item" title="Close" ng-click="$ctrl.str = ''; $ctrl.removeSearch();">
       <i class="fa fa-times" style="font-size: 11px; color: gray;"></i>
     </a>
-    <a class="ph-link-input-item" title="Next">
+    <a class="ph-link-input-item" title="Next" ng-click="$ctrl.nextResult()">
       <i class="fa fa-chevron-down" style="font-size: 11px; color: gray;"></i>
     </a>
-    <a class="ph-link-input-item" title="Previous">
+    <a class="ph-link-input-item" title="Previous" ng-click="$ctrl.previousResult()">
       <i class="fa fa-chevron-up" style="font-size: 11px; color: gray;"></i>
     </a>
 
@@ -38,7 +38,7 @@
 
     <span class="ph-input-item">
       <span style="font-family: FontAwesome, Roboto; font-size: 11px; color: gray;">
-        0 of {{$ctrl.numberSearchResults}}
+        {{$ctrl.indexSearchResults}} of {{$ctrl.numberSearchResults}}
       </span>
     </span>
 
