@@ -1,7 +1,3 @@
-'use strict';
-
-import template from './contact.html';
-
 export default function(app) {
-  app.component('contact', {template});
+  app.component('contact', {template: require('./contact.html')});
 };

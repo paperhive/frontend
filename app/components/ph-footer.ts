@@ -1,7 +1,3 @@
-'use strict';
-
-import template from './ph-footer.html';
-
 export default function(app) {
-  app.component('phFooter', {template});
+  app.component('phFooter', {template: require('./ph-footer.html')});
 };

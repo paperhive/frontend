@@ -1,4 +1,3 @@
-'use strict';
 import auth from './auth';
 import channel from './channel';
 import channelsApi from './channelsApi';

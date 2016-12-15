@@ -1,10 +1,12 @@
-'use strict';
 import { clone } from 'lodash';
 import { Observable } from 'rx';
 import socketio from 'socket.io-client';
 import url from 'url';
 
 class WebsocketService {
+  parsedUrl: url.Url;
+  path: string;
+
   constructor(apiUrl) {
     // parse url for socketio
     this.parsedUrl = url.parse(apiUrl);
@@ -32,7 +34,7 @@ class WebsocketService {
           path: this.path,
           // TODO: remove for allowing fallback?
           transports: ['websocket'],
-        }
+        },
       );
 
       socket.emit('join', payload);

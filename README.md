@@ -15,7 +15,7 @@
 ```
 git clone git@github.com:paperhive/paperhive-frontend.git --recursive
 cd paperhive-frontend
-npm run install-deps
+npm install
 cp config.json.default config.json
 ```
 Adapt `config.json` to your needs and finally run:
@@ -31,6 +31,14 @@ current branch run
 ```
 git submodule update
 ```
+
+#### Atom packages
+
+The following atom packages are recommended:
+
+* atom-typescript
+* linter-tslint
+* linter-eslint
 
 #### Development
 Running

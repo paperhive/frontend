@@ -1,24 +1,30 @@
-<div class="dropdown" uib-dropdown>
-  <div class="btn-group ph-channel-selector-group" role="group" is-open="$ctrl.isOpen" uib-dropdown>
-    <a
-      href="{{
-        $ctrl.channelService.selectedChannel ?
-        './channels/' + $ctrl.channelService.selectedChannel.id :
-        ''
-      }}"
-      class="btn btn-default ph-channel-selector-channel"
-      ng-class="{disabled: !$ctrl.channelService.selectedChannel}"
-      title="{{$ctrl.channelService.getName($ctrl.channelService.selectedChannel)}}{{$ctrl.channelService.getDescription($ctrl.channelService.selectedChannel) ? ': ' : ''}}{{$ctrl.channelService.getDescription($ctrl.channelService.selectedChannel)}}"
-    >
-      <i ng-if="!$ctrl.channelService.selectedChannel" class="fa fa-fw fa-globe"></i>
-      <i ng-if="$ctrl.channelService.selectedChannel" class="fa fa-fw fa-lock"></i>
+<div class="dropdown ph-dropdown-flex" uib-dropdown>
+  <div class="ph-selected-channel">
+    <div ng-if="!$ctrl.channelService.selectedChannel">
+      <i class="fa fa-fw fa-globe ph-channel-icon-public"></i>
       {{$ctrl.channelService.getName($ctrl.channelService.selectedChannel)}}
-    </a>
+    </div>
+    <div ng-if="$ctrl.channelService.selectedChannel">
+      <span class="fa-stack fa-stack-sm fa-fw ph-channel-icon-private">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-user fa-stack-1x fa-inverse"></i>
+      </span>
+      <a
+        href="./channels/{{$ctrl.channelService.selectedChannel.id}}"
+        class="ph-channel-selector-channel"
+        title="{{$ctrl.channelService.getNameDescription($ctrl.channelService.selectedChannel)}}"
+      >
+        {{$ctrl.channelService.getName($ctrl.channelService.selectedChannel)}}
+      </a>
+    </div>
+  </div>
+
+  <div class="btn-group ph-channel-selector-channel" is-open="$ctrl.isOpen" uib-dropdown>
     <button class="btn btn-default" uib-dropdown-toggle>
       <i class="fa fa-bullhorn"></i>
       <i class="fa fa-caret-down"></i>
     </button>
-    <ul class="dropdown-menu dropdown-menu-right ph-dropdown-menu-full" uib-dropdown-menu>
+    <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu>
       <li ng-click="$ctrl.isOpen = false" ng-class="{active: !$ctrl.channelService.selectedChannel}">
         <a href=""
           ng-click="$ctrl.channelService.selectChannel(undefined)"
@@ -26,7 +32,7 @@
         >
           <div class="ph-grow-container">
             <div class="ph-grow-item">
-              <i class="fa fa-fw ph-dropdown-icon-left fa-globe"></i>
+              <i class="fa fa-fw fa-globe ph-channel-icon ph-channel-icon-public"></i>
               Public channel
             </div>
             <div class="pull-right" ng-if="$ctrl.publicDiscussions">
@@ -39,7 +45,7 @@
       <li
         ng-repeat="channel in $ctrl.channelService.channels"
         ng-click="$ctrl.isOpen = false"
-        ng-class="{active: channel.id === $ctrl.channelService.selectedChannel.id}"
+        ng-class="{'active ph-private-channel': channel.id === $ctrl.channelService.selectedChannel.id}"
       >
         <a href=""
           ng-click="$ctrl.channelService.selectChannel(channel)"
@@ -47,7 +53,10 @@
         >
           <div class="ph-grow-container">
             <div class="ph-grow-item">
-              <i class="fa fa-fw ph-dropdown-icon-left fa-lock"></i>
+              <span class="fa-stack fa-stack-sm fa-fw ph-channel-icon ph-channel-icon-private">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-user fa-stack-1x fa-inverse"></i>
+              </span>
               {{$ctrl.channelService.getName(channel)}}
               <small class="text-muted">{{$ctrl.channelService.getDescription(channel)}}</small>
             </div>

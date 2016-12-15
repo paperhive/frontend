@@ -1,7 +1,4 @@
 import { cloneDeep } from 'lodash';
-import * as angular from 'angular';
-
-import template from './comment.html';
 
 export default function(app) {
   app.component(
@@ -13,7 +10,6 @@ export default function(app) {
         onDelete: '&',
         onUpdate: '&',
       },
-      template,
       controller: [
         '$scope', '$q', 'authService', '$window',
         function($scope, $q, authService, $window) {
@@ -35,10 +31,10 @@ export default function(app) {
 
           // For a more advanced example, using promises, see
           // <https://github.com/jeff-collins/ment.io/blob/master/ment.io/scripts.js>.
-          $scope.searchUsers = function(term) {
+          $scope.searchUsers = term => {
             // Fill localItems, used as mentio-items in the respective directive.
             const results = [];
-            angular.forEach($scope.users, function(item) {
+            $scope.users.forEach(item => {
               if (item.userName.toUpperCase().indexOf(term.toUpperCase()) >= 0) {
                 results.push(item);
               }
@@ -73,14 +69,16 @@ export default function(app) {
             if ($scope.editMode && ctrl.content.body !== $scope.comment.body) {
               const answer = $window.confirm(
                 'There is unsaved content in the reply field. ' +
-                  'Are you sure you want to leave this page?'
+                  'Are you sure you want to leave this page?',
               );
               if (!answer) {
                 event.preventDefault();
               }
             }
           });
-        }]
-    }
+        },
+      ],
+      template: require('./comment.html'),
+    },
   );
 };

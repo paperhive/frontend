@@ -26,13 +26,13 @@
   ></margin-link>
 </div>
 <div
-  ng-repeat="discussion in $ctrl.filteredDiscussions track by discussion.id"
+  ng-repeat="discussion in $ctrl.sortedDiscussions track by discussion.id"
   class="ph-margin-discussion"
-  ng-style="{
-    top: $ctrl.discussionPositions[discussion.id] + 'px',
-    opacity: $ctrl.channelService.selectedChannel.id === discussion.channel ? 1 : 0.5,
+  ng-style="{top: $ctrl.discussionPositions[discussion.id] + 'px'}"
+  ng-class="{
+    'ph-margin-discussion-animate': $ctrl.discussionPositions[discussion.id] !== undefined,
+    'ph-margin-discussion-fade': $ctrl.channelService.selectedChannel.id !== discussion.channel,
   }"
-  ng-class="{'ph-margin-discussion-animate': $ctrl.discussionPositions[discussion.id] !== undefined}"
   id="discussion-{{discussion.id}}"
 >
   <margin-discussion-placeholder
@@ -55,7 +55,7 @@
 
     popover-placement="top"
     popover-is-open="$ctrl.discussionPositions[discussion.id] !== undefined && discussion.id === 'cDmUY04FkYx9' && $ctrl.tour.stages[$ctrl.tour.index] === 'margin-discussion'"
-    uib-popover-template="'html/shared/tour-margin-discussion.html'"
+    uib-popover-template="$ctrl.tour.urls.marginDiscussion"
     popover-trigger="'none'"
   ></margin-discussion>
 </div>

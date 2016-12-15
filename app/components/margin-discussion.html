@@ -1,5 +1,22 @@
-<div class="ph-margin-container">
+<div class="ph-margin-container"
+  ng-class="{'ph-private-channel': $ctrl.channel}"
+>
   <!-- original comment -->
+
+  <div ng-show="!$ctrl.channel" class="ph-channel-description">
+    <i class="fa fa-fw fa-globe"></i> Public channel
+  </div>
+  <div ng-show="$ctrl.channel" class="ph-channel-description">
+    <i class="fa fa-fw fa-user"></i>
+    <a
+      href="./channels/{{$ctrl.channel.id}}"
+      class="ph-channel-selector-channel"
+      title="{{$ctrl.channelService.getNameDescription($ctrl.channel)}}"
+    >
+      {{$ctrl.channelService.getName($ctrl.channel)}}
+    </a>
+  </div>
+
   <div class="ph-margin-row">
     <!-- avatar -->
     <avatar user="$ctrl.discussion.author" size="38"
@@ -17,15 +34,6 @@
             <a href="./users/{{$ctrl.discussion.author.account.username}}">
               {{$ctrl.discussion.author.displayName}}</a>
             · <span am-time-ago="$ctrl.discussion.createdAt"></span>
-            ·
-            <i ng-show="!$ctrl.discussion.channel"
-              class="fa fa-globe"
-              uib-tooltip="Public channel"
-            ></i>
-            <i ng-show="$ctrl.discussion.channel"
-              class="fa fa-lock"
-              uib-tooltip="{{$ctrl.channel.name}}"
-            ></i>
           </p>
           <div class="ph-margin-body"
             ng-class="{'ph-margin-body-collapsed': !$ctrl.isExpanded}"
@@ -54,7 +62,7 @@
               <a class="btn btn-link btn-xs"
                 uib-tooltip="Share URL"
                 tooltip-class="tooltip-nowrap"
-                uib-popover-template="'html/directives/margin-discussion-url-popover.html'"
+                uib-popover-template="$ctrl.marginDiscussionUrlPopoverUrl"
                 popover-placement="bottom-right"
                 popover-trigger="'outsideClick'"
                 role="button"

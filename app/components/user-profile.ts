@@ -1,13 +1,8 @@
-'use strict';
-
-import template from './user-profile.html';
-
 export default function(app) {
-  app.component(
-    'userProfile', {
-      template,
-      bindings: {
-        'user': '<',
-      }
-    });
+  app.component('userProfile', {
+    template: require('./user-profile.html'),
+    bindings: {
+      user: '<',
+    },
+  });
 };

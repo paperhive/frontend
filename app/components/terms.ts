@@ -1,7 +1,3 @@
-'use strict';
-
-import template from './terms.html';
-
 export default function(app) {
-  app.component('terms', {template});
+  app.component('terms', {template: require('./terms.html')});
 };

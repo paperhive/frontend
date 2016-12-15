@@ -1,12 +1,10 @@
-import template from './channel-selector.html';
-
 export default function(app) {
   app.component('channelSelector', {
     bindings: {
       discussions: '<',
     },
     controller: class ChannelSelectorCtrl {
-      discussions: Array<any>;
+      discussions: any[];
 
       publicDiscussions: number;
       channelDiscussions: any;
@@ -38,6 +36,6 @@ export default function(app) {
         this.$uibModal.open({component: 'channelNew'});
       };
     },
-    template,
+    template: require('./channel-selector.html'),
   });
 };

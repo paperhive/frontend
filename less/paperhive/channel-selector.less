@@ -1,23 +1,74 @@
 channel-selector {
   .btn, .dropdown-menu {
-    font-size: @font-size-base - 2;
+    font-size: @font-size-base;
+    width: 100%;
     max-height: 345px;
     overflow-y: auto;
+    box-shadow: @ph-shadow;
+
+    > li {
+      > a {
+        padding-top: @padding-base-vertical*2;
+        padding-bottom: @padding-base-vertical*2;
+      }
+      &.active {
+        > a, a:hover {
+          background: @ph-highlight-color;
+          .ph-channel-icon {
+            color: @ph-white;
+          }
+        }
+        &.ph-private-channel {
+          > a, a:hover {
+            background: @ph-badge-bg-color;
+            .ph-channel-icon > .fa-circle {
+              color: @ph-white;
+            }
+            .ph-channel-icon > .fa-inverse {
+              color: @ph-badge-bg-color;
+            }
+          }
+        }
+      }
+
+      &.divider {
+        margin: 0;
+      }
+    }
+  }
+  .dropdown-menu {
+    padding: 0;
+    margin: 3px 0;
   }
 }
 
-.ph-channel-selector-group {
-  display: flex;
-  > .btn {
-    border: none;
-  }
-  > .btn.dropdown-toggle {
-    border-left: 1px solid @btn-default-border;
-  }
+.ph-channel-icon-public {
+  color: @ph-highlight-color;
 }
 
-.ph-channel-selector-channel {
-  flex-grow: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.ph-channel-icon-private > .fa-circle {
+  color: @ph-badge-bg-color;
+}
+
+.ph-dropdown-flex {
+  .ph-selected-channel {
+    flex-grow: 1;
+    overflow: hidden;
+    padding-right: @padding-base-vertical;
+    > div {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+  .ph-channel-selector-channel {
+    &.btn-group {
+      box-shadow: @ph-shadow;
+      display: flex;
+      position: initial;
+    }
+    > .btn {
+      border: none;
+    }
+  }
 }

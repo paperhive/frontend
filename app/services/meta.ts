@@ -1,4 +1,5 @@
-import * as angular from 'angular';
+import angular from 'angular';
+
 export default function(app) {
   app.factory('metaService', ['$rootScope', function($rootScope) {
     const service = {

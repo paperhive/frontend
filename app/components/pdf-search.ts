@@ -1,7 +1,5 @@
 'use strict';
 
-import template from './pdf-search.html';
-
 export default function(app) {
   app.component('pdfSearch', {
     bindings: {
@@ -9,7 +7,8 @@ export default function(app) {
       large: '<',
     },
     controller: class PdfSearchController {
-      constructor() {}
+      onSearchSubmit: any;
+      large: boolean;
 
       submit(str) {
         this.onSearchSubmit({searchStr: str});
@@ -20,6 +19,6 @@ export default function(app) {
       }
 
     },
-    template,
+    template: require('./pdf-search.html'),
   });
 };

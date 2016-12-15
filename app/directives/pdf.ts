@@ -1,10 +1,10 @@
 import angular from 'angular';
 import { queue } from 'async';
 import jquery from 'jquery';
-import { clone, difference, filter, flatten, get, isArray, isEqual, isNumber, map, pick, some, uniq } from 'lodash';
+import { clone, difference, filter, flatten, get, isArray, isEqual, isNumber, pick, some, uniq } from 'lodash';
 import { PDFJS } from 'pdfjs-dist';
-import rangy from 'rangy';
-import srch from 'srch';
+const rangy = require('rangy');
+import { backTransformRange } from 'srch';
 
 // test if height and width properties of 2 objects are equal
 function isSameSize(obj1, obj2) {
@@ -92,7 +92,7 @@ function getRectanglesSelector(range, container, restoreSelection = true) {
   // get TextNodes inside the range
   const textNodes = filter(
     getTextNodes(container),
-    range.containsNodeText.bind(range)
+    range.containsNodeText.bind(range),
   );
 
   // wrap each TextNode in a span to measure it
@@ -130,8 +130,9 @@ export default function(app) {
   // directive follows a few basic rules that make it easier to switch to
   // angular2, see
   // http://teropa.info/blog/2015/10/18/refactoring-angular-apps-to-components.html
-  app.directive('pdfFull', ['$compile', '$document', '$http', '$q', 'scroll', '$timeout', '$window', 'config', function($compile, $document, $http, $q, scroll, $timeout, $window, config) {
-
+  app.directive('pdfFull', [
+      '$compile', '$document', '$http', '$q', 'scroll', '$timeout', '$window', 'config',
+      function($compile, $document, $http, $q, scroll, $timeout, $window, config) {
     // render a page in a canvas
     class CanvasRenderer {
       container: JQuery;
@@ -158,7 +159,6 @@ export default function(app) {
       async render(viewport) {
         // new size
         const size = roundSize(viewport);
-
 
         // create canvas
         if (!this.canvas) {
@@ -191,8 +191,8 @@ export default function(app) {
     class TextRenderer {
       element: JQuery;
       page: PDFPageProxy;
-      textContent: TextContent;
-      renderTask: PDFRenderTask; // currently running task
+      textContent: PDFTextContent;
+      renderTask: PDFRenderTextTask; // currently running task
       rendered = false;
 
       constructor(element, page) {
@@ -240,17 +240,17 @@ export default function(app) {
         this.rendered = true;
       }
 
-      getRangePdfRectangles(range) {
+      getRangePdfRectangles(ranges) {
         // TODO: optimize performance
-        return flatten(range.map(range => {
+        return flatten(ranges.map(range => {
           const index = range.transformation.index;
           // get n-th child
           const nthChild = this.element[0].childNodes[index].firstChild;
           let rangyRange = rangy.createRange();
           rangyRange.setStart(nthChild, range.position);
           rangyRange.setEnd(nthChild, range.position + range.length);
-          const selectors = getRectanglesSelector(rangyRange, this.element[0], false);
-          selectors.forEach(selector => selector.pageNumber = this.page.pageIndex + 1);
+          const selectors = getRectanglesSelector(rangyRange, this.element[0], false) as any[];
+          selectors.forEach(selector => selector.pageNumber = this.page.pageNumber);
           return selectors;
         }));
       }
@@ -288,7 +288,7 @@ export default function(app) {
         // get a non-flipped version of the viewport
         // andré: this took me a few hours, uaaargh! :)
         const viewport = _viewport.clone({
-          dontFlip: true
+          dontFlip: true,
         });
 
         if (!this.annotations) {
@@ -304,7 +304,7 @@ export default function(app) {
           div: this.element[0], // layer:
           linkService: this.linkService,
           page: this.page,
-          viewport: viewport,
+          viewport,
         });
 
         // create tooltip
@@ -319,7 +319,7 @@ export default function(app) {
                 Press and hold ${isMac ? 'cmd (⌘)' : 'Ctrl+Alt'} to select text
                 inside a link.
               </div>
-            </div>`
+            </div>`,
           );
           this.tooltip.appendTo(this.element);
           const target = jquery(event.currentTarget);
@@ -350,19 +350,21 @@ export default function(app) {
       pageSize: any; // TODO: remove?
       textFocused: boolean = false;
       textContent: any;
-      textSnippetTransformations: Array<any>;
+      textSnippetTransformations: any[];
       searchMatches: any[];
       lastSearchMatches: any[];
 
       // renderer state
+      height: number;
       renderedSize: {height: number, width: number};
       canvasRenderer: CanvasRenderer;
       textRenderer: TextRenderer;
       annotationsRenderer: AnnotationsRenderer;
 
       constructor(public pdf: PDFDocumentProxy, public pageNumber: number,
-          public element: JQuery, public scope: any,
-          public linkService, public defaultPageSize, initialWidth: number) {
+                  public element: JQuery, public scope: any,
+                  public linkService, public defaultPageSize,
+                  initialWidth: number) {
         // update size to default size
         this.updateSize(initialWidth);
       }
@@ -392,10 +394,10 @@ export default function(app) {
         this.textSnippetTransformations = [];
         this.textContent.items.forEach((item, index) => {
           this.textSnippetTransformations.push(
-            {original: item.str.length, transformed: item.str.length, textObject: item, index}
+            {original: item.str.length, transformed: item.str.length, textObject: item, index},
           );
           this.textSnippetTransformations.push(
-            {original: 0, transformed: 1}
+            {original: 0, transformed: 1},
           );
         });
         // remove last element (there is no space)
@@ -508,7 +510,7 @@ export default function(app) {
           offset: {
             top: this.element[0].offsetTop,
             left: this.element[0].offsetLeft,
-          }
+          },
         });
       }
 
@@ -554,7 +556,6 @@ export default function(app) {
         } catch (error) {
           // return if cancelled
           if (error === 'cancelled') {
-            console.log(`page ${this.pageNumber} cancelled`);
             return false;
           }
           throw error;
@@ -598,7 +599,7 @@ export default function(app) {
 
         this.scope.searchHighlightsByPage[this.pageNumber] = this.searchMatches.map(match => {
           // store length, position and transformation
-          const transformedMatch = srch.backTransformRange(match, this.textSnippetTransformations);
+          const transformedMatch = backTransformRange(match, this.textSnippetTransformations);
           // get corresponding pdfRectangles
           const pdfRectangles = this.textRenderer.getRangePdfRectangles(transformedMatch);
           return {matchIndex: match.matchIndex, selectors: {pdfRectangles}};
@@ -611,10 +612,10 @@ export default function(app) {
 
     // render a full pdf
     class PdfFull {
-      pages: Array<PdfPage>;
-      renderedPages: Array<PdfPage>;
+      pages: PdfPage[];
+      renderedPages: PdfPage[];
       renderQueue: any;
-      texts: Array<any>;
+      texts: any[];
 
       containerWidth: number;
       lastSelectors: any;
@@ -622,10 +623,10 @@ export default function(app) {
       linkService: LinkService;
       anchor: string;
       textFocused: boolean = false;
-      textTransformations: Array<any>;
+      textTransformations: any[];
 
       constructor(public pdf: PDFDocumentProxy, public element: JQuery,
-          public scope: any) {
+                  public scope: any) {
         this.pages = [];
 
         // set up render queue
@@ -661,7 +662,10 @@ export default function(app) {
           this.element.append(pageElement);
 
           // instantiate page
-          const page = new PdfPage(this.pdf, pageNumber, pageElement, this.scope, this.linkService, defaultPageSize, width);
+          const page = new PdfPage(
+            this.pdf, pageNumber, pageElement, this.scope,
+            this.linkService, defaultPageSize, width,
+          );
           this.pages.push(page);
         }
 
@@ -699,8 +703,9 @@ export default function(app) {
         // note: key events are not fired on PDFs
         const onKeyEvent = event => {
           const shouldFocus = event.altKey && event.ctrlKey || event.metaKey;
-          if (shouldFocus) this.textFocus();
-          else if (!mousedown) {
+          if (shouldFocus) {
+            this.textFocus();
+          } else if (!mousedown) {
             this.textUnfocus();
             if (event.type === 'keyup') this.onTextSelect();
           }
@@ -744,7 +749,7 @@ export default function(app) {
           this.textTransformations = [];
           this.texts.forEach((text, index) => {
             this.textTransformations.push(
-              {original: text.length, transformed: text.length, pageNumber: index + 1}
+              {original: text.length, transformed: text.length, pageNumber: index + 1},
             );
             this.textTransformations.push({original: 0, transformed: 1});
           });
@@ -762,28 +767,28 @@ export default function(app) {
         if (!matches) return;
 
         // adds transformation to the matches
-        const transformedMatches = matches.map(match => srch.backTransformRange(match, this.textTransformations));
+        const transformedMatches = matches.map(match => backTransformRange(match, this.textTransformations));
 
         // get matches and positions by page
         const matchesByPage = this.pages.map(() => []);
         transformedMatches.forEach((match, matchIndex) => {
-          match.forEach(match => {
-            const pageNumber = match.transformation.pageNumber;
+          match.forEach(range => {
+            const pageNumber = range.transformation.pageNumber;
             if (pageNumber === undefined) {
               throw new Error('no page number in transformation!');
             }
 
             matchesByPage[pageNumber - 1].push({
               matchIndex,
-              position: match.position,
-              length: match.length,
+              position: range.position,
+              length: range.length,
             });
           });
         });
 
         // set matches for each page
-        matchesByPage.forEach((pageMatches, pageIndex) =>
-          this.pages[pageIndex].setSearchMatches(pageMatches)
+        matchesByPage.forEach(
+          (pageMatches, pageIndex) => this.pages[pageIndex].setSearchMatches(pageMatches),
         );
       }
 
@@ -869,31 +874,31 @@ export default function(app) {
 
               // is this a backwards selection (bottom to top)
               isBackwards: selection.isBackwards(),
+
+              // pdf text positions selector
+              pdfTextQuotes: pageRanges.map(pageRange => {
+                const page = this.pages[pageRange.pageNumber - 1];
+                const selector = getTextQuoteSelector(pageRange.range, page.textRenderer.element[0]) as any;
+                selector.pageNumber = pageRange.pageNumber;
+                return selector;
+              }),
+
+              // pdf text quotes selector
+              pdfTextPositions: pageRanges.map(pageRange => {
+                const page = this.pages[pageRange.pageNumber - 1];
+                const selector = getTextPositionSelector(pageRange.range, page.textRenderer.element[0]);
+                selector.pageNumber = pageRange.pageNumber;
+                return selector;
+              }),
+
+              // pdf rectangles selector
+              pdfRectangles: flatten(pageRanges.map(pageRange => {
+                const page = this.pages[pageRange.pageNumber - 1];
+                const rectSelectors = getRectanglesSelector(range, page.textRenderer.element[0]) as any;
+                rectSelectors.forEach(selector => selector.pageNumber = pageRange.pageNumber);
+                return rectSelectors;
+              })),
             };
-
-            // pdf text positions selector
-            selectors.pdfTextQuotes = pageRanges.map(pageRange => {
-              const page = this.pages[pageRange.pageNumber - 1];
-              const selector = getTextQuoteSelector(pageRange.range, page.textRenderer.element[0]);
-              selector.pageNumber = pageRange.pageNumber;
-              return selector;
-            });
-
-            // pdf text quotes selector
-            selectors.pdfTextPositions = pageRanges.map(pageRange => {
-              const page = this.pages[pageRange.pageNumber - 1];
-              const selector = getTextPositionSelector(pageRange.range, page.textRenderer.element[0]);
-              selector.pageNumber = pageRange.pageNumber;
-              return selector;
-            });
-
-            // pdf rectangles selector
-            selectors.pdfRectangles = flatten(pageRanges.map(pageRange => {
-              const page = this.pages[pageRange.pageNumber - 1];
-              const selectors = getRectanglesSelector(range, page.textRenderer.element[0]);
-              selectors.forEach(selector => selector.pageNumber = pageRange.pageNumber);
-              return selectors;
-            }));
 
             return this.onSelect(selectors);
           });
@@ -944,7 +949,6 @@ export default function(app) {
         const unrenderPages = difference(this.renderedPages, running, renderPages);
         unrenderPages.forEach(page => page.unrender());
         this.renderedPages = difference(this.renderedPages, unrenderPages);
-
 
         // if not resized: remove pages that are running or already rendered
         if (!force && !sizeChanged) {
@@ -1001,7 +1005,7 @@ export default function(app) {
 
         promise.then(
           rendered => callback(undefined, rendered),
-          err => callback(err)
+          err => callback(err),
         );
       }
 
@@ -1014,15 +1018,18 @@ export default function(app) {
 
         let match;
         // match page
-        if (match = /^p:(\d+)$/.exec(anchor)) {
+        match = /^p:(\d+)$/.exec(anchor);
+        if (match) {
           return this.scrollToId(anchor);
         }
         // match pdf named destination
-        if (match = /^pdfd:(.*)$/.exec(anchor)) {
+        match = /^pdfd:(.*)$/.exec(anchor);
+        if (match) {
           return await this.scrollToDest(match[1]);
         }
         // match selection anchor
-        if (match = /^s:([\w-]+)$/.exec(anchor)) {
+        match = /^s:([\w-]+)$/.exec(anchor);
+        if (match) {
           return await this.scrollToSelection(match[1]);
         }
         throw new Error(`Anchor ${anchor} does not match.`);
@@ -1041,7 +1048,6 @@ export default function(app) {
         const destRef = await this.pdf.getDestination(dest);
         if (!destRef) throw new Error(`destination ${dest} not found`);
         if (!isArray(destRef)) throw new Error('destination does not resolve to array');
-
         let top;
         switch (destRef[1].name) {
           case 'XYZ':
@@ -1077,13 +1083,13 @@ export default function(app) {
           this.element.offset().top +
           page.element[0].offsetTop +
           coords[1] / page.pageSize.height * page.height,
-          {offset: (this.scope.viewportOffsetTop || 0) + 130}
+          {offset: (this.scope.viewportOffsetTop || 0) + 130},
         );
       }
 
       async scrollToSelection(anchorId) {
         const response = await $http.get(`${config.apiUrl}/anchors/${anchorId}`);
-        const rects = get(response, 'data.target.selectors.pdfRectangles');
+        const rects = get(response, 'data.target.selectors.pdfRectangles') as any[];
         if (!rects) throw new Error('pdf rectangles missing');
 
         // get top rect of selection
@@ -1104,7 +1110,7 @@ export default function(app) {
           this.element.offset().top +
           page.element[0].offsetTop +
           topRect.top * page.height,
-          {offset: (this.scope.viewportOffsetTop || 0) + 130}
+          {offset: (this.scope.viewportOffsetTop || 0) + 130},
         );
 
         // set selection
@@ -1129,7 +1135,7 @@ export default function(app) {
 
         this.scope.highlights.forEach(highlight => {
           if (!highlight.selectors || !highlight.selectors.pdfRectangles) return;
-          const pageNumbers = uniq(highlight.selectors.pdfRectangles.map(rect => rect.pageNumber));
+          const pageNumbers = uniq(highlight.selectors.pdfRectangles.map(rect => rect.pageNumber)) as number[];
           pageNumbers.forEach(pageNumber => {
             if (!this.scope.highlightsByPage[pageNumber]) {
               this.scope.highlightsByPage[pageNumber] = [];
@@ -1211,9 +1217,9 @@ export default function(app) {
 
         onTextUpdate: '&',
       },
-      link: async function(scope, element, attrs) {
+      link: async (scope, element, attrs) => {
         let pdfFull;
-        scope.$watch('pdf', async function (pdf) {
+        scope.$watch('pdf', async (pdf) => {
           // destroy current pdf
           if (pdfFull) {
             pdfFull.destroy();

@@ -7,7 +7,7 @@ export default function(app) {
 
     constructor(public $document, public $window) {}
 
-    private static preventDefault(event) {
+    static preventDefault(event) {
       event.preventDefault();
     }
 

@@ -1,5 +1,3 @@
-import { assign } from 'lodash';
-
 export default function(app) {
   app.service('channelsApi', class ChannelApi {
     static $inject = ['$http', 'config', 'notificationService'];
@@ -46,7 +44,9 @@ export default function(app) {
 
     invitationDelete(channelId, invitationId, token) {
       if (token) {
-        return this.$http.delete(`${this.config.apiUrl}/channels/${channelId}/invitations/${invitationId}?token=${token}`)
+        return this.$http.delete(
+          `${this.config.apiUrl}/channels/${channelId}/invitations/${invitationId}?token=${token}`,
+        )
           .catch(this.notificationService.httpError('could not delete invitation'));
       }
       return this.$http.delete(`${this.config.apiUrl}/channels/${channelId}/invitations/${invitationId}`)
@@ -55,7 +55,10 @@ export default function(app) {
 
     invitationConfirm(channelId, invitationId, token, password) {
       if (token) {
-        return this.$http.post(`${this.config.apiUrl}/channels/${channelId}/invitations/${invitationId}/confirm?token=${token}`, password)
+        return this.$http.post(
+          `${this.config.apiUrl}/channels/${channelId}/invitations/${invitationId}/confirm?token=${token}`,
+          password,
+        )
           .catch(this.notificationService.httpError('could not confirm invitation'))
           .then(response => response.data);
       }

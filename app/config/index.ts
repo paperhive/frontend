@@ -1,5 +1,3 @@
-'use strict';
-
 import animate from './animate';
 import debug from './debug';
 import html5Mode from './html5-mode';

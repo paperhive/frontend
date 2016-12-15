@@ -23,7 +23,7 @@
 
       popover-placement="bottom-left"
       popover-is-open="$ctrl.tour.stages[$ctrl.tour.index] === 'hive'"
-      uib-popover-template="'html/shared/tour-hive.html'"
+      uib-popover-template="$ctrl.tour.urls.hive"
       popover-trigger="'none'"
     ></hive-button>
   </div>
@@ -98,7 +98,7 @@
     <uib-accordion close-others="oneAtATime">
       <div ng-if="$ctrl.kudosDoi" uib-accordion-group class="panel-default ph-sidenav-info-kudos" is-open="$ctrl.kudosOpen">
         <uib-accordion-heading>
-          <img src="./static/img/kudos-icon.svg" alt="Kudos"> Kudos explanation
+          <img src="../../static/img/kudos-icon.svg" alt="Kudos"> Kudos explanation
           <i class="pull-right fa" ng-class="{
             'fa-chevron-down': $ctrl.kudosOpen,
             'fa-chevron-right': !$ctrl.kudosOpen

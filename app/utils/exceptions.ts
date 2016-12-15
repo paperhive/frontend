@@ -1,5 +1,3 @@
-'use strict';
-
 export default function(app) {
   function PhError(message) {
     this.name = 'PhError';
@@ -7,4 +5,4 @@ export default function(app) {
   }
   PhError.prototype = new Error();
   PhError.prototype.constructor = PhError;
-  };
+};

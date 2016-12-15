@@ -1,7 +1,3 @@
-'use strict';
-
-import template from './extension-buttons.html';
-
 export default function(app) {
     app.component('extensionButtons', {
       controller: [
@@ -14,6 +10,6 @@ export default function(app) {
           // <https://developer.mozilla.org/en/docs/Installing_Extensions_and_Themes_From_Web_Pages>
           // but we didn't get this to work now.
         }],
-        template
+        template: require('./extension-buttons.html'),
     });
 };

@@ -1,9 +1,7 @@
 {
-  "extends": "eslint:recommended",
+  "extends": "../.eslintrc",
   "env": {
-    "es6": true,
     "jasmine": true,
-    "node": true,
     "protractor": true
   },
   "rules": {

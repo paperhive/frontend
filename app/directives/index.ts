@@ -1,6 +1,5 @@
 import affix from './affix';
 import attributes from './attributes';
-import attribution from './attribution';
 import confirmedClick from './confirmed-click';
 import elastic from './elastic';
 import kramjax from './kramjax';
@@ -20,7 +19,6 @@ import viewportHeight from './viewport-height';
 export default function(app) {
   affix(app);
   attributes(app);
-  attribution(app);
   confirmedClick(app);
   elastic(app);
   kramjax(app);

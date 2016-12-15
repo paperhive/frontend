@@ -1,15 +1,13 @@
-'use strict';
-
-import * as angular from 'angular';
+import angular from 'angular';
 
 export default function(app) {
   app.directive('attributes', [function() {
     return {
       restrict: 'A',
       scope: {
-        attributes: '='
+        attributes: '=',
       },
-      link: function(scope, element, attr) {
+      link: (scope, element, attr) => {
         scope.$watch('attributes', function(attributes, oldAttributes) {
           // angular.copy strips keys added by angular, e.g., $$hashKey
           angular.forEach(angular.copy(oldAttributes), function(_, attribute) {
@@ -18,7 +16,7 @@ export default function(app) {
           element.attr(angular.copy(attributes));
         });
 
-      }
+      },
     };
   }]);
 };

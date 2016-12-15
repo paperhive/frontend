@@ -1,11 +1,7 @@
-'use strict';
 import { dedent } from 'dentist';
-
-import template from './help-markdown.html';
 
 export default function(app) {
   app.component('helpMarkdown', {
-    template,
     controller: [
       function() {
         const ctrl = this;
@@ -84,13 +80,15 @@ export default function(app) {
           \`\`\`
         `);
 
+        /* tslint:disable:max-line-length */
         ctrl.formulas = dedent(`
           You can use $$\\LaTeX$$ to typeset formulas. A formula can be displayed inline, e.g. $$e=mc^2$$, or as a block:
           $$\\int_\\Omega \\nabla u \\cdot \\nabla v~dx = \\int_\\Omega fv~dx$$
           Also check out this [LaTeX introduction](https://en.wikibooks.org/wiki/LaTeX/Mathematics).
         `);
-
-      }
-    ]
+        /* tslint:enable:max-line-length */
+      },
+    ],
+    template: require('./help-markdown.html'),
   });
 };

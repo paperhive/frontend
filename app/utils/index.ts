@@ -1,4 +1,3 @@
-'use strict';
 import exceptions from './exceptions';
 
 export default function(app) {
