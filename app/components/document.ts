@@ -323,9 +323,7 @@ export default function(app) {
         // returns array of objects (position, length)
         this.searchRanges =
           this.searchStr ? this.searchIndex.search(this.searchStr) : undefined;
-        if (this.searchRanges) {
-          this.numberSearchResults = this.searchRanges.length;
-        }
+        this.numberSearchResults = this.searchRanges !== undefined ? this.searchRanges.length : undefined;
       }
     },
     template: require('./document.html'),

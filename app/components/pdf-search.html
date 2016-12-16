@@ -6,6 +6,7 @@
     margin-right: 12px;
     cursor: pointer;
     text-decoration: none;
+    user-select: none;
   }
   .ph-input-item {
     position: relative;
@@ -36,7 +37,7 @@
       <span style="border-right: 1px solid #BDBDBD;"></span>
     </span>
 
-    <span class="ph-input-item">
+    <span class="ph-input-item" ng-show="$ctrl.numberSearchResults >= 0">
       <span style="font-family: FontAwesome, Roboto; font-size: 11px; color: gray;">
         {{$ctrl.indexSearchResults}} of {{$ctrl.numberSearchResults}}
       </span>

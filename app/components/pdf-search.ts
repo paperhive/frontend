@@ -3,9 +3,9 @@
 export default function(app) {
   app.component('pdfSearch', {
     bindings: {
-      onSearchSubmit: '&',
       large: '<',
       numberSearchResults: '<',
+      onSearchSubmit: '&',
     },
     controller: class PdfSearchController {
       indexSearchResults: number;
@@ -13,9 +13,18 @@ export default function(app) {
       numberSearchResults: number;
       onSearchSubmit: any;
 
-      constructor() {
-        this.numberSearchResults = 0;
-        this.indexSearchResults = 0;
+      static $inject = ['$scope'];
+      constructor(public $scope: any) {
+        $scope.$watch('$ctrl.numberSearchResults', this.updateSearchResults.bind(this));
+      }
+
+      updateSearchResults() {
+        if (this.numberSearchResults > 0) {
+          this.indexSearchResults = 1;
+        }
+        if (this.numberSearchResults === 0) {
+          this.indexSearchResults = 0;
+        }
       }
 
       submit(str) {
@@ -35,8 +44,8 @@ export default function(app) {
       }
 
       removeSearch() {
-        this.numberSearchResults = 0;
-        // TODO remove highlight
+        // remove highlight
+        this.onSearchSubmit({searchStr: undefined});
       }
 
     },
