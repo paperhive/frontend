@@ -14,6 +14,10 @@
     float: right;
     margin-right: 14px;
   }
+  .ph-inactive-link {
+    pointer-events: none;
+    cursor: none;
+  }
 </style>
 
 <div ng-if="$ctrl.large" class="ph-sidenav-item">
@@ -23,18 +27,24 @@
       style="padding-right: 80px; font-family: FontAwesome, Roboto; font-size: 14px;"
       autocomplete="off"
     >
-    <a class="ph-link-input-item" title="Close" ng-click="$ctrl.str = ''; $ctrl.removeSearch();">
+    <a class="ph-link-input-item" title="Close" ng-class="$ctrl.str ? '' : 'ph-inactive-link'"
+      ng-click="$ctrl.str = ''; $ctrl.removeSearch();"
+    >
       <i class="fa fa-times" style="font-size: 11px; color: gray;"></i>
     </a>
-    <a class="ph-link-input-item" title="Next" ng-click="$ctrl.nextResult()">
+    <a class="ph-link-input-item" title="Next" ng-click="$ctrl.nextResult()"
+      ng-class="($ctrl.numberSearchResults > 0) ? '' : 'ph-inactive-link'"
+    >
       <i class="fa fa-chevron-down" style="font-size: 11px; color: gray;"></i>
     </a>
-    <a class="ph-link-input-item" title="Previous" ng-click="$ctrl.previousResult()">
+    <a class="ph-link-input-item" title="Previous" ng-click="$ctrl.previousResult()"
+      ng-class="($ctrl.numberSearchResults > 0) ? '' : 'ph-inactive-link'"
+    >
       <i class="fa fa-chevron-up" style="font-size: 11px; color: gray;"></i>
     </a>
 
     <span class="ph-input-item">
-      <span style="border-right: 1px solid #BDBDBD;"></span>
+      <span style="border-right: 1px solid gray;"></span>
     </span>
 
     <span class="ph-input-item" ng-show="$ctrl.numberSearchResults >= 0">
