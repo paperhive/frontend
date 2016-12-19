@@ -209,6 +209,7 @@ export default function(app) {
       searchRanges: IRange[];
       searchIndex: SearchIndex;
       numberSearchResults: number;
+      indexSearchResults: number;
 
       // note: do *not* use $routeSegment.$routeParams because they still
       // use the old state in $routeChangeSuccess events

@@ -734,6 +734,9 @@ export default function(app) {
         // monitor scrollToAnchor
         this.scope.$watch('scrollToAnchor', this.scrollToAnchor.bind(this));
 
+        // monitor scrollToSearchMatchIndex
+        this.scope.$watch('scrollToSearchMatchIndex', this.scrollToSearchMatchIndex.bind(this));
+
         // monitor searchRanges
         this.scope.$watch('searchRanges', this.searchRanges.bind(this));
 
@@ -1087,6 +1090,12 @@ export default function(app) {
         );
       }
 
+      async scrollToSearchMatchIndex(searchMatchIndex: number) {
+        if (searchMatchIndex) {
+          console.log('new index', searchMatchIndex)
+        }
+      }
+
       async scrollToSelection(anchorId) {
         const response = await $http.get(`${config.apiUrl}/anchors/${anchorId}`);
         const rects = get(response, 'data.target.selectors.pdfRectangles') as any[];
@@ -1167,6 +1176,7 @@ export default function(app) {
         popupTarget: '<',
 
         scrollToAnchor: '<',
+        scrollToSearchMatchIndex: '<',
 
         viewportOffsetTop: '<',
 

@@ -6,6 +6,7 @@ export default function(app) {
       large: '<',
       numberSearchResults: '<',
       onSearchSubmit: '&',
+      onSearchMatchIndexUpdate: '&',
     },
     controller: class PdfSearchController {
       indexSearchResults: number;
@@ -21,9 +22,11 @@ export default function(app) {
       updateSearchResults() {
         if (this.numberSearchResults > 0) {
           this.indexSearchResults = 1;
+          this.onSearchMatchIndexUpdate({indexSearchResults: 1});
         }
         if (this.numberSearchResults === 0) {
           this.indexSearchResults = 0;
+          this.onSearchMatchIndexUpdate({indexSearchResults: 0});
         }
       }
 
@@ -32,20 +35,31 @@ export default function(app) {
       }
 
       nextResult() {
-        (this.indexSearchResults !== this.numberSearchResults) ?
-          this.indexSearchResults++ : this.indexSearchResults = 1;
+        if (this.indexSearchResults !== this.numberSearchResults) {
+          this.indexSearchResults++;
+          this.onSearchMatchIndexUpdate({indexSearchResults: this.indexSearchResults});
+        } else {
+          this.indexSearchResults = 1;
+          this.onSearchMatchIndexUpdate({indexSearchResults: this.indexSearchResults});
+        }
         // TODO scroll to result
       }
 
       previousResult() {
-        (this.indexSearchResults !== 1) ?
-          this.indexSearchResults-- : this.indexSearchResults = this.numberSearchResults;
+        if (this.indexSearchResults !== 1) {
+          this.indexSearchResults--;
+          this.onSearchMatchIndexUpdate({indexSearchResults: this.indexSearchResults});
+        } else {
+          this.indexSearchResults = this.numberSearchResults;
+          this.onSearchMatchIndexUpdate({indexSearchResults: this.indexSearchResults});
+        }
         // TODO scroll to result
       }
 
       removeSearch() {
         // remove highlight
         this.onSearchSubmit({searchStr: undefined});
+        this.onSearchMatchIndexUpdate({indexSearchResults: undefined});
       }
 
     },

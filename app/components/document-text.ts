@@ -8,6 +8,7 @@ class DocumentTextCtrl {
   latestAccessibleRevision: any;
   discussions: any[];
   filteredDiscussions: any[];
+  indexSearchResults: number;
 
   draftSelectors: any;
   highlights: any[];
@@ -130,6 +131,7 @@ export default function(app) {
       viewportOffsetTop: '<',
       expanded: '<',
       searchRanges: '<',
+      indexSearchResults: '<',
 
       onDiscussionSubmit: '&',
       onDiscussionUpdate: '&',
