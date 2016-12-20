@@ -30,7 +30,19 @@
         <search-date facet="$ctrl.facets.publishedByYear"></search-date>
       </div>
       <div class="col-md-3 text-center">
-        <search-journal facet="$ctrl.facets.journal"></search-journal>
+        <h5>Journal</h5>
+        <search-donut
+          facets="$ctrl.facets.journal"
+          selected="$ctrl.selectedJournals"
+          on-add="$ctrl.selectedJournals.push(key)"
+          on-remove="$ctrl.selectedJournals.splice($ctrl.selectedJournals.indexOf(key), 1)"
+        ></search-donut>
+        <search-dropdown
+          facets="$ctrl.facets.journal"
+          selected="$ctrl.selectedJournals"
+          on-add="$ctrl.selectedJournals.push(key)"
+          on-remove="$ctrl.selectedJournals.splice($ctrl.selectedJournals.indexOf(key), 1)"
+        ></search-dropdown>
       </div>
       <div class="col-md-3 text-center">
         <h5>Access</h5>

@@ -1,4 +1,5 @@
-'use strict';
+import { copy } from 'angular';
+import { isArray, isEqual } from 'lodash';
 
 export default function(app) {
   app.component('search', {
@@ -8,7 +9,8 @@ export default function(app) {
       query: string;
       queryModel: string;
 
-      facets: {};
+      facets = {};
+      selectedJournals: string[] = [];
       resultsTotal: number;
       results: any[];
       total: number;
@@ -23,11 +25,17 @@ export default function(app) {
         $scope.$on('$locationChangeSuccess', this.updateFromLocation.bind(this));
         this.updateFromLocation();
 
-        $scope.$watchGroup(['$ctrl.query', '$ctrl.page'], () => {
-          this.updateLocation();
-          this.updateResults();
-        });
+        $scope.$watchGroup(
+          ['$ctrl.query', '$ctrl.page'],
+          (newVals, oldVals) => newVals !== oldVals && this.updateResults(),
+        );
 
+        $scope.$watchCollection(
+          '$ctrl.selectedJournals',
+          (newVals, oldVals) => newVals !== oldVals && this.updateResults(),
+        );
+
+        this.updateResults();
         this.updateTotal();
       }
 
@@ -41,8 +49,20 @@ export default function(app) {
 
       // update controller variables from location
       updateFromLocation() {
-        this.query = this.$location.search().query;
-        this.page = this.$location.search().page || 1;
+        const search = this.$location.search();
+        this.query = search.query;
+        this.page = search.page || 1;
+
+        let journals = search.journals || [];
+        // if journals is provided once then we need to turn the
+        // string into an array
+        if (!isArray(journals)) {
+          journals = [journals];
+        }
+        journals.sort();
+        if (!isEqual(this.selectedJournals, journals)) {
+          this.selectedJournals = journals;
+        }
 
         this.queryModel = this.query;
       }
@@ -52,13 +72,15 @@ export default function(app) {
         this.$location.search({
           query: this.query,
           page: this.page > 1 ? this.page : undefined,
+          journals: this.selectedJournals,
         });
       }
 
       updateResults() {
+        this.updateLocation();
+
         this.resultsTotal = undefined;
         this.results = undefined;
-        this.facets = undefined;
         this.updatingResults = true;
 
         return this.$http.get(`${this.config.apiUrl}/documents/search`, {
@@ -67,6 +89,7 @@ export default function(app) {
             limit: this.maxPerPage,
             skip: (this.page - 1) * this.maxPerPage,
             restrictToLatest: true,
+            // journals: this.selectedJournals,
           },
         })
         .then(

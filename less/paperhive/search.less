@@ -13,12 +13,18 @@
   }
 }
 
-.ph-search-chart-journal {
+.ph-search-donut {
   .ct-slice-donut {
-    transition: stroke-width 0.6s ease;
+    transition: stroke-width 0.3s ease, opacity 0.3s ease;
     cursor: pointer;
-    &:hover {
+    &:hover, &.ph-search-donut-slice-active {
       stroke-width: 35px !important;
+    }
+  }
+  &.ph-search-donut-active {
+    .ct-slice-donut:not(.ph-search-donut-slice-active) {
+      // gray out non-active slices if another is active
+      opacity: 0.3;
     }
   }
 }

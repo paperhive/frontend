@@ -60,7 +60,7 @@ export default function(app) {
         .when('/password/reset', 'passwordReset')
         .when('/publishers', 'publishers')
         .when('/return/channelInvitation', 'channelInvitationConfirm')
-        .when('/search', 'search')
+        .when('/search', 'search', {reloadOnSearch: false})
         .when('/settings', 'settings')
         .when('/settings/profile', 'settings.profile')
         .when('/settings/site', 'settings.site')

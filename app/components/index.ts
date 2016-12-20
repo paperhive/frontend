@@ -68,7 +68,7 @@ import phFooter from './ph-footer';
 import publishers from './publishers';
 import search from './search';
 import searchDate from './search-date';
-import searchJournal from './search-journal';
+import searchDonut from './search-donut';
 import settings from './settings';
 import settingsAccounts from './settings-accounts';
 import settingsEmail from './settings-email';
@@ -153,7 +153,7 @@ export default function(app) {
   publishers(app);
   search(app);
   searchDate(app);
-  searchJournal(app);
+  searchDonut(app);
   settings(app);
   settingsAccounts(app);
   settingsEmail(app);
