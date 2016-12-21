@@ -69,6 +69,7 @@ import publishers from './publishers';
 import search from './search';
 import searchDate from './search-date';
 import searchDonut from './search-donut';
+import searchDropdown from './search-dropdown';
 import settings from './settings';
 import settingsAccounts from './settings-accounts';
 import settingsEmail from './settings-email';
@@ -154,6 +155,7 @@ export default function(app) {
   search(app);
   searchDate(app);
   searchDonut(app);
+  searchDropdown(app);
   settings(app);
   settingsAccounts(app);
   settingsEmail(app);

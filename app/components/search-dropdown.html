@@ -1,0 +1,30 @@
+<div class="dropdown" uib-dropdown>
+  <button type="button" class="btn btn-sm btn-default" uib-dropdown-toggle>
+    <div class="ph-grow-container">
+      <div class="ph-grow-item">
+        <span ng-show="!$ctrl.selected || $ctrl.selected.length === 0">Filter by journal</span>
+        <span ng-show="$ctrl.selected.length > 0">
+          Filtered by {{$ctrl.selected.length}} journals
+        </span>
+      </div>
+      <div><span class="caret"></span></div>
+    </div>
+  </button>
+  <ul class="dropdown-menu ph-dropdown-menu-full" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+    <li ng-repeat="item in $ctrl.items track by item.key" role="menuitem">
+      <a href title="{{item.key}}" ng-click="$ctrl.toggle($event, item)">
+        <div class="ph-grow-container">
+          <div class="ph-grow-item" ng-class="{'text-muted': $ctrl.selected.length > 0 && !item.selected}">
+            <i class="fa fa-fw" ng-class="{'fa-check': item.selected}"></i>
+            {{item.key}}
+          </div>
+          <div>
+            <span class="badge" ng-class="{'badge-primary': item.selected}">
+              {{item.countShort}}
+            </span>
+          </div>
+        </div>
+      </a>
+    </li>
+  </ul>
+</div>

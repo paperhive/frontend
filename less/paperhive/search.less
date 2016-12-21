@@ -1,6 +1,7 @@
 .ph-search-filters {
   box-shadow: @ph-shadow-inset-top, @ph-shadow-inset-bottom;
   background-color: white;
+  padding: (@grid-gutter-width / 2) 0;
 }
 
 .ph-search-chart-date {
@@ -26,5 +27,17 @@
       // gray out non-active slices if another is active
       opacity: 0.3;
     }
+  }
+}
+
+search-dropdown {
+  button {
+    width: 100%;
+  }
+  .dropdown-menu {
+    font-size: 14px;
+  }
+  .badge {
+    font-size: 12px;
   }
 }

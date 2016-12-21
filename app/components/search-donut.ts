@@ -41,14 +41,13 @@ export default function(app) {
       sliceElements: { [key: string]: JQuery; };
 
       static $inject = ['$scope'];
-      constructor(public $scope) {}
+      constructor(public $scope) {
+        $scope.$watchCollection('$ctrl.selected', this.updateSliceElements.bind(this));
+      }
 
       $onChanges(changes) {
         if (changes.facets && !equals(changes.facets.currentValue, changes.facets.previousValue)) {
           this.updateChartistData();
-        }
-        if (changes.selected) {
-          this.updateSliceElements();
         }
       }
 
