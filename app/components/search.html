@@ -37,6 +37,13 @@
           on-add="$ctrl.selectedJournals.push(key)"
           on-remove="$ctrl.selectedJournals.splice($ctrl.selectedJournals.indexOf(key), 1)"
         ></search-donut>
+        <a href class="small ph-link-icon"
+          ng-click="$ctrl.selectedJournals.splice(0, $ctrl.selectedJournals.length)"
+          ng-class="{'ph-hidden': !$ctrl.selectedJournals || $ctrl.selectedJournals.length === 0}"
+        >
+          <i class="fa fa-fw fa-times"></i>
+          Clear filter
+        </a>
         <search-dropdown
           facets="$ctrl.facets.journal"
           selected="$ctrl.selectedJournals"
