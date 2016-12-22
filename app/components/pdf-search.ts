@@ -1,4 +1,4 @@
-'use strict';
+import jquery from 'jquery';
 
 export default function(app) {
   app.component('pdfSearch', {
@@ -16,9 +16,24 @@ export default function(app) {
       onSearchMatchIndexUpdate: any;
       searchedStr: string;
 
-      static $inject = ['$scope'];
-      constructor(public $scope: any) {
+      onKeyDownBind: any;
+
+      static $inject = ['$element', '$scope', '$window'];
+      constructor(public $element, public $scope: any, public $window) {
         $scope.$watch('$ctrl.numberSearchResults', this.updateSearchResults.bind(this));
+        this.onKeyDownBind = this.onKeyDown.bind(this);
+        jquery($window).on('keydown', this.onKeyDownBind);
+      }
+
+      $onDestroy() {
+        jquery(this.$window).off('keydown', this.onKeyDownBind);
+      }
+
+      onKeyDown(event) {
+        if (event.ctrlKey && event.keyCode === 70) {
+          this.$element.find('input').focus();
+          event.preventDefault();
+        }
       }
 
       updateSearchResults() {
