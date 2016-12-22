@@ -14,6 +14,7 @@ export default function(app) {
       numberSearchResults: number;
       onSearchSubmit: any;
       onSearchMatchIndexUpdate: any;
+      searchedStr: string;
 
       static $inject = ['$scope'];
       constructor(public $scope: any) {
@@ -31,7 +32,12 @@ export default function(app) {
       }
 
       submit(str) {
-        this.onSearchSubmit({searchStr: str});
+        if (str === this.searchedStr && this.numberSearchResults > 0) {
+          this.nextResult();
+        } else {
+          this.onSearchSubmit({searchStr: str});
+        }
+        this.searchedStr = str;
       }
 
       nextResult() {
