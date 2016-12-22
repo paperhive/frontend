@@ -22,13 +22,12 @@ export default function(app) {
 
       updateSearchResults() {
         if (this.numberSearchResults > 0) {
-          this.indexSearchResults = 1;
-          this.onSearchMatchIndexUpdate({indexSearchResults: 1});
+          this.indexSearchResults = 0;
         }
         if (this.numberSearchResults === 0) {
-          this.indexSearchResults = 0;
-          this.onSearchMatchIndexUpdate({indexSearchResults: 0});
+          this.indexSearchResults = undefined;
         }
+        this.onSearchMatchIndexUpdate({indexSearchResults: this.indexSearchResults});
       }
 
       submit(str) {
@@ -36,25 +35,21 @@ export default function(app) {
       }
 
       nextResult() {
-        if (this.indexSearchResults !== this.numberSearchResults) {
+        if (this.indexSearchResults < this.numberSearchResults - 1) {
           this.indexSearchResults++;
-          this.onSearchMatchIndexUpdate({indexSearchResults: this.indexSearchResults});
         } else {
-          this.indexSearchResults = 1;
-          this.onSearchMatchIndexUpdate({indexSearchResults: this.indexSearchResults});
+          this.indexSearchResults = 0;
         }
-        // TODO scroll to result
+        this.onSearchMatchIndexUpdate({indexSearchResults: this.indexSearchResults});
       }
 
       previousResult() {
-        if (this.indexSearchResults !== 1) {
+        if (this.indexSearchResults > 0) {
           this.indexSearchResults--;
-          this.onSearchMatchIndexUpdate({indexSearchResults: this.indexSearchResults});
         } else {
-          this.indexSearchResults = this.numberSearchResults;
-          this.onSearchMatchIndexUpdate({indexSearchResults: this.indexSearchResults});
+          this.indexSearchResults = this.numberSearchResults - 1;
         }
-        // TODO scroll to result
+        this.onSearchMatchIndexUpdate({indexSearchResults: this.indexSearchResults});
       }
 
       removeSearch() {

@@ -1100,8 +1100,8 @@ export default function(app) {
       }
 
       async scrollToSearchMatchIndex(searchMatchIndex: number) {
-        if (searchMatchIndex) {
-          const match = this.scope.searchRanges[searchMatchIndex - 1];
+        if (searchMatchIndex >= 0) {
+          const match = this.scope.searchRanges[searchMatchIndex];
           const transformedMatch = backTransformRange(match, this.textTransformations);
           const page = this.pages[transformedMatch[0].transformation.pageNumber - 1];
           const top = page.getMatchTop(transformedMatch[0]);

@@ -49,7 +49,7 @@
 
     <span class="ph-input-item" ng-show="$ctrl.numberSearchResults >= 0">
       <span style="font-family: FontAwesome, Roboto; font-size: 11px; color: gray;">
-        {{$ctrl.indexSearchResults}} of {{$ctrl.numberSearchResults}}
+        {{$ctrl.indexSearchResults === undefined ? 0 : $ctrl.indexSearchResults + 1}} of {{$ctrl.numberSearchResults}}
       </span>
     </span>
 
