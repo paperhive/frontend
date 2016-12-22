@@ -13,6 +13,7 @@ export default function(app) {
       large: boolean;
       numberSearchResults: number;
       onSearchSubmit: any;
+      onSearchMatchIndexUpdate: any;
 
       static $inject = ['$scope'];
       constructor(public $scope: any) {

@@ -588,6 +588,15 @@ export default function(app) {
         this.initializedRenderers = false;
       }
 
+      getMatchTop(match) {
+        const transformedMatch = backTransformRange(match, this.textSnippetTransformations);
+        const textObject = transformedMatch[0].transformation.textObject;
+        const tx = textObject.transform;
+        const fontHeight = Math.sqrt(tx[2] * tx[2] + tx[3] * tx[3]);
+        const y = (tx[1] * textObject.width + tx[3] * textObject.height) / fontHeight + tx[5];
+        return 1 - y / this.pageSize.height;
+      }
+
       setSearchMatches(matches) {
         this.searchMatches = matches;
         this.updateSearchHighlights();
@@ -1092,7 +1101,17 @@ export default function(app) {
 
       async scrollToSearchMatchIndex(searchMatchIndex: number) {
         if (searchMatchIndex) {
-          console.log('new index', searchMatchIndex)
+          const match = this.scope.searchRanges[searchMatchIndex - 1];
+          const transformedMatch = backTransformRange(match, this.textTransformations);
+          const page = this.pages[transformedMatch[0].transformation.pageNumber - 1];
+          const top = page.getMatchTop(transformedMatch[0]);
+          // scroll to page
+          scroll.scrollTo(
+            this.element.offset().top +
+            page.element[0].offsetTop +
+            top * page.height,
+            {offset: (this.scope.viewportOffsetTop || 0) + 130},
+          );
         }
       }
 
