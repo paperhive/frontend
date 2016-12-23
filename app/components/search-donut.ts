@@ -26,6 +26,14 @@ export default function(app) {
           if (event.type === 'slice') {
             const el = jquery(event.element._node);
             el.on('click', () => this.onSliceClick(el, event.meta));
+            el.on('mouseenter', () => this.$scope.$apply(() => {
+              this.tooltipShow = true;
+              this.tooltipKey = event.meta;
+              this.tooltipValue = getShortInteger(event.value);
+            }));
+            el.on('mouseleave', () => this.$scope.$apply(
+              () => this.tooltipShow = false,
+            ));
             this.sliceElements[event.meta] = el;
             this.updateSliceElement(event.meta);
           }
@@ -36,13 +44,19 @@ export default function(app) {
       selected: string[];
       onAdd: (o: {key: string}) => Promise<void>;
       onRemove: (o: {key: string}) => Promise<void>;
+      tooltipElement: JQuery;
+      tooltipShow = false;
+      tooltipKey: string;
+      tooltipValue: string;
 
       chartistData: any;
       sliceElements: { [key: string]: JQuery; };
 
-      static $inject = ['$scope'];
-      constructor(public $scope) {
+      static $inject = ['$element', '$scope'];
+      constructor(public $element, public $scope) {
         $scope.$watchCollection('$ctrl.selected', this.updateSliceElements.bind(this));
+        this.tooltipElement = $element.find('> .tooltip');
+        $element.on('mousemove', this.onMouseMove.bind(this));
       }
 
       $onChanges(changes) {
@@ -76,6 +90,15 @@ export default function(app) {
         } else {
           el.removeClass('ph-search-donut-slice-active');
         }
+      }
+
+      onMouseMove(event) {
+        const height = this.tooltipElement.outerHeight();
+        const width = this.tooltipElement.outerWidth();
+        this.tooltipElement.css({
+          top: event.offsetY - height + 'px',
+          left: event.offsetX - Math.floor(width / 2) + 'px',
+        });
       }
 
       onSliceClick(el: JQuery, key: string) {

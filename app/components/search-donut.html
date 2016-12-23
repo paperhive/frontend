@@ -5,3 +5,14 @@
   chartist-chart-type="Pie"
   chartist-events="$ctrl.chartistEvents"
 ></chartist>
+<div class="tooltip top" role="tooltip"
+  ng-class="{in: $ctrl.tooltipShow}"
+>
+  <div class="tooltip-arrow"></div>
+  <div class="tooltip-inner">
+    <div class="ph-grow-container">
+      <div class="ph-grow-item">{{$ctrl.tooltipKey}}</div>
+      <div><span class="badge">{{$ctrl.tooltipValue}}</span></div>
+    </div>
+  </div>
+</div>

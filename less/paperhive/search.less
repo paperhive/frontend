@@ -14,6 +14,22 @@
   }
 }
 
+search-donut {
+  display: block;
+  position: relative;
+  > .tooltip {
+    // prevent weird flickering due to mouse events
+    pointer-events: none;
+    > .tooltip-inner {
+      // prevent line break
+      white-space: nowrap;
+      .badge {
+        margin-left: 0.25em;
+      }
+    }
+  }
+}
+
 .ph-search-donut {
   .ct-slice-donut {
     transition: stroke-width 0.3s ease, opacity 0.3s ease;
