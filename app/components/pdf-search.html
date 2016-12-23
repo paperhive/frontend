@@ -1,55 +1,34 @@
-<style>
-  .ph-link-input-item {
-    position: relative;
-    top: -30px;
-    float: right;
-    margin-right: 12px;
-    cursor: pointer;
-    text-decoration: none;
-    user-select: none;
-  }
-  .ph-input-item {
-    position: relative;
-    top: -30px;
-    float: right;
-    margin-right: 14px;
-  }
-  .ph-inactive-link {
-    pointer-events: none;
-    cursor: none;
-  }
-</style>
-
 <div ng-if="$ctrl.large" class="ph-sidenav-item">
   <div class="form-group">
-    <input type="text" class="form-control" placeholder="&#xf002;  Search in pdf"
-      ng-model="$ctrl.str" ng-keypress="$event.keyCode === 13 && $ctrl.submit($ctrl.str)"
-      style="padding-right: 80px; font-family: FontAwesome, Roboto; font-size: 14px;"
+    <input type="text" class="form-control ph-search-in-pdf-bar"
+      placeholder="&#xf002;  Search in pdf" ng-model="$ctrl.str"
+      ng-keypress="$event.keyCode === 13 && $ctrl.submit($ctrl.str)"
       autocomplete="off"
     >
-    <a class="ph-link-input-item" title="Close" ng-class="$ctrl.str ? '' : 'ph-inactive-link'"
-      ng-click="$ctrl.str = ''; $ctrl.removeSearch();"
+    <a class="ph-input-control" ng-class="$ctrl.str ? '' : 'ph-inactive-link'"
+      ng-click="$ctrl.str = ''; $ctrl.removeSearch();" title="Close"
     >
-      <i class="fa fa-times" style="font-size: 11px; color: gray;"></i>
+      <i class="fa fa-times ph-search-navigation"></i>
     </a>
-    <a class="ph-link-input-item" title="Next" ng-click="$ctrl.nextResult()"
+    <a class="ph-input-control" title="Next" ng-click="$ctrl.nextResult()"
       ng-class="($ctrl.numberSearchResults > 0) ? '' : 'ph-inactive-link'"
     >
-      <i class="fa fa-chevron-down" style="font-size: 11px; color: gray;"></i>
+      <i class="fa fa-chevron-down ph-search-navigation"></i>
     </a>
-    <a class="ph-link-input-item" title="Previous" ng-click="$ctrl.previousResult()"
+    <a class="ph-input-control" title="Previous" ng-click="$ctrl.previousResult()"
       ng-class="($ctrl.numberSearchResults > 0) ? '' : 'ph-inactive-link'"
     >
-      <i class="fa fa-chevron-up" style="font-size: 11px; color: gray;"></i>
+      <i class="fa fa-chevron-up ph-search-navigation"></i>
     </a>
 
     <span class="ph-input-item">
-      <span style="border-right: 1px solid gray;"></span>
+      <span class="ph-search-navigation-separator"></span>
     </span>
 
     <span class="ph-input-item" ng-show="$ctrl.numberSearchResults >= 0">
-      <span style="font-family: FontAwesome, Roboto; font-size: 11px; color: gray;">
-        {{$ctrl.indexSearchResults === undefined ? 0 : $ctrl.indexSearchResults + 1}} of {{$ctrl.numberSearchResults}}
+      <span class="ph-number-of-search-results">
+        {{$ctrl.indexSearchResults === undefined ? 0 : $ctrl.indexSearchResults + 1}}
+        of {{$ctrl.numberSearchResults}}
       </span>
     </span>
 
