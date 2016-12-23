@@ -27,13 +27,11 @@ export default function(app) {
             const el = jquery(event.element._node);
             el.on('click', () => this.onSliceClick(el, event.meta));
             el.on('mouseenter', () => this.$scope.$apply(() => {
-              this.tooltipShow = true;
+              this.tooltipElement.addClass('in');
               this.tooltipKey = event.meta;
               this.tooltipValue = getShortInteger(event.value);
             }));
-            el.on('mouseleave', () => this.$scope.$apply(
-              () => this.tooltipShow = false,
-            ));
+            el.on('mouseleave', () => this.tooltipElement.removeClass('in'));
             this.sliceElements[event.meta] = el;
             this.updateSliceElement(event.meta);
           }
@@ -45,7 +43,6 @@ export default function(app) {
       onAdd: (o: {key: string}) => Promise<void>;
       onRemove: (o: {key: string}) => Promise<void>;
       tooltipElement: JQuery;
-      tooltipShow = false;
       tooltipKey: string;
       tooltipValue: string;
 
