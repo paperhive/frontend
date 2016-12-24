@@ -1,0 +1,72 @@
+<div class="dropdown" uib-dropdown>
+  <button type="button" class="btn btn-sm btn-default" uib-dropdown-toggle>
+    <div class="ph-grow-container">
+      <div class="ph-grow-item">
+        Filter by publication date
+      </div>
+      <div><span class="caret"></span></div>
+    </div>
+  </button>
+  <ul class="dropdown-menu ph-dropdown-menu-full" uib-dropdown-menu role="menu" aria-labelledby="single-button" ng-click="$event.stopPropagation()">
+    <li ng-repeat="item in $ctrl.items track by item.id" role="menuitem">
+      <a href title="{{item.label}}" ng-click="$ctrl.selected = item.id">
+        <div class="ph-grow-container">
+          <div class="ph-grow-item">
+            <i class="fa fa-fw" ng-class="{'fa-check': $ctrl.selected === item.id}"></i>
+            {{item.label}}
+          </div>
+          <div>
+            <span class="badge" ng-class="{'badge-primary': $ctrl.selected === item.id}">
+              {{item.countShort}}
+            </span>
+          </div>
+        </div>
+      </a>
+    </li>
+    <li role="menuitem">
+      <a href title="Custom date range" ng-click="$ctrl.selected = 'custom'">
+        <div class="ph-flex">
+          <div><i class="fa fa-fw" ng-class="{'fa-check': $ctrl.selected === 'custom'}"></i>&nbsp;</div>
+          <div class="ph-flex-grow">
+            Custom date range
+            <form class="form-horizontal ph-sm-margin-top" uib-collapse="$ctrl.selected !== 'custom'">
+              <!-- from -->
+              <div class="form-group">
+                <span for="from" class="col-sm-4 control-label">From</span>
+                <div class="col-sm-8">
+                  <div class="input-group input-group-sm">
+                    <input type="text" class="form-control"
+                      ng-model="from"
+                      uib-datepicker-popup="yyyy-MM-dd"
+                      is-open="$ctrl.fromOpened"
+                      close-text="Close"
+                    >
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default" ng-click="$ctrl.fromOpened = !$ctrl.fromOpened">
+                        <i class="fa fa-fw fa-calendar"></i>
+                      </button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <!-- to -->
+              <div class="form-group">
+                <span for="from" class="col-sm-4 control-label">To</span>
+                <div class="col-sm-8">
+                  <div class="input-group input-group-sm">
+                    <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="to" is-open="$ctrl.toOpened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default" ng-click="$ctrl.toOpened = !$ctrl.toOpened">
+                        <i class="fa fa-fw fa-calendar"></i>
+                      </button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </a>
+    </li>
+  </ul>
+</div>

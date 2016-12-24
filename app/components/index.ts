@@ -68,6 +68,7 @@ import phFooter from './ph-footer';
 import publishers from './publishers';
 import search from './search';
 import searchDate from './search-date';
+import searchDateDropdown from './search-date-dropdown';
 import searchDonut from './search-donut';
 import searchDropdown from './search-dropdown';
 import settings from './settings';
@@ -154,6 +155,7 @@ export default function(app) {
   publishers(app);
   search(app);
   searchDate(app);
+  searchDateDropdown(app);
   searchDonut(app);
   searchDropdown(app);
   settings(app);
