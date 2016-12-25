@@ -1,4 +1,4 @@
-<div class="dropdown" uib-dropdown>
+<div class="dropdown" uib-dropdown auto-close="outsideClick">
   <button type="button" class="btn btn-sm btn-default" uib-dropdown-toggle>
     <div class="ph-grow-container">
       <div class="ph-grow-item">
@@ -13,7 +13,7 @@
   </button>
   <ul class="dropdown-menu ph-dropdown-menu-full" uib-dropdown-menu role="menu" aria-labelledby="single-button">
     <li ng-repeat="item in $ctrl.items track by item.key" role="menuitem">
-      <a href title="{{item.key}}" ng-click="$ctrl.toggle($event, item)">
+      <a href title="{{item.key}}" ng-click="$ctrl.toggle(item)">
         <div class="ph-grow-container">
           <div class="ph-grow-item" ng-class="{'text-muted': $ctrl.selected.length > 0 && !item.selected}">
             <i class="fa fa-fw" ng-class="{'fa-check': item.selected}"></i>

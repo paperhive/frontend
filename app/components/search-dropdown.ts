@@ -30,13 +30,12 @@ export default function(app) {
         }));
       }
 
-      toggle($event, item) {
+      toggle(item) {
         if (item.selected) {
           this.onRemove({key: item.key});
         } else {
           this.onAdd({key: item.key});
         }
-        $event.stopPropagation();
       }
     },
     template: require('./search-dropdown.html'),
