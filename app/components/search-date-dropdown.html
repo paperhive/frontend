@@ -1,13 +1,17 @@
-<div class="dropdown" uib-dropdown>
+<div class="dropdown" uib-dropdown auto-close="outsideClick">
   <button type="button" class="btn btn-sm btn-default" uib-dropdown-toggle>
     <div class="ph-grow-container">
-      <div class="ph-grow-item">
-        Filter by publication date
+      <div class="ph-grow-item" ng-switch="$ctrl.selected">
+        <span ng-switch-when="lastWeek">Filtered by last week</span>
+        <span ng-switch-when="lastMonth">Filtered by last month</span>
+        <span ng-switch-when="lastYear">Filtered by last year</span>
+        <span ng-switch-when="custom">Filtered by custom date range</span>
+        <span ng-switch-default>Filter by publication date</span>
       </div>
       <div><span class="caret"></span></div>
     </div>
   </button>
-  <ul class="dropdown-menu ph-dropdown-menu-full" uib-dropdown-menu role="menu" aria-labelledby="single-button" ng-click="$event.stopPropagation()">
+  <ul class="dropdown-menu ph-dropdown-menu-full" uib-dropdown-menu role="menu" aria-labelledby="single-button">
     <li ng-repeat="item in $ctrl.items track by item.id" role="menuitem">
       <a href title="{{item.label}}" ng-click="$ctrl.selected = item.id">
         <div class="ph-grow-container">
@@ -24,49 +28,59 @@
       </a>
     </li>
     <li role="menuitem">
-      <a href title="Custom date range" ng-click="$ctrl.selected = 'custom'">
+      <div class="ph-dropdown-item" ng-click="$ctrl.selected = 'custom'">
         <div class="ph-flex">
           <div><i class="fa fa-fw" ng-class="{'fa-check': $ctrl.selected === 'custom'}"></i>&nbsp;</div>
           <div class="ph-flex-grow">
             Custom date range
-            <form class="form-horizontal ph-sm-margin-top" uib-collapse="$ctrl.selected !== 'custom'">
+            <form class="form-horizontal ph-sm-margin-top"
+              uib-collapse="$ctrl.selected !== 'custom'"
+              novalidate
+            >
               <!-- from -->
               <div class="form-group">
                 <span for="from" class="col-sm-4 control-label">From</span>
                 <div class="col-sm-8">
-                  <div class="input-group input-group-sm">
-                    <input type="text" class="form-control"
+                  <div class="ph-input-has-icon ph-input-has-icon-left">
+                    <input type="text" class="form-control input-sm" name="from"
                       ng-model="from"
                       uib-datepicker-popup="yyyy-MM-dd"
                       is-open="$ctrl.fromOpened"
+                      on-open-focus="false"
+                      close-on-date-selection="false"
                       close-text="Close"
+                      popup-placement="auto right-top"
+                      ng-focus="$ctrl.fromOpened = true; $ctrl.toOpened = false"
+                      ng-click="$ctrl.fromOpened = true; $ctrl.toOpened = false"
                     >
-                    <span class="input-group-btn">
-                      <button type="button" class="btn btn-default" ng-click="$ctrl.fromOpened = !$ctrl.fromOpened">
-                        <i class="fa fa-fw fa-calendar"></i>
-                      </button>
-                    </span>
+                    <i class="ph-input-icon ph-input-icon-left fa fa-calendar"></i>
                   </div>
                 </div>
               </div>
               <!-- to -->
               <div class="form-group">
-                <span for="from" class="col-sm-4 control-label">To</span>
+                <span for="to" class="col-sm-4 control-label">To</span>
                 <div class="col-sm-8">
-                  <div class="input-group input-group-sm">
-                    <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="to" is-open="$ctrl.toOpened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
-                    <span class="input-group-btn">
-                      <button type="button" class="btn btn-default" ng-click="$ctrl.toOpened = !$ctrl.toOpened">
-                        <i class="fa fa-fw fa-calendar"></i>
-                      </button>
-                    </span>
+                  <div class="ph-input-has-icon ph-input-has-icon-left">
+                    <input type="text" class="form-control input-sm" name="to"
+                      ng-model="to"
+                      uib-datepicker-popup="yyyy-MM-dd"
+                      is-open="$ctrl.toOpened"
+                      on-open-focus="false"
+                      close-on-date-selection="false"
+                      close-text="Close"
+                      popup-placement="auto right-top"
+                      ng-focus="$ctrl.fromOpened = false; $ctrl.toOpened = true"
+                      ng-click="$ctrl.fromOpened = false; $ctrl.toOpened = true"
+                    >
+                    <i class="ph-input-icon ph-input-icon-left fa fa-calendar"></i>
                   </div>
                 </div>
               </div>
             </form>
           </div>
         </div>
-      </a>
+      </div>
     </li>
   </ul>
 </div>
