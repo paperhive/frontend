@@ -57,3 +57,19 @@ search-date-dropdown, search-dropdown {
     font-size: 12px;
   }
 }
+
+// add margin for datepicker popup placement
+.ph-search-date-input {
+  div[uib-datepicker-popup-wrap] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: 5px;
+    pointer-events: none;
+    > * {
+      pointer-events: all;
+    }
+  }
+}
