@@ -8,6 +8,7 @@ import { getShortInteger } from '../utils/index';
 export default function(app) {
   app.component('searchDropdown', {
     bindings: {
+      description: '@',
       facets: '<',
       selected: '<',
       onAdd: '&',
@@ -21,13 +22,13 @@ export default function(app) {
 
       items: Array<{key: string, count: number, selected: boolean}>;
 
+      static $inject = ['$scope'];
+      constructor($scope) {
+        $scope.$watchCollection('$ctrl.selected', this.updateItems.bind(this));
+      }
+
       $onChanges() {
-        this.items = map(this.facets, (count, key) => ({
-          key,
-          count,
-          countShort: getShortInteger(count),
-          selected: this.selected && this.selected.indexOf(key) !== -1,
-        }));
+        this.updateItems();
       }
 
       toggle(item) {
@@ -36,6 +37,15 @@ export default function(app) {
         } else {
           this.onAdd({key: item.key});
         }
+      }
+
+      updateItems() {
+        this.items = map(this.facets, (count, key) => ({
+          key,
+          count,
+          countShort: getShortInteger(count),
+          selected: this.selected && this.selected.indexOf(key) !== -1,
+        }));
       }
     },
     template: require('./search-dropdown.html'),

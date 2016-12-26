@@ -2,10 +2,10 @@
   <button type="button" class="btn btn-sm btn-default" uib-dropdown-toggle>
     <div class="ph-grow-container">
       <div class="ph-grow-item">
-        <span ng-show="!$ctrl.selected || $ctrl.selected.length === 0">Filter by journal</span>
+        <span ng-show="!$ctrl.selected.length">{{$ctrl.description}}</span>
         <span ng-show="$ctrl.selected.length > 0">
           Filtered by {{$ctrl.selected.length}}
-          {{$ctrl.selected.length === 1 ? 'journal' : 'journals'}}
+          {{$ctrl.selected.length === 1 ? 'item' : 'items'}}
         </span>
       </div>
       <div><span class="caret"></span></div>
