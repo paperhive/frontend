@@ -1,5 +1,52 @@
 import { copy } from 'angular';
-import { isArray, isEqual } from 'lodash';
+import { clone, isArray, isEqual } from 'lodash';
+
+class DateFilter {
+  mode: string;
+  customFrom: Date;
+  customTo: Date;
+}
+
+// André: subclassing Array is still a pain in the ass in JS
+//        -> use items property
+class FilterArray {
+  items = [];
+
+  add(item) {
+    if (this.items.indexOf(item) !== -1) return;
+    this.items.push(item);
+  }
+
+  isEmpty() {
+    return this.items.length === 0;
+  }
+
+  remove(item) {
+    this.items.splice(this.items.indexOf(item), 1);
+  }
+
+  replace(items) {
+    this.reset();
+    items.forEach(item => this.items.push(item));
+  }
+
+  reset() {
+    this.items.splice(0, this.items.length);
+  }
+
+  setFromQuery(val) {
+    let array = val || [];
+    // if param is just a single value (i.e. parameter is provided once) then
+    // we need to turn the string into an array
+    if (!isArray(array)) {
+      array = [array];
+    }
+    array = clone(array).sort();
+    if (isEqual(array, this.items)) return;
+
+    this.replace(array);
+  }
+}
 
 export default function(app) {
   app.component('search', {
@@ -10,7 +57,12 @@ export default function(app) {
       queryModel: string;
 
       facets = {};
-      selectedJournals: string[] = [];
+      filters = {
+        access: new FilterArray(),
+        date: new DateFilter(),
+        documentType: new FilterArray(),
+        journal: new FilterArray(),
+      };
       resultsTotal: number;
       results: any[];
       total: number;
@@ -30,10 +82,10 @@ export default function(app) {
           (newVals, oldVals) => newVals !== oldVals && this.updateResults(),
         );
 
-        $scope.$watchCollection(
-          '$ctrl.selectedJournals',
+        ['access', 'documentType', 'journal'].forEach(filter => $scope.$watchCollection(
+          `$ctrl.filters.${filter}.items`,
           (newVals, oldVals) => newVals !== oldVals && this.updateResults(),
-        );
+        ));
 
         this.updateResults();
         this.updateTotal();
@@ -53,16 +105,9 @@ export default function(app) {
         this.query = search.query;
         this.page = search.page || 1;
 
-        let journals = search.journals || [];
-        // if journals is provided once then we need to turn the
-        // string into an array
-        if (!isArray(journals)) {
-          journals = [journals];
-        }
-        journals.sort();
-        if (!isEqual(this.selectedJournals, journals)) {
-          this.selectedJournals = journals;
-        }
+        this.filters.access.setFromQuery(search.access);
+        this.filters.documentType.setFromQuery(search.documentType);
+        this.filters.journal.setFromQuery(search.journal);
 
         this.queryModel = this.query;
       }
@@ -72,7 +117,9 @@ export default function(app) {
         this.$location.search({
           query: this.query,
           page: this.page > 1 ? this.page : undefined,
-          journals: this.selectedJournals,
+          access: this.filters.access.items,
+          documentType: this.filters.documentType.items,
+          journal: this.filters.journal.items,
         });
       }
 

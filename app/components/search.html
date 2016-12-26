@@ -42,29 +42,70 @@
         <h5>Journal</h5>
         <search-donut
           facets="$ctrl.facets.journal"
-          selected="$ctrl.selectedJournals"
-          on-add="$ctrl.selectedJournals.push(key)"
-          on-remove="$ctrl.selectedJournals.splice($ctrl.selectedJournals.indexOf(key), 1)"
+          selected="$ctrl.filters.journal.items"
+          on-add="$ctrl.filters.journal.add(key)"
+          on-remove="$ctrl.filters.journal.remove(key)"
         ></search-donut>
         <a href class="small ph-link-icon"
-          ng-click="$ctrl.selectedJournals.splice(0, $ctrl.selectedJournals.length)"
-          ng-class="{'ph-hidden': !$ctrl.selectedJournals || $ctrl.selectedJournals.length === 0}"
+          ng-click="$ctrl.filters.journal.reset()"
+          ng-class="{'ph-hidden': $ctrl.filters.journal.isEmpty()}"
         >
           <i class="fa fa-fw fa-times"></i>
           Clear filter
         </a>
         <search-dropdown
+          description="Filter by journal"
           facets="$ctrl.facets.journal"
-          selected="$ctrl.selectedJournals"
-          on-add="$ctrl.selectedJournals.push(key)"
-          on-remove="$ctrl.selectedJournals.splice($ctrl.selectedJournals.indexOf(key), 1)"
+          selected="$ctrl.filters.journal.items"
+          on-add="$ctrl.filters.journal.add(key)"
+          on-remove="$ctrl.filters.journal.remove(key)"
         ></search-dropdown>
       </div>
       <div class="col-md-3 text-center">
         <h5>Access</h5>
+        <search-donut
+          facets="$ctrl.facets.isOpenAccess"
+          selected="$ctrl.filters.access.items"
+          on-add="$ctrl.filters.access.add(key)"
+          on-remove="$ctrl.filters.access.remove(key)"
+        ></search-donut>
+        <a href class="small ph-link-icon"
+          ng-click="$ctrl.filters.access.reset()"
+          ng-class="{'ph-hidden': $ctrl.filters.access.isEmpty()}"
+        >
+          <i class="fa fa-fw fa-times"></i>
+          Clear filter
+        </a>
+        <search-dropdown
+          description="Filter by access"
+          facets="$ctrl.facets.isOpenAccess"
+          selected="$ctrl.filters.access.items"
+          on-add="$ctrl.filters.access.add(key)"
+          on-remove="$ctrl.filters.access.remove(key)"
+        ></search-dropdown>
       </div>
       <div class="col-md-3 text-center">
         <h5>Document type</h5>
+        <search-donut
+          facets="$ctrl.facets.documentType"
+          selected="$ctrl.filters.documentType.items"
+          on-add="$ctrl.filters.documentType.add(key)"
+          on-remove="$ctrl.filters.documentType.remove(key)"
+        ></search-donut>
+        <a href class="small ph-link-icon"
+          ng-click="$ctrl.filters.documentType.reset()"
+          ng-class="{'ph-hidden': $ctrl.filters.documentType.isEmpty()}"
+        >
+          <i class="fa fa-fw fa-times"></i>
+          Clear filter
+        </a>
+        <search-dropdown
+          description="Filter by document type"
+          facets="$ctrl.facets.documentType"
+          selected="$ctrl.filters.documentType.items"
+          on-add="$ctrl.filters.documentType.add(key)"
+          on-remove="$ctrl.filters.documentType.remove(key)"
+        ></search-dropdown>
       </div>
     </div>
   </div>
