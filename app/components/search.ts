@@ -2,9 +2,10 @@ import { copy } from 'angular';
 import { clone, isArray, isEqual } from 'lodash';
 
 class DateFilter {
+  data: {}
   mode: string;
-  customFrom: Date;
-  customTo: Date;
+  from: Date;
+  to: Date;
 }
 
 // André: subclassing Array is still a pain in the ass in JS
@@ -143,7 +144,8 @@ export default function(app) {
           response => {
             this.resultsTotal = response.data.total;
             this.results = response.data.documents;
-            this.facets = response.data.facets;
+            // this.facets = response.data.facets;
+            this.facets = require('./search-facets.json');
           },
           response => this.notificationService.notifications.push({
             type: 'error',

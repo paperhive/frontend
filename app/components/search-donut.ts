@@ -5,6 +5,13 @@ import { forEach, map } from 'lodash';
 
 import { getShortInteger } from '../utils/index';
 
+// todo: common interface
+interface IFacet {
+  key: string;
+  value: number;
+  label: string;
+}
+
 export default function(app) {
   app.component('searchDonut', {
     bindings: {
@@ -28,22 +35,22 @@ export default function(app) {
             el.on('click', () => this.onSliceClick(el, event.meta));
             el.on('mouseenter', () => this.$scope.$apply(() => {
               this.tooltipElement.addClass('in');
-              this.tooltipKey = event.meta;
+              this.tooltipLabel = event.meta.label;
               this.tooltipValue = getShortInteger(event.value);
             }));
             el.on('mouseleave', () => this.tooltipElement.removeClass('in'));
-            this.sliceElements[event.meta] = el;
-            this.updateSliceElement(event.meta);
+            this.sliceElements[event.meta.key] = el;
+            this.updateSliceElement(event.meta.key);
           }
         },
       };
 
-      facets: { [key: string]: number; };
+      facets: IFacet[];
       selected: string[];
       onAdd: (o: {key: string}) => Promise<void>;
       onRemove: (o: {key: string}) => Promise<void>;
       tooltipElement: JQuery;
-      tooltipKey: string;
+      tooltipLabel: string;
       tooltipValue: string;
 
       chartistData: any;
@@ -68,9 +75,9 @@ export default function(app) {
         if (!this.facets) return;
 
         this.chartistData = {
-          series: map(this.facets, (count, key) => ({
-            value: count,
-            meta: key,
+          series: this.facets.map(facet => ({
+            value: facet.value,
+            meta: facet,
           })),
         };
       }
@@ -98,14 +105,14 @@ export default function(app) {
         });
       }
 
-      onSliceClick(el: JQuery, key: string) {
+      onSliceClick(el: JQuery, meta: any) {
         this.$scope.$apply(() => {
-          if (this.selected.indexOf(key) === -1) {
+          if (this.selected.indexOf(meta.key) === -1) {
             el.addClass('ph-search-donut-slice-active');
-            this.onAdd({key});
+            this.onAdd({key: meta.key});
           } else {
             el.removeClass('ph-search-donut-slice-active');
-            this.onRemove({key});
+            this.onRemove({key: meta.key});
           }
         });
       }

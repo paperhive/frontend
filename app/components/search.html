@@ -28,15 +28,19 @@
     <div class="row">
       <div class="col-md-3 text-center">
         <h5>Publication date</h5>
-        <search-date facet="$ctrl.facets.publishedByYear"></search-date>
+        <search-date facet="$ctrl.facets.publishedAt.byYear"></search-date>
         <a href class="small ph-link-icon"
-          ng-click="$ctrl.resetDateFilter()"
-          ng-class="{'ph-hidden': !$ctrl.dateFilter}"
+          ng-click="$ctrl.filters.publishedAt = undefined"
+          ng-class="{'ph-hidden': !$ctrl.filters.publishedAt}"
         >
           <i class="fa fa-fw fa-times"></i>
           Clear filter
         </a>
-        <search-date-dropdown></search-date-dropdown>
+        <search-date-dropdown
+          facet="$ctrl.facets.publishedAt"
+          selected="$ctrl.filters.publishedAt"
+          on-select="$ctrl.filters.publishedAt = filter"
+        ></search-date-dropdown>
       </div>
       <div class="col-md-3 text-center">
         <h5>Journal</h5>
@@ -64,7 +68,7 @@
       <div class="col-md-3 text-center">
         <h5>Access</h5>
         <search-donut
-          facets="$ctrl.facets.isOpenAccess"
+          facets="$ctrl.facets.access"
           selected="$ctrl.filters.access.items"
           on-add="$ctrl.filters.access.add(key)"
           on-remove="$ctrl.filters.access.remove(key)"
@@ -78,7 +82,7 @@
         </a>
         <search-dropdown
           description="Filter by access"
-          facets="$ctrl.facets.isOpenAccess"
+          facets="$ctrl.facets.access"
           selected="$ctrl.filters.access.items"
           on-add="$ctrl.filters.access.add(key)"
           on-remove="$ctrl.filters.access.remove(key)"

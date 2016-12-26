@@ -5,6 +5,13 @@ import { forEach, map } from 'lodash';
 
 import { getShortInteger } from '../utils/index';
 
+// todo: common interface
+interface IFacet {
+  key: string;
+  value: number;
+  label: string;
+}
+
 export default function(app) {
   app.component('searchDropdown', {
     bindings: {
@@ -15,12 +22,12 @@ export default function(app) {
       onRemove: '&',
     },
     controller: class SearchDropdownCtrl {
-      facets: { [key: string]: number; };
+      facets: IFacet[];
       selected: string[];
       onAdd: (o: {key: string}) => Promise<void>;
       onRemove: (o: {key: string}) => Promise<void>;
 
-      items: Array<{key: string, count: number, selected: boolean}>;
+      items: Array<{key: string, value: number, valueShort: number, label: string, selected: boolean}>;
 
       static $inject = ['$scope'];
       constructor($scope) {
@@ -40,11 +47,12 @@ export default function(app) {
       }
 
       updateItems() {
-        this.items = map(this.facets, (count, key) => ({
-          key,
-          count,
-          countShort: getShortInteger(count),
-          selected: this.selected && this.selected.indexOf(key) !== -1,
+        this.items = this.facets && this.facets.map(facet => ({
+          key: facet.key,
+          value: facet.value,
+          valueShort: getShortInteger(facet.value),
+          label: facet.label,
+          selected: this.selected && this.selected.indexOf(facet.key) !== -1,
         }));
       }
     },
