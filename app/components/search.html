@@ -30,16 +30,16 @@
         <h5>Publication date</h5>
         <search-date facet="$ctrl.facets.publishedAt.byYear"></search-date>
         <a href class="small ph-link-icon"
-          ng-click="$ctrl.filters.publishedAt = undefined"
-          ng-class="{'ph-hidden': !$ctrl.filters.publishedAt}"
+          ng-click="$ctrl.filters.publishedAt.set()"
+          ng-class="{'ph-hidden': !$ctrl.filters.publishedAt.mode}"
         >
           <i class="fa fa-fw fa-times"></i>
           Clear filter
         </a>
         <search-date-dropdown
-          facet="$ctrl.facets.publishedAt"
-          selected="$ctrl.filters.publishedAt"
-          on-select="$ctrl.filters.publishedAt = filter"
+          facets="$ctrl.facets.publishedAt"
+          filter="$ctrl.filters.publishedAt"
+          on-filter-update="$ctrl.filters.publishedAt.set(mode, from, to)"
         ></search-date-dropdown>
       </div>
       <div class="col-md-3 text-center">

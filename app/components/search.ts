@@ -2,10 +2,15 @@ import { copy } from 'angular';
 import { clone, isArray, isEqual } from 'lodash';
 
 class DateFilter {
-  data: {}
   mode: string;
   from: Date;
   to: Date;
+
+  set(mode, from, to) {
+    this.mode = mode;
+    this.from = from && new Date(from);
+    this.to = to && new Date(to);
+  }
 }
 
 // André: subclassing Array is still a pain in the ass in JS
@@ -60,9 +65,9 @@ export default function(app) {
       facets = {};
       filters = {
         access: new FilterArray(),
-        date: new DateFilter(),
         documentType: new FilterArray(),
         journal: new FilterArray(),
+        publishedAt: new DateFilter(),
       };
       resultsTotal: number;
       results: any[];
@@ -87,6 +92,10 @@ export default function(app) {
           `$ctrl.filters.${filter}.items`,
           (newVals, oldVals) => newVals !== oldVals && this.updateResults(),
         ));
+        $scope.$watchGroup(
+          ['mode', 'from', 'to'].map(key => `$ctrl.filters.publishedAt.${key}`),
+          (newVals, oldVals) => newVals !== oldVals && this.updateResults(),
+        );
 
         this.updateResults();
         this.updateTotal();
@@ -109,6 +118,7 @@ export default function(app) {
         this.filters.access.setFromQuery(search.access);
         this.filters.documentType.setFromQuery(search.documentType);
         this.filters.journal.setFromQuery(search.journal);
+        this.filters.publishedAt.set(search.publishedAtMode, search.publishedAtFrom, search.publishedAtTo);
 
         this.queryModel = this.query;
       }
@@ -121,6 +131,9 @@ export default function(app) {
           access: this.filters.access.items,
           documentType: this.filters.documentType.items,
           journal: this.filters.journal.items,
+          publishedAtMode: this.filters.publishedAt.mode,
+          publishedAtFrom: this.filters.publishedAt.from && this.filters.publishedAt.from.toISOString(),
+          publishedAtTo: this.filters.publishedAt.to && this.filters.publishedAt.to.toISOString(),
         });
       }
 

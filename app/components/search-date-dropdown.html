@@ -1,40 +1,43 @@
 <div class="dropdown" uib-dropdown auto-close="outsideClick">
   <button type="button" class="btn btn-sm btn-default" uib-dropdown-toggle>
     <div class="ph-grow-container">
-      <div class="ph-grow-item" ng-switch="$ctrl.selected">
-        <span ng-switch-when="lastWeek">Filtered by last week</span>
-        <span ng-switch-when="lastMonth">Filtered by last month</span>
-        <span ng-switch-when="lastYear">Filtered by last year</span>
-        <span ng-switch-when="custom">Filtered by custom date range</span>
-        <span ng-switch-default>Filter by publication date</span>
+      <div class="ph-grow-item">
+        <span ng-if="$ctrl.filter.mode === undefined">Filter by publication date</span>
+        <span ng-if="$ctrl.filter.mode === 'lastWeek'">Filtered by last week</span>
+        <span ng-if="$ctrl.filter.mode === 'lastMonth'">Filtered by last month</span>
+        <span ng-if="$ctrl.filter.mode === 'lastYear'">Filtered by last year</span>
+        <span ng-if="$ctrl.filter.mode === 'custom'">Filtered by custom date range</span>
       </div>
       <div><span class="caret"></span></div>
     </div>
   </button>
   <ul class="dropdown-menu ph-dropdown-menu-full" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-    <li ng-repeat="item in $ctrl.items track by item.id" role="menuitem">
-      <a href title="{{item.label}}" ng-click="$ctrl.selected = item.id">
+    <li ng-repeat="item in $ctrl.items track by item.key" role="menuitem">
+      <a href title="{{item.label}}" ng-click="$ctrl.onFilterUpdate({mode: item.key})">
         <div class="ph-grow-container">
           <div class="ph-grow-item">
-            <i class="fa fa-fw" ng-class="{'fa-check': $ctrl.selected === item.id}"></i>
+            <i class="fa fa-fw" ng-class="{'fa-check': $ctrl.filter.mode === item.key}"></i>
             {{item.label}}
           </div>
           <div>
-            <span class="badge" ng-class="{'badge-primary': $ctrl.selected === item.id}">
-              {{item.countShort}}
+            <span class="badge"
+              ng-show="item.valueShort !== undefined"
+              ng-class="{'badge-primary': $ctrl.filter.mode === item.key}"
+            >
+              {{item.valueShort}}
             </span>
           </div>
         </div>
       </a>
     </li>
     <li role="menuitem">
-      <div class="ph-dropdown-item" ng-click="$ctrl.selected = 'custom'">
+      <div class="ph-dropdown-item" ng-click="$ctrl.filter.set('custom', $ctrl.from, $ctrl.to)">
         <div class="ph-flex">
-          <div><i class="fa fa-fw" ng-class="{'fa-check': $ctrl.selected === 'custom'}"></i>&nbsp;</div>
+          <div><i class="fa fa-fw" ng-class="{'fa-check': $ctrl.filter.mode === 'custom'}"></i>&nbsp;</div>
           <div class="ph-flex-grow">
             Custom date range
             <form class="form-horizontal ph-sm-margin-top"
-              uib-collapse="$ctrl.selected !== 'custom'"
+              uib-collapse="$ctrl.filter.mode !== 'custom'"
               novalidate
             >
               <!-- from -->
@@ -43,7 +46,7 @@
                 <div class="col-sm-8">
                   <div class="ph-input-has-icon ph-input-has-icon-left ph-search-date-input">
                     <input type="text" class="form-control input-sm" name="from"
-                      ng-model="from"
+                      ng-model="$ctrl.from"
                       uib-datepicker-popup="yyyy-MM-dd"
                       is-open="$ctrl.fromOpened"
                       on-open-focus="false"
@@ -63,7 +66,7 @@
                 <div class="col-sm-8">
                   <div class="ph-input-has-icon ph-input-has-icon-left ph-search-date-input">
                     <input type="text" class="form-control input-sm" name="to"
-                      ng-model="to"
+                      ng-model="$ctrl.to"
                       uib-datepicker-popup="yyyy-MM-dd"
                       is-open="$ctrl.toOpened"
                       on-open-focus="false"
