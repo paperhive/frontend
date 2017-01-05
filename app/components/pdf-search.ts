@@ -30,7 +30,8 @@ export default function(app) {
       }
 
       onKeyDown(event) {
-        if (event.ctrlKey && event.keyCode === 70) {
+        // check if `ctrl` or `cmd` on Mac is pressed
+        if ((event.ctrlKey || event.metaKey) && event.keyCode === 70) {
           this.$element.find('input').focus();
           event.preventDefault();
         }
