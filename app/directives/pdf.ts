@@ -448,6 +448,7 @@ export default function(app) {
               on-mouseleave="onHighlightMouseleave({highlight: highlight, pageNumber: pageNumber})"
             ></pdf-highlight>
             <pdf-highlight
+              class="ph-pdf-highlight-search"
               ng-repeat="highlight in searchHighlightsByPage[${this.pageNumber}]"
               highlight="highlight"
               emphasized="false"
