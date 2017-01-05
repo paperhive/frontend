@@ -392,7 +392,9 @@ export default function(app) {
       async getPageText() {
         this.textContent = await this.page.getTextContent();
         this.textSnippetTransformations = [];
-        this.textContent.items.forEach((item, index) => {
+        // filter whitespaces, see https://github.com/mozilla/pdf.js/blob/master/src/display/text_layer.js#L55
+        const items = this.textContent.items.filter(item => /\S/.test(item.str));
+        items.forEach((item, index) => {
           this.textSnippetTransformations.push(
             {original: item.str.length, transformed: item.str.length, textObject: item, index},
           );
@@ -404,7 +406,7 @@ export default function(app) {
         if (this.textSnippetTransformations.length > 0) {
           this.textSnippetTransformations.pop();
         }
-        return this.textContent.items.map(text => text.str).join(' ');
+        return items.map(text => text.str).join(' ');
       }
 
       async initPageSize(_width = undefined) {
