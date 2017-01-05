@@ -214,7 +214,7 @@ document-sidenav {
       position: relative;
       
       &.ph-sidenav-pages {
-        flex: 2;
+        flex: 3;
       }
       a {
         display: block;
@@ -226,27 +226,36 @@ document-sidenav {
           border-bottom: 2px solid @ph-base-color;
         }
       }
+      input {
+        text-align: center;
+        padding: @padding-base-vertical;
+        font-size: 80%;
+      }
     }
-  }
-  
+  }  
 }
-[class*="ph-sidenav-expand"] {
+.ph-sidenav-arrow { 
+  height: auto;
+  top: 0;
+  left: 50%;  
+  opacity: 0;
+  transition: opacity .6s ease;
+  z-index: 10000;
+}
+[class*="ph-sidenav-expand-"] {
   position: absolute;
   background: @ph-white;
   box-shadow: @ph-shadow; 
   width: 100%; 
   bottom: 100%; 
   left: 0;
-  &:before {
-    content: '';
-    position: absolute;
-    width: 0; 
-    height: 0; 
-    top: 100%;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;    
-    border-top: 5px solid @ph-white;
-  }
+  opacity: 0;
+  padding: @padding-base-horizontal;
+  transition: opacity .6s ease;  
+}
+.ph-sidenav-expanded {
+  opacity: 1;
+  transition: opacity .6s ease;
 }
 
 // override padding for kudos so the iframe can fill the entire panel body

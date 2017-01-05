@@ -26,6 +26,10 @@ export default function(app) {
         $scope.$watchCollection('$ctrl.activeRevision', this.updatePublisherLink.bind(this));
       }
 
+      docNavToggle(id) {
+        this.docNav = this.docNav === id ? undefined : id;
+      }
+
       getDoi() {
         if (!this.documentCtrl.revisions) return;
         for (const revision of this.documentCtrl.revisions) {
