@@ -1,31 +1,23 @@
 language: node_js
-node_js:
-  - iojs
+sudo: required
+services:
+  - docker
 before_script:
   - cp config.json.default config.json
-  - npm install -g bower
-  - npm install -g gulp
-  - npm install -g protractor
-  # Install (possibly from cache), update packages according to bower.json,
-  # and prune obsolete packages.
-  - bower update
-  - bower prune
-  # Ditto.
-  - npm update
-  - npm prune
+  - npm install
 script:
-  - gulp
-  - npm test
-  - gulp test
-sudo: false
-cache:
-  directories:
-    - node_modules
-    - bower_components
-env:
-  global:
-    - secure: htpFvFnIWQWt5OE/UempJalrnle2bP3mAv0ZTD/pi9pPWV8lgHcR9pINL6Pzu3udbMFPGiKVJR7iMxNrkhNR5Iw3o00O4DJZl238K1P4A6XRAF0itu2o7tQ+/8eT91oITwsoPj0xAtBIKlZ67nGk5efJGP89YGZTip1Jb7B0P6s=
-    - secure: kbgPNvbAPh7UyBFFMmRjFVn30Eq57MRNWdv4YmBYzGv04Fns7CHe6sscSWlOBvzjAhrht9XYBt56QMHe7b/dlimG0/UO+kyij1UYU1dYv54tynamnl0PEDkhuH/knewfFVFOy6KsVfw5FK7dTyGTD0YsL4wuiS91wYUo7l1uptw=
+  - npm run build
+after_success:
+  - docker build gcr.io/paperhive-c0ff33/frontend:$TRAVIS_COMMIT
+  #- npm test
+# cache:
+#   directories:
+#     - node_modules
+#     - bower_components
+# env:
+#   global:
+#     - secure: htpFvFnIWQWt5OE/UempJalrnle2bP3mAv0ZTD/pi9pPWV8lgHcR9pINL6Pzu3udbMFPGiKVJR7iMxNrkhNR5Iw3o00O4DJZl238K1P4A6XRAF0itu2o7tQ+/8eT91oITwsoPj0xAtBIKlZ67nGk5efJGP89YGZTip1Jb7B0P6s=
+#     - secure: kbgPNvbAPh7UyBFFMmRjFVn30Eq57MRNWdv4YmBYzGv04Fns7CHe6sscSWlOBvzjAhrht9XYBt56QMHe7b/dlimG0/UO+kyij1UYU1dYv54tynamnl0PEDkhuH/knewfFVFOy6KsVfw5FK7dTyGTD0YsL4wuiS91wYUo7l1uptw=
 
-addons:
-  sauce_connect: true
+# addons:
+#   sauce_connect: true
