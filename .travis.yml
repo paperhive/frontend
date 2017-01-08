@@ -4,10 +4,17 @@ node_js:
 sudo: required
 services:
   - docker
+addons:
+  sauce_connect:
+    username: paperhive
+  jwt:
+    secure: "j81HTjQenXBJTorpThKgTB2Sg64U6GM3Ytp5Y5oUeBMZJItvootdkAZD9qzVGZ3RPyRVr5C917CwQmjyincr7S2hv8flfEXNyWz0if2P5HHXuh3q3FUG3S0srQ9PDKLOmFioyasWksrH2XMz5XbQ2kFhNezjRS1UM2FYLgSPwqY="
+
 before_script:
   - cp config.json.default config.json
 script:
   - npm run build
+  - npm test
 after_success:
   - export DOCKER_IMAGE_NAME="gcr.io/paperhive-c0ff33/frontend:${TRAVIS_COMMIT:0:8}"
   - docker build -t ${DOCKER_IMAGE_NAME} .
@@ -19,15 +26,3 @@ after_success:
   - openssl aes-256-cbc -K $encrypted_90e3403db14e_key -iv $encrypted_90e3403db14e_iv -in gcloud-secret.json.enc -out gcloud-secret.json -d
   - gcloud auth activate-service-account --key-file gcloud-secret.json
   - gcloud docker -- push ${DOCKER_IMAGE_NAME}
-  #- npm test
-# cache:
-#   directories:
-#     - node_modules
-#     - bower_components
-# env:
-#   global:
-#     - secure: htpFvFnIWQWt5OE/UempJalrnle2bP3mAv0ZTD/pi9pPWV8lgHcR9pINL6Pzu3udbMFPGiKVJR7iMxNrkhNR5Iw3o00O4DJZl238K1P4A6XRAF0itu2o7tQ+/8eT91oITwsoPj0xAtBIKlZ67nGk5efJGP89YGZTip1Jb7B0P6s=
-#     - secure: kbgPNvbAPh7UyBFFMmRjFVn30Eq57MRNWdv4YmBYzGv04Fns7CHe6sscSWlOBvzjAhrht9XYBt56QMHe7b/dlimG0/UO+kyij1UYU1dYv54tynamnl0PEDkhuH/knewfFVFOy6KsVfw5FK7dTyGTD0YsL4wuiS91wYUo7l1uptw=
-
-# addons:
-#   sauce_connect: true
