@@ -15,7 +15,9 @@ after_success:
   - curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
   - sudo apt-get update && sudo apt-get install google-cloud-sdk
   - gcloud config set project paperhive-c0ff33
-
+  - openssl aes-256-cbc -K $encrypted_90e3403db14e_key -iv $encrypted_90e3403db14e_iv -in gcloud-secret.json.enc -out gcloud-secret.json -d
+  - gcloud auth activate-service-account --key-file gcloud-secret.json
+  - gcloud docker -- push gcr.io/paperhive-c0ff33/frontend:$TRAVIS_COMMIT
   #- npm test
 # cache:
 #   directories:
