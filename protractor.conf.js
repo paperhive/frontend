@@ -58,23 +58,30 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
   //  'build': process.env.TRAVIS_BUILD_NUMBER
   //},
   exports.config.multiCapabilities = [{
-    'browserName': 'chrome',
-    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'PaperHive (chrome)'
+    browserName: 'chrome',
+    version: '54.0',
+    platform: 'Windows 10',
+    name: 'PaperHive (chrome)',
   }, {
-    'browserName': 'firefox',
-    // http://stackoverflow.com/a/27645817/353337
-    'version': '33',
-    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'PaperHive (firefox)'
+    browserName: 'firefox',
+    version: '50.0',
+    platform: 'Windows 10',
+    name: 'PaperHive (firefox)'
   }, {
-    'browserName': 'safari',
-    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'PaperHive (safari)'
+    browserName: 'MicrosoftEdge',
+    version: '14.14393',
+    platform: 'Windows 10',
+    name: 'PaperHive (edge)',
+  }, {
+    browserName: 'safari',
+    version: '10.0',
+    platform: 'macOS 10.12',
+    name: 'PaperHive (safari)',
   }];
+  exports.config.multiCapabilities.forEach(capability => {
+    capability['tunnel-identifier'] = process.env.TRAVIS_JOB_NUMBER;
+    capability.build = process.env.TRAVIS_BUILD_NUMBER;
+  });
   exports.config.baseUrl = 'http://localhost:8080';
 } else {
   // Only test chrome locally
