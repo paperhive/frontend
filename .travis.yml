@@ -8,7 +8,13 @@ before_script:
 script:
   - npm run build
 after_success:
-  - docker build gcr.io/paperhive-c0ff33/frontend:$TRAVIS_COMMIT
+  - docker build gcr.io/paperhive-c0ff33/frontend:$TRAVIS_COMMIT .
+  - export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
+  - echo "deb https://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+  - curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+  - sudo apt-get update && sudo apt-get install google-cloud-sdk
+  - gcloud config set project paperhive-c0ff33
+
   #- npm test
 # cache:
 #   directories:
