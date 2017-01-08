@@ -1,28 +1,5 @@
-FROM node:6
-
-# init workspace
-RUN mkdir /paperhive-frontend
-WORKDIR /paperhive-frontend
-
-# env var fixes excessive npm log output
-# see https://github.com/nodejs/docker-node/issues/57
-ENV NPM_CONFIG_LOGLEVEL="warn"
-
-# let bower run as root
-# http://bower.io/docs/api/#allow-root
-ENV BOWER_ALLOW_ROOT="true"
-
-# grab phantomjs from CDN (instead of rate-limited bitbucket)
-#ENV PHANTOMJS_CDNURL="http://cnpmjs.org/downloads"
-
-# copy dependency definitions and install them (may be cached!)
-COPY package.json /paperhive-frontend/
-RUN npm install
-
-# copy and build src
-COPY . /paperhive-frontend
-RUN npm run lint
-RUN npm run build
-
-# test when launching container with this image
-CMD npm run test
+FROM nginx
+ENV PRERENDER_TOKEN missin_token
+COPY build /usr/share/nginx/html
+COPY docker-nginx.conf /etc/nginx/conf.d/default.conf.template
+CMD envsubst '\$PRERENDER_TOKEN' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'
