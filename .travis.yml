@@ -9,15 +9,16 @@ addons:
     username: paperhive
   jwt:
     secure: "j81HTjQenXBJTorpThKgTB2Sg64U6GM3Ytp5Y5oUeBMZJItvootdkAZD9qzVGZ3RPyRVr5C917CwQmjyincr7S2hv8flfEXNyWz0if2P5HHXuh3q3FUG3S0srQ9PDKLOmFioyasWksrH2XMz5XbQ2kFhNezjRS1UM2FYLgSPwqY="
-
 before_script:
   - cp config.json.default config.json
+  - export DOCKER_IMAGE_NAME="gcr.io/paperhive-c0ff33/frontend:${TRAVIS_COMMIT:0:8}"
 script:
   - npm run build
-  - npm test
-after_success:
-  - export DOCKER_IMAGE_NAME="gcr.io/paperhive-c0ff33/frontend:${TRAVIS_COMMIT:0:8}"
   - docker build -t ${DOCKER_IMAGE_NAME} .
+  - docker run -d --rm --name frontend -p 8080:80 ${DOCKER_IMAGE_NAME}
+  - npm test
+  - docker stop frontend
+after_success:
   - export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
   - echo "deb https://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
   - curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -

@@ -75,6 +75,7 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
     'build': process.env.TRAVIS_BUILD_NUMBER,
     'name': 'PaperHive (safari)'
   }];
+  exports.config.baseUrl = 'http://localhost:8080';
 } else {
   // Only test chrome locally
   exports.config.multiCapabilities = [{
