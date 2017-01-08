@@ -15,7 +15,7 @@ before_script:
 script:
   - npm run build
   - docker build -t ${DOCKER_IMAGE_NAME} .
-  - docker run -d --rm --name frontend -p 8080:80 ${DOCKER_IMAGE_NAME}
+  - docker run -d --name frontend -p 8080:80 ${DOCKER_IMAGE_NAME}
   - npm test
   - docker stop frontend
 after_success:
