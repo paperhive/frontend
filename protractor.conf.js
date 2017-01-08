@@ -69,7 +69,7 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
     name: 'PaperHive (firefox)'
   }, {
     browserName: 'MicrosoftEdge',
-    version: '14.14393',
+    version: '13',
     platform: 'Windows 10',
     name: 'PaperHive (edge)',
   }, {
@@ -77,12 +77,13 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
     // (not yet running on SauceLabs as of 2017-01-09)
     browserName: 'safari',
     version: '9.0',
-    platform: 'macOS 10.11',
+    platform: 'OS X 10.11',
     name: 'PaperHive (safari)',
   }];
   exports.config.multiCapabilities.forEach(capability => {
     capability['tunnel-identifier'] = process.env.TRAVIS_JOB_NUMBER;
     capability.build = process.env.TRAVIS_BUILD_NUMBER;
+    capability.screenResolution = '1280x960';
   });
   exports.config.baseUrl = 'http://localhost:8080';
 } else {
