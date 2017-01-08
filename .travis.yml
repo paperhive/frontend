@@ -6,7 +6,6 @@ services:
   - docker
 before_script:
   - cp config.json.default config.json
-  - npm install
 script:
   - npm run build
 after_success:
