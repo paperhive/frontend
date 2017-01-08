@@ -12,6 +12,36 @@ exports.config = {
   }
 };
 
+// https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
+const saucelabsCapabilities = [{
+  browserName: 'chrome',
+  version: '54',
+  platform: 'Windows 10',
+  name: 'PaperHive (chrome)',
+}, {
+  browserName: 'firefox',
+  version: '50',
+  platform: 'Windows 10',
+  name: 'PaperHive (firefox)'
+}, {
+  browserName: 'MicrosoftEdge',
+  version: '14',
+  platform: 'Windows 10',
+  name: 'PaperHive (edge)',
+}, {
+  // Note: Safari 10 requires Selenium 3
+  // (not yet running on SauceLabs as of 2017-01-09)
+  browserName: 'safari',
+  version: '9',
+  platform: 'OS X 10.11',
+  name: 'PaperHive (safari)',
+}];
+saucelabsCapabilities.forEach(capability => {
+  capability['tunnel-identifier'] = process.env.TRAVIS_JOB_NUMBER;
+  capability.build = process.env.TRAVIS_BUILD_NUMBER;
+  capability.screenResolution = '1280x960';
+});
+
 if (process.env.SAUCE_ONDEMAND_BROWSERS) {
   // jenkins
   // translate SAUCE_ONDEMAND_BROWSERS into a protractor-digestible list
@@ -57,34 +87,7 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
   //  'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
   //  'build': process.env.TRAVIS_BUILD_NUMBER
   //},
-  exports.config.multiCapabilities = [{
-    browserName: 'chrome',
-    version: '54.0',
-    platform: 'Windows 10',
-    name: 'PaperHive (chrome)',
-  }, {
-    browserName: 'firefox',
-    version: '50.0',
-    platform: 'Windows 10',
-    name: 'PaperHive (firefox)'
-  }, {
-    browserName: 'MicrosoftEdge',
-    version: '13',
-    platform: 'Windows 10',
-    name: 'PaperHive (edge)',
-  }, {
-    // Note: Safari 10 requires Selenium 3
-    // (not yet running on SauceLabs as of 2017-01-09)
-    browserName: 'safari',
-    version: '9.0',
-    platform: 'OS X 10.11',
-    name: 'PaperHive (safari)',
-  }];
-  exports.config.multiCapabilities.forEach(capability => {
-    capability['tunnel-identifier'] = process.env.TRAVIS_JOB_NUMBER;
-    capability.build = process.env.TRAVIS_BUILD_NUMBER;
-    capability.screenResolution = '1280x960';
-  });
+  exports.config.multiCapabilities = saucelabsCapabilities;
   exports.config.baseUrl = 'http://localhost:8080';
 } else {
   // Only test chrome locally
