@@ -73,5 +73,3 @@ directives(paperhive);
 filters(paperhive);
 services(paperhive);
 utils(paperhive);
-
-bootstrap(document, ['paperhive'], {strictDi: true});
