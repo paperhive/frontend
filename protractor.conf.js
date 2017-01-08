@@ -73,9 +73,11 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
     platform: 'Windows 10',
     name: 'PaperHive (edge)',
   }, {
+    // Note: Safari 10 requires Selenium 3
+    // (not yet running on SauceLabs as of 2017-01-09)
     browserName: 'safari',
-    version: '10.0',
-    platform: 'macOS 10.12',
+    version: '9.0',
+    platform: 'macOS 10.11',
     name: 'PaperHive (safari)',
   }];
   exports.config.multiCapabilities.forEach(capability => {
