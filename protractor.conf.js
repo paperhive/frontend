@@ -41,10 +41,10 @@ const saucelabsCapabilities = [{
   platform: 'Windows 10',
   name: 'PaperHive (ie)',
 }];
-console.log(process.env.TRAVIS_BUILD_NUMBER);
+// console.log(process.env.TRAVIS_BUILD_NUMBER);
 saucelabsCapabilities.forEach(capability => {
   capability['tunnel-identifier'] = process.env.TRAVIS_JOB_NUMBER;
-  capability.build = process.env.TRAVIS_BUILD_NUMBER;
+  // capability.build = process.env.TRAVIS_BUILD_NUMBER;
   capability.screenResolution = '1280x960';
 });
 
