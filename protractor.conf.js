@@ -44,7 +44,7 @@ const saucelabsCapabilities = [{
 saucelabsCapabilities.forEach(capability => {
   capability['tunnel-identifier'] = process.env.TRAVIS_JOB_NUMBER;
   capability.tags = ['frontend'];
-  if (process.env.TRAVIS_PULL_REQUEST === 'false' && process.env.TRAVIS_BRANCH === 'docker-nginx') {
+  if (process.env.TRAVIS_PULL_REQUEST === 'false' && process.env.TRAVIS_BRANCH === 'master') {
     capability.tags.push('master');
   }
   capability.screenResolution = '1280x960';
