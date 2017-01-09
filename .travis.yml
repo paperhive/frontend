@@ -10,19 +10,26 @@ addons:
   jwt:
     secure: "j81HTjQenXBJTorpThKgTB2Sg64U6GM3Ytp5Y5oUeBMZJItvootdkAZD9qzVGZ3RPyRVr5C917CwQmjyincr7S2hv8flfEXNyWz0if2P5HHXuh3q3FUG3S0srQ9PDKLOmFioyasWksrH2XMz5XbQ2kFhNezjRS1UM2FYLgSPwqY="
 before_script:
-  - cp config.json.default config.json
+  # gcloud repo
+  - export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
+  - echo "deb https://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+  - curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+  # install gcloud and jq
+  - sudo apt-get update && sudo apt-get install google-cloud-sdk jq
+  # configure frontend with placeholders (will be replaced in container)
+  - cat config.json.default | jq ". + {\"apiUrl\": \"PAPERHIVE_API_URL\", \"baseHref\": \"PAPERHIVE_BASE_HREF"}" > config.json
+  # give the docker image a name
   - export DOCKER_IMAGE_NAME="gcr.io/paperhive-c0ff33/frontend:${TRAVIS_COMMIT:0:8}"
 script:
   - npm run build
+  # build docker image
   - docker build -t ${DOCKER_IMAGE_NAME} .
+  # run docker container for e2e tests
   - docker run -d --name frontend -p 8080:80 ${DOCKER_IMAGE_NAME}
   - npm test
   - docker stop frontend
 after_success:
-  - export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
-  - echo "deb https://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-  - curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-  - sudo apt-get update && sudo apt-get install google-cloud-sdk
+  # upload docker image
   - gcloud config set project paperhive-c0ff33
   - openssl aes-256-cbc -K $encrypted_90e3403db14e_key -iv $encrypted_90e3403db14e_iv -in gcloud-secret.json.enc -out gcloud-secret.json -d
   - gcloud auth activate-service-account --key-file gcloud-secret.json
