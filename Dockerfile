@@ -1,5 +1,11 @@
 FROM nginx
-ENV PRERENDER_TOKEN missing_token
-COPY build /usr/share/nginx/html
-COPY docker-nginx.conf /etc/nginx/conf.d/default.conf.template
-CMD envsubst '\$PRERENDER_TOKEN' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'
+ENV \
+  PRERENDER_TOKEN="missing_token" \
+  PAPERHIVE_BASE_HREF="/" \
+  PAPERHIVE_API_URL="https://dev.paperhive.org/backend/master"
+COPY build /frontend/html
+COPY docker-start.sh /frontend/start.sh
+RUN chmod +x /frontend/start.sh
+COPY build/index.html /frontend/templates/index.html
+COPY docker-nginx.conf /frontend/templates/default.conf
+CMD ["/frontend/start.sh"]
