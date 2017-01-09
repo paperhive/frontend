@@ -2,9 +2,11 @@
 
 <html lang="en" ng-app="paperhive" ng-strict-di>
   <head>
-    <!-- base href is the entry point of the deployed app -->
-    <base href="<%= htmlWebpackPlugin.options.config.baseHref %>">
-    <title data-ng-bind="metaService.data.title"></title>
+    <!-- runtime config (overwritten by docker start script) -->
+    <base href="${htmlWebpackPlugin.options.config.baseHref}">
+    <script>window.paperhiveConfig = ${JSON.stringify(htmlWebpackPlugin.options.config)};</script>
+
+    <title data-ng-bind="metaService.data.title">PaperHive</title>
 
     <!-- meta tags -->
     <meta charset="utf-8">

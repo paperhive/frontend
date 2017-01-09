@@ -47,8 +47,6 @@ import filters from './filters/index';
 import services from './services/index';
 import utils from './utils/index';
 
-const configJson = require('../config.json');
-
 export const paperhive = module(
     'paperhive', [
       ngAnimate,
@@ -64,7 +62,7 @@ export const paperhive = module(
       'angulartics.google.analytics',
     ],
   )
-  .constant('config', configJson)
+  .constant('config', (<any> window).paperhiveConfig)
   ;
 
 config(paperhive);
