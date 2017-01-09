@@ -35,6 +35,11 @@ const saucelabsCapabilities = [{
   version: '9',
   platform: 'OS X 10.11',
   name: 'PaperHive (safari)',
+}, {
+  browserName: 'internet explorer',
+  version: '11',
+  platform: 'Windows 10',
+  name: 'PaperHive (ie)',
 }];
 saucelabsCapabilities.forEach(capability => {
   capability['tunnel-identifier'] = process.env.TRAVIS_JOB_NUMBER;
