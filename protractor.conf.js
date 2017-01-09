@@ -47,51 +47,8 @@ saucelabsCapabilities.forEach(capability => {
   capability.screenResolution = '1280x960';
 });
 
-if (process.env.SAUCE_ONDEMAND_BROWSERS) {
-  // jenkins
-  // translate SAUCE_ONDEMAND_BROWSERS into a protractor-digestible list
-  exports.config.multiCapabilities = [];
-  JSON.parse(process.env.SAUCE_ONDEMAND_BROWSERS).forEach(function(entry) {
-    exports.config.multiCapabilities.push({
-      name: 'PaperHive (' + entry.browser + ')',
-      browserName: entry.browser,
-      version: entry['browser-version'],
-      // andré: OS seems to be platform!
-      platform: entry.os,
-      build: process.env.BUILD_NUMBER
-    });
-    // Test against deployed platform
-    exports.config.baseUrl = process.env.TEST_URL;
-  });
-
-} else if (process.env.TRAVIS_JOB_NUMBER) {
-  // travis
-  //  {
-  //  'browserName': 'android',
-  //  'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-  //  'build': process.env.TRAVIS_BUILD_NUMBER
-  //},
-  //{
-  //  'browserName': 'iexplore',
-  //  'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-  //  'build': process.env.TRAVIS_BUILD_NUMBER,
-  //  'name': 'PaperHive (iexplore)'
-  //},
-  //{
-  //  'browserName': 'ipad',
-  //  'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-  //  'build': process.env.TRAVIS_BUILD_NUMBER
-  //},
-  //{
-  //  'browserName': 'iphone',
-  //  'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-  //  'build': process.env.TRAVIS_BUILD_NUMBER
-  //},
-  //{
-  //  'browserName': 'opera',
-  //  'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-  //  'build': process.env.TRAVIS_BUILD_NUMBER
-  //},
+// travis or jenkins -> use saucelabs
+if (process.env.TRAVIS_JOB_NUMBER || process.env.SAUCE_ONDEMAND_BROWSERS) {
   exports.config.multiCapabilities = saucelabsCapabilities;
   exports.config.baseUrl = 'http://localhost:8080';
 } else {
