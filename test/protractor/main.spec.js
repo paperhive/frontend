@@ -16,33 +16,29 @@ describe('PaperHive homepage', function() {
   });
 
   it('should be present about us link', function () {
-    var aboutUs = element(by.linkText('About us'));
-    expect(aboutUs.isPresent()).toBe(true);
     var linkAboutUs = element(by.id('about-us-link'));
+    expect(linkAboutUs.isPresent()).toBe(true)
     linkAboutUs.click();
     utils.expectUrl('./about');
   });
 
   it('should be present Contact link', function () {
-    var contact = element(by.linkText('Contact'));
-    expect(contact.isPresent()).toBe(true);
     var linkContact = element(by.id('contact-link'));
+    expect(linkContact.isPresent()).toBe(true);
     linkContact.click();
     utils.expectUrl('./contact');
   });
 
   it('should be present Terms of service link', function () {
-    var legalNotice = element(by.linkText('Terms of service and privacy policy'));
-    expect(legalNotice.isPresent()).toBe(true);
     var linkLegalNotice = element(by.id('terms-link'));
+    expect(linkLegalNotice.isPresent()).toBe(true);
     linkLegalNotice.click();
     utils.expectUrl('./terms');
   });
 
   it('should be present Legal notice link', function () {
-    var legalNotice = element(by.linkText('Legal notice'));
-    expect(legalNotice.isPresent()).toBe(true);
     var linkLegalNotice = element(by.id('legal-link'));
+    expect(linkLegalNotice.isPresent()).toBe(true);
     linkLegalNotice.click();
     utils.expectUrl('./legalnotice');
   });
