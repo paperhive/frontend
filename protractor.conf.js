@@ -41,15 +41,16 @@ const saucelabsCapabilities = [{
   platform: 'Windows 10',
   name: 'PaperHive (ie)',
 }];
-// console.log(process.env.TRAVIS_BUILD_NUMBER);
 saucelabsCapabilities.forEach(capability => {
   capability['tunnel-identifier'] = process.env.TRAVIS_JOB_NUMBER;
-  // capability.build = process.env.TRAVIS_BUILD_NUMBER;
   capability.screenResolution = '1280x960';
 });
 
 // travis or jenkins -> use saucelabs
 if (process.env.TRAVIS_JOB_NUMBER || process.env.SAUCE_ONDEMAND_BROWSERS) {
+  exports.config.sauceUser = process.env.SAUCE_USERNAME || process.env.SAUCE_USER_NAME;
+  exports.config.sauceKey = process.env.SAUCE_ACCESS_KEY || process.env.SAUCE_API_KEY;
+  exports.config.sauceBuild = process.env.TRAVIS_BUILD_NUMBER;
   exports.config.multiCapabilities = saucelabsCapabilities;
   exports.config.baseUrl = 'http://localhost:8080';
 } else {
@@ -79,14 +80,4 @@ if (process.env.TRAVIS_JOB_NUMBER || process.env.SAUCE_ONDEMAND_BROWSERS) {
       });
     });
   };
-}
-
-if (process.env.SAUCE_USER_NAME) {
-  // jenkins
-  exports.config.sauceUser = process.env.SAUCE_USER_NAME;
-  exports.config.sauceKey = process.env.SAUCE_API_KEY;
-} else if (process.env.SAUCE_USERNAME) {
-  // travis
-  exports.config.sauceUser = process.env.SAUCE_USERNAME;
-  exports.config.sauceKey = process.env.SAUCE_ACCESS_KEY;
 }
