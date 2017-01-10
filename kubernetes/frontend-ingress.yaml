@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  namespace: dev
+  name: frontend-$PAPERHIVE_BRANCH-ingress
+  labels:
+    name: frontend
+    branch: $PAPERHIVE_BRANCH
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    kubernetes.io/tls-acme: "true"
+    ingress.kubernetes.io/rewrite-target: /
+spec:
+  # TODO: replace kubernetes with dev below
+  tls:
+  - secretName: kubernetes-paperhive-org
+    # secretName: staging-paperhive-org
+    hosts:
+    - kubernetes.paperhive.org
+    # - staging.paperhive.org
+  rules:
+  - host: kubernetes.paperhive.org
+    # host: staging.paperhive.org
+    http:
+      paths:
+      - path: /frontend/$PAPERHIVE_BRANCH
+        backend:
+          serviceName: frontend-$PAPERHIVE_BRANCH-service
+          servicePort: 80

@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  namespace: dev
+  name: frontend-$PAPERHIVE_BRANCH-deployment
+  labels:
+    name: frontend
+    branch: $PAPERHIVE_BRANCH
+spec:
+  template:
+    metadata:
+      labels:
+        name: frontend
+        branch: $PAPERHIVE_BRANCH
+    spec:
+      containers:
+      - image: gcr.io/paperhive-c0ff33/frontend:$PAPERHIVE_COMMIT
+        name: frontend
+        env:
+        - name: PAPERHIVE_BASE_HREF
+          value: /frontend/$PAPERHIVE_BRANCH/
+        - name: PAPERHIVE_API_URL
+          value: https://dev.paperhive.org/backend/master
+        ports:
+        - containerPort: 80
+          name: http
