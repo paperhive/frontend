@@ -210,7 +210,6 @@ document-sidenav {
     align-items: center;
     li {
       flex: 1;
-      text-align: center;
       position: relative;
       
       &.ph-sidenav-pages {
@@ -261,7 +260,33 @@ document-sidenav {
   opacity: 1;
   transition: opacity .6s ease;
 }
-
+.ph-sidenav-small {
+  ul {
+    display: block; 
+    li {
+      &.ph-pages-current {
+        margin: @padding-base-horizontal;
+      }
+      a {
+        border-bottom: none; 
+        border-left: 2px solid transparent;
+        &:hover {
+          border-bottom: none;
+          border-left: 2px solid @ph-base-color;
+        }
+      }
+    }
+  }
+  .ph-sidenav-arrow {
+    top: 50%; 
+    left: 100%; 
+  }
+  [class*="ph-sidenav-expand-"] {
+    left: 100%; 
+    bottom: 0; 
+    width: inherit; 
+  }
+}
 // override padding for kudos so the iframe can fill the entire panel body
 .ph-ph-sidenav-info-info-kudos .panel-body {
   padding: 0;
