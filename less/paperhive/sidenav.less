@@ -265,11 +265,13 @@ document-sidenav {
     display: block; 
     li {
       &.ph-pages-current {
-        margin: @padding-base-horizontal;
+        margin: @padding-base-horizontal/2;
       }
       a {
         border-bottom: none; 
         border-left: 2px solid transparent;
+        padding-top: @padding-base-horizontal/2;
+        padding-bottom: @padding-base-horizontal/2;
         &:hover {
           border-bottom: none;
           border-left: 2px solid @ph-base-color;
