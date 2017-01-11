@@ -4,6 +4,8 @@ set -eu
 set -o pipefail
 
 # is this a pull request build? then don't deploy!
+# NOTE: the decrypted secrets won't be available anyway if the PR comes from
+#       another repository
 if [ "${TRAVIS_PULL_REQUEST}" != "false"]; then
   echo "This is a pull request. Don't push or deploy."
   exit 0
