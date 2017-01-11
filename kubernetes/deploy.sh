@@ -24,7 +24,7 @@ gcloud auth activate-service-account --key-file gcloud-secret.json
 gcloud docker -- push ${PAPERHIVE_DOCKER_IMAGE}
 
 # install kubectl
-gcloud -q components install kubectl
+sudo gcloud -q components install kubectl
 
 # remove old kubernetes resources (if any)
 kubectl --namespace dev delete deployments,services,pods,ingresses -l branch=${PAPERHIVE_BRANCH}
