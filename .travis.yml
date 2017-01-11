@@ -10,12 +10,14 @@ addons:
   jwt:
     secure: "j81HTjQenXBJTorpThKgTB2Sg64U6GM3Ytp5Y5oUeBMZJItvootdkAZD9qzVGZ3RPyRVr5C917CwQmjyincr7S2hv8flfEXNyWz0if2P5HHXuh3q3FUG3S0srQ9PDKLOmFioyasWksrH2XMz5XbQ2kFhNezjRS1UM2FYLgSPwqY="
 before_script:
-  # gcloud repo
-  - export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
-  - echo "deb https://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-  - curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+  # gcloud sdk repo
+  - echo "deb https://packages.cloud.google.com/apt cloud-sdk-${lsb_release -c -s} main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+  # kubernetes repo
+  - echo "deb https://packages.cloud.google.com/apt kubernetes-${lsb_release -c -s} main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+  # gcloud key
+  - curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
   # install gcloud and jq
-  - sudo apt-get update && sudo apt-get install google-cloud-sdk jq
+  - sudo apt-get update && sudo apt-get install google-cloud-sdk jq kubectl
   # configure frontend with placeholders (will be replaced in container)
   - 'cat config.json.default | jq -c ". + {\"apiUrl\": \"\$PAPERHIVE_API_URL\", \"baseHref\": \"\$PAPERHIVE_BASE_HREF\"}" > config.json'
   # give the docker image a name
