@@ -6,21 +6,21 @@ metadata:
   labels:
     name: frontend
     branch: $PAPERHIVE_BRANCH
+    commit: $PAPERHIVE_COMMIT
 spec:
   template:
     metadata:
       labels:
         name: frontend
         branch: $PAPERHIVE_BRANCH
+        commit: $PAPERHIVE_COMMIT
     spec:
       containers:
-      - image: gcr.io/paperhive-c0ff33/frontend:$PAPERHIVE_COMMIT
+      - image: $PAPERHIVE_DOCKER_IMAGE
         name: frontend
         env:
         - name: PAPERHIVE_BASE_HREF
           value: /frontend/$PAPERHIVE_BRANCH/
-        - name: PAPERHIVE_API_URL
-          value: https://dev.paperhive.org/backend/master
         ports:
         - containerPort: 80
           name: http

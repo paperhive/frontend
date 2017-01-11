@@ -6,6 +6,7 @@ metadata:
   labels:
     name: frontend
     branch: $PAPERHIVE_BRANCH
+    commit: $PAPERHIVE_COMMIT
 spec:
   type: NodePort
   ports:
@@ -15,3 +16,4 @@ spec:
   selector:
     name: frontend
     branch: $PAPERHIVE_BRANCH
+    commit: $PAPERHIVE_COMMIT
