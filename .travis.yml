@@ -15,7 +15,7 @@ before_script:
   # gcloud sdk repo
   - echo "deb https://packages.cloud.google.com/apt cloud-sdk-${lsb_release -c -s} main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
   # install gcloud and jq
-  - sudo apt-get update && sudo apt-get install google-cloud-sdk jq
+  - sudo apt-get update && sudo apt-get install google-cloud-sdk jq kubectl
   # configure frontend with placeholders (will be replaced in container)
   - 'cat config.json.default | jq -c ". + {\"apiUrl\": \"\$PAPERHIVE_API_URL\", \"baseHref\": \"\$PAPERHIVE_BASE_HREF\"}" > config.json'
   # give the docker image a name
