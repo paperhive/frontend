@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: dev
+  namespace: dev-frontend
   name: frontend-$PAPERHIVE_BRANCH-service
   labels:
     name: frontend

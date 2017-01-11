@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  namespace: dev
+  namespace: dev-frontend
   name: frontend-$PAPERHIVE_BRANCH-deployment
   labels:
     name: frontend
