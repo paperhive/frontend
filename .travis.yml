@@ -20,10 +20,11 @@ before_script:
   - 'cat config.json.default | jq -c ". + {\"apiUrl\": \"\$PAPERHIVE_API_URL\", \"baseHref\": \"\$PAPERHIVE_BASE_HREF\"}" > config.json'
   # give the docker image a name
   - export DOCKER_IMAGE="gcr.io/paperhive-c0ff33/frontend:${TRAVIS_COMMIT:0:8}"
+  - export DEFAULT_API_URL="$(jq -r '.apiUrl' config.json.default)"
 script:
   - npm run build
   # build docker image
-  - docker build -t ${DOCKER_IMAGE} .
+  - docker build --build-arg DEFAULT_API_URL="${DEFAULT_API_URL}" -t ${DOCKER_IMAGE} .
   # run docker container for e2e tests
   - docker run -d --name frontend -p 8080:80 ${DOCKER_IMAGE}
   - npm test
