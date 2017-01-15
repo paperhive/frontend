@@ -12,16 +12,12 @@ metadata:
     kubernetes.io/tls-acme: "true"
     ingress.kubernetes.io/rewrite-target: /
 spec:
-  # TODO: replace kubernetes with dev below
   tls:
-  - secretName: kubernetes-paperhive-org
-    # secretName: staging-paperhive-org
+  - secretName: dev-paperhive-org
     hosts:
-    - kubernetes.paperhive.org
-    # - staging.paperhive.org
+    - dev.paperhive.org
   rules:
-  - host: kubernetes.paperhive.org
-    # host: staging.paperhive.org
+  - host: dev.paperhive.org
     http:
       paths:
       - path: /frontend/$PAPERHIVE_BRANCH
