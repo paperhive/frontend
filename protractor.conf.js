@@ -12,69 +12,51 @@ exports.config = {
   }
 };
 
-if (process.env.SAUCE_ONDEMAND_BROWSERS) {
-  // jenkins
-  // translate SAUCE_ONDEMAND_BROWSERS into a protractor-digestible list
-  exports.config.multiCapabilities = [];
-  JSON.parse(process.env.SAUCE_ONDEMAND_BROWSERS).forEach(function(entry) {
-    exports.config.multiCapabilities.push({
-      name: 'PaperHive (' + entry.browser + ')',
-      browserName: entry.browser,
-      version: entry['browser-version'],
-      // andré: OS seems to be platform!
-      platform: entry.os,
-      build: process.env.BUILD_NUMBER
-    });
-    // Test against deployed platform
-    exports.config.baseUrl = process.env.TEST_URL;
-  });
+// https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
+const saucelabsCapabilities = [{
+  browserName: 'chrome',
+  version: '54',
+  platform: 'Windows 10',
+  name: 'PaperHive (chrome)',
+}, {
+  browserName: 'firefox',
+  version: '50',
+  platform: 'Windows 10',
+  name: 'PaperHive (firefox)'
+}, {
+  browserName: 'MicrosoftEdge',
+  version: '14',
+  platform: 'Windows 10',
+  name: 'PaperHive (edge)',
+}, {
+  // Note: Safari 10 requires Selenium 3
+  // (not yet running on SauceLabs as of 2017-01-09)
+  browserName: 'safari',
+  version: '9',
+  platform: 'OS X 10.11',
+  name: 'PaperHive (safari)',
+}, {
+  browserName: 'internet explorer',
+  version: '11',
+  platform: 'Windows 10',
+  name: 'PaperHive (ie)',
+}];
+saucelabsCapabilities.forEach(capability => {
+  capability['tunnel-identifier'] = process.env.TRAVIS_JOB_NUMBER;
+  capability.tags = ['frontend'];
+  if (process.env.TRAVIS_PULL_REQUEST === 'false' && process.env.TRAVIS_BRANCH === 'master') {
+    capability.tags.push('master');
+  }
+  capability.screenResolution = '1280x960';
+});
 
-} else if (process.env.TRAVIS_JOB_NUMBER) {
-  // travis
-  //  {
-  //  'browserName': 'android',
-  //  'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-  //  'build': process.env.TRAVIS_BUILD_NUMBER
-  //},
-  //{
-  //  'browserName': 'iexplore',
-  //  'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-  //  'build': process.env.TRAVIS_BUILD_NUMBER,
-  //  'name': 'PaperHive (iexplore)'
-  //},
-  //{
-  //  'browserName': 'ipad',
-  //  'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-  //  'build': process.env.TRAVIS_BUILD_NUMBER
-  //},
-  //{
-  //  'browserName': 'iphone',
-  //  'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-  //  'build': process.env.TRAVIS_BUILD_NUMBER
-  //},
-  //{
-  //  'browserName': 'opera',
-  //  'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-  //  'build': process.env.TRAVIS_BUILD_NUMBER
-  //},
-  exports.config.multiCapabilities = [{
-    'browserName': 'chrome',
-    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'PaperHive (chrome)'
-  }, {
-    'browserName': 'firefox',
-    // http://stackoverflow.com/a/27645817/353337
-    'version': '33',
-    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'PaperHive (firefox)'
-  }, {
-    'browserName': 'safari',
-    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'PaperHive (safari)'
-  }];
+// travis or jenkins -> use saucelabs
+if (process.env.TRAVIS_JOB_NUMBER || process.env.SAUCE_ONDEMAND_BROWSERS) {
+  exports.config.sauceUser = process.env.SAUCE_USERNAME || process.env.SAUCE_USER_NAME;
+  exports.config.sauceKey = process.env.SAUCE_ACCESS_KEY || process.env.SAUCE_API_KEY;
+  exports.config.sauceBuild = process.env.TRAVIS_BUILD_NUMBER;
+  exports.config.multiCapabilities = saucelabsCapabilities;
+  exports.config.baseUrl = 'http://localhost:8080';
 } else {
   // Only test chrome locally
   exports.config.multiCapabilities = [{
@@ -102,14 +84,4 @@ if (process.env.SAUCE_ONDEMAND_BROWSERS) {
       });
     });
   };
-}
-
-if (process.env.SAUCE_USER_NAME) {
-  // jenkins
-  exports.config.sauceUser = process.env.SAUCE_USER_NAME;
-  exports.config.sauceKey = process.env.SAUCE_API_KEY;
-} else if (process.env.SAUCE_USERNAME) {
-  // travis
-  exports.config.sauceUser = process.env.SAUCE_USERNAME;
-  exports.config.sauceKey = process.env.SAUCE_ACCESS_KEY;
 }
