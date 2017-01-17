@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  namespace: dev-frontend
+  name: frontend-$PAPERHIVE_BRANCH-deployment
+  labels:
+    name: frontend
+    branch: $PAPERHIVE_BRANCH
+    commit: $PAPERHIVE_COMMIT
+spec:
+  template:
+    metadata:
+      labels:
+        name: frontend
+        branch: $PAPERHIVE_BRANCH
+        commit: $PAPERHIVE_COMMIT
+    spec:
+      containers:
+      - image: $PAPERHIVE_DOCKER_IMAGE
+        name: frontend
+        env:
+        - name: PAPERHIVE_BASE_HREF
+          value: /frontend/$PAPERHIVE_BRANCH/
+        ports:
+        - containerPort: 80
+          name: http
