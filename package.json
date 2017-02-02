@@ -60,7 +60,7 @@
     "postcss-loader": "^1.1.1",
     "protractor": "^4.0.9",
     "tslint": "^4.0.2",
-    "typescript": "2.1.1",
+    "typescript": "2.1.5",
     "webpack": "^2.1.0-beta.27",
     "webpack-dev-server": "^1.16.2"
   },
