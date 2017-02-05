@@ -29,23 +29,24 @@ export default function(app) {
 
               canceler = $q.defer();
               const defer = $q.defer();
-              $http.get(config.apiUrl + '/documents/sources', {
+              $http.get(`${config.apiUrl}/documents/sources`, {
                 params: {handle: modelValue},
                 timeout: canceler.promise,
-              })
-              .success(function(data) {
-                scope.validateDocumentSource = data;
-                defer.resolve();
-              })
-              .error(function(data, status) {
-                scope.validateDocumentSource = undefined;
-                if (status === 404) {
-                  defer.reject('Document source is not recognized');
-                }
-                defer.reject(
-                  'An error occured while checking the document source',
-                );
-              });
+              }).then(
+                response => {
+                  scope.validateDocumentSource = response.data;
+                  defer.resolve();
+                },
+                response => {
+                  scope.validateDocumentSource = undefined;
+                  if (response.status === 404) {
+                    defer.reject('Document source is not recognized');
+                  }
+                  defer.reject(
+                    'An error occured while checking the document source',
+                  );
+                },
+              );
               return defer.promise;
             };
         },
