@@ -12,7 +12,6 @@ import pdf from './pdf';
 import scroll from './scroll';
 import subnav from './subnav';
 import toc from './toc';
-import validateDocumentSource from './validate-document-source';
 import validateUsername from './validate-username';
 import viewportHeight from './viewport-height';
 
@@ -31,7 +30,6 @@ export default function(app) {
   scroll(app);
   subnav(app);
   toc(app);
-  validateDocumentSource(app);
   validateUsername(app);
   viewportHeight(app);
 };
