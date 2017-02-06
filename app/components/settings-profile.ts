@@ -31,21 +31,22 @@ export default function(app) {
         ctrl.save = function() {
           ctrl.busy = 'save';
 
-          ctrl.saveRaw().
-            success(function(data) {
-            ctrl.busy = false;
-            authService.user = data;
-            ctrl.setting.succeeded = true;
-            setTimeout(function() {
+          ctrl.saveRaw().then(
+            response => {
+              ctrl.busy = false;
+              authService.user = response.data;
+              ctrl.setting.succeeded = true;
+              setTimeout(function() {
+                ctrl.setting.succeeded = false;
+                $scope.$apply();
+              }, 5000);
+            },
+            response => {
+              ctrl.busy = false;
+              notificationService.httpError('could not save data');
               ctrl.setting.succeeded = false;
-              $scope.$apply();
-            }, 5000);
-          }).
-            error(function(data) {
-            ctrl.busy = false;
-            notificationService.httpError('could not save data');
-            ctrl.setting.succeeded = false;
-          });
+            },
+          );
       };
     }],
     template: require('./settings-profile.html'),

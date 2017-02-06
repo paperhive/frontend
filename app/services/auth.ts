@@ -80,23 +80,22 @@ export default function(app) {
 
         // log in
         loginFun()
-          .success(function(data, status) {
+          .then(response => {
             // TODO think about better way for login waiting
             authService.loginPromise = undefined;
-            authService.user = data.person;
-            authService.token = data.token;
+            authService.user = response.data.person;
+            authService.token = response.data.token;
 
             // fires 'storage' event in other tabs
             if (localStorageAvailable) {
-              $window.localStorage.token = data.token;
+              $window.localStorage.token = response.data.token;
             }
 
-            deferred.resolve(data);
-          })
-          .error(function(data) {
+            deferred.resolve(response.data);
+          }, response => {
             authService.loginPromise = undefined;
             authService.logout();
-            deferred.reject(data);
+            deferred.reject(response.data);
           });
 
         return deferred.promise;
