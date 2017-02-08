@@ -1,6 +1,6 @@
 /*!
  * PaperHive (https://paperhive.org)
- * Copyright 2014-2016 André Gaul <andre@paperhive.org>,
+ * Copyright 2014-2017 André Gaul <andre@paperhive.org>,
  *                     Nico Schlömer <nico@paperhive.org>
  * Licensed under GPL3
  * (https://github.com/paperhive/paperhive-frontend/blob/master/LICENSE)
@@ -49,8 +49,6 @@ import filters from './filters/index';
 import services from './services/index';
 import utils from './utils/index';
 
-const configJson = require('../config.json');
-
 export const paperhive = module(
     'paperhive', [
       ngAnimate,
@@ -67,7 +65,7 @@ export const paperhive = module(
       'angulartics.google.analytics',
     ],
   )
-  .constant('config', configJson)
+  .constant('config', (<any> window).paperhiveConfig)
   ;
 
 config(paperhive);
@@ -76,5 +74,3 @@ directives(paperhive);
 filters(paperhive);
 services(paperhive);
 utils(paperhive);
-
-bootstrap(document, ['paperhive'], {strictDi: true});

@@ -1,24 +1,12 @@
-FROM node:7
-
-# init workspace
-RUN mkdir /paperhive-frontend
-WORKDIR /paperhive-frontend
-
-# env var fixes excessive npm log output
-# see https://github.com/nodejs/docker-node/issues/57
-ENV NPM_CONFIG_LOGLEVEL="warn"
-
-# grab phantomjs from CDN (instead of rate-limited bitbucket)
-#ENV PHANTOMJS_CDNURL="http://cnpmjs.org/downloads"
-
-# copy dependency definitions and install them (may be cached!)
-COPY package.json /paperhive-frontend/
-RUN npm install
-
-# copy and build src
-COPY . /paperhive-frontend
-RUN npm run lint
-RUN npm run build
-
-# test when launching container with this image
-CMD npm run test
+FROM nginx
+ARG DEFAULT_API_URL="https://dev.paperhive.org/backend/master"
+ENV \
+  PRERENDER_TOKEN="missing_token" \
+  PAPERHIVE_BASE_HREF="/" \
+  PAPERHIVE_API_URL=${DEFAULT_API_URL}
+COPY build /frontend/html
+COPY docker-start.sh /frontend/start.sh
+RUN chmod +x /frontend/start.sh
+COPY build/index.html /frontend/templates/index.html
+COPY docker-nginx.conf /frontend/templates/default.conf
+CMD ["/frontend/start.sh"]

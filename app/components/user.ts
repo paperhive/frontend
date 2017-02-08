@@ -14,29 +14,24 @@ export default function(app) {
         $scope.auth = authService;
 
         // fetch user
-        $http.get(
-          config.apiUrl + '/people/username/' +
-            $routeSegment.$routeParams.username,
-        )
-        .success(function(data) {
-          $scope.user = data;
-          metaService.set({
-            title: data.account.username + ' (' + data.displayName + ')' +
-              ' · PaperHive',
-            meta: [{
-              name: 'description',
-              content: 'Profile of ' + data.account.username +
-                ' (' + data.displayName + ')' +
-                ' on PaperHive.',
-            }],
-          });
-        })
-        .error(function(data) {
-          notificationService.notifications.push({
-            type: 'error',
-            message: data.message,
-          });
-        });
+        $http.get(`${config.apiUrl}/people/username/${$routeSegment.$routeParams.username}`).then(
+          response => {
+            $scope.user = response.data;
+            metaService.set({
+              title: `${response.data.account.username} (${response.data.displayName}) · PaperHive`,
+              meta: [{
+                name: 'description',
+                content: `Profile of ${response.data.account.username} (${response.data.displayName}) on PaperHive.`,
+              }],
+            });
+          },
+          response => {
+            notificationService.notifications.push({
+              type: 'error',
+              message: response.data.message,
+            });
+          },
+        );
       },
     ],
     template: require('./user.html'),

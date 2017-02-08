@@ -20,18 +20,18 @@ export default function(app) {
             const defer = $q.defer();
 
             $http.get(config.apiUrl + '/people/username/' + modelValue)
-              .success(function(data) {
-                defer.reject('The username is already taken.');
-              })
-              .error(function(data, status) {
-                // username available
-                if (status === 404) {
-                  return defer.resolve();
-                }
-                defer.reject(
-                  'An error occured while checking if the username is available',
-                );
-              });
+              .then(
+                response => defer.reject('The username is already taken.'),
+                response => {
+                  // username available
+                  if (response.status === 404) {
+                    return defer.resolve();
+                  }
+                  defer.reject(
+                    'An error occured while checking if the username is available',
+                  );
+                },
+              );
 
             return defer.promise;
           };

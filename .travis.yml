@@ -1,31 +1,34 @@
 language: node_js
 node_js:
-  - iojs
-before_script:
-  - cp config.json.default config.json
-  - npm install -g bower
-  - npm install -g gulp
-  - npm install -g protractor
-  # Install (possibly from cache), update packages according to bower.json,
-  # and prune obsolete packages.
-  - bower update
-  - bower prune
-  # Ditto.
-  - npm update
-  - npm prune
-script:
-  - gulp
-  - npm test
-  - gulp test
-sudo: false
-cache:
-  directories:
-    - node_modules
-    - bower_components
-env:
-  global:
-    - secure: htpFvFnIWQWt5OE/UempJalrnle2bP3mAv0ZTD/pi9pPWV8lgHcR9pINL6Pzu3udbMFPGiKVJR7iMxNrkhNR5Iw3o00O4DJZl238K1P4A6XRAF0itu2o7tQ+/8eT91oITwsoPj0xAtBIKlZ67nGk5efJGP89YGZTip1Jb7B0P6s=
-    - secure: kbgPNvbAPh7UyBFFMmRjFVn30Eq57MRNWdv4YmBYzGv04Fns7CHe6sscSWlOBvzjAhrht9XYBt56QMHe7b/dlimG0/UO+kyij1UYU1dYv54tynamnl0PEDkhuH/knewfFVFOy6KsVfw5FK7dTyGTD0YsL4wuiS91wYUo7l1uptw=
-
+  - node
+sudo: required
+services:
+  - docker
 addons:
-  sauce_connect: true
+  sauce_connect:
+    username: paperhive
+  jwt:
+    secure: "j81HTjQenXBJTorpThKgTB2Sg64U6GM3Ytp5Y5oUeBMZJItvootdkAZD9qzVGZ3RPyRVr5C917CwQmjyincr7S2hv8flfEXNyWz0if2P5HHXuh3q3FUG3S0srQ9PDKLOmFioyasWksrH2XMz5XbQ2kFhNezjRS1UM2FYLgSPwqY="
+before_script:
+  # gcloud key
+  - curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+  # gcloud sdk repo
+  - echo "deb https://packages.cloud.google.com/apt cloud-sdk-$(lsb_release -c -s) main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+  # install gcloud and jq
+  - sudo apt-get update && sudo apt-get install google-cloud-sdk jq kubectl
+  # configure frontend with placeholders (will be replaced in container)
+  - 'cat config.json.default | jq -c ". + {\"apiUrl\": \"\$PAPERHIVE_API_URL\", \"baseHref\": \"\$PAPERHIVE_BASE_HREF\"}" > config.json'
+  # give the docker image a name
+  - export DOCKER_IMAGE="gcr.io/paperhive-c0ff33/frontend:${TRAVIS_COMMIT:0:8}"
+  - export DEFAULT_API_URL="$(jq -r '.apiUrl' config.json.default)"
+script:
+  - NODE_ENV=production npm run build
+  # build docker image
+  - docker build --build-arg DEFAULT_API_URL="${DEFAULT_API_URL}" -t ${DOCKER_IMAGE} .
+  # run docker container for e2e tests
+  - docker run -d --name frontend -p 8080:80 ${DOCKER_IMAGE}
+  - npm test
+  - docker stop frontend
+after_success:
+  # deploy
+  - ./kubernetes/deploy.sh
