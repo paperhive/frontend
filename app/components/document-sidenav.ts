@@ -18,6 +18,7 @@ export default function(app) {
       kudosDoi: string;
       kudosTestedDoi: string;
       publisherLink: string;
+      docNav: string;
 
       static $inject = ['$http', '$scope', 'tourService'];
       constructor(public $http, $scope, public tour) {
