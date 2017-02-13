@@ -33,7 +33,7 @@
       document-ctrl="$ctrl.documentCtrl"
     ></channel-bookmark>
 
-    <div class="dropdown ph-sidenav-item" is-open="$ctrl.revisionDropdownOpen" uib-dropdown
+    <div class="dropdown ph-sidenav-item ph-dropdown-large" is-open="$ctrl.revisionDropdownOpen" uib-dropdown
       ng-if="$ctrl.documentCtrl.revisions && $ctrl.documentCtrl.revisionAccess && $ctrl.activeRevision"
     >
       <button uib-dropdown-toggle
@@ -62,6 +62,7 @@
               <span class="ph-sidenav-journal">{{$ctrl.documentCtrl.getRevisionDescription(revision)}}</span>,
               {{revision.publishedAt | date:'MMM yyyy'}}
             </span>
+            <span class="ph-split-icon-right">5 <i class="fa fa-fw fa-comments"></i></span>
           </a>
           <a ng-if="$ctrl.documentCtrl.revisionAccess[revision.revision] === undefined"
             class="ph-split-container ph-split-container-no-icon ph-split-container-icon-right"
