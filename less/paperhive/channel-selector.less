@@ -1,10 +1,9 @@
-channel-selector {
+.ph-dropdown-large {
   .btn, .dropdown-menu {
     font-size: @font-size-base;
     width: 100%;
     max-height: 345px;
-    overflow-y: auto;
-    box-shadow: @ph-shadow;
+    box-shadow: none;
 
     > li {
       > a {
@@ -39,6 +38,7 @@ channel-selector {
   .dropdown-menu {
     padding: 0;
     margin: 3px 0;
+    box-shadow: @ph-shadow;
   }
 }
 
@@ -63,12 +63,8 @@ channel-selector {
   }
   .ph-channel-selector-channel {
     &.btn-group {
-      box-shadow: @ph-shadow;
       display: flex;
       position: initial;
-    }
-    > .btn {
-      border: none;
     }
   }
 }
