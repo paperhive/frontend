@@ -89,11 +89,17 @@
       </ul>
     </div>
   </div>
-  <div class="ph-sidenav-item" ng-if="$ctrl.publisherLink">
-    <a href="{{$ctrl.publisherLink}}" class="ph-sidenav-publisher-link">
-      Visit publisher's publication page
-    </a>
-  </div>
+  <p ng-if="$ctrl.discussionsCtrl.discussions.length > $ctrl.discussionsByRevision[$ctrl.activeRevision.revision].length"
+    class="ph-sidenav-item"
+  >
+    <i class="fa fa-fw fa-comments"></i>
+    {{$ctrl.discussionsCtrl.discussions.length - $ctrl.discussionsByRevision[$ctrl.activeRevision.revision].length}}
+    more discussions on other versions
+  </p>
+  <p ng-if="$ctrl.publisherLink" class="ph-sidenav-item">
+    <i class="fa fa-fw fa-home"></i>
+    <a href="{{$ctrl.publisherLink}}">Visit publisher's publication page</a>
+  </p>
   <div class="ph-sidenav-accordion">
     <uib-accordion close-others="oneAtATime">
       <div ng-if="$ctrl.kudosDoi" uib-accordion-group class="panel-default ph-sidenav-info-kudos" is-open="$ctrl.kudosOpen">

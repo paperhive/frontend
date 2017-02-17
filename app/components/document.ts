@@ -289,6 +289,7 @@ export default function(app) {
 
         // filter discussions by revision
         const discussionsByRevision = {};
+        revisionIds.forEach(revisionId => discussionsByRevision[revisionId] = []);
         discussions.forEach(discussion => {
           const revision = discussion.target.documentRevision;
           if (!discussionsByRevision[revision]) discussionsByRevision[revision] = [];
