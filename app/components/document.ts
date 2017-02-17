@@ -1,5 +1,5 @@
 import angular from 'angular';
-import { find, findIndex, merge, pick, remove } from 'lodash';
+import { find, findIndex, map, merge, pick, remove } from 'lodash';
 
 import { getRevisionMetadata } from '../utils/documents';
 
@@ -202,6 +202,7 @@ export default function(app) {
       activeRevision: any;
       discussionsCtrl: DiscussionsController;
       documentCtrl: any;
+      discussionsByRevision: any;
       filteredDiscussions: any[];
 
       // note: do *not* use $routeSegment.$routeParams because they still
@@ -244,8 +245,10 @@ export default function(app) {
 
         // update filtered discussions if discussions, channel or showAllChannels changed
         $scope.$watchCollection('$ctrl.discussionsCtrl.discussions', this.updateFilteredDiscussions.bind(this));
+        $scope.$watch('$ctrl.activeRevision', this.updateFilteredDiscussions.bind(this));
         $scope.$watch('$ctrl.channelService.selectedChannel', this.updateFilteredDiscussions.bind(this));
         $scope.$watch('$ctrl.channelService.showAllChannels', this.updateFilteredDiscussions.bind(this));
+        $scope.$watchCollection('$ctrl.documentCtrl.revisions', this.updateFilteredDiscussions.bind(this));
       }
 
       updateActiveRevision() {
@@ -274,8 +277,29 @@ export default function(app) {
 
       updateFilteredDiscussions() {
         if (this.filteredDiscussions === undefined) this.filteredDiscussions = [];
+        if (this.discussionsByRevision === undefined) this.discussionsByRevision = {};
 
-        let discussions = this.discussionsCtrl.discussions;
+        // get revision data
+        const activeRevisionId = this.activeRevision && this.activeRevision.revision;
+        const revisionIds = this.documentCtrl.revisions
+          && this.documentCtrl.revisions.map(revision => revision.revision)
+          || [];
+
+        let discussions = this.discussionsCtrl.discussions || [];
+
+        // filter discussions by revision
+        const discussionsByRevision = {};
+        revisionIds.forEach(revisionId => discussionsByRevision[revisionId] = []);
+        discussions.forEach(discussion => {
+          const revision = discussion.target.documentRevision;
+          if (!discussionsByRevision[revision]) discussionsByRevision[revision] = [];
+          discussionsByRevision[revision].push(discussion);
+        });
+        angular.copy(discussionsByRevision, this.discussionsByRevision);
+
+        // only use discussions from the active revision
+        discussions = activeRevisionId && discussionsByRevision[activeRevisionId] || [];
+
         if (!discussions) {
           angular.copy([], this.filteredDiscussions);
           return;
