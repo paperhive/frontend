@@ -1,15 +1,116 @@
 import { copy } from 'angular';
-import { clone, isArray, isEqual } from 'lodash';
+import { assign, clone, isArray, isEqual } from 'lodash';
+
+interface IDateFilterOptions {
+  apiParameters: {
+    from: string;
+    to: string;
+  };
+  urlParameters: {
+    mode: string;
+    from: string;
+    to: string;
+  };
+}
+
+interface IDateFilterData {
+  mode: string;
+  from: string;
+  to: string;
+}
+
+function parseDate(str) {
+  const ms = Date.parse(str);
+  if (isNaN(ms)) throw new Error(`invalid date`);
+  return new Date(ms);
+}
 
 class DateFilter {
   mode: string;
   from: Date;
   to: Date;
 
-  set(mode, from, to) {
-    this.mode = mode;
-    this.from = from && new Date(from);
-    this.to = to && new Date(to);
+  constructor(public options: IDateFilterOptions) {}
+
+  update(data: IDateFilterData) {
+    const currentData = {mode: this.mode, from: this.from, to: this.to};
+    const newData = {mode: undefined, from: undefined, to: undefined};
+
+    // sanitize data
+    switch (data.mode) {
+      case undefined: break;
+      case 'custom': {
+        if (!data.from && !data.to) throw new Error('from or to required');
+        newData.mode = 'custom';
+        newData.from = data.from && parseDate(data.from);
+        newData.to = data.to && parseDate(data.to);
+        break;
+      }
+      case 'lastYear': {
+        newData.mode = 'lastYear';
+        if (currentData.mode === 'lastYear') {
+          newData.from = currentData.from;
+          break;
+        }
+        const date = new Date();
+        date.setFullYear(date.getFullYear() - 1);
+        newData.from = date;
+        break;
+      }
+      case 'lastMonth': {
+        newData.mode = 'lastMonth';
+        if (currentData.mode === 'lastMonth') {
+          newData.from = currentData.from;
+          break;
+        }
+        const date = new Date();
+        date.setMonth(date.getMonth() - 1);
+        newData.from = date;
+        break;
+      }
+      case 'lastWeek': {
+        newData.mode = 'lastWeek';
+        if (currentData.mode === 'lastWeek') {
+          newData.from = currentData.from;
+          break;
+        }
+        const date = new Date();
+        date.setDate(date.getDate() - 7);
+        newData.from = date;
+        break;
+      }
+      default:
+        throw new Error(`date mode ${data.mode} unknown`);
+    }
+
+    if (isEqual(currentData, newData)) return;
+    assign(this, newData);
+    // TODO: notify?
+  }
+
+  updateFromUrlQuery(query) {
+    this.update({
+      mode: query[this.options.urlParameters.mode],
+      from: query[this.options.urlParameters.from],
+      to: query[this.options.urlParameters.to],
+    });
+  }
+
+  getUrlQuery() {
+    return {
+      [this.options.urlParameters.mode]: this.mode,
+      [this.options.urlParameters.from]: this.mode === 'custom' && this.from
+        ? this.from.toISOString() : undefined,
+      [this.options.urlParameters.to]: this.mode === 'custom' && this.to
+        ? this.to.toISOString() : undefined,
+    };
+  }
+
+  getApiQuery() {
+    return {
+      [this.options.apiParameters.from]: this.from,
+      [this.options.apiParameters.to]: this.to,
+    };
   }
 }
 
@@ -62,15 +163,18 @@ export default function(app) {
       query: string;
       queryModel: string;
 
-      facets = {};
       filters = {
         access: new FilterArray(),
         documentType: new FilterArray(),
         journal: new FilterArray(),
-        publishedAt: new DateFilter(),
+        publishedAt: new DateFilter({
+          apiParameters: {from: 'publishedAfter', to: 'publishedBefore'},
+          urlParameters: {mode: 'publishedAtMode', from: 'publishedAtFrom', to: 'publishedBefore'},
+        }),
       };
       resultsTotal: number;
       results: any[];
+      filterResults = {};
       total: number;
       updatingResults: boolean;
       updatingTotal: boolean;
@@ -118,23 +222,23 @@ export default function(app) {
         this.filters.access.setFromQuery(search.access);
         this.filters.documentType.setFromQuery(search.documentType);
         this.filters.journal.setFromQuery(search.journal);
-        this.filters.publishedAt.set(search.publishedAtMode, search.publishedAtFrom, search.publishedAtTo);
+        this.filters.publishedAt.updateFromUrlQuery(search);
 
         this.queryModel = this.query;
       }
 
       // update location from controller
       updateLocation() {
-        this.$location.search({
+        const search = {
           query: this.query,
           page: this.page > 1 ? this.page : undefined,
+          // TODO: move to filters
           access: this.filters.access.items,
           documentType: this.filters.documentType.items,
           journal: this.filters.journal.items,
-          publishedAtMode: this.filters.publishedAt.mode,
-          publishedAtFrom: this.filters.publishedAt.from && this.filters.publishedAt.from.toISOString(),
-          publishedAtTo: this.filters.publishedAt.to && this.filters.publishedAt.to.toISOString(),
-        });
+        };
+        assign(search, this.filters.publishedAt.getUrlQuery());
+        this.$location.search(search);
       }
 
       updateResults() {
@@ -144,21 +248,20 @@ export default function(app) {
         this.results = undefined;
         this.updatingResults = true;
 
-        return this.$http.get(`${this.config.apiUrl}/documents/search`, {
-          params: {
-            q: this.query,
-            limit: this.maxPerPage,
-            skip: (this.page - 1) * this.maxPerPage,
-            restrictToLatest: true,
-            // journals: this.selectedJournals,
-          },
-        })
+        const params = {
+          q: this.query,
+          limit: this.maxPerPage,
+          skip: (this.page - 1) * this.maxPerPage,
+          restrictToLatest: true,
+        };
+        assign(params, this.filters.publishedAt.getApiQuery());
+
+        return this.$http.get(`${this.config.apiUrl}/documents/search`, {params})
         .then(
           response => {
             this.resultsTotal = response.data.total;
             this.results = response.data.documents;
-            // this.facets = response.data.facets;
-            this.facets = require('./search-facets.json');
+            this.filterResults = response.data.filters;
           },
           response => this.notificationService.notifications.push({
             type: 'error',

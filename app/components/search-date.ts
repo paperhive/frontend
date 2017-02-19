@@ -6,7 +6,7 @@ import { getShortInteger } from '../utils/index';
 export default function(app) {
   app.component('searchDate', {
     bindings: {
-      facet: '<',
+      aggregation: '<',
     },
     controller: class SearchDateCtrl {
       chartistOptions = {
@@ -21,7 +21,7 @@ export default function(app) {
         fullWidth: true,
       };
       chartistData: any;
-      facet: {};
+      aggregation: any[];
 
       chartistEvents = {
         draw: event => {
@@ -38,11 +38,13 @@ export default function(app) {
 
       updateChartistData() {
         this.chartistData = undefined;
-        if (!this.facet) return;
-        const points = map(this.facet, (count, date) => {
-          return {x: parseInt(date.substr(0, 4), 10), y: count};
-        });
-        this.chartistData = {series: [points]};
+        if (!this.aggregation) return;
+
+        this.chartistData = {
+          series: [
+            this.aggregation.map(bucket => ({x: bucket.key, y: bucket.count})),
+          ],
+        };
       }
     },
     template: require('./search-date.html'),

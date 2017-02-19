@@ -1,4 +1,4 @@
-<div class="dropdown" uib-dropdown auto-close="outsideClick">
+<div class="dropdown" uib-dropdown auto-close="outsideClick" on-toggle="!open && $ctrl.updateFromFilter()">
   <button type="button" class="btn btn-sm btn-default" uib-dropdown-toggle>
     <div class="ph-grow-container">
       <div class="ph-grow-item">
@@ -13,16 +13,16 @@
   </button>
   <ul class="dropdown-menu ph-dropdown-menu-full" uib-dropdown-menu role="menu" aria-labelledby="single-button">
     <li ng-repeat="item in $ctrl.items track by item.key" role="menuitem">
-      <a href title="{{item.label}}" ng-click="$ctrl.onFilterUpdate({mode: item.key})">
+      <a href title="{{item.label}}" ng-click="$ctrl.setMode(item.key)">
         <div class="ph-grow-container">
           <div class="ph-grow-item">
-            <i class="fa fa-fw" ng-class="{'fa-check': $ctrl.filter.mode === item.key}"></i>
+            <i class="fa fa-fw" ng-class="{'fa-check': $ctrl.mode === item.key}"></i>
             {{item.label}}
           </div>
           <div>
             <span class="badge"
               ng-show="item.valueShort !== undefined"
-              ng-class="{'badge-primary': $ctrl.filter.mode === item.key}"
+              ng-class="{'badge-primary': $ctrl.mode === item.key}"
             >
               {{item.valueShort}}
             </span>
@@ -31,13 +31,13 @@
       </a>
     </li>
     <li role="menuitem">
-      <div class="ph-dropdown-item" ng-click="$ctrl.filter.set('custom', $ctrl.from, $ctrl.to)">
+      <div class="ph-dropdown-item" ng-click="$ctrl.setMode('custom')">
         <div class="ph-flex">
-          <div><i class="fa fa-fw" ng-class="{'fa-check': $ctrl.filter.mode === 'custom'}"></i>&nbsp;</div>
+          <div><i class="fa fa-fw" ng-class="{'fa-check': $ctrl.mode === 'custom'}"></i>&nbsp;</div>
           <div class="ph-flex-grow">
             Custom date range
             <form class="form-horizontal ph-sm-margin-top"
-              uib-collapse="$ctrl.filter.mode !== 'custom'"
+              uib-collapse="$ctrl.mode !== 'custom'"
               novalidate
             >
               <!-- from -->

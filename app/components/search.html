@@ -28,9 +28,9 @@
     <div class="row">
       <div class="col-md-3 text-center">
         <h5>Publication date</h5>
-        <search-date facet="$ctrl.facets.publishedAt.byYear"></search-date>
+        <search-date aggregation="$ctrl.filterResults.publishedAt.aggregation"></search-date>
         <a href class="small ph-link-icon"
-          ng-click="$ctrl.filters.publishedAt.set()"
+          ng-click="$ctrl.filters.publishedAt.update({})"
           ng-class="{'ph-hidden': !$ctrl.filters.publishedAt.mode}"
         >
           <i class="fa fa-fw fa-times"></i>
@@ -39,7 +39,7 @@
         <search-date-dropdown
           facets="$ctrl.facets.publishedAt"
           filter="$ctrl.filters.publishedAt"
-          on-filter-update="$ctrl.filters.publishedAt.set(mode, from, to)"
+          on-filter-update="$ctrl.filters.publishedAt.update({mode, from, to})"
         ></search-date-dropdown>
       </div>
       <div class="col-md-3 text-center">
@@ -114,10 +114,12 @@
     </div>
   </div>
 </div>
-<div class="container">
+<div class="container ph-md-padding-top">
   <div ng-if="$ctrl.results !== undefined">
-    <h2 ng-if="!$ctrl.results.length">No results for <em>{{$ctrl.query}}</em></h2>
-    <h2 ng-if="$ctrl.results.length">Results for <em>{{$ctrl.query}}</em></h2>
+    <p>
+      <span ng-if="$ctrl.resultsTotal === 0">No documents match your query.</span>
+      <span ng-if="$ctrl.resultsTotal > 0">Found {{$ctrl.resultsTotal | number}} documents.</span>
+    </p>
     <small class="text-muted">
       Couldn't find what you are looking for? <a href ng-click="feedbackModal.open()">Send us feedback</a> with
       suggestions for content that you miss on PaperHive.

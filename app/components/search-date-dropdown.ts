@@ -3,15 +3,17 @@ import { getShortInteger } from '../utils/index';
 export default function(app) {
   app.component('searchDateDropdown', {
     bindings: {
-      facets: '<',
+      aggregations: '<',
       filter: '<',
       onFilterUpdate: '&',
     },
     controller: class SearchDateDropdownCtrl {
       facets: any;
       filter: any;
+      onFilterUpdate: any;
 
       items: any[];
+      mode: string;
       from: Date;
       to: Date;
 
@@ -24,24 +26,39 @@ export default function(app) {
         ], this.updateItems.bind(this));
 
         $scope.$watchGroup(
-          ['$ctrl.filter.from', '$ctrl.filter.to'],
-          this.updateCustom.bind(this),
+          ['$ctrl.filter.mode', '$ctrl.filter.from', '$ctrl.filter.to'],
+          this.updateFromFilter.bind(this),
         );
 
         $scope.$watchGroup(
-          ['$ctrl.to', '$ctrl.from'],
+          ['$ctrl.mode', '$ctrl.to', '$ctrl.from'],
           this.updateFilter.bind(this),
         );
       }
 
-      updateCustom() {
+      setMode(mode) {
+        if (this.mode === mode) return;
+        this.mode = mode;
+        this.from = undefined;
+        this.to = undefined;
+      }
+
+      updateFromFilter() {
+        this.mode = this.filter.mode;
         this.from = this.filter.from;
         this.to = this.filter.to;
       }
 
       updateFilter() {
-        this.filter.from = this.from;
-        this.filter.to = this.to;
+        // do not update if data is not ready
+        if (this.mode === 'custom' && (!this.from && !this.to)) return;
+
+        // send update
+        this.onFilterUpdate({
+          mode: this.mode,
+          from: this.mode === 'custom' ? this.from : undefined,
+          to: this.mode === 'custom' ? this.to : undefined,
+        });
       }
 
       updateItems() {
