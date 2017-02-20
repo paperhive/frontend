@@ -1,5 +1,5 @@
 import { copy } from 'angular';
-import { assign, clone, isArray, isEqual } from 'lodash';
+import { assign, clone, forEach, isArray, isEqual } from 'lodash';
 
 interface IDateFilterOptions {
   apiParameters: {
@@ -11,6 +11,7 @@ interface IDateFilterOptions {
     from: string;
     to: string;
   };
+  onUpdate(): void;
 }
 
 interface IDateFilterData {
@@ -85,7 +86,7 @@ class DateFilter {
 
     if (isEqual(currentData, newData)) return;
     assign(this, newData);
-    // TODO: notify?
+    this.options.onUpdate();
   }
 
   updateFromUrlQuery(query) {
@@ -162,16 +163,9 @@ export default function(app) {
       page = 1;
       query: string;
       queryModel: string;
+      filters: any;
+      params: any = {};
 
-      filters = {
-        access: new FilterArray(),
-        documentType: new FilterArray(),
-        journal: new FilterArray(),
-        publishedAt: new DateFilter({
-          apiParameters: {from: 'publishedAfter', to: 'publishedBefore'},
-          urlParameters: {mode: 'publishedAtMode', from: 'publishedAtFrom', to: 'publishedBefore'},
-        }),
-      };
       resultsTotal: number;
       results: any[];
       filterResults = {};
@@ -185,24 +179,29 @@ export default function(app) {
       constructor(public config, public $http, public $location, $scope,
                   public feedbackModal, public notificationService) {
         $scope.$on('$locationChangeSuccess', this.updateFromLocation.bind(this));
-        this.updateFromLocation();
 
         $scope.$watchGroup(
           ['$ctrl.query', '$ctrl.page'],
-          (newVals, oldVals) => newVals !== oldVals && this.updateResults(),
+          (newVals, oldVals) => newVals !== oldVals && this.updateParams(),
         );
 
-        ['access', 'documentType', 'journal'].forEach(filter => $scope.$watchCollection(
-          `$ctrl.filters.${filter}.items`,
-          (newVals, oldVals) => newVals !== oldVals && this.updateResults(),
-        ));
-        $scope.$watchGroup(
-          ['mode', 'from', 'to'].map(key => `$ctrl.filters.publishedAt.${key}`),
-          (newVals, oldVals) => newVals !== oldVals && this.updateResults(),
-        );
+        this.filters = {
+          /*
+          access: new FilterArray(),
+          documentType: new FilterArray(),
+          journal: new FilterArray(),
+          */
+          publishedAt: new DateFilter({
+            onUpdate: this.updateParams.bind(this),
+            apiParameters: {from: 'publishedAfter', to: 'publishedBefore'},
+            urlParameters: {mode: 'publishedAtMode', from: 'publishedAtFrom', to: 'publishedBefore'},
+          }),
+        };
 
-        this.updateResults();
+        this.updateFromLocation();
         this.updateTotal();
+
+        $scope.$watchCollection('$ctrl.params', this.updateResults.bind(this));
       }
 
       scrollToTop() {
@@ -219,10 +218,7 @@ export default function(app) {
         this.query = search.query;
         this.page = search.page || 1;
 
-        this.filters.access.setFromQuery(search.access);
-        this.filters.documentType.setFromQuery(search.documentType);
-        this.filters.journal.setFromQuery(search.journal);
-        this.filters.publishedAt.updateFromUrlQuery(search);
+        forEach(this.filters, filter => filter.updateFromUrlQuery(search));
 
         this.queryModel = this.query;
       }
@@ -232,29 +228,32 @@ export default function(app) {
         const search = {
           query: this.query,
           page: this.page > 1 ? this.page : undefined,
-          // TODO: move to filters
-          access: this.filters.access.items,
-          documentType: this.filters.documentType.items,
-          journal: this.filters.journal.items,
         };
-        assign(search, this.filters.publishedAt.getUrlQuery());
+        forEach(this.filters, filter => assign(search, filter.getUrlQuery()));
         this.$location.search(search);
       }
 
-      updateResults() {
-        this.updateLocation();
-
-        this.resultsTotal = undefined;
-        this.results = undefined;
-        this.updatingResults = true;
-
+      updateParams() {
         const params = {
           q: this.query,
           limit: this.maxPerPage,
           skip: (this.page - 1) * this.maxPerPage,
           restrictToLatest: true,
         };
-        assign(params, this.filters.publishedAt.getApiQuery());
+
+        // TODO: loop
+        forEach(this.filters, filter => assign(params, filter.getApiQuery()));
+
+        if (isEqual(params, this.params)) return;
+        copy(params, this.params);
+      }
+
+      updateResults(params) {
+        this.updateLocation();
+
+        this.resultsTotal = undefined;
+        this.results = undefined;
+        this.updatingResults = true;
 
         return this.$http.get(`${this.config.apiUrl}/documents/search`, {params})
         .then(

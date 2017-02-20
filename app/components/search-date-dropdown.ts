@@ -8,7 +8,7 @@ export default function(app) {
       onFilterUpdate: '&',
     },
     controller: class SearchDateDropdownCtrl {
-      facets: any;
+      aggregations: any;
       filter: any;
       onFilterUpdate: any;
 
@@ -68,7 +68,7 @@ export default function(app) {
           {key: 'lastMonth', label: 'Last month'},
           {key: 'lastYear', label: 'Last year'},
         ].map(item => {
-          const value = this.facets && item.key && this.facets[item.key];
+          const value = this.aggregations && item.key && this.aggregations[item.key];
           return {
             key: item.key,
             label: item.label,
