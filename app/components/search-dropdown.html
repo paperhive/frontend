@@ -12,7 +12,7 @@
     </div>
   </button>
   <ul class="dropdown-menu ph-dropdown-menu-full" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-    <li ng-repeat="item in $ctrl.items track by item.key" role="menuitem">
+    <li ng-repeat="item in $ctrl.items track by item.term" role="menuitem">
       <a href title="{{item.label}}" ng-click="$ctrl.toggle(item)">
         <div class="ph-grow-container">
           <div class="ph-grow-item" ng-class="{'text-muted': $ctrl.selected.length > 0 && !item.selected}">
@@ -21,7 +21,7 @@
           </div>
           <div>
             <span class="badge" ng-class="{'badge-primary': item.selected}">
-              {{item.valueShort}}
+              {{item.countShort}}
             </span>
           </div>
         </div>

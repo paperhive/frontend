@@ -6,16 +6,16 @@ import { forEach, map } from 'lodash';
 import { getShortInteger } from '../utils/index';
 
 // todo: common interface
-interface IFacet {
-  key: string;
-  value: number;
+interface IBucket {
+  term: string;
+  count: number;
   label: string;
 }
 
 export default function(app) {
   app.component('searchDonut', {
     bindings: {
-      facets: '<',
+      aggregation: '<',
       selected: '<',
       onAdd: '&',
       onRemove: '&',
@@ -35,26 +35,26 @@ export default function(app) {
             el.on('click', () => this.onSliceClick(el, event.meta));
             el.on('mouseenter', () => this.$scope.$apply(() => {
               this.tooltipElement.addClass('in');
-              this.tooltipLabel = event.meta.label;
+              this.tooltipLabel = event.meta.label || event.meta.term;
               this.tooltipValue = getShortInteger(event.value);
             }));
             el.on('mouseleave', () => this.tooltipElement.removeClass('in'));
-            this.sliceElements[event.meta.key] = el;
-            this.updateSliceElement(event.meta.key);
+            this.sliceElements[event.meta.term] = el;
+            this.updateSliceElement(event.meta.term);
           }
         },
       };
 
-      facets: IFacet[];
+      aggregation: IBucket[];
       selected: string[];
-      onAdd: (o: {key: string}) => Promise<void>;
-      onRemove: (o: {key: string}) => Promise<void>;
+      onAdd: (o: {term: string}) => Promise<void>;
+      onRemove: (o: {term: string}) => Promise<void>;
       tooltipElement: JQuery;
       tooltipLabel: string;
       tooltipValue: string;
 
       chartistData: any;
-      sliceElements: { [key: string]: JQuery; };
+      sliceElements: { [term: string]: JQuery; };
 
       static $inject = ['$element', '$scope'];
       constructor(public $element, public $scope) {
@@ -64,7 +64,7 @@ export default function(app) {
       }
 
       $onChanges(changes) {
-        if (changes.facets && !equals(changes.facets.currentValue, changes.facets.previousValue)) {
+        if (changes.aggregation && !equals(changes.aggregation.currentValue, changes.aggregation.previousValue)) {
           this.updateChartistData();
         }
       }
@@ -72,24 +72,24 @@ export default function(app) {
       updateChartistData() {
         this.chartistData = undefined;
         this.sliceElements = {};
-        if (!this.facets) return;
+        if (!this.aggregation) return;
 
         this.chartistData = {
-          series: this.facets.map(facet => ({
-            value: facet.value,
-            meta: facet,
+          series: this.aggregation.map(bucket => ({
+            value: bucket.count,
+            meta: bucket,
           })),
         };
       }
 
       updateSliceElements() {
-        forEach(this.sliceElements, (_, key) => this.updateSliceElement(key));
+        forEach(this.sliceElements, (_, term) => this.updateSliceElement(term));
       }
 
-      updateSliceElement(key) {
-        const el = this.sliceElements[key];
+      updateSliceElement(term) {
+        const el = this.sliceElements[term];
         if (!el) return;
-        if (this.selected.indexOf(key) !== -1) {
+        if (this.selected.indexOf(term) !== -1) {
           el.addClass('ph-search-donut-slice-active');
         } else {
           el.removeClass('ph-search-donut-slice-active');
@@ -107,12 +107,12 @@ export default function(app) {
 
       onSliceClick(el: JQuery, meta: any) {
         this.$scope.$apply(() => {
-          if (this.selected.indexOf(meta.key) === -1) {
+          if (this.selected.indexOf(meta.term) === -1) {
             el.addClass('ph-search-donut-slice-active');
-            this.onAdd({key: meta.key});
+            this.onAdd({term: meta.term});
           } else {
             el.removeClass('ph-search-donut-slice-active');
-            this.onRemove({key: meta.key});
+            this.onRemove({term: meta.term});
           }
         });
       }

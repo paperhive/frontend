@@ -20,12 +20,6 @@ interface IDateFilterData {
   to: string;
 }
 
-function parseDate(str) {
-  const ms = Date.parse(str);
-  if (isNaN(ms)) throw new Error(`invalid date`);
-  return new Date(ms);
-}
-
 class DateFilter {
   mode: string;
   from: Date;
@@ -43,8 +37,8 @@ class DateFilter {
       case 'custom': {
         if (!data.from && !data.to) throw new Error('from or to required');
         newData.mode = 'custom';
-        newData.from = data.from && parseDate(data.from);
-        newData.to = data.to && parseDate(data.to);
+        newData.from = data.from && parseValue(data.from, 'date');
+        newData.to = data.to && parseValue(data.to, 'date');
         break;
       }
       case 'lastYear': {
@@ -112,6 +106,108 @@ class DateFilter {
       [this.options.apiParameters.from]: this.from,
       [this.options.apiParameters.to]: this.to,
     };
+  }
+}
+
+function parseValue(value: string, type: string) {
+  switch (type) {
+    case 'string': return value;
+    case 'boolean':
+      if (value === 'true') return true;
+      if (value === 'false') return false;
+      throw new Error('not true or false');
+    case 'integer': {
+      const integer = parseInt(value, 10);
+      if (isNaN(integer)) throw new Error('is not an integer');
+      return integer;
+    }
+    case 'number': {
+      const num = parseFloat(value);
+      if (isNaN(num)) throw new Error('is not a number');
+      return num;
+    }
+    case 'date': {
+      const milliseconds = Date.parse(value);
+      if (!milliseconds) throw new Error('is not an ISO8601 date');
+      return new Date(milliseconds);
+    }
+    default: throw new Error(`type ${this.options.type} not recognized`);
+  }
+}
+
+interface ITermsFilterOptions {
+  type: string;
+  apiParameters: {
+    term: string;
+    missing: string;
+  };
+  urlParameters: {
+    term: string;
+    missing: string;
+  };
+  onUpdate(): void;
+}
+
+class TermsFilter<T> {
+  private missing: boolean;
+  private terms: T[] = [];
+
+  constructor(public options: ITermsFilterOptions) {}
+
+  add(term: T) {
+    this.terms.push(term);
+    this.options.onUpdate();
+  }
+
+  remove(term: T) {
+    this.terms.splice(this.terms.indexOf(term), 1);
+    this.options.onUpdate();
+  }
+
+  reset() {
+    this.terms.splice(0, this.terms.length);
+    this.missing = false;
+    this.options.onUpdate();
+  }
+
+  setMissing(missing: boolean) {
+    if (this.missing === missing) return;
+    this.missing = missing;
+    this.options.onUpdate();
+  }
+
+  isActive() {
+    return this.terms.length > 0 || this.missing;
+  }
+
+  getApiQuery() {
+    return {
+      [this.options.apiParameters.term]: this.terms,
+      [this.options.apiParameters.missing]: this.missing,
+    };
+  }
+
+  getUrlQuery() {
+    return {
+      [this.options.urlParameters.term]: this.terms.length > 0
+        ? this.terms.map(term => term.toString()) : undefined,
+      [this.options.urlParameters.missing]: this.missing ? true : undefined,
+    };
+  }
+
+  updateFromUrlQuery(query) {
+    const urlTerms = query[this.options.urlParameters.term];
+    const newTerms = [];
+    if (isArray(urlTerms)) {
+      urlTerms.forEach(term => newTerms.push(parseValue(term, this.options.type)));
+    } else if (urlTerms !== undefined) {
+      newTerms.push(parseValue(urlTerms, this.options.type));
+    }
+
+    copy(newTerms, this.terms);
+
+    const missing = query[this.options.urlParameters.missing];
+    this.missing = missing !== undefined && parseValue(missing, 'boolean');
   }
 }
 
@@ -191,6 +287,12 @@ export default function(app) {
           documentType: new FilterArray(),
           journal: new FilterArray(),
           */
+          documentType: new TermsFilter({
+            onUpdate: this.updateParams.bind(this),
+            type: 'string',
+            apiParameters: {term: 'documentType', missing: 'documentTypeMissing'},
+            urlParameters: {term: 'documentType', missing: 'documentTypeMissing'},
+          }),
           publishedAt: new DateFilter({
             onUpdate: this.updateParams.bind(this),
             apiParameters: {from: 'publishedAfter', to: 'publishedBefore'},

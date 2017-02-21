@@ -75,7 +75,7 @@
         ></search-donut>
         <a href class="small ph-link-icon"
           ng-click="$ctrl.filters.access.reset()"
-          ng-class="{'ph-hidden': $ctrl.filters.access.isEmpty()}"
+          ng-class="{'ph-hidden': !$ctrl.filters.access.isActive()}"
         >
           <i class="fa fa-fw fa-times"></i>
           Clear filter
@@ -91,24 +91,24 @@
       <div class="col-md-3 text-center">
         <h5>Document type</h5>
         <search-donut
-          facets="$ctrl.facets.documentType"
-          selected="$ctrl.filters.documentType.items"
-          on-add="$ctrl.filters.documentType.add(key)"
-          on-remove="$ctrl.filters.documentType.remove(key)"
+          aggregation="$ctrl.filterResults.documentType.aggregation"
+          selected="$ctrl.filters.documentType.terms"
+          on-add="$ctrl.filters.documentType.add(term)"
+          on-remove="$ctrl.filters.documentType.remove(term)"
         ></search-donut>
         <a href class="small ph-link-icon"
           ng-click="$ctrl.filters.documentType.reset()"
-          ng-class="{'ph-hidden': $ctrl.filters.documentType.isEmpty()}"
+          ng-class="{'ph-hidden': !$ctrl.filters.documentType.isActive()}"
         >
           <i class="fa fa-fw fa-times"></i>
           Clear filter
         </a>
         <search-dropdown
           description="Filter by document type"
-          facets="$ctrl.facets.documentType"
-          selected="$ctrl.filters.documentType.items"
-          on-add="$ctrl.filters.documentType.add(key)"
-          on-remove="$ctrl.filters.documentType.remove(key)"
+          aggregation="$ctrl.filterResults.documentType.aggregation"
+          selected="$ctrl.filters.documentType.terms"
+          on-add="$ctrl.filters.documentType.add(term)"
+          on-remove="$ctrl.filters.documentType.remove(term)"
         ></search-dropdown>
       </div>
     </div>

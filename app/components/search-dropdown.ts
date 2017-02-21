@@ -6,9 +6,9 @@ import { forEach, map } from 'lodash';
 import { getShortInteger } from '../utils/index';
 
 // todo: common interface
-interface IFacet {
-  key: string;
-  value: number;
+interface IBucket {
+  term: string;
+  count: number;
   label: string;
 }
 
@@ -16,18 +16,24 @@ export default function(app) {
   app.component('searchDropdown', {
     bindings: {
       description: '@',
-      facets: '<',
+      aggregation: '<',
       selected: '<',
       onAdd: '&',
       onRemove: '&',
     },
     controller: class SearchDropdownCtrl {
-      facets: IFacet[];
+      aggregation: IBucket[];
       selected: string[];
-      onAdd: (o: {key: string}) => Promise<void>;
-      onRemove: (o: {key: string}) => Promise<void>;
+      onAdd: (o: {term: string}) => Promise<void>;
+      onRemove: (o: {term: string}) => Promise<void>;
 
-      items: Array<{key: string, value: number, valueShort: number, label: string, selected: boolean}>;
+      items: Array<{
+        term: string,
+        count: number,
+        countShort: number,
+        label: string,
+        selected: boolean}
+      >;
 
       static $inject = ['$scope'];
       constructor($scope) {
@@ -40,19 +46,19 @@ export default function(app) {
 
       toggle(item) {
         if (item.selected) {
-          this.onRemove({key: item.key});
+          this.onRemove({term: item.term});
         } else {
-          this.onAdd({key: item.key});
+          this.onAdd({term: item.term});
         }
       }
 
       updateItems() {
-        this.items = this.facets && this.facets.map(facet => ({
-          key: facet.key,
-          value: facet.value,
-          valueShort: getShortInteger(facet.value),
-          label: facet.label,
-          selected: this.selected && this.selected.indexOf(facet.key) !== -1,
+        this.items = this.aggregation && this.aggregation.map(bucket => ({
+          term: bucket.term,
+          count: bucket.count,
+          countShort: getShortInteger(bucket.count),
+          label: bucket.label || bucket.term,
+          selected: this.selected && this.selected.indexOf(bucket.term) !== -1,
         }));
       }
     },
