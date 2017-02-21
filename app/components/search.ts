@@ -282,16 +282,23 @@ export default function(app) {
         );
 
         this.filters = {
-          /*
-          access: new FilterArray(),
-          documentType: new FilterArray(),
-          journal: new FilterArray(),
-          */
+          access: new TermsFilter({
+            onUpdate: this.updateParams.bind(this),
+            type: 'string',
+            apiParameters: {term: 'openAccess', missing: 'openAccessMissing'},
+            urlParameters: {term: 'access', missing: 'accessMissing'},
+          }),
           documentType: new TermsFilter({
             onUpdate: this.updateParams.bind(this),
             type: 'string',
             apiParameters: {term: 'documentType', missing: 'documentTypeMissing'},
             urlParameters: {term: 'documentType', missing: 'documentTypeMissing'},
+          }),
+          journal: new TermsFilter({
+            onUpdate: this.updateParams.bind(this),
+            type: 'string',
+            apiParameters: {term: 'journal', missing: 'journalMissing'},
+            urlParameters: {term: 'journal', missing: 'journalMissing'},
           }),
           publishedAt: new DateFilter({
             onUpdate: this.updateParams.bind(this),

@@ -37,7 +37,7 @@
           Clear filter
         </a>
         <search-date-dropdown
-          facets="$ctrl.facets.publishedAt"
+          aggregation="$ctrl.filterResults.publishedAt.aggregation"
           filter="$ctrl.filters.publishedAt"
           on-filter-update="$ctrl.filters.publishedAt.update({mode, from, to})"
         ></search-date-dropdown>
@@ -45,33 +45,33 @@
       <div class="col-md-3 text-center">
         <h5>Journal</h5>
         <search-donut
-          facets="$ctrl.facets.journal"
-          selected="$ctrl.filters.journal.items"
-          on-add="$ctrl.filters.journal.add(key)"
-          on-remove="$ctrl.filters.journal.remove(key)"
+          aggregation="$ctrl.filterResults.journal.aggregation"
+          selected="$ctrl.filters.journal.terms"
+          on-add="$ctrl.filters.journal.add(term)"
+          on-remove="$ctrl.filters.journal.remove(term)"
         ></search-donut>
         <a href class="small ph-link-icon"
           ng-click="$ctrl.filters.journal.reset()"
-          ng-class="{'ph-hidden': $ctrl.filters.journal.isEmpty()}"
+          ng-class="{'ph-hidden': !$ctrl.filters.journal.isActive()}"
         >
           <i class="fa fa-fw fa-times"></i>
           Clear filter
         </a>
         <search-dropdown
           description="Filter by journal"
-          facets="$ctrl.facets.journal"
-          selected="$ctrl.filters.journal.items"
-          on-add="$ctrl.filters.journal.add(key)"
-          on-remove="$ctrl.filters.journal.remove(key)"
+          aggregation="$ctrl.filterResults.journal.aggregation"
+          selected="$ctrl.filters.journal.terms"
+          on-add="$ctrl.filters.journal.add(term)"
+          on-remove="$ctrl.filters.journal.remove(term)"
         ></search-dropdown>
       </div>
       <div class="col-md-3 text-center">
         <h5>Access</h5>
         <search-donut
-          facets="$ctrl.facets.access"
-          selected="$ctrl.filters.access.items"
-          on-add="$ctrl.filters.access.add(key)"
-          on-remove="$ctrl.filters.access.remove(key)"
+          aggregation="$ctrl.filterResults.openAccess.aggregation"
+          selected="$ctrl.filters.access.terms"
+          on-add="$ctrl.filters.access.add(term)"
+          on-remove="$ctrl.filters.access.remove(term)"
         ></search-donut>
         <a href class="small ph-link-icon"
           ng-click="$ctrl.filters.access.reset()"
@@ -82,10 +82,10 @@
         </a>
         <search-dropdown
           description="Filter by access"
-          facets="$ctrl.facets.access"
-          selected="$ctrl.filters.access.items"
-          on-add="$ctrl.filters.access.add(key)"
-          on-remove="$ctrl.filters.access.remove(key)"
+          aggregation="$ctrl.filterResults.openAccess.aggregation"
+          selected="$ctrl.filters.access.terms"
+          on-add="$ctrl.filters.access.add(term)"
+          on-remove="$ctrl.filters.access.remove(term)"
         ></search-dropdown>
       </div>
       <div class="col-md-3 text-center">
