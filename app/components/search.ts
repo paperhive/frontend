@@ -149,7 +149,6 @@ interface ITermsFilterOptions {
 }
 
 class TermsFilter<T> {
-  private missing: boolean;
   private terms: T[] = [];
 
   constructor(public options: ITermsFilterOptions) {}
@@ -166,33 +165,30 @@ class TermsFilter<T> {
 
   reset() {
     this.terms.splice(0, this.terms.length);
-    this.missing = false;
-    this.options.onUpdate();
-  }
-
-  setMissing(missing: boolean) {
-    if (this.missing === missing) return;
-    this.missing = missing;
     this.options.onUpdate();
   }
 
   isActive() {
-    return this.terms.length > 0 || this.missing;
+    return this.terms.length > 0;
   }
 
   getApiQuery() {
+    const terms = this.terms.filter(term => term !== null);
     return {
-      [this.options.apiParameters.term]: this.terms,
-      [this.options.apiParameters.missing]: this.missing,
+      [this.options.apiParameters.term]: terms.length > 0 ? terms : undefined,
+      [this.options.apiParameters.missing]: this.terms.indexOf(null) !== -1
+        ? true : undefined,
     };
   }
 
   getUrlQuery() {
-    return {
-      [this.options.urlParameters.term]: this.terms.length > 0
-        ? this.terms.map(term => term.toString()) : undefined,
-      [this.options.urlParameters.missing]: this.missing ? true : undefined,
-    };
+    const result = {};
+    const terms = this.terms
+      .filter(term => term !== null)
+      .map(term => term.toString());
+    if (terms.length > 0) result[this.options.urlParameters.term] = terms;
+    if (this.terms.indexOf(null) !== -1) result[this.options.urlParameters.missing] = 'true';
+    return result;
   }
 
   updateFromUrlQuery(query) {
@@ -204,10 +200,16 @@ class TermsFilter<T> {
       newTerms.push(parseValue(urlTerms, this.options.type));
     }
 
-    copy(newTerms, this.terms);
-
     const missing = query[this.options.urlParameters.missing];
-    this.missing = missing !== undefined && parseValue(missing, 'boolean');
+    if (missing !== undefined && parseValue(missing, 'boolean')) {
+      newTerms.push(null);
+    }
+
+    console.log(newTerms);
+    if (!isEqual(newTerms, this.terms)) {
+      copy(newTerms, this.terms);
+      this.options.onUpdate();
+    }
   }
 }
 
@@ -284,7 +286,7 @@ export default function(app) {
         this.filters = {
           access: new TermsFilter({
             onUpdate: this.updateParams.bind(this),
-            type: 'string',
+            type: 'boolean',
             apiParameters: {term: 'openAccess', missing: 'openAccessMissing'},
             urlParameters: {term: 'access', missing: 'accessMissing'},
           }),

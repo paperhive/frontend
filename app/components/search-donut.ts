@@ -47,14 +47,14 @@ export default function(app) {
 
       aggregation: IBucket[];
       selected: string[];
-      onAdd: (o: {term: string}) => Promise<void>;
-      onRemove: (o: {term: string}) => Promise<void>;
+      onAdd: (o: {term}) => Promise<void>;
+      onRemove: (o: {term}) => Promise<void>;
       tooltipElement: JQuery;
       tooltipLabel: string;
       tooltipValue: string;
 
       chartistData: any;
-      sliceElements: { [term: string]: JQuery; };
+      sliceElements: { [term]: JQuery; };
 
       static $inject = ['$element', '$scope'];
       constructor(public $element, public $scope) {
@@ -89,6 +89,7 @@ export default function(app) {
       updateSliceElement(term) {
         const el = this.sliceElements[term];
         if (!el) return;
+        console.log(el, term, this.selected);
         if (this.selected.indexOf(term) !== -1) {
           el.addClass('ph-search-donut-slice-active');
         } else {
@@ -107,8 +108,11 @@ export default function(app) {
 
       onSliceClick(el: JQuery, meta: any) {
         this.$scope.$apply(() => {
+          console.log(meta);
+          console.log(meta.term);
           if (this.selected.indexOf(meta.term) === -1) {
             el.addClass('ph-search-donut-slice-active');
+
             this.onAdd({term: meta.term});
           } else {
             el.removeClass('ph-search-donut-slice-active');
