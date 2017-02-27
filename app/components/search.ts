@@ -185,14 +185,14 @@ class TermsFilter<T> {
     const result = {};
     const terms = this.terms
       .filter(term => term !== null)
-      .map(term => term.toString());
+      .map(term => term === null ? null : term.toString());
     if (terms.length > 0) result[this.options.urlParameters.term] = terms;
     if (this.terms.indexOf(null) !== -1) result[this.options.urlParameters.missing] = 'true';
     return result;
   }
 
   updateFromUrlQuery(query) {
-    const urlTerms = query[this.options.urlParameters.term];
+    const urlTerms = query[this.options.urlParameters.term] as string[];
     const newTerms = [];
     if (isArray(urlTerms)) {
       urlTerms.forEach(term => newTerms.push(parseValue(term, this.options.type)));
@@ -200,12 +200,11 @@ class TermsFilter<T> {
       newTerms.push(parseValue(urlTerms, this.options.type));
     }
 
-    const missing = query[this.options.urlParameters.missing];
+    const missing = query[this.options.urlParameters.missing] as string;
     if (missing !== undefined && parseValue(missing, 'boolean')) {
       newTerms.push(null);
     }
 
-    console.log(newTerms);
     if (!isEqual(newTerms, this.terms)) {
       copy(newTerms, this.terms);
       this.options.onUpdate();

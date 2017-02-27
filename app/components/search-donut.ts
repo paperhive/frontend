@@ -39,8 +39,9 @@ export default function(app) {
               this.tooltipValue = getShortInteger(event.value);
             }));
             el.on('mouseleave', () => this.tooltipElement.removeClass('in'));
-            this.sliceElements[event.meta.term] = el;
-            this.updateSliceElement(event.meta.term);
+            const slice = {term: event.meta.term, element: el};
+            this.slices.push(slice);
+            this.updateSlice(slice);
           }
         },
       };
@@ -54,11 +55,14 @@ export default function(app) {
       tooltipValue: string;
 
       chartistData: any;
-      sliceElements: { [term]: JQuery; };
+      slices: Array<{
+        element: JQuery;
+        term: any;
+      }>;
 
       static $inject = ['$element', '$scope'];
       constructor(public $element, public $scope) {
-        $scope.$watchCollection('$ctrl.selected', this.updateSliceElements.bind(this));
+        $scope.$watchCollection('$ctrl.selected', this.updateSlices.bind(this));
         this.tooltipElement = $element.find('> .tooltip');
         $element.on('mousemove', this.onMouseMove.bind(this));
       }
@@ -71,7 +75,7 @@ export default function(app) {
 
       updateChartistData() {
         this.chartistData = undefined;
-        this.sliceElements = {};
+        this.slices = [];
         if (!this.aggregation) return;
 
         this.chartistData = {
@@ -82,18 +86,15 @@ export default function(app) {
         };
       }
 
-      updateSliceElements() {
-        forEach(this.sliceElements, (_, term) => this.updateSliceElement(term));
+      updateSlices() {
+        this.slices.forEach(slice => this.updateSlice(slice));
       }
 
-      updateSliceElement(term) {
-        const el = this.sliceElements[term];
-        if (!el) return;
-        console.log(el, term, this.selected);
-        if (this.selected.indexOf(term) !== -1) {
-          el.addClass('ph-search-donut-slice-active');
+      updateSlice(slice) {
+        if (this.selected.indexOf(slice.term) !== -1) {
+          slice.element.addClass('ph-search-donut-slice-active');
         } else {
-          el.removeClass('ph-search-donut-slice-active');
+          slice.element.removeClass('ph-search-donut-slice-active');
         }
       }
 
@@ -108,11 +109,8 @@ export default function(app) {
 
       onSliceClick(el: JQuery, meta: any) {
         this.$scope.$apply(() => {
-          console.log(meta);
-          console.log(meta.term);
           if (this.selected.indexOf(meta.term) === -1) {
             el.addClass('ph-search-donut-slice-active');
-
             this.onAdd({term: meta.term});
           } else {
             el.removeClass('ph-search-donut-slice-active');
