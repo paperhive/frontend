@@ -19,7 +19,7 @@
             <i class="fa fa-fw" ng-class="{'fa-check': item.selected}"></i>
             {{item.label}}
           </div>
-          <div>
+          <div ng-if="item.count > 0">
             <span class="badge" ng-class="{'badge-primary': item.selected}">
               {{item.countShort}}
             </span>

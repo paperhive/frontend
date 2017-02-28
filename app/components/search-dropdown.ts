@@ -53,13 +53,36 @@ export default function(app) {
       }
 
       updateItems() {
-        this.items = this.aggregation && this.aggregation.map(bucket => ({
-          term: bucket.term,
-          count: bucket.count,
-          countShort: getShortInteger(bucket.count),
-          label: bucket.label || bucket.term,
-          selected: this.selected && this.selected.indexOf(bucket.term) !== -1,
-        }));
+        const selectedAggregationTerms = [];
+        this.items = [];
+
+        if (this.aggregation) {
+          this.aggregation.forEach(bucket => {
+            const selected = this.selected && this.selected.indexOf(bucket.term) !== -1;
+            if (selected) selectedAggregationTerms.push(bucket.term);
+
+            this.items.push({
+              term: bucket.term,
+              count: bucket.count,
+              countShort: getShortInteger(bucket.count),
+              label: bucket.label || bucket.term,
+              selected,
+            });
+          });
+        }
+
+        if (this.selected) {
+          this.selected.forEach(term => {
+            if (selectedAggregationTerms.indexOf(term) !== -1) return;
+            this.items.unshift({
+              term,
+              count: undefined,
+              countShort: undefined,
+              label: term,
+              selected: true,
+            });
+          });
+        }
       }
     },
     template: require('./search-dropdown.html'),
