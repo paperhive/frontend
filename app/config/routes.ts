@@ -55,6 +55,7 @@ export default function(app) {
         .when('/knowledgeunlatched', 'knowledgeunlatched')
         .when('/legalnotice', 'legalnotice')
         .when('/login', 'login')
+        .when('/onboarding', 'onboarding')
         .when('/partners', 'partners')
         .when('/password/request', 'passwordRequest')
         .when('/password/reset', 'passwordReset')
@@ -347,6 +348,11 @@ export default function(app) {
         .segment('login', {
           template: '<login></login>',
           title: 'Log in to · Paperhive',
+        })
+
+        .segment('onboarding', {
+          template: '<onboarding></onboarding>',
+          title: 'Onboarding · PaperHive',
         })
 
         .segment('partners', {

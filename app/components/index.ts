@@ -57,6 +57,7 @@ import newReply from './new-reply';
 import notFound from './not-found';
 import notifications from './notifications';
 import officeMap from './office-map';
+import onboarding from './onboarding';
 import partnerLogos from './partner-logos';
 import passwordRequest from './password-request';
 import passwordReset from './password-reset';
@@ -140,6 +141,7 @@ export default function(app) {
   notFound(app);
   notifications(app);
   officeMap(app);
+  onboarding(app);
   partnerLogos(app);
   passwordRequest(app);
   passwordReset(app);
