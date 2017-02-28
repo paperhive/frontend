@@ -275,15 +275,16 @@ export default function(app) {
 
       resultsTotal: number;
       results: any[];
+      updateResultsCanceller: any;
       filterResults = {};
       total: number;
       updatingResults: boolean;
       updatingTotal: boolean;
 
-      static $inject = ['config', '$http', '$location', '$scope',
+      static $inject = ['config', '$http', '$location', '$q', '$scope',
         'feedbackModal', 'notificationService'];
 
-      constructor(public config, public $http, public $location, $scope,
+      constructor(public config, public $http, public $location, public $q, $scope,
                   public feedbackModal, public notificationService) {
         this.filters = {
           access: new TermsFilter({
@@ -379,19 +380,35 @@ export default function(app) {
         this.results = undefined;
         this.updatingResults = true;
 
-        return this.$http.get(`${this.config.apiUrl}/documents/search`, {params})
-        .then(
-          response => {
-            this.resultsTotal = response.data.total;
-            this.results = response.data.documents;
-            this.filterResults = response.data.filters;
-          },
-          response => this.notificationService.notifications.push({
-            type: 'error',
-            message: 'Could not fetch documents',
-          }),
+        if (this.updateResultsCanceller) {
+          this.updateResultsCanceller.resolve();
+        }
+        this.updateResultsCanceller = this.$q.defer();
+
+        return this.$http.get(
+          `${this.config.apiUrl}/documents/search`,
+          {params, timeout: this.updateResultsCanceller.promise},
         )
-        .finally(() => this.updatingResults = false);
+          .then(
+            response => {
+              this.resultsTotal = response.data.total;
+              this.results = response.data.documents;
+              this.filterResults = response.data.filters;
+            },
+            response => {
+              // request cancelled?
+              if (response.status === -1) return;
+              // display error
+              this.notificationService.notifications.push({
+                type: 'error',
+                message: 'Could not fetch documents',
+              });
+            },
+          )
+          .finally(() => {
+            this.updatingResults = false;
+            this.updateResultsCanceller = undefined;
+          });
       }
 
       updateTotal() {
