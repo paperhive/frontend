@@ -1,5 +1,5 @@
 import { copy } from 'angular';
-import { assign, clone, forEach, isArray, isEqual } from 'lodash';
+import { assign, clone, forEach, isArray, isEqual, pickBy } from 'lodash';
 
 interface IDateFilterOptions {
   apiParameters: {
@@ -271,7 +271,7 @@ export default function(app) {
       query: string;
       queryModel: string;
       filters: any;
-      params: any = {};
+      params: any;
 
       resultsTotal: number;
       results: any[];
@@ -285,13 +285,6 @@ export default function(app) {
 
       constructor(public config, public $http, public $location, $scope,
                   public feedbackModal, public notificationService) {
-        $scope.$on('$locationChangeSuccess', this.updateFromLocation.bind(this));
-
-        $scope.$watchGroup(
-          ['$ctrl.query', '$ctrl.page'],
-          (newVals, oldVals) => newVals !== oldVals && this.updateParams(),
-        );
-
         this.filters = {
           access: new TermsFilter({
             onUpdate: this.updateParams.bind(this),
@@ -318,10 +311,16 @@ export default function(app) {
           }),
         };
 
+        $scope.$on('$locationChangeSuccess', this.updateFromLocation.bind(this));
         this.updateFromLocation();
-        this.updateTotal();
+
+        $scope.$watchGroup(
+          ['$ctrl.query', '$ctrl.page'],
+          this.updateParams.bind(this),
+        );
 
         $scope.$watchCollection('$ctrl.params', this.updateResults.bind(this));
+        this.updateTotal();
       }
 
       scrollToTop() {
@@ -354,21 +353,26 @@ export default function(app) {
       }
 
       updateParams() {
-        const params = {
+        let params = {
           q: this.query,
           limit: this.maxPerPage,
           skip: (this.page - 1) * this.maxPerPage,
           restrictToLatest: true,
-        };
+        } as any;
 
-        // TODO: loop
         forEach(this.filters, filter => assign(params, filter.getApiQuery()));
 
+        // remove undefined
+        params = pickBy(params, v => v !== undefined);
+
+        if (!this.params) this.params = {};
         if (isEqual(params, this.params)) return;
         copy(params, this.params);
       }
 
       updateResults(params) {
+        if (!params) return;
+
         this.updateLocation();
 
         this.resultsTotal = undefined;
