@@ -12,8 +12,10 @@
     </div>
   </button>
   <ul class="dropdown-menu ph-dropdown-menu-full" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-    <li ng-repeat="item in $ctrl.items track by item.key" role="menuitem">
-      <a href title="{{item.label}}" ng-click="$ctrl.setMode(item.key)">
+    <li ng-repeat="item in $ctrl.items track by item.key" role="menuitem"
+      ng-class="{disabled: item.value === 0}"
+    >
+      <a href title="{{item.label}}" ng-click="(item.key === undefined || item.value > 0) && !$ctrl.setMode(item.key)">
         <div class="ph-grow-container">
           <div class="ph-grow-item">
             <i class="fa fa-fw" ng-class="{'fa-check': $ctrl.mode === item.key}"></i>
