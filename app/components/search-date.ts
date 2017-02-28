@@ -21,7 +21,9 @@ export default function(app) {
         fullWidth: true,
       };
       chartistData: any;
-      aggregation: any[];
+      aggregation: {
+        byYear: Array<{key: number, count: number}>;
+      };
 
       chartistEvents = {
         draw: event => {
@@ -42,7 +44,7 @@ export default function(app) {
 
         this.chartistData = {
           series: [
-            this.aggregation.map(bucket => ({x: bucket.key, y: bucket.count})),
+            this.aggregation.byYear.map(bucket => ({x: bucket.key, y: bucket.count})),
           ],
         };
       }

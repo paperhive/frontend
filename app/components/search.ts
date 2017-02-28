@@ -27,6 +27,16 @@ class DateFilter {
 
   constructor(public options: IDateFilterOptions) {}
 
+  // round to beginning of day
+  static getDay(date) {
+    const newDate = new Date(date);
+    newDate.setUTCHours(0);
+    newDate.setUTCMinutes(0);
+    newDate.setUTCSeconds(0);
+    newDate.setUTCMilliseconds(0);
+    return newDate;
+  }
+
   update(data: IDateFilterData) {
     const currentData = {mode: this.mode, from: this.from, to: this.to};
     const newData = {mode: undefined, from: undefined, to: undefined};
@@ -48,8 +58,8 @@ class DateFilter {
           break;
         }
         const date = new Date();
-        date.setFullYear(date.getFullYear() - 1);
-        newData.from = date;
+        date.setUTCFullYear(date.getUTCFullYear() - 1);
+        newData.from = DateFilter.getDay(date);
         break;
       }
       case 'lastMonth': {
@@ -59,8 +69,8 @@ class DateFilter {
           break;
         }
         const date = new Date();
-        date.setMonth(date.getMonth() - 1);
-        newData.from = date;
+        date.setUTCMonth(date.getUTCMonth() - 1);
+        newData.from = DateFilter.getDay(date);
         break;
       }
       case 'lastWeek': {
@@ -70,8 +80,8 @@ class DateFilter {
           break;
         }
         const date = new Date();
-        date.setDate(date.getDate() - 7);
-        newData.from = date;
+        date.setUTCDate(date.getUTCDate() - 7);
+        newData.from = DateFilter.getDay(date);
         break;
       }
       default:

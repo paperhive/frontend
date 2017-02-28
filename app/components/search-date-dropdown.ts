@@ -3,12 +3,12 @@ import { getShortInteger } from '../utils/index';
 export default function(app) {
   app.component('searchDateDropdown', {
     bindings: {
-      aggregations: '<',
+      aggregation: '<',
       filter: '<',
       onFilterUpdate: '&',
     },
     controller: class SearchDateDropdownCtrl {
-      aggregations: any;
+      aggregation: any;
       filter: any;
       onFilterUpdate: any;
 
@@ -20,9 +20,9 @@ export default function(app) {
       static $inject = ['$scope'];
       constructor($scope) {
         $scope.$watchGroup([
-          '$ctrl.facets.lastWeek',
-          '$ctrl.facets.lastMonth',
-          '$ctrl.facets.lastYear',
+          '$ctrl.aggregation.lastWeek',
+          '$ctrl.aggregation.lastMonth',
+          '$ctrl.aggregation.lastYear',
         ], this.updateItems.bind(this));
 
         $scope.$watchGroup(
@@ -68,7 +68,7 @@ export default function(app) {
           {key: 'lastMonth', label: 'Last month'},
           {key: 'lastYear', label: 'Last year'},
         ].map(item => {
-          const value = this.aggregations && item.key && this.aggregations[item.key];
+          const value = this.aggregation && item.key && this.aggregation[item.key];
           return {
             key: item.key,
             label: item.label,
