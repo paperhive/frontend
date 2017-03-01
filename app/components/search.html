@@ -115,6 +115,10 @@
   </div>
 </div>
 <div class="container ph-md-padding-top">
+  <div ng-if="$ctrl.documentsUpdating">
+    <i class="fa fa-fw fa-circle-o-notch fa-spin"></i>
+    Searching...
+  </div>
   <div ng-if="$ctrl.documents !== undefined">
     <p>
       <span ng-if="$ctrl.documentsTotal === 0">No documents match your query.</span>
