@@ -28,106 +28,106 @@
     <div class="row">
       <div class="col-md-3 text-center">
         <h5>Publication date</h5>
-        <search-date aggregation="$ctrl.filterResults.publishedAt.aggregation"></search-date>
+        <search-date aggregation="$ctrl.filters.publishedAt.aggregation"></search-date>
         <a href class="small ph-link-icon"
-          ng-click="$ctrl.filters.publishedAt.update({})"
-          ng-class="{'ph-hidden': !$ctrl.filters.publishedAt.mode}"
+          ng-click="$ctrl.filterCtrls.publishedAt.update({})"
+          ng-class="{'ph-hidden': !$ctrl.filterCtrls.publishedAt.mode}"
         >
           <i class="fa fa-fw fa-times"></i>
           Clear filter
         </a>
         <search-date-dropdown
-          aggregation="$ctrl.filterResults.publishedAt.aggregation"
-          filter="$ctrl.filters.publishedAt"
-          on-filter-update="$ctrl.filters.publishedAt.update({mode, from, to})"
+          aggregation="$ctrl.filters.publishedAt.aggregation"
+          filter="$ctrl.filterCtrls.publishedAt"
+          on-filter-update="$ctrl.filterCtrls.publishedAt.update({mode, from, to})"
         ></search-date-dropdown>
       </div>
       <div class="col-md-3 text-center">
         <h5>Journal</h5>
         <search-donut
-          aggregation="$ctrl.filterResults.journal.aggregation"
-          selected="$ctrl.filters.journal.terms"
-          on-add="$ctrl.filters.journal.add(term)"
-          on-remove="$ctrl.filters.journal.remove(term)"
+          aggregation="$ctrl.filters.journal.aggregation"
+          selected="$ctrl.filterCtrls.journal.terms"
+          on-add="$ctrl.filterCtrls.journal.add(term)"
+          on-remove="$ctrl.filterCtrls.journal.remove(term)"
         ></search-donut>
         <a href class="small ph-link-icon"
-          ng-click="$ctrl.filters.journal.reset()"
-          ng-class="{'ph-hidden': !$ctrl.filters.journal.isActive()}"
+          ng-click="$ctrl.filterCtrls.journal.reset()"
+          ng-class="{'ph-hidden': !$ctrl.filterCtrls.journal.isActive()}"
         >
           <i class="fa fa-fw fa-times"></i>
           Clear filter
         </a>
         <search-dropdown
           description="Filter by journal"
-          aggregation="$ctrl.filterResults.journal.aggregation"
-          selected="$ctrl.filters.journal.terms"
-          on-add="$ctrl.filters.journal.add(term)"
-          on-remove="$ctrl.filters.journal.remove(term)"
+          aggregation="$ctrl.filters.journal.aggregation"
+          selected="$ctrl.filterCtrls.journal.terms"
+          on-add="$ctrl.filterCtrls.journal.add(term)"
+          on-remove="$ctrl.filterCtrls.journal.remove(term)"
         ></search-dropdown>
       </div>
       <div class="col-md-3 text-center">
         <h5>Access</h5>
         <search-donut
-          aggregation="$ctrl.filterResults.openAccess.aggregation"
-          selected="$ctrl.filters.access.terms"
-          on-add="$ctrl.filters.access.add(term)"
-          on-remove="$ctrl.filters.access.remove(term)"
+          aggregation="$ctrl.filters.openAccess.aggregation"
+          selected="$ctrl.filterCtrls.access.terms"
+          on-add="$ctrl.filterCtrls.access.add(term)"
+          on-remove="$ctrl.filterCtrls.access.remove(term)"
         ></search-donut>
         <a href class="small ph-link-icon"
-          ng-click="$ctrl.filters.access.reset()"
-          ng-class="{'ph-hidden': !$ctrl.filters.access.isActive()}"
+          ng-click="$ctrl.filterCtrls.access.reset()"
+          ng-class="{'ph-hidden': !$ctrl.filterCtrls.access.isActive()}"
         >
           <i class="fa fa-fw fa-times"></i>
           Clear filter
         </a>
         <search-dropdown
           description="Filter by access"
-          aggregation="$ctrl.filterResults.openAccess.aggregation"
-          selected="$ctrl.filters.access.terms"
-          on-add="$ctrl.filters.access.add(term)"
-          on-remove="$ctrl.filters.access.remove(term)"
+          aggregation="$ctrl.filters.openAccess.aggregation"
+          selected="$ctrl.filterCtrls.access.terms"
+          on-add="$ctrl.filterCtrls.access.add(term)"
+          on-remove="$ctrl.filterCtrls.access.remove(term)"
         ></search-dropdown>
       </div>
       <div class="col-md-3 text-center">
         <h5>Document type</h5>
         <search-donut
-          aggregation="$ctrl.filterResults.documentType.aggregation"
-          selected="$ctrl.filters.documentType.terms"
-          on-add="$ctrl.filters.documentType.add(term)"
-          on-remove="$ctrl.filters.documentType.remove(term)"
+          aggregation="$ctrl.filters.documentType.aggregation"
+          selected="$ctrl.filterCtrls.documentType.terms"
+          on-add="$ctrl.filterCtrls.documentType.add(term)"
+          on-remove="$ctrl.filterCtrls.documentType.remove(term)"
         ></search-donut>
         <a href class="small ph-link-icon"
-          ng-click="$ctrl.filters.documentType.reset()"
-          ng-class="{'ph-hidden': !$ctrl.filters.documentType.isActive()}"
+          ng-click="$ctrl.filterCtrls.documentType.reset()"
+          ng-class="{'ph-hidden': !$ctrl.filterCtrls.documentType.isActive()}"
         >
           <i class="fa fa-fw fa-times"></i>
           Clear filter
         </a>
         <search-dropdown
           description="Filter by document type"
-          aggregation="$ctrl.filterResults.documentType.aggregation"
-          selected="$ctrl.filters.documentType.terms"
-          on-add="$ctrl.filters.documentType.add(term)"
-          on-remove="$ctrl.filters.documentType.remove(term)"
+          aggregation="$ctrl.filters.documentType.aggregation"
+          selected="$ctrl.filterCtrls.documentType.terms"
+          on-add="$ctrl.filterCtrls.documentType.add(term)"
+          on-remove="$ctrl.filterCtrls.documentType.remove(term)"
         ></search-dropdown>
       </div>
     </div>
   </div>
 </div>
 <div class="container ph-md-padding-top">
-  <div ng-if="$ctrl.results !== undefined">
+  <div ng-if="$ctrl.documents !== undefined">
     <p>
-      <span ng-if="$ctrl.resultsTotal === 0">No documents match your query.</span>
-      <span ng-if="$ctrl.resultsTotal > 0">Found {{$ctrl.resultsTotal | number}} documents.</span>
+      <span ng-if="$ctrl.documentsTotal === 0">No documents match your query.</span>
+      <span ng-if="$ctrl.documentsTotal > 0">Found {{$ctrl.documentsTotal | number}} documents.</span>
     </p>
     <small class="text-muted">
       Couldn't find what you are looking for? <a href ng-click="feedbackModal.open()">Send us feedback</a> with
       suggestions for content that you miss on PaperHive.
     </small>
-    <div ng-if="$ctrl.results.length">
+    <div ng-if="$ctrl.documents.length > 0">
       <div class="row ph-lg-margin-bottom row ph-lg-margin-top">
         <div class="col-md-8">
-          <div class="ph-lg-margin-top media" ng-repeat="document in $ctrl.results">
+          <div class="ph-lg-margin-top media" ng-repeat="document in $ctrl.documents">
             <h4>
               <a href="./documents/{{document.id}}" title="{{document.title}}">
                 <mathjax body="document.title"></mathjax>
@@ -149,26 +149,15 @@
           </div>
         </div>
       </div>
-      <div class="row ph-lg-margin-bottom">
-        <div class="col-md-8">
-          <ul uib-pagination
-            ng-if="$ctrl.resultsTotal > $ctrl.maxPerPage"
-            boundary-links="true"
-            boundary-link-numbers="true"
-            class="pagination-sm"
-            first-text="&laquo;"
-            last-text="&raquo;"
-            max-size="7"
-            next-text="&rsaquo;"
-            ng-click="$ctrl.scrollToTop()"
-            items-per-page="$ctrl.maxPerPage"
-            ng-model="$ctrl.page"
-            previous-text="&lsaquo;"
-            rotate="false"
-            total-items="$ctrl.resultsTotal"
-          ></ul>
-        </div>
-      </div>
+      <button ng-if="$ctrl.documents.length < $ctrl.documentsTotal"
+        ng-click="$ctrl.fetchDocumentsScroll()"
+        ng-disabled="$ctrl.documentsScrollUpdating"
+        class="btn btn-default" type="submit"
+      >
+        <i ng-if="!$ctrl.documentsScrollUpdating" class="fa fa-fw fa-angle-double-down"></i>
+        <i ng-if="$ctrl.documentsScrollUpdating" class="fa fa-fw fa-circle-o-notch fa-spin"></i>
+        Load more
+      </button>
     </div>
   </div>
 </div>

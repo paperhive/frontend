@@ -1,6 +1,5 @@
 {
-  "_apiUrl": "https://dev.paperhive.org/backend/master",
-  "apiUrl": "https://paperhive.org/api",
+  "apiUrl": "https://dev.paperhive.org/backend/master",
   "apiVersion": "1.0.0",
   "baseHref": "/"
 }

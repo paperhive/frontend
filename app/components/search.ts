@@ -266,62 +266,78 @@ class FilterArray {
 export default function(app) {
   app.component('search', {
     controller: class SearchCtrl {
-      const maxPerPage = 10;
-      page = 1;
-      query: string;
-      queryModel: string;
-      filters: any;
-      params: any;
+      filterCtrls = {
+        access: new TermsFilter({
+          onUpdate: this.updateFilterCtrlParams.bind(this),
+          type: 'boolean',
+          apiParameters: {term: 'openAccess', missing: 'openAccessMissing'},
+          urlParameters: {term: 'access', missing: 'accessMissing'},
+        }),
+        documentType: new TermsFilter({
+          onUpdate: this.updateFilterCtrlParams.bind(this),
+          type: 'string',
+          apiParameters: {term: 'documentType', missing: 'documentTypeMissing'},
+          urlParameters: {term: 'documentType', missing: 'documentTypeMissing'},
+        }),
+        journal: new TermsFilter({
+          onUpdate: this.updateFilterCtrlParams.bind(this),
+          type: 'string',
+          apiParameters: {term: 'journal', missing: 'journalMissing'},
+          urlParameters: {term: 'journal', missing: 'journalMissing'},
+        }),
+        publishedAt: new DateFilter({
+          onUpdate: this.updateFilterCtrlParams.bind(this),
+          apiParameters: {from: 'publishedAfter', to: 'publishedBefore'},
+          urlParameters: {mode: 'publishedAtMode', from: 'publishedAtFrom', to: 'publishedBefore'},
+        }),
+      };
 
-      resultsTotal: number;
-      results: any[];
-      updateResultsCanceller: any;
-      filterResults = {};
+      queryModel: string;
+
+      // parameters defining the result set (for search *and* aggregations)
+      searchParams: any = {};
+      filterCtrlParams: any = {};
+
+      // parameters defining how the results are fetched
+      searchFetchParams = {
+        sortBy: 'score',
+        size: 10,
+      };
+
+      documentsParams: any = {};
+      documentsUpdating: boolean;
+      documentsCanceller: any;
+      documentsScrollToken: string;
+      documentsTotal: number;
+      documents: any[];
+
+      documentsScrollUpdating: boolean;
+      documentsScrollCanceller: any;
+
+      filtersParams: any = {};
+      filtersUpdating: boolean;
+      filtersCanceller: any;
+      filters: any;
+
+      totalUpdating: boolean;
       total: number;
-      updatingResults: boolean;
-      updatingTotal: boolean;
 
       static $inject = ['config', '$http', '$location', '$q', '$scope',
         'feedbackModal', 'notificationService'];
 
       constructor(public config, public $http, public $location, public $q, $scope,
                   public feedbackModal, public notificationService) {
-        this.filters = {
-          access: new TermsFilter({
-            onUpdate: this.updateParams.bind(this),
-            type: 'boolean',
-            apiParameters: {term: 'openAccess', missing: 'openAccessMissing'},
-            urlParameters: {term: 'access', missing: 'accessMissing'},
-          }),
-          documentType: new TermsFilter({
-            onUpdate: this.updateParams.bind(this),
-            type: 'string',
-            apiParameters: {term: 'documentType', missing: 'documentTypeMissing'},
-            urlParameters: {term: 'documentType', missing: 'documentTypeMissing'},
-          }),
-          journal: new TermsFilter({
-            onUpdate: this.updateParams.bind(this),
-            type: 'string',
-            apiParameters: {term: 'journal', missing: 'journalMissing'},
-            urlParameters: {term: 'journal', missing: 'journalMissing'},
-          }),
-          publishedAt: new DateFilter({
-            onUpdate: this.updateParams.bind(this),
-            apiParameters: {from: 'publishedAfter', to: 'publishedBefore'},
-            urlParameters: {mode: 'publishedAtMode', from: 'publishedAtFrom', to: 'publishedBefore'},
-          }),
-        };
 
         $scope.$on('$locationChangeSuccess', this.updateFromLocation.bind(this));
         this.updateFromLocation();
 
-        $scope.$watchGroup(
-          ['$ctrl.query', '$ctrl.page'],
-          this.updateParams.bind(this),
-        );
+        $scope.$watchCollection('$ctrl.searchParams', this.updateParams.bind(this));
+        $scope.$watchCollection('$ctrl.searchFetchParams', this.updateParams.bind(this));
+        $scope.$watchCollection('$ctrl.filterCtrlParams', this.updateParams.bind(this));
 
-        $scope.$watchCollection('$ctrl.params', this.updateResults.bind(this));
-        this.updateTotal();
+        $scope.$watchCollection('$ctrl.documentsParams', this.fetchDocuments.bind(this));
+        $scope.$watchCollection('$ctrl.filtersParams', this.fetchFilters.bind(this));
+        this.fetchTotal();
       }
 
       scrollToTop() {
@@ -329,71 +345,98 @@ export default function(app) {
       }
 
       submitQuery() {
-        this.query = this.queryModel;
+        this.searchParams.q = this.queryModel;
       }
 
       // update controller variables from location
       updateFromLocation() {
         const search = this.$location.search();
-        this.query = search.query;
-        this.page = search.page || 1;
 
-        forEach(this.filters, filter => filter.updateFromUrlQuery(search));
+        // set query input model
+        this.queryModel = search.query;
 
-        this.queryModel = this.query;
+        // set result set params
+        // TODO: check if array is equal (otherwise digest is triggered)
+        // this.searchParams.in = ['authors', 'ids', 'title']; // TODO
+        this.searchParams.q = search.query;
+        this.searchParams.restrictToLatest = search.restrictToLatest !== 'false';
+
+        // set search fetch params
+        this.searchFetchParams.sortBy = search.sortBy || 'score';
+
+        // set filter params
+        forEach(this.filterCtrls, filter => filter.updateFromUrlQuery(search));
       }
 
       // update location from controller
       updateLocation() {
         const search = {
-          query: this.query,
-          page: this.page > 1 ? this.page : undefined,
+          // result set params
+          // TODO:
+          // in: isEqual(this.searchParams.in.sort(), ['authors', 'ids', 'title']) ?
+          //  undefined : this.searchParams.in,
+          query: this.searchParams.q,
+          restrictToLatest: this.searchParams.restrictToLatest ? undefined : 'true',
+          // fetch params
+          sortBy: this.searchParams.sortBy === 'score' ? undefined : this.searchParams.sortBy,
         };
-        forEach(this.filters, filter => assign(search, filter.getUrlQuery()));
+
+        // add filter parameters
+        forEach(this.filterCtrls, filter => assign(search, filter.getUrlQuery()));
+
+        // update location
         this.$location.search(search);
       }
 
-      updateParams() {
-        let params = {
-          q: this.query,
-          limit: this.maxPerPage,
-          skip: (this.page - 1) * this.maxPerPage,
-          restrictToLatest: true,
-        } as any;
-
-        forEach(this.filters, filter => assign(params, filter.getApiQuery()));
-
-        // remove undefined
-        params = pickBy(params, v => v !== undefined);
-
-        if (!this.params) this.params = {};
-        if (isEqual(params, this.params)) return;
-        copy(params, this.params);
+      updateFilterCtrlParams() {
+        const params = {};
+        forEach(this.filterCtrls, filter => assign(params, filter.getApiQuery()));
+        copy(pickBy(params, v => v !== undefined), this.filterCtrlParams);
       }
 
-      updateResults(params) {
-        if (!params) return;
+      updateParams() {
 
+        const documentsParams = assign(
+          {},
+          this.searchParams,
+          this.searchFetchParams,
+          this.filterCtrlParams,
+        );
+        const filtersParams = assign(
+          {},
+          this.searchParams,
+          this.filterCtrlParams,
+        );
+
+        copy(pickBy(documentsParams, v => v !== undefined), this.documentsParams);
+        copy(pickBy(filtersParams, v => v !== undefined), this.filtersParams);
+      }
+
+      fetchDocuments() {
         this.updateLocation();
 
-        this.resultsTotal = undefined;
-        this.results = undefined;
-        this.updatingResults = true;
+        // reset
+        this.documentsUpdating = true;
+        if (this.documentsCanceller) this.documentsCanceller.resolve();
+        this.documentsCanceller = this.$q.defer();
+        delete this.documentsScrollToken;
+        delete this.documentsTotal;
+        delete this.documents;
 
-        if (this.updateResultsCanceller) {
-          this.updateResultsCanceller.resolve();
-        }
-        this.updateResultsCanceller = this.$q.defer();
+        // also cancel scroll requests
+        if (this.documentsScrollCanceller) this.documentsScrollCanceller.resolve();
+        delete this.documentsScrollCanceller;
+        this.documentsScrollUpdating = false;
 
         return this.$http.get(
           `${this.config.apiUrl}/documents/search`,
-          {params, timeout: this.updateResultsCanceller.promise},
+          {params: this.documentsParams, timeout: this.documentsCanceller.promise},
         )
           .then(
             response => {
-              this.resultsTotal = response.data.total;
-              this.results = response.data.documents;
-              this.filterResults = response.data.filters;
+              this.documentsScrollToken = response.data.scrollToken;
+              this.documentsTotal = response.data.total;
+              this.documents = response.data.documents;
             },
             response => {
               // request cancelled?
@@ -406,13 +449,81 @@ export default function(app) {
             },
           )
           .finally(() => {
-            this.updatingResults = false;
-            this.updateResultsCanceller = undefined;
+            this.documentsUpdating = false;
+            delete this.documentsCanceller;
           });
       }
 
-      updateTotal() {
-        this.updatingTotal = true;
+      fetchDocumentsScroll() {
+        // reset
+        this.documentsScrollUpdating = true;
+        if (this.documentsScrollCanceller) {
+          this.documentsScrollCanceller.resolve();
+        }
+        this.documentsScrollCanceller = this.$q.defer();
+
+        return this.$http.get(
+          `${this.config.apiUrl}/documents/search/scroll`,
+          {
+            params: {scrollToken: this.documentsScrollToken},
+            timeout: this.documentsScrollCanceller.promise,
+          },
+        )
+          .then(
+            response => {
+              this.documents.push(...response.data.documents);
+            },
+            response => {
+              // request cancelled?
+              if (response.status === -1) return;
+              // display error
+              this.notificationService.notifications.push({
+                type: 'error',
+                message: 'Could not fetch documents',
+              });
+            },
+          )
+          .finally(() => {
+            this.documentsScrollUpdating = false;
+            delete this.documentsScrollCanceller;
+          });
+      }
+
+      fetchFilters() {
+        // reset
+        this.filtersUpdating = true;
+        if (this.filtersCanceller) {
+          this.filtersCanceller.resolve();
+        }
+        this.filtersCanceller = this.$q.defer();
+        delete this.filters;
+
+        return this.$http.get(
+          `${this.config.apiUrl}/documents/search/filters`,
+          {params: this.filtersParams, timeout: this.filtersCanceller.promise},
+        )
+          .then(
+            response => {
+              this.filters = response.data.filters;
+            },
+            response => {
+              // request cancelled?
+              if (response.status === -1) return;
+              // display error
+              this.notificationService.notifications.push({
+                type: 'error',
+                message: 'Could not fetch filters',
+              });
+            },
+          )
+          .finally(() => {
+            this.filtersUpdating = false;
+            delete this.filtersCanceller;
+          });
+      }
+
+      fetchTotal() {
+        this.totalUpdating = true;
         return this.$http.get(`${this.config.apiUrl}/documents/search`, {
           restrictToLatest: true,
         }).then(
@@ -421,7 +532,7 @@ export default function(app) {
             type: 'error',
             message: 'Could not fetch documents',
           }),
-        ).finally(() => this.updatingTotal = false);
+        ).finally(() => this.totalUpdating = false);
       }
     },
     template: require('./search.html'),
