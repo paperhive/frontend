@@ -296,7 +296,7 @@ export default function(app) {
             urlParameter: 'sortBy',
           },
           [
-            {id: 'score', label: 'Most relevant first'},
+            {id: 'score', label: 'Best matches first'},
             {id: '-publishedAt', label: 'Most recent first'},
             {id: '+publishedAt', label: 'Oldest first'},
           ],
