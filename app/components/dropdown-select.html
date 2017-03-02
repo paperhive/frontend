@@ -1,5 +1,6 @@
 <div class="dropdown ph-dropdown-small" uib-dropdown auto-close="outsideClick">
   <button class="btn btn-default btn-sm" type="button" uib-dropdown-toggle>
+    <i ng-if="$ctrl.iconClasses" class="{{$ctrl.iconClasses}}"></i>
     {{$ctrl.description}}
     <i class="fa fa-fw fa-caret-down"></i>
   </button>

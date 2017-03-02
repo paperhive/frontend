@@ -7,6 +7,7 @@ interface IItem {
 export default function(app) {
   app.component('dropdownSelect', {
     bindings: {
+      iconClasses: '@',
       description: '<',
       items: '<',
       onSelect: '&',
