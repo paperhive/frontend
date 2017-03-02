@@ -496,7 +496,6 @@ export default function(app) {
           this.filtersCanceller.resolve();
         }
         this.filtersCanceller = this.$q.defer();
-        delete this.filters;
 
         return this.$http.get(
           `${this.config.apiUrl}/documents/search/filters`,
