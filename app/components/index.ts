@@ -30,6 +30,7 @@ import documentRemote from './document-remote';
 import documentSidenav from './document-sidenav';
 import documentText from './document-text';
 import documentsList from './documents-list';
+import dropdownSelect from './dropdown-select';
 import extensionButtons from './extension-buttons';
 import feedback from './feedback';
 import feedbackButton from './feedback-button';
@@ -117,6 +118,7 @@ export default function(app) {
   documentSidenav(app);
   documentText(app);
   documentsList(app);
+  dropdownSelect(app);
   extensionButtons(app);
   feedback(app);
   feedbackButton(app);
