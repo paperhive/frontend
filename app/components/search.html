@@ -43,6 +43,29 @@
         ></search-date-dropdown>
       </div>
       <div class="col-md-3 text-center">
+        <h5>Document type</h5>
+        <search-donut
+          aggregation="$ctrl.filters.documentType.aggregation"
+          selected="$ctrl.filterCtrls.documentType.terms"
+          on-add="$ctrl.filterCtrls.documentType.add(term)"
+          on-remove="$ctrl.filterCtrls.documentType.remove(term)"
+        ></search-donut>
+        <a href class="small ph-link-icon"
+          ng-click="$ctrl.filterCtrls.documentType.reset()"
+          ng-class="{'ph-hidden': !$ctrl.filterCtrls.documentType.isActive()}"
+        >
+          <i class="fa fa-fw fa-times"></i>
+          Clear filter
+        </a>
+        <search-dropdown
+          description="Filter by document type"
+          aggregation="$ctrl.filters.documentType.aggregation"
+          selected="$ctrl.filterCtrls.documentType.terms"
+          on-add="$ctrl.filterCtrls.documentType.add(term)"
+          on-remove="$ctrl.filterCtrls.documentType.remove(term)"
+        ></search-dropdown>
+      </div>
+      <div class="col-md-3 text-center">
         <h5>Journal</h5>
         <search-donut
           aggregation="$ctrl.filters.journal.aggregation"
@@ -86,29 +109,6 @@
           selected="$ctrl.filterCtrls.access.terms"
           on-add="$ctrl.filterCtrls.access.add(term)"
           on-remove="$ctrl.filterCtrls.access.remove(term)"
-        ></search-dropdown>
-      </div>
-      <div class="col-md-3 text-center">
-        <h5>Document type</h5>
-        <search-donut
-          aggregation="$ctrl.filters.documentType.aggregation"
-          selected="$ctrl.filterCtrls.documentType.terms"
-          on-add="$ctrl.filterCtrls.documentType.add(term)"
-          on-remove="$ctrl.filterCtrls.documentType.remove(term)"
-        ></search-donut>
-        <a href class="small ph-link-icon"
-          ng-click="$ctrl.filterCtrls.documentType.reset()"
-          ng-class="{'ph-hidden': !$ctrl.filterCtrls.documentType.isActive()}"
-        >
-          <i class="fa fa-fw fa-times"></i>
-          Clear filter
-        </a>
-        <search-dropdown
-          description="Filter by document type"
-          aggregation="$ctrl.filters.documentType.aggregation"
-          selected="$ctrl.filterCtrls.documentType.terms"
-          on-add="$ctrl.filterCtrls.documentType.add(term)"
-          on-remove="$ctrl.filterCtrls.documentType.remove(term)"
         ></search-dropdown>
       </div>
     </div>
