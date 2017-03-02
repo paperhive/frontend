@@ -364,13 +364,15 @@ export default function(app) {
       updateFromLocation() {
         const search = this.$location.search();
 
+        const query = search.query || '';
+
         // set query input model
-        this.queryModel = search.query;
+        this.queryModel = query;
 
         // set result set params
         // TODO: check if array is equal (otherwise digest is triggered)
         // this.searchParams.in = ['authors', 'ids', 'title']; // TODO
-        this.searchParams.q = search.query;
+        this.searchParams.q = query;
         this.searchParams.restrictToLatest = search.restrictToLatest !== 'false';
 
         // set params
@@ -385,7 +387,7 @@ export default function(app) {
           // TODO:
           // in: isEqual(this.searchParams.in.sort(), ['authors', 'ids', 'title']) ?
           //  undefined : this.searchParams.in,
-          query: this.searchParams.q,
+          query: this.searchParams.q ? this.searchParams.q : undefined,
           restrictToLatest: this.searchParams.restrictToLatest ? undefined : 'true',
         };
 
