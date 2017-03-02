@@ -309,7 +309,7 @@ export default function(app) {
       documentsCanceller: any;
       documentsScrollToken: string;
       documentsTotal: number;
-      documents: any[];
+      documents: any[] = [];
 
       documentsScrollUpdating: boolean;
       documentsScrollCanceller: any;
@@ -395,7 +395,6 @@ export default function(app) {
       }
 
       updateParams() {
-
         const documentsParams = assign(
           {},
           this.searchParams,
@@ -421,7 +420,7 @@ export default function(app) {
         this.documentsCanceller = this.$q.defer();
         delete this.documentsScrollToken;
         delete this.documentsTotal;
-        delete this.documents;
+        this.documents.splice(0, this.documents.length);
 
         // also cancel scroll requests
         if (this.documentsScrollCanceller) this.documentsScrollCanceller.resolve();
@@ -436,7 +435,7 @@ export default function(app) {
             response => {
               this.documentsScrollToken = response.data.scrollToken;
               this.documentsTotal = response.data.total;
-              this.documents = response.data.documents;
+              copy(response.data.documents, this.documents);
             },
             response => {
               // request cancelled?

@@ -128,40 +128,38 @@
       Couldn't find what you are looking for? <a href ng-click="feedbackModal.open()">Send us feedback</a> with
       suggestions for content that you miss on PaperHive.
     </small>
-    <div ng-if="$ctrl.documents.length > 0">
-      <div class="row ph-lg-margin-bottom row ph-lg-margin-top">
-        <div class="col-md-8">
-          <div class="ph-lg-margin-top media" ng-repeat="document in $ctrl.documents">
-            <h4>
-              <a href="./documents/{{document.id}}" title="{{document.title}}">
-                <mathjax body="document.title"></mathjax>
-              </a>
-            </h4>
-            <span ng-repeat="author in document.authors">
-              {{author.name}}{{$last ? '' : ', '}}
-            </span>
-            <small class="text-muted ph-sm-margin-left">
-              {{document.publishedAt | date: 'yyyy'}}
+    <div class="row ph-lg-margin-bottom row ph-lg-margin-top">
+      <div class="col-md-8">
+        <div class="ph-lg-margin-top ph-fade-in ph-fade-out" ng-repeat="document in $ctrl.documents">
+          <h4>
+            <a href="./documents/{{document.id}}" title="{{document.title}}">
+              <mathjax body="document.title"></mathjax>
+            </a>
+          </h4>
+          <span ng-repeat="author in document.authors">
+            {{author.name}}{{$last ? '' : ', '}}
+          </span>
+          <small class="text-muted ph-sm-margin-left">
+            {{document.publishedAt | date: 'yyyy'}}
+          </small>
+          <div class="ph-sm-margin-top">
+            <small>
+              <mathjax
+                body="(document.abstract | limitTo: 220) + (document.abstract.length > 220 ? '&hellip;' : '')"
+              ></mathjax>
             </small>
-            <div class="ph-sm-margin-top">
-              <small>
-                <mathjax
-                  body="(document.abstract | limitTo: 220) + (document.abstract.length > 220 ? '&hellip;' : '')"
-                ></mathjax>
-              </small>
-            </div>
           </div>
         </div>
       </div>
-      <button ng-if="$ctrl.documents.length < $ctrl.documentsTotal"
-        ng-click="$ctrl.fetchDocumentsScroll()"
-        ng-disabled="$ctrl.documentsScrollUpdating"
-        class="btn btn-default" type="submit"
-      >
-        <i ng-if="!$ctrl.documentsScrollUpdating" class="fa fa-fw fa-angle-double-down"></i>
-        <i ng-if="$ctrl.documentsScrollUpdating" class="fa fa-fw fa-circle-o-notch fa-spin"></i>
-        Load more
-      </button>
     </div>
+    <button ng-if="$ctrl.documents.length < $ctrl.documentsTotal"
+      ng-click="$ctrl.fetchDocumentsScroll()"
+      ng-disabled="$ctrl.documentsScrollUpdating"
+      class="btn btn-default" type="submit"
+    >
+      <i ng-if="!$ctrl.documentsScrollUpdating" class="fa fa-fw fa-angle-double-down"></i>
+      <i ng-if="$ctrl.documentsScrollUpdating" class="fa fa-fw fa-circle-o-notch fa-spin"></i>
+      Load more
+    </button>
   </div>
 </div>
