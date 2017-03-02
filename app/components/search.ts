@@ -1,5 +1,5 @@
 import { copy } from 'angular';
-import { assign, clone, forEach, isArray, isEqual, pickBy } from 'lodash';
+import { assign, clone, cloneDeep, find, forEach, isArray, isEqual, pickBy } from 'lodash';
 
 interface IDateFilterOptions {
   apiParameters: {
@@ -222,44 +222,40 @@ class TermsFilter<T> {
   }
 }
 
-// André: subclassing Array is still a pain in the ass in JS
-//        -> use items property
-class FilterArray {
-  items = [];
+class SelectCtrl {
+  selectedItem: any;
+  items: any[];
 
-  add(item) {
-    if (this.items.indexOf(item) !== -1) return;
-    this.items.push(item);
+  constructor(public options, items, public defaultId) {
+    this.items = cloneDeep(items);
+    this.selectedItem = find(this.items, {id: defaultId}) || this.items && this.items[0];
+    this.selectedItem.selected = true;
   }
 
-  isEmpty() {
-    return this.items.length === 0;
+  select(selectItem) {
+    if (this.selectedItem.id === selectItem.id) return;
+    this.selectedItem.selected = false;
+    selectItem.selected = true;
+    this.selectedItem = selectItem;
+    this.options.onUpdate();
   }
 
-  remove(item) {
-    this.items.splice(this.items.indexOf(item), 1);
+  getApiQuery() {
+    return {[this.options.apiParameter]: this.selectedItem.id};
   }
 
-  replace(items) {
-    this.reset();
-    items.forEach(item => this.items.push(item));
+  getUrlQuery() {
+    return {
+      [this.options.urlParameter]: this.selectedItem.id === this.defaultId
+        ? undefined : this.selectedItem.id,
+    };
   }
 
-  reset() {
-    this.items.splice(0, this.items.length);
-  }
-
-  setFromQuery(val) {
-    let array = val || [];
-    // if param is just a single value (i.e. parameter is provided once) then
-    // we need to turn the string into an array
-    if (!isArray(array)) {
-      array = [array];
-    }
-    array = clone(array).sort();
-    if (isEqual(array, this.items)) return;
-
-    this.replace(array);
+  updateFromUrlQuery(query) {
+    const selectedId = query[this.options.urlParameter] || this.defaultId;
+    const item = find(this.items, {id: selectedId});
+    if (!item) throw new Error('invalid parameter');
+    this.select(item);
   }
 }
 
@@ -268,28 +264,44 @@ export default function(app) {
     controller: class SearchCtrl {
       filterCtrls = {
         access: new TermsFilter({
-          onUpdate: this.updateFilterCtrlParams.bind(this),
+          onUpdate: this.updateCtrlParams.bind(this),
           type: 'boolean',
           apiParameters: {term: 'openAccess', missing: 'openAccessMissing'},
           urlParameters: {term: 'access', missing: 'accessMissing'},
         }),
         documentType: new TermsFilter({
-          onUpdate: this.updateFilterCtrlParams.bind(this),
+          onUpdate: this.updateCtrlParams.bind(this),
           type: 'string',
           apiParameters: {term: 'documentType', missing: 'documentTypeMissing'},
           urlParameters: {term: 'documentType', missing: 'documentTypeMissing'},
         }),
         journal: new TermsFilter({
-          onUpdate: this.updateFilterCtrlParams.bind(this),
+          onUpdate: this.updateCtrlParams.bind(this),
           type: 'string',
           apiParameters: {term: 'journal', missing: 'journalMissing'},
           urlParameters: {term: 'journal', missing: 'journalMissing'},
         }),
         publishedAt: new DateFilter({
-          onUpdate: this.updateFilterCtrlParams.bind(this),
+          onUpdate: this.updateCtrlParams.bind(this),
           apiParameters: {from: 'publishedAfter', to: 'publishedBefore'},
           urlParameters: {mode: 'publishedAtMode', from: 'publishedAtFrom', to: 'publishedBefore'},
         }),
+      };
+
+      searchFetchCtrls = {
+        sortBy: new SelectCtrl(
+          {
+            onUpdate: this.updateCtrlParams.bind(this),
+            apiParameter: 'sortBy',
+            urlParameter: 'sortBy',
+          },
+          [
+            {id: 'score', label: 'Most relevant first'},
+            {id: '-publishedAt', label: 'Most recent first'},
+            {id: '+publishedAt', label: 'Oldest first'},
+          ],
+          'score',
+        ),
       };
 
       queryModel: string;
@@ -361,11 +373,9 @@ export default function(app) {
         this.searchParams.q = search.query;
         this.searchParams.restrictToLatest = search.restrictToLatest !== 'false';
 
-        // set search fetch params
-        this.searchFetchParams.sortBy = search.sortBy || 'score';
-
-        // set filter params
-        forEach(this.filterCtrls, filter => filter.updateFromUrlQuery(search));
+        // set params
+        forEach(this.filterCtrls, ctrl => ctrl.updateFromUrlQuery(search));
+        forEach(this.searchFetchCtrls, ctrl => ctrl.updateFromUrlQuery(search));
       }
 
       // update location from controller
@@ -377,21 +387,25 @@ export default function(app) {
           //  undefined : this.searchParams.in,
           query: this.searchParams.q,
           restrictToLatest: this.searchParams.restrictToLatest ? undefined : 'true',
-          // fetch params
-          sortBy: this.searchParams.sortBy === 'score' ? undefined : this.searchParams.sortBy,
         };
 
-        // add filter parameters
-        forEach(this.filterCtrls, filter => assign(search, filter.getUrlQuery()));
+        // add parameters
+        forEach(this.filterCtrls, ctrl => assign(search, ctrl.getUrlQuery()));
+        forEach(this.searchFetchCtrls, ctrl => assign(search, ctrl.getUrlQuery()));
 
         // update location
         this.$location.search(search);
       }
 
-      updateFilterCtrlParams() {
+      static updateCtrlParams(ctrls, targetParams) {
         const params = {};
-        forEach(this.filterCtrls, filter => assign(params, filter.getApiQuery()));
-        copy(pickBy(params, v => v !== undefined), this.filterCtrlParams);
+        forEach(ctrls, filter => assign(params, filter.getApiQuery()));
+        copy(pickBy(params, v => v !== undefined), targetParams);
+      }
+
+      updateCtrlParams() {
+        SearchCtrl.updateCtrlParams(this.filterCtrls, this.filterCtrlParams);
+        SearchCtrl.updateCtrlParams(this.searchFetchCtrls, this.searchFetchParams);
       }
 
       updateParams() {

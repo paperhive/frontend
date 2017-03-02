@@ -1,4 +1,4 @@
-<div class="dropdown" uib-dropdown auto-close="outsideClick" on-toggle="!open && $ctrl.updateFromFilter()">
+<div class="dropdown ph-dropdown-small" uib-dropdown auto-close="outsideClick" on-toggle="!open && $ctrl.updateFromFilter()">
   <button type="button" class="btn btn-sm btn-default" uib-dropdown-toggle>
     <div class="ph-grow-container">
       <div class="ph-grow-item">
@@ -8,7 +8,7 @@
         <span ng-if="$ctrl.filter.mode === 'lastYear'">Filtered by last year</span>
         <span ng-if="$ctrl.filter.mode === 'custom'">Filtered by custom date range</span>
       </div>
-      <div><span class="caret"></span></div>
+      <div><i class="fa fa-fw fa-caret-down"></i></div>
     </div>
   </button>
   <ul class="dropdown-menu ph-dropdown-menu-full" uib-dropdown-menu role="menu" aria-labelledby="single-button">
