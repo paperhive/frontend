@@ -523,9 +523,10 @@ export default function(app) {
 
       fetchTotal() {
         this.totalUpdating = true;
-        return this.$http.get(`${this.config.apiUrl}/documents/search`, {
-          restrictToLatest: true,
-        }).then(
+        return this.$http.get(
+          `${this.config.apiUrl}/documents/search`,
+          {params: {restrictToLatest: true}},
+        ).then(
           response => this.total = response.data.total,
           response => this.notificationService.notifications.push({
             type: 'error',
