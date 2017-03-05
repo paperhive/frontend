@@ -38,6 +38,7 @@ export default function(app) {
         selected: boolean}
       >;
       other: number;
+      otherShort: string;
 
       static $inject = ['$scope'];
       constructor($scope) {
@@ -62,6 +63,7 @@ export default function(app) {
 
         if (this.aggregation) {
           this.other = this.aggregation.other;
+          this.otherShort = getShortInteger(this.other);
           this.aggregation.buckets.forEach(bucket => {
             const selected = this.selected && this.selected.indexOf(bucket.term) !== -1;
             if (selected) selectedAggregationTerms.push(bucket.term);
