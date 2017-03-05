@@ -1,0 +1,72 @@
+.ph-search-filters {
+  box-shadow: @ph-shadow-inset-top, @ph-shadow-inset-bottom;
+  background-color: white;
+  padding: (@grid-gutter-width / 2) 0;
+}
+
+.ph-search-chart-date {
+  .ct-bar {
+    stroke: @ph-highlight-color;
+    stroke-width: 1%;
+  }
+  .ct-grid.ct-horizontal {
+    display: none;
+  }
+}
+
+search-donut {
+  display: block;
+  position: relative;
+  > .tooltip {
+    // prevent weird flickering due to mouse events
+    pointer-events: none;
+    > .tooltip-inner {
+      // prevent line break
+      white-space: nowrap;
+      .badge {
+        margin-left: 0.25em;
+      }
+    }
+  }
+}
+
+.ph-search-donut {
+  .ct-slice-donut {
+    transition: stroke-width 0.3s ease, opacity 0.3s ease;
+    cursor: pointer;
+    &:hover, &.ph-search-donut-slice-active {
+      stroke-width: 35px !important;
+    }
+  }
+  &.ph-search-donut-active {
+    .ct-slice-donut:not(.ph-search-donut-slice-active) {
+      // gray out non-active slices if another is active
+      opacity: 0.3;
+    }
+  }
+}
+
+search-date-dropdown, search-dropdown {
+  button {
+    width: 100%;
+  }
+  .badge {
+    font-size: 12px;
+  }
+}
+
+// add margin for datepicker popup placement
+.ph-search-date-input {
+  div[uib-datepicker-popup-wrap] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: 0 5px;
+    pointer-events: none;
+    > * {
+      pointer-events: all;
+    }
+  }
+}

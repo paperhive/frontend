@@ -29,6 +29,8 @@ import ngAnimate from 'angular-animate';    // ngAnimate module
 import ngRoute from 'angular-route';        // ngRoute module
 import ngSanitize from 'angular-sanitize';  // ngSanitize module
 
+// properly exported modules
+import angularChartist from 'angular-chartistjs'; // chartist.js
 import 'angular-route-segment';                  // route-segment, view-segment
 import 'angular-ui-bootstrap';                   // ui.bootstrap
 import 'angular-moment';                         // angularMoment
@@ -52,6 +54,7 @@ export const paperhive = module(
       ngAnimate,
       ngRoute,
       ngSanitize,
+      angularChartist,
       'route-segment',
       'view-segment',
       'ui.bootstrap',
