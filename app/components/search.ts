@@ -352,10 +352,6 @@ export default function(app) {
         this.fetchTotal();
       }
 
-      scrollToTop() {
-        window.scrollTo(0, 0);
-      }
-
       submitQuery() {
         this.searchParams.q = this.queryModel;
       }
