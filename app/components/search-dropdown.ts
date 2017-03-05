@@ -22,7 +22,10 @@ export default function(app) {
       onRemove: '&',
     },
     controller: class SearchDropdownCtrl {
-      aggregation: IBucket[];
+      aggregation: {
+        buckets: IBucket[];
+        other: number;
+      };
       selected: string[];
       onAdd: (o: {term: string}) => Promise<void>;
       onRemove: (o: {term: string}) => Promise<void>;
@@ -34,6 +37,7 @@ export default function(app) {
         label: string,
         selected: boolean}
       >;
+      other: number;
 
       static $inject = ['$scope'];
       constructor($scope) {
@@ -57,7 +61,8 @@ export default function(app) {
         this.items = [];
 
         if (this.aggregation) {
-          this.aggregation.forEach(bucket => {
+          this.other = this.aggregation.other;
+          this.aggregation.buckets.forEach(bucket => {
             const selected = this.selected && this.selected.indexOf(bucket.term) !== -1;
             if (selected) selectedAggregationTerms.push(bucket.term);
 

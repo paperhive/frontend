@@ -46,7 +46,10 @@ export default function(app) {
         },
       };
 
-      aggregation: IBucket[];
+      aggregation: {
+        other: number;
+        buckets: IBucket[];
+      };
       selected: string[];
       onAdd: (o: {term}) => Promise<void>;
       onRemove: (o: {term}) => Promise<void>;
@@ -79,7 +82,7 @@ export default function(app) {
         if (!this.aggregation) return;
 
         this.chartistData = {
-          series: this.aggregation.map(bucket => ({
+          series: this.aggregation.buckets.map(bucket => ({
             value: bucket.count,
             meta: bucket,
           })),

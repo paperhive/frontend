@@ -28,5 +28,16 @@
         </div>
       </a>
     </li>
+    <li ng-if="$ctrl.other > 0" role="menuitem" class="disabled">
+      <a href title="The list is limited to 10 items – this entry lets you know how much is missing.">
+        <div class="ph-grow-container">
+          <div class="ph-grow-item text-muted">
+            <i class="fa fa-fw"></i>
+            Other
+          </div>
+          <div><span class="badge">{{$ctrl.other}}</span></div>
+        </div>
+      </a>
+    </li>
   </ul>
 </div>
