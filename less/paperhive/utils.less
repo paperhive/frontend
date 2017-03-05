@@ -172,6 +172,14 @@ ul.ph-ul-md-spacing {
   }
 }
 
+.ph-flex {
+  display: flex;
+}
+
+.ph-flex-grow {
+  flex-grow: 1;
+}
+
 .ph-grow-container {
   display: flex;
 }
@@ -184,4 +192,67 @@ ul.ph-ul-md-spacing {
 
 .ph-text-overflow {
   .text-overflow();
+}
+
+.ph-hidden {
+  visibility: hidden;
+}
+
+.ph-input-has-icon {
+  position: relative;
+
+  // padding for left icon
+  &.ph-input-has-icon-left > .form-control {
+    padding-left: @input-height-base;
+    &.input-lg {
+      padding-left: @input-height-large;
+    }
+    &.input-sm {
+      padding-left: @input-height-small;
+    }
+  }
+
+  // padding for right icon
+  &.ph-input-has-icon-right > .form-control {
+    padding-right: @input-height-base;
+    &.input-lg {
+      padding-right: @input-height-large;
+    }
+    &.input-sm {
+      padding-right: @input-height-small;
+    }
+  }
+
+  // icon basics
+  > .ph-input-icon {
+    height: @input-height-base;
+    width: @input-height-base;
+    line-height: @input-height-base;
+
+    position: absolute;
+    top: 0;
+    pointer-events: none;
+    text-align: center;
+
+    &.ph-input-icon-left {
+      left: 0;
+    }
+    &.ph-input-icon-right {
+      right: 0;
+    }
+  }
+
+  // large input
+  > .input-lg ~ .ph-input-icon {
+    height: @input-height-large;
+    width: @input-height-large;
+    line-height: @input-height-large;
+  }
+
+  // small input
+  > .input-sm ~ .ph-input-icon {
+    height: @input-height-small;
+    width: @input-height-small;
+    line-height: @input-height-small;
+  }
 }

@@ -1,0 +1,68 @@
+// bootstrap dropdowns only allow "a" elements in dropdowns
+// this block adds a "ph-dropdown-item" class
+.dropdown-menu {
+  > li > .ph-dropdown-item {
+    cursor: pointer;
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: @line-height-base;
+    color: @dropdown-link-color;
+    white-space: nowrap; // prevent links from randomly breaking onto new lines
+
+    &:hover,
+    &:focus {
+      text-decoration: none;
+      color: @dropdown-link-hover-color;
+      background-color: @dropdown-link-hover-bg;
+    }
+  }
+
+  > .active > .ph-dropdown-item {
+    &,
+    &:hover,
+    &:focus {
+      color: @dropdown-link-active-color;
+      text-decoration: none;
+      outline: 0;
+      background-color: @dropdown-link-active-bg;
+    }
+  }
+
+  > .disabled > .ph-dropdown-item {
+    &,
+    &:hover,
+    &:focus {
+      color: @dropdown-link-disabled-color;
+    }
+
+    // Nuke hover/focus effects
+    &:hover,
+    &:focus {
+      text-decoration: none;
+      background-color: transparent;
+      background-image: none; // Remove CSS gradient
+      .reset-filter();
+      cursor: @cursor-disabled;
+    }
+  }
+}
+
+// dropdown items have a lot of padding by default
+// ph-dropdown-menu-full uses full width and reduces the padding,
+// e.g. for including icons
+.ph-dropdown-menu-full {
+  width: 100%;
+  > li {
+    > a, > .ph-dropdown-item {
+      padding: @padding-base-vertical/2 @padding-base-horizontal;
+    }
+  }
+}
+
+.ph-dropdown-small {
+  .dropdown-menu {
+    font-size: 14px;
+  }
+}

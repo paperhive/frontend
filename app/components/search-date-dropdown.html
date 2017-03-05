@@ -1,0 +1,92 @@
+<div class="dropdown ph-dropdown-small" uib-dropdown auto-close="outsideClick" on-toggle="!open && $ctrl.updateFromFilter()">
+  <button type="button" class="btn btn-sm btn-default" uib-dropdown-toggle>
+    <div class="ph-grow-container">
+      <div class="ph-grow-item">
+        <i class="fa fa-fw fa-filter"></i>
+        <span ng-if="$ctrl.filter.mode === undefined">Filter by publication date</span>
+        <span ng-if="$ctrl.filter.mode === 'lastWeek'">Filtered by last week</span>
+        <span ng-if="$ctrl.filter.mode === 'lastMonth'">Filtered by last month</span>
+        <span ng-if="$ctrl.filter.mode === 'lastYear'">Filtered by last year</span>
+        <span ng-if="$ctrl.filter.mode === 'custom'">Filtered by custom date range</span>
+      </div>
+      <div><i class="fa fa-fw fa-caret-down"></i></div>
+    </div>
+  </button>
+  <ul class="dropdown-menu ph-dropdown-menu-full" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+    <li ng-repeat="item in $ctrl.items track by item.key" role="menuitem"
+      ng-class="{disabled: item.value === 0}"
+    >
+      <a href title="{{item.label}}" ng-click="(item.key === undefined || item.value > 0) && !$ctrl.setMode(item.key)">
+        <div class="ph-grow-container">
+          <div class="ph-grow-item">
+            <i class="fa fa-fw" ng-class="{'fa-check': $ctrl.mode === item.key}"></i>
+            {{item.label}}
+          </div>
+          <div>
+            <span class="badge"
+              ng-show="item.valueShort !== undefined"
+              ng-class="{'badge-primary': $ctrl.mode === item.key}"
+            >
+              {{item.valueShort}}
+            </span>
+          </div>
+        </div>
+      </a>
+    </li>
+    <li role="menuitem">
+      <div class="ph-dropdown-item" ng-click="$ctrl.setMode('custom')">
+        <div class="ph-flex">
+          <div><i class="fa fa-fw" ng-class="{'fa-check': $ctrl.mode === 'custom'}"></i>&nbsp;</div>
+          <div class="ph-flex-grow">
+            Custom date range
+            <form class="form-horizontal ph-sm-margin-top"
+              uib-collapse="$ctrl.mode !== 'custom'"
+              novalidate
+            >
+              <!-- from -->
+              <div class="form-group">
+                <span for="from" class="col-sm-4 control-label">From</span>
+                <div class="col-sm-8">
+                  <div class="ph-input-has-icon ph-input-has-icon-left ph-search-date-input">
+                    <input type="text" class="form-control input-sm" name="from"
+                      ng-model="$ctrl.from"
+                      uib-datepicker-popup="yyyy-MM-dd"
+                      is-open="$ctrl.fromOpened"
+                      on-open-focus="false"
+                      close-on-date-selection="false"
+                      show-button-bar="false"
+                      popup-placement="auto right-top"
+                      ng-focus="$ctrl.fromOpened = true; $ctrl.toOpened = false"
+                      ng-click="$ctrl.fromOpened = true; $ctrl.toOpened = false"
+                    >
+                    <i class="ph-input-icon ph-input-icon-left fa fa-calendar"></i>
+                  </div>
+                </div>
+              </div>
+              <!-- to -->
+              <div class="form-group">
+                <span for="to" class="col-sm-4 control-label">To</span>
+                <div class="col-sm-8">
+                  <div class="ph-input-has-icon ph-input-has-icon-left ph-search-date-input">
+                    <input type="text" class="form-control input-sm" name="to"
+                      ng-model="$ctrl.to"
+                      uib-datepicker-popup="yyyy-MM-dd"
+                      is-open="$ctrl.toOpened"
+                      on-open-focus="false"
+                      close-on-date-selection="false"
+                      show-button-bar="false"
+                      popup-placement="auto right-top"
+                      ng-focus="$ctrl.fromOpened = false; $ctrl.toOpened = true"
+                      ng-click="$ctrl.fromOpened = false; $ctrl.toOpened = true"
+                    >
+                    <i class="ph-input-icon ph-input-icon-left fa fa-calendar"></i>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

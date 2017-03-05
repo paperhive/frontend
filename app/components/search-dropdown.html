@@ -1,0 +1,43 @@
+<div class="dropdown ph-dropdown-small" uib-dropdown auto-close="outsideClick">
+  <button type="button" class="btn btn-sm btn-default" uib-dropdown-toggle>
+    <div class="ph-grow-container">
+      <div class="ph-grow-item">
+        <i class="fa fa-fw fa-filter"></i>
+        <span ng-show="!$ctrl.selected.length">{{$ctrl.description}}</span>
+        <span ng-show="$ctrl.selected.length > 0">
+          Filtered by {{$ctrl.selected.length}}
+          {{$ctrl.selected.length === 1 ? 'item' : 'items'}}
+        </span>
+      </div>
+      <div><i class="fa fa-fw fa-caret-down"></i></div>
+    </div>
+  </button>
+  <ul class="dropdown-menu ph-dropdown-menu-full" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+    <li ng-repeat="item in $ctrl.items track by item.term" role="menuitem">
+      <a href title="{{item.label}}" ng-click="$ctrl.toggle(item); $event.stopPropagation();">
+        <div class="ph-grow-container">
+          <div class="ph-grow-item" ng-class="{'text-muted': $ctrl.selected.length > 0 && !item.selected}">
+            <i class="fa fa-fw" ng-class="{'fa-check': item.selected}"></i>
+            {{item.label}}
+          </div>
+          <div ng-if="item.count > 0">
+            <span class="badge" ng-class="{'badge-primary': item.selected}">
+              {{item.countShort}}
+            </span>
+          </div>
+        </div>
+      </a>
+    </li>
+    <li ng-if="$ctrl.other > 0" role="menuitem" class="disabled">
+      <a href title="The list is limited to 10 items – this entry lets you know how much is missing.">
+        <div class="ph-grow-container">
+          <div class="ph-grow-item text-muted">
+            <i class="fa fa-fw"></i>
+            Other
+          </div>
+          <div><span class="badge">{{$ctrl.otherShort}}</span></div>
+        </div>
+      </a>
+    </li>
+  </ul>
+</div>

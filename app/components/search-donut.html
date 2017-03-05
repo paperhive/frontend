@@ -1,0 +1,16 @@
+<chartist class="ct-chart ph-search-donut"
+  ng-class="{'ph-search-donut-active': $ctrl.selected.length > 0}"
+  chartist-data="$ctrl.chartistData"
+  chartist-chart-options="$ctrl.chartistOptions"
+  chartist-chart-type="Pie"
+  chartist-events="$ctrl.chartistEvents"
+></chartist>
+<div class="tooltip top fade" role="tooltip">
+  <div class="tooltip-arrow"></div>
+  <div class="tooltip-inner">
+    <div class="ph-grow-container">
+      <div class="ph-grow-item">{{$ctrl.tooltipLabel}}</div>
+      <div><span class="badge">{{$ctrl.tooltipValue}}</span></div>
+    </div>
+  </div>
+</div>
