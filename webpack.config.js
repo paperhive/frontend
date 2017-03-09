@@ -23,6 +23,8 @@ module.exports = {
       // alias highlight.js to highlightjs
       // see https://github.com/s-panferov/awesome-typescript-loader/issues/249
       highlightjs: 'highlight.js',
+      // alias angular-chartist.js to angular-chartistjs
+      'angular-chartistjs': 'angular-chartist.js',
     },
   },
   externals: {

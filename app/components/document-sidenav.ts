@@ -2,6 +2,8 @@ export default function(app) {
   app.component('documentSidenav', {
     bindings: {
       activeRevision: '<',
+      discussionsCtrl: '<',
+      discussionsByRevision: '<',
       documentCtrl: '<',
       open: '<',
       numberSearchResults: '<',

@@ -33,7 +33,13 @@
 @ph-danger-highlight-color: darken(@ph-bg-danger, 15%);
 
 @ph-text-highlight-color: rgb(255, 255, 0);
-@ph-shadow: 0 0 5px 0px rgba(64, 64, 64, 0.3);
+
+// shadow
+@ph-shadow-color: rgba(64, 64, 64, 0.3);
+@ph-shadow-size: 5px;
+@ph-shadow: 0 0 @ph-shadow-size 0px @ph-shadow-color;
+@ph-shadow-inset-top: inset 0 @ph-shadow-size @ph-shadow-size -@ph-shadow-size @ph-shadow-color;
+@ph-shadow-inset-bottom: inset 0 -@ph-shadow-size @ph-shadow-size -@ph-shadow-size @ph-shadow-color;
 
 // margin discussions
 @ph-margin-basecolor: white;

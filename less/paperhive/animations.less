@@ -1,17 +1,20 @@
 .ph-fade-out {
-  &.ng-hide-add {
+  &.ng-hide-add, &.ng-leave  {
     transition: 0.8s ease opacity;
   }
-  &.ng-hide {
+  &.ng-hide, &.ng-leave.ng-leave-active {
     opacity: 0;
   }
 }
 
 .ph-fade-in {
-  &.ng-hide-remove {
+  &.ng-hide-remove, &.ng-enter{
     transition: 0.8s ease opacity;
   }
-  &.ng-hide {
+  &.ng-hide, &.ng-enter {
     opacity: 0;
+  }
+  &.ng-enter.ng-enter-active {
+    opacity: 1;
   }
 }

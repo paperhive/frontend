@@ -1,5 +1,7 @@
 # PaperHive Frontend
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/paperhive/paperhive-frontend.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/paperhive/paperhive-frontend.svg?branch=master)](https://travis-ci.org/paperhive/paperhive-frontend)
 [![Dependency Status](https://gemnasium.com/paperhive/paperhive-frontend.svg)](https://gemnasium.com/paperhive/paperhive-frontend)
 [![Sauce Labs Status](https://badges.herokuapp.com/sauce/paperhive?name=PaperHive&tag=master&source=api)](https://saucelabs.com/u/paperhive)
