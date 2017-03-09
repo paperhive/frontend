@@ -28,6 +28,7 @@ import documentItem from './document-item';
 import documentNew from './document-new';
 import documentRemote from './document-remote';
 import documentSidenav from './document-sidenav';
+import documentSidenavPagination from './document-sidenav-pagination';
 import documentText from './document-text';
 import documentsList from './documents-list';
 import dropdownSelect from './dropdown-select';
@@ -117,6 +118,7 @@ export default function(app) {
   documentNew(app);
   documentRemote(app);
   documentSidenav(app);
+  documentSidenavPagination(app);
   documentText(app);
   documentsList(app);
   dropdownSelect(app);

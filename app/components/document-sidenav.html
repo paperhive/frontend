@@ -123,22 +123,11 @@
   </div>
   <div class="ph-sidenav-pagination">
     <ul class="ph-sidenav-icons">
-      <li class="ph-sidenav-pages">
-        <ul>
-          <li class="ph-pages-scroll-up">
-            <a class="btn" alt="Previous page" title="Previous page"><i class="fa fa-fw fa-chevron-circle-left"></i></a>
-          </li>
-          <li class="ph-pages-current">
-            <input type="text" class="ph-pages-current form-control input-sm" value="5">
-          </li>
-          <li class="ph-pages-total">
-            <span class="">/ 100 </span>
-          </li>
-          <li class="ph-pages-scroll-down">
-            <a class="btn" alt="Next page" title="Next page"><i class="fa fa-fw fa-chevron-circle-right"></i></a>
-          </li>
-        </ul>
-      </li>
+      <document-sidenav-pagination
+        page-number=""
+        total-page-number="$ctrl.pdfInfo.numPages"
+        on-change="TODO">
+      </document-sidenav-pagination>
       <li class="ph-sidenav-index">
         <a class="btn" ng-click="$ctrl.docNavToggle('index')" title="Index" alt="Index"><i class="fa fa-list-ol"></i></a>
         <div class="ph-margin-arrow-container ph-sidenav-arrow"
@@ -180,8 +169,6 @@
     <i class="fa fa-chevron-right" aria-hidden="true"></i>
   </button>
   <hive-button document-ctrl="$ctrl.documentCtrl" large="false"></hive-button>
-
-  <pdf-search on-search-submit="$ctrl.onSearchSubmit({searchStr})" large="false"></pdf-search>
 
   <div class="ph-sidenav-pagination">
     <ul class="ph-sidenav-icons">

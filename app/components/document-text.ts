@@ -17,6 +17,8 @@ class DocumentTextCtrl {
   pageCoordinates: any;
   anchor: string;
   pdfUrl: string;
+  pdfInfo: any;
+  onPdfInfoUpdate: (o: {pdfInfo: any}) => Promise<void>;
 
   static $inject = ['$animate', '$element', '$http', '$location',
     '$routeSegment', '$scope', '$window', 'config', 'notificationService',
@@ -46,6 +48,16 @@ class DocumentTextCtrl {
     }
     $animate.on('addClass', $element, triggerResize);
     $animate.on('removeClass', $element, triggerResize);
+
+    $scope.$watch('$ctrl.pdfStatus.pdf', pdf => {
+      if (!pdf) {
+        this.pdfInfo = undefined;
+        return;
+      }
+      this.pdfInfo = {numPages: pdf.numPages};
+    });
+
+    $scope.$watchCollection('$ctrl.pdfInfo', pdfInfo => this.onPdfInfoUpdate({pdfInfo}));
   }
 
   // create link for pdf destinations
@@ -139,6 +151,7 @@ export default function(app) {
       onReplySubmit: '&',
       onReplyUpdate: '&',
       onReplyDelete: '&',
+      onPdfInfoUpdate: '&',
       onTextUpdate: '&',
     },
     controller: DocumentTextCtrl,

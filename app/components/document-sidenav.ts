@@ -6,6 +6,7 @@ export default function(app) {
       discussionsByRevision: '<',
       documentCtrl: '<',
       open: '<',
+      pdfInfo: '<',
       numberSearchResults: '<',
       viewportOffsetTop: '<',
       onToggle: '&',
