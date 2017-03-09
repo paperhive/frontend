@@ -24,12 +24,17 @@ export default function(app) {
       kudosDoi: string;
       kudosTestedDoi: string;
       publisherLink: string;
+      docNav: string;
 
       static $inject = ['$http', '$scope', 'tourService'];
       constructor(public $http, $scope, public tour) {
 
         $scope.$watchCollection('$ctrl.documentCtrl.revisions', this.updateKudos.bind(this));
         $scope.$watchCollection('$ctrl.activeRevision', this.updatePublisherLink.bind(this));
+      }
+
+      docNavToggle(id) {
+        this.docNav = this.docNav === id ? undefined : id;
       }
 
       getDoi() {

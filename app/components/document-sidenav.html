@@ -121,6 +121,56 @@
       </div>
     </uib-accordion>
   </div>
+  <div class="ph-sidenav-pagination">
+    <ul class="ph-sidenav-icons">
+      <li class="ph-sidenav-pages">
+        <ul>
+          <li class="ph-pages-scroll-up">
+            <a class="btn" alt="Previous page" title="Previous page"><i class="fa fa-fw fa-chevron-circle-left"></i></a>
+          </li>
+          <li class="ph-pages-current">
+            <input type="text" class="ph-pages-current form-control input-sm" value="5">
+          </li>
+          <li class="ph-pages-total">
+            <span class="">/ 100 </span>
+          </li>
+          <li class="ph-pages-scroll-down">
+            <a class="btn" alt="Next page" title="Next page"><i class="fa fa-fw fa-chevron-circle-right"></i></a>
+          </li>
+        </ul>
+      </li>
+      <li class="ph-sidenav-index">
+        <a class="btn" ng-click="$ctrl.docNavToggle('index')" title="Index" alt="Index"><i class="fa fa-list-ol"></i></a>
+        <div class="ph-margin-arrow-container ph-sidenav-arrow"
+            ng-class="{'ph-sidenav-expanded': $ctrl.docNav === 'index'}">
+          <div class="ph-arrow ph-arrow-outward-bottom"></div>
+        </div>
+      </li>
+      <li class="ph-sidenav-thumbnails">
+        <a class="btn" ng-click="$ctrl.docNavToggle('thumb')" title="Page Thumbnails" alt="Page Thumbnails"><i class="fa fa-file-text-o"></i></a>
+        <div class="ph-margin-arrow-container ph-sidenav-arrow"
+            ng-class="{'ph-sidenav-expanded': $ctrl.docNav === 'thumb'}">
+          <div class="ph-arrow ph-arrow-outward-bottom"></div>
+        </div>
+      </li>
+      <li class="ph-sidenav-search">
+        <a class="btn" ng-click="$ctrl.docNavToggle('search')" title="Search" alt="Search"><i class="fa fa-fw fa-search"></i></a>
+        <div class="ph-margin-arrow-container ph-sidenav-arrow"
+            ng-class="{'ph-sidenav-expanded': $ctrl.docNav === 'search'}">
+          <div class="ph-arrow ph-arrow-outward-bottom"></div>
+        </div>
+      </li>
+      <div class="ph-sidenav-expand-index" ng-class="{'ph-sidenav-expanded': $ctrl.docNav === 'index'}">
+        Index
+      </div>
+      <div class="ph-sidenav-expand-thumb" ng-class="{'ph-sidenav-expanded': $ctrl.docNav === 'thumb'}">
+        Thumbnails
+      </div>
+      <div class="ph-sidenav-expand-search" ng-class="{'ph-sidenav-expanded': $ctrl.docNav === 'search'}">
+        This will expand and show information
+      </div>
+    </ul>
+  </div>
 </div>
 <div class="ph-sidenav-small"
   ng-show="!$ctrl.open"
@@ -130,5 +180,58 @@
     <i class="fa fa-chevron-right" aria-hidden="true"></i>
   </button>
   <hive-button document-ctrl="$ctrl.documentCtrl" large="false"></hive-button>
+
   <pdf-search on-search-submit="$ctrl.onSearchSubmit({searchStr})" large="false"></pdf-search>
+
+  <div class="ph-sidenav-pagination">
+    <ul class="ph-sidenav-icons">
+      <li class="ph-sidenav-pages">
+        <ul>
+          <li class="ph-pages-scroll-up">
+            <a class="btn" alt="Previous page" title="Previous page"><i class="fa fa-fw fa-chevron-circle-left"></i></a>
+          </li>
+          <li class="ph-pages-current" uib-tooltip="Page 5 of 100" tooltip-placement="right">
+            <input type="text" class="ph-pages-current form-control input-sm" value="5" >
+          </li>
+          <!-- <li class="ph-pages-total">
+            <span class="">/ 100</span>
+          </li> -->
+          <li class="ph-pages-scroll-down">
+            <a class="btn" alt="Next page" title="Next page"><i class="fa fa-fw fa-chevron-circle-right"></i></a>
+          </li>
+        </ul>
+      </li>
+      <li class="ph-sidenav-index">
+        <a class="btn" ng-click="$ctrl.docNavToggle('index')" title="Index" alt="Index"><i class="fa fa-list-ol"></i></a>
+        <div class="ph-margin-arrow-container ph-sidenav-arrow"
+            ng-class="{'ph-sidenav-expanded': $ctrl.docNav === 'index'}">
+          <div class="ph-arrow ph-arrow-outward-left"></div>
+        </div>
+        <div class="ph-sidenav-expand-index" ng-class="{'ph-sidenav-expanded': $ctrl.docNav === 'index'}">
+          Index
+        </div>
+      </li>
+      <li class="ph-sidenav-thumbnails">
+        <a class="btn" ng-click="$ctrl.docNavToggle('thumb')" title="Page Thumbnails" alt="Page Thumbnails"><i class="fa fa-file-text-o"></i></a>
+        <div class="ph-margin-arrow-container ph-sidenav-arrow"
+            ng-class="{'ph-sidenav-expanded': $ctrl.docNav === 'thumb'}">
+          <div class="ph-arrow ph-arrow-outward-left"></div>
+        </div>
+        <div class="ph-sidenav-expand-thumb" ng-class="{'ph-sidenav-expanded': $ctrl.docNav === 'thumb'}">
+          Thumbnails
+        </div>
+      </li>
+      <li class="ph-sidenav-search">
+        <a class="btn" ng-click="$ctrl.docNavToggle('search')" title="Search" alt="Search"><i class="fa fa-fw fa-search"></i></a>
+        <div class="ph-margin-arrow-container ph-sidenav-arrow"
+            ng-class="{'ph-sidenav-expanded': $ctrl.docNav === 'search'}">
+          <div class="ph-arrow ph-arrow-outward-left"></div>
+        </div>
+        <div class="ph-sidenav-expand-search" ng-class="{'ph-sidenav-expanded': $ctrl.docNav === 'search'}">
+          This will expand and show information
+        </div>
+      </li>
+
+    </ul>
+  </div>
 </div>

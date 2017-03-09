@@ -187,6 +187,104 @@ document-sidenav {
   }
 }
 
+// Pagination 
+.ph-sidenav-pagination {
+  position: absolute;
+  background: fade(@gray-lighter, 60%);
+  width: 100%;
+  height: auto;
+  left: 0;
+  bottom: 0; 
+
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none; 
+    display: flex; 
+    flex-direction: row; 
+    justify-content: space-between;
+    align-items: center;
+    li {
+      flex: 1;
+      position: relative;
+      
+      &.ph-sidenav-pages {
+        flex: 3;
+      }
+      a {
+        display: block;
+        border-bottom: 2px solid transparent;
+        padding-top: @padding-base-horizontal;
+        padding-bottom: @padding-base-horizontal;
+        &:hover {
+          background: @gray-lighter;
+          border-bottom: 2px solid @ph-base-color;
+        }
+      }
+      &.ph-pages-total, 
+      input {
+        text-align: center;
+        padding: @padding-base-vertical/2;
+        font-size: 80%;
+      }
+      input {
+        height: 25px;
+      }
+    }
+  }  
+}
+.ph-sidenav-arrow { 
+  height: auto;
+  top: 0;
+  left: 50%;  
+  opacity: 0;
+  transition: opacity .6s ease;
+  z-index: 10000;
+}
+[class*="ph-sidenav-expand-"] {
+  position: absolute;
+  background: @ph-white;
+  box-shadow: @ph-shadow; 
+  width: 100%; 
+  bottom: 100%; 
+  left: 0;
+  opacity: 0;
+  padding: @padding-base-horizontal;
+  transition: opacity .6s ease;  
+}
+.ph-sidenav-expanded {
+  opacity: 1;
+  transition: opacity .6s ease;
+}
+.ph-sidenav-small {
+  ul {
+    display: block; 
+    li {
+      &.ph-pages-current {
+        margin: @padding-base-horizontal/2;
+      }
+      a {
+        border-bottom: none; 
+        border-left: 2px solid transparent;
+        padding-top: @padding-base-horizontal/2;
+        padding-bottom: @padding-base-horizontal/2;
+        &:hover {
+          border-bottom: none;
+          border-left: 2px solid @ph-base-color;
+        }
+      }
+    }
+  }
+  .ph-sidenav-arrow {
+    top: 50%; 
+    left: 100%; 
+  }
+  [class*="ph-sidenav-expand-"] {
+    left: 100%; 
+    bottom: 0; 
+    width: inherit; 
+  }
+}
 // override padding for kudos so the iframe can fill the entire panel body
 .ph-sidenav-info-kudos .panel-body {
   padding: 0;
