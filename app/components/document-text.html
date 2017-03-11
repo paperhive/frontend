@@ -43,7 +43,7 @@
         on-select="$ctrl.draftSelectors = selectors || $ctrl.draftSelectors"
         on-link-dest-create="$ctrl.getLinkDest(dest)"
         on-anchor-update="$ctrl.anchor = anchor"
-        on-document-info-update="$ctrl.onDocumentInfoUpdate(info)"
+        on-page-number-update="$ctrl.pdfInfo.pageNumber = pageNumber"
         on-text-update="$ctrl.onTextUpdate({str, pageLengths})"
 
         popover-placement="right-top"

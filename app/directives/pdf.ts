@@ -6,6 +6,8 @@ import { PDFJS } from 'pdfjs-dist';
 const rangy = require('rangy');
 import { backTransformRange } from 'srch';
 
+const viewportPadding = 130;
+
 // test if height and width properties of 2 objects are equal
 function isSameSize(obj1, obj2) {
   return obj1 && obj2 && obj1.height === obj2.height && obj1.width === obj2.width;
@@ -629,6 +631,7 @@ export default function(app) {
       renderQueue: any;
       texts: any[];
 
+      pageNumber: number;
       containerWidth: number;
       lastSelectors: any;
       lastSimpleSelection: any;
@@ -936,6 +939,8 @@ export default function(app) {
           this.element.removeClass('ph-pdf-resize-active');
         }
 
+        this.updatePageNumber();
+
         // get currently running render tasks
         const running = this.renderQueue.workersList().map(task => task.data);
 
@@ -1056,7 +1061,7 @@ export default function(app) {
         if (!element) return;
 
         // scroll
-        scroll.scrollTo(element, {offset: (this.scope.viewportOffsetTop || 0) + 130});
+        scroll.scrollTo(element, {offset: (this.scope.viewportOffsetTop || 0) + viewportPadding});
       }
 
       async scrollToDest(dest) {
@@ -1098,7 +1103,7 @@ export default function(app) {
           this.element.offset().top +
           page.element[0].offsetTop +
           coords[1] / page.pageSize.height * page.height,
-          {offset: (this.scope.viewportOffsetTop || 0) + 130},
+          {offset: (this.scope.viewportOffsetTop || 0) + viewportPadding},
         );
       }
 
@@ -1113,7 +1118,7 @@ export default function(app) {
             this.element.offset().top +
             page.element[0].offsetTop +
             top * page.height,
-            {offset: (this.scope.viewportOffsetTop || 0) + 130},
+            {offset: (this.scope.viewportOffsetTop || 0) + viewportPadding},
           );
         }
       }
@@ -1141,7 +1146,7 @@ export default function(app) {
           this.element.offset().top +
           page.element[0].offsetTop +
           topRect.top * page.height,
-          {offset: (this.scope.viewportOffsetTop || 0) + 130},
+          {offset: (this.scope.viewportOffsetTop || 0) + viewportPadding},
         );
 
         // set selection
@@ -1174,6 +1179,18 @@ export default function(app) {
             this.scope.highlightsByPage[pageNumber].push(highlight);
           });
         });
+      }
+
+      updatePageNumber() {
+        let pageNumber = 1;
+        for (const page of this.pages) {
+          const rect = page.element[0].getBoundingClientRect();
+          if (rect.bottom > (this.scope.viewportOffsetTop || 0) + viewportPadding) break;
+          pageNumber += 1;
+        }
+        if (this.pageNumber === pageNumber) return;
+        this.pageNumber = pageNumber;
+        this.scope.onPageNumberUpdate({pageNumber});
       }
     }
 
@@ -1246,6 +1263,8 @@ export default function(app) {
 
         // called when the anchor is updated
         onAnchorUpdate: '&',
+
+        onPageNumberUpdate: '&',
 
         onTextUpdate: '&',
       },
