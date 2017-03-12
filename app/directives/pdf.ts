@@ -631,6 +631,7 @@ export default function(app) {
       renderQueue: any;
       texts: any[];
 
+      scrollTimeout: Promise<null>;
       scrolling: boolean;
       pageNumber: number;
       containerWidth: number;
@@ -701,6 +702,10 @@ export default function(app) {
         angular.element($window).on('resize', _resizeRender);
         angular.element($window).on('scroll', _render);
 
+        // sync current scroll state to url
+        const _scrollSync =  this.scrollSync.bind(this);
+        angular.element($window).on('scroll', _scrollSync);
+
         // focus text layer on mousedown (except click on links)
         let mousedown = false;
         this.element.on('mousedown', event => {
@@ -732,6 +737,7 @@ export default function(app) {
         this.element.on('$destroy', () => {
           angular.element($window).off('resize', _resizeRender);
           angular.element($window).off('scroll', _render);
+          angular.element($window).off('scroll', _scrollSync);
           $document.off('mouseup', onMouseUp);
           $document.off('keydown keyup', onKeyEvent);
         });
@@ -1030,6 +1036,15 @@ export default function(app) {
         );
       }
 
+      // sync current scroll state to url if resting at one place
+      scrollSync() {
+        if (this.scrollTimeout) $timeout.cancel(this.scrollTimeout);
+        this.scrollTimeout = $timeout(() => this.scope.$apply(() => {
+          this.scrollTimeout = undefined;
+          this.scope.onAnchorUpdate({anchor: `p:${this.pageNumber}`});
+        }), 5000);
+      }
+
       async scrollToAnchor(anchor) {
         if (!anchor) return;
         if (anchor !== this.anchor) {
@@ -1041,6 +1056,8 @@ export default function(app) {
         // match page
         match = /^p:(\d+)$/.exec(anchor);
         if (match) {
+          const pageNumber = parseInt(match[1], 10);
+          if (pageNumber === this.pageNumber) return;
           return this.scrollToId(anchor);
         }
         // match pdf named destination
