@@ -738,6 +738,7 @@ export default function(app) {
           angular.element($window).off('resize', _resizeRender);
           angular.element($window).off('scroll', _render);
           angular.element($window).off('scroll', _scrollSync);
+          if (this.scrollTimeout) $timeout.cancel(this.scrollTimeout);
           $document.off('mouseup', onMouseUp);
           $document.off('keydown keyup', onKeyEvent);
         });
