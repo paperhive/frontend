@@ -19,6 +19,7 @@
           ng-max="$ctrl.totalPageNumber"
           ng-required="true"
           ng-disabled="$ctrl.pageNumber === undefined"
+          ng-blur="$ctrl.pageNumberModel = $ctrl.pageNumber"
         >
       </form>
     </li>
