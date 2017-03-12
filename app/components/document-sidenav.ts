@@ -9,6 +9,7 @@ export default function(app) {
       pdfInfo: '<',
       numberSearchResults: '<',
       viewportOffsetTop: '<',
+      onAnchorUpdate: '&',
       onToggle: '&',
       onSearchSubmit: '&',
       onSearchMatchIndexUpdate: '&',

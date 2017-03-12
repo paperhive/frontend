@@ -135,6 +135,7 @@ class DocumentTextCtrl {
 export default function(app) {
   app.component('documentText', {
     bindings: {
+      anchor: '<',
       revision: '<',
       access: '<',
       latestAccessibleRevision: '<',

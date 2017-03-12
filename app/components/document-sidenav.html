@@ -126,7 +126,7 @@
       <document-sidenav-pagination
         page-number="$ctrl.pdfInfo.pageNumber"
         total-page-number="$ctrl.pdfInfo.numPages"
-        on-change="TODO">
+        on-change="$ctrl.onAnchorUpdate({anchor: 'p:' + pageNumber})">
       </document-sidenav-pagination>
       <li class="ph-sidenav-index">
         <a class="btn" ng-click="$ctrl.docNavToggle('index')" title="Index" alt="Index"><i class="fa fa-list-ol"></i></a>
