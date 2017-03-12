@@ -631,6 +631,7 @@ export default function(app) {
       renderQueue: any;
       texts: any[];
 
+      scrolling: boolean;
       pageNumber: number;
       containerWidth: number;
       lastSelectors: any;
@@ -1061,7 +1062,14 @@ export default function(app) {
         if (!element) return;
 
         // scroll
-        scroll.scrollTo(element, {offset: (this.scope.viewportOffsetTop || 0) + viewportPadding});
+        scroll.scrollTo(element, {
+          offset: (this.scope.viewportOffsetTop || 0) + viewportPadding,
+          before: () => this.scrolling = true,
+          after: () => {
+            this.scrolling = false;
+            this.updatePageNumber();
+          },
+        });
       }
 
       async scrollToDest(dest) {
@@ -1182,6 +1190,9 @@ export default function(app) {
       }
 
       updatePageNumber() {
+        // do not update page number during scroll operation
+        if (this.scrolling) return;
+
         let pageNumber = 1;
         for (const page of this.pages) {
           const rect = page.element[0].getBoundingClientRect();
