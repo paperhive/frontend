@@ -5,7 +5,7 @@
   "scripts": {
     "build": "npm run clean && npm-run-all -s build:*",
     "build:webpack": "webpack --config webpack.config.js --optimize-minimize",
-    "clean": "rm -rf build*",
+    "clean": "rimraf build",
     "lint:ts": "tslint app/**/*.ts",
     "lint:js": "eslint test *.js",
     "lint": "npm run lint:ts && npm run lint:js",

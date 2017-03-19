@@ -1,6 +1,72 @@
 .ph-onboarding-wizard {
+	margin: 30px 0;
+	counter-reset: step;
+
+	&.ph-flex-container {
+		flex-direction: column;
+	}
+	.ph-flex-item {
+		flex: 1;
+		align-self: auto; 
+	}
+}
+.ph-onboarding-steps {
 	background: @ph-white; 
 	box-shadow: @ph-shadow; 
-	padding: @padding-base-horizontal;
-	border-left: 5px solid @ph-green;
+	position: relative;
+    padding: @padding-base-horizontal @padding-base-horizontal @padding-base-horizontal 30px;
+    margin-bottom: 15px;
+
+    min-height: 150px;
+
+
+
+	&::before {
+    	content: '';
+    	position: absolute;
+		height: 100%; 
+		left: -3px;
+		top: 0;		
+		border-left: 6px solid; 
+    }
+    &::after {
+    	content: counter(step); 
+		counter-increment: step;
+		border-radius: 50%; 
+		border: @ph-background-color solid 3px;
+		box-sizing: content-box;
+		padding: (@padding-base-vertical - 2) @padding-base-horizontal; 
+		font-size: 2rem; 
+		color: @ph-white; 
+		position: absolute;
+		top: 50%; 
+		left: -21px;
+		margin-top: -21px; 
+    }   
+
+    &.ph-wizard-done {
+		&::before {			
+			border-left-color: @ph-green;
+		}
+		&::after {
+			background: @ph-green;
+		}
+    }
+    &.ph-wizard-active {
+		&::before {			
+			border-left-color: @ph-highlight-color;
+		}
+		&::after {
+			background: @ph-highlight-color;
+		}
+    }
+    &.ph-wizard-todo {
+    	&::before {			
+			border-left-color: hsl(hue(@ph-base-color), 0%, 90%);
+		}
+		&::after {
+			background: hsl(hue(@ph-base-color), 0%, 90%);
+		}
+    }
 }
+
