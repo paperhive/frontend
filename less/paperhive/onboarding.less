@@ -1,3 +1,8 @@
+.ph-onboarding {
+	background: url(../../static/img/bg.png);
+	background-size: cover; 
+	height: 100vh;
+}
 .ph-onboarding-wizard {
 	margin: 30px 0;
 	counter-reset: step;
@@ -15,12 +20,22 @@
 	box-shadow: @ph-shadow; 
 	position: relative;
     padding: @padding-base-horizontal @padding-base-horizontal @padding-base-horizontal 30px;
-    margin-bottom: 15px;
+    margin-bottom: @padding-base-horizontal;
 
     min-height: 150px;
 
+	h3 {
+		margin: 0 0 @padding-base-horizontal 0;
+	}
 
-
+	.input-group {
+		width: 100%; 
+		margin-bottom: @padding-base-horizontal;
+		label {
+			display: block;
+		}
+	}
+	
 	&::before {
     	content: '';
     	position: absolute;
@@ -69,4 +84,6 @@
 		}
     }
 }
-
+.ph-onboarding-buttons {
+	text-align: right;
+}

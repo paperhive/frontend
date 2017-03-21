@@ -3,7 +3,51 @@
 		<div class="row">
 			<div class="ph-onboarding-wizard ph-flex-container">
 				<div class="ph-onboarding-steps ph-flex-item ph-wizard-done">
-					Hello World
+					<h3>Personal Details</h3>
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="input-group">
+								<label for="name">Name</label>
+								<input id="name" type="text" class="form-control">					
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="input-group">
+								<label for="email">Email</label>
+								<input id="email" type="text" class="form-control">					
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="input-group dropdown ph-dropdown-large">
+								<label for="discipline">Discipline</label>
+								<input id="discipline" type="text" class="form-control">		
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="input-group dropdown ph-dropdown-large">
+								<label>Occupation</label>
+								<button uib-dropdown-toggle type="button" class="btn btn-default ph-split-container ph-split-container-icon-right dropdown-toggle">
+									<span class="ph-split-text">Select</span>
+									<i class="fa fa-fw fa-caret-down ph-split-icon-right"></i>
+								</button>		
+								<ul class="dropdown-menu ph-dropdown-menu-full" role="menu">
+									<li>Professor</li>
+									<li>Postdoc</li>
+									<li>PHD Student</li>
+									<li>Student</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="ph-onboarding-buttons">
+								<button class="btn btn-primary">Next</button>
+							</div>							
+						</div>
+					</div>
 				</div>
 				<div class="ph-onboarding-steps ph-flex-item ph-wizard-active">
 					Hello World
