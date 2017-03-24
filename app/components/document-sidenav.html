@@ -143,7 +143,7 @@
         </div>
       </li>
       <li class="ph-sidenav-search">
-        <a class="btn" ng-click="$ctrl.docNavToggle('search')" title="Search" alt="Search"><i class="fa fa-fw fa-search"></i></a>
+        <a class="btn" ng-click="$ctrl.docNavToggle('search')" title="Search in full text" alt="Search in full text"><i class="fa fa-fw fa-search"></i></a>
         <div class="ph-margin-arrow-container ph-sidenav-arrow"
             ng-class="{'ph-sidenav-expanded': $ctrl.docNav === 'search'}">
           <div class="ph-arrow ph-arrow-outward-bottom"></div>
@@ -156,7 +156,13 @@
         Thumbnails
       </div>
       <div class="ph-sidenav-expand-search" ng-class="{'ph-sidenav-expanded': $ctrl.docNav === 'search'}">
-        This will expand and show information
+        <document-sidenav-search
+          large="true"
+          match-number="$ctrl.pdfInfo.searchMatchIndex"
+          total-match-number="$ctrl.pdfInfo.searchMatches.length"
+          search-str="$ctrl.pdfInfo.searchStr"
+          on-update="$ctrl.onSearchUpdate({searchStr, searchMatchIndex})"
+        ></document-sidenav-search>
       </div>
     </ul>
   </div>

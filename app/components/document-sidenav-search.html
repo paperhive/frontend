@@ -1,0 +1,39 @@
+<div ng-if="$ctrl.large">
+  <div class="form-group ph-no-margin">
+    <input type="text" class="form-control"
+      ng-style="{'padding-right': $ctrl.iconsSize && $ctrl.iconsSize.width + 'px'}"
+      placeholder="&#xf002;  Search in full text" ng-model="$ctrl.str"
+      ng-keypress="$event.keyCode === 13 && $ctrl.submit($ctrl.str)"
+      autocomplete="off"
+    >
+    <div class="ph-component-controls" on-resized="$ctrl.iconsSize = $size">
+      <span class="ph-component-counters">
+        5 of 11
+        <!--
+        {{$ctrl.indexSearchResults === undefined ? 0 : $ctrl.indexSearchResults + 1}}
+        of {{$ctrl.numberSearchResults}}
+      -->
+      </span>
+      <span class="ph-component-separator"></span>
+      <button class="btn btn-link" title="Previous" ng-click="$ctrl.previousResult()"
+        ng-disabled="!$ctrl.numberSearchResults"
+      >
+        <i class="fa fa-chevron-up"></i>
+      </button>
+      <a class="btn" title="Next" ng-click="$ctrl.nextResult()"
+        ng-disabled="!$ctrl.numberSearchResults"
+      >
+        <i class="fa fa-chevron-down"></i>
+      </a>
+      <button class="btn btn-link" ng-click="$ctrl.clearSearch()" title="Clear search">
+        <i class="fa fa-times"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div ng-if="!$ctrl.large" class="ph-sidenav-item">
+  <button class="btn btn-link">
+    <i class="fa fa-search"></i>
+  </button>
+</div>

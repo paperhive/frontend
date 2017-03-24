@@ -1,14 +1,17 @@
 import jquery from 'jquery';
 
+require('./document-sidenav-search.less');
+
 export default function(app) {
-  app.component('pdfSearch', {
+  app.component('documentSidenavSearch', {
     bindings: {
       large: '<',
+
       numberSearchResults: '<',
       onSearchSubmit: '&',
       onSearchMatchIndexUpdate: '&',
     },
-    controller: class PdfSearchController {
+    controller: class DocumenSidenavSearchCtrl {
       indexSearchResults: number;
       large: boolean;
       numberSearchResults: number;
@@ -81,6 +84,6 @@ export default function(app) {
       }
 
     },
-    template: require('./pdf-search.html'),
+    template: require('./document-sidenav-search.html'),
   });
 };
