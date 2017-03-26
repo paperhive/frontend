@@ -37,8 +37,10 @@ module.exports = {
         // upstream files that only need to be copied
         include: [path.resolve(__dirname, 'node_modules')],
         test: /\.(eot|ttf|woff2?)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: "file-loader",
-        query: {name: 'assets/[name].[md5:hash:hex:8].[ext]'},
+        use: [{
+          loader: 'file-loader',
+          options: {name: 'assets/[name].[md5:hash:hex:8].[ext]'},
+        }],
       },
       {
         // upstream images
@@ -47,25 +49,30 @@ module.exports = {
         use: [
           {
             loader: 'file-loader',
-            query: {name: 'assets/[name].[md5:hash:hex:8].[ext]'},
+            options: {name: 'assets/[name].[md5:hash:hex:8].[ext]'},
           },
-          'image-webpack-loader',
+          {
+            loader: 'image-webpack-loader',
+            options: {},
+          },
         ],
       },
       {
         test: /\.html$/,
         exclude: [path.resolve(__dirname, 'app/index.html')],
-        loader: 'html-loader',
-        query: {
-          interpolate: 'require', // allow ${require(...)} in html
-        },
+        use: [{
+          loader: 'html-loader',
+          options: {interpolate: 'require'}, // allow ${require(...)} in html
+        }],
       },
       {
         // files that only need to be copied
         exclude: [path.resolve(__dirname, 'node_modules')],
         test: /\.(ico|xml)?$/,
-        loader: "file-loader",
-        query: {name: '[path][name].[md5:hash:hex:8].[ext]'},
+        use: [{
+          loader: 'file-loader',
+          options: {name: '[path][name].[md5:hash:hex:8].[ext]'},
+        }],
       },
       {
         // images that can be optimized
@@ -74,20 +81,21 @@ module.exports = {
         use: [
           {
             loader: 'file-loader',
-            query: {name: '[path][name].[md5:hash:hex:8].[ext]'},
+            options: {name: '[path][name].[md5:hash:hex:8].[ext]'},
           },
-          'image-webpack-loader',
+          {
+            loader: 'image-webpack-loader',
+            options: {},
+          },
         ],
       },
       {
         test: /\.json$/,
-        loader: 'json-loader',
+        use: [{loader: 'json-loader'}],
       },
       {
         test: /\.less$/,
-        loader: extractCss.extract({
-          loader: ['css-loader?sourceMap', 'less-loader?sourceMap'],
-        }),
+        use: extractCss.extract(['css-loader?sourceMap', 'less-loader?sourceMap']),
       },
       {
         // transpile ES6 dependencies with babel
@@ -98,10 +106,10 @@ module.exports = {
       },
       {
         test: /\.ts$/,
-        loader: 'awesome-typescript-loader',
-        query: {
-          useBabel: true,
-        },
+        use: [{
+          loader: 'awesome-typescript-loader',
+          options: {useBabel: true},
+        }],
       },
     ],
   },
