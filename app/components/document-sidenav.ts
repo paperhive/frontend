@@ -11,8 +11,7 @@ export default function(app) {
       viewportOffsetTop: '<',
       onAnchorUpdate: '&',
       onToggle: '&',
-      onSearchSubmit: '&',
-      onSearchMatchIndexUpdate: '&',
+      onSearchUpdate: '&',
     },
     controller: class DocumentSidenavCtrl {
       activeRevision: string;

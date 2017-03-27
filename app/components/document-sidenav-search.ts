@@ -6,81 +6,51 @@ export default function(app) {
   app.component('documentSidenavSearch', {
     bindings: {
       large: '<',
-
-      numberSearchResults: '<',
-      onSearchSubmit: '&',
-      onSearchMatchIndexUpdate: '&',
+      matches: '<',
+      matchIndex: '<',
+      searchStr: '<',
+      onClose: '&',
+      onUpdate: '&',
     },
     controller: class DocumenSidenavSearchCtrl {
-      indexSearchResults: number;
       large: boolean;
-      numberSearchResults: number;
-      onSearchSubmit: any;
-      onSearchMatchIndexUpdate: any;
-      searchedStr: string;
+      matches: any[];
+      matchIndex: number;
+      searchStr: string;
+      onClose: () => void;
+      onUpdate: (o: {searchStr: string, matchIndex: number}) => void;
 
       onKeyDownBind: any;
+      searchStrModel: string;
 
-      static $inject = ['$element', '$scope', '$window'];
-      constructor(public $element, public $scope: any, public $window) {
-        $scope.$watch('$ctrl.numberSearchResults', this.updateSearchResults.bind(this));
-        this.onKeyDownBind = this.onKeyDown.bind(this);
-        jquery($window).on('keydown', this.onKeyDownBind);
+      static $inject = ['$element', '$scope', '$timeout', '$window'];
+      constructor(public $element, public $scope, public $timeout, public $window) {
+        $scope.$watch('$ctrl.searchStr', str => this.searchStrModel = str);
+        $timeout(() => $element.find('input').focus(), 50);
       }
 
-      $onDestroy() {
-        jquery(this.$window).off('keydown', this.onKeyDownBind);
-      }
-
-      onKeyDown(event) {
-        // check if `ctrl` or `cmd` on Mac is pressed
-        if ((event.ctrlKey || event.metaKey) && event.keyCode === 70) {
-          this.$element.find('input').focus();
-          event.preventDefault();
-        }
-      }
-
-      updateSearchResults() {
-        if (this.numberSearchResults > 0) {
-          this.indexSearchResults = 0;
-        }
-        if (this.numberSearchResults === 0) {
-          this.indexSearchResults = undefined;
-        }
-        this.onSearchMatchIndexUpdate({indexSearchResults: this.indexSearchResults});
-      }
-
-      submit(str) {
-        if (str === this.searchedStr && this.numberSearchResults > 0) {
-          this.nextResult();
+      submit() {
+        if (this.searchStrModel === this.searchStr) {
+          this.next();
         } else {
-          this.onSearchSubmit({searchStr: str});
+          this.onUpdate({searchStr: this.searchStrModel, matchIndex: undefined});
         }
-        this.searchedStr = str;
       }
 
-      nextResult() {
-        if (this.indexSearchResults < this.numberSearchResults - 1) {
-          this.indexSearchResults++;
-        } else {
-          this.indexSearchResults = 0;
-        }
-        this.onSearchMatchIndexUpdate({indexSearchResults: this.indexSearchResults});
+      next() {
+        const matchIndex = this.matchIndex < this.matches.length - 1
+          ? this.matchIndex + 1 : 0;
+        this.onUpdate({searchStr: this.searchStr, matchIndex});
       }
 
-      previousResult() {
-        if (this.indexSearchResults > 0) {
-          this.indexSearchResults--;
-        } else {
-          this.indexSearchResults = this.numberSearchResults - 1;
-        }
-        this.onSearchMatchIndexUpdate({indexSearchResults: this.indexSearchResults});
+      previous() {
+        const matchIndex = this.matchIndex > 0 ? this.matchIndex - 1 : this.matches.length - 1;
+        this.onUpdate({searchStr: this.searchStr, matchIndex});
       }
 
-      removeSearch() {
-        // remove highlight
-        this.onSearchSubmit({searchStr: undefined});
-        this.onSearchMatchIndexUpdate({indexSearchResults: undefined});
+      close() {
+        this.onUpdate({searchStr: undefined, matchIndex: undefined});
+        this.onClose();
       }
 
     },

@@ -187,27 +187,27 @@ document-sidenav {
   }
 }
 
-// Pagination 
+// Pagination
 .ph-sidenav-pagination {
   position: absolute;
   background: fade(@gray-lighter, 60%);
   width: 100%;
   height: auto;
   left: 0;
-  bottom: 0; 
+  bottom: 0;
 
   ul {
     padding: 0;
     margin: 0;
-    list-style: none; 
-    display: flex; 
-    flex-direction: row; 
+    list-style: none;
+    display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     li {
       flex: 1;
       position: relative;
-      
+
       &.ph-sidenav-pages {
         flex: 3;
       }
@@ -221,7 +221,7 @@ document-sidenav {
           border-bottom: 2px solid @ph-base-color;
         }
       }
-      &.ph-pages-total, 
+      &.ph-pages-total,
       input {
         text-align: center;
         padding: @padding-base-vertical/2;
@@ -231,40 +231,33 @@ document-sidenav {
         height: 25px;
       }
     }
-  }  
+  }
 }
-.ph-sidenav-arrow { 
+.ph-sidenav-arrow {
   height: auto;
   top: 0;
-  left: 50%;  
-  opacity: 0;
-  transition: opacity .6s ease;
+  left: 50%;
   z-index: 10000;
 }
 [class*="ph-sidenav-expand-"] {
   position: absolute;
   background: @ph-white;
-  box-shadow: @ph-shadow; 
-  width: 100%; 
-  bottom: 100%; 
+  box-shadow: @ph-shadow;
+  width: 100%;
+  bottom: 100%;
   left: 0;
-  opacity: 0;
   padding: @padding-base-horizontal;
-  transition: opacity .6s ease;  
 }
-.ph-sidenav-expanded {
-  opacity: 1;
-  transition: opacity .6s ease;
-}
+
 .ph-sidenav-small {
   ul {
-    display: block; 
+    display: block;
     li {
       &.ph-pages-current {
         margin: @padding-base-horizontal/2;
       }
       a {
-        border-bottom: none; 
+        border-bottom: none;
         border-left: 2px solid transparent;
         padding-top: @padding-base-horizontal/2;
         padding-bottom: @padding-base-horizontal/2;
@@ -276,13 +269,13 @@ document-sidenav {
     }
   }
   .ph-sidenav-arrow {
-    top: 50%; 
-    left: 100%; 
+    top: 50%;
+    left: 100%;
   }
   [class*="ph-sidenav-expand-"] {
-    left: 100%; 
-    bottom: 0; 
-    width: inherit; 
+    left: 100%;
+    bottom: 0;
+    width: inherit;
   }
 }
 // override padding for kudos so the iframe can fill the entire panel body

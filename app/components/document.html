@@ -43,8 +43,7 @@
   viewport-offset-top="$root.navbarSize.height + subnavSize.height"
 
   on-toggle="$ctrl.sidenavOpen = open"
-  on-search-submit="$ctrl.searchStr = searchStr;"
-  on-search-match-index-update="$ctrl.indexSearchResults = indexSearchResults;"
+  on-search-update="$ctrl.searchStr = searchStr; $ctrl.searchMatchIndex = matchIndex"
   on-anchor-update="$ctrl.anchor = anchor"
 ></document-sidenav>
 <div app-view-segment="1" class="ph-documents-columns"></div>

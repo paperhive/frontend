@@ -130,41 +130,42 @@
       </document-sidenav-pagination>
       <li class="ph-sidenav-index">
         <a class="btn" ng-click="$ctrl.docNavToggle('index')" title="Index" alt="Index"><i class="fa fa-list-ol"></i></a>
-        <div class="ph-margin-arrow-container ph-sidenav-arrow"
-            ng-class="{'ph-sidenav-expanded': $ctrl.docNav === 'index'}">
+        <div class="ph-margin-arrow-container ph-sidenav-arrow ph-fade"
+            ng-if="$ctrl.docNav === 'index'">
           <div class="ph-arrow ph-arrow-outward-bottom"></div>
         </div>
       </li>
       <li class="ph-sidenav-thumbnails">
         <a class="btn" ng-click="$ctrl.docNavToggle('thumb')" title="Page Thumbnails" alt="Page Thumbnails"><i class="fa fa-file-text-o"></i></a>
-        <div class="ph-margin-arrow-container ph-sidenav-arrow"
-            ng-class="{'ph-sidenav-expanded': $ctrl.docNav === 'thumb'}">
+        <div class="ph-margin-arrow-container ph-sidenav-arrow ph-fade"
+            ng-if="$ctrl.docNav === 'thumb'">
           <div class="ph-arrow ph-arrow-outward-bottom"></div>
         </div>
       </li>
       <li class="ph-sidenav-search">
         <a class="btn" ng-click="$ctrl.docNavToggle('search')" title="Search in full text" alt="Search in full text"><i class="fa fa-fw fa-search"></i></a>
-        <div class="ph-margin-arrow-container ph-sidenav-arrow"
-            ng-class="{'ph-sidenav-expanded': $ctrl.docNav === 'search'}">
+        <div class="ph-margin-arrow-container ph-sidenav-arrow ph-fade"
+            ng-if="$ctrl.docNav === 'search'">
           <div class="ph-arrow ph-arrow-outward-bottom"></div>
         </div>
       </li>
-      <div class="ph-sidenav-expand-index" ng-class="{'ph-sidenav-expanded': $ctrl.docNav === 'index'}">
-        Index
-      </div>
-      <div class="ph-sidenav-expand-thumb" ng-class="{'ph-sidenav-expanded': $ctrl.docNav === 'thumb'}">
-        Thumbnails
-      </div>
-      <div class="ph-sidenav-expand-search" ng-class="{'ph-sidenav-expanded': $ctrl.docNav === 'search'}">
-        <document-sidenav-search
-          large="true"
-          match-number="$ctrl.pdfInfo.searchMatchIndex"
-          total-match-number="$ctrl.pdfInfo.searchMatches.length"
-          search-str="$ctrl.pdfInfo.searchStr"
-          on-update="$ctrl.onSearchUpdate({searchStr, searchMatchIndex})"
-        ></document-sidenav-search>
-      </div>
     </ul>
+    <div class="ph-sidenav-expand-index ph-fade" ng-if="$ctrl.docNav === 'index'">
+      Index
+    </div>
+    <div class="ph-sidenav-expand-thumb ph-fade" ng-if="$ctrl.docNav === 'thumb'">
+      Thumbnails
+    </div>
+    <div class="ph-sidenav-expand-search ph-fade" ng-if="$ctrl.docNav === 'search'">
+      <document-sidenav-search
+        large="true"
+        match-index="$ctrl.pdfInfo.searchMatchIndex"
+        matches="$ctrl.pdfInfo.searchMatches"
+        search-str="$ctrl.pdfInfo.searchStr"
+        on-update="$ctrl.onSearchUpdate({searchStr, searchMatchIndex})"
+        on-close="$ctrl.docNav = undefined"
+      ></document-sidenav-search>
+    </div>
   </div>
 </div>
 <div class="ph-sidenav-small"
