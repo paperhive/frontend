@@ -765,7 +765,12 @@ export default function(app) {
 
         this.scope.$watchCollection('highlights', this.updateHighlights.bind(this));
 
+        // wait a bit before performing non-critical tasks
         await new Promise(resolve => setTimeout(resolve, 1000));
+
+        const outline = await this.pdf.getOutline();
+        this.scope.onOutlineUpdate({outline});
+
         await this.updateText();
       }
 
@@ -1292,6 +1297,8 @@ export default function(app) {
 
         // called when the anchor is updated
         onAnchorUpdate: '&',
+
+        onOutlineUpdate: '&',
 
         onPageNumberUpdate: '&',
 

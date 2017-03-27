@@ -1,0 +1,18 @@
+<div class="ph-component-icon">
+  <i class="fa fa-fw" ng-if="!$ctrl.item.items || $ctrl.item.items.length === 0"></i>
+  <a href=""
+    ng-click="$ctrl.collapsed = !$ctrl.collapsed"
+    ng-if="$ctrl.item.items.length > 0"
+  ><i class="fa fa-fw" ng-class="{
+    'fa-chevron-right': $ctrl.collapsed,
+    'fa-chevron-down': !$ctrl.collapsed,
+  }"></i></a>
+</div>
+<div class="ph-component-body">
+  <a href="" ng-click="$ctrl.onSelect({dest: $ctrl.item.dest})">{{$ctrl.item.title}}</a>
+  <div ng-if="$ctrl.item.items.length > 0" uib-collapse="$ctrl.collapsed">
+    <document-sidenav-outline-item ng-repeat="item in $ctrl.item.items"
+      item="item" on-select="$ctrl.onSelect({dest})"
+    ></document-sidenav-outline-item>
+  </div>
+</div>

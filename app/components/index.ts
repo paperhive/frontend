@@ -28,6 +28,7 @@ import documentItem from './document-item';
 import documentNew from './document-new';
 import documentRemote from './document-remote';
 import documentSidenav from './document-sidenav';
+import documentSidenavOutlineItem from './document-sidenav-outline-item';
 import documentSidenavPagination from './document-sidenav-pagination';
 import documentSidenavSearch from './document-sidenav-search';
 import documentText from './document-text';
@@ -118,6 +119,7 @@ export default function(app) {
   documentNew(app);
   documentRemote(app);
   documentSidenav(app);
+  documentSidenavOutlineItem(app);
   documentSidenavPagination(app);
   documentSidenavSearch(app);
   documentText(app);

@@ -128,21 +128,21 @@
         total-page-number="$ctrl.pdfInfo.numPages"
         on-change="$ctrl.onAnchorUpdate({anchor: 'p:' + pageNumber})">
       </document-sidenav-pagination>
-      <li class="ph-sidenav-index">
-        <a class="btn" ng-click="$ctrl.docNavToggle('index')" title="Index" alt="Index"><i class="fa fa-list-ol"></i></a>
+      <li>
+        <a class="btn" ng-click="$ctrl.docNavToggle('outline')" title="Outline" alt="Outline"><i class="fa fa-list-ol"></i></a>
         <div class="ph-margin-arrow-container ph-sidenav-arrow ph-fade"
-            ng-if="$ctrl.docNav === 'index'">
+            ng-if="$ctrl.docNav === 'outline'">
           <div class="ph-arrow ph-arrow-outward-bottom"></div>
         </div>
       </li>
-      <li class="ph-sidenav-thumbnails">
+      <!--li>
         <a class="btn" ng-click="$ctrl.docNavToggle('thumb')" title="Page Thumbnails" alt="Page Thumbnails"><i class="fa fa-file-text-o"></i></a>
         <div class="ph-margin-arrow-container ph-sidenav-arrow ph-fade"
             ng-if="$ctrl.docNav === 'thumb'">
           <div class="ph-arrow ph-arrow-outward-bottom"></div>
         </div>
-      </li>
-      <li class="ph-sidenav-search">
+      </li-->
+      <li>
         <a class="btn" ng-click="$ctrl.docNavToggle('search')" title="Search in full text" alt="Search in full text"><i class="fa fa-fw fa-search"></i></a>
         <div class="ph-margin-arrow-container ph-sidenav-arrow ph-fade"
             ng-if="$ctrl.docNav === 'search'">
@@ -150,8 +150,11 @@
         </div>
       </li>
     </ul>
-    <div class="ph-sidenav-expand-index ph-fade" ng-if="$ctrl.docNav === 'index'">
-      Index
+    <div class="ph-sidenav-expand-index ph-fade" ng-if="$ctrl.docNav === 'outline'">
+      <document-sidenav-outline-item ng-repeat="item in $ctrl.pdfInfo.outline"
+        item="item"
+        on-select="$ctrl.onAnchorUpdate({anchor: 'pdfd:' + dest})"
+      ></document-sidenav-outline-item>
     </div>
     <div class="ph-sidenav-expand-thumb ph-fade" ng-if="$ctrl.docNav === 'thumb'">
       Thumbnails
@@ -195,17 +198,17 @@
           </li>
         </ul>
       </li>
-      <li class="ph-sidenav-index">
-        <a class="btn" ng-click="$ctrl.docNavToggle('index')" title="Index" alt="Index"><i class="fa fa-list-ol"></i></a>
+      <li>
+        <a class="btn" ng-click="$ctrl.docNavToggle('outline')" title="Outline" alt="Outline"><i class="fa fa-list-ol"></i></a>
         <div class="ph-margin-arrow-container ph-sidenav-arrow"
-            ng-class="{'ph-sidenav-expanded': $ctrl.docNav === 'index'}">
+            ng-class="{'ph-sidenav-expanded': $ctrl.docNav === 'outline'}">
           <div class="ph-arrow ph-arrow-outward-left"></div>
         </div>
-        <div class="ph-sidenav-expand-index" ng-class="{'ph-sidenav-expanded': $ctrl.docNav === 'index'}">
-          Index
+        <div class="ph-sidenav-expand-index" ng-class="{'ph-sidenav-expanded': $ctrl.docNav === 'outline'}">
+          Outline
         </div>
       </li>
-      <li class="ph-sidenav-thumbnails">
+      <li>
         <a class="btn" ng-click="$ctrl.docNavToggle('thumb')" title="Page Thumbnails" alt="Page Thumbnails"><i class="fa fa-file-text-o"></i></a>
         <div class="ph-margin-arrow-container ph-sidenav-arrow"
             ng-class="{'ph-sidenav-expanded': $ctrl.docNav === 'thumb'}">
@@ -215,7 +218,7 @@
           Thumbnails
         </div>
       </li>
-      <li class="ph-sidenav-search">
+      <li>
         <a class="btn" ng-click="$ctrl.docNavToggle('search')" title="Search" alt="Search"><i class="fa fa-fw fa-search"></i></a>
         <div class="ph-margin-arrow-container ph-sidenav-arrow"
             ng-class="{'ph-sidenav-expanded': $ctrl.docNav === 'search'}">
