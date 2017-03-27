@@ -1,6 +1,5 @@
 import angular from 'angular';
 import { find, findIndex, map, merge, pick, remove } from 'lodash';
-import { SearchIndex } from 'srch';
 
 import { getRevisionMetadata } from '../utils/documents';
 
@@ -205,12 +204,6 @@ export default function(app) {
       documentCtrl: any;
       discussionsByRevision: any;
       filteredDiscussions: any[];
-      pdfText: string;
-      searchStr: string;
-      searchRanges: IRange[];
-      searchIndex: SearchIndex;
-      numberSearchResults: number;
-      indexSearchResults: number;
 
       // note: do *not* use $routeSegment.$routeParams because they still
       // use the old state in $routeChangeSuccess events
@@ -256,10 +249,6 @@ export default function(app) {
         $scope.$watch('$ctrl.channelService.selectedChannel', this.updateFilteredDiscussions.bind(this));
         $scope.$watch('$ctrl.channelService.showAllChannels', this.updateFilteredDiscussions.bind(this));
         $scope.$watchCollection('$ctrl.documentCtrl.revisions', this.updateFilteredDiscussions.bind(this));
-
-        // update search index
-        $scope.$watch('$ctrl.pdfText', this.updateSearchIndex.bind(this));
-        $scope.$watch('$ctrl.searchStr', this.search.bind(this));
       }
 
       updateActiveRevision() {
@@ -336,20 +325,6 @@ export default function(app) {
           title: this.activeRevision.title + ' · PaperHive',
           meta: metadata,
         });
-      }
-
-      updateSearchIndex() {
-        this.searchIndex = undefined;
-        if (!this.pdfText) return;
-        this.searchIndex = new SearchIndex(this.pdfText);
-      }
-
-      search() {
-        if (!this.searchIndex) return;
-        // returns array of objects (position, length)
-        this.searchRanges =
-          this.searchStr ? this.searchIndex.search(this.searchStr) : undefined;
-        this.numberSearchResults = this.searchRanges !== undefined ? this.searchRanges.length : undefined;
       }
     },
     template: require('./document.html'),

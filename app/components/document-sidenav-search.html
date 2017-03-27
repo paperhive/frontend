@@ -9,16 +9,17 @@
     >
     <div class="ph-component-controls" on-resized="$ctrl.iconsSize = $size">
       <span class="ph-component-counters" ng-if="$ctrl.matches !== undefined">
-        {{$ctrl.matchIndex + 1}} of {{$ctrl.matches.length}}
+        {{$ctrl.matchIndex === undefined ? 0 : $ctrl.matchIndex + 1}}
+        of {{$ctrl.matches.length}}
       </span>
       <span class="ph-component-separator" ng-if="$ctrl.matches !== undefined"></span>
       <button class="btn btn-link" title="Previous" ng-click="$ctrl.previous()"
-        ng-if="$ctrl.matches !== undefined"
+        ng-if="$ctrl.matches.length > 0"
       >
         <i class="fa fa-chevron-up"></i>
       </button>
-      <a class="btn" title="Next" ng-click="$ctrl.next()"
-        ng-if="$ctrl.matches !== undefined"
+      <a class="btn btn-link" title="Next" ng-click="$ctrl.next()"
+        ng-if="$ctrl.matches.length > 0"
       >
         <i class="fa fa-chevron-down"></i>
       </a>

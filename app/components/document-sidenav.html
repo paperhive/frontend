@@ -159,10 +159,10 @@
     <div class="ph-sidenav-expand-search ph-fade" ng-if="$ctrl.docNav === 'search'">
       <document-sidenav-search
         large="true"
-        match-index="$ctrl.pdfInfo.searchMatchIndex"
-        matches="$ctrl.pdfInfo.searchMatches"
-        search-str="$ctrl.pdfInfo.searchStr"
-        on-update="$ctrl.onSearchUpdate({searchStr, searchMatchIndex})"
+        match-index="$ctrl.searchMatchIndex"
+        matches="$ctrl.searchMatches"
+        search-str="$ctrl.searchStr"
+        on-update="$ctrl.onSearchUpdate({searchStr, matchIndex})"
         on-close="$ctrl.docNav = undefined"
       ></document-sidenav-search>
     </div>

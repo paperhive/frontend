@@ -7,7 +7,9 @@ export default function(app) {
       documentCtrl: '<',
       open: '<',
       pdfInfo: '<',
-      numberSearchResults: '<',
+      searchMatches: '<',
+      searchMatchIndex: '<',
+      searchStr: '<',
       viewportOffsetTop: '<',
       onAnchorUpdate: '&',
       onToggle: '&',
@@ -17,8 +19,11 @@ export default function(app) {
       activeRevision: string;
       documentCtrl: any;
       open: boolean;
-      numberSearchResults: number;
+      searchMatches: any[];
+      searchMatchIndex: number;
+      searchStr: string;
       viewportOffsetTop: number;
+      onSearchUpdate: (o: {searchStr: string, matchIndex: number}) => void;
       onToggle: any;
 
       kudosOpen = true;
@@ -35,6 +40,9 @@ export default function(app) {
       }
 
       docNavToggle(id) {
+        if (this.docNav === 'search') {
+          this.onSearchUpdate({searchStr: undefined, matchIndex: undefined});
+        }
         this.docNav = this.docNav === id ? undefined : id;
       }
 

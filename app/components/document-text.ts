@@ -1,5 +1,6 @@
 import jquery from 'jquery';
 import { merge } from 'lodash';
+import { SearchIndex } from 'srch';
 
 class DocumentTextCtrl {
   // input
@@ -18,7 +19,12 @@ class DocumentTextCtrl {
   anchor: string;
   pdfUrl: string;
   pdfInfo: any;
+  pdfText: string;
+  searchStr: string;
+  searchIndex: SearchIndex;
+  searchMatches: IRange[];
   onPdfInfoUpdate: (o: {pdfInfo: any}) => Promise<void>;
+  onSearchMatchesUpdate: (o: {searchMatches: any[]}) => void;
 
   static $inject = ['$animate', '$element', '$http', '$location',
     '$routeSegment', '$scope', '$window', 'config', 'notificationService',
@@ -58,6 +64,10 @@ class DocumentTextCtrl {
     });
 
     $scope.$watchCollection('$ctrl.pdfInfo', pdfInfo => this.onPdfInfoUpdate({pdfInfo}));
+
+    // update search index
+    $scope.$watch('$ctrl.pdfText', this.updateSearchIndex.bind(this));
+    $scope.$watch('$ctrl.searchStr', this.search.bind(this));
   }
 
   // create link for pdf destinations
@@ -130,6 +140,18 @@ class DocumentTextCtrl {
 
     this.highlights = highlights;
   }
+
+  updateSearchIndex() {
+    this.searchIndex = undefined;
+    if (!this.pdfText) return;
+    this.searchIndex = new SearchIndex(this.pdfText);
+  }
+
+  search() {
+    this.searchMatches = this.searchIndex && this.searchStr
+      ? this.searchIndex.search(this.searchStr) : undefined;
+    this.onSearchMatchesUpdate({searchMatches: this.searchMatches});
+  }
 }
 
 export default function(app) {
@@ -143,8 +165,8 @@ export default function(app) {
       filteredDiscussions: '<',
       viewportOffsetTop: '<',
       expanded: '<',
-      searchRanges: '<',
-      indexSearchResults: '<',
+      searchStr: '<',
+      searchMatchIndex: '<',
 
       onDiscussionSubmit: '&',
       onDiscussionUpdate: '&',
@@ -153,7 +175,7 @@ export default function(app) {
       onReplyUpdate: '&',
       onReplyDelete: '&',
       onPdfInfoUpdate: '&',
-      onTextUpdate: '&',
+      onSearchMatchesUpdate: '&',
     },
     controller: DocumentTextCtrl,
     template: require('./document-text.html'),

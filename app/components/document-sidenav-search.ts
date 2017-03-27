@@ -38,12 +38,14 @@ export default function(app) {
       }
 
       next() {
+        if (!this.matches || this.matches.length === 0) return;
         const matchIndex = this.matchIndex < this.matches.length - 1
           ? this.matchIndex + 1 : 0;
         this.onUpdate({searchStr: this.searchStr, matchIndex});
       }
 
       previous() {
+        if (!this.matches || this.matches.length === 0) return;
         const matchIndex = this.matchIndex > 0 ? this.matchIndex - 1 : this.matches.length - 1;
         this.onUpdate({searchStr: this.searchStr, matchIndex});
       }
