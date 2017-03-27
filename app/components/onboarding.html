@@ -1,61 +1,131 @@
 <div class="ph-onboarding">
-	<div class="container">
-		<div class="row">
-			<div class="ph-onboarding-wizard ph-flex-container">
-				<div class="ph-onboarding-steps ph-flex-item ph-wizard-done">
-					<h3>Personal Details</h3>
-					<div class="row">
-						<div class="col-lg-6">
-							<div class="input-group">
-								<label for="name">Name</label>
-								<input id="name" type="text" class="form-control">					
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="input-group">
-								<label for="email">Email</label>
-								<input id="email" type="text" class="form-control">					
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-lg-6">
-							<div class="input-group dropdown ph-dropdown-large">
-								<label for="discipline">Discipline</label>
-								<input id="discipline" type="text" class="form-control">		
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="input-group dropdown ph-dropdown-large">
-								<label>Occupation</label>
-								<button uib-dropdown-toggle type="button" class="btn btn-default ph-split-container ph-split-container-icon-right dropdown-toggle">
-									<span class="ph-split-text">Select</span>
-									<i class="fa fa-fw fa-caret-down ph-split-icon-right"></i>
-								</button>		
-								<ul class="dropdown-menu ph-dropdown-menu-full" role="menu">
-									<li>Professor</li>
-									<li>Postdoc</li>
-									<li>PHD Student</li>
-									<li>Student</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="ph-onboarding-buttons">
-								<button class="btn btn-primary">Next</button>
-							</div>							
-						</div>
-					</div>
-				</div>
-				<div class="ph-onboarding-steps ph-flex-item ph-wizard-active">
-					Hello World
-				</div>
-				<div class="ph-onboarding-steps ph-flex-item ph-wizard-todo">
-					Hello World
-				</div>
-			</div>
-		</div>
-	</div>
+	<form class="" name="onboarding">  
+	    <div class="container">
+	        <div class="row">
+	            <div class="ph-onboarding-wizard ph-flex-container">
+	                <div class="ph-onboarding-steps ph-flex-item ph-wizard-done">            		
+	                    <h3>Personal Details</h3>
+	                    <div class="row">
+	                        <div class="col-lg-6">
+	                            <label for="name">Name</label>
+	                            <div class="form-group">
+	                                <input id="name" type="text" class="form-control" placeholder="Full Name">
+	                            </div>
+	                        </div>
+	                        <div class="col-lg-6">
+	                            <label for="email">Email</label>
+	                            <div class="form-group">
+	                                <input id="email" type="text" class="form-control" placeholder="Email">
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="row">
+	                        <div class="col-lg-6">
+	                            <label for="discipline">Discipline</label>
+	                            <div class="form-group">
+	                                <input id="discipline" type="text" class="form-control" placeholder="Discipline">
+	                            </div>
+	                        </div>
+	                        <div class="col-lg-6">
+	                            <label>Occupation</label>
+	                            <div class="form-group dropdown ph-dropdown-large">
+	                                <button uib-dropdown-toggle type="button" class="btn btn-default ph-split-container ph-split-container-icon-right dropdown-toggle">
+	                                    <span class="ph-split-text">Select</span>
+	                                    <i class="fa fa-fw fa-caret-down ph-split-icon-right"></i>
+	                                </button>
+	                                <ul class="dropdown-menu ph-dropdown-menu-full" role="menu">
+	                                    <li>Professor</li>
+	                                    <li>Postdoc</li>
+	                                    <li>PHD Student</li>
+	                                    <li>Student</li>
+	                                </ul>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="row">
+	                        <div class="col-lg-6">
+	                            <label for="institution">Institution</label>
+	                            <div class="form-group">
+	                                <input id="institution" type="text" class="form-control" placeholder="Institution">
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="row">
+	                        <div class="col-lg-6">
+	                            <a href="">Skip</a>
+	                        </div>
+	                        <div class="col-lg-6">
+	                            <div class="ph-onboarding-buttons">
+	                                <button class="btn btn-primary">Next</button>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="ph-onboarding-steps ph-flex-item ph-wizard-active">              	
+	                    <h3>Create Channel</h3>
+	                    <div class="row">
+	                        <div class="col-lg-6">
+	                            <label for="channel">Channel Name</label>
+	                            <div class="form-group">
+	                                <input id="channel" type="text" class="form-control" placeholder="Channel Name">
+	                            </div>
+	                        </div>
+	                        <div class="col-lg-6">
+	                            <label for="invite">Invite People</label>
+	                            <div class="input-group">
+	                                <input id="invite" type="text" class="form-control" placeholder="Email">
+	                                <span class="input-group-btn">
+								    	<button class="btn btn-primary" type="button">
+								    		<i class="fa fa-fw fa-plus" aria-hidden="true"></i> Add
+								    	</button>
+								    </span>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="row">
+	                    	<div class="col-lg-6 col-lg-offset-6">
+	                    		<table class="table ph-md-margin-bottom">
+	                    			<tr>
+	                    				<td><a href="">Email address</a> </td>
+	                    				<td><a href=""><i class="fa fa-fw fa-times" aria-hidden="true"></i> Remove</a></td>
+	                    			</tr>
+	                    		</table>
+	                    	</div>
+	                    </div>
+	                    <div class="row">
+	                        <div class="col-lg-6">
+	                            <a href="">Skip</a>
+	                        </div>
+	                        <div class="col-lg-6">
+	                            <div class="ph-onboarding-buttons">
+	                                <button class="btn btn-default">Previous</button>
+	                                <button class="btn btn-primary">Next</button>
+	                            </div>
+	                        </div>
+	                    </div>                    
+	                </div>
+	                <div class="ph-onboarding-steps ph-flex-item ph-wizard-todo">
+	                    <h3>Bookmark</h3>
+	                    <div class="row">
+	                    	<div class="col-lg-6">
+	                    		<div class="btn-group" role="group" aria-label="...">
+	                    			<button type="button" class="btn btn-primary">
+									    <span class="ph-split-icon">
+									      <i class="fa fa-star"></i>
+									    </span>
+									</button>
+									<button type="button" class="btn btn-default">
+									    <span class="ph-split-text">
+									      Bookmark in channel
+									    </span>
+									</button>
+	                    		</div>
+	                    		
+	                    	</div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+    </form>
 </div>
