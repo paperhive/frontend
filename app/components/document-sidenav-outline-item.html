@@ -9,7 +9,11 @@
   }"></i></a>
 </div>
 <div class="ph-component-body">
-  <a href="" ng-click="$ctrl.onSelect({dest: $ctrl.item.dest})">{{$ctrl.item.title}}</a>
+  <div class="ph-component-link-container">
+    <a href="" ng-click="$ctrl.onSelect({dest: $ctrl.item.dest})"
+      title="{{$ctrl.item.title}}"
+    >{{$ctrl.item.title}}</a>
+  </div>
   <div ng-if="$ctrl.item.items.length > 0" uib-collapse="$ctrl.collapsed">
     <document-sidenav-outline-item ng-repeat="item in $ctrl.item.items"
       item="item" on-select="$ctrl.onSelect({dest})"
