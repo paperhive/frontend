@@ -23,7 +23,6 @@ document-sidenav {
   min-width: 250px;
   overflow-x: hidden;
   overflow-y: auto;;
-  padding: @ph-sidenav-small-width (@grid-gutter-width/2) 30px;
 }
 
 .ph-sidenav-small {
@@ -47,6 +46,12 @@ document-sidenav {
       transform @ph-sidenav-animation-duration ease-in-out @ph-sidenav-animation-duration,
       box-shadow @ph-sidenav-animation-duration ease-in-out @ph-sidenav-animation-duration;
   }
+}
+
+.ph-sidenav-body {
+  padding: @ph-sidenav-small-width (@grid-gutter-width/2) 30px;
+  height: 100%;
+  overflow: auto;
 }
 
 // mixin for content that should not be hidden beneath the sidenav
@@ -134,6 +139,11 @@ document-sidenav {
     top: 50%;
     margin-top: -8px;
   }
+}
+
+.ph-sidenav-outline {
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 .ph-dropdown-menu-full {
