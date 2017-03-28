@@ -29,11 +29,22 @@ export default function(app) {
         $timeout(() => $element.find('input').focus(), 50);
       }
 
-      submit() {
-        if (this.searchStrModel === this.searchStr) {
-          this.next();
-        } else {
-          this.onUpdate({searchStr: this.searchStrModel, matchIndex: undefined});
+      onKeypress($event) {
+        // enter
+        if ($event.keyCode === 13) {
+          if (this.searchStrModel === this.searchStr) {
+            if ($event.shiftKey) this.previous();
+            else this.next();
+          } else {
+            this.onUpdate({searchStr: this.searchStrModel, matchIndex: undefined});
+          }
+        }
+      }
+
+      onKeyup($event) {
+        // note: esc does not trigger keypress
+        if ($event.keyCode === 27) {
+          this.close();
         }
       }
 

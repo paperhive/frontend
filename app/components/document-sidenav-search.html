@@ -4,7 +4,8 @@
       ng-model="$ctrl.searchStrModel"
       ng-style="{'padding-right': $ctrl.iconsSize && $ctrl.iconsSize.width + 'px'}"
       placeholder="&#xf002;  Search in full text"
-      ng-keypress="$event.keyCode === 13 && $ctrl.submit()"
+      ng-keypress="$ctrl.onKeypress($event)"
+      ng-keyup="$ctrl.onKeyup($event)"
       autocomplete="off"
     >
     <div class="ph-component-controls" on-resized="$ctrl.iconsSize = $size">
