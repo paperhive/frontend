@@ -1,0 +1,22 @@
+@import "../../less/variables.less";
+
+document-sidenav-pagination {
+  .ph-component-current input, .ph-component-total {
+    text-align: center;
+    padding: @padding-base-vertical/2;
+    font-size: 80%;
+    height: 25px;
+  }
+}
+
+.ph-sidenav-small {
+  document-sidenav-pagination {
+    .ph-component-current {
+      margin: @padding-base-horizontal/2;
+    }
+
+    .tooltip {
+      white-space: nowrap;
+    }
+  }
+}

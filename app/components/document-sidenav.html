@@ -126,6 +126,7 @@
   <div class="ph-sidenav-pagination" on-resized="$ctrl.paginationSize = $size">
     <ul class="ph-sidenav-icons">
       <document-sidenav-pagination
+        large="true"
         page-number="$ctrl.pdfInfo.pageNumber"
         total-page-number="$ctrl.pdfInfo.numPages"
         on-change="$ctrl.onAnchorUpdate({anchor: 'p:' + pageNumber})">
@@ -191,22 +192,12 @@
 
   <div class="ph-sidenav-pagination">
     <ul class="ph-sidenav-icons">
-      <li class="ph-sidenav-pages">
-        <ul>
-          <li class="ph-pages-scroll-up">
-            <a class="btn" alt="Previous page" title="Previous page"><i class="fa fa-fw fa-chevron-circle-left"></i></a>
-          </li>
-          <li class="ph-pages-current" uib-tooltip="Page 5 of 100" tooltip-placement="right">
-            <input type="text" class="ph-pages-current form-control input-sm" value="5" >
-          </li>
-          <!-- <li class="ph-pages-total">
-            <span class="">/ 100</span>
-          </li> -->
-          <li class="ph-pages-scroll-down">
-            <a class="btn" alt="Next page" title="Next page"><i class="fa fa-fw fa-chevron-circle-right"></i></a>
-          </li>
-        </ul>
-      </li>
+      <document-sidenav-pagination
+        large="false"
+        page-number="$ctrl.pdfInfo.pageNumber"
+        total-page-number="$ctrl.pdfInfo.numPages"
+        on-change="$ctrl.onAnchorUpdate({anchor: 'p:' + pageNumber})">
+      </document-sidenav-pagination>
       <li>
         <a class="btn" ng-click="$ctrl.docNavToggle('outline')" title="Outline" alt="Outline"><i class="fa fa-list-ol"></i></a>
         <div class="ph-margin-arrow-container ph-sidenav-arrow"

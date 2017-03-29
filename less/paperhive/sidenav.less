@@ -218,9 +218,6 @@ document-sidenav {
       flex: 1;
       position: relative;
 
-      &.ph-sidenav-pages {
-        flex: 3;
-      }
       a {
         display: block;
         border-bottom: 2px solid transparent;
@@ -230,15 +227,6 @@ document-sidenav {
           background: @gray-lighter;
           border-bottom: 2px solid @ph-base-color;
         }
-      }
-      &.ph-pages-total,
-      input {
-        text-align: center;
-        padding: @padding-base-vertical/2;
-        font-size: 80%;
-      }
-      input {
-        height: 25px;
       }
     }
   }
@@ -263,9 +251,6 @@ document-sidenav {
   ul {
     display: block;
     li {
-      &.ph-pages-current {
-        margin: @padding-base-horizontal/2;
-      }
       a {
         border-bottom: none;
         border-left: 2px solid transparent;

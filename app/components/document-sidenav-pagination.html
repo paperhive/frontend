@@ -1,32 +1,34 @@
-<li class="ph-sidenav-pages">
+<li>
   <ul>
-    <li class="ph-pages-scroll-up">
+    <li>
       <a class="btn" alt="Previous page" title="Previous page"
         ng-disabled="$ctrl.pageNumber === undefined || $ctrl.pageNumber === 1"
         ng-click="$ctrl.pageNumber > 1 && $ctrl.onChange({pageNumber: $ctrl.pageNumber - 1})"
       ><i class="fa fa-fw fa-chevron-circle-left"></i></a>
     </li>
-    <li class="ph-pages-current">
+    <li class="ph-component-current">
       <form
         name="pageNumberForm"
-        ng-submit="pageNumberForm.$valid && $ctrl.onChange({pageNumber: $ctrl.pageNumberModel})"
+        ng-submit="pageNumberForm.$valid && $ctrl.submit()"
         novalidate
       >
         <input
-          type="number" class="ph-pages-current form-control input-sm"
+          type="text" class="form-control input-sm"
           ng-model="$ctrl.pageNumberModel"
-          ng-min="1"
-          ng-max="$ctrl.totalPageNumber"
+          ng-pattern="'[0-9]*'"
           ng-required="true"
           ng-disabled="$ctrl.pageNumber === undefined"
           ng-blur="$ctrl.pageNumberModel = $ctrl.pageNumber"
+          uib-tooltip="Page {{$ctrl.pageNumber}} of {{$ctrl.totalPageNumber}}"
+          tooltip-enable="!$ctrl.large"
+          tooltip-placement="right"
         >
       </form>
     </li>
-    <li class="ph-pages-total">
+    <li class="ph-component-total" ng-if="$ctrl.large">
       <span ng-if="$ctrl.totalPageNumber !== undefined">/ {{$ctrl.totalPageNumber}}</span>
     </li>
-    <li class="ph-pages-scroll-down">
+    <li>
       <a class="btn" alt="Next page" title="Next page"
         ng-disabled="$ctrl.pageNumber === undefined || $ctrl.pageNumber === $ctrl.totalPageNumber"
         ng-click="$ctrl.pageNumber < $ctrl.totalPageNumber && $ctrl.onChange({pageNumber: $ctrl.pageNumber + 1})"
