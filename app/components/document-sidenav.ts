@@ -1,3 +1,5 @@
+import jquery from 'jquery';
+
 export default function(app) {
   app.component('documentSidenav', {
     bindings: {
@@ -32,11 +34,28 @@ export default function(app) {
       publisherLink: string;
       docNav: string;
 
-      static $inject = ['$http', '$scope', 'tourService'];
-      constructor(public $http, $scope, public tour) {
+      onKeydownBind: (event: JQueryKeyEventObject) => void;
+
+      static $inject = ['$http', '$scope', '$window', 'tourService'];
+      constructor(public $http, $scope, public $window, public tour) {
 
         $scope.$watchCollection('$ctrl.documentCtrl.revisions', this.updateKudos.bind(this));
         $scope.$watchCollection('$ctrl.activeRevision', this.updatePublisherLink.bind(this));
+
+        this.onKeydownBind = this.onKeydown.bind(this);
+        jquery($window).on('keydown', this.onKeydownBind);
+      }
+
+      $onDestroy() {
+        jquery(this.$window).off('keydown', this.onKeydownBind);
+      }
+
+      onKeydown(event: JQueryKeyEventObject) {
+        // check if ctrl+f or cmd+f (Mac) is pressed
+        if ((event.ctrlKey || event.metaKey) && event.keyCode === 70) {
+          if (this.docNav !== 'search') this.docNavToggle('search');
+          event.preventDefault();
+        }
       }
 
       docNavToggle(id) {

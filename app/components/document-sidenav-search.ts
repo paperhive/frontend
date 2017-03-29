@@ -1,5 +1,3 @@
-import jquery from 'jquery';
-
 require('./document-sidenav-search.less');
 
 export default function(app) {
@@ -23,8 +21,8 @@ export default function(app) {
       onKeyDownBind: any;
       searchStrModel: string;
 
-      static $inject = ['$element', '$scope', '$timeout', '$window'];
-      constructor(public $element, public $scope, public $timeout, public $window) {
+      static $inject = ['$element', '$scope', '$timeout'];
+      constructor(public $element, public $scope, public $timeout) {
         $scope.$watch('$ctrl.searchStr', str => this.searchStrModel = str);
         $timeout(() => $element.find('input').focus(), 50);
       }
