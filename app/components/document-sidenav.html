@@ -142,7 +142,7 @@
         </div>
       </li>
       <li>
-        <a class="btn" ng-click="$ctrl.docNavToggle('search')"
+        <a class="btn" ng-click="$ctrl.pdfInfo.searchIndex && $ctrl.docNavToggle('search')"
           ng-disabled="!$ctrl.pdfInfo.searchIndex"
           title="Search in full text" alt="Search in full text"
         ><i class="fa fa-fw fa-search"></i></a>
@@ -189,7 +189,10 @@
         on-change="$ctrl.onAnchorUpdate({anchor: 'p:' + pageNumber})">
       </document-sidenav-pagination>
       <li>
-        <a class="btn" ng-click="$ctrl.docNavToggle('outline')" title="Outline" alt="Outline"><i class="fa fa-list-ol"></i></a>
+        <a class="btn" ng-click="$ctrl.pdfInfo.outline && $ctrl.docNavToggle('outline')"
+          ng-disabled="!$ctrl.pdfInfo.outline"
+          title="Outline" alt="Outline"
+        ><i class="fa fa-list-ol"></i></a>
         <div class="ph-margin-arrow-container ph-sidenav-arrow ph-fade"
             ng-if="$ctrl.docNav === 'outline'">
           <div class="ph-arrow ph-arrow-outward-left"></div>
@@ -203,7 +206,10 @@
         </div>
       </li>
       <li>
-        <a class="btn" ng-click="$ctrl.docNavToggle('search')" title="Search" alt="Search"><i class="fa fa-fw fa-search"></i></a>
+        <a class="btn" ng-click="$ctrl.pdfInfo.searchIndex && $ctrl.docNavToggle('search')"
+          title="Search" alt="Search"
+          ng-disabled="!$ctrl.pdfInfo.searchIndex"
+        ><i class="fa fa-fw fa-search"></i></a>
         <div class="ph-margin-arrow-container ph-sidenav-arrow ph-fade"
             ng-if="$ctrl.docNav === 'search'">
           <div class="ph-arrow ph-arrow-outward-left"></div>
