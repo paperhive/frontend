@@ -152,14 +152,14 @@
         </div>
       </li>
     </ul>
-    <div class="ph-sidenav-expand-index ph-fade ph-sidenav-outline" ng-if="$ctrl.docNav === 'outline'">
+    <div class="ph-sidenav-panel ph-fade ph-sidenav-outline" ng-if="$ctrl.docNav === 'outline'">
       <h5>Outline</h5>
       <document-sidenav-outline-item ng-repeat="item in $ctrl.pdfInfo.outline"
         item="item"
         on-select="$ctrl.onAnchorUpdate({anchor: 'pdfd:' + dest})"
       ></document-sidenav-outline-item>
     </div>
-    <div class="ph-sidenav-expand-search ph-fade" ng-if="$ctrl.docNav === 'search'">
+    <div class="ph-sidenav-panel ph-fade" ng-if="$ctrl.docNav === 'search'">
       <document-sidenav-search
         large="true"
         match-index="$ctrl.searchMatchIndex"
@@ -194,7 +194,7 @@
             ng-if="$ctrl.docNav === 'outline'">
           <div class="ph-arrow ph-arrow-outward-left"></div>
         </div>
-        <div class="ph-sidenav-expand-index ph-sidenav-outline ph-fade" ng-if="$ctrl.docNav === 'outline'">
+        <div class="ph-sidenav-panel ph-sidenav-outline ph-fade" ng-if="$ctrl.docNav === 'outline'">
           <h5>Outline</h5>
           <document-sidenav-outline-item ng-repeat="item in $ctrl.pdfInfo.outline"
             item="item"
@@ -208,7 +208,7 @@
             ng-if="$ctrl.docNav === 'search'">
           <div class="ph-arrow ph-arrow-outward-left"></div>
         </div>
-        <div class="ph-sidenav-expand-search ph-sidenav-search ph-fade" ng-if="$ctrl.docNav === 'search'">
+        <div class="ph-sidenav-panel ph-sidenav-search ph-fade" ng-if="$ctrl.docNav === 'search'">
           <document-sidenav-search
             large="false"
             match-index="$ctrl.searchMatchIndex"
