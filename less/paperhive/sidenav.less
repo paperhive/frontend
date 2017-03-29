@@ -218,7 +218,7 @@ document-sidenav {
       flex: 1;
       position: relative;
 
-      a {
+      > a {
         display: block;
         border-bottom: 2px solid transparent;
         padding-top: @padding-base-horizontal;
@@ -251,7 +251,7 @@ document-sidenav {
   ul {
     display: block;
     li {
-      a {
+      > a {
         border-bottom: none;
         border-left: 2px solid transparent;
         padding-top: @padding-base-horizontal/2;
@@ -271,6 +271,9 @@ document-sidenav {
     left: 100%;
     bottom: 0;
     width: inherit;
+  }
+  .ph-sidenav-outline, .ph-sidenav-search {
+    width: 25vw;
   }
 }
 // override padding for kudos so the iframe can fill the entire panel body
