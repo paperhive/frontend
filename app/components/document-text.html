@@ -33,6 +33,8 @@
         }"
         scroll-to-anchor="$ctrl.allPagesInitialized && $ctrl.anchor"
         viewport-offset-top="$ctrl.viewportOffsetTop"
+        search-ranges="$ctrl.searchMatches"
+        scroll-to-search-match-index="$ctrl.searchMatchIndex"
 
         on-highlight-mouseenter="$ctrl.hoveredHighlights[highlight.id] = true"
         on-highlight-mouseleave="$ctrl.hoveredHighlights[highlight.id] = false"
@@ -41,6 +43,9 @@
         on-select="$ctrl.draftSelectors = selectors || $ctrl.draftSelectors"
         on-link-dest-create="$ctrl.getLinkDest(dest)"
         on-anchor-update="$ctrl.anchor = anchor"
+        on-page-number-update="$ctrl.pdfInfo.pageNumber = pageNumber"
+        on-outline-update="$ctrl.pdfInfo.outline = outline"
+        on-text-update="$ctrl.pdfText = str; $ctrl.pdfPageLengths = pageLengths;"
 
         popover-placement="right-top"
         popover-append-to-body="true"
