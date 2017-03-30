@@ -134,7 +134,8 @@
       <li>
         <a class="btn" ng-click="$ctrl.pdfInfo.outline && $ctrl.docNavToggle('outline')"
           ng-disabled="!$ctrl.pdfInfo.outline"
-          title="Outline" alt="Outline"
+          title="{{$ctrl.pdfInfo.outline ? 'Index' : 'Index not available'}}"
+          alt="{{$ctrl.pdfInfo.outline ? 'Index' : 'Index not available'}}"
         ><i class="fa fa-list-ol"></i></a>
         <div class="ph-margin-arrow-container ph-sidenav-arrow ph-fade"
             ng-if="$ctrl.docNav === 'outline'">
@@ -153,7 +154,7 @@
       </li>
     </ul>
     <div class="ph-sidenav-panel ph-fade ph-sidenav-outline" ng-if="$ctrl.docNav === 'outline'">
-      <h5>Outline</h5>
+      <h5>Index</h5>
       <document-sidenav-outline-item ng-repeat="item in $ctrl.pdfInfo.outline"
         item="item"
         on-select="$ctrl.onAnchorUpdate({anchor: 'pdfd:' + dest})"
@@ -191,14 +192,15 @@
       <li>
         <a class="btn" ng-click="$ctrl.pdfInfo.outline && $ctrl.docNavToggle('outline')"
           ng-disabled="!$ctrl.pdfInfo.outline"
-          title="Outline" alt="Outline"
+          title="{{$ctrl.pdfInfo.outline ? 'Index' : 'Index not available'}}"
+          alt="{{$ctrl.pdfInfo.outline ? 'Index' : 'Index not available'}}"
         ><i class="fa fa-list-ol"></i></a>
         <div class="ph-margin-arrow-container ph-sidenav-arrow ph-fade"
             ng-if="$ctrl.docNav === 'outline'">
           <div class="ph-arrow ph-arrow-outward-left"></div>
         </div>
         <div class="ph-sidenav-panel ph-sidenav-outline ph-fade" ng-if="$ctrl.docNav === 'outline'">
-          <h5>Outline</h5>
+          <h5>Index</h5>
           <document-sidenav-outline-item ng-repeat="item in $ctrl.pdfInfo.outline"
             item="item"
             on-select="$ctrl.onAnchorUpdate({anchor: 'pdfd:' + dest})"
@@ -207,7 +209,7 @@
       </li>
       <li>
         <a class="btn" ng-click="$ctrl.pdfInfo.searchIndex && $ctrl.docNavToggle('search')"
-          title="Search" alt="Search"
+          title="Search in full text" alt="Search in full text"
           ng-disabled="!$ctrl.pdfInfo.searchIndex"
         ><i class="fa fa-fw fa-search"></i></a>
         <div class="ph-margin-arrow-container ph-sidenav-arrow ph-fade"
