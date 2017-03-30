@@ -98,6 +98,13 @@ module.exports = {
         use: extractCss.extract(['css-loader?sourceMap', 'less-loader?sourceMap']),
       },
       {
+        // transpile ES6 dependencies with babel
+        include: ['srch']
+          .map(mod => path.resolve(__dirname, `./node_modules/${mod}`)),
+        test: /\.js/,
+        loader: 'babel-loader',
+      },
+      {
         test: /\.ts$/,
         use: [{
           loader: 'awesome-typescript-loader',
@@ -142,4 +149,5 @@ module.exports = {
       'window.jQuery': 'jquery', // for angular
     }),
   ],
+  performance: { hints: false },
 };

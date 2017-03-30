@@ -23,7 +23,6 @@ document-sidenav {
   min-width: 250px;
   overflow-x: hidden;
   overflow-y: auto;;
-  padding: @ph-sidenav-small-width (@grid-gutter-width/2) 30px;
 }
 
 .ph-sidenav-small {
@@ -47,6 +46,12 @@ document-sidenav {
       transform @ph-sidenav-animation-duration ease-in-out @ph-sidenav-animation-duration,
       box-shadow @ph-sidenav-animation-duration ease-in-out @ph-sidenav-animation-duration;
   }
+}
+
+.ph-sidenav-body {
+  padding: @ph-sidenav-small-width (@grid-gutter-width/2) 30px;
+  height: 100%;
+  overflow: auto;
 }
 
 // mixin for content that should not be hidden beneath the sidenav
@@ -136,6 +141,11 @@ document-sidenav {
   }
 }
 
+.ph-sidenav-outline {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
 .ph-dropdown-menu-full {
   .ph-dropdown-icon-left.fa.fa-fw {
     width: @ph-split-icon-width;
@@ -187,6 +197,85 @@ document-sidenav {
   }
 }
 
+// Pagination
+.ph-sidenav-pagination {
+  position: absolute;
+  background: lighten(@gray-lighter, 3%);
+  width: 100%;
+  height: auto;
+  left: 0;
+  bottom: 0;
+
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    li {
+      flex: 1;
+      position: relative;
+
+      > a {
+        display: block;
+        border-bottom: 2px solid transparent;
+        padding-top: @padding-base-horizontal;
+        padding-bottom: @padding-base-horizontal;
+        &:hover {
+          background: @gray-lighter;
+          border-bottom: 2px solid @ph-base-color;
+        }
+      }
+    }
+  }
+}
+.ph-sidenav-arrow {
+  height: auto;
+  top: 0;
+  left: 50%;
+  z-index: 10000;
+}
+.ph-sidenav-panel {
+  position: absolute;
+  background: @ph-white;
+  box-shadow: @ph-shadow;
+  width: 100%;
+  bottom: 100%;
+  left: 0;
+  padding: @padding-base-horizontal;
+}
+
+.ph-sidenav-small {
+  ul {
+    display: block;
+    li {
+      > a {
+        border-bottom: none;
+        border-left: 2px solid transparent;
+        padding-top: @padding-base-horizontal/2;
+        padding-bottom: @padding-base-horizontal/2;
+        &:hover {
+          border-bottom: none;
+          border-left: 2px solid @ph-base-color;
+        }
+      }
+    }
+  }
+  .ph-sidenav-arrow {
+    top: 50%;
+    left: 100%;
+  }
+  .ph-sidenav-panel {
+    left: 100%;
+    bottom: 0;
+    width: inherit;
+  }
+  .ph-sidenav-outline, .ph-sidenav-search {
+    width: 25vw;
+  }
+}
 // override padding for kudos so the iframe can fill the entire panel body
 .ph-sidenav-info-kudos .panel-body {
   padding: 0;
