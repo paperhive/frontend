@@ -142,13 +142,14 @@ class DocumentTextCtrl {
   }
 
   updateSearchIndex() {
+    if (!this.pdfInfo) return;
     this.pdfInfo.searchIndex = undefined;
     if (!this.pdfText) return;
     this.pdfInfo.searchIndex = new SearchIndex(this.pdfText);
   }
 
   search() {
-    this.searchMatches = this.pdfInfo.searchIndex && this.searchStr
+    this.searchMatches = this.pdfInfo && this.pdfInfo.searchIndex && this.searchStr
       ? this.pdfInfo.searchIndex.search(this.searchStr) : undefined;
     this.onSearchMatchesUpdate({searchMatches: this.searchMatches});
   }
