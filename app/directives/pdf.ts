@@ -1088,10 +1088,10 @@ export default function(app) {
         scroll.scrollTo(element, {
           offset: (this.scope.viewportOffsetTop || 0) + viewportPadding,
           before: () => this.scrolling = true,
-          after: () => {
+          after: () => this.scope.$apply(() => {
             this.scrolling = false;
             this.updatePageNumber();
-          },
+          }),
         });
       }
 
