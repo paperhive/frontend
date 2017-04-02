@@ -2,7 +2,7 @@ import angular from 'angular';
 import { clone, compact, map, sortBy, sum } from 'lodash';
 
 export default function(app) {
-  app.component('marginDiscussions', {
+  app.component('margin', {
     bindings: {
       discussions: '<',
       filteredDiscussions: '<',
@@ -265,6 +265,6 @@ export default function(app) {
         $scope.$watchCollection('$ctrl.pageCoordinates', updatePositions);
       },
     ],
-    template: require('./margin-discussions.html'),
+    template: require('./margin.html'),
   });
 }

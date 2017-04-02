@@ -55,7 +55,7 @@
       ></pdf-full>
     </div>
     <div class="col-md-3">
-      <margin-discussions
+      <margin
         ng-if="$ctrl.allPagesInitialized"
         discussions="$ctrl.discussions"
         filtered-discussions="$ctrl.filteredDiscussions"
@@ -74,7 +74,7 @@
         on-reply-delete="$ctrl.onReplyDelete({reply: reply})"
         on-discussion-mouseenter="$ctrl.hoveredMarginDiscussions[discussion.id] = true"
         on-discussion-mouseleave="$ctrl.hoveredMarginDiscussions[discussion.id] = false"
-      ></margin-discussions>
+      ></margin>
     </div>
   </div>
 

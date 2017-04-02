@@ -1,0 +1,47 @@
+<div
+  class="ph-margin-controls ph-margin-controls-top"
+  ng-style="{top: $ctrl.viewportOffsetTop || 0}"
+>
+  <div class="ph-margin-controls-permanent">
+    <channel-selector discussions="$ctrl.discussions"></channel-selector>
+    <!--filter-button></filter-button-->
+  </div>
+  <margin-link
+    position="top"
+    discussion-offsets="$ctrl.discussionPositions"
+    discussion-sizes="$ctrl.discussionSizes"
+    viewport-offset-top="$ctrl.viewportOffsetTop"
+    viewport-offset-bottom="$ctrl.viewportOffsetBottom"
+  ></margin-link>
+</div>
+<div class="ph-margin-controls ph-margin-controls-bottom"
+  ng-style="{bottom: $ctrl.viewportOffsetBottom || 0}"
+>
+  <margin-link
+    position="bottom"
+    discussion-offsets="$ctrl.discussionPositions"
+    discussion-sizes="$ctrl.discussionSizes"
+    viewport-offset-top="$ctrl.viewportOffsetTop"
+    viewport-offset-bottom="$ctrl.viewportOffsetBottom"
+  ></margin-link>
+</div>
+<div
+  ng-repeat="cluster in $ctrl.discussionClusters track by cluster.id"
+  class="ph-margin-cluster"
+  ng-style="{top: cluster.top + 'px'}"
+>
+  {{cluster}}
+  <margin-discussion-placeholder
+    ng-show="!$ctrl.discussionVisibilities[discussion.id]"
+  ></margin-discussion-placeholder>
+</div>
+<margin-discussion-draft
+  selectors="$ctrl.draftSelectors"
+  on-submit="$ctrl.submitDiscussion(discussion)"
+  on-discard="$ctrl.onDraftDiscard()"
+
+  on-resized="$ctrl.draftSize = $size"
+  ng-if="$ctrl.draftSelectors"
+  ng-show="$ctrl.draftPosition !== undefined"
+  ng-style="{'top': $ctrl.draftPosition + 'px'}"
+></margin-discussion-draft>
