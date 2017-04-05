@@ -38,13 +38,13 @@ document-sidenav {
   }
   &.ng-hide-add {
     transition:
-      transform @ph-sidenav-animation-duration ease-in-out,
-      box-shadow @ph-sidenav-animation-duration ease-in-out;
+      transform @ph-animation-duration ease-in-out,
+      box-shadow @ph-animation-duration ease-in-out;
   }
   &.ng-hide-remove {
     transition:
-      transform @ph-sidenav-animation-duration ease-in-out @ph-sidenav-animation-duration,
-      box-shadow @ph-sidenav-animation-duration ease-in-out @ph-sidenav-animation-duration;
+      transform @ph-animation-duration ease-in-out @ph-animation-duration,
+      box-shadow @ph-animation-duration ease-in-out @ph-animation-duration;
   }
 }
 
@@ -67,9 +67,9 @@ document-sidenav {
 
   &.ph-sidenav-open-add, &.ph-sidenav-open-remove {
     transition:
-      margin-left @ph-sidenav-animation-duration ease-in-out,
-      padding-left @ph-sidenav-animation-duration ease-in-out,
-      width @ph-sidenav-animation-duration ease-in-out;
+      margin-left @ph-animation-duration ease-in-out,
+      padding-left @ph-animation-duration ease-in-out,
+      width @ph-animation-duration ease-in-out;
   }
 }
 
