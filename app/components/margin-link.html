@@ -6,7 +6,7 @@
   }"
   ng-show="$ctrl.count > 0"
   scroll
-  scroll-to="$ctrl.scrolling ? '' : ('#discussion-' + $ctrl.nextDiscussionId)"
+  scroll-to="$ctrl.scrolling ? '' : ('#discussion-' + $ctrl.nextPositionedDiscussion.discussion.id)"
   scroll-offset="$ctrl.viewportOffsetTop + 130"
   scroll-duration="500"
   scroll-before="$ctrl.scrolling = true"

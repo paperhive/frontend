@@ -1,6 +1,8 @@
 import angular from 'angular';
 import { clone, compact, map, sortBy, sum } from 'lodash';
 
+require('./margin.less');
+
 export default function(app) {
   app.component('margin', {
     bindings: {
@@ -168,101 +170,56 @@ export default function(app) {
         $scope.$watch('$ctrl.scrollToAnchor', updateScroll);
         $scope.$watchCollection('$ctrl.discussionPositions', updateScroll);
 
-        // compute discussionPosititions and draftPosition
-        function updatePositions() {
+        // compute positionedDiscussions and discussionClusters
+        function updateClusters() {
+          $ctrl.discussionClusters = undefined;
+          $ctrl.positionedDiscussions = undefined;
+
           if (!$ctrl.filteredDiscussions) return;
 
-          // get raw draft position
-          const draftRawPosition = getRawPosition($ctrl.draftSelectors);
+          // get position and sort by position
+          const positionedDiscussions = $ctrl.filteredDiscussions
+            .map(discussion => ({
+              discussion,
+              top: getRawPosition(discussion.target.selectors),
+            }))
+            .filter(positionedDiscussion => positionedDiscussion.top !== undefined)
+            .sort((a, b) => a.top < b.top ? -1 : 1);
 
-          // create draft coord object (falsy if it has no position or no height)
-          const draftCoord = draftRawPosition !== undefined &&
-            $ctrl.draftSize && $ctrl.draftSize.height &&
-            {position: draftRawPosition, height: $ctrl.draftSize.height};
-
-          // get raw discussion positions
-          const discussionRawPositions = {};
-          $ctrl.filteredDiscussions.forEach(discussion => {
-            discussionRawPositions[discussion.id] =
-              getRawPosition(discussion.target.selectors);
-            if (!$ctrl.discussionSizes[discussion.id]) {
-              $ctrl.discussionSizes[discussion.id] = {height: 135};
+          // group into clusters
+          const clusters = [];
+          const clusterHeight = 135;
+          positionedDiscussions.forEach(positionedDiscussion => {
+            const lastCluster = clusters.length > 0 && clusters[clusters.length - 1];
+            if (!lastCluster || lastCluster.top + clusterHeight < positionedDiscussion.top) {
+              clusters.push({
+                top: positionedDiscussion.top,
+                discussions: [positionedDiscussion],
+              });
+              return;
             }
+
+            lastCluster.discussions.push(positionedDiscussion);
           });
 
-          // create array with id, offset and height for each discussion
-          // (ignores discussions without size, e.g., unrendered discussions)
-          const coords = sortBy(compact(map(discussionRawPositions, (position, id) => {
-            if (position === undefined || !$ctrl.discussionSizes[id]) return;
-            return {id, position, height: $ctrl.discussionSizes[id].height};
-          })), 'position');
+          // generate cluster ids
+          clusters.forEach(cluster => {
+            cluster.id = cluster.discussions
+              .map(discussion => discussion.id)
+              .join(':');
+          });
 
-          // padding between elements
-          const padding = 8;
-          const offsetTop = 70;
-
-          // treat above and below separately
-          const coordsAbove = draftCoord &&
-            coords.filter(coord => coord.position <= draftCoord.position);
-          const coordsBelow = coords.filter(coord =>
-            !draftCoord || coord.position > draftCoord.position,
-          );
-
-          // move bottom elements from above to below if there's not enough space
-          function getTotalHeight(_coords) {
-            return sum(map(_coords, 'height')) + _coords.length * padding;
-          }
-          while (draftCoord && getTotalHeight(coordsAbove) + offsetTop > draftCoord.position) {
-            // remove last one in above
-            const last = coordsAbove.splice(-1, 1);
-            // insert to beginning of below
-            coordsBelow.unshift(last[0]);
-          }
-
-          const positions = {};
-          function place(_coords, lb, ub) {
-            const ids = _coords.map(coord => coord.id);
-            const anchors = _coords.map(coord => coord.position);
-            const heights = _coords.map(coord => coord.height + padding);
-
-            const optAnchors = distangleService.distangle(anchors, heights, lb, ub);
-            for (let i = 0; i < anchors.length; i++) {
-              positions[ids[i]] = optAnchors[i];
-            }
-          }
-
-          // place discussions
-          if (draftCoord) {
-            place(coordsAbove, offsetTop, draftCoord.position);
-            place(coordsBelow, draftCoord.position + draftCoord.height + padding, undefined);
-          } else {
-            place(coordsBelow, offsetTop, undefined);
-          }
-
-          // update controller properties
-          $ctrl.draftPosition = draftCoord ? draftCoord.position : undefined;
-          angular.copy(positions, $ctrl.discussionPositions);
-          updateDiscussionVisibilities();
-
-          // sort by position (for preventing z-index issues)
-          $ctrl.sortedDiscussions = $ctrl.filteredDiscussions
-            .filter(discussion => positions[discussion.id] !== undefined)
-            .sort((discussionA, discussionB) => {
-              const pA = positions[discussionA.id];
-              const pB = positions[discussionB.id];
-              if (pA < pB) return -1;
-              if (pA > pB) return 1;
-              return 0;
-            });
+          $ctrl.positionedDiscussions = positionedDiscussions;
+          $ctrl.discussionClusters = clusters;
         }
 
         // update positions if discussions, draftSelectors, discussionSizes,
         // draftSize or page coords changed
-        $scope.$watchCollection('$ctrl.filteredDiscussions', updatePositions);
-        $scope.$watch('$ctrl.draftSelectors', updatePositions);
-        $scope.$watch('$ctrl.draftSize', updatePositions);
-        $scope.$watchCollection('$ctrl.discussionSizes', updatePositions);
-        $scope.$watchCollection('$ctrl.pageCoordinates', updatePositions);
+        $scope.$watchCollection('$ctrl.filteredDiscussions', updateClusters);
+        $scope.$watch('$ctrl.draftSelectors', updateClusters);
+        $scope.$watch('$ctrl.draftSize', updateClusters);
+        $scope.$watchCollection('$ctrl.discussionSizes', updateClusters);
+        $scope.$watchCollection('$ctrl.pageCoordinates', updateClusters);
       },
     ],
     template: require('./margin.html'),

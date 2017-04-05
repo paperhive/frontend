@@ -5,8 +5,7 @@ export default function(app) {
   app.component('marginLink', {
     bindings: {
       position: '@',
-      discussionOffsets: '<',
-      discussionSizes: '<',
+      positionedDiscussions: '<',
       viewportOffsetTop: '<',
       viewportOffsetBottom: '<',
       extraOffset: '<',
@@ -20,14 +19,14 @@ export default function(app) {
         }
 
         function updateCount() {
-          if (!ctrl.discussionOffsets || !ctrl.discussionSizes) return;
+          if (!ctrl.positionedDiscussions) return;
           let count = 0;
 
           // add/substract extra offset such that an element is considered to be
           // hidden if this number of pixels is visible at maximum
           const extraOffset = ctrl.extraOffset || 70;
 
-          ctrl.nextDiscussionId = undefined;
+          ctrl.nextPositionedDiscussion = undefined;
 
           // get position of parent element
           // (may be null when the element is detached/destroyed)
@@ -40,27 +39,27 @@ export default function(app) {
           ctrl.parentTop = parentBoundingRect.top;
 
           // count elements above/below the viewport and get next discussion id
-          forEach(ctrl.discussionOffsets, (offset, id) => {
-            if (!ctrl.discussionSizes[id]) return;
-            const height = ctrl.discussionSizes[id].height;
+          forEach(ctrl.positionedDiscussions, (positionedDiscussion) => {
+            const top = positionedDiscussion.top;
+            const height = 135;
 
             if (ctrl.position === 'top') {
-              if (parentBoundingRect.top + offset + height - extraOffset < ctrl.viewportOffsetTop) {
+              if (parentBoundingRect.top + top + height - extraOffset < ctrl.viewportOffsetTop) {
                 count++;
 
-                // update nextDiscussionId
-                if (!ctrl.nextDiscussionId || offset >= ctrl.discussionOffsets[ctrl.nextDiscussionId]) {
-                  ctrl.nextDiscussionId = id;
+                // update nextPositionedDiscussion
+                if (!ctrl.nextDiscussionId || top >= ctrl.nextPositionedDiscussion.top) {
+                  ctrl.nextPositionedDiscussion = positionedDiscussion;
                 }
               }
             } else {
               const viewportHeight = angular.element($window).height();
-              if (parentBoundingRect.top + offset + extraOffset > viewportHeight) {
+              if (parentBoundingRect.top + top + extraOffset > viewportHeight) {
                 count++;
 
-                // update nextDiscussionId
-                if (!ctrl.nextDiscussionId || offset <= ctrl.discussionOffsets[ctrl.nextDiscussionId]) {
-                  ctrl.nextDiscussionId = id;
+                // update nextPositionedDiscussion
+                if (!ctrl.nextDiscussionId || top <= ctrl.nextPositionedDiscussion.top) {
+                  ctrl.nextPositionedDiscussion = positionedDiscussion;
                 }
               }
             }
@@ -74,8 +73,7 @@ export default function(app) {
         }
 
         // register updateCount on change of input data
-        $scope.$watchCollection('$ctrl.discussionOffsets', updateCount);
-        $scope.$watchCollection('$ctrl.discussionSizes', updateCount);
+        $scope.$watchCollection('$ctrl.positionedDiscussions', updateCount);
         $scope.$watch('$ctrl.viewportOffsetTop', updateCount);
 
         // wrap updateCount with $apply for non-angular events

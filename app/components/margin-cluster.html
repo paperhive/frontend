@@ -1,0 +1,22 @@
+<!-- avatar -->
+<button class="btn btn-primary ph-component-circle"
+  ng-click="$ctrl.onOpen({$cluster: $ctrl.cluster})"
+>
+  <div>+{{$ctrl.cluster.discussions.length}}</div>
+</button>
+<div class="ph-component-body">
+  <!-- arrow -->
+  <div class="ph-margin-arrow-container">
+    <div class="ph-arrow ph-arrow-outward-left"></div>
+  </div>
+  <div class="ph-margin-row-content">
+    <div class="ph-xs-margin-bottom">
+      <div class="ph-margin-discussion-placeholder-author"></div>
+      <div class="ph-margin-discussion-placeholder-date"></div>
+    </div>
+    <div class="ph-margin-discussion-placeholder-title ph-sm-margin-bottom"></div>
+    <div class="ph-margin-discussion-placeholder-body ph-xs-margin-bottom"></div>
+    <div class="ph-margin-discussion-placeholder-body ph-sm-margin-bottom"></div>
+    <div class="ph-margin-discussion-placeholder-more"></div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+@import "../../less/variables.less";
+
+margin-cluster {
+  position: absolute;
+  left: (@grid-gutter-width / 2);
+  right: (@grid-gutter-width / 2);
+
+  > .ph-component-circle {
+    position: absolute;
+    top: 0;
+    width: @ph-margin-avatar-size;
+    height: @ph-margin-avatar-size;
+    border: none;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+
+    &:active, &:focus {
+      outline: none !important;
+    }
+
+    > div {
+      flex: 1;
+      font-size: 14px;
+      font-weight: bold;
+      text-align: center;
+    }
+  }
+
+  > .ph-component-body {
+    margin-left: @ph-margin-body-offset;
+    box-shadow: @ph-shadow;
+    background-color: @ph-margin-body-bgcolor;
+  }
+}
