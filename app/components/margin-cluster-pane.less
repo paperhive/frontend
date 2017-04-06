@@ -9,4 +9,10 @@ margin-cluster-pane {
   z-index: @zindex-navbar-fixed - 2;
   background-color: white;
   box-shadow: @ph-shadow;
+
+  > button {
+    &:active, &:focus {
+      outline: none !important;
+    }
+  }
 }
