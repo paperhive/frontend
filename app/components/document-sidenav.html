@@ -150,7 +150,7 @@
       <h5>Index</h5>
       <document-sidenav-outline-item ng-repeat="item in $ctrl.pdfInfo.outline"
         item="item"
-        on-select="$ctrl.onAnchorUpdate({anchor: 'pdfd:' + dest})"
+        on-anchor-update="$ctrl.onAnchorUpdate({anchor})"
       ></document-sidenav-outline-item>
     </div>
     <div class="ph-sidenav-panel ph-fade" ng-if="$ctrl.docNav === 'search'">

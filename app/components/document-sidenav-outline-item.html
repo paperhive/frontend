@@ -10,13 +10,13 @@
 </div>
 <div class="ph-component-body">
   <div class="ph-component-link-container">
-    <a href="" ng-click="$ctrl.onSelect({dest: $ctrl.item.dest})"
+    <a href="" ng-click="$ctrl.select()"
       title="{{$ctrl.item.title}}"
     >{{$ctrl.item.title}}</a>
   </div>
   <div ng-if="$ctrl.item.items.length > 0" uib-collapse="$ctrl.collapsed">
     <document-sidenav-outline-item ng-repeat="item in $ctrl.item.items"
-      item="item" on-select="$ctrl.onSelect({dest})"
+      item="item" on-anchor-update="$ctrl.onAnchorUpdate({anchor})"
     ></document-sidenav-outline-item>
   </div>
 </div>
