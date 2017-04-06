@@ -1,5 +1,5 @@
 import jquery from 'jquery';
-import { merge } from 'lodash';
+import { isArray, merge } from 'lodash';
 import { SearchIndex } from 'srch';
 
 class DocumentTextCtrl {
@@ -75,7 +75,11 @@ class DocumentTextCtrl {
     const segmentName = this.$routeSegment.name;
     const baseUrl = this.$routeSegment
       .getSegmentUrl(segmentName, this.$routeSegment.$routeParams);
-    return `.${baseUrl}?a=pdfd:${encodeURIComponent(dest)}`;
+
+    const anchor = isArray(dest)
+      ? `pdfdr:${JSON.stringify(dest)}`
+      : `pdfd:${dest}`;
+    return `.${baseUrl}?a=${encodeURIComponent(anchor)}`;
   }
 
   getNewDiscussion(discussion) {
