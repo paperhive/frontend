@@ -1,3 +1,17 @@
-<button class="btn btn-link" ng-click="$ctrl.onClose()">
-  <i class="fa fa-fw fa-times"></i>
-</button>
+<div class="ph-component-header">
+  <button class="btn btn-link" ng-click="$ctrl.onClose()">
+    <i class="fa fa-fw fa-times"></i>
+  </button>
+</div>
+<div class="ph-component-body">
+  <margin-discussion
+    ng-repeat="discussion in $ctrl.cluster.discussions"
+    discussion="discussion"
+    on-discussion-update="$ctrl.onDiscussionUpdate({discussion})"
+    on-discussion-delete="$ctrl.onDiscussionDelete({discussion})"
+    on-reply-submit="$ctrl.onReplySubmit({reply})"
+    on-reply-update="$ctrl.onReplyUpdate({reply})"
+    on-reply-delete="$ctrl.onReplyDelete({reply})"
+    on-discussion-hover="$ctrl.onDiscussionHover({discussion, hovered})"
+  ></margin-discussion>
+</div>

@@ -67,13 +67,12 @@
         scroll-to-anchor="$ctrl.allPagesInitialized && $ctrl.anchor"
         on-draft-discard="$ctrl.draftSelectors = undefined"
         on-discussion-submit="$ctrl.onDiscussionSubmit({discussion: $ctrl.getNewDiscussion(discussion)})"
-        on-discussion-update="$ctrl.onDiscussionUpdate({discussion: discussion})"
-        on-discussion-delete="$ctrl.onDiscussionDelete({discussion: discussion})"
-        on-reply-submit="$ctrl.onReplySubmit({reply: reply})"
-        on-reply-update="$ctrl.onReplyUpdate({reply: reply})"
-        on-reply-delete="$ctrl.onReplyDelete({reply: reply})"
-        on-discussion-mouseenter="$ctrl.hoveredMarginDiscussions[discussion.id] = true"
-        on-discussion-mouseleave="$ctrl.hoveredMarginDiscussions[discussion.id] = false"
+        on-discussion-update="$ctrl.onDiscussionUpdate({discussion})"
+        on-discussion-delete="$ctrl.onDiscussionDelete({discussion})"
+        on-reply-submit="$ctrl.onReplySubmit({reply})"
+        on-reply-update="$ctrl.onReplyUpdate({reply})"
+        on-reply-delete="$ctrl.onReplyDelete({reply})"
+        on-discussion-hover="$ctrl.hoveredMarginDiscussions[discussion.id] = hovered"
       ></margin>
     </div>
   </div>

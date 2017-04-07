@@ -22,8 +22,7 @@ export default function(app) {
       onReplySubmit: '&',
       onReplyUpdate: '&',
       onReplyDelete: '&',
-      onDiscussionMouseenter: '&',
-      onDiscussionMouseleave: '&',
+      onDiscussionHover: '&',
     },
     controller: [
       '$document', '$element', '$scope', '$timeout', '$window', 'scroll',
@@ -194,12 +193,12 @@ export default function(app) {
             if (!lastCluster || lastCluster.top + clusterHeight < positionedDiscussion.top) {
               clusters.push({
                 top: positionedDiscussion.top,
-                discussions: [positionedDiscussion],
+                discussions: [positionedDiscussion.discussion],
               });
               return;
             }
 
-            lastCluster.discussions.push(positionedDiscussion);
+            lastCluster.discussions.push(positionedDiscussion.discussion);
           });
 
           // generate cluster ids
@@ -212,6 +211,18 @@ export default function(app) {
           $ctrl.positionedDiscussions = positionedDiscussions;
           $ctrl.discussionClusters = clusters;
         }
+
+        $ctrl.discussionDelete = function (discussion) {
+          return $ctrl.onDiscussionDelete({discussion})
+            .then(() => {
+              const idx = $ctrl.currentCluster.discussions.indexOf(discussion);
+              if (idx === -1) return;
+              $ctrl.currentCluster.discussions.splice(idx, 1);
+              if ($ctrl.currentCluster.discussions.length === 0) {
+                $ctrl.currentCluster = undefined;
+              }
+            });
+        };
 
         // update positions if discussions, draftSelectors, discussionSizes,
         // draftSize or page coords changed

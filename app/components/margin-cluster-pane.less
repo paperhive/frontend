@@ -9,10 +9,26 @@ margin-cluster-pane {
   z-index: @zindex-navbar-fixed - 2;
   background-color: white;
   box-shadow: @ph-shadow;
+  display: flex;
+  flex-direction: column;
 
-  > button {
-    &:active, &:focus {
-      outline: none !important;
+  > .ph-component-header {
+    > button {
+      &:active, &:focus {
+        outline: none !important;
+      }
+    }
+  }
+
+  > .ph-component-body {
+    flex-grow: 1;
+    width: 100%;
+    padding: @grid-gutter-width/2;
+    overflow-y: auto;
+
+    > margin-discussion {
+      display: block;
+      margin-bottom: @grid-gutter-width;
     }
   }
 }

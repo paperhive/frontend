@@ -24,7 +24,7 @@
   ></margin-link>
 </div>
 <margin-cluster
-  ng-repeat="cluster in $ctrl.discussionClusters track by cluster.id"
+  ng-repeat="cluster in $ctrl.discussionClusters"
   cluster="cluster"
   on-open="$ctrl.currentCluster = $cluster"
   ng-style="{top: cluster.top + 'px'}"
@@ -35,6 +35,13 @@
   ng-style="{top: $ctrl.viewportOffsetTop || 0}"
   cluster="$ctrl.currentCluster"
   on-close="$ctrl.currentCluster = undefined"
+  on-discussion-submit="$ctrl.onDiscussionSubmit({discussion})"
+  on-discussion-update="$ctrl.onDiscussionUpdate({discussion})"
+  on-discussion-delete="$ctrl.discussionDelete(discussion)"
+  on-reply-submit="$ctrl.onReplySubmit({reply})"
+  on-reply-update="$ctrl.onReplyUpdate({reply})"
+  on-reply-delete="$ctrl.onReplyDelete({reply})"
+  on-discussion-hover="$ctrl.onDiscussionHover({discussion, hovered})"
 ></margin-cluster-pane>
 <margin-discussion-draft
   selectors="$ctrl.draftSelectors"
