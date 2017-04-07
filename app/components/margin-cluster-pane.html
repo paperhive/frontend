@@ -12,6 +12,7 @@
     on-reply-submit="$ctrl.onReplySubmit({reply})"
     on-reply-update="$ctrl.onReplyUpdate({reply})"
     on-reply-delete="$ctrl.onReplyDelete({reply})"
-    on-discussion-hover="$ctrl.onDiscussionHover({discussion, hovered})"
+    ng-mouseenter="$ctrl.onDiscussionHover({discussion, hovered: true})"
+    ng-mouseleave="$ctrl.onDiscussionHover({discussion, hovered: false})"
   ></margin-discussion>
 </div>
