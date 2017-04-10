@@ -116,17 +116,17 @@
           <!-- do not move this before the options link (pull-right!) because
           this creates a newline after inserting the first reply -->
           <a
-            class="badge ph-margin-badge"
+            class="btn btn-primary btn-xs"
             ng-click="$ctrl.isExpanded = !$ctrl.isExpanded"
           >
             <span ng-if="$ctrl.isExpanded">
-              Show less
               <i class="fa fa-fw fa-chevron-up"></i>
+              Show less
             </span>
             <span ng-if="!$ctrl.isExpanded">
-              Show more
               <i class="fa fa-fw fa-chevron-down"></i>
-              </span>
+              Show more
+            </span>
           </a>
           <span class="ph-margin-info" ng-if="$ctrl.discussion.replies.length">
             {{$ctrl.discussion.replies.length}}
