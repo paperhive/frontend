@@ -5,13 +5,21 @@ margin-cluster {
   left: (@grid-gutter-width / 2);
   right: (@grid-gutter-width / 2);
 
+  > avatar {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
   > .ph-component-circle {
     position: absolute;
     top: 0;
+    left: 0;
     width: @ph-margin-avatar-size;
     height: @ph-margin-avatar-size;
     border: none;
     border-radius: 50%;
+    opacity: 0.75;
 
     display: flex;
     align-items: center;
