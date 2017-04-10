@@ -2,23 +2,46 @@
   classes="img-circle"
 ></avatar>
 <button class="btn btn-primary ph-component-circle"
+  ng-if="$ctrl.cluster.discussions.length > 1"
   ng-click="$ctrl.onOpen({$cluster: $ctrl.cluster})"
 >
-  <div>+{{$ctrl.cluster.discussions.length}}</div>
+  <div>+{{$ctrl.cluster.discussions.length - 1}}</div>
 </button>
 <div class="ph-component-body">
   <!-- arrow -->
   <div class="ph-margin-arrow-container">
     <div class="ph-arrow ph-arrow-outward-left"></div>
   </div>
+  <div ng-if="$ctrl.cluster.discussions.length > 2" class="ph-component-shadow-2"></div>
+  <div ng-if="$ctrl.cluster.discussions.length > 1" class="ph-component-shadow-1"></div>
   <div class="ph-margin-row-content">
-    <div class="ph-xs-margin-bottom">
-      <div class="ph-margin-discussion-placeholder-author"></div>
-      <div class="ph-margin-discussion-placeholder-date"></div>
+    <p class="ph-xs-margin-bottom ph-margin-info">
+      <a href="./users/{{$ctrl.cluster.discussions[0].author.account.username}}">
+        {{$ctrl.cluster.discussions[0].author.displayName}}</a>
+      · <span am-time-ago="$ctrl.cluster.discussions[0].createdAt"></span>
+    </p>
+    <div class="ph-margin-body"
+      ng-class="{'ph-margin-body-collapsed': !$ctrl.isExpanded}"
+      ng-style="{'max-height': $ctrl.bodyHeight + 'px'}"
+      on-resized="$ctrl.bodyHeight = $size.scrollHeight"
+    >
+      <div ng-if="!$ctrl.cluster.discussions[0].body">
+        <mathjax body="$ctrl.cluster.discussions[0].title"></mathjax>
+      </div>
+      <div ng-if="$ctrl.cluster.discussions[0].body">
+        <p class="ph-margin-title ph-no-margin ph-xs-margin-bottom">
+          <mathjax body="$ctrl.cluster.discussions[0].title"></mathjax>
+        </p>
+        <kramjax body="$ctrl.cluster.discussions[0].body"></kramjax>
+      </div>
+      <div ng-if="$ctrl.bodyHeight > 70" class="ph-margin-body-fade"></div>
     </div>
-    <div class="ph-margin-discussion-placeholder-title ph-sm-margin-bottom"></div>
-    <div class="ph-margin-discussion-placeholder-body ph-xs-margin-bottom"></div>
-    <div class="ph-margin-discussion-placeholder-body ph-sm-margin-bottom"></div>
-    <div class="ph-margin-discussion-placeholder-more"></div>
+    <button
+      class="btn btn-primary btn-xs ph-xs-margin-top"
+      ng-click="$ctrl.onOpen({$cluster: $ctrl.cluster})"
+    >
+      <i class="fa fa-fw fa-chevron-right"></i>
+      Show more
+    </button>
   </div>
 </div>

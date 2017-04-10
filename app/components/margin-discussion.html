@@ -35,7 +35,7 @@
               {{$ctrl.discussion.author.displayName}}</a>
             · <span am-time-ago="$ctrl.discussion.createdAt"></span>
           </p>
-          <div class="ph-margin-body"
+          <div class="ph-margin-body ph-xs-margin-bottom"
             ng-class="{'ph-margin-body-collapsed': !$ctrl.isExpanded}"
             ng-style="{'max-height': $ctrl.bodyHeight + 'px'}"
             on-resized="$ctrl.bodyHeight = $size.scrollHeight"
@@ -115,7 +115,7 @@
           </div>
           <!-- do not move this before the options link (pull-right!) because
           this creates a newline after inserting the first reply -->
-          <a
+          <button
             class="btn btn-primary btn-xs"
             ng-click="$ctrl.isExpanded = !$ctrl.isExpanded"
           >
@@ -127,7 +127,7 @@
               <i class="fa fa-fw fa-chevron-down"></i>
               Show more
             </span>
-          </a>
+          </button>
           <span class="ph-margin-info" ng-if="$ctrl.discussion.replies.length">
             {{$ctrl.discussion.replies.length}}
             <i class="fa fa-comments"></i>
