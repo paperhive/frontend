@@ -1,7 +1,7 @@
 import { cloneDeep } from 'lodash';
 
 export default function(app) {
-  app.component('marginDiscussionDraft', {
+  app.component('marginDraftPane', {
     bindings: {
       selectors: '<',
       onSubmit: '&',
@@ -34,6 +34,6 @@ export default function(app) {
         };
       },
     ],
-    template: require('./margin-discussion-draft.html'),
+    template: require('./margin-draft-pane.html'),
   });
 };

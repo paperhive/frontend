@@ -24,10 +24,12 @@
   ></margin-link>
 </div>
 <margin-cluster
-  ng-repeat="cluster in $ctrl.discussionClusters"
+  ng-repeat="cluster in $ctrl.discussionClusters track by cluster.id"
   cluster="cluster"
   on-open="$ctrl.currentCluster = $cluster"
   ng-style="{top: cluster.top + 'px'}"
+  ng-mouseenter="$ctrl.highlightCluster(cluster, true)"
+  ng-mouseleave="$ctrl.highlightCluster(cluster, false)"
 ></margin-cluster>
 <margin-cluster-pane
   ng-if="$ctrl.currentCluster"
@@ -43,13 +45,9 @@
   on-reply-delete="$ctrl.onReplyDelete({reply})"
   on-discussion-hover="$ctrl.onDiscussionHover({discussion, hovered})"
 ></margin-cluster-pane>
-<margin-discussion-draft
+<margin-draft-pane
+  ng-if="$ctrl.draftSelectors"
   selectors="$ctrl.draftSelectors"
   on-submit="$ctrl.submitDiscussion(discussion)"
   on-discard="$ctrl.onDraftDiscard()"
-
-  on-resized="$ctrl.draftSize = $size"
-  ng-if="$ctrl.draftSelectors"
-  ng-show="$ctrl.draftPosition !== undefined"
-  ng-style="{'top': $ctrl.draftPosition + 'px'}"
-></margin-discussion-draft>
+></margin-draft-pane>

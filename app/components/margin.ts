@@ -224,12 +224,12 @@ export default function(app) {
             });
         };
 
-        // update positions if discussions, draftSelectors, discussionSizes,
-        // draftSize or page coords changed
+        $ctrl.highlightCluster = function(cluster, hovered) {
+          cluster.discussions.forEach(discussion => $ctrl.onDiscussionHover({discussion, hovered}));
+        };
+
+        // update positions if discussions, or page coords changed
         $scope.$watchCollection('$ctrl.filteredDiscussions', updateClusters);
-        $scope.$watch('$ctrl.draftSelectors', updateClusters);
-        $scope.$watch('$ctrl.draftSize', updateClusters);
-        $scope.$watchCollection('$ctrl.discussionSizes', updateClusters);
         $scope.$watchCollection('$ctrl.pageCoordinates', updateClusters);
       },
     ],
