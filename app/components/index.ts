@@ -55,6 +55,7 @@ import marginDiscussionDraft from './margin-discussion-draft';
 import marginDiscussionEdit from './margin-discussion-edit';
 import marginDiscussionPlaceholder from './margin-discussion-placeholder';
 import marginLink from './margin-link';
+import marginReply from './margin-reply';
 import marginReplyEdit from './margin-reply-edit';
 import navbar from './navbar';
 import navbarSearch from './navbar-search';
@@ -148,6 +149,7 @@ export default function(app) {
   marginDiscussionEdit(app);
   marginDiscussionPlaceholder(app);
   marginLink(app);
+  marginReply(app);
   marginReplyEdit(app);
   navbar(app);
   navbarSearch(app);
