@@ -40,8 +40,15 @@
       class="btn btn-primary btn-xs ph-xs-margin-top"
       ng-click="$ctrl.onOpen({$cluster: $ctrl.cluster})"
     >
-      <i class="fa fa-fw fa-chevron-right"></i>
-      Show more
+      <span ng-if="$ctrl.cluster.discussions.length === 1">
+        <i class="fa fa-fw fa-comment"></i>
+        Show discussion
+      </span>
+      <span ng-if="$ctrl.cluster.discussions.length > 1">
+        <i class="fa fa-fw fa-comments"></i>
+        Show discussions
+      </span>
+
     </button>
   </div>
 </div>
