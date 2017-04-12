@@ -25,12 +25,37 @@ export default function(app) {
       onDiscussionHover: '&',
     },
     controller: [
-      '$document', '$element', '$scope', '$timeout', '$window', 'scroll',
+      '$document', '$element', '$scope', '$timeout', '$uibModal', '$window', 'scroll',
       'channelService', 'distangleService', 'tourService',
-      function($document, $element, $scope, $timeout, $window, scroll, channelService, distangleService, tourService) {
+      function($document, $element, $scope, $timeout, $uibModal, $window, scroll, channelService,
+               distangleService, tourService) {
         const $ctrl = this;
 
         $ctrl.channelService = channelService;
+
+        $ctrl.closeClusterPane = function() {
+          if (!$ctrl.clusterPaneUnsavedContent) {
+            $ctrl.currentCluster = undefined;
+            return;
+          }
+
+          const modal = $uibModal.open({
+            template: `
+              <div class="modal-header">
+                <h3 class="modal-title">Discard draft?</h3>
+              </div>
+              <div class="modal-body">
+                There is an unsent draft. Do you want to discard it?
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-danger" type="button" ng-click="$close()">Discard</button>
+                <button class="btn btn-default" type="button" ng-click="$dismiss()">Cancel</button>
+              </div>
+            `,
+          });
+
+          modal.result.then(() => $ctrl.currentCluster = undefined);
+        };
 
         // viewport tracking for deciding which discussions actually need to be rendered
         // note: unrendered discussions will be rendered with a placeholder

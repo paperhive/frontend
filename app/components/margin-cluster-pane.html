@@ -1,6 +1,6 @@
 <div class="ph-component-header">
   <button class="btn btn-link" title="Close and show all discussions"
-    ng-click="$ctrl.close()"
+    ng-click="$ctrl.onClose()"
   >
     <i class="fa fa-fw fa-times"></i>
   </button>
@@ -14,7 +14,7 @@
     on-reply-submit="$ctrl.onReplySubmit({reply})"
     on-reply-update="$ctrl.onReplyUpdate({reply})"
     on-reply-delete="$ctrl.onReplyDelete({reply})"
-    on-unsaved-content-update="$ctrl.unsavedContent[discussion._id] = unsavedContent"
+    on-unsaved-content-update="$ctrl.unsavedContent[discussion.id] = unsavedContent"
     ng-mouseenter="$ctrl.onDiscussionHover({discussion, hovered: true})"
     ng-mouseleave="$ctrl.onDiscussionHover({discussion, hovered: false})"
   ></margin-discussion>

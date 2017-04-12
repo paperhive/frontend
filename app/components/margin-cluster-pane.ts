@@ -14,17 +14,20 @@ export default function(app) {
       onReplyUpdate: '&',
       onReplyDelete: '&',
       onDiscussionHover: '&',
+      onUnsavedContentUpdate: '&',
     },
     controller: class MarginClusterPaneCtrl {
       cluster: any;
       onClose: () => void;
+      onUnsavedContentUpdate: (o: {unsavedContent: boolean}) => void;
 
       // map discussion ids to booleans indicating if there is unsaved content
       unsavedContent: {[key: string]: boolean} = {};
 
-      static $inject = ['$scope', '$uibModal'];
-      constructor($scope, public $uibModal) {
+      static $inject = ['$scope'];
+      constructor($scope) {
         $scope.$watchCollection('$ctrl.cluster.discussions', this.cleanupUnsavedContent.bind(this));
+        $scope.$watchCollection('$ctrl.unsavedContent', this.updateUnsavedContent.bind(this));
       }
 
       cleanupUnsavedContent() {
@@ -35,26 +38,9 @@ export default function(app) {
         removeIds.forEach(id => delete this.unsavedContent[id]);
       }
 
-      close() {
+      updateUnsavedContent() {
         const unsavedContent = some(values(this.unsavedContent));
-        if (!unsavedContent) return this.onClose();
-
-        const modal = this.$uibModal.open({
-          template: `
-            <div class="modal-header">
-              <h3 class="modal-title">Discard draft?</h3>
-            </div>
-            <div class="modal-body">
-              There is an unsent draft. Do you want to discard it?
-            </div>
-            <div class="modal-footer">
-              <button class="btn btn-danger" type="button" ng-click="$close()">Discard</button>
-              <button class="btn btn-default" type="button" ng-click="$dismiss()">Cancel</button>
-            </div>
-          `,
-        });
-
-        modal.result.then(() => this.onClose());
+        this.onUnsavedContentUpdate({unsavedContent});
       }
     },
     template: require('./margin-cluster-pane.html'),
