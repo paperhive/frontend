@@ -36,7 +36,7 @@
   class="ph-slide-in ph-slide-in-left ph-slide-out ph-slide-out-right"
   ng-style="{top: $ctrl.viewportOffsetTop || 0}"
   cluster="$ctrl.currentCluster"
-  on-close="$ctrl.closeClusterPane()"
+  on-close="$ctrl.closeClusterPane().catch($ctrl.noop)"
   on-discussion-submit="$ctrl.onDiscussionSubmit({discussion})"
   on-discussion-update="$ctrl.onDiscussionUpdate({discussion})"
   on-discussion-delete="$ctrl.discussionDelete(discussion)"
@@ -47,9 +47,13 @@
   on-unsaved-content-update="$ctrl.clusterPaneUnsavedContent = unsavedContent"
 ></margin-cluster-pane>
 <margin-draft-pane
-  ng-if="$ctrl.draftSelectors"
+  ng-if="$ctrl.draftPaneOpen"
+  class="ph-slide-in ph-slide-in-left ph-slide-out ph-slide-out-right"
+  ng-style="{top: $ctrl.viewportOffsetTop || 0}"
   selectors="$ctrl.draftSelectors"
   on-submit="$ctrl.submitDiscussion(discussion)"
-  on-discard="$ctrl.onDraftDiscard()"
+  on-close="$ctrl.closeDraftPane().catch($ctrl.noop)"
   on-unsaved-content-update="$ctrl.draftPaneUnsavedContent = unsavedContent"
+  ng-mouseup="$event.stopPropagation()"
+  ng-keyup="$event.stopPropagation()"
 ></margin-draft-pane>

@@ -1,101 +1,109 @@
-<div
-  class="ph-margin-container"
-  ng-class="{'ph-private-channel': $ctrl.channelService.selectedChannel}"
-  on-outside-mousedown="!comment.title && !comment.body && $ctrl.onDiscard()"
->
-  <div ng-show="!$ctrl.channelService.selectedChannel" class="ph-channel-description ph-channel-description-sticky">
-    <i class="fa fa-fw fa-globe"></i> Public channel
-  </div>
-  <div ng-show="$ctrl.channelService.selectedChannel" class="ph-channel-description ph-channel-description-sticky">
-    <i class="fa fa-fw fa-lock"></i>
-    <a
-      href="./channels/{{$ctrl.channelService.selectedChannel.id}}"
-      class="ph-channel-selector-channel"
-      title="{{$ctrl.channelService.getNameDescription($ctrl.channelService.selectedChannel)}}"
-    >
-      {{$ctrl.channelService.getName($ctrl.channelService.selectedChannel)}}
-    </a>
-  </div>
-  <div ng-if="auth.user" class="ph-margin-row">
-    <!-- avatar -->
-    <avatar user="auth.user" size="38"
-        classes="ph-margin-avatar img-circle"
-        ></avatar>
-    <div class="ph-margin-base-row">
-      <!-- arrow -->
-      <div class="ph-margin-arrow-container">
-        <div class="ph-arrow ph-arrow-outward-left"></div>
-      </div>
-      <!-- row content -->
-      <div class="ph-margin-row-content">
-        <form ng-submit="commentForm.$valid && $ctrl.submit()"
-          name="commentForm" novalidate>
-          <div class="form-group ph-no-margin has-feedback"
-            ng-class="{'has-error': commentForm.title.$dirty &&
-              commentForm.title.$invalid}">
-            <input ng-model="comment.title" name="title"
-              ng-focus="state.textFocused = true"
-              ng-blur="state.textFocused = false"
-              class="form-group form-control ph-no-margin ph-margin-textarea"
-              type="text" placeholder="Enter comment title..."
-              required ng-maxlength="40">
-            <i ng-if="commentForm.title.$dirty && commentForm.title.$invalid"
-              class="fa fa-fw fa-times form-control-feedback" aria-hidden="true"></i>
-            <p class="help-block small"
-                ng-if="commentForm.title.$dirty && commentForm.title.$error.required">
-              A title is required.
-            </p>
-            <p class="help-block small" ng-if="commentForm.title.$error.maxlength">
-              A title is limited to 40 characters (you entered
-              {{commentForm.title.$viewValue.length}} characters).
-            </p>
-          </div>
-          <div uib-collapse="!state.textFocused && !comment.title && !comment.body"
-              class="ph-sm-margin-top">
-            <textarea ng-model="comment.body"
-              ng-focus="state.textFocused = true"
-              ng-blur="state.textFocused = false"
-              elastic
-              id="textbody" placeholder="Enter comment (optional)..."
-              class="form-group form-control ph-comment-body ph-no-margin ph-margin-textarea ph-textarea-elastic ph-textarea-small"
-              >
-            </textarea>
-            <div class="ph-text-smaller text-muted">
-              Use
-              <a href="./help/markdown" target="_blank" title="Markdown cheat sheet">Markdown</a>
-              to enrich this comment.
+<div class="ph-component-header">
+  <button class="btn btn-link" title="Close and show all discussions"
+    ng-click="$ctrl.onClose()"
+  >
+    <i class="fa fa-fw fa-times"></i>
+  </button>
+</div>
+<div class="ph-component-body">
+  <div
+    class="ph-margin-container"
+    ng-class="{'ph-private-channel': $ctrl.channelService.selectedChannel}"
+  >
+    <div ng-show="!$ctrl.channelService.selectedChannel" class="ph-channel-description ph-channel-description-sticky">
+      <i class="fa fa-fw fa-globe"></i> Public channel
+    </div>
+    <div ng-show="$ctrl.channelService.selectedChannel" class="ph-channel-description ph-channel-description-sticky">
+      <i class="fa fa-fw fa-lock"></i>
+      <a
+        href="./channels/{{$ctrl.channelService.selectedChannel.id}}"
+        class="ph-channel-selector-channel"
+        title="{{$ctrl.channelService.getNameDescription($ctrl.channelService.selectedChannel)}}"
+      >
+        {{$ctrl.channelService.getName($ctrl.channelService.selectedChannel)}}
+      </a>
+    </div>
+    <div ng-if="auth.user" class="ph-margin-row">
+      <!-- avatar -->
+      <avatar user="auth.user" size="38"
+          classes="ph-margin-avatar img-circle"
+          ></avatar>
+      <div class="ph-margin-base-row">
+        <!-- arrow -->
+        <div class="ph-margin-arrow-container">
+          <div class="ph-arrow ph-arrow-outward-left"></div>
+        </div>
+        <!-- row content -->
+        <div class="ph-margin-row-content">
+          <form ng-submit="commentForm.$valid && $ctrl.submit()"
+            name="commentForm" novalidate>
+            <div class="form-group ph-no-margin has-feedback"
+              ng-class="{'has-error': commentForm.title.$dirty &&
+                commentForm.title.$invalid}">
+              <input ng-model="comment.title" name="title"
+                ng-focus="state.textFocused = true"
+                ng-blur="state.textFocused = false"
+                class="form-group form-control ph-no-margin ph-margin-textarea"
+                type="text" placeholder="Enter comment title..."
+                required ng-maxlength="40">
+              <i ng-if="commentForm.title.$dirty && commentForm.title.$invalid"
+                class="fa fa-fw fa-times form-control-feedback" aria-hidden="true"></i>
+              <p class="help-block small"
+                  ng-if="commentForm.title.$dirty && commentForm.title.$error.required">
+                A title is required.
+              </p>
+              <p class="help-block small" ng-if="commentForm.title.$error.maxlength">
+                A title is limited to 40 characters (you entered
+                {{commentForm.title.$viewValue.length}} characters).
+              </p>
             </div>
-            <div class="ph-sm-margin-top clearfix">
-              <button ng-disabled="commentForm.$invalid || $ctrl.submitting"
-                  class="btn btn-sm btn-primary pull-right">
-                <i ng-if="!$ctrl.submitting" class="fa fa-fw fa-check"></i>
-                <i ng-if="$ctrl.submitting" class="fa fa-fw fa-spinner fa-spin"></i>
-                Add comment
-              </button>
+            <div uib-collapse="!state.textFocused && !comment.title && !comment.body"
+                class="ph-sm-margin-top">
+              <textarea ng-model="comment.body"
+                ng-focus="state.textFocused = true"
+                ng-blur="state.textFocused = false"
+                elastic
+                id="textbody" placeholder="Enter comment (optional)..."
+                class="form-group form-control ph-comment-body ph-no-margin ph-margin-textarea ph-textarea-elastic ph-textarea-small"
+                >
+              </textarea>
+              <div class="ph-text-smaller text-muted">
+                Use
+                <a href="./help/markdown" target="_blank" title="Markdown cheat sheet">Markdown</a>
+                to enrich this comment.
+              </div>
+              <div class="ph-sm-margin-top clearfix">
+                <button ng-disabled="commentForm.$invalid || $ctrl.submitting"
+                    class="btn btn-sm btn-primary pull-right">
+                  <i ng-if="!$ctrl.submitting" class="fa fa-fw fa-check"></i>
+                  <i ng-if="$ctrl.submitting" class="fa fa-fw fa-spinner fa-spin"></i>
+                  Add comment
+                </button>
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-  <div ng-if="!auth.user" class="ph-margin-row">
-    <!-- avatar -->
-    <div class="ph-margin-unknown-avatar-container ph-margin-avatar">
-      <div class="ph-margin-unknown-avatar">
-        <i class="fa fa-user"></i>
+    <div ng-if="!auth.user" class="ph-margin-row">
+      <!-- avatar -->
+      <div class="ph-margin-unknown-avatar-container ph-margin-avatar">
+        <div class="ph-margin-unknown-avatar">
+          <i class="fa fa-user"></i>
+        </div>
       </div>
-    </div>
-    <div class="ph-margin-base-row">
-      <!-- arrow -->
-      <div class="ph-margin-arrow-container">
-        <div class="ph-arrow ph-arrow-outward-left"></div>
-      </div>
-      <!-- row content -->
-      <div class="ph-margin-row-content">
-        <a href="./signup?returnPath={{auth.returnPath}}">Sign up</a>
-        or
-        <a href="./login?returnPath={{auth.returnPath}}">log in</a>
-        to comment.
+      <div class="ph-margin-base-row">
+        <!-- arrow -->
+        <div class="ph-margin-arrow-container">
+          <div class="ph-arrow ph-arrow-outward-left"></div>
+        </div>
+        <!-- row content -->
+        <div class="ph-margin-row-content">
+          <a href="./signup?returnPath={{auth.returnPath}}">Sign up</a>
+          or
+          <a href="./login?returnPath={{auth.returnPath}}">log in</a>
+          to comment.
+        </div>
       </div>
     </div>
   </div>

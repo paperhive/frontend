@@ -15,7 +15,8 @@ export default function(app) {
       viewportOffsetBottom: '<',
       scrollToAnchor: '<',
 
-      onDraftDiscard: '&',
+      onDraftOpenUpdate: '&',
+      onDraftUnsavedContentUpdate: '&',
       onDiscussionSubmit: '&',
       onDiscussionUpdate: '&',
       onDiscussionDelete: '&',
@@ -25,36 +26,89 @@ export default function(app) {
       onDiscussionHover: '&',
     },
     controller: [
-      '$document', '$element', '$scope', '$timeout', '$uibModal', '$window', 'scroll',
+      '$document', '$element', '$q', '$scope', '$timeout', '$uibModal', '$window', 'scroll',
       'channelService', 'distangleService', 'tourService',
-      function($document, $element, $scope, $timeout, $uibModal, $window, scroll, channelService,
+      function($document, $element, $q, $scope, $timeout, $uibModal, $window, scroll, channelService,
                distangleService, tourService) {
         const $ctrl = this;
 
         $ctrl.channelService = channelService;
 
-        $ctrl.closeClusterPane = function() {
-          if (!$ctrl.clusterPaneUnsavedContent) {
-            $ctrl.currentCluster = undefined;
+        $ctrl.noop = angular.noop;
+
+        $scope.$watch(
+          '$ctrl.draftPaneOpen',
+          opened => $ctrl.onDraftOpenUpdate({opened}),
+        );
+
+        $scope.$watch(
+          '$ctrl.draftPaneUnsavedContent',
+          unsavedContent => $ctrl.onDraftUnsavedContentUpdate({unsavedContent}),
+        );
+
+        $ctrl.updateDraftPane = function () {
+          if (!$ctrl.draftSelectors) {
+            $ctrl.draftPaneOpen = false;
             return;
           }
+          if ($ctrl.currentCluster) {
+            $ctrl.closeClusterPane().then(() => $ctrl.draftPaneOpen = true);
+          } else {
+            $ctrl.draftPaneOpen = true;
+          }
+        };
+        $scope.$watch('$ctrl.draftSelectors', $ctrl.updateDraftPane);
 
-          const modal = $uibModal.open({
-            template: `
-              <div class="modal-header">
-                <h3 class="modal-title">Discard draft?</h3>
-              </div>
-              <div class="modal-body">
-                There is an unsent draft. Do you want to discard it?
-              </div>
-              <div class="modal-footer">
-                <button class="btn btn-danger" type="button" ng-click="$close()">Discard</button>
-                <button class="btn btn-default" type="button" ng-click="$dismiss()">Cancel</button>
-              </div>
-            `,
-          });
+        $ctrl.closeDraftPane = function() {
+          if (!$ctrl.draftPaneOpen || !$ctrl.draftPaneUnsavedContent) {
+            $ctrl.draftSelectors = undefined;
+            $ctrl.draftPaneOpen = false;
+            $ctrl.draftPaneUnsavedContent = false;
+            return $q.resolve();
+          }
+          return $uibModal.open({
+              template: `
+                <div class="modal-header">
+                  <h3 class="modal-title">Discard draft?</h3>
+                </div>
+                <div class="modal-body">
+                  Your discussion is not yet submitted. Do you want to discard it?
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-danger" type="button" ng-click="$close()">Discard</button>
+                  <button class="btn btn-default" type="button" ng-click="$dismiss()">Cancel</button>
+                </div>
+              `,
+            })
+            .result.then(() => {
+              $ctrl.draftSelectors = undefined;
+              $ctrl.draftPaneOpen = false;
+              $ctrl.draftPaneUnsavedContent = false;
+            });
+        };
 
-          modal.result.then(() => $ctrl.currentCluster = undefined);
+        $ctrl.closeClusterPane = function() {
+          if (!$ctrl.currentCluster || !$ctrl.clusterPaneUnsavedContent) {
+            $ctrl.currentCluster = undefined;
+            return $q.resolve();
+          }
+
+          return $uibModal
+            .open({
+              template: `
+                <div class="modal-header">
+                  <h3 class="modal-title">Discard draft?</h3>
+                </div>
+                <div class="modal-body">
+                  There is an unsent draft. Do you want to discard it?
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-danger" type="button" ng-click="$close()">Discard</button>
+                  <button class="btn btn-default" type="button" ng-click="$dismiss()">Cancel</button>
+                </div>
+              `,
+            })
+            .result.then(() => $ctrl.currentCluster = undefined);
         };
 
         // viewport tracking for deciding which discussions actually need to be rendered
@@ -108,7 +162,12 @@ export default function(app) {
 
         $ctrl.submitDiscussion = discussion => {
           const promise = $ctrl.onDiscussionSubmit({discussion});
-          promise.then(newDiscussion => $ctrl.showShareMessageId = newDiscussion.id);
+          promise.then(newDiscussion => {
+            $ctrl.showShareMessageId = newDiscussion.id;
+            $ctrl.draftPaneOpen = false;
+            $ctrl.draftPaneUnsavedContent = false;
+            $ctrl.draftSelectors = undefined;
+          });
           return promise;
         };
 
