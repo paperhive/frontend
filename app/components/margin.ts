@@ -1,5 +1,6 @@
 import angular from 'angular';
 import { clone, compact, map, sortBy, sum } from 'lodash';
+const rangy = require('rangy');
 
 require('./margin.less');
 
@@ -46,13 +47,20 @@ export default function(app) {
           unsavedContent => $ctrl.onDraftUnsavedContentUpdate({unsavedContent}),
         );
 
+        $ctrl.closeDraftPaneUnsafe = function () {
+          $ctrl.draftPaneOpen = false;
+          $ctrl.draftPaneUnsavedContent = false;
+          rangy.getSelection().removeAllRanges();
+        };
+
         $ctrl.updateDraftPane = function () {
-          if (!$ctrl.draftSelectors) {
-            $ctrl.draftPaneOpen = false;
-            return;
-          }
+          if (!$ctrl.draftSelectors) return $ctrl.closeDraftPaneUnsafe();
+
           if ($ctrl.currentCluster) {
-            $ctrl.closeClusterPane().then(() => $ctrl.draftPaneOpen = true);
+            $ctrl.closeClusterPane().then(
+              () => $ctrl.draftPaneOpen = true,
+              () => $ctrl.closeDraftPaneUnsafe(),
+            );
           } else {
             $ctrl.draftPaneOpen = true;
           }
@@ -61,9 +69,7 @@ export default function(app) {
 
         $ctrl.closeDraftPane = function() {
           if (!$ctrl.draftPaneOpen || !$ctrl.draftPaneUnsavedContent) {
-            $ctrl.draftSelectors = undefined;
-            $ctrl.draftPaneOpen = false;
-            $ctrl.draftPaneUnsavedContent = false;
+            $ctrl.closeDraftPaneUnsafe();
             return $q.resolve();
           }
           return $uibModal.open({
@@ -80,11 +86,7 @@ export default function(app) {
                 </div>
               `,
             })
-            .result.then(() => {
-              $ctrl.draftSelectors = undefined;
-              $ctrl.draftPaneOpen = false;
-              $ctrl.draftPaneUnsavedContent = false;
-            });
+            .result.then(() => $ctrl.closeDraftPaneUnsafe());
         };
 
         $ctrl.closeClusterPane = function() {
@@ -166,7 +168,6 @@ export default function(app) {
             $ctrl.showShareMessageId = newDiscussion.id;
             $ctrl.draftPaneOpen = false;
             $ctrl.draftPaneUnsavedContent = false;
-            $ctrl.draftSelectors = undefined;
           });
           return promise;
         };
