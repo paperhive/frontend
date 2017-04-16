@@ -1,8 +1,11 @@
 <div
   class="ph-margin-controls ph-margin-controls-top"
   ng-style="{top: $ctrl.viewportOffsetTop || 0}"
+
 >
-  <div class="ph-margin-controls-permanent">
+  <div class="ph-margin-controls-permanent"
+    on-resized="$ctrl.controlsSize = $size"
+  >
     <channel-selector discussions="$ctrl.discussions"></channel-selector>
     <!--filter-button></filter-button-->
   </div>

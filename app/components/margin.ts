@@ -259,7 +259,8 @@ export default function(app) {
           $ctrl.discussionClusters = undefined;
           $ctrl.positionedDiscussions = undefined;
 
-          if (!$ctrl.filteredDiscussions) return;
+          if (!$ctrl.filteredDiscussions || !$ctrl.controlsSize) return;
+          const topMin = $ctrl.controlsSize.height;
 
           // get position and sort by position
           const positionedDiscussions = $ctrl.filteredDiscussions
@@ -276,8 +277,9 @@ export default function(app) {
           positionedDiscussions.forEach(positionedDiscussion => {
             const lastCluster = clusters.length > 0 && clusters[clusters.length - 1];
             if (!lastCluster || lastCluster.top + clusterHeight < positionedDiscussion.top) {
+              const top = positionedDiscussion.top < topMin ? topMin : positionedDiscussion.top;
               clusters.push({
-                top: positionedDiscussion.top,
+                top,
                 discussions: [positionedDiscussion.discussion],
               });
               return;
@@ -316,6 +318,7 @@ export default function(app) {
         // update positions if discussions, or page coords changed
         $scope.$watchCollection('$ctrl.filteredDiscussions', updateClusters);
         $scope.$watchCollection('$ctrl.pageCoordinates', updateClusters);
+        $scope.$watch('$ctrl.controlsSize', updateClusters);
       },
     ],
     template: require('./margin.html'),
