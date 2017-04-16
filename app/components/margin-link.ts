@@ -24,9 +24,12 @@ export default function(app) {
           if (!ctrl.clusters) return;
           let count = 0;
 
+          // max height of a cluster
+          const maxHeight = 140;
+
           // add/substract extra offset such that an element is considered to be
-          // hidden if this number of pixels is visible at maximum
-          const extraOffset = ctrl.extraOffset || 70;
+          // hidden if more than this amount of pixels are hidden
+          const extraOffset = ctrl.extraOffset || 20;
 
           // get position of parent element
           // (may be null when the element is detached/destroyed)
@@ -38,13 +41,12 @@ export default function(app) {
 
           ctrl.parentTop = parentBoundingRect.top;
 
-          // count elements above/below the viewport and get next discussion id
+          // count elements above/below the viewport and get next cluster
           forEach(ctrl.clusters, (cluster) => {
             const top = cluster.top;
-            const height = 135;
 
             if (ctrl.position === 'top') {
-              if (parentBoundingRect.top + top + height - extraOffset < ctrl.viewportOffsetTop) {
+              if (parentBoundingRect.top + top + extraOffset < ctrl.viewportOffsetTop) {
                 count += cluster.discussions.length;
 
                 // update nextCluster
@@ -54,7 +56,7 @@ export default function(app) {
               }
             } else {
               const viewportHeight = angular.element($window).height();
-              if (parentBoundingRect.top + top + extraOffset > viewportHeight) {
+              if (parentBoundingRect.top + top - extraOffset + maxHeight > viewportHeight) {
                 count += cluster.discussions.length;
 
                 // update nextCluster

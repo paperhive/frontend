@@ -260,7 +260,7 @@ export default function(app) {
           $ctrl.positionedDiscussions = undefined;
 
           if (!$ctrl.filteredDiscussions || !$ctrl.controlsSize) return;
-          const topMin = $ctrl.controlsSize.height;
+          const topMin = $ctrl.controlsSize.height + 15;
 
           // get position and sort by position
           const positionedDiscussions = $ctrl.filteredDiscussions
