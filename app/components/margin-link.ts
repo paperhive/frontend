@@ -5,7 +5,7 @@ export default function(app) {
   app.component('marginLink', {
     bindings: {
       position: '@',
-      positionedDiscussions: '<',
+      clusters: '<',
       viewportOffsetTop: '<',
       viewportOffsetBottom: '<',
       extraOffset: '<',
@@ -19,14 +19,14 @@ export default function(app) {
         }
 
         function updateCount() {
-          if (!ctrl.positionedDiscussions) return;
+          ctrl.nextCluster = undefined;
+
+          if (!ctrl.clusters) return;
           let count = 0;
 
           // add/substract extra offset such that an element is considered to be
           // hidden if this number of pixels is visible at maximum
           const extraOffset = ctrl.extraOffset || 70;
-
-          ctrl.nextPositionedDiscussion = undefined;
 
           // get position of parent element
           // (may be null when the element is detached/destroyed)
@@ -39,27 +39,27 @@ export default function(app) {
           ctrl.parentTop = parentBoundingRect.top;
 
           // count elements above/below the viewport and get next discussion id
-          forEach(ctrl.positionedDiscussions, (positionedDiscussion) => {
-            const top = positionedDiscussion.top;
+          forEach(ctrl.clusters, (cluster) => {
+            const top = cluster.top;
             const height = 135;
 
             if (ctrl.position === 'top') {
               if (parentBoundingRect.top + top + height - extraOffset < ctrl.viewportOffsetTop) {
-                count++;
+                count += cluster.discussions.length;
 
-                // update nextPositionedDiscussion
-                if (!ctrl.nextDiscussionId || top >= ctrl.nextPositionedDiscussion.top) {
-                  ctrl.nextPositionedDiscussion = positionedDiscussion;
+                // update nextCluster
+                if (!ctrl.nextCluster || top >= ctrl.nextCluster.top) {
+                  ctrl.nextCluster = cluster;
                 }
               }
             } else {
               const viewportHeight = angular.element($window).height();
               if (parentBoundingRect.top + top + extraOffset > viewportHeight) {
-                count++;
+                count += cluster.discussions.length;
 
-                // update nextPositionedDiscussion
-                if (!ctrl.nextDiscussionId || top <= ctrl.nextPositionedDiscussion.top) {
-                  ctrl.nextPositionedDiscussion = positionedDiscussion;
+                // update nextCluster
+                if (!ctrl.nextCluster || top <= ctrl.nextCluster.top) {
+                  ctrl.nextCluster = cluster;
                 }
               }
             }
@@ -73,7 +73,7 @@ export default function(app) {
         }
 
         // register updateCount on change of input data
-        $scope.$watchCollection('$ctrl.positionedDiscussions', updateCount);
+        $scope.$watchCollection('$ctrl.clusters', updateCount);
         $scope.$watch('$ctrl.viewportOffsetTop', updateCount);
 
         // wrap updateCount with $apply for non-angular events
