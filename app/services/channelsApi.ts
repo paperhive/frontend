@@ -37,8 +37,18 @@ export default function(app) {
         .catch(this.notificationService.httpError('could not deactivate channel'));
     }
 
+    getFromInvitationLinkToken(token) {
+      return this.$http.get(`${this.config.apiUrl}/channels/invitationLinkToken/${token}`)
+        .then(response => response.data);
+    }
+
     invitationLinkTokenReset(channelId) {
       return this.$http.post(`${this.config.apiUrl}/channels/${channelId}/invitationLinkToken/reset`)
+        .then(response => response.data);
+    }
+
+    invitationLinkTokenConfirm(channelId, token) {
+      return this.$http.post(`${this.config.apiUrl}/channels/${channelId}/invitationLinkToken/${token}/confirm`)
         .then(response => response.data);
     }
 

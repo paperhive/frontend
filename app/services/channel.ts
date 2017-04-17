@@ -61,9 +61,18 @@ export default function(app) {
         .then(() => this.get(id).isActive = false);
     }
 
+    getFromInvitationLinkToken(token) {
+      return this.channelsApi.getFromInvitationLinkToken(token);
+    }
+
     invitationLinkTokenReset(id) {
       return this.channelsApi.invitationLinkTokenReset(id)
         .then((newChannel) => angular.copy(newChannel, this.get(id)));
+    }
+
+    invitationLinkTokenConfirm(id, token) {
+      return this.channelsApi.invitationLinkTokenConfirm(id, token)
+        .then(channel => this.channels.push(channel));
     }
 
     invitationCreate(id, invitation) {
