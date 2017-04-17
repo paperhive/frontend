@@ -16,8 +16,8 @@ export default function(app) {
       resetting: boolean;
       resetted: boolean;
 
-      static $inject = ['$scope', '$window', 'channelService', 'config'];
-      constructor($scope, $window, public channelService, config) {
+      static $inject = ['$scope', '$window', 'channelService', 'clipboard', 'config'];
+      constructor($scope, $window, public channelService, public clipboard, config) {
         // remove trailing slash
         this.baseUrl = `${$window.location.origin}${config.baseHref}`.replace(/\/$/, '');
 
