@@ -37,6 +37,11 @@ export default function(app) {
         .catch(this.notificationService.httpError('could not deactivate channel'));
     }
 
+    invitationLinkTokenReset(channelId) {
+      return this.$http.post(`${this.config.apiUrl}/channels/${channelId}/invitationLinkToken/reset`)
+        .then(response => response.data);
+    }
+
     invitationCreate(channelId, invitation) {
       return this.$http.post(`${this.config.apiUrl}/channels/${channelId}/invitations`, invitation)
         .then(response => response.data);

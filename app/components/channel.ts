@@ -30,6 +30,15 @@ export default function(app) {
         });
       }
 
+      invitationLinkModalOpen() {
+        this.$uibModal.open({
+          component: 'channelInvitationLink',
+          resolve: {
+            channel: () => this.channel,
+          },
+        });
+      };
+
       invitationModalOpen() {
         this.$uibModal.open({
           component: 'channelInvitationNew',

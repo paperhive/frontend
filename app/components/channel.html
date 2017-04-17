@@ -35,15 +35,24 @@
             </div>
           </div>
         </div>
-        <button
-          ng-if="$ctrl.isOwner"
-          type="button" ng-click="$ctrl.invitationModalOpen()"
-          class="btn btn-primary ph-md-margin-bottom" ng-disabled="!$ctrl.channel.isActive"
-          title="{{$ctrl.channel.isActive ? '' : 'Reactivate the channel to invite people'}}"
-        >
-          <i class="fa fa-fw fa-envelope" aria-hidden="true"></i>
-          Invite someone
-        </button>
+        <div ng-if="$ctrl.isOwner" class="ph-md-margin-bottom">
+          <button
+            type="button" ng-click="$ctrl.invitationLinkModalOpen()"
+            class="btn btn-primary" ng-disabled="!$ctrl.channel.isActive"
+            title="{{$ctrl.channel.isActive ? 'Invite someone with a shareable invitation link' : 'Reactivate the channel to invite people'}}"
+          >
+            <i class="fa fa-fw fa-link" aria-hidden="true"></i>
+            Invitation link
+          </button>
+          <button
+            type="button" ng-click="$ctrl.invitationModalOpen()"
+            class="btn btn-primary" ng-disabled="!$ctrl.channel.isActive"
+            title="{{$ctrl.channel.isActive ? 'Invite someone via email' : 'Reactivate the channel to invite people'}}"
+          >
+            <i class="fa fa-fw fa-envelope" aria-hidden="true"></i>
+            Invite email
+          </button>
+        </div>
       </div>
     </div>
   </div>
