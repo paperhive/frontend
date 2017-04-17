@@ -1,0 +1,53 @@
+<div class="container ph-lg-margin-bottom" ng-if="$ctrl.channel">
+  <h2 class="text-center">Join channel</h2>
+  <div class="row ph-lg-margin-top">
+    <div class="col-sm-offset-2 col-sm-8">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="form-group">
+            <label for="name" class="col-sm-3">Channel name</label>
+            <div class="col-sm-9"><p>{{$ctrl.channel.name}}</p></div>
+          </div>
+
+          <div class="form-group" ng-if="$ctrl.channel.description">
+            <label for="description" class="col-sm-3">Channel description</label>
+            <div class="col-sm-9"><p>{{$ctrl.channel.description}}</p></div>
+          </div>
+
+          <div ng-if="$ctrl.isMember" class="text-right">
+            <span class="text-muted">You are already a member of this channel.</span>
+            <a class="btn btn-primary" ng-href="./channels/{{$ctrl.channel.id}}">
+              <i class="fa fa-fw fa-chevron-right"></i>
+              Go to channel
+            </a>
+          </div>
+
+          <div ng-if="!$ctrl.isMember && $ctrl.authService.user" class="text-right">
+            <button type="button" class="btn btn-primary" ng-click="$ctrl.join()"
+              ng-disabled="$ctrl.joining"
+            >
+              <i class="fa fa-fw" ng-class="{
+                'fa-spin fa-circle-o-notch': $ctrl.joining,
+                'fa-check': !$ctrl.joining,
+              }"></i>
+              Join
+            </button>
+          </div>
+
+          <div ng-if="!$ctrl.authService.user" class="row">
+            <div class="col-md-6">
+              <a href="./signup?returnPath={{$ctrl.authService.returnPath}}"
+                class="btn btn-primary btn-block"
+              >Sign up</a>
+            </div>
+            <div class="col-md-6">
+              <a href="./login?returnPath={{$ctrl.authService.returnPath}}"
+                class="btn btn-default btn-block"
+              >Log in</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

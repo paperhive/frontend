@@ -8,6 +8,8 @@ import channel from './channel';
 import channelBookmark from './channel-bookmark';
 import channelBookmarksList from './channel-bookmarks-list';
 import channelInvitationConfirm from './channel-invitation-confirm';
+import channelInvitationLink from './channel-invitation-link';
+import channelInvitationLinkConfirm from './channel-invitation-link-confirm';
 import channelInvitationNew from './channel-invitation-new';
 import channelInvitations from './channel-invitations';
 import channelMemberUpdate from './channel-member-update';
@@ -99,6 +101,8 @@ export default function(app) {
   channelBookmark(app);
   channelBookmarksList(app);
   channelInvitationConfirm(app);
+  channelInvitationLink(app);
+  channelInvitationLinkConfirm(app);
   channelInvitationNew(app);
   channelInvitations(app);
   channelMembers(app);
