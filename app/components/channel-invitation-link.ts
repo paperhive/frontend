@@ -1,3 +1,4 @@
+
 export default function(app) {
   app.component('channelInvitationLink', {
     bindings: {
@@ -16,17 +17,24 @@ export default function(app) {
       resetting: boolean;
       resetted: boolean;
 
-      static $inject = ['$scope', '$window', 'channelService', 'clipboard', 'config'];
-      constructor($scope, $window, public channelService, public clipboard, config) {
+      static $inject = ['$element', '$scope', '$window', 'channelService', 'clipboard', 'config'];
+      constructor(public $element, $scope, $window, public channelService, public clipboard, config) {
         // remove trailing slash
         this.baseUrl = `${$window.location.origin}${config.baseHref}`.replace(/\/$/, '');
 
         $scope.$watch('$ctrl.resolve.channel.invitationLinkToken', this.updateLink.bind(this));
       }
 
+      copy() {
+        const input = this.$element.find('input');
+        this.clipboard.copy(this.invitationLink);
+        input.select();
+      }
+
       updateLink() {
         if (!this.resolve.channel) return;
-        this.invitationLink = `${this.baseUrl}/channels/invitationLink?token=${this.resolve.channel.invitationLinkToken}`
+        this.invitationLink =
+          `${this.baseUrl}/channels/invitationLink?token=${this.resolve.channel.invitationLinkToken}`;
       }
 
       resetLink() {
