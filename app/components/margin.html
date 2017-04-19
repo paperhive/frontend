@@ -29,7 +29,7 @@
   ></margin-link>
 </div>
 <margin-cluster
-  ng-repeat="cluster in $ctrl.discussionClusters track by cluster.id"
+  ng-repeat="cluster in $ctrl.discussionClusters track by cluster.top"
   cluster="cluster"
   on-open="$ctrl.currentCluster = $cluster; $ctrl.currentDiscussion = $cluster.discussions.length === 1 ? $cluster.discussions[0].id : undefined"
   ng-style="{top: cluster.top + 'px'}"

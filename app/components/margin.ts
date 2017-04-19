@@ -170,6 +170,7 @@ export default function(app) {
           const promise = $ctrl.onDiscussionSubmit({discussion});
           promise.then(newDiscussion => {
             $ctrl.showShareMessageId = newDiscussion.id;
+            $ctrl.prioritizedDiscussionIds.unshift(newDiscussion.id);
             $ctrl.draftPaneOpen = false;
             $ctrl.draftPaneUnsavedContent = false;
           });
@@ -206,6 +207,10 @@ export default function(app) {
         $ctrl.discussionPositions = {};
         $ctrl.draftPosition = undefined;
 
+        // collect discussionIds that are prioritized, e.g., because of a
+        // discussion link or because the discussion has just been created
+        $ctrl.prioritizedDiscussionIds = [];
+
         // get raw top position of provided selectors (relative to offsetParent)
         function getRawPosition(selectors) {
           if (!selectors || !selectors.pdfRectangles) return;
@@ -225,7 +230,7 @@ export default function(app) {
           if (!pageCoord) return;
 
           // compute position
-          return pageCoord.offset.top + pageCoord.size.height * topRect.top;
+          return Math.floor(pageCoord.offset.top + pageCoord.size.height * topRect.top);
         }
 
         function updateScroll() {
@@ -242,6 +247,8 @@ export default function(app) {
 
           const cluster = $ctrl.discussionToCluster && $ctrl.discussionToCluster[id];
           if (!cluster) return;
+
+          $ctrl.prioritizedDiscussionIds.unshift(id);
 
           $ctrl.scrollToCluster(cluster);
 
@@ -298,14 +305,23 @@ export default function(app) {
           // generate cluster ids and sort into discussionToCluster
           const discussionToCluster = {};
           clusters.forEach(cluster => {
-            cluster.id = cluster.discussions
-              .map(discussion => discussion.id)
-              .join(':');
+            // pull first matching prioritized discussion to the front (if any)
+            const discussionIds = cluster.discussions.map(discussion => discussion.id);
+            for (const prioritizedDiscussionId of $ctrl.prioritizedDiscussionIds) {
+              const index = discussionIds.indexOf(prioritizedDiscussionId);
+              if (index === -1) continue;
+              const removed = cluster.discussions.splice(index, 1);
+              cluster.discussions.unshift(removed[0]);
+              break;
+            }
+
+            // fill discussionToCluster
             cluster.discussions.forEach(discussion => {
               discussionToCluster[discussion.id] = cluster;
             });
           });
 
+          // TODO: angular.copy
           $ctrl.positionedDiscussions = positionedDiscussions;
           $ctrl.discussionClusters = clusters;
           $ctrl.discussionToCluster = discussionToCluster;
@@ -331,6 +347,7 @@ export default function(app) {
         // update positions if discussions, or page coords changed
         $scope.$watchCollection('$ctrl.filteredDiscussions', updateClusters);
         $scope.$watchCollection('$ctrl.pageCoordinates', updateClusters);
+        $scope.$watchCollection('$ctrl.prioritizedDiscussionIds', updateClusters);
         $scope.$watch('$ctrl.controlsSize', updateClusters);
       },
     ],
