@@ -20,21 +20,19 @@
         {{$ctrl.cluster.discussions[0].author.displayName}}</a>
       · <span am-time-ago="$ctrl.cluster.discussions[0].createdAt"></span>
     </p>
-    <div class="ph-margin-body"
-      ng-class="{'ph-margin-body-collapsed': !$ctrl.isExpanded}"
-      ng-style="{'max-height': $ctrl.bodyHeight + 'px'}"
-      on-resized="$ctrl.bodyHeight = $size.scrollHeight"
-    >
-      <div ng-if="!$ctrl.cluster.discussions[0].body">
+    <div class="ph-component-body-container">
+      <div ng-if="!$ctrl.cluster.discussions[0].body" class="ph-component-discussion-title">
         <mathjax body="$ctrl.cluster.discussions[0].title"></mathjax>
       </div>
       <div ng-if="$ctrl.cluster.discussions[0].body">
-        <p class="ph-margin-title ph-no-margin ph-xs-margin-bottom">
+        <p class="ph-margin-title ph-component-discussion-title ph-no-margin ph-xs-margin-bottom">
           <mathjax body="$ctrl.cluster.discussions[0].title"></mathjax>
         </p>
-        <kramjax body="$ctrl.cluster.discussions[0].body"></kramjax>
+        <kramjax
+          body="$ctrl.cluster.discussions[0].body"
+          class="ph-component-discussion-body"
+        ></kramjax>
       </div>
-      <div ng-if="$ctrl.bodyHeight > 70" class="ph-margin-body-fade"></div>
     </div>
     <button
       class="btn btn-primary btn-xs ph-xs-margin-top"

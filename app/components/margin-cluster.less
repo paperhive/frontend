@@ -21,6 +21,7 @@ margin-cluster {
     height: @ph-margin-avatar-size;
     border: none;
     border-radius: 50%;
+    padding: 0;
 
     display: flex;
     align-items: center;
@@ -63,6 +64,29 @@ margin-cluster {
       background-color: @ph-margin-body-bgcolor;
       box-shadow: @ph-shadow;
       z-index: -2;
+    }
+
+    .ph-component-body-container {
+      max-height: 4em;
+      overflow: hidden;
+
+      .ph-component-discussion-title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .ph-component-discussion-body {
+        > :first-child {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        > :not(:first-child) {
+          display: none;
+        }
+      }
     }
   }
 }
