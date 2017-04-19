@@ -35,11 +35,7 @@
               {{$ctrl.discussion.author.displayName}}</a>
             · <span am-time-ago="$ctrl.discussion.createdAt"></span>
           </p>
-          <div class="ph-margin-body ph-xs-margin-bottom"
-            ng-class="{'ph-margin-body-collapsed': !$ctrl.isExpanded}"
-            ng-style="{'max-height': $ctrl.bodyHeight + 'px'}"
-            on-resized="$ctrl.bodyHeight = $size.scrollHeight"
-          >
+          <div class="ph-margin-body ph-xs-margin-bottom">
             <div ng-if="!$ctrl.discussion.body">
               <mathjax body="$ctrl.discussion.title"></mathjax>
             </div>
@@ -49,7 +45,6 @@
               </p>
               <kramjax body="$ctrl.discussion.body"></kramjax>
             </div>
-            <div ng-if="$ctrl.bodyHeight > 70" class="ph-margin-body-fade"></div>
           </div>
           <div class="pull-right">
             <div class="btn-group"

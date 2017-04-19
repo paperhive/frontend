@@ -6,6 +6,7 @@ export default function(app) {
   app.component('marginClusterPane', {
     bindings: {
       cluster: '<',
+      currentDiscussion: '<',
       onClose: '&',
       onDiscussionSubmit: '&',
       onDiscussionUpdate: '&',

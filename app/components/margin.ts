@@ -92,6 +92,7 @@ export default function(app) {
         $ctrl.closeClusterPane = function() {
           if (!$ctrl.currentCluster || !$ctrl.clusterPaneUnsavedContent) {
             $ctrl.currentCluster = undefined;
+            $ctrl.currentDiscussion = undefined;
             return $q.resolve();
           }
 
@@ -110,7 +111,10 @@ export default function(app) {
                 </div>
               `,
             })
-            .result.then(() => $ctrl.currentCluster = undefined);
+            .result.then(() => {
+              $ctrl.currentCluster = undefined;
+              $ctrl.currentDiscussion = undefined;
+            });
         };
 
         // viewport tracking for deciding which discussions actually need to be rendered
@@ -315,6 +319,7 @@ export default function(app) {
               $ctrl.currentCluster.discussions.splice(idx, 1);
               if ($ctrl.currentCluster.discussions.length === 0) {
                 $ctrl.currentCluster = undefined;
+                $ctrl.currentDiscussion = undefined;
               }
             });
         };

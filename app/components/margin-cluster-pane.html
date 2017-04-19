@@ -9,6 +9,7 @@
   <margin-discussion
     ng-repeat="discussion in $ctrl.cluster.discussions"
     discussion="discussion"
+    is-expanded="discussion.id === $ctrl.currentDiscussion"
     on-discussion-update="$ctrl.onDiscussionUpdate({discussion})"
     on-discussion-delete="$ctrl.onDiscussionDelete({discussion})"
     on-reply-submit="$ctrl.onReplySubmit({reply})"

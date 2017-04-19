@@ -31,7 +31,7 @@
 <margin-cluster
   ng-repeat="cluster in $ctrl.discussionClusters track by cluster.id"
   cluster="cluster"
-  on-open="$ctrl.currentCluster = $cluster"
+  on-open="$ctrl.currentCluster = $cluster; $ctrl.currentDiscussion = $cluster.discussions.length === 1 ? $cluster.discussions[0].id : undefined"
   ng-style="{top: cluster.top + 'px'}"
   ng-mouseenter="$ctrl.highlightCluster(cluster, true)"
   ng-mouseleave="$ctrl.highlightCluster(cluster, false)"
@@ -41,6 +41,7 @@
   class="ph-slide-in ph-slide-in-left ph-slide-out ph-slide-out-right"
   ng-style="{top: $ctrl.viewportOffsetTop || 0}"
   cluster="$ctrl.currentCluster"
+  current-discussion="$ctrl.currentDiscussion"
   on-close="$ctrl.closeClusterPane().catch($ctrl.noop)"
   on-discussion-submit="$ctrl.onDiscussionSubmit({discussion})"
   on-discussion-update="$ctrl.onDiscussionUpdate({discussion})"

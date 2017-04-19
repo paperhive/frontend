@@ -9,6 +9,7 @@ export default function(app) {
     bindings: {
       discussion: '<',
       showShareMessage: '<',
+      isExpanded: '<',
       onDiscussionUpdate: '&',
       onDiscussionDelete: '&',
       onReplySubmit: '&',
