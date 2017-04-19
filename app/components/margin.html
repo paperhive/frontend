@@ -14,6 +14,7 @@
     clusters="$ctrl.discussionClusters"
     viewport-offset-top="$ctrl.viewportOffsetTop + $ctrl.controlsSize.height"
     viewport-offset-bottom="$ctrl.viewportOffsetBottom"
+    on-scroll-to-cluster="$ctrl.scrollToCluster(cluster)"
   ></margin-link>
 </div>
 <div class="ph-margin-controls ph-margin-controls-bottom"
@@ -24,6 +25,7 @@
     clusters="$ctrl.discussionClusters"
     viewport-offset-top="$ctrl.viewportOffsetTop + $ctrl.controlsSize.height"
     viewport-offset-bottom="$ctrl.viewportOffsetBottom"
+    on-scroll-to-cluster="$ctrl.scrollToCluster(cluster)"
   ></margin-link>
 </div>
 <margin-cluster

@@ -5,12 +5,7 @@
     'ph-margin-link-bottom': $ctrl.position === 'bottom',
   }"
   ng-show="$ctrl.count > 0"
-  scroll
-  scroll-to="$ctrl.nextCluster.top"
-  scroll-offset="60"
-  scroll-duration="500"
-  scroll-before="$ctrl.scrolling = true"
-  scroll-after="$ctrl.scrolling = false"
+  ng-click="$ctrl.onScrollToCluster({cluster: $ctrl.nextCluster})"
   title="{{$ctrl.count}} more {{$ctrl.count === 1 ? 'discussion' : 'discussions'}} {{$ctrl.position === 'top' ? 'above' : 'below'}}"
 >
   <i ng-if="$ctrl.position === 'top'" class="fa fa-chevron-up"></i>

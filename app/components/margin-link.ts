@@ -9,6 +9,7 @@ export default function(app) {
       viewportOffsetTop: '<',
       viewportOffsetBottom: '<',
       extraOffset: '<',
+      onScrollToCluster: '&',
     },
     controller: [
       '$scope', '$element', '$window', function($scope, $element, $window) {

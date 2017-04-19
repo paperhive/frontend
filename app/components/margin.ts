@@ -236,28 +236,31 @@ export default function(app) {
           if (!match) return;
           const id = match[1];
 
-          // get element
-          const element = document.getElementById(`discussion-${id}`);
-          if (!element || !element.offsetParent) return;
+          const cluster = $ctrl.discussionToCluster && $ctrl.discussionToCluster[id];
+          if (!cluster) return;
 
-          const top = angular.element(element.offsetParent).offset().top +
-            $ctrl.discussionPositions[id];
-
-          scroll.scrollTo(top, {
-            duration: 1000,
-            offset: ($ctrl.viewportOffsetTop || 0) + 130,
-          });
+          $ctrl.scrollToCluster(cluster);
 
           $ctrl.currentScrollAnchor = $ctrl.scrollToAnchor;
         }
 
         $scope.$watch('$ctrl.scrollToAnchor', updateScroll);
-        $scope.$watchCollection('$ctrl.discussionPositions', updateScroll);
+        $scope.$watchCollection('$ctrl.discussionToCluster', updateScroll);
+
+        $ctrl.scrollToCluster = function(cluster) {
+          if ($ctrl.scrolling) return;
+          $ctrl.scrolling = true;
+          return scroll.scrollTo(cluster.top, {
+            duration: 500,
+            offset: 60,
+          }).then(() => $ctrl.scrolling = false);
+        };
 
         // compute positionedDiscussions and discussionClusters
         function updateClusters() {
           $ctrl.discussionClusters = undefined;
           $ctrl.positionedDiscussions = undefined;
+          $ctrl.discussionToCluster = undefined;
 
           if (!$ctrl.filteredDiscussions || !$ctrl.controlsSize) return;
           const topMin = $ctrl.controlsSize.height + 15;
@@ -288,15 +291,20 @@ export default function(app) {
             lastCluster.discussions.push(positionedDiscussion.discussion);
           });
 
-          // generate cluster ids
+          // generate cluster ids and sort into discussionToCluster
+          const discussionToCluster = {};
           clusters.forEach(cluster => {
             cluster.id = cluster.discussions
               .map(discussion => discussion.id)
               .join(':');
+            cluster.discussions.forEach(discussion => {
+              discussionToCluster[discussion.id] = cluster;
+            });
           });
 
           $ctrl.positionedDiscussions = positionedDiscussions;
           $ctrl.discussionClusters = clusters;
+          $ctrl.discussionToCluster = discussionToCluster;
         }
 
         $ctrl.discussionDelete = function (discussion) {

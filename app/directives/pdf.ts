@@ -1076,7 +1076,6 @@ export default function(app) {
         if (match) {
           return await this.scrollToSelection(match[1]);
         }
-        throw new Error(`Anchor ${anchor} does not match.`);
       }
 
       scrollToId(id) {
