@@ -10,8 +10,8 @@ export default function(app) {
       baseUrl: string;
       fullUrl: string;
 
-      static $inject = ['$window', 'config'];
-      constructor(public $window, public config) {
+      static $inject = ['$element', '$window', 'clipboard', 'config'];
+      constructor(public $element, public $window, public clipboard, public config) {
         // remove trailing slash
         this.baseUrl =
           `${$window.location.origin}${config.baseHref}`.replace(/\/$/, '');
@@ -19,6 +19,12 @@ export default function(app) {
 
       $onChanges() {
         this.fullUrl = `${this.baseUrl}${this.url}`;
+      }
+
+      copy() {
+        const input = this.$element.find('input');
+        this.clipboard.copy(this.fullUrl);
+        input.select();
       }
     },
     template: require('./url-share.html'),
