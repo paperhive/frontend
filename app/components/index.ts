@@ -21,6 +21,7 @@ import channelsList from './channels-list';
 import comment from './comment';
 import contact from './contact';
 import discussionList from './discussion-list';
+import discussionShareIcon from './discussion-share-icon';
 import discussionThreadView from './discussion-thread-view';
 import document from './document';
 import documentInfoKudos from './document-info-kudos';
@@ -115,6 +116,7 @@ export default function(app) {
   comment(app);
   contact(app);
   discussionList(app);
+  discussionShareIcon(app);
   discussionThreadView(app);
   document(app);
   documentInfoKudos(app);

@@ -21,7 +21,7 @@
       · <span am-time-ago="$ctrl.cluster.discussions[0].createdAt"></span>
     </p>
     <div class="ph-component-body-container">
-      <div ng-if="!$ctrl.cluster.discussions[0].body" class="ph-component-discussion-title">
+      <div ng-if="!$ctrl.cluster.discussions[0].body" class="ph-component-discussion-title ph-xs-margin-bottom">
         <mathjax body="$ctrl.cluster.discussions[0].title"></mathjax>
       </div>
       <div ng-if="$ctrl.cluster.discussions[0].body">
@@ -34,18 +34,27 @@
         ></kramjax>
       </div>
     </div>
-    <button
-      class="btn btn-primary btn-xs ph-xs-margin-top"
-      ng-click="$ctrl.onOpen({$cluster: $ctrl.cluster})"
-    >
-      <span ng-if="$ctrl.cluster.discussions.length === 1">
-        <i class="fa fa-fw fa-comment"></i>
-        Show discussion
+    <div class="clearfix">
+      <div class="pull-right">
+        <discussion-share-icon discussion="$ctrl.cluster.discussions[0]"></discussion-share-icon>
+      </div>
+      <button
+        class="btn btn-primary btn-xs"
+        ng-click="$ctrl.onOpen({$cluster: $ctrl.cluster})"
+      >
+        <span ng-if="$ctrl.cluster.discussions.length === 1">
+          <i class="fa fa-fw fa-comment"></i>
+          Show discussion
+        </span>
+        <span ng-if="$ctrl.cluster.discussions.length > 1">
+          <i class="fa fa-fw fa-comments"></i>
+          Show {{$ctrl.cluster.discussions.length}} discussions
+        </span>
+      </button>
+      <span class="ph-margin-info" ng-if="$ctrl.cluster.discussions[0].replies.length">
+        {{$ctrl.cluster.discussions[0].replies.length}}
+        <i class="fa fa-comments"></i>
       </span>
-      <span ng-if="$ctrl.cluster.discussions.length > 1">
-        <i class="fa fa-fw fa-comments"></i>
-        Show discussions
-      </span>
-    </button>
+    </div>
   </div>
 </div>
