@@ -1,0 +1,49 @@
+<div class="modal-header">
+  <button type="button" class="close" aria-label="Close" title="Close" ng-click="$ctrl.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <h3 class="modal-title">
+    Channel invitation link
+  </h3>
+</div>
+<div class="modal-body">
+  <div class="form-group">
+    <div class="input-group">
+      <input type="text" class="form-control" ng-model="$ctrl.invitationLink" readonly>
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" ng-click="$ctrl.copy()">
+          <i class="fa fa-fw fa-link"></i> Copy link
+        </button>
+      </span>
+    </div>
+  </div>
+  <p>
+    Anyone with the invitation link can join this channel as a regular member.
+  </p>
+  <p class="small">
+    If you shared the above link but want to prevent further people from joining
+    this channel then you can
+    <a href="#" ng-click="$ctrl.showGenerate = true">generate a new invitation link</a>.
+  </p>
+  <div uib-collapse="!$ctrl.showGenerate">
+    <p class="small">
+      <button type="button" ng-click="$ctrl.resetLink()" class="btn btn-xs btn-danger"
+        ng-disabled="$ctrl.resetting || $ctrl.resetted"
+      >
+        <i class="fa fa-fw" ng-class="{
+          'fa-warning': !$ctrl.resetting,
+          'fa-spin fa-circle-o-notch': $ctrl.resetting,
+        }"></i>
+        Generate new invitation link
+      </button>
+      <span ng-if="$ctrl.resetted">A new invitation link has been generated.</span>
+    </p>
+    <p class="small text-danger">
+      Warning: the current link will become useless. This action cannot be undone.
+    </p>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-click="$ctrl.close()">
+    Close
+  </button>
+</div>

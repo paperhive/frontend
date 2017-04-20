@@ -85,6 +85,13 @@ export default function(app) {
             return `LangSci ${rev}`;
           }
 
+          if (revision.remote.type === 'paperhiveGhp') {
+            if (revision.documentType === 'lecture-notes') {
+              return `Lecture notes`;
+            }
+            return `PaperHive ${revision.remote.revision}`;
+          }
+
           // isbn
           if (revision.isbn) {
             return `ISBN ${revision.isbn}`;
@@ -109,6 +116,8 @@ export default function(app) {
               return `http://langsci-press.org/catalog/book/${revision.remote.id}`;
             case 'oapen':
               return `https://oapen.org/search?identifier=${revision.remote.id}`;
+            case 'paperhiveGhp':
+              return undefined;
             default:
               throw new Error('unknown remote type');
           }

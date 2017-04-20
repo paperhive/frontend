@@ -267,7 +267,10 @@ export default function(app) {
       }
 
       navigateTo(dest) {
-        this.scrollToAnchor(`pdfd:${dest}`);
+        const anchor = isArray(dest)
+          ? `pdfdr:${JSON.stringify(dest)}`
+          : `pdfd:${dest}`;
+        this.scrollToAnchor(anchor);
       }
     }
 
@@ -1071,6 +1074,12 @@ export default function(app) {
         if (match) {
           return await this.scrollToDest(match[1]);
         }
+        // match pdf destination ref
+        match = /^pdfdr:(.*)$/.exec(anchor);
+        if (match) {
+          const destRef = JSON.parse(match[1]);
+          return await this.scrollToDestRef(destRef);
+        }
         // match selection anchor
         match = /^s:([\w-]+)$/.exec(anchor);
         if (match) {
@@ -1097,6 +1106,10 @@ export default function(app) {
       async scrollToDest(dest) {
         const destRef = await this.pdf.getDestination(dest);
         if (!destRef) throw new Error(`destination ${dest} not found`);
+        await this.scrollToDestRef(destRef);
+      }
+
+      async scrollToDestRef(destRef: PDFDestRef) {
         if (!isArray(destRef)) throw new Error('destination does not resolve to array');
         let top;
         switch (destRef[1].name) {

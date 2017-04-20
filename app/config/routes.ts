@@ -30,6 +30,7 @@ export default function(app) {
         .when('/channels', 'channels')
         .when('/channels/list', 'channels.list' )
         .when('/channels/invitations', 'channels.invitations')
+        .when('/channels/invitationLink', 'channelInvitationLinkConfirm')
         .when('/channels/:channelId', 'channel')
         .when('/channels/:channelId/activity', 'channel.activity')
         .when('/channels/:channelId/bookmarks', 'channel.bookmarks')
@@ -145,10 +146,19 @@ export default function(app) {
           title: 'PaperHive',
         })
 
+        .segment('channelInvitationLinkConfirm', {
+          template: '<channel-invitation-link-confirm></channel-invitation-link-confirm>',
+          title: 'Join channel · PaperHive',
+          resolve: {
+            auth: ['authService', (authService) => authService.loginPromise],
+          },
+        })
+
         .segment('channelInvitationConfirm', {
           template: '<channel-invitation-confirm></channel-invitation-confirm>',
           title: 'Confirm your invitation · PaperHive',
         })
+
         .segment('channels', {
           template: '<channels></channels>',
           title: 'My channels · PaperHive',
