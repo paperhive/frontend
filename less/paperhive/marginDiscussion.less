@@ -42,47 +42,39 @@ margin-discussion-draft {
   // WARNING: disabled because it breaks dropdown menus
   //position: relative;
   //z-index: 1;
-  border-top: 3px solid @ph-highlight-color;
+}
 
+.ph-margin-container, margin-cluster {
   .ph-channel-description {
     position: absolute;
-    top: 0;
+    top: -3px;
     width: 100%;
     font-size: @ph-badge-font-size;
     text-align: center;
     background: @ph-highlight-color;
-    color: #fff;
+    color: white;
     line-height: 20px;
-    transform-origin: bottom center;
-    transition: all .6s ease;
+    transition: top .6s ease;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    &.ph-channel-description-sticky {
-      top: -19px;
-      height: inherit;
-      max-height: 20px;
-    }
-  }
-  &:hover {
-    .ph-channel-description {
-      top: -19px;
-      height: inherit;
-      max-height: 20px;
-      transition: all .6s ease;
-    }
-  }
-  &.ph-private-channel {
-    border-top: 3px solid @ph-badge-bg-color;
-    a.ph-channel-selector-channel {
+
+    a {
       color: white;
     }
-    .ph-channel-description {
-      background: @ph-badge-bg-color;
+
+    &.ph-channel-private {
+      // todo: fix color
+      background: @ph-channel-private-bgcolor;
     }
-    .ph-margin-badge {
-      background: @ph-badge-bg-color;
+
+    &.ph-channel-description-sticky {
+      top: -19px;
     }
+  }
+
+  &:hover .ph-channel-description {
+    top: -19px;
   }
 }
 
@@ -110,6 +102,10 @@ margin-discussion-draft {
 
 .ph-margin-base-row {
   background-color: @ph-margin-body-bgcolor;
+
+  // position base-row above channel flag
+  position: relative;
+
   > .ph-margin-arrow-container {
     .ph-arrow-container(
       @ph-margin-arrow-size,
@@ -154,16 +150,6 @@ margin-discussion-draft {
   padding: 5px 7px;
 }
 
-.ph-margin-badge {
-  font-size: smaller;
-  font-weight: normal;
-  padding: 3px 7px;
-  background-color: @ph-highlight-color;
-  &:hover {
-    background-color: lighten(@ph-highlight-color, 10%);
-  }
-}
-
 margin-discussion kramjax p {
   margin: 0 0 5px;
 }
@@ -175,27 +161,6 @@ margin-discussion kramjax .MathJax_Display {
 .ph-margin-body {
   position: relative;
   overflow: hidden;
-  transition: max-height 0.5s ease;
-
-  > .ph-margin-body-fade {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    height: 20px;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), white);
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    pointer-events: none;
-  }
-
-  &.ph-margin-body-collapsed {
-    max-height: 70px !important;
-
-    > .ph-margin-body-fade {
-      opacity: 1;
-    }
-  }
 }
 
 

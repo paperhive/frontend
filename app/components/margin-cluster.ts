@@ -6,7 +6,20 @@ export default function(app) {
       cluster: '<',
       onOpen: '&',
     },
-    controller: class MarginClusterCtrl {},
+    controller: class MarginClusterCtrl {
+      channel: any;
+
+      static $inject = ['$scope', 'channelService'];
+      constructor($scope, public channelService) {
+        $scope.$watch('$ctrl.cluster.discussions[0]', this.updateChannel.bind(this));
+      }
+
+      updateChannel(discussion) {
+        this.channel = undefined;
+        if (!discussion || !discussion.channel) return;
+        this.channel = this.channelService.get(discussion.channel);
+      }
+    },
     template: require('./margin-cluster.html'),
   });
 }

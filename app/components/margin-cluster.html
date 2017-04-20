@@ -8,6 +8,22 @@
   <div>+{{$ctrl.cluster.discussions.length - 1}}</div>
 </button>
 <div class="ph-component-body">
+  <!-- channel flag -->
+  <div class="ph-channel-description" ng-class="{'ph-channel-private': $ctrl.channel}">
+    <span ng-if="!$ctrl.channel">
+      <i class="fa fa-fw fa-globe"></i> Public channel
+    </span>
+    <span ng-if="$ctrl.channel">
+      <i class="fa fa-fw fa-user"></i>
+      <a
+        href="./channels/{{$ctrl.channel.id}}"
+        class="ph-channel-selector-channel"
+        title="{{$ctrl.channelService.getNameDescription($ctrl.channel)}}"
+      >
+        {{$ctrl.channelService.getName($ctrl.channel)}}
+      </a>
+    </span>
+  </div>
   <!-- arrow -->
   <div class="ph-margin-arrow-container">
     <div class="ph-arrow ph-arrow-outward-left"></div>

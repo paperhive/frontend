@@ -2,26 +2,27 @@
   ng-class="{'ph-private-channel': $ctrl.channel}"
 >
   <!-- original comment -->
-
-  <div ng-show="!$ctrl.channel" class="ph-channel-description">
-    <i class="fa fa-fw fa-globe"></i> Public channel
-  </div>
-  <div ng-show="$ctrl.channel" class="ph-channel-description">
-    <i class="fa fa-fw fa-user"></i>
-    <a
-      href="./channels/{{$ctrl.channel.id}}"
-      class="ph-channel-selector-channel"
-      title="{{$ctrl.channelService.getNameDescription($ctrl.channel)}}"
-    >
-      {{$ctrl.channelService.getName($ctrl.channel)}}
-    </a>
-  </div>
-
   <div class="ph-margin-row">
     <!-- avatar -->
     <avatar user="$ctrl.discussion.author" size="38"
       classes="ph-margin-avatar img-circle"
-      ></avatar>
+    ></avatar>
+    <!-- channel flag -->
+    <div class="ph-channel-description" ng-class="{'ph-channel-private': $ctrl.channel}">
+      <span ng-if="!$ctrl.channel">
+        <i class="fa fa-fw fa-globe"></i> Public channel
+      </span>
+      <span ng-if="$ctrl.channel">
+        <i class="fa fa-fw fa-user"></i>
+        <a
+          href="./channels/{{$ctrl.channel.id}}"
+          class="ph-channel-selector-channel"
+          title="{{$ctrl.channelService.getNameDescription($ctrl.channel)}}"
+        >
+          {{$ctrl.channelService.getName($ctrl.channel)}}
+        </a>
+      </span>
+    </div>
     <div class="ph-margin-base-row">
       <!-- arrow -->
       <div class="ph-margin-arrow-container">
