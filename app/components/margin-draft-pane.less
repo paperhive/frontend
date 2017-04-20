@@ -13,17 +13,23 @@ margin-draft-pane {
   flex-direction: column;
 
   > .ph-component-header {
+    display: flex;
+    align-items: flex-start;
     > button {
       &:active, &:focus {
         outline: none !important;
       }
+    }
+    channel-selector {
+      flex-grow: 1;
+      margin: @grid-gutter-width/2;
     }
   }
 
   > .ph-component-body {
     flex-grow: 1;
     width: 100%;
-    padding: @grid-gutter-width/2;
+    padding: @grid-gutter-width @grid-gutter-width/2;
     overflow-y: auto;
 
     > margin-discussion {

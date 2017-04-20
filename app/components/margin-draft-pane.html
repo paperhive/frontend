@@ -4,24 +4,25 @@
   >
     <i class="fa fa-fw fa-times"></i>
   </button>
+  <channel-selector discussions="$ctrl.discussions"></channel-selector>
 </div>
 <div class="ph-component-body">
-  <div
-    class="ph-margin-container"
-    ng-class="{'ph-private-channel': $ctrl.channelService.selectedChannel}"
-  >
-    <div ng-show="!$ctrl.channelService.selectedChannel" class="ph-channel-description ph-channel-description-sticky">
-      <i class="fa fa-fw fa-globe"></i> Public channel
-    </div>
-    <div ng-show="$ctrl.channelService.selectedChannel" class="ph-channel-description ph-channel-description-sticky">
-      <i class="fa fa-fw fa-lock"></i>
-      <a
-        href="./channels/{{$ctrl.channelService.selectedChannel.id}}"
-        class="ph-channel-selector-channel"
-        title="{{$ctrl.channelService.getNameDescription($ctrl.channelService.selectedChannel)}}"
-      >
-        {{$ctrl.channelService.getName($ctrl.channelService.selectedChannel)}}
-      </a>
+  <div class="ph-margin-container">
+    <!-- channel flag -->
+    <div class="ph-channel-description ph-channel-description-sticky" ng-class="{'ph-channel-private': $ctrl.channelService.selectedChannel}">
+      <span ng-if="!$ctrl.channelService.selectedChannel">
+        <i class="fa fa-fw fa-globe"></i> Public channel
+      </span>
+      <span ng-if="$ctrl.channelService.selectedChannel">
+        <i class="fa fa-fw fa-user"></i>
+        <a
+          href="./channels/{{$ctrl.channelService.selectedChannel.id}}"
+          class="ph-channel-selector-channel"
+          title="{{$ctrl.channelService.getNameDescription($ctrl.channelService.selectedChannel)}}"
+        >
+          {{$ctrl.channelService.getName($ctrl.channelService.selectedChannel)}}
+        </a>
+      </span>
     </div>
     <div ng-if="auth.user" class="ph-margin-row">
       <!-- avatar -->
