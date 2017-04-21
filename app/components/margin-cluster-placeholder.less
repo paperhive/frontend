@@ -1,0 +1,48 @@
+@import "../../less/variables.less";
+
+margin-cluster-placeholder {
+  position: absolute;
+  left: (@grid-gutter-width / 2);
+  right: (@grid-gutter-width / 2);
+
+  .ph-margin-cluster-placeholder-avatar {
+    position: absolute;
+    left: -50px;
+    top: 0;
+    width: @ph-margin-avatar-size;
+    height: @ph-margin-avatar-size;
+    background-color: @ph-margin-cluster-placeholder-color;
+    border-radius: 50%;
+  }
+
+  .ph-margin-cluster-placeholder-author {
+    display: inline-block;
+    width: 30%;
+    height: 15px;
+    background-color: lighten(@link-color, 50%);
+  }
+
+  .ph-margin-cluster-placeholder-date {
+    display: inline-block;
+    width: 30%;
+    height: 15px;
+    background-color: @ph-margin-cluster-placeholder-color;
+  }
+
+  .ph-margin-cluster-placeholder-title {
+    width: 50%;
+    height: 19px;
+    background-color: @ph-margin-cluster-placeholder-color;
+  }
+
+  .ph-margin-cluster-placeholder-body {
+    height: 19px;
+    background-color: @ph-margin-cluster-placeholder-color;
+  }
+
+  .ph-margin-cluster-placeholder-more {
+    height: 15px;
+    width: 25%;
+    background-color: @btn-primary-bg;
+  }
+}

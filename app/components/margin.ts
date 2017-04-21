@@ -32,6 +32,7 @@ export default function(app) {
       function($document, $element, $q, $scope, $timeout, $uibModal, $window, scroll, channelService,
                distangleService, tourService) {
         const $ctrl = this;
+        const clusterHeight = 135;
 
         $ctrl.channelService = channelService;
 
@@ -117,46 +118,44 @@ export default function(app) {
             });
         };
 
-        // viewport tracking for deciding which discussions actually need to be rendered
-        // note: unrendered discussions will be rendered with a placeholder
-        $ctrl.discussionVisibilities = {};
-        function updateDiscussionVisibilities() {
-          if (!$ctrl.filteredDiscussions) return;
+        // get clusters that are visible
+        function getVisibleClusters(clusters) {
+          const parentTop = $element[0].getBoundingClientRect().top;
+          const viewportHeight = angular.element($window).height();
+          return clusters.filter(cluster => {
+            const position = cluster.top;
+            return position !== undefined
+              && parentTop + position + clusterHeight > - viewportHeight
+              && parentTop + position < 2 * viewportHeight;
+          });
+        }
 
-          function getVisibleDiscussionIds(discussionIds) {
-            const parentTop = $element[0].getBoundingClientRect().top;
-            const viewportHeight = angular.element($window).height();
-            return discussionIds.filter(discussionId => {
-              const position = $ctrl.discussionPositions[discussionId];
-              const size = $ctrl.discussionSizes[discussionId];
-              if (position === undefined || size === undefined) return false;
-              return parentTop + position + size.height > - viewportHeight && parentTop + position < 2 * viewportHeight;
-            });
+        // viewport tracking for deciding which clusters actually need to be rendered
+        // note: unrendered clusters will be rendered with a placeholder
+        let updateClusterVisibilitiesPromise;
+        function updateClusterVisibilities() {
+          if (updateClusterVisibilities) {
+            $timeout.cancel(updateClusterVisibilitiesPromise);
+            updateClusterVisibilitiesPromise = undefined;
           }
 
-          // determine which discussions are visible right now
-          const visibleDiscussionIds = getVisibleDiscussionIds(
-            $ctrl.filteredDiscussions.map(discussion => discussion.id),
-          );
+          if (!$ctrl.discussionClusters) return;
+
+          const visibleClusters = getVisibleClusters($ctrl.discussionClusters);
 
           // reevaluate after a short delay
-          $timeout(() => {
+          updateClusterVisibilitiesPromise = $timeout(() => $scope.$evalAsync(() => {
             // only make discussions visible that still pass the visibility test
-            const newDiscussionVisibilities = {};
-            getVisibleDiscussionIds(visibleDiscussionIds)
-              .forEach(discussionId => (newDiscussionVisibilities[discussionId] = true));
+            const stillVisibleClusters = getVisibleClusters(visibleClusters);
 
-            if (angular.equals(newDiscussionVisibilities, $ctrl.discussionVisibilities)) return;
-
-            angular.copy(newDiscussionVisibilities, $ctrl.discussionVisibilities);
-
-            $scope.$evalAsync();
-          }, 250, false);
+            $ctrl.discussionClusters.forEach(cluster => cluster.visible = false);
+            stillVisibleClusters.forEach(cluster => cluster.visible = true);
+          }), 250, false);
         }
-        // update discussion visibilities on scroll and resize event
-        angular.element($window).on('scroll', updateDiscussionVisibilities);
+        // update cluster visibilities on scroll and resize event
+        angular.element($window).on('scroll', updateClusterVisibilities);
         $element.on('$destroy', () =>
-          angular.element($window).off('scroll', updateDiscussionVisibilities),
+          angular.element($window).off('scroll', updateClusterVisibilities),
         );
 
         // show popover with share message?
@@ -287,7 +286,6 @@ export default function(app) {
 
           // group into clusters
           const clusters = [];
-          const clusterHeight = 135;
           positionedDiscussions.forEach(positionedDiscussion => {
             const lastCluster = clusters.length > 0 && clusters[clusters.length - 1];
             if (!lastCluster || lastCluster.top + clusterHeight < positionedDiscussion.top) {
@@ -320,6 +318,8 @@ export default function(app) {
               discussionToCluster[discussion.id] = cluster;
             });
           });
+
+          getVisibleClusters(clusters).forEach(cluster => cluster.visible = true);
 
           // TODO: angular.copy
           $ctrl.positionedDiscussions = positionedDiscussions;

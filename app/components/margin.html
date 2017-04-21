@@ -28,14 +28,20 @@
     on-scroll-to-cluster="$ctrl.scrollToCluster(cluster)"
   ></margin-link>
 </div>
-<margin-cluster
-  ng-repeat="cluster in $ctrl.discussionClusters track by cluster.top"
-  cluster="cluster"
-  on-open="$ctrl.currentCluster = $cluster; $ctrl.currentDiscussion = $cluster.discussions.length === 1 ? $cluster.discussions[0].id : undefined"
-  ng-style="{top: cluster.top + 'px'}"
-  ng-mouseenter="$ctrl.highlightCluster(cluster, true)"
-  ng-mouseleave="$ctrl.highlightCluster(cluster, false)"
-></margin-cluster>
+<div ng-repeat="cluster in $ctrl.discussionClusters track by cluster.top">
+  <margin-cluster
+    ng-if="cluster.visible"
+    cluster="cluster"
+    on-open="$ctrl.currentCluster = $cluster; $ctrl.currentDiscussion = $cluster.discussions.length === 1 ? $cluster.discussions[0].id : undefined"
+    ng-style="{top: cluster.top + 'px'}"
+    ng-mouseenter="$ctrl.highlightCluster(cluster, true)"
+    ng-mouseleave="$ctrl.highlightCluster(cluster, false)"
+  ></margin-cluster>
+  <margin-cluster-placeholder
+    ng-if="!cluster.visible"
+    ng-style="{top: cluster.top + 'px'}"
+  ></margin-cluster-placeholder>
+</div>
 <margin-cluster-pane
   ng-if="$ctrl.currentCluster"
   class="ph-slide-in ph-slide-in-left ph-slide-out ph-slide-out-right"
