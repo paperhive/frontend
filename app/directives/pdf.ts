@@ -6,7 +6,7 @@ import { PDFJS } from 'pdfjs-dist';
 const rangy = require('rangy');
 import { backTransformRange } from 'srch';
 
-const viewportPadding = 130;
+const viewportPadding = 140;
 
 // test if height and width properties of 2 objects are equal
 function isSameSize(obj1, obj2) {
@@ -1085,7 +1085,6 @@ export default function(app) {
         if (match) {
           return await this.scrollToSelection(match[1]);
         }
-        throw new Error(`Anchor ${anchor} does not match.`);
       }
 
       scrollToId(id) {
@@ -1095,7 +1094,7 @@ export default function(app) {
 
         // scroll
         scroll.scrollTo(element, {
-          offset: (this.scope.viewportOffsetTop || 0) + viewportPadding,
+          offset: viewportPadding,
           before: () => this.scrolling = true,
           after: () => this.scope.$apply(() => {
             this.scrolling = false;
@@ -1147,7 +1146,7 @@ export default function(app) {
           this.element.offset().top +
           page.element[0].offsetTop +
           coords[1] / page.pageSize.height * page.height,
-          {offset: (this.scope.viewportOffsetTop || 0) + viewportPadding},
+          {offset: viewportPadding},
         );
       }
 
@@ -1162,7 +1161,7 @@ export default function(app) {
             this.element.offset().top +
             page.element[0].offsetTop +
             top * page.height,
-            {offset: (this.scope.viewportOffsetTop || 0) + viewportPadding},
+            {offset: viewportPadding},
           );
         }
       }
@@ -1190,7 +1189,7 @@ export default function(app) {
           this.element.offset().top +
           page.element[0].offsetTop +
           topRect.top * page.height,
-          {offset: (this.scope.viewportOffsetTop || 0) + viewportPadding},
+          {offset: viewportPadding},
         );
 
         // set selection

@@ -1,26 +1,24 @@
 import angular from 'angular';
-import { merge } from 'lodash';
-
-const marginDiscussionUrlPopoverUrl =
-  require('!ngtemplate-loader?relativeTo=/app!html-loader!./margin-discussion-url-popover.html');
+import { difference, keys, merge, some, values } from 'lodash';
 
 export default function(app) {
   app.component('marginDiscussion', {
     bindings: {
       discussion: '<',
       showShareMessage: '<',
+      isExpanded: '<',
       onDiscussionUpdate: '&',
       onDiscussionDelete: '&',
       onReplySubmit: '&',
       onReplyUpdate: '&',
       onReplyDelete: '&',
+      onUnsavedContentUpdate: '&',
     },
     controller: [
       '$scope', '$q', '$location', 'authService', 'channelService',
       function($scope, $q, $location, authService, channelService) {
         const ctrl = this;
 
-        this.marginDiscussionUrlPopoverUrl = marginDiscussionUrlPopoverUrl;
         this.channelService = channelService;
 
         // expose discussion in template
@@ -29,8 +27,24 @@ export default function(app) {
           this.channel = channel && channelService.get(channel);
         });
 
-        $scope.state = {};
-        $scope.replyDraft = {};
+        ctrl.unsavedContent = {};
+        ctrl.cleanupUnsavedContent = function() {
+          const removeIds = difference(
+            keys(ctrl.unsavedContent),
+            ctrl.discussion.replies.map(reply => reply.id),
+          );
+          removeIds.forEach(id => delete ctrl.unsavedContent[id]);
+        };
+        $scope.$watchCollection('$ctrl.discussion.replies', ctrl.cleanupUnsavedContent.bind(ctrl));
+
+        ctrl.updateUnsavedContent = function () {
+          const unsavedContent = ctrl.editing || ctrl.replyBody || some(values(ctrl.unsavedContent));
+          ctrl.onUnsavedContentUpdate({unsavedContent});
+        };
+        $scope.$watch('$ctrl.editing', ctrl.updateUnsavedContent.bind(ctrl));
+        $scope.$watch('$ctrl.replyBody', ctrl.updateUnsavedContent.bind(ctrl));
+        $scope.$watchCollection('$ctrl.unsavedContent', ctrl.updateUnsavedContent.bind(ctrl));
+
         $scope.auth = authService;
 
         // required to work around event.stopPropagation() issue with
@@ -48,52 +62,15 @@ export default function(app) {
 
         // add reply
         ctrl.replySubmit = () => {
-          $scope.state.submitting = true;
-          const reply = merge(
-            {},
-            $scope.replyDraft,
-            {discussion: $scope.discussion.id},
-          );
+          ctrl.submitting = true;
+          const reply = {
+            body: ctrl.replyBody,
+            discussion: $scope.discussion.id,
+          };
           $q.when(ctrl.onReplySubmit({reply}))
-            .then(() => $scope.replyDraft = {})
-            .finally(() => $scope.state.submitting = false);
+            .then(() => ctrl.replyBody = undefined)
+            .finally(() => ctrl.submitting = false);
         };
-
-        // delete reply
-        ctrl.replyDelete = (reply) => {
-          $scope.state.submitting = true;
-          $q.when(ctrl.onReplyDelete({reply}))
-            .finally(() => $scope.state.submitting = false);
-        };
-
-        // reply controller (for deletion)
-        // TODO: remove controller!
-        $scope.replyCtrl = ['$scope', _$scope => {
-          _$scope.replyState = {};
-          _$scope.replyDelete = reply => {
-            _$scope.replyState.submitting = true;
-            $q.when(ctrl.onReplyDelete({reply}))
-              .finally(() => _$scope.replyState.submitting = false);
-          };
-        }];
-
-        // reply controller (for editing)
-        // TODO: remove controller (move into new component)
-        $scope.replyEditCtrl = ['$scope', _$scope => {
-          _$scope.copy = angular.copy($scope.reply);
-          _$scope.replyUpdate = () => {
-            _$scope.replyState.submitting = true;
-            $q.when(ctrl.onReplyUpdate(
-              {$replyOld: _$scope.reply, $replyNew: _$scope.copy},
-            ))
-              .then(function() {
-                _$scope.replyState.editing = false;
-              })
-              .finally(function() {
-                _$scope.replyState.submitting = false;
-              });
-          };
-        }];
       },
     ],
     template: require('./margin-discussion.html'),

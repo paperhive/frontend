@@ -1,14 +1,14 @@
 <form>
   <div class="form-group">
     <label for="url">{{$ctrl.label}}</label>
-    <input
-      type="text"
-      name="url"
-      class="form-control input-sm"
-      readonly
-      value="{{$ctrl.fullUrl}}"
-      size="{{$ctrl.fullUrl.length}}"
-    >
+    <div class="input-group input-group-sm">
+      <input type="text" class="form-control input-sm" ng-model="$ctrl.fullUrl" readonly>
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" ng-click="$ctrl.copy()">
+          <i class="fa fa-fw fa-link"></i> Copy link
+        </button>
+      </span>
+    </div>
     <p class="help-block">{{$ctrl.help}}</p>
   </div>
 </form>

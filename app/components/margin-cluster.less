@@ -1,0 +1,96 @@
+@import "../../less/variables.less";
+
+@ph-margin-cluster-shadow-offset: (@grid-gutter-width / 2) / 4;
+
+margin-cluster {
+  position: absolute;
+  left: (@grid-gutter-width / 2);
+  right: (@grid-gutter-width / 2);
+
+  > avatar {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  > .ph-component-circle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: @ph-margin-avatar-size;
+    height: @ph-margin-avatar-size;
+    border: none;
+    border-radius: 50%;
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+
+    &:active, &:focus {
+      outline: none !important;
+    }
+
+    > div {
+      flex: 1;
+      font-size: 14px;
+      font-weight: bold;
+      text-align: center;
+    }
+  }
+
+  > .ph-component-body {
+    margin-left: @ph-margin-body-offset;
+    box-shadow: @ph-shadow;
+    position: relative;
+
+    .ph-component-shadow-1 {
+      position: absolute;
+      top: @ph-margin-cluster-shadow-offset;
+      bottom: -@ph-margin-cluster-shadow-offset;
+      left: @ph-margin-cluster-shadow-offset;
+      right: -@ph-margin-cluster-shadow-offset;
+      background-color: @ph-margin-body-bgcolor;
+      box-shadow: @ph-shadow;
+      z-index: -1;
+    }
+
+    .ph-component-shadow-2 {
+      position: absolute;
+      top: @ph-margin-cluster-shadow-offset * 2;
+      bottom: -@ph-margin-cluster-shadow-offset * 2;
+      left: @ph-margin-cluster-shadow-offset * 2;
+      right: -@ph-margin-cluster-shadow-offset * 2;
+      background-color: @ph-margin-body-bgcolor;
+      box-shadow: @ph-shadow;
+      z-index: -2;
+    }
+
+    .ph-margin-row-content {
+      background-color: @ph-margin-body-bgcolor;
+      position: relative;
+    }
+
+    .ph-component-body-container {
+      max-height: 4em;
+      overflow: hidden;
+
+      .ph-component-discussion-title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .ph-component-discussion-body {
+        > :first-child {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        > :not(:first-child) {
+          display: none;
+        }
+      }
+    }
+  }
+}

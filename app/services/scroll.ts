@@ -40,8 +40,9 @@ export default function(app) {
 
       // scroll smooth
       await new Promise((resolve, reject) => {
+        const bodyOffset = parseInt(jquery('body').css('padding-top'), 10);
         jquery('html, body').animate({
-          scrollTop: top - options.offset,
+          scrollTop: top - options.offset - bodyOffset,
         }, {
           complete: resolve,
           duration: options.duration,
