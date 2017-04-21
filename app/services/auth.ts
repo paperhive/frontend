@@ -62,47 +62,38 @@ export default function(app) {
 
       // log in wrapper
       function login(loginFun) {
-        const deferred = $q.defer();
+        const runningLogin = authService.loginPromise || $q.resolve();
+        authService.loginPromise = $q((resolve, reject) => {
+          runningLogin.then(
+            () => {
+              loginFun().then(
+                response => {
+                  authService.user = response.data.person;
+                  authService.token = response.data.token;
 
-        // if already logging in: wait until completed
-        if (authService.loginPromise) {
-          authService.loginPromise.then(
-            data => {
-              login(loginFun).then(deferred.resolve, deferred.reject);
+                  // fires 'storage' event in other tabs
+                  if (localStorageAvailable) {
+                    $window.localStorage.token = response.data.token;
+                  }
+                  resolve(response.data);
+                },
+                response => {
+                  authService.logout();
+                  reject(response.data);
+                }
+              )
             },
-            deferred.reject,
-          );
-          return deferred.promise;
-        }
+            reject,
+          )
+        });
 
-        // set loginPromise
-        authService.loginPromise = deferred.promise;
-
-        // log in
-        loginFun()
-          .then(response => {
-            // TODO think about better way for login waiting
-            authService.loginPromise = undefined;
-            authService.user = response.data.person;
-            authService.token = response.data.token;
-
-            // fires 'storage' event in other tabs
-            if (localStorageAvailable) {
-              $window.localStorage.token = response.data.token;
-            }
-
-            deferred.resolve(response.data);
-          }, response => {
-            authService.loginPromise = undefined;
-            authService.logout();
-            deferred.reject(response.data);
-          });
-
-        return deferred.promise;
+        return authService.loginPromise;
       }
+
       authService.loginToken = (token) => {
         return login(_loginToken(token));
       };
+
       authService.loginEmail = (emailOrUsername, password) => {
         return login(_loginEmail(emailOrUsername, password));
       };

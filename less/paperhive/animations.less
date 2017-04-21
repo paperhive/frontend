@@ -1,17 +1,71 @@
 .ph-fade-out {
-  &.ng-hide-add {
-    transition: 0.8s ease opacity;
+  &.ng-hide-add, &.ng-leave  {
+    transition: opacity @ph-animation-duration ease;
   }
-  &.ng-hide {
+  &.ng-hide, &.ng-leave.ng-leave-active {
     opacity: 0;
   }
 }
 
 .ph-fade-in {
-  &.ng-hide-remove {
-    transition: 0.8s ease opacity;
+  &.ng-hide-remove, &.ng-enter{
+    transition: opacity @ph-animation-duration ease;
   }
-  &.ng-hide {
+  &.ng-hide, &.ng-enter {
     opacity: 0;
+  }
+  &.ng-enter.ng-enter-active {
+    opacity: 1;
+  }
+}
+
+.ph-fade {
+  .ph-fade-in();
+  .ph-fade-out();
+}
+
+.ph-slide-in {
+  &.ng-hide-remove, &.ng-enter {
+    transition: all @ph-animation-duration ease-out;
+  }
+  &.ng-hide, &.ng-enter {
+    &.ph-slide-in-left {
+      transform: translateX(100%);
+    }
+    &.ph-slide-in-right {
+      transform: translateX(-100%);
+    }
+    &.ph-slide-in-top {
+      transform: translateY(100%);
+    }
+    &.ph-slide-in-bottom {
+      transform: translateY(-100%);
+    }
+  }
+  &.ng-enter.ng-enter-active {
+    transform: translateX(0);
+  }
+}
+
+.ph-slide-out {
+  &.ng-hide-add, &.ng-leave {
+    transition: all @ph-animation-duration ease-in;
+  }
+  &.ng-leave {
+    transform: translateX(0);
+  }
+  &.ng-hide, &.ng-leave.ng-leave-active {
+    &.ph-slide-out-left {
+      transform: translateX(-100%);
+    }
+    &.ph-slide-out-right {
+      transform: translateX(100%);
+    }
+    &.ph-slide-out-top {
+      transform: translateY(-100%);
+    }
+    &.ph-slide-out-bottom {
+      transform: translateY(100%);
+    }
   }
 }

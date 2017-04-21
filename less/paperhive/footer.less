@@ -4,16 +4,19 @@ html {
   // sticky footer
   position: relative;
   min-height: 100%;
-  // end sticky footer
 }
 body {
+  // this property is set dynamically via js according to the actual height of
+  // the footer, see index.html.
+  padding-bottom: @ph-footer-height;
+
   > footer {
     // sticky footer
     position: absolute;
-    top: 100%;
+    bottom: 0;
     width: 100%;
     min-height: @ph-footer-height;
-    // end sticky footer
+
     .ph-highlight-border-bottom();
   }
 }

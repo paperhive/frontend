@@ -1,0 +1,71 @@
+<div
+  class="ph-margin-controls ph-margin-controls-top"
+  ng-style="{top: $ctrl.viewportOffsetTop || 0}"
+
+>
+  <div class="ph-margin-controls-permanent"
+    on-resized="$ctrl.controlsSize = $size"
+  >
+    <channel-selector discussions="$ctrl.discussions"></channel-selector>
+    <!--filter-button></filter-button-->
+  </div>
+  <margin-link
+    position="top"
+    clusters="$ctrl.discussionClusters"
+    viewport-offset-top="$ctrl.viewportOffsetTop + $ctrl.controlsSize.height"
+    viewport-offset-bottom="$ctrl.viewportOffsetBottom"
+    on-scroll-to-cluster="$ctrl.scrollToCluster(cluster)"
+  ></margin-link>
+</div>
+<div class="ph-margin-controls ph-margin-controls-bottom"
+  ng-style="{bottom: $ctrl.viewportOffsetBottom || 0}"
+>
+  <margin-link
+    position="bottom"
+    clusters="$ctrl.discussionClusters"
+    viewport-offset-top="$ctrl.viewportOffsetTop + $ctrl.controlsSize.height"
+    viewport-offset-bottom="$ctrl.viewportOffsetBottom"
+    on-scroll-to-cluster="$ctrl.scrollToCluster(cluster)"
+  ></margin-link>
+</div>
+<div ng-repeat="cluster in $ctrl.discussionClusters track by cluster.top">
+  <margin-cluster
+    ng-if="cluster.visible"
+    cluster="cluster"
+    on-open="$ctrl.currentCluster = $cluster; $ctrl.currentDiscussion = $cluster.discussions.length === 1 ? $cluster.discussions[0].id : undefined"
+    ng-style="{top: cluster.top + 'px'}"
+    ng-mouseenter="$ctrl.highlightCluster(cluster, true)"
+    ng-mouseleave="$ctrl.highlightCluster(cluster, false)"
+  ></margin-cluster>
+  <margin-cluster-placeholder
+    ng-if="!cluster.visible"
+    ng-style="{top: cluster.top + 'px'}"
+  ></margin-cluster-placeholder>
+</div>
+<margin-cluster-pane
+  ng-if="$ctrl.currentCluster"
+  class="ph-slide-in ph-slide-in-left ph-slide-out ph-slide-out-right"
+  ng-style="{top: $ctrl.viewportOffsetTop || 0}"
+  cluster="$ctrl.currentCluster"
+  current-discussion="$ctrl.currentDiscussion"
+  on-close="$ctrl.closeClusterPane().catch($ctrl.noop)"
+  on-discussion-submit="$ctrl.onDiscussionSubmit({discussion})"
+  on-discussion-update="$ctrl.onDiscussionUpdate({discussion})"
+  on-discussion-delete="$ctrl.discussionDelete(discussion)"
+  on-reply-submit="$ctrl.onReplySubmit({reply})"
+  on-reply-update="$ctrl.onReplyUpdate({reply})"
+  on-reply-delete="$ctrl.onReplyDelete({reply})"
+  on-discussion-hover="$ctrl.onDiscussionHover({discussion, hovered})"
+  on-unsaved-content-update="$ctrl.clusterPaneUnsavedContent = unsavedContent"
+></margin-cluster-pane>
+<margin-draft-pane
+  ng-if="$ctrl.draftPaneOpen"
+  class="ph-slide-in ph-slide-in-left ph-slide-out ph-slide-out-right"
+  ng-style="{top: $ctrl.viewportOffsetTop || 0}"
+  selectors="$ctrl.draftSelectors"
+  on-submit="$ctrl.submitDiscussion(discussion)"
+  on-close="$ctrl.closeDraftPane().catch($ctrl.noop)"
+  on-unsaved-content-update="$ctrl.draftPaneUnsavedContent = unsavedContent"
+  ng-mouseup="$event.stopPropagation()"
+  ng-keyup="$event.stopPropagation()"
+></margin-draft-pane>

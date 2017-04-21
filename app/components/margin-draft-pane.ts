@@ -1,11 +1,14 @@
 import { cloneDeep } from 'lodash';
 
+require('./margin-draft-pane.less');
+
 export default function(app) {
-  app.component('marginDiscussionDraft', {
+  app.component('marginDraftPane', {
     bindings: {
       selectors: '<',
       onSubmit: '&',
-      onDiscard: '&',
+      onClose: '&',
+      onUnsavedContentUpdate: '&',
     },
     controller: [
       '$scope', '$q', 'authService', 'channelService',
@@ -14,6 +17,12 @@ export default function(app) {
         $scope.auth = authService;
         $scope.comment = {};
         this.channelService = channelService;
+
+        ctrl.updateUnsavedContent = function () {
+          const unsavedContent = $scope.comment.title || $scope.comment.body;
+          ctrl.onUnsavedContentUpdate({unsavedContent});
+        };
+        $scope.$watchGroup(['comment.title', 'comment.body'], ctrl.updateUnsavedContent);
 
         ctrl.submit = function() {
 
@@ -29,11 +38,11 @@ export default function(app) {
           ctrl.submitting = true;
 
           $q.when(ctrl.onSubmit({discussion}))
-            .then(data => ctrl.onDiscard())
+            .then(data => ctrl.onClose())
             .finally(() => ctrl.submitting = false);
         };
       },
     ],
-    template: require('./margin-discussion-draft.html'),
+    template: require('./margin-draft-pane.html'),
   });
 };

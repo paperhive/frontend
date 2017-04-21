@@ -1,0 +1,15 @@
+<div class="dropdown ph-dropdown-small" uib-dropdown auto-close="outsideClick">
+  <button class="btn btn-default btn-sm" type="button" uib-dropdown-toggle>
+    <i ng-if="$ctrl.iconClasses" class="{{$ctrl.iconClasses}}"></i>
+    {{$ctrl.description}}
+    <i class="fa fa-fw fa-caret-down"></i>
+  </button>
+  <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+    <li ng-repeat="item in $ctrl.items track by item.id" role="menuitem">
+      <a href title="{{item.label}}" ng-click="$ctrl.toggle(item); $event.stopPropagation();">
+        <i class="fa fa-fw" ng-class="{'fa-check': item.selected}"></i>
+        {{item.label}}
+      </a>
+    </li>
+  </ul>
+</div>

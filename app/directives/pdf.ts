@@ -4,6 +4,9 @@ import jquery from 'jquery';
 import { clone, difference, filter, flatten, get, isArray, isEqual, isNumber, pick, some, uniq } from 'lodash';
 import { PDFJS } from 'pdfjs-dist';
 const rangy = require('rangy');
+import { backTransformRange } from 'srch';
+
+const viewportPadding = 140;
 
 // test if height and width properties of 2 objects are equal
 function isSameSize(obj1, obj2) {
@@ -76,14 +79,14 @@ const getTextNodes = function(node) {
   return nodes;
 };
 
-function getRectanglesSelector(range, container) {
+function getRectanglesSelector(range, container, restoreSelection = true) {
   const containerRect = container.getBoundingClientRect();
 
   // preserve current selection to work around browser bugs that result
   // in a changed selection
   // see https://github.com/timdown/rangy/issues/93
   // and https://github.com/timdown/rangy/issues/282
-  const currentSelection = rangy.serializeSelection(rangy.getSelection(), true);
+  const currentSelection = restoreSelection && rangy.serializeSelection(rangy.getSelection(), true);
 
   // split start container if necessary
   range.splitBoundaries();
@@ -115,7 +118,7 @@ function getRectanglesSelector(range, container) {
   range.normalizeBoundaries();
 
   // restore selection (see above)
-  if (currentSelection) {
+  if (restoreSelection && currentSelection) {
     rangy.deserializeSelection(currentSelection);
   }
 
@@ -192,6 +195,7 @@ export default function(app) {
       page: PDFPageProxy;
       textContent: PDFTextContent;
       renderTask: PDFRenderTextTask; // currently running task
+      rendered = false;
 
       constructor(element, page) {
         this.element = element;
@@ -234,6 +238,23 @@ export default function(app) {
         // normalize the DOM subtree of the rendered page
         // (otherwise serialized ranges may be based on different DOM states)
         this.element[0].normalize();
+
+        this.rendered = true;
+      }
+
+      getRangePdfRectangles(ranges) {
+        // TODO: optimize performance
+        return flatten(ranges.map(range => {
+          const index = range.transformation.index;
+          // get n-th child
+          const nthChild = this.element[0].childNodes[index].firstChild;
+          let rangyRange = rangy.createRange();
+          rangyRange.setStart(nthChild, range.position);
+          rangyRange.setEnd(nthChild, range.position + range.length);
+          const selectors = getRectanglesSelector(rangyRange, this.element[0], false) as any[];
+          selectors.forEach(selector => selector.pageNumber = this.page.pageNumber);
+          return selectors;
+        }));
       }
     }
 
@@ -246,7 +267,10 @@ export default function(app) {
       }
 
       navigateTo(dest) {
-        this.scrollToAnchor(`pdfd:${dest}`);
+        const anchor = isArray(dest)
+          ? `pdfdr:${JSON.stringify(dest)}`
+          : `pdfd:${dest}`;
+        this.scrollToAnchor(anchor);
       }
     }
 
@@ -330,6 +354,10 @@ export default function(app) {
       initializedRenderers: boolean;
       pageSize: any; // TODO: remove?
       textFocused: boolean = false;
+      textContent: any;
+      textSnippetTransformations: any[];
+      searchMatches: any[];
+      lastSearchMatches: any[];
 
       // renderer state
       height: number;
@@ -364,6 +392,26 @@ export default function(app) {
           viewport: this.page.getViewport(scale),
           deviceViewport: this.page.getViewport(scale * pixelRatio),
         };
+      }
+
+      async getPageText() {
+        this.textContent = await this.page.getTextContent();
+        this.textSnippetTransformations = [];
+        // filter whitespaces, see https://github.com/mozilla/pdf.js/blob/master/src/display/text_layer.js#L55
+        const items = this.textContent.items.filter(item => /\S/.test(item.str));
+        items.forEach((item, index) => {
+          this.textSnippetTransformations.push(
+            {original: item.str.length, transformed: item.str.length, textObject: item, index},
+          );
+          this.textSnippetTransformations.push(
+            {original: 0, transformed: 1},
+          );
+        });
+        // remove last element (there is no space)
+        if (this.textSnippetTransformations.length > 0) {
+          this.textSnippetTransformations.pop();
+        }
+        return items.map(text => text.str).join(' ');
       }
 
       async initPageSize(_width = undefined) {
@@ -403,6 +451,13 @@ export default function(app) {
               page-number="${this.page.pageNumber}"
               on-mouseenter="onHighlightMouseenter({highlight: highlight, pageNumber: pageNumber})"
               on-mouseleave="onHighlightMouseleave({highlight: highlight, pageNumber: pageNumber})"
+            ></pdf-highlight>
+            <pdf-highlight
+              class="ph-pdf-highlight-search"
+              ng-repeat="highlight in searchHighlightsByPage[${this.pageNumber}]"
+              highlight="highlight"
+              emphasized="false"
+              page-number="${this.page.pageNumber}"
             ></pdf-highlight>
           </div>
         `)(this.scope);
@@ -501,6 +556,8 @@ export default function(app) {
           await this.textRenderer.render(viewport);
           await this.annotationsRenderer.render(viewport);
 
+          this.updateSearchHighlights();
+
           this.onRendered();
 
           return true;
@@ -538,6 +595,36 @@ export default function(app) {
 
         this.initializedRenderers = false;
       }
+
+      getMatchTop(match) {
+        const transformedMatch = backTransformRange(match, this.textSnippetTransformations);
+        const textObject = transformedMatch[0].transformation.textObject;
+        const tx = textObject.transform;
+        const fontHeight = Math.sqrt(tx[2] * tx[2] + tx[3] * tx[3]);
+        const y = (tx[1] * textObject.width + tx[3] * textObject.height) / fontHeight + tx[5];
+        return 1 - y / this.pageSize.height;
+      }
+
+      setSearchMatches(matches) {
+        this.searchMatches = matches;
+        this.updateSearchHighlights();
+      }
+
+      updateSearchHighlights() {
+        if (this.lastSearchMatches === this.searchMatches) return;
+        if (!this.textRenderer || !this.textRenderer.rendered) return;
+
+        this.scope.searchHighlightsByPage[this.pageNumber] = this.searchMatches.map(match => {
+          // store length, position and transformation
+          const transformedMatch = backTransformRange(match, this.textSnippetTransformations);
+          // get corresponding pdfRectangles
+          const pdfRectangles = this.textRenderer.getRangePdfRectangles(transformedMatch);
+          return {matchIndex: match.matchIndex, selectors: {pdfRectangles}};
+        });
+
+        // store matches (length, matchIndex, position)
+        this.lastSearchMatches = this.searchMatches;
+      }
     }
 
     // render a full pdf
@@ -545,13 +632,18 @@ export default function(app) {
       pages: PdfPage[];
       renderedPages: PdfPage[];
       renderQueue: any;
+      texts: any[];
 
+      scrollTimeout: Promise<null>;
+      scrolling: boolean;
+      pageNumber: number;
       containerWidth: number;
       lastSelectors: any;
       lastSimpleSelection: any;
       linkService: LinkService;
       anchor: string;
       textFocused: boolean = false;
+      textTransformations: any[];
 
       constructor(public pdf: PDFDocumentProxy, public element: JQuery,
                   public scope: any) {
@@ -613,6 +705,10 @@ export default function(app) {
         angular.element($window).on('resize', _resizeRender);
         angular.element($window).on('scroll', _render);
 
+        // sync current scroll state to url
+        const _scrollSync =  this.scrollSync.bind(this);
+        angular.element($window).on('scroll', _scrollSync);
+
         // focus text layer on mousedown (except click on links)
         let mousedown = false;
         this.element.on('mousedown', event => {
@@ -644,6 +740,8 @@ export default function(app) {
         this.element.on('$destroy', () => {
           angular.element($window).off('resize', _resizeRender);
           angular.element($window).off('scroll', _render);
+          angular.element($window).off('scroll', _scrollSync);
+          if (this.scrollTimeout) $timeout.cancel(this.scrollTimeout);
           $document.off('mouseup', onMouseUp);
           $document.off('keydown keyup', onKeyEvent);
         });
@@ -662,7 +760,70 @@ export default function(app) {
         // monitor scrollToAnchor
         this.scope.$watch('scrollToAnchor', this.scrollToAnchor.bind(this));
 
+        // monitor scrollToSearchMatchIndex
+        this.scope.$watch('scrollToSearchMatchIndex', this.scrollToSearchMatchIndex.bind(this));
+
+        // monitor searchRanges
+        this.scope.$watch('searchRanges', this.searchRanges.bind(this));
+
         this.scope.$watchCollection('highlights', this.updateHighlights.bind(this));
+
+        // wait a bit before performing non-critical tasks
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        const outline = await this.pdf.getOutline();
+        this.scope.onOutlineUpdate({outline});
+
+        await this.updateText();
+      }
+
+      async updateText() {
+        this.texts = await Promise.all(this.pages.map(page => page.getPageText()));
+        this.scope.$apply(() => {
+          this.textTransformations = [];
+          this.texts.forEach((text, index) => {
+            this.textTransformations.push(
+              {original: text.length, transformed: text.length, pageNumber: index + 1},
+            );
+            this.textTransformations.push({original: 0, transformed: 1});
+          });
+          // remove last element (there is no space)
+          if (this.textTransformations.length > 0) this.textTransformations.pop();
+          this.scope.onTextUpdate({str: this.texts.join(' ')});
+        });
+      }
+
+      // transforms all found ranges with absolute position and length
+      // in ranges with relative page position and pdfRectangles
+      searchRanges(matches) {
+        this.scope.searchHighlightsByPage = {};
+
+        if (!matches) return;
+
+        // adds transformation to the matches
+        const transformedMatches = matches.map(match => backTransformRange(match, this.textTransformations));
+
+        // get matches and positions by page
+        const matchesByPage = this.pages.map(() => []);
+        transformedMatches.forEach((match, matchIndex) => {
+          match.forEach(range => {
+            const pageNumber = range.transformation.pageNumber;
+            if (pageNumber === undefined) {
+              throw new Error('no page number in transformation!');
+            }
+
+            matchesByPage[pageNumber - 1].push({
+              matchIndex,
+              position: range.position,
+              length: range.length,
+            });
+          });
+        });
+
+        // set matches for each page
+        matchesByPage.forEach(
+          (pageMatches, pageIndex) => this.pages[pageIndex].setSearchMatches(pageMatches),
+        );
       }
 
       destroy() {
@@ -794,6 +955,8 @@ export default function(app) {
           this.element.removeClass('ph-pdf-resize-active');
         }
 
+        this.updatePageNumber();
+
         // get currently running render tasks
         const running = this.renderQueue.workersList().map(task => task.data);
 
@@ -882,6 +1045,15 @@ export default function(app) {
         );
       }
 
+      // sync current scroll state to url if resting at one place
+      scrollSync() {
+        if (this.scrollTimeout) $timeout.cancel(this.scrollTimeout);
+        this.scrollTimeout = $timeout(() => this.scope.$apply(() => {
+          this.scrollTimeout = undefined;
+          this.scope.onAnchorUpdate({anchor: `p:${this.pageNumber}`});
+        }), 5000);
+      }
+
       async scrollToAnchor(anchor) {
         if (!anchor) return;
         if (anchor !== this.anchor) {
@@ -893,6 +1065,8 @@ export default function(app) {
         // match page
         match = /^p:(\d+)$/.exec(anchor);
         if (match) {
+          const pageNumber = parseInt(match[1], 10);
+          if (pageNumber === this.pageNumber) return;
           return this.scrollToId(anchor);
         }
         // match pdf named destination
@@ -900,12 +1074,17 @@ export default function(app) {
         if (match) {
           return await this.scrollToDest(match[1]);
         }
+        // match pdf destination ref
+        match = /^pdfdr:(.*)$/.exec(anchor);
+        if (match) {
+          const destRef = JSON.parse(match[1]);
+          return await this.scrollToDestRef(destRef);
+        }
         // match selection anchor
         match = /^s:([\w-]+)$/.exec(anchor);
         if (match) {
           return await this.scrollToSelection(match[1]);
         }
-        throw new Error(`Anchor ${anchor} does not match.`);
       }
 
       scrollToId(id) {
@@ -914,12 +1093,23 @@ export default function(app) {
         if (!element) return;
 
         // scroll
-        scroll.scrollTo(element, {offset: (this.scope.viewportOffsetTop || 0) + 130});
+        scroll.scrollTo(element, {
+          offset: viewportPadding,
+          before: () => this.scrolling = true,
+          after: () => this.scope.$apply(() => {
+            this.scrolling = false;
+            this.updatePageNumber();
+          }),
+        });
       }
 
       async scrollToDest(dest) {
         const destRef = await this.pdf.getDestination(dest);
         if (!destRef) throw new Error(`destination ${dest} not found`);
+        await this.scrollToDestRef(destRef);
+      }
+
+      async scrollToDestRef(destRef: PDFDestRef) {
         if (!isArray(destRef)) throw new Error('destination does not resolve to array');
         let top;
         switch (destRef[1].name) {
@@ -956,8 +1146,24 @@ export default function(app) {
           this.element.offset().top +
           page.element[0].offsetTop +
           coords[1] / page.pageSize.height * page.height,
-          {offset: (this.scope.viewportOffsetTop || 0) + 130},
+          {offset: viewportPadding},
         );
+      }
+
+      async scrollToSearchMatchIndex(searchMatchIndex: number) {
+        if (searchMatchIndex >= 0) {
+          const match = this.scope.searchRanges[searchMatchIndex];
+          const transformedMatch = backTransformRange(match, this.textTransformations);
+          const page = this.pages[transformedMatch[0].transformation.pageNumber - 1];
+          const top = page.getMatchTop(transformedMatch[0]);
+          // scroll to page
+          scroll.scrollTo(
+            this.element.offset().top +
+            page.element[0].offsetTop +
+            top * page.height,
+            {offset: viewportPadding},
+          );
+        }
       }
 
       async scrollToSelection(anchorId) {
@@ -983,7 +1189,7 @@ export default function(app) {
           this.element.offset().top +
           page.element[0].offsetTop +
           topRect.top * page.height,
-          {offset: (this.scope.viewportOffsetTop || 0) + 130},
+          {offset: viewportPadding},
         );
 
         // set selection
@@ -1017,6 +1223,21 @@ export default function(app) {
           });
         });
       }
+
+      updatePageNumber() {
+        // do not update page number during scroll operation
+        if (this.scrolling) return;
+
+        let pageNumber = 1;
+        for (const page of this.pages) {
+          const rect = page.element[0].getBoundingClientRect();
+          if (rect.bottom > (this.scope.viewportOffsetTop || 0) + viewportPadding) break;
+          pageNumber += 1;
+        }
+        if (this.pageNumber === pageNumber) return;
+        this.pageNumber = pageNumber;
+        this.scope.onPageNumberUpdate({pageNumber});
+      }
     }
 
     return {
@@ -1040,8 +1261,11 @@ export default function(app) {
         popupTarget: '<',
 
         scrollToAnchor: '<',
+        scrollToSearchMatchIndex: '<',
 
         viewportOffsetTop: '<',
+
+        searchRanges: '<',
 
         // Output
         // ======
@@ -1085,6 +1309,12 @@ export default function(app) {
 
         // called when the anchor is updated
         onAnchorUpdate: '&',
+
+        onOutlineUpdate: '&',
+
+        onPageNumberUpdate: '&',
+
+        onTextUpdate: '&',
       },
       link: async (scope, element, attrs) => {
         let pdfFull;

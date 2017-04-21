@@ -15,6 +15,7 @@ export default function(app) {
         ctrl.replyCopy = angular.copy(ctrl.reply);
 
         ctrl.submit = () => {
+          ctrl.submitting = true;
           $q.when(ctrl.onSubmit({reply: ctrl.replyCopy}))
             .then(() => ctrl.onDiscard())
             .finally(() => ctrl.submitting = false);

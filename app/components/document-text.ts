@@ -1,5 +1,6 @@
 import jquery from 'jquery';
-import { merge } from 'lodash';
+import { isArray, merge } from 'lodash';
+import { SearchIndex } from 'srch';
 
 class DocumentTextCtrl {
   // input
@@ -8,6 +9,7 @@ class DocumentTextCtrl {
   latestAccessibleRevision: any;
   discussions: any[];
   filteredDiscussions: any[];
+  indexSearchResults: number;
 
   draftSelectors: any;
   highlights: any[];
@@ -16,6 +18,13 @@ class DocumentTextCtrl {
   pageCoordinates: any;
   anchor: string;
   pdfUrl: string;
+  pdfInfo: any;
+  pdfText: string;
+  searchStr: string;
+  searchIndex: SearchIndex;
+  searchMatches: IRange[];
+  onPdfInfoUpdate: (o: {pdfInfo: any}) => Promise<void>;
+  onSearchMatchesUpdate: (o: {searchMatches: any[]}) => void;
 
   static $inject = ['$animate', '$element', '$http', '$location',
     '$routeSegment', '$scope', '$window', 'config', 'notificationService',
@@ -45,6 +54,20 @@ class DocumentTextCtrl {
     }
     $animate.on('addClass', $element, triggerResize);
     $animate.on('removeClass', $element, triggerResize);
+
+    $scope.$watch('$ctrl.pdfStatus.pdf', pdf => {
+      if (!pdf) {
+        this.pdfInfo = undefined;
+        return;
+      }
+      this.pdfInfo = {numPages: pdf.numPages};
+    });
+
+    $scope.$watchCollection('$ctrl.pdfInfo', pdfInfo => this.onPdfInfoUpdate({pdfInfo}));
+
+    // update search index
+    $scope.$watch('$ctrl.pdfText', this.updateSearchIndex.bind(this));
+    $scope.$watch('$ctrl.searchStr', this.search.bind(this));
   }
 
   // create link for pdf destinations
@@ -52,7 +75,11 @@ class DocumentTextCtrl {
     const segmentName = this.$routeSegment.name;
     const baseUrl = this.$routeSegment
       .getSegmentUrl(segmentName, this.$routeSegment.$routeParams);
-    return `.${baseUrl}?a=pdfd:${encodeURIComponent(dest)}`;
+
+    const anchor = isArray(dest)
+      ? `pdfdr:${JSON.stringify(dest)}`
+      : `pdfd:${dest}`;
+    return `.${baseUrl}?a=${encodeURIComponent(anchor)}`;
   }
 
   getNewDiscussion(discussion) {
@@ -117,11 +144,25 @@ class DocumentTextCtrl {
 
     this.highlights = highlights;
   }
+
+  updateSearchIndex() {
+    if (!this.pdfInfo) return;
+    this.pdfInfo.searchIndex = undefined;
+    if (!this.pdfText) return;
+    this.pdfInfo.searchIndex = new SearchIndex(this.pdfText);
+  }
+
+  search() {
+    this.searchMatches = this.pdfInfo && this.pdfInfo.searchIndex && this.searchStr
+      ? this.pdfInfo.searchIndex.search(this.searchStr) : undefined;
+    this.onSearchMatchesUpdate({searchMatches: this.searchMatches});
+  }
 }
 
 export default function(app) {
   app.component('documentText', {
     bindings: {
+      anchor: '<',
       revision: '<',
       access: '<',
       latestAccessibleRevision: '<',
@@ -129,6 +170,8 @@ export default function(app) {
       filteredDiscussions: '<',
       viewportOffsetTop: '<',
       expanded: '<',
+      searchStr: '<',
+      searchMatchIndex: '<',
 
       onDiscussionSubmit: '&',
       onDiscussionUpdate: '&',
@@ -136,6 +179,8 @@ export default function(app) {
       onReplySubmit: '&',
       onReplyUpdate: '&',
       onReplyDelete: '&',
+      onPdfInfoUpdate: '&',
+      onSearchMatchesUpdate: '&',
     },
     controller: DocumentTextCtrl,
     template: require('./document-text.html'),

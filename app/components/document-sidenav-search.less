@@ -1,0 +1,37 @@
+@import "../../less/variables.less";
+
+document-sidenav-search {
+  .form-group {
+    position: relative;
+    input {
+      font-family: FontAwesome, @font-family-sans-serif;
+    }
+  }
+
+  .ph-component-controls {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    padding: 0 6px;
+
+    .ph-component-counters {
+      font-size: 80%;
+      color: @text-muted;
+      vertical-align: middle;
+      cursor: default;
+      user-select: none;
+    }
+
+    .ph-component-separator {
+      border-right: 1px solid @text-muted;
+      margin: 0 6px;
+      vertical-align: middle;
+    }
+
+    > button {
+      padding: 6px;
+      height: 100%;
+    }
+  }
+}

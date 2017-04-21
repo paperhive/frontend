@@ -1,0 +1,40 @@
+@import "../../less/variables.less";
+
+margin-draft-pane {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 25%;
+  z-index: @zindex-navbar-fixed - 2;
+  background-color: white;
+  box-shadow: @ph-shadow;
+  display: flex;
+  flex-direction: column;
+
+  > .ph-component-header {
+    display: flex;
+    align-items: flex-start;
+    > button {
+      &:active, &:focus {
+        outline: none !important;
+      }
+    }
+    channel-selector {
+      flex-grow: 1;
+      margin: @grid-gutter-width/2;
+    }
+  }
+
+  > .ph-component-body {
+    flex-grow: 1;
+    width: 100%;
+    padding: @grid-gutter-width @grid-gutter-width/2;
+    overflow-y: auto;
+
+    > margin-discussion {
+      display: block;
+      margin-bottom: @grid-gutter-width;
+    }
+  }
+}

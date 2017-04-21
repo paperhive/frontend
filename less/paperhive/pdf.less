@@ -106,6 +106,12 @@ pdf-full {
       background-color: @ph-text-highlight-color;
       &.ph-pdf-highlight-emphasize {
         background-color: @ph-highlight-color;
+        z-index: 1;
+      }
+    }
+    pdf-highlight.ph-pdf-highlight-search {
+      .ph-pdf-highlight {
+        background-color: lighten(@ph-badge-bg-color, 10%);
       }
     }
   }

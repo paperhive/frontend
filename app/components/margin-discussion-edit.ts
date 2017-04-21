@@ -15,6 +15,7 @@ export default function(app) {
         ctrl.discussionCopy = angular.copy(ctrl.discussion);
 
         ctrl.submit = () => {
+          ctrl.submitting = true;
           $q.when(ctrl.onSubmit({discussion: ctrl.discussionCopy}))
             .then(() => ctrl.onDiscard())
             .finally(() => ctrl.submitting = false);

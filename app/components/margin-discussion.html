@@ -1,27 +1,26 @@
-<div class="ph-margin-container"
-  ng-class="{'ph-private-channel': $ctrl.channel}"
->
+<div class="ph-margin-container">
   <!-- original comment -->
-
-  <div ng-show="!$ctrl.channel" class="ph-channel-description">
-    <i class="fa fa-fw fa-globe"></i> Public channel
-  </div>
-  <div ng-show="$ctrl.channel" class="ph-channel-description">
-    <i class="fa fa-fw fa-user"></i>
-    <a
-      href="./channels/{{$ctrl.channel.id}}"
-      class="ph-channel-selector-channel"
-      title="{{$ctrl.channelService.getNameDescription($ctrl.channel)}}"
-    >
-      {{$ctrl.channelService.getName($ctrl.channel)}}
-    </a>
-  </div>
-
   <div class="ph-margin-row">
     <!-- avatar -->
     <avatar user="$ctrl.discussion.author" size="38"
       classes="ph-margin-avatar img-circle"
-      ></avatar>
+    ></avatar>
+    <!-- channel flag -->
+    <div class="ph-channel-description" ng-class="{'ph-channel-private': $ctrl.channel}">
+      <span ng-if="!$ctrl.channel">
+        <i class="fa fa-fw fa-globe"></i> Public channel
+      </span>
+      <span ng-if="$ctrl.channel">
+        <i class="fa fa-fw fa-user"></i>
+        <a
+          href="./channels/{{$ctrl.channel.id}}"
+          class="ph-channel-selector-channel"
+          title="{{$ctrl.channelService.getNameDescription($ctrl.channel)}}"
+        >
+          {{$ctrl.channelService.getName($ctrl.channel)}}
+        </a>
+      </span>
+    </div>
     <div class="ph-margin-base-row">
       <!-- arrow -->
       <div class="ph-margin-arrow-container">
@@ -35,11 +34,7 @@
               {{$ctrl.discussion.author.displayName}}</a>
             · <span am-time-ago="$ctrl.discussion.createdAt"></span>
           </p>
-          <div class="ph-margin-body"
-            ng-class="{'ph-margin-body-collapsed': !$ctrl.isExpanded}"
-            ng-style="{'max-height': $ctrl.bodyHeight + 'px'}"
-            on-resized="$ctrl.bodyHeight = $size.scrollHeight"
-          >
+          <div class="ph-margin-body ph-xs-margin-bottom">
             <div ng-if="!$ctrl.discussion.body">
               <mathjax body="$ctrl.discussion.title"></mathjax>
             </div>
@@ -49,7 +44,6 @@
               </p>
               <kramjax body="$ctrl.discussion.body"></kramjax>
             </div>
-            <div ng-if="$ctrl.bodyHeight > 70" class="ph-margin-body-fade"></div>
           </div>
           <div class="pull-right">
             <div class="btn-group"
@@ -59,18 +53,7 @@
               popover-is-open="$ctrl.showShareMessage"
               popover-trigger="'none'"
             >
-              <a class="btn btn-link btn-xs"
-                uib-tooltip="Share URL"
-                tooltip-class="tooltip-nowrap"
-                uib-popover-template="$ctrl.marginDiscussionUrlPopoverUrl"
-                popover-placement="bottom-right"
-                popover-trigger="'outsideClick'"
-                role="button"
-                ng-href="{{'documents' | routeSegmentUrl}}?a=d:{{$ctrl.discussion.id}}"
-                ng-click="$event.preventDefault()"
-              >
-                <i class="fa fa-fw fa-lg fa-share-alt"></i>
-              </a>
+              <discussion-share-icon discussion="$ctrl.discussion"></discussion-share-icon>
             </div>
             <div class="btn-group" uib-dropdown>
               <button class="btn btn-link btn-xs"
@@ -115,19 +98,19 @@
           </div>
           <!-- do not move this before the options link (pull-right!) because
           this creates a newline after inserting the first reply -->
-          <a
-            class="badge ph-margin-badge"
+          <button
+            class="btn btn-primary btn-xs"
             ng-click="$ctrl.isExpanded = !$ctrl.isExpanded"
           >
             <span ng-if="$ctrl.isExpanded">
-              Show less
               <i class="fa fa-fw fa-chevron-up"></i>
+              Show less
             </span>
             <span ng-if="!$ctrl.isExpanded">
-              Show more
               <i class="fa fa-fw fa-chevron-down"></i>
-              </span>
-          </a>
+              Show more
+            </span>
+          </button>
           <span class="ph-margin-info" ng-if="$ctrl.discussion.replies.length">
             {{$ctrl.discussion.replies.length}}
             <i class="fa fa-comments"></i>
@@ -144,81 +127,15 @@
     </div>
   </div>
   <div uib-collapse="!$ctrl.isExpanded" class="ph-margin-collapse">
-    <!-- replies (note that ng-repeat creates a child scope!) -->
-    <div ng-repeat="reply in $ctrl.discussion.replies"
-        ng-controller="replyCtrl"
-        class="ph-margin-row ph-margin-row-border-top">
-      <!-- avatar -->
-      <avatar user="reply.author" size="38"
-          classes="ph-margin-avatar img-circle"
-          ></avatar>
-      <div class="ph-margin-row-container ph-margin-reply">
-        <!-- arrow -->
-        <div class="ph-margin-arrow-container">
-          <div class="ph-arrow ph-arrow-outward-left"></div>
-        </div>
-        <!-- row content -->
-        <div class="ph-margin-row-content">
-          <!-- view reply -->
-          <div ng-if="!replyState.editing" class="clearfix">
-            <div class="ph-margin-info">
-              <p class="ph-xs-margin-bottom">
-                <a href="./users/{{reply.author.account.username}}">
-                  {{reply.author.displayName}}</a>
-                · <span am-time-ago="reply.createdAt"></span>
-              </p>
-            </div>
-            <kramjax body="reply.body"></kramjax>
-            <div class="pull-right">
-              <div class="btn-group" uib-dropdown>
-                <button class="btn btn-link btn-xs"
-                  uib-dropdown-toggle
-                  uib-tooltip="Options"
-                  tooltip-class="tooltip-nowrap"
-                >
-                  <i class="fa fa-fw fa-lg fa-ellipsis-v"></i>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-right ph-margin-dropdown">
-                  <li>
-                    <a ng-href=".{{'documents.discussions.thread' | routeSegmentUrl:
-                      {discussionId: discussion.id} }}#{{reply.id}}">
-                      <i class="fa fa-fw fa-comments"></i> Show discussion view
-                    </a>
-                  </li>
-                  <!-- edit reply -->
-                  <li ng-if="auth.user.id === reply.author.id"
-                      ng-class="{disabled: replyState.submitting}">
-                    <a ng-click="replyState.editing = true" href>
-                      <i class="fa fa-fw fa-pencil"></i> Edit
-                    </a>
-                  </li>
-                  <!-- delete reply -->
-                  <li ng-if="auth.user.id === reply.author.id"
-                      ng-class="{disabled: replyState.submitting}">
-                      <a ng-confirm-click="Really delete reply?"
-                          confirmed-click="$ctrl.replyDelete(reply)" href>
-                      <i class="fa fa-fw fa-times"></i> Delete
-                    </a>
-                  </li>
-                  <!--li ng-if="auth.user.id !== reply.author.id">
-                    <a href><i class="fa fa-fw fa-flag"></i> Flag</a>
-                  </li-->
-                </ul>
-              </div>
-            </div>
-          </div>
-          <!-- edit reply -->
-          <margin-reply-edit
-            reply="reply"
-            on-submit="$ctrl.onReplyUpdate({discussion: discussion, reply: reply})"
-            on-discard="replyState.editing = false"
-            ng-if="replyState.editing"
-          ></margin-reply-edit>
-        </div>
-      </div>
-    </div>
+    <margin-reply
+      ng-repeat="reply in $ctrl.discussion.replies"
+      reply="reply"
+      on-update="$ctrl.onReplyUpdate({reply})"
+      on-delete="$ctrl.onReplyDelete({reply})"
+      on-unsaved-content-update="$ctrl.unsavedContent[reply.id] = unsavedContent"
+    ></margin-reply>
     <!-- reply form -->
-    <div ng-if="auth.user && !state.editing" class="ph-margin-row ph-margin-row-border-top">
+    <div ng-if="auth.user && !$ctrl.editing" class="ph-margin-row ph-margin-row-border-top">
       <!-- avatar -->
       <avatar user="auth.user" size="38"
           classes="ph-margin-avatar img-circle"
@@ -232,13 +149,13 @@
         <div class="ph-margin-row-content">
           <form ng-submit="replyForm.$valid && $ctrl.replySubmit()"
               name="replyForm" novalidate>
-            <textarea ng-model="replyDraft.body"
-              ng-focus="state.textFocused = true"
-              ng-blur="state.textFocused = false"
+            <textarea ng-model="$ctrl.replyBody"
+              ng-focus="$ctrl.textFocused = true"
+              ng-blur="$ctrl.textFocused = false"
               class="form-group form-control ph-comment-body ph-margin-textarea ph-no-margin ph-textarea-elastic ph-textarea-small"
               elastic placeholder="Reply..." required
               ></textarea>
-            <div uib-collapse="!state.textFocused && !replyDraft.body">
+            <div uib-collapse="!$ctrl.textFocused && !$ctrl.replyBody">
               <div class="ph-text-smaller text-muted">
                 Use
                 <a href="./help/markdown" target="_blank" title="Markdown cheat sheet">Markdown</a>
@@ -246,9 +163,9 @@
               </div>
               <div class="ph-sm-margin-top clearfix">
                 <button type="submit" class="btn btn-primary btn-sm pull-right"
-                    ng-disabled="replyForm.$invalid || state.submitting">
-                  <i ng-if="!state.submitting" class="fa fa-fw fa-check"></i>
-                  <i ng-if="state.submitting" class="fa fa-fw fa-spinner fa-spin"></i>
+                    ng-disabled="replyForm.$invalid || $ctrl.submitting">
+                  <i ng-if="!$ctrl.submitting" class="fa fa-fw fa-check"></i>
+                  <i ng-if="$ctrl.submitting" class="fa fa-fw fa-spinner fa-spin"></i>
                   Add reply
                 </button>
               </div>

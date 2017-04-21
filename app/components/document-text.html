@@ -33,14 +33,19 @@
         }"
         scroll-to-anchor="$ctrl.allPagesInitialized && $ctrl.anchor"
         viewport-offset-top="$ctrl.viewportOffsetTop"
+        search-ranges="$ctrl.searchMatches"
+        scroll-to-search-match-index="$ctrl.searchMatchIndex"
 
         on-highlight-mouseenter="$ctrl.hoveredHighlights[highlight.id] = true"
         on-highlight-mouseleave="$ctrl.hoveredHighlights[highlight.id] = false"
-        on-page-resized="$ctrl.pageCoordinates[pageNumber] = {offset: offset, size: displaySize}"
+        on-page-resized="$ctrl.pageCoordinates[pageNumber] = {offset, size: displaySize}"
         on-all-pages-resized="$ctrl.allPagesInitialized = true"
-        on-select="$ctrl.draftSelectors = selectors || $ctrl.draftSelectors"
+        on-select="$ctrl.draftSelectors = selectors || $ctrl.draftUnsavedContent && $ctrl.draftSelectors"
         on-link-dest-create="$ctrl.getLinkDest(dest)"
         on-anchor-update="$ctrl.anchor = anchor"
+        on-page-number-update="$ctrl.pdfInfo.pageNumber = pageNumber"
+        on-outline-update="$ctrl.pdfInfo.outline = outline"
+        on-text-update="$ctrl.pdfText = str; $ctrl.pdfPageLengths = pageLengths;"
 
         popover-placement="right-top"
         popover-append-to-body="true"
@@ -50,7 +55,7 @@
       ></pdf-full>
     </div>
     <div class="col-md-3">
-      <margin-discussions
+      <margin
         ng-if="$ctrl.allPagesInitialized"
         discussions="$ctrl.discussions"
         filtered-discussions="$ctrl.filteredDiscussions"
@@ -60,16 +65,16 @@
         viewport-offset-top="$ctrl.viewportOffsetTop"
         viewport-offset-bottom="0"
         scroll-to-anchor="$ctrl.allPagesInitialized && $ctrl.anchor"
-        on-draft-discard="$ctrl.draftSelectors = undefined"
+        on-draft-open-update="$ctrl.draftOpen = opened"
+        on-draft-unsaved-content-update="$ctrl.draftUnsavedContent = unsavedContent"
         on-discussion-submit="$ctrl.onDiscussionSubmit({discussion: $ctrl.getNewDiscussion(discussion)})"
-        on-discussion-update="$ctrl.onDiscussionUpdate({discussion: discussion})"
-        on-discussion-delete="$ctrl.onDiscussionDelete({discussion: discussion})"
-        on-reply-submit="$ctrl.onReplySubmit({reply: reply})"
-        on-reply-update="$ctrl.onReplyUpdate({reply: reply})"
-        on-reply-delete="$ctrl.onReplyDelete({reply: reply})"
-        on-discussion-mouseenter="$ctrl.hoveredMarginDiscussions[discussion.id] = true"
-        on-discussion-mouseleave="$ctrl.hoveredMarginDiscussions[discussion.id] = false"
-      ></margin-discussions>
+        on-discussion-update="$ctrl.onDiscussionUpdate({discussion})"
+        on-discussion-delete="$ctrl.onDiscussionDelete({discussion})"
+        on-reply-submit="$ctrl.onReplySubmit({reply})"
+        on-reply-update="$ctrl.onReplyUpdate({reply})"
+        on-reply-delete="$ctrl.onReplyDelete({reply})"
+        on-discussion-hover="$ctrl.hoveredMarginDiscussions[discussion.id] = hovered"
+      ></margin>
     </div>
   </div>
 

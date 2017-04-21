@@ -5,6 +5,8 @@
 
 @ph-border-height: 1px;
 
+@ph-animation-duration: 0.8s;
+
 // navbar
 @ph-navbar-default-padding: 0px 0;
 @ph-navbar-border-color: #bfbfbf;
@@ -16,7 +18,6 @@
 // sidenav
 @ph-sidenav-small-width: 48px;
 @ph-sidenav-small-btn-height: 40px;
-@ph-sidenav-animation-duration: 0.8s;
 
 // footer
 @ph-footer-height: 50px;
@@ -33,22 +34,34 @@
 @ph-danger-highlight-color: darken(@ph-bg-danger, 15%);
 
 @ph-text-highlight-color: rgb(255, 255, 0);
-@ph-shadow: 0 0 5px 0px rgba(64, 64, 64, 0.3);
+
+// shadow
+@ph-shadow-color: rgba(64, 64, 64, 0.3);
+@ph-shadow-size: 5px;
+@ph-shadow: 0 0 @ph-shadow-size 0px @ph-shadow-color;
+@ph-shadow-inset-top: inset 0 @ph-shadow-size @ph-shadow-size -@ph-shadow-size @ph-shadow-color;
+@ph-shadow-inset-bottom: inset 0 -@ph-shadow-size @ph-shadow-size -@ph-shadow-size @ph-shadow-color;
 
 // margin discussions
-@ph-margin-basecolor: white;
 @ph-margin-avatar-size: 38px;
 @ph-margin-avatar-arrow-padding: 4px;
 @ph-margin-avatar-bgcolor: #e4e4e4;
 @ph-margin-arrow-size: 8px;
+@ph-margin-body-offset: @ph-margin-avatar-size + @ph-margin-avatar-arrow-padding + @ph-margin-arrow-size;
+@ph-margin-body-bgcolor: white;
 @ph-margin-border-color: #dbdbdb; //@panel-default-border;
+
+@ph-margin-cluster-placeholder-color: #d6d6d6;
+
+@ph-channel-public-bgcolor: @ph-highlight-color;
+@ph-channel-private-bgcolor: #ff7f2a;
 
 // margin controls
 @ph-margin-controls-height: @ph-margin-avatar-size;
 @ph-margin-controls-margin: @ph-margin-avatar-arrow-padding + @ph-margin-arrow-size;
 
 // badge
-@ph-badge-bg-color: #ff7f2a;
+@ph-badge-bg-color: #037292;
 @ph-badge-color: white;
 @ph-badge-font-size: 12px;
 @ph-badge-padding: 3px;
