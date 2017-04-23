@@ -1,169 +1,162 @@
 <div class="container">
-  <div class="row">
-    <div class="ph-onboarding-wizard ph-flex-container">
-      <div class="ph-onboarding-steps ph-flex-item ph-wizard-done">
-        <form name="personalDetails">
-          <h3>Personal Details</h3>
-          <div class="row">
-            <div class="col-lg-6">
-              <label for="name">Name</label>
-              <div class="form-group">
-                <input id="name" type="text" class="form-control" placeholder="Full Name">
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <label for="email">Email</label>
-              <div class="form-group">
-                <input id="email" type="text" class="form-control" placeholder="Email">
-              </div>
-            </div>
+  <div class="ph-component-step ph-component-step-done">
+    <div class="ph-component-step-number">1</div>
+    <form name="personalDetails">
+      <h3>Personal Details</h3>
+      <div class="row">
+        <div class="col-lg-6">
+          <label for="name">Name</label>
+          <div class="form-group">
+            <input id="name" type="text" class="form-control" placeholder="Full Name">
           </div>
-          <div class="row">
-            <div class="col-lg-6">
-              <label for="discipline">Discipline</label>
-              <div class="form-group">
-                <input id="discipline" type="text" class="form-control" placeholder="Discipline">
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <label>Occupation</label>
-              <div class="form-group dropdown ph-dropdown-large" uib-dropdown>
-                <button uib-dropdown-toggle type="button" class="btn btn-default ph-split-container ph-split-container-icon-right dropdown-toggle">
-                  <span class="ph-split-text">Select</span>
-                  <i class="fa fa-fw fa-caret-down ph-split-icon-right"></i>
+        </div>
+        <div class="col-lg-6">
+          <label for="email">Email</label>
+          <div class="form-group">
+            <input id="email" type="text" class="form-control" placeholder="Email">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          <label for="discipline">Discipline</label>
+          <div class="form-group">
+            <input id="discipline" type="text" class="form-control" placeholder="Discipline">
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <label>Occupation</label>
+          <div class="form-group dropdown ph-dropdown-large" uib-dropdown>
+            <button uib-dropdown-toggle type="button" class="btn btn-default ph-split-container ph-split-container-icon-right dropdown-toggle">
+              <span class="ph-split-text">Select</span>
+              <i class="fa fa-fw fa-caret-down ph-split-icon-right"></i>
+            </button>
+            <ul class="dropdown-menu ph-dropdown-menu-full" role="menu">
+              <li><span class="ph-text-overflow">Professor</span></li>
+              <li><span class="ph-text-overflow">Postdoc</span></li>
+              <li><span class="ph-text-overflow">PHD Student</span></li>
+              <li><span class="ph-text-overflow">Student</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          <a href="">Skip</a>
+        </div>
+        <div class="col-lg-6 text-right">
+          <button class="btn btn-primary">Next</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="ph-component-step ph-flex-item ph-component-step-active">
+    <div class="ph-component-step-number">2</div>
+    <form name="channel">
+      <h3>Create Channel</h3>
+      <div class="row">
+        <div class="col-lg-6">
+          <label for="channel">Channel Name</label>
+          <div class="form-group">
+            <input id="channel" type="text" class="form-control" placeholder="Channel Name">
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <label for="invite">Invite People</label>
+          <div class="input-group">
+            <input id="invite" type="text" class="form-control" placeholder="Email">
+            <span class="input-group-btn">
+              <button class="btn btn-primary" type="button">
+                <i class="fa fa-fw fa-plus" aria-hidden="true"></i> Add
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 col-lg-offset-6">
+          <table class="table ph-md-margin-bottom">
+            <tr>
+              <td><a href="">Email address</a> </td>
+              <td><a href=""><i class="fa fa-fw fa-times" aria-hidden="true"></i> Remove</a></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          <a href="">Skip</a>
+        </div>
+        <div class="col-lg-6 text-right">
+          <button class="btn btn-default">Previous</button>
+          <button class="btn btn-primary">Next</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="ph-component-step ph-flex-item ph-component-step-todo">
+    <div class="ph-component-step-number">3</div>
+    <h3>Bookmark</h3>
+    <div class="row">
+      <div class="col-lg-12">
+        <form novalidate ng-submit="$ctrl.submitQuery()">
+          <div class="form-group">
+            <div class="input-group">
+              <input ng-model="$ctrl.queryModel" class="form-control" placeholder="Search documents">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="submit">
+                  <i class="fa fa-fw fa-search"></i>
                 </button>
-                <ul class="dropdown-menu ph-dropdown-menu-full" role="menu">
-                  <li><span class="ph-text-overflow">Professor</span></li>
-                  <li><span class="ph-text-overflow">Postdoc</span></li>
-                  <li><span class="ph-text-overflow">PHD Student</span></li>
-                  <li><span class="ph-text-overflow">Student</span></li>
-                </ul>
-              </div>
+              </span>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6">
-              <a href="">Skip</a>
-            </div>
-            <div class="col-lg-6">
-              <div class="ph-onboarding-buttons">
-                <button class="btn btn-primary">Next</button>
-              </div>
-            </div>
+            <small class="help-block">
+              <i class="fa fa-fw fa-info-circle"></i>
+              Search
+              <i ng-if="$ctrl.totalUpdating" class="fa fa-circle-o-notch fa-spin"></i>
+              <span ng-if="!$ctrl.totalUpdating">{{$ctrl.total | number}}</span>
+              documents by title, author, DOI or arxiv id.
+            </small>
           </div>
         </form>
       </div>
-      <div class="ph-onboarding-steps ph-flex-item ph-wizard-active">
-        <form name="channel">
-          <h3>Create Channel</h3>
-          <div class="row">
-            <div class="col-lg-6">
-              <label for="channel">Channel Name</label>
-              <div class="form-group">
-                <input id="channel" type="text" class="form-control" placeholder="Channel Name">
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <label for="invite">Invite People</label>
-              <div class="input-group">
-                <input id="invite" type="text" class="form-control" placeholder="Email">
-                <span class="input-group-btn">
-                  <button class="btn btn-primary" type="button">
-                    <i class="fa fa-fw fa-plus" aria-hidden="true"></i> Add
-                  </button>
-                </span>
-              </div>
-            </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="ph-flex-container">
+          <div class="ph-flex-item">
+            <button type="button" uib-dropdown-toggle class="btn btn-link">
+              <i class="fa fa-lg"
+              ng-class="{
+                'fa-star-o': $ctrl.documentCtrl.bookmarks.length === 0,
+                'fa-star': $ctrl.documentCtrl.bookmarks.length !== 0,
+              }"
+              ></i>
+            </button>
+            <hive-button document-ctrl="$ctrl.documentCtrl" large="false"></hive-button>
           </div>
-          <div class="row">
-            <div class="col-lg-6 col-lg-offset-6">
-              <table class="table ph-md-margin-bottom">
-                <tr>
-                  <td><a href="">Email address</a> </td>
-                  <td><a href=""><i class="fa fa-fw fa-times" aria-hidden="true"></i> Remove</a></td>
-                </tr>
-              </table>
-            </div>
+          <div class="ph-flex-item">
+            <a href="" title="{{document.title}}">
+              Document Title
+            </a>
+            <span>
+              Author Name
+            </span>
           </div>
-          <div class="row">
-            <div class="col-lg-6">
-              <a href="">Skip</a>
-            </div>
-            <div class="col-lg-6">
-              <div class="ph-onboarding-buttons">
-                <button class="btn btn-default">Previous</button>
-                <button class="btn btn-primary">Next</button>
-              </div>
-            </div>
+          <div class="ph-flex-item">
+            <span>
+              Published: 2017
+            </span>
           </div>
-        </form>
+        </div>
       </div>
-      <div class="ph-onboarding-steps ph-flex-item ph-wizard-todo">
-        <h3>Bookmark</h3>
-        <div class="row">
-          <div class="col-lg-12">
-            <form novalidate ng-submit="$ctrl.submitQuery()" class="ph-xl-margin-top">
-              <div class="form-group">
-                <div class="input-group">
-                  <input ng-model="$ctrl.queryModel" class="form-control" placeholder="Search documents">
-                  <span class="input-group-btn">
-                    <button class="btn btn-default" type="submit">
-                      <i class="fa fa-fw fa-search"></i>
-                    </button>
-                  </span>
-                </div>
-                <small class="help-block">
-                  <i class="fa fa-fw fa-info-circle"></i>
-                  Search
-                  <i ng-if="$ctrl.totalUpdating" class="fa fa-circle-o-notch fa-spin"></i>
-                  <span ng-if="!$ctrl.totalUpdating">{{$ctrl.total | number}}</span>
-                  documents by title, author, DOI or arxiv id.
-                </small>
-              </div>
-            </form>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="ph-flex-container">
-              <div class="ph-flex-item">
-                <button type="button" uib-dropdown-toggle class="btn btn-link">
-                  <i class="fa fa-lg"
-                  ng-class="{
-                    'fa-star-o': $ctrl.documentCtrl.bookmarks.length === 0,
-                    'fa-star': $ctrl.documentCtrl.bookmarks.length !== 0,
-                  }"
-                  ></i>
-                </button>
-                <hive-button document-ctrl="$ctrl.documentCtrl" large="false"></hive-button>
-              </div>
-              <div class="ph-flex-item">
-                <a href="" title="{{document.title}}">
-                  Document Title
-                </a>
-                <span>
-                  Author Name
-                </span>
-              </div>
-              <div class="ph-flex-item">
-                <span>
-                  Published: 2017
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-6">
-            <a href="">Skip</a>
-          </div>
-          <div class="col-lg-6">
-            <div class="ph-onboarding-buttons">
-              <button class="btn btn-default">Previous</button>
-              <button class="btn btn-primary">Next</button>
-            </div>
-          </div>
-        </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <a href="">Skip</a>
+      </div>
+      <div class="col-lg-6 text-right">
+        <button class="btn btn-default">Previous</button>
+        <button class="btn btn-primary">Next</button>
       </div>
     </div>
   </div>
