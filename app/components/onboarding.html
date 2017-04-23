@@ -2,45 +2,42 @@
   <div class="ph-component-step ph-component-step-done">
     <div class="ph-component-step-number">1</div>
     <form name="personalDetails">
-      <h3>Personal Details</h3>
+      <h3>Personal details</h3>
       <div class="row">
         <div class="col-lg-6">
-          <label for="name">Name</label>
           <div class="form-group">
-            <input id="name" type="text" class="form-control" placeholder="Full Name">
+            <label for="name">Name</label>
+            <input name="name" type="text" class="form-control" placeholder="Full name">
           </div>
         </div>
         <div class="col-lg-6">
-          <label for="email">Email</label>
           <div class="form-group">
-            <input id="email" type="text" class="form-control" placeholder="Email">
+            <label for="email">Email</label>
+            <input name="email" type="text" class="form-control" placeholder="Email">
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-lg-6">
-          <label for="discipline">Discipline</label>
           <div class="form-group">
-            <input id="discipline" type="text" class="form-control" placeholder="Discipline">
+            <label for="discipline">Discipline</label>
+            <input name="discipline" type="text" class="form-control" placeholder="Discipline">
           </div>
         </div>
         <div class="col-lg-6">
-          <label>Occupation</label>
-          <div class="form-group dropdown ph-dropdown-large" uib-dropdown>
-            <button uib-dropdown-toggle type="button" class="btn btn-default ph-split-container ph-split-container-icon-right dropdown-toggle">
-              <span class="ph-split-text">Select</span>
-              <i class="fa fa-fw fa-caret-down ph-split-icon-right"></i>
-            </button>
-            <ul class="dropdown-menu ph-dropdown-menu-full" role="menu">
-              <li><span class="ph-text-overflow">Professor</span></li>
-              <li><span class="ph-text-overflow">Postdoc</span></li>
-              <li><span class="ph-text-overflow">PHD Student</span></li>
-              <li><span class="ph-text-overflow">Student</span></li>
-            </ul>
+          <div class="form-group">
+            <label>Occupation</label>
+            <select name="occupation" class="form-control">
+              <option>Professor</option>
+              <option>Postdoc</option>
+              <option>PhD student</option>
+              <option>Student</option>
+              <option>other</option>
+            </select>
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row ph-component-buttons">
         <div class="col-lg-6">
           <a href="">Skip</a>
         </div>
@@ -50,19 +47,19 @@
       </div>
     </form>
   </div>
-  <div class="ph-component-step ph-flex-item ph-component-step-active">
+  <div class="ph-component-step ph-component-step-active">
     <div class="ph-component-step-number">2</div>
     <form name="channel">
-      <h3>Create Channel</h3>
+      <h3>Create channel</h3>
       <div class="row">
         <div class="col-lg-6">
-          <label for="channel">Channel Name</label>
           <div class="form-group">
-            <input id="channel" type="text" class="form-control" placeholder="Channel Name">
+            <label for="channel">Channel name</label>
+            <input name="name" type="text" class="form-control" placeholder="Channel name">
           </div>
         </div>
         <div class="col-lg-6">
-          <label for="invite">Invite People</label>
+          <label for="invite">Invite people</label>
           <div class="input-group">
             <input id="invite" type="text" class="form-control" placeholder="Email">
             <span class="input-group-btn">
@@ -83,7 +80,7 @@
           </table>
         </div>
       </div>
-      <div class="row">
+      <div class="row ph-component-buttons">
         <div class="col-lg-6">
           <a href="">Skip</a>
         </div>
@@ -94,7 +91,7 @@
       </div>
     </form>
   </div>
-  <div class="ph-component-step ph-flex-item ph-component-step-todo">
+  <div class="ph-component-step ph-component-step-todo">
     <div class="ph-component-step-number">3</div>
     <h3>Bookmark</h3>
     <div class="row">
@@ -150,7 +147,7 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row ph-component-buttons">
       <div class="col-lg-6">
         <a href="">Skip</a>
       </div>
