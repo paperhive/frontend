@@ -6,6 +6,8 @@ onboarding {
   display: block;
   margin: @grid-gutter-width 0;
 
+
+
   .ph-component-step {
     position: relative;
     min-height: 150px;
@@ -16,6 +18,7 @@ onboarding {
 
     background: @ph-white;
     box-shadow: @ph-shadow;
+    transition: @ph-animation-duration ease opacity;
 
     > .ph-component-step-number {
       position: absolute;
@@ -44,12 +47,18 @@ onboarding {
         background: @ph-green;
       }
     }
+
+    &.ph-component-step-inactive {
+      opacity: 0.4;
+    }
+
     &.ph-component-step-active {
       border-left-color: @ph-highlight-color;
       > .ph-component-step-number {
         background: @ph-highlight-color;
       }
     }
+
     &.ph-component-step-todo {
       border-left-color: hsl(hue(@ph-base-color), 0%, 90%);
       > .ph-component-step-number {

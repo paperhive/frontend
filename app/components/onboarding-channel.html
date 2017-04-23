@@ -1,0 +1,48 @@
+<div class="ph-component-step ph-component-step-active"
+  ng-class="{'ph-component-step-inactive': !$ctrl.active}"
+>
+  <div class="ph-component-step-number">2</div>
+  <form name="channel">
+    <h3>Create channel</h3>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label for="channel">Channel name</label>
+          <input name="name" type="text" class="form-control" placeholder="Channel name">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <label for="invite">Invite people</label>
+        <div class="input-group">
+          <input id="invite" type="text" class="form-control" placeholder="Email">
+          <span class="input-group-btn">
+            <button class="btn btn-primary" type="button">
+              <i class="fa fa-fw fa-plus" aria-hidden="true"></i> Add
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-lg-offset-6">
+        <table class="table ph-md-margin-bottom">
+          <tr>
+            <td><a href="">Email address</a> </td>
+            <td><a href=""><i class="fa fa-fw fa-times" aria-hidden="true"></i> Remove</a></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="row ph-component-buttons">
+      <div class="col-lg-6">
+        <button type="button" class="btn btn-link"
+          ng-disabled="!$ctrl.active"
+        >Skip</button>
+      </div>
+      <div class="col-lg-6 text-right">
+        <button type="button" class="btn btn-default" ng-click="$ctrl.onPrevious()">Previous</button>
+        <button type="button" class="btn btn-primary" ng-click="$ctrl.onNext()">Next</button>
+      </div>
+    </div>
+  </form>
+</div>

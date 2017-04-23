@@ -1,0 +1,63 @@
+<div class="ph-component-step ph-component-step-done"
+  ng-class="{'ph-component-step-inactive': !$ctrl.active}"
+>
+  <div class="ph-component-step-number">1</div>
+  <form name="personalDetails">
+    <h3>Personal details</h3>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input name="name" type="text" class="form-control" placeholder="Full name"
+            ng-disabled="!$ctrl.active"
+          >
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input name="email" type="text" class="form-control" placeholder="Email"
+            ng-disabled="!$ctrl.active"
+          >
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label for="discipline">Discipline</label>
+          <input name="discipline" type="text" class="form-control" placeholder="Discipline"
+            ng-disabled="!$ctrl.active"
+          >
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label>Occupation</label>
+          <select name="occupation" class="form-control"
+            ng-disabled="!$ctrl.active"
+          >
+            <option>Professor</option>
+            <option>Postdoc</option>
+            <option>PhD student</option>
+            <option>Student</option>
+            <option>other</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row ph-component-buttons">
+      <div class="col-lg-6">
+        <button type="button" class="btn btn-link"
+          ng-disabled="!$ctrl.active"
+        >Skip</button>
+      </div>
+      <div class="col-lg-6 text-right">
+        <button type="button" class="btn btn-primary"
+          ng-click="$ctrl.onNext()"
+          ng-disabled="!$ctrl.active"
+        >Next</button>
+      </div>
+    </div>
+  </form>
+</div>
