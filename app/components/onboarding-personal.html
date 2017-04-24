@@ -25,24 +25,50 @@
     <div class="row">
       <div class="col-lg-6">
         <div class="form-group">
-          <label for="discipline">Discipline</label>
-          <input name="discipline" type="text" class="form-control" placeholder="Discipline"
+          <label>Discipline</label>
+          <select name="disciplineSelect" class="form-control"
+            ng-model="$ctrl.disciplineSelect"
+            ng-options="discipline for discipline in $ctrl.disciplineOptions"
             ng-disabled="!$ctrl.active"
+            required="true"
           >
+            <option value="" disabled="true" ng-if="!$ctrl.disciplineSelect"
+            >Please select a discipline</option>
+          </select>
+        </div>
+        <div uib-collapse="$ctrl.disciplineSelect !== 'Other'">
+          <div class="form-group" >
+            <input name="disciplineText" type="text" class="form-control"
+              placeholder="Discipline"
+              ng-model="$ctrl.disciplineText"
+              ng-disabled="!$ctrl.active"
+              ng-required="$ctrl.disciplineSelect === 'Other'"
+            >
+          </div>
         </div>
       </div>
       <div class="col-lg-6">
         <div class="form-group">
           <label>Occupation</label>
           <select name="occupation" class="form-control"
+            ng-model="$ctrl.occupationSelect"
+            ng-options="occupation for occupation in $ctrl.occupationOptions"
             ng-disabled="!$ctrl.active"
+            required="true"
           >
-            <option>Professor</option>
-            <option>Postdoc</option>
-            <option>PhD student</option>
-            <option>Student</option>
-            <option>other</option>
+            <option value="" disabled="true" ng-if="!$ctrl.occupationSelect"
+            >Please select an occupation</option>
           </select>
+        </div>
+        <div uib-collapse="$ctrl.occupationSelect !== 'Other'">
+          <div class="form-group" >
+            <input name="occupationText" type="text" class="form-control"
+              placeholder="Occupation"
+              ng-model="$ctrl.occupationText"
+              ng-disabled="!$ctrl.active"
+              ng-required="$ctrl.occupationSelect === 'Other'"
+            >
+          </div>
         </div>
       </div>
     </div>
