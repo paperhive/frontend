@@ -8,9 +8,13 @@
       <form novalidate ng-submit="$ctrl.submitQuery()">
         <div class="form-group">
           <div class="input-group">
-            <input ng-model="$ctrl.queryModel" class="form-control" placeholder="Search documents">
+            <input ng-model="$ctrl.queryModel" class="form-control" placeholder="Search documents"
+              ng-disabled="!$ctrl.active"
+            >
             <span class="input-group-btn">
-              <button class="btn btn-default" type="submit">
+              <button class="btn btn-default" type="submit"
+                ng-disabled="!$ctrl.active"
+              >
                 <i class="fa fa-fw fa-search"></i>
               </button>
             </span>
@@ -30,7 +34,9 @@
     <div class="col-md-12">
       <div class="ph-flex-container">
         <div class="ph-flex-item">
-          <button type="button" uib-dropdown-toggle class="btn btn-link">
+          <button type="button" uib-dropdown-toggle class="btn btn-link"
+            ng-disabled="!$ctrl.active"
+          >
             <i class="fa fa-lg"
             ng-class="{
               'fa-star-o': $ctrl.documentCtrl.bookmarks.length === 0,
@@ -41,7 +47,7 @@
           <hive-button document-ctrl="$ctrl.documentCtrl" large="false"></hive-button>
         </div>
         <div class="ph-flex-item">
-          <a href="" title="{{document.title}}">
+          <a href="" title="{{document.title}}" tabindex="-1">
             Document Title
           </a>
           <span>
@@ -56,15 +62,11 @@
       </div>
     </div>
   </div>
-  <div class="row ph-component-buttons">
-    <div class="col-lg-6">
-      <button type="button" class="btn btn-link"
-        ng-disabled="!$ctrl.active"
-      >Skip</button>
-    </div>
-    <div class="col-lg-6 text-right">
-      <button type="button" class="btn btn-default" ng-click="$ctrl.onPrevious()">Previous</button>
-      <button type="button" class="btn btn-primary" ng-click="$ctrl.onNext()">Next</button>
-    </div>
+  <div class="ph-component-buttons text-right clearfix">
+    <button type="button" class="btn btn-link pull-left"
+      ng-disabled="!$ctrl.active"
+    >Skip</button>
+    <button type="button" class="btn btn-default" ng-click="$ctrl.onPrevious()">Previous</button>
+    <button type="button" class="btn btn-primary" ng-click="$ctrl.onNext()">Next</button>
   </div>
 </div>

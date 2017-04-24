@@ -8,15 +8,21 @@
       <div class="col-lg-6">
         <div class="form-group">
           <label for="channel">Channel name</label>
-          <input name="name" type="text" class="form-control" placeholder="Channel name">
+          <input name="name" type="text" class="form-control" placeholder="Channel name"
+            ng-disabled="!$ctrl.active"
+          >
         </div>
       </div>
       <div class="col-lg-6">
         <label for="invite">Invite people</label>
         <div class="input-group">
-          <input id="invite" type="text" class="form-control" placeholder="Email">
+          <input id="invite" type="text" class="form-control" placeholder="Email"
+            ng-disabled="!$ctrl.active"
+          >
           <span class="input-group-btn">
-            <button class="btn btn-primary" type="button">
+            <button class="btn btn-primary" type="button"
+              ng-disabled="!$ctrl.active"
+            >
               <i class="fa fa-fw fa-plus" aria-hidden="true"></i> Add
             </button>
           </span>
@@ -27,22 +33,24 @@
       <div class="col-lg-6 col-lg-offset-6">
         <table class="table ph-md-margin-bottom">
           <tr>
-            <td><a href="">Email address</a> </td>
-            <td><a href=""><i class="fa fa-fw fa-times" aria-hidden="true"></i> Remove</a></td>
+            <td><a href="" tabindex="-1">Email address</a> </td>
+            <td><a href="" tabindex="-1"><i class="fa fa-fw fa-times" aria-hidden="true"></i> Remove</a></td>
           </tr>
         </table>
       </div>
     </div>
-    <div class="row ph-component-buttons">
-      <div class="col-lg-6">
-        <button type="button" class="btn btn-link"
-          ng-disabled="!$ctrl.active"
-        >Skip</button>
-      </div>
-      <div class="col-lg-6 text-right">
-        <button type="button" class="btn btn-default" ng-click="$ctrl.onPrevious()">Previous</button>
-        <button type="button" class="btn btn-primary" ng-click="$ctrl.onNext()">Next</button>
-      </div>
+    <div class="ph-component-buttons text-right clearfix">
+      <button type="button" class="btn btn-link pull-left"
+        ng-disabled="!$ctrl.active"
+      >Skip</button>
+      <button type="button" class="btn btn-default"
+        ng-click="$ctrl.onPrevious()"
+        ng-disabled="!$ctrl.active"
+      >Previous</button>
+      <button type="button" class="btn btn-primary"
+        ng-click="$ctrl.onNext()"
+        ng-disabled="!$ctrl.active"
+      >Next</button>
     </div>
   </form>
 </div>
