@@ -23,7 +23,8 @@ onboarding {
 
     background: @ph-white;
     box-shadow: @ph-shadow;
-    transition: @ph-animation-duration ease opacity;
+    transition: @ph-animation-duration ease opacity,
+      @ph-animation-duration ease border-left-color;
 
     > .ph-component-step-number {
       position: absolute;
@@ -44,12 +45,28 @@ onboarding {
       font-size: 2rem;
       font-weight: bold;
       color: @ph-white;
+
+      transition: @ph-animation-duration ease background-color;
     }
 
-    &.ph-component-step-done {
+    &.ph-component-step-complete {
       border-left-color: @ph-green;
       > .ph-component-step-number {
-        background: @ph-green;
+        background-color: @ph-green;
+      }
+    }
+
+    &.ph-component-step-incomplete {
+      border-left-color: hsl(hue(@ph-base-color), 0%, 90%);
+      > .ph-component-step-number {
+        background-color: hsl(hue(@ph-base-color), 0%, 90%);
+      }
+    }
+
+    &.ph-component-step-active {
+      border-left-color: @ph-highlight-color;
+      > .ph-component-step-number {
+        background-color: @ph-highlight-color;
       }
     }
 
@@ -57,20 +74,6 @@ onboarding {
       opacity: 0.4;
       pointer-events: none;
       user-select: none;
-    }
-
-    &.ph-component-step-active {
-      border-left-color: @ph-highlight-color;
-      > .ph-component-step-number {
-        background: @ph-highlight-color;
-      }
-    }
-
-    &.ph-component-step-todo {
-      border-left-color: hsl(hue(@ph-base-color), 0%, 90%);
-      > .ph-component-step-number {
-        background: hsl(hue(@ph-base-color), 0%, 90%);
-      }
     }
   }
 

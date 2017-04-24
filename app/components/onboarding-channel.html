@@ -1,5 +1,10 @@
-<div class="ph-component-step ph-component-step-active"
-  ng-class="{'ph-component-step-inactive': !$ctrl.active}"
+<div class="ph-component-step"
+  ng-class="{
+    'ph-component-step-active': $ctrl.active,
+    'ph-component-step-inactive': !$ctrl.active,
+    'ph-component-step-complete': !$ctrl.active && $ctrl.complete,
+    'ph-component-step-incomplete': !$ctrl.active && !$ctrl.complete,
+  }"
 >
   <div class="ph-component-step-number">2</div>
   <form name="channel">
@@ -41,6 +46,7 @@
     </div>
     <div class="ph-component-buttons text-right clearfix">
       <button type="button" class="btn btn-link pull-left"
+        ng-click="$ctrl.onNext()"
         ng-disabled="!$ctrl.active"
       >Skip</button>
       <button type="button" class="btn btn-default"
@@ -48,7 +54,7 @@
         ng-disabled="!$ctrl.active"
       >Previous</button>
       <button type="button" class="btn btn-primary"
-        ng-click="$ctrl.onNext()"
+        ng-click="$ctrl.next()"
         ng-disabled="!$ctrl.active"
       >Next</button>
     </div>

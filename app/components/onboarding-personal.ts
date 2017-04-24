@@ -7,6 +7,8 @@ export default function(app) {
       onNext: '&',
     },
     controller: class OnboardingPersonalCtrl {
+      onNext: () => void;
+
       const disciplines = [
         'Agricultural Sciences',
         'Architecture',
@@ -54,6 +56,8 @@ export default function(app) {
       occupationSelect: string;
       occupationText: string;
 
+      complete = false;
+
       static $inject = ['$scope', 'authService'];
       constructor($scope, public authService) {
         this.disciplineOptions = [...this.disciplines, 'Other'];
@@ -61,6 +65,11 @@ export default function(app) {
 
         $scope.$watch('$ctrl.authService.user.discipline', this.updateDiscipline.bind(this));
         $scope.$watch('$ctrl.authService.user.occupation', this.updateOccupation.bind(this));
+      }
+
+      next() {
+        this.complete = true;
+        this.onNext();
       }
 
       updateDiscipline(discipline) {

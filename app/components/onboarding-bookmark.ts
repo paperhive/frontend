@@ -7,7 +7,15 @@ export default function(app) {
       onNext: '&',
       onPrevious: '&',
     },
-    controller: class OnboardingBookmarkCtrl {},
+    controller: class OnboardingBookmarkCtrl {
+      onNext: () => void;
+      complete = false;
+
+      next() {
+        this.complete = true;
+        this.onNext();
+      }
+    },
     template: require('./onboarding-bookmark.html'),
   });
 };
