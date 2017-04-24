@@ -13,8 +13,9 @@
       <div class="col-lg-6">
         <div class="form-group">
           <label for="name">Name</label>
-          <input name="name" type="text" class="form-control" placeholder="Full name"
-            ng-disabled="!$ctrl.active"
+          <input name="displayName" type="text" class="form-control" placeholder="Full name"
+            ng-model="$ctrl.displayName"
+            ng-disabled="!$ctrl.active || $ctrl.submitting"
           >
         </div>
       </div>
@@ -22,7 +23,7 @@
         <div class="form-group">
           <label for="email">Email</label>
           <input name="email" type="text" class="form-control" placeholder="Email"
-            ng-disabled="!$ctrl.active"
+            ng-disabled="!$ctrl.active || $ctrl.submitting"
           >
         </div>
       </div>
@@ -34,7 +35,7 @@
           <select name="disciplineSelect" class="form-control"
             ng-model="$ctrl.disciplineSelect"
             ng-options="discipline for discipline in $ctrl.disciplineOptions"
-            ng-disabled="!$ctrl.active"
+            ng-disabled="!$ctrl.active || $ctrl.submitting"
             required="true"
           >
             <option value="" disabled="true" ng-if="!$ctrl.disciplineSelect"
@@ -46,7 +47,7 @@
             <input name="disciplineText" type="text" class="form-control"
               placeholder="Discipline"
               ng-model="$ctrl.disciplineText"
-              ng-disabled="!$ctrl.active"
+              ng-disabled="!$ctrl.active || $ctrl.submitting"
               ng-required="$ctrl.disciplineSelect === 'Other'"
             >
           </div>
@@ -58,7 +59,7 @@
           <select name="occupation" class="form-control"
             ng-model="$ctrl.occupationSelect"
             ng-options="occupation for occupation in $ctrl.occupationOptions"
-            ng-disabled="!$ctrl.active"
+            ng-disabled="!$ctrl.active || $ctrl.submitting"
             required="true"
           >
             <option value="" disabled="true" ng-if="!$ctrl.occupationSelect"
@@ -70,7 +71,7 @@
             <input name="occupationText" type="text" class="form-control"
               placeholder="Occupation"
               ng-model="$ctrl.occupationText"
-              ng-disabled="!$ctrl.active"
+              ng-disabled="!$ctrl.active || $ctrl.submitting"
               ng-required="$ctrl.occupationSelect === 'Other'"
             >
           </div>
@@ -80,12 +81,18 @@
     <div class="ph-component-buttons text-right clearfix">
       <button type="button" class="btn btn-link pull-left"
         ng-click="$ctrl.onNext()"
-        ng-disabled="!$ctrl.active"
+        ng-disabled="!$ctrl.active || $ctrl.submitting"
       >Skip</button>
       <button type="button" class="btn btn-primary"
         ng-click="$ctrl.next()"
-        ng-disabled="!$ctrl.active"
-      >Next</button>
+        ng-disabled="!$ctrl.active || $ctrl.submitting"
+      >
+        <i class="fa fa-fw" ng-class="{
+          'fa-circle-o-notch fa-spin': $ctrl.submitting,
+          'fa-check': !$ctrl.submitting
+        }"></i>
+        Next
+      </button>
     </div>
   </form>
 </div>
