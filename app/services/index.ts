@@ -7,6 +7,8 @@ import documentController from './document-controller';
 import feedbackModal from './feedback-modal';
 import meta from './meta';
 import notifications from './notifications';
+import peopleApi from './people-api';
+import person from './person';
 import scroll from './scroll';
 import tour from './tour';
 import websockets from './websockets';
@@ -21,6 +23,8 @@ export default function(app) {
   feedbackModal(app);
   meta(app);
   notifications(app);
+  peopleApi(app);
+  person(app);
   scroll(app);
   tour(app);
   websockets(app);

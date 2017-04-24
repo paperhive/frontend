@@ -13,6 +13,7 @@ export default function(app) {
             type: 'error',
             message: (data && data.message) || msg || 'unknown error',
           });
+          throw new Error(msg);
         };
       };
 
