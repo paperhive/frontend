@@ -1,8 +1,8 @@
 <div class="ph-component-step"
   ng-class="{
-    'ph-component-step-active': $ctrl.active,
+    'ph-component-step-active': $ctrl.active && !$ctrl.complete,
     'ph-component-step-inactive': !$ctrl.active,
-    'ph-component-step-complete': !$ctrl.active && $ctrl.complete,
+    'ph-component-step-complete': $ctrl.complete,
     'ph-component-step-incomplete': !$ctrl.active && !$ctrl.complete,
   }"
 >
@@ -68,11 +68,18 @@
     </div>
   </div>
   <div class="ph-component-buttons text-right clearfix">
-    <button type="button" class="btn btn-link pull-left"
+    <button type="button" class="btn btn-link pull-left ph-btn-skip"
       ng-click="$ctrl.onNext()"
       ng-disabled="!$ctrl.active"
     >Skip</button>
     <button type="button" class="btn btn-default" ng-click="$ctrl.onPrevious()">Previous</button>
-    <button type="button" class="btn btn-primary" ng-click="$ctrl.next()">Next</button>
+    <button type="button" class="btn btn-primary" ng-click="$ctrl.next()"
+    >
+      <i class="fa fa-fw" ng-class="{
+        'fa-circle-o-notch fa-spin': $ctrl.submitting,
+        'fa-check': !$ctrl.submitting
+      }"></i>
+      Next
+    </button>
   </div>
 </div>

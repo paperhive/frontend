@@ -1,8 +1,8 @@
 <div class="ph-component-step"
   ng-class="{
-    'ph-component-step-active': $ctrl.active,
+    'ph-component-step-active': $ctrl.active && !$ctrl.complete,
     'ph-component-step-inactive': !$ctrl.active,
-    'ph-component-step-complete': !$ctrl.active && $ctrl.complete,
+    'ph-component-step-complete': $ctrl.complete,
     'ph-component-step-incomplete': !$ctrl.active && !$ctrl.complete,
   }"
 >
@@ -39,8 +39,9 @@
           <label for="email">Email</label>
           <input name="email" type="text" class="form-control" placeholder="Email"
             ng-model="$ctrl.email"
-            required pattern=".*@.+\..+"
             ng-disabled="!$ctrl.active || $ctrl.submitting"
+            pattern=".*@.+\..+"
+            required
           >
           <i ng-show="personalDetails.email.$invalid"
             class="fa fa-times form-control-feedback"
@@ -128,7 +129,7 @@
       </div>
     </div>
     <div class="ph-component-buttons text-right clearfix">
-      <button type="button" class="btn btn-link pull-left"
+      <button type="button" class="btn btn-link pull-left ph-btn-skip"
         ng-click="$ctrl.onNext()"
         ng-disabled="!$ctrl.active || $ctrl.submitting"
       >Skip</button>
