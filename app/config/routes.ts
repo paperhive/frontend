@@ -363,6 +363,9 @@ export default function(app) {
         .segment('onboarding', {
           template: '<onboarding></onboarding>',
           title: 'Onboarding · PaperHive',
+          resolve: {
+            auth: ['authService', (authService) => authService.loginPromise],
+          },
         })
 
         .segment('partners', {
