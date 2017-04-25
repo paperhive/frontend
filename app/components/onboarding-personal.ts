@@ -1,4 +1,4 @@
-import { cloneDeep } from 'lodash';
+import { cloneDeep, find } from 'lodash';
 
 require('./onboarding.less');
 
@@ -64,12 +64,13 @@ export default function(app) {
       displayName: string;
       email: string;
 
-      static $inject = ['$scope', 'authService', 'personService'];
-      constructor($scope, public authService, public personService) {
+      static $inject = ['$scope', 'authService', 'notificationService', 'personService'];
+      constructor($scope, public authService, public notificationService, public personService) {
         this.disciplineOptions = [...this.disciplines, 'Other'];
         this.occupationOptions = [...this.occupations, 'Other'];
 
         $scope.$watch('$ctrl.authService.user.displayName', displayName => this.displayName = displayName);
+        $scope.$watch('$ctrl.authService.user.account.email', email => this.email = email);
         $scope.$watch('$ctrl.authService.user.discipline', this.updateDiscipline.bind(this));
         $scope.$watch('$ctrl.authService.user.occupation', this.updateOccupation.bind(this));
       }
@@ -77,8 +78,7 @@ export default function(app) {
       next() {
         this.submitting = true;
 
-        // TODO: email
-
+        // build new person object
         const person = cloneDeep(this.authService.user);
         person.displayName = this.displayName;
         person.discipline = this.disciplineSelect !== 'Other'
@@ -86,7 +86,23 @@ export default function(app) {
         person.occupation = this.occupationSelect !== 'Other'
           ? this.occupationSelect : this.occupationText;
 
+        // sanitize email
+        const email = this.email && this.email.toLowerCase().trim();
+
+        // email already verified?
+        const emailVerified = find(this.authService.user.externalIds, {type: 'email', id: email});
+        if (emailVerified) person.account.email = email;
+
         this.personService.update(person)
+          .then(() => {
+            if (emailVerified) return;
+            // add email
+            return this.personService.emailAdd(this.authService.user.id, email, true)
+              .then(() => this.notificationService.notifications.push({
+                type: 'info',
+                message: `We've sent you a verification link to ${email}.`,
+              }));
+          })
           .then(() => {
             this.complete = true;
             this.onNext();

@@ -19,14 +19,14 @@ export default function(app) {
         );
     }
 
-    emailAdd(personId, email, frontendUrl, returnUrl) {
+    emailAdd(personId, email, setAsDefault, frontendUrl, returnUrl) {
       return this.$http.post(
         `${this.config.apiUrl}/people/${personId}/emails`,
-        {email, frontendUrl, returnUrl},
+        {email, setAsDefault, frontendUrl, returnUrl},
       )
         .then(
           response => response.data,
-          this.notificationService.httpError('could not get add email'),
+          this.notificationService.httpError('could not add email'),
         );
     }
 

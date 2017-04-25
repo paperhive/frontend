@@ -23,6 +23,7 @@
         <div class="form-group">
           <label for="email">Email</label>
           <input name="email" type="text" class="form-control" placeholder="Email"
+            ng-model="$ctrl.email"
             ng-disabled="!$ctrl.active || $ctrl.submitting"
           >
         </div>
