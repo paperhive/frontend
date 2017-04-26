@@ -1,4 +1,5 @@
 require('./onboarding.less');
+require('./onboarding-channel.less');
 
 export default function(app) {
   app.component('onboardingChannel', {
@@ -20,10 +21,11 @@ export default function(app) {
       static $inject = ['channelService'];
       constructor(public channelService) {}
 
-      add(email) {
-        const sanitizedEmail = OnboardingChannelCtrl.sanitizeEmail(email);
+      add() {
+        if (!this.email) return;
+        const sanitizedEmail = OnboardingChannelCtrl.sanitizeEmail(this.email);
         if (this.emails.indexOf(sanitizedEmail) !== -1) return;
-        this.emails.push(sanitizedEmail);
+        this.emails.unshift(sanitizedEmail);
         this.email = undefined;
       }
 

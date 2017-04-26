@@ -1,6 +1,32 @@
+.ph-expand {
+  &.ng-hide-remove, &.ng-enter{
+    transition: all @ph-animation-duration ease;
+    overflow: hidden;
+  }
+  &.ng-hide, &.ng-enter {
+    max-height: 0;
+  }
+  &.ng-enter.ng-enter-active {
+    max-height: 40px;
+  }
+}
+
+.ph-collapse {
+  &.ng-hide-add, &.ng-leave  {
+    transition: all @ph-animation-duration ease;
+    overflow: hidden;
+  }
+  &.ng-hide-TODO, &.ng-leave {
+    max-height: 40px;
+  }
+  &.ng-hide, &.ng-leave.ng-leave-active {
+    max-height: 0;
+  }
+}
+
 .ph-fade-out {
   &.ng-hide-add, &.ng-leave  {
-    transition: opacity @ph-animation-duration ease;
+    transition: all @ph-animation-duration ease;
   }
   &.ng-hide, &.ng-leave.ng-leave-active {
     opacity: 0;
@@ -9,7 +35,7 @@
 
 .ph-fade-in {
   &.ng-hide-remove, &.ng-enter{
-    transition: opacity @ph-animation-duration ease;
+    transition: all @ph-animation-duration ease;
   }
   &.ng-hide, &.ng-enter {
     opacity: 0;

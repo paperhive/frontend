@@ -32,8 +32,7 @@
         </div>
       </div>
       <div class="col-lg-6">
-        <form name="emails" novalidate>
-        <div class="form-group">
+        <div class="form-group" ng-form="members">
           <label for="invite">Invite people</label>
           <div class="input-group">
             <input name="email" type="text" class="form-control" placeholder="Email"
@@ -41,30 +40,26 @@
               ng-disabled="!$ctrl.active"
               pattern=".*@.+\..+"
               required
+              ng-keypress="$event.charCode === 13 && $ctrl.add()"
             >
             <span class="input-group-btn">
               <button class="btn btn-primary" type="button"
-                ng-click="$ctrl.add($ctrl.email)"
-                ng-disabled="!$ctrl.active || $ctrl.submitting || channel.email.$invalid"
+                ng-click="$ctrl.add()"
+                ng-disabled="!$ctrl.active || $ctrl.submitting || members.email.$invalid"
               >
                 <i class="fa fa-fw fa-plus" aria-hidden="true"></i> Add
               </button>
             </span>
           </div>
         </div>
-        <table class="table ph-md-margin-bottom">
-          <tr ng-repeat="email in $ctrl.emails">
-            <td>{{email}}</td>
-            <td>
-              <button type="button" class="btn btn-link"
-                ng-click="$ctrl.remove(email)"
-              >
-               <i class="fa fa-fw fa-times"></i> Remove
-             </button>
-           </td>
-          </tr>
-        </table>
-      </form>
+        <div ng-repeat="email in $ctrl.emails" class="ph-component-member ph-fade ph-expand ph-collapse">
+          <div class="ph-component-email">{{email}}</div>
+          <button type="button" class="btn btn-link ph-link-icon"
+            ng-click="$ctrl.remove(email)"
+          >
+            <i class="fa fa-fw fa-times"></i> Remove
+          </button>
+        </div>
       </div>
     </div>
     <div class="ph-component-buttons text-right clearfix">
