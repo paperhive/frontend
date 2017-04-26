@@ -1,27 +1,9 @@
 .ph-expand {
-  &.ng-hide-remove, &.ng-enter{
-    transition: all @ph-animation-duration ease;
-    overflow: hidden;
-  }
-  &.ng-hide, &.ng-enter {
-    max-height: 0;
-  }
-  &.ng-enter.ng-enter-active {
-    max-height: 40px;
-  }
+  .ph-expand-mixin(40px);
 }
 
 .ph-collapse {
-  &.ng-hide-add, &.ng-leave  {
-    transition: all @ph-animation-duration ease;
-    overflow: hidden;
-  }
-  &.ng-hide-TODO, &.ng-leave {
-    max-height: 40px;
-  }
-  &.ng-hide, &.ng-leave.ng-leave-active {
-    max-height: 0;
-  }
+  .ph-collapse-mixin(40px);
 }
 
 .ph-fade-out {

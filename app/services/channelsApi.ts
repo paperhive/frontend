@@ -1,5 +1,5 @@
 export default function(app) {
-  app.service('channelsApi', class ChannelApi {
+  app.service('channelsApi', class ChannelsApi {
     static $inject = ['$http', 'config', 'notificationService'];
     constructor(public $http, public config, public notificationService) {}
 

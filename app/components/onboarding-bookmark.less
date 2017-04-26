@@ -1,0 +1,43 @@
+@import "../../less/mixins.less";
+@import "../../less/variables.less";
+
+onboarding-bookmark {
+  .ph-component-document {
+    display: flex;
+    align-items: flex-start;
+    .ph-collapse-mixin(100px);
+    .ph-expand-mixin(100px);
+  }
+
+  .ph-component-document-controls {
+    margin: 0 @padding-small-horizontal;
+  }
+
+  .ph-component-document-body {
+    flex-grow: 1;
+    overflow: hidden;
+    margin-bottom: @padding-small-vertical;
+  }
+
+  .ph-component-title {
+    margin: @padding-small-vertical 0;
+    mathjax {
+      display: block;
+      .text-overflow();
+    }
+  }
+
+  .ph-component-document-author-year {
+    display: flex;
+    margin-bottom: @padding-small-vertical;
+  }
+
+  .ph-component-document-author {
+    .text-overflow();
+  }
+
+  .ph-component-document-bib {
+    margin-bottom: @padding-small-vertical;
+    .text-overflow();
+  }
+}
