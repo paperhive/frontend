@@ -30,8 +30,8 @@ export default function(app) {
       bookmarked = false;
       bookmarkSubmitting = {};
 
-      static $inject = ['$http', 'documentsApi'];
-      constructor(public $http, public documentsApi) {
+      static $inject = ['$http', 'channelService', 'documentsApi'];
+      constructor(public $http, public channelService, public documentsApi) {
         this.updateTotal();
       }
 

@@ -4,11 +4,16 @@ export default function(app) {
   app.component('onboarding', {
     controller: class OnboardingCtrl {
       currentStep = 1;
+      channelId: string;
 
-      static $inject = ['scroll'];
-      constructor(public scroll) {}
+      static $inject = ['$location', 'scroll'];
+      constructor(public $location, public scroll) {}
 
       next() {
+        if (this.currentStep === 3) {
+          this.$location.url(`/channels/${this.channelId}`);
+          return;
+        }
         this.currentStep += 1;
         this.scrollToCurrentStep();
       }

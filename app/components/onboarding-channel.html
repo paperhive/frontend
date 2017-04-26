@@ -9,13 +9,15 @@
   <div class="ph-component-step-number">2</div>
   <form name="channel" novalidate>
     <h3>Create channel</h3>
+    <p class="lead">Channels allow private annotations and group discussions</p>
     <div class="row">
       <div class="col-lg-6">
         <div class="form-group has-feedback"
           ng-class="{'has-error': channel.name.$invalid && channel.name.$dirty}"
         >
           <label for="channel">Channel name</label>
-          <input name="name" type="text" class="form-control" placeholder="Channel name"
+          <input name="name" type="text" class="form-control"
+            placeholder="e.g., Seminar group, PhD thesis"
             ng-model="$ctrl.name"
             ng-disabled="!$ctrl.active"
             required
@@ -33,7 +35,7 @@
       </div>
       <div class="col-lg-6">
         <div class="form-group" ng-form="members">
-          <label for="invite">Invite people</label>
+          <label for="invite">Invite people (optional)</label>
           <div class="input-group">
             <input name="email" type="text" class="form-control" placeholder="Email"
               ng-model="$ctrl.email"

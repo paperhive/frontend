@@ -10,6 +10,6 @@
   <onboarding-bookmark
     active="$ctrl.currentStep === 3"
     channel-id="$ctrl.channelId"
-    on-next="$ctrl.currentStep === 3 && ($ctrl.currentStep = $ctrl.currentStep + 1) && TODO"
+    on-next="$ctrl.currentStep === 3 && $ctrl.next()"
   ></onboarding-bookmark>
 </div>
