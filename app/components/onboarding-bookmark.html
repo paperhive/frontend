@@ -84,7 +84,9 @@
     Load more
   </button>
   <div class="ph-component-buttons text-right">
-    <button type="button" class="btn btn-primary" ng-click="$ctrl.next()"
+    <button type="button" class="btn btn-primary"
+      ng-click="$ctrl.next()"
+      ng-disabled="!$ctrl.bookmarked"
     >
       <i class="fa fa-fw" ng-class="{
         'fa-circle-o-notch fa-spin': $ctrl.submitting,

@@ -27,6 +27,7 @@ export default function(app) {
       totalUpdating = false;
       scrollUpdating = false;
 
+      bookmarked = false;
       bookmarkSubmitting = {};
 
       static $inject = ['$http', 'documentsApi'];
@@ -61,7 +62,10 @@ export default function(app) {
           ? this.documentsApi.bookmarkDelete(document.id, this.channelId)
           : this.documentsApi.bookmarkAdd(document.id, this.channelId);
         promise
-          .then(() => document.bookmarked = !document.bookmarked)
+          .then(() => {
+            document.bookmarked = !document.bookmarked;
+            if (document.bookmarked) this.bookmarked = true;
+          })
           .finally(() => this.bookmarkSubmitting[document.id] = false);
       }
 
