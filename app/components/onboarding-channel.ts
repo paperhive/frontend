@@ -6,10 +6,9 @@ export default function(app) {
     bindings: {
       active: '<',
       onNext: '&',
-      onPrevious: '&',
     },
     controller: class OnboardingChannelCtrl {
-      onNext: () => void;
+      onNext: (o: {channelId: string}) => void;
 
       name: string;
       email: string;
@@ -41,8 +40,10 @@ export default function(app) {
 
       next() {
         this.submitting = true;
+        let channelId;
         this.channelService.create({name: this.name})
           .then(channel => {
+            channelId = channel.id;
             return Promise.all(this.emails.map(email => {
               return this.channelService.invitationCreate(channel.id, {
                 email,
@@ -52,7 +53,7 @@ export default function(app) {
           })
           .then(() => {
             this.complete = true;
-            this.onNext();
+            this.onNext({channelId});
           })
           .finally(() => this.submitting = false);
       }

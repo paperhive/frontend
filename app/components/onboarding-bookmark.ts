@@ -10,7 +10,6 @@ export default function(app) {
       active: '<',
       channelId: '<',
       onNext: '&',
-      onPrevious: '&',
     },
     controller: class OnboardingBookmarkCtrl {
       channelId: string;

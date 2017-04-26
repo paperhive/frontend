@@ -83,12 +83,7 @@
     <i ng-if="$ctrl.scrollUpdating" class="fa fa-fw fa-circle-o-notch fa-spin"></i>
     Load more
   </button>
-  <div class="ph-component-buttons text-right clearfix">
-    <button type="button" class="btn btn-link pull-left ph-btn-skip"
-      ng-click="$ctrl.onNext()"
-      ng-disabled="!$ctrl.active"
-    >Skip</button>
-    <button type="button" class="btn btn-default" ng-click="$ctrl.onPrevious()">Previous</button>
+  <div class="ph-component-buttons text-right">
     <button type="button" class="btn btn-primary" ng-click="$ctrl.next()"
     >
       <i class="fa fa-fw" ng-class="{

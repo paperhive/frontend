@@ -128,11 +128,7 @@
         </div>
       </div>
     </div>
-    <div class="ph-component-buttons text-right clearfix">
-      <button type="button" class="btn btn-link pull-left ph-btn-skip"
-        ng-click="$ctrl.onNext()"
-        ng-disabled="!$ctrl.active || $ctrl.submitting"
-      >Skip</button>
+    <div class="ph-component-buttons text-right">
       <button type="button" class="btn btn-primary"
         ng-click="$ctrl.next()"
         ng-disabled="!$ctrl.active || $ctrl.submitting || personalDetails.$invalid"

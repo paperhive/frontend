@@ -13,11 +13,6 @@ export default function(app) {
         this.scrollToCurrentStep();
       }
 
-      previous() {
-        this.currentStep -= 1;
-        this.scrollToCurrentStep();
-      }
-
       scrollToCurrentStep() {
         const stepElements = [
           'onboarding-personal',

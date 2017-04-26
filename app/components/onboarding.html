@@ -5,13 +5,11 @@
   ></onboarding-personal>
   <onboarding-channel
     active="$ctrl.currentStep === 2"
-    on-previous="$ctrl.currentStep === 2 && $ctrl.previous()"
-    on-next="$ctrl.currentStep === 2 && $ctrl.next()"
+    on-next="$ctrl.currentStep === 2 && ($ctrl.channelId = channelId || $ctrl.channelId) && $ctrl.next()"
   ></onboarding-channel>
   <onboarding-bookmark
     active="$ctrl.currentStep === 3"
-    channel-id="'SEGdOjfPjnVc'"
-    on-previous="$ctrl.currentStep === 3 && $ctrl.previous()"
+    channel-id="$ctrl.channelId"
     on-next="$ctrl.currentStep === 3 && TODO"
   ></onboarding-bookmark>
 </div>
