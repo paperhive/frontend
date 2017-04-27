@@ -1,3 +1,5 @@
+import { get } from 'lodash';
+
 import {localStorageAvailable} from '../utils/local-storage';
 
 export default function(app) {
@@ -11,8 +13,8 @@ export default function(app) {
     };
   });
 
-  app.factory('authService', ['authState', 'config', '$http', '$q', '$rootScope', '$window', '$location',
-    function(authState, config, $http, $q, $rootScope, $window, $location) {
+  app.factory('authService', ['authState', 'config', '$http', '$q', '$rootScope', '$window', '$location', 'notificationService',
+    function(authState, config, $http, $q, $rootScope, $window, $location, notificationService) {
       const authService = authState;
 
       // authService.returnPath
@@ -81,16 +83,35 @@ export default function(app) {
                   if (localStorageAvailable) {
                     $window.localStorage.token = response.data.token;
                   }
+
+                  // person not created right now and onboarding not completed
+                  const onboarding = authService.user.account.onboarding;
+                  if (!response.data.personCreated && !/\/onboarding/.test($location.url())
+                    && (!onboarding
+                      || !get(onboarding, 'profile.completedAt')
+                      || !get(onboarding, 'channel.completedAt')
+                      || !get(onboarding, 'bookmarks.completedAt')
+                    )
+                  ) {
+                    notificationService.notifications.push({
+                      type: 'info',
+                      message: `
+                        <strong><a href="/onboarding">Complete your profile</a></strong>
+                        to get started.
+                        `,
+                    });
+                  }
+
                   resolve(response.data);
                 },
                 response => {
                   authService.logout();
                   reject(response.data);
-                }
-              )
+                },
+              );
             },
             reject,
-          )
+          );
         });
 
         return authService.loginPromise;
