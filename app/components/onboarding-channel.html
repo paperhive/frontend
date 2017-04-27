@@ -78,7 +78,7 @@
       <button type="button" class="btn btn-primary"
         ng-click="$ctrl.next()"
         ng-disabled="(!$ctrl.authService.user.account.onboarding.channel.completedAt || $ctrl.createNew)
-          && (!$ctrl.active || $ctrl.submitting || channel.name.$invalid)"
+          && (!$ctrl.active || $ctrl.submitting || channel.name.$invalid || channel.members.email.$viewValue)"
       >
         <i class="fa fa-fw" ng-class="{
           'fa-circle-o-notch fa-spin': $ctrl.submitting,
