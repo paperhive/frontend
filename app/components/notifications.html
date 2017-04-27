@@ -1,26 +1,20 @@
 <div uib-alert
+  ng-show="notification"
   class="ph-navbar-alert clearfix"
-  close="close($index)"
+  close="close()"
   ng-class="{
     'alert-danger': notification.type === 'error',
     'alert-warning': notification.type === 'warning',
     'alert-info': notification.type === 'info',
     'alert-success': notification.type === 'success',
   }"
-  ng-repeat="notification in notifications | limitTo: 1"
 >
-  <span ng-show="notification.type == 'error'">
-    <i class="fa fa-fw fa-warning"></i>
-  </span>
-  <span ng-show="notification.type == 'warning'">
-    <i class="fa fa-fw fa-warning"></i>
-  </span>
-  <span ng-show="notification.type == 'info'">
-    <i class="fa fa-fw fa-info-circle"></i>
-  </span>
-  <span ng-show="notification.type == 'success'">
-    <i class="fa fa-fw fa-info-circle"></i>
-  </span>
+  <i class="fa fa-fw fa-warning"
+    ng-class="{
+      'fa-warning': notification.type == 'error' || notification.type == 'warning',
+      'fa-info-circle': notification.type == 'info' || notification.type == 'success',
+    }"
+  ></i>
   <span ng-bind-html="notification.message"></span>
   <span class="pull-right label label-default" ng-show="notifications.length > 1">
     {{notifications.length - 1}}

@@ -1,17 +1,19 @@
 export default function(app) {
   app.component('notifications', {
-    controller: ['$scope', 'notificationService',
-      function($scope, notificationService) {
+    controller: ['$element', '$scope', 'notificationService',
+      function($element, $scope, notificationService) {
         $scope.notifications = notificationService.notifications;
-        $scope.close = function(index) {
-          notificationService.notifications.splice(index, 1);
-        };
-        $scope.types = {
-          error: 'danger',
-          info: 'info',
-          warning: 'warning',
-          success: 'success',
-        };
+
+        $scope.$watchCollection(
+          'notifications',
+          notifications => $scope.notification = notifications && notifications.length > 0
+            ? notifications[notifications.length - 1] : undefined,
+        );
+
+        $scope.close = () => notificationService.notifications.pop();
+        $element.on('click', event => $scope.$apply(() => {
+          if (event.target.href) $scope.close();
+        }));
       },
     ],
     template: require('./notifications.html'),
