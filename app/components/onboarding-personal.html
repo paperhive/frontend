@@ -1,9 +1,12 @@
 <div class="ph-component-step"
   ng-class="{
-    'ph-component-step-active': $ctrl.active && !$ctrl.complete,
+    'ph-component-step-active': $ctrl.active
+      && !$ctrl.authService.user.account.onboarding.profile.completedAt,
     'ph-component-step-inactive': !$ctrl.active,
-    'ph-component-step-complete': $ctrl.complete,
-    'ph-component-step-incomplete': !$ctrl.active && !$ctrl.complete,
+    'ph-component-step-complete':
+      $ctrl.authService.user.account.onboarding.profile.completedAt,
+    'ph-component-step-incomplete': !$ctrl.active
+      && !$ctrl.authService.user.account.onboarding.profile.completedAt,
   }"
 >
   <div class="ph-component-step-number">1</div>

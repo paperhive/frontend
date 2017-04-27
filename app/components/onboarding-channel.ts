@@ -1,3 +1,5 @@
+import { cloneDeep } from 'lodash';
+
 require('./onboarding.less');
 require('./onboarding-channel.less');
 
@@ -8,17 +10,17 @@ export default function(app) {
       onNext: '&',
     },
     controller: class OnboardingChannelCtrl {
-      onNext: (o: {channelId: string}) => void;
+      onNext: () => void;
 
       name: string;
       email: string;
       emails: string[] = [];
 
-      complete = false;
+      createNew = false;
       submitting = false;
 
-      static $inject = ['channelService'];
-      constructor(public channelService) {}
+      static $inject = ['authService', 'channelService', 'personService'];
+      constructor(public authService, public channelService, public personService) {}
 
       add() {
         if (!this.email) return;
@@ -39,6 +41,11 @@ export default function(app) {
       }
 
       next() {
+        if (this.authService.user.account.onboarding.channel.completedAt && !this.createNew) {
+          this.onNext();
+          return;
+        }
+
         this.submitting = true;
         let channelId;
         this.channelService.create({name: this.name})
@@ -52,9 +59,15 @@ export default function(app) {
             }));
           })
           .then(() => {
-            this.complete = true;
-            this.onNext({channelId});
+            const person = cloneDeep(this.authService.user);
+            person.account.onboarding = person.account.onboarding || {};
+            person.account.onboarding.channel = {
+              completedAt: new Date(),
+              channel: channelId,
+            };
+            return this.personService.update(person);
           })
+          .then(() => this.onNext())
           .finally(() => this.submitting = false);
       }
     },

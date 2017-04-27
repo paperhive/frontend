@@ -1,5 +1,5 @@
 import { copy } from 'angular';
-import { find } from 'lodash';
+import { cloneDeep, find } from 'lodash';
 
 require('./onboarding.less');
 require('./onboarding-bookmark.less');
@@ -8,16 +8,13 @@ export default function(app) {
   app.component('onboardingBookmark', {
     bindings: {
       active: '<',
-      channelId: '<',
       onNext: '&',
     },
     controller: class OnboardingBookmarkCtrl {
-      channelId: string;
       onNext: () => void;
 
       query: string;
 
-      complete = false;
       searching = false;
 
       total: number;
@@ -30,8 +27,8 @@ export default function(app) {
       bookmarked = false;
       bookmarkSubmitting = {};
 
-      static $inject = ['$http', 'channelService', 'documentsApi'];
-      constructor(public $http, public channelService, public documentsApi) {
+      static $inject = ['$http', 'authService', 'channelService', 'documentsApi', 'personService'];
+      constructor(public $http, public authService, public channelService, public documentsApi, public personService) {
         this.updateTotal();
       }
 
@@ -47,20 +44,26 @@ export default function(app) {
       }
 
       getBookmarks(documents) {
+        const channelId = this.authService.user.account.onboarding.channel.channel;
+        if (!channelId) throw new Error('no channel available');
+
         return Promise.all(documents.map(document => {
           return this.documentsApi.bookmarksGet(document.id)
             .then(data => {
-              document.bookmarked = !!find(data.bookmarks, {channel: {id: this.channelId}});
+              document.bookmarked = !!find(data.bookmarks, {channel: {id: channelId}});
               return document;
             });
         }));
       }
 
       toggleBookmark(document) {
+        const channelId = this.authService.user.account.onboarding.channel.channel;
+        if (!channelId) throw new Error('no channel available');
+
         this.bookmarkSubmitting[document.id] = true;
         const promise = document.bookmarked
-          ? this.documentsApi.bookmarkDelete(document.id, this.channelId)
-          : this.documentsApi.bookmarkAdd(document.id, this.channelId);
+          ? this.documentsApi.bookmarkDelete(document.id, channelId)
+          : this.documentsApi.bookmarkAdd(document.id, channelId);
         promise
           .then(() => {
             document.bookmarked = !document.bookmarked;
@@ -70,8 +73,10 @@ export default function(app) {
       }
 
       next() {
-        this.complete = true;
-        this.onNext();
+        const person = cloneDeep(this.authService.user);
+        person.account.onboarding = person.account.onboarding || {};
+        person.account.onboarding.bookmarks = {completedAt: new Date()};
+        this.personService.update(person).then(() => this.onNext());
       }
 
       scroll() {

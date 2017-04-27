@@ -59,7 +59,6 @@ export default function(app) {
       occupationText: string;
 
       submitting = false;
-      complete = false;
 
       displayName: string;
       email: string;
@@ -85,6 +84,8 @@ export default function(app) {
           ? this.disciplineSelect : this.disciplineText;
         person.occupation = this.occupationSelect !== 'Other'
           ? this.occupationSelect : this.occupationText;
+        person.account.onboarding = person.account.onboarding || {};
+        person.account.onboarding.profile = {completedAt: new Date()};
 
         // sanitize email
         const email = this.email && this.email.toLowerCase().trim();
@@ -103,13 +104,8 @@ export default function(app) {
                 message: `We've sent you a verification link to ${email}.`,
               }));
           })
-          .then(() => {
-            this.complete = true;
-            this.onNext();
-          })
-          .finally(() => {
-            this.submitting = false;
-          });
+          .then(() => this.onNext())
+          .finally(() => this.submitting = false);
       }
 
       updateDiscipline(discipline) {

@@ -1,16 +1,26 @@
 <div class="ph-component-step"
   ng-class="{
-    'ph-component-step-active': $ctrl.active && !$ctrl.complete,
+    'ph-component-step-active': $ctrl.active
+      && !$ctrl.authService.user.account.onboarding.channel.completedAt,
     'ph-component-step-inactive': !$ctrl.active,
-    'ph-component-step-complete': $ctrl.complete,
-    'ph-component-step-incomplete': !$ctrl.active && !$ctrl.complete,
+    'ph-component-step-complete':
+      $ctrl.authService.user.account.onboarding.channel.completedAt,
+    'ph-component-step-incomplete': !$ctrl.active
+      && !$ctrl.authService.user.account.onboarding.channel.completedAt,
   }"
 >
   <div class="ph-component-step-number">2</div>
   <form name="channel" novalidate>
     <h3>Create channel</h3>
     <p class="lead">Channels allow private annotations and group discussions</p>
-    <div class="row">
+    <div ng-if="$ctrl.authService.user.account.onboarding.channel.completedAt && !$ctrl.createNew">
+      You already created the channel
+      <a target="_blank"
+        href="/channels/{{$ctrl.authService.user.account.onboarding.channel.channel}}"
+      >{{$ctrl.channelService.get($ctrl.authService.user.account.onboarding.channel.channel).name}}</a>.
+      Do you want to <a href="" ng-click="$ctrl.createNew = true">create a new one</a>?
+    </div>
+    <div class="row" ng-if="!$ctrl.authService.user.account.onboarding.channel.completedAt || $ctrl.createNew">
       <div class="col-lg-6">
         <div class="form-group has-feedback"
           ng-class="{'has-error': channel.name.$invalid && channel.name.$dirty}"
@@ -67,7 +77,8 @@
     <div class="ph-component-buttons text-right">
       <button type="button" class="btn btn-primary"
         ng-click="$ctrl.next()"
-        ng-disabled="!$ctrl.active || $ctrl.submitting || channel.name.$invalid"
+        ng-disabled="(!$ctrl.authService.user.account.onboarding.channel.completedAt || $ctrl.createNew)
+          && (!$ctrl.active || $ctrl.submitting || channel.name.$invalid)"
       >
         <i class="fa fa-fw" ng-class="{
           'fa-circle-o-notch fa-spin': $ctrl.submitting,

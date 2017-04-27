@@ -4,10 +4,9 @@ export default function(app) {
   app.component('onboarding', {
     controller: class OnboardingCtrl {
       currentStep = 1;
-      channelId: string;
 
-      static $inject = ['$location', 'scroll'];
-      constructor(public $location, public scroll) {}
+      static $inject = ['$location', 'authService', 'scroll'];
+      constructor(public $location, public authService, public scroll) {}
 
       next() {
         if (this.currentStep === 3) {
@@ -15,7 +14,9 @@ export default function(app) {
           if (/^\/documents/.test(returnUrl)) {
             this.$location.url(returnUrl);
           } else {
-            this.$location.url(`/channels/${this.channelId}`);
+            const channelId = this.authService.user.account.onboarding.channel.channel;
+            if (!channelId) throw new Error('no channel available');
+            this.$location.url(`/channels/${channelId}`);
           }
           return;
         }

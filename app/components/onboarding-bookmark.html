@@ -1,16 +1,19 @@
 <div class="ph-component-step"
   ng-class="{
-    'ph-component-step-active': $ctrl.active && !$ctrl.complete,
+    'ph-component-step-active': $ctrl.active
+      && !$ctrl.authService.user.account.onboarding.bookmarks.completedAt,
     'ph-component-step-inactive': !$ctrl.active,
-    'ph-component-step-complete': $ctrl.complete,
-    'ph-component-step-incomplete': !$ctrl.active && !$ctrl.complete,
+    'ph-component-step-complete':
+      $ctrl.authService.user.account.onboarding.bookmarks.completedAt,
+    'ph-component-step-incomplete': !$ctrl.active
+      && !$ctrl.authService.user.account.onboarding.bookmarks.completedAt,
   }"
 >
   <div class="ph-component-step-number">3</div>
   <h3>Bookmark documents</h3>
   <p class="lead">
     Add a few documents to the channel
-    <em>{{$ctrl.channelService.get($ctrl.channelId).name}}</em>
+    <em>{{$ctrl.channelService.get($ctrl.authService.user.account.onboarding.channel.channel).name}}</em>
   </p>
   <form novalidate ng-submit="$ctrl.submitQuery()">
     <div class="form-group">
