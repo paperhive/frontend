@@ -3,12 +3,12 @@ import { cloneDeep, find } from 'lodash';
 require('./onboarding.less');
 
 export default function(app) {
-  app.component('onboardingPersonal', {
+  app.component('onboardingProfile', {
     bindings: {
       active: '<',
       onNext: '&',
     },
-    controller: class OnboardingPersonalCtrl {
+    controller: class OnboardingProfileCtrl {
       onNext: () => void;
 
       const disciplines = [
@@ -136,6 +136,6 @@ export default function(app) {
         this.occupationText = occupation;
       }
     },
-    template: require('./onboarding-personal.html'),
+    template: require('./onboarding-profile.html'),
   });
 };

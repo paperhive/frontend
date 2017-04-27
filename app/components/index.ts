@@ -70,7 +70,7 @@ import officeMap from './office-map';
 import onboarding from './onboarding';
 import onboardingBookmark from './onboarding-bookmark';
 import onboardingChannel from './onboarding-channel';
-import onboardingPersonal from './onboarding-personal';
+import onboardingProfile from './onboarding-profile';
 import partnerLogos from './partner-logos';
 import passwordRequest from './password-request';
 import passwordReset from './password-reset';
@@ -171,7 +171,7 @@ export default function(app) {
   onboarding(app);
   onboardingBookmark(app);
   onboardingChannel(app);
-  onboardingPersonal(app);
+  onboardingProfile(app);
   partnerLogos(app);
   passwordRequest(app);
   passwordReset(app);

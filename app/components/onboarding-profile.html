@@ -10,12 +10,12 @@
   }"
 >
   <div class="ph-component-step-number">1</div>
-  <form name="personalDetails" novalidate>
+  <form name="profile" novalidate>
     <h3>Complete your profile</h3>
     <div class="row">
       <div class="col-lg-6">
         <div class="form-group has-feedback"
-          ng-class="{'has-error': personalDetails.displayName.$invalid}"
+          ng-class="{'has-error': profile.displayName.$invalid}"
         >
           <label for="name">Name</label>
           <input name="displayName" type="text" class="form-control" placeholder="Full name"
@@ -23,11 +23,11 @@
             ng-disabled="!$ctrl.active || $ctrl.submitting"
             required ng-minlength="3" ng-maxlength="40"
           >
-          <i ng-show="personalDetails.displayName.$invalid"
+          <i ng-show="profile.displayName.$invalid"
             class="fa fa-times form-control-feedback"
           ></i>
-          <p class="help-block" uib-collapse="!personalDetails.displayName.$invalid"
-            ng-messages="personalDetails.displayName.$error"
+          <p class="help-block" uib-collapse="!profile.displayName.$invalid"
+            ng-messages="profile.displayName.$error"
           >
             <i class="fa fa-fw fa-warning"></i>
             <span ng-message="required">A name is required.</span>
@@ -37,7 +37,7 @@
       </div>
       <div class="col-lg-6">
         <div class="form-group has-feedback"
-          ng-class="{'has-error': personalDetails.email.$invalid}"
+          ng-class="{'has-error': profile.email.$invalid}"
         >
           <label for="email">Email</label>
           <input name="email" type="text" class="form-control" placeholder="Email"
@@ -46,11 +46,11 @@
             pattern=".*@.+\..+"
             required
           >
-          <i ng-show="personalDetails.email.$invalid"
+          <i ng-show="profile.email.$invalid"
             class="fa fa-times form-control-feedback"
           ></i>
-          <p class="help-block" uib-collapse="!personalDetails.email.$invalid"
-            ng-messages="personalDetails.email.$error"
+          <p class="help-block" uib-collapse="!profile.email.$invalid"
+            ng-messages="profile.email.$error"
           >
             <i class="fa fa-fw fa-warning"></i>
             <span ng-message="required">Please enter your email address.</span>
@@ -75,7 +75,7 @@
         </div>
         <div uib-collapse="$ctrl.disciplineSelect !== 'Other'">
           <div class="form-group has-feedback"
-            ng-class="{'has-error': personalDetails.disciplineText.$dirty && personalDetails.disciplineText.$invalid}"
+            ng-class="{'has-error': profile.disciplineText.$dirty && profile.disciplineText.$invalid}"
           >
             <input name="disciplineText" type="text" class="form-control"
               placeholder="Discipline"
@@ -83,11 +83,11 @@
               ng-disabled="!$ctrl.active || $ctrl.submitting"
               ng-required="$ctrl.disciplineSelect === 'Other'"
             >
-            <i ng-show="personalDetails.disciplineText.$dirty && personalDetails.disciplineText.$invalid"
+            <i ng-show="profile.disciplineText.$dirty && profile.disciplineText.$invalid"
               class="fa fa-times form-control-feedback"
             ></i>
-            <p class="help-block" uib-collapse="!personalDetails.disciplineText.$dirty || !personalDetails.disciplineText.$invalid"
-              ng-messages="personalDetails.disciplineText.$error"
+            <p class="help-block" uib-collapse="!profile.disciplineText.$dirty || !profile.disciplineText.$invalid"
+              ng-messages="profile.disciplineText.$error"
             >
               <i class="fa fa-fw fa-warning"></i>
               <span ng-message="required">Please enter your discipline.</span>
@@ -110,7 +110,7 @@
         </div>
         <div uib-collapse="$ctrl.occupationSelect !== 'Other'">
           <div class="form-group has-feedback"
-            ng-class="{'has-error': personalDetails.occupationText.$dirty && personalDetails.occupationText.$invalid}"
+            ng-class="{'has-error': profile.occupationText.$dirty && profile.occupationText.$invalid}"
           >
             <input name="occupationText" type="text" class="form-control"
               placeholder="Occupation"
@@ -118,11 +118,11 @@
               ng-disabled="!$ctrl.active || $ctrl.submitting"
               ng-required="$ctrl.occupationSelect === 'Other'"
             >
-            <i ng-show="personalDetails.occupationText.$dirty && personalDetails.occupationText.$invalid"
+            <i ng-show="profile.occupationText.$dirty && profile.occupationText.$invalid"
               class="fa fa-times form-control-feedback"
             ></i>
-            <p class="help-block" uib-collapse="!personalDetails.occupationText.$dirty || !personalDetails.occupationText.$invalid"
-              ng-messages="personalDetails.occupationText.$error"
+            <p class="help-block" uib-collapse="!profile.occupationText.$dirty || !profile.occupationText.$invalid"
+              ng-messages="profile.occupationText.$error"
             >
               <i class="fa fa-fw fa-warning"></i>
               <span ng-message="required">Please enter your occupation.</span>
@@ -134,7 +134,7 @@
     <div class="ph-component-buttons text-right">
       <button type="button" class="btn btn-primary"
         ng-click="$ctrl.next()"
-        ng-disabled="!$ctrl.active || $ctrl.submitting || personalDetails.$invalid"
+        ng-disabled="!$ctrl.active || $ctrl.submitting || profile.$invalid"
       >
         <i class="fa fa-fw" ng-class="{
           'fa-circle-o-notch fa-spin': $ctrl.submitting,

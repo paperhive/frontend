@@ -1,4 +1,4 @@
-import { cloneDeep } from 'lodash';
+import { cloneDeep, get } from 'lodash';
 
 require('./onboarding.less');
 require('./onboarding-channel.less');
@@ -19,8 +19,8 @@ export default function(app) {
       createNew = false;
       submitting = false;
 
-      static $inject = ['authService', 'channelService', 'personService'];
-      constructor(public authService, public channelService, public personService) {}
+      static $inject = ['$timeout', 'authService', 'channelService', 'personService'];
+      constructor(public $timeout, public authService, public channelService, public personService) {}
 
       add() {
         if (!this.email) return;
@@ -41,7 +41,7 @@ export default function(app) {
       }
 
       next() {
-        if (this.authService.user.account.onboarding.channel.completedAt && !this.createNew) {
+        if (get(this.authService.user.account, 'onboarding.channel.completedAt') && !this.createNew) {
           this.onNext();
           return;
         }
@@ -67,6 +67,7 @@ export default function(app) {
             };
             return this.personService.update(person);
           })
+          .then(() => this.$timeout(800))
           .then(() => this.onNext())
           .finally(() => this.submitting = false);
       }
