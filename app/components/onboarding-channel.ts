@@ -46,17 +46,24 @@ export default function(app) {
           return;
         }
 
+        // exclude these email addresses (users may add their own address)
+        const userEmails = this.authService.user.externalIds
+          .filter(externalId => externalId.type === 'email' && externalId.id)
+          .map(externalId => externalId.id);
+
         this.submitting = true;
         let channelId;
         this.channelService.create({name: this.name})
           .then(channel => {
             channelId = channel.id;
-            return Promise.all(this.emails.map(email => {
-              return this.channelService.invitationCreate(channel.id, {
-                email,
-                roles: ['member'],
-              });
-            }));
+            return Promise.all(
+              this.emails
+                .filter(email => userEmails.indexOf(email) === -1)
+                .map(email => this.channelService.invitationCreate(channel.id, {
+                  email,
+                  roles: ['member'],
+                })),
+              );
           })
           .then(() => {
             const person = cloneDeep(this.authService.user);
