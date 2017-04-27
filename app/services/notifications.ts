@@ -13,17 +13,9 @@ export default function(app) {
             type: 'error',
             message: (data && data.message) || msg || 'unknown error',
           });
+          throw new Error(msg);
         };
       };
-
-      // remove notifications if route changes
-      $rootScope.$on('$routeChangeSuccess', function(event, newRoute, oldRoute) {
-        const oldPath = oldRoute && oldRoute.$$route.originalPath;
-        // filter redirect after first sign-up
-        if (oldPath !== '/authReturn') {
-          service.notifications.splice(0, service.notifications.length);
-        }
-      });
 
       return service;
     },

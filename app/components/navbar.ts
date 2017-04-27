@@ -1,3 +1,5 @@
+require('./onboarding.less');
+
 export default function(app) {
   app.component('navbar', {
     controller : ['$routeSegment', '$scope', 'tourService',

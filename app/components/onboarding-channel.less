@@ -1,0 +1,16 @@
+@import "../../less/mixins.less";
+@import "../../less/variables.less";
+
+onboarding-channel {
+  .ph-component-member {
+    display: flex;
+    align-items: center;
+    .ph-collapse-mixin(40px);
+    .ph-expand-mixin(40px);
+  }
+
+  .ph-component-email {
+    flex-grow: 1;
+    .text-overflow();
+  }
+}

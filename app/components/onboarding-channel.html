@@ -1,0 +1,91 @@
+<div class="ph-component-step"
+  ng-class="{
+    'ph-component-step-active': $ctrl.active
+      && !$ctrl.authService.user.account.onboarding.channel.completedAt,
+    'ph-component-step-inactive': !$ctrl.active,
+    'ph-component-step-complete':
+      $ctrl.authService.user.account.onboarding.channel.completedAt,
+    'ph-component-step-incomplete': !$ctrl.active
+      && !$ctrl.authService.user.account.onboarding.channel.completedAt,
+  }"
+>
+  <div class="ph-component-step-number">2</div>
+  <form name="channel" novalidate>
+    <h3>Create channel</h3>
+    <p class="lead">Channels allow private annotations and group discussions</p>
+    <div ng-if="$ctrl.authService.user.account.onboarding.channel.completedAt && !$ctrl.createNew">
+      You already created the channel
+      <a target="_blank"
+        href="/channels/{{$ctrl.authService.user.account.onboarding.channel.channel}}"
+      >{{$ctrl.channelService.get($ctrl.authService.user.account.onboarding.channel.channel).name}}</a>.
+      Do you want to <a href="" ng-click="$ctrl.createNew = true">create a new one</a>?
+    </div>
+    <div class="row" ng-if="!$ctrl.authService.user.account.onboarding.channel.completedAt || $ctrl.createNew">
+      <div class="col-lg-6">
+        <div class="form-group has-feedback"
+          ng-class="{'has-error': channel.name.$invalid && channel.name.$dirty}"
+        >
+          <label for="channel">Channel name</label>
+          <input name="name" type="text" class="form-control"
+            placeholder="e.g., Seminar group, PhD thesis"
+            ng-model="$ctrl.name"
+            ng-disabled="!$ctrl.active"
+            required
+          >
+          <i ng-show="channel.name.$invalid && channel.name.$dirty"
+            class="fa fa-times form-control-feedback"
+          ></i>
+          <p class="help-block" uib-collapse="!channel.name.$invalid || !channel.name.$dirty"
+            ng-messages="channel.name.$error"
+          >
+            <i class="fa fa-fw fa-warning"></i>
+            <span ng-message="required">A channel name is required.</span>
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="form-group" ng-form="members">
+          <label for="invite">Invite people (optional)</label>
+          <div class="input-group">
+            <input name="email" type="text" class="form-control" placeholder="Email"
+              ng-model="$ctrl.email"
+              ng-disabled="!$ctrl.active"
+              pattern=".*@.+\..+"
+              required
+              ng-keypress="$event.charCode === 13 && $ctrl.add()"
+            >
+            <span class="input-group-btn">
+              <button class="btn btn-primary" type="button"
+                ng-click="$ctrl.add()"
+                ng-disabled="!$ctrl.active || $ctrl.submitting || members.email.$invalid"
+              >
+                <i class="fa fa-fw fa-plus" aria-hidden="true"></i> Add
+              </button>
+            </span>
+          </div>
+        </div>
+        <div ng-repeat="email in $ctrl.emails" class="ph-component-member ph-fade">
+          <div class="ph-component-email">{{email}}</div>
+          <button type="button" class="btn btn-link ph-link-icon"
+            ng-click="$ctrl.remove(email)"
+          >
+            <i class="fa fa-fw fa-times"></i> Remove
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="ph-component-buttons text-right">
+      <button type="button" class="btn btn-primary"
+        ng-click="$ctrl.next()"
+        ng-disabled="(!$ctrl.authService.user.account.onboarding.channel.completedAt || $ctrl.createNew)
+          && (!$ctrl.active || $ctrl.submitting || channel.name.$invalid || channel.members.email.$viewValue)"
+      >
+        <i class="fa fa-fw" ng-class="{
+          'fa-circle-o-notch fa-spin': $ctrl.submitting,
+          'fa-check': !$ctrl.submitting
+        }"></i>
+        Next
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,25 @@
+.ph-expand-mixin(@max-height) {
+  &.ng-hide-remove, &.ng-enter{
+    transition: all @ph-animation-duration ease;
+    overflow: hidden;
+  }
+  &.ng-hide, &.ng-enter {
+    max-height: 0;
+  }
+  &.ng-enter.ng-enter-active {
+    max-height: @max-height;
+  }
+}
+
+.ph-collapse-mixin(@max-height) {
+  &.ng-hide-add, &.ng-leave  {
+    transition: all @ph-animation-duration ease;
+    overflow: hidden;
+  }
+  &.ng-hide-TODO, &.ng-leave {
+    max-height: @max-height;
+  }
+  &.ng-hide, &.ng-leave.ng-leave-active {
+    max-height: 0;
+  }
+}

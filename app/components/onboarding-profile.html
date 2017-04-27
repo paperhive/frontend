@@ -1,0 +1,147 @@
+<div class="ph-component-step"
+  ng-class="{
+    'ph-component-step-active': $ctrl.active
+      && !$ctrl.authService.user.account.onboarding.profile.completedAt,
+    'ph-component-step-inactive': !$ctrl.active,
+    'ph-component-step-complete':
+      $ctrl.authService.user.account.onboarding.profile.completedAt,
+    'ph-component-step-incomplete': !$ctrl.active
+      && !$ctrl.authService.user.account.onboarding.profile.completedAt,
+  }"
+>
+  <div class="ph-component-step-number">1</div>
+  <form name="profile" novalidate>
+    <h3>Complete your profile</h3>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="form-group has-feedback"
+          ng-class="{'has-error': profile.displayName.$invalid}"
+        >
+          <label for="name">Name</label>
+          <input name="displayName" type="text" class="form-control" placeholder="Full name"
+            ng-model="$ctrl.displayName"
+            ng-disabled="!$ctrl.active || $ctrl.submitting"
+            required ng-minlength="3" ng-maxlength="40"
+          >
+          <i ng-show="profile.displayName.$invalid"
+            class="fa fa-times form-control-feedback"
+          ></i>
+          <p class="help-block" uib-collapse="!profile.displayName.$invalid"
+            ng-messages="profile.displayName.$error"
+          >
+            <i class="fa fa-fw fa-warning"></i>
+            <span ng-message="required">A name is required.</span>
+            <span ng-message="minlength, maxlength">A name must have between 3 and 40 characters.</span>
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="form-group has-feedback"
+          ng-class="{'has-error': profile.email.$invalid}"
+        >
+          <label for="email">Email</label>
+          <input name="email" type="text" class="form-control" placeholder="Email"
+            ng-model="$ctrl.email"
+            ng-disabled="!$ctrl.active || $ctrl.submitting"
+            pattern=".*@.+\..+"
+            required
+          >
+          <i ng-show="profile.email.$invalid"
+            class="fa fa-times form-control-feedback"
+          ></i>
+          <p class="help-block" uib-collapse="!profile.email.$invalid"
+            ng-messages="profile.email.$error"
+          >
+            <i class="fa fa-fw fa-warning"></i>
+            <span ng-message="required">Please enter your email address.</span>
+            <span ng-message="email, pattern">The email address you provided is not valid.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label>Discipline</label>
+          <select name="disciplineSelect" class="form-control"
+            ng-model="$ctrl.disciplineSelect"
+            ng-options="discipline for discipline in $ctrl.disciplineOptions"
+            ng-disabled="!$ctrl.active || $ctrl.submitting"
+            required="true"
+          >
+            <option value="" disabled="true" ng-if="!$ctrl.disciplineSelect"
+            >Please select a discipline</option>
+          </select>
+        </div>
+        <div uib-collapse="$ctrl.disciplineSelect !== 'Other'">
+          <div class="form-group has-feedback"
+            ng-class="{'has-error': profile.disciplineText.$dirty && profile.disciplineText.$invalid}"
+          >
+            <input name="disciplineText" type="text" class="form-control"
+              placeholder="Discipline"
+              ng-model="$ctrl.disciplineText"
+              ng-disabled="!$ctrl.active || $ctrl.submitting"
+              ng-required="$ctrl.disciplineSelect === 'Other'"
+            >
+            <i ng-show="profile.disciplineText.$dirty && profile.disciplineText.$invalid"
+              class="fa fa-times form-control-feedback"
+            ></i>
+            <p class="help-block" uib-collapse="!profile.disciplineText.$dirty || !profile.disciplineText.$invalid"
+              ng-messages="profile.disciplineText.$error"
+            >
+              <i class="fa fa-fw fa-warning"></i>
+              <span ng-message="required">Please enter your discipline.</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label>Occupation</label>
+          <select name="occupation" class="form-control"
+            ng-model="$ctrl.occupationSelect"
+            ng-options="occupation for occupation in $ctrl.occupationOptions"
+            ng-disabled="!$ctrl.active || $ctrl.submitting"
+            required="true"
+          >
+            <option value="" disabled="true" ng-if="!$ctrl.occupationSelect"
+            >Please select an occupation</option>
+          </select>
+        </div>
+        <div uib-collapse="$ctrl.occupationSelect !== 'Other'">
+          <div class="form-group has-feedback"
+            ng-class="{'has-error': profile.occupationText.$dirty && profile.occupationText.$invalid}"
+          >
+            <input name="occupationText" type="text" class="form-control"
+              placeholder="Occupation"
+              ng-model="$ctrl.occupationText"
+              ng-disabled="!$ctrl.active || $ctrl.submitting"
+              ng-required="$ctrl.occupationSelect === 'Other'"
+            >
+            <i ng-show="profile.occupationText.$dirty && profile.occupationText.$invalid"
+              class="fa fa-times form-control-feedback"
+            ></i>
+            <p class="help-block" uib-collapse="!profile.occupationText.$dirty || !profile.occupationText.$invalid"
+              ng-messages="profile.occupationText.$error"
+            >
+              <i class="fa fa-fw fa-warning"></i>
+              <span ng-message="required">Please enter your occupation.</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ph-component-buttons text-right">
+      <button type="button" class="btn btn-primary"
+        ng-click="$ctrl.next()"
+        ng-disabled="!$ctrl.active || $ctrl.submitting || profile.$invalid"
+      >
+        <i class="fa fa-fw" ng-class="{
+          'fa-circle-o-notch fa-spin': $ctrl.submitting,
+          'fa-check': !$ctrl.submitting
+        }"></i>
+        Next
+      </button>
+    </div>
+  </form>
+</div>

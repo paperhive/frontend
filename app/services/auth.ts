@@ -1,3 +1,5 @@
+import { get } from 'lodash';
+
 import {localStorageAvailable} from '../utils/local-storage';
 
 export default function(app) {
@@ -11,13 +13,19 @@ export default function(app) {
     };
   });
 
-  app.factory('authService', ['authState', 'config', '$http', '$q', '$rootScope', '$window', '$location',
-    function(authState, config, $http, $q, $rootScope, $window, $location) {
+  app.factory('authService', ['authState', 'config', '$http', '$q', '$rootScope', '$window', '$location', 'notificationService',
+    function(authState, config, $http, $q, $rootScope, $window, $location, notificationService) {
       const authService = authState;
 
       // authService.returnPath
       function setReturnPath() {
-        if (['/login', '/password/request', '/password/reset', '/signup'].indexOf($location.path()) === -1) {
+        if ([
+          '/login',
+          '/password/request',
+          '/password/reset',
+          '/signup',
+          '/onboarding',
+        ].indexOf($location.path()) === -1) {
           authService.returnPath = $location.url();
         }
         if (!authService.returnPath) {
@@ -75,16 +83,48 @@ export default function(app) {
                   if (localStorageAvailable) {
                     $window.localStorage.token = response.data.token;
                   }
+
+                  // url where the user is sent after login
+                  let newUrl = response.data.returnUrl;
+
+                  // person not created right now, onboarding not completed and not on /onboarding
+                  const onboarding = authService.user.account.onboarding;
+                  const onboardingCompleted = onboarding
+                    && get(onboarding, 'profile.completedAt')
+                    && get(onboarding, 'channel.completedAt')
+                    && get(onboarding, 'bookmarks.completedAt');
+
+                  if (!onboardingCompleted) {
+                    // send to onboarding without notification
+                    // (if first login and newUrl is not channel invitation)
+                    if (response.data.personCreated && !/^\/channels\/invitationLink/.test(newUrl)) {
+                      newUrl = `/onboarding?returnUrl=${encodeURIComponent(newUrl)}`;
+                    } else {
+                      // show notification if not currently on onboarding
+                      if (!/^\/onboarding/.test($location.url())) {
+                        notificationService.notifications.push({
+                          type: 'info',
+                          message: `
+                            <strong><a href="/onboarding">Complete your profile</a></strong>
+                            to get started.
+                            `,
+                        });
+                      }
+                    }
+                  }
+
+                  if (newUrl) $location.url(newUrl);
+
                   resolve(response.data);
                 },
                 response => {
                   authService.logout();
                   reject(response.data);
-                }
-              )
+                },
+              );
             },
             reject,
-          )
+          );
         });
 
         return authService.loginPromise;

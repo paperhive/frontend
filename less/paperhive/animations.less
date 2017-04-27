@@ -1,6 +1,14 @@
+.ph-expand {
+  .ph-expand-mixin(40px);
+}
+
+.ph-collapse {
+  .ph-collapse-mixin(40px);
+}
+
 .ph-fade-out {
   &.ng-hide-add, &.ng-leave  {
-    transition: opacity @ph-animation-duration ease;
+    transition: all @ph-animation-duration ease;
   }
   &.ng-hide, &.ng-leave.ng-leave-active {
     opacity: 0;
@@ -9,7 +17,7 @@
 
 .ph-fade-in {
   &.ng-hide-remove, &.ng-enter{
-    transition: opacity @ph-animation-duration ease;
+    transition: all @ph-animation-duration ease;
   }
   &.ng-hide, &.ng-enter {
     opacity: 0;

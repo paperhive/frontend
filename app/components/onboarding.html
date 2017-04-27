@@ -1,0 +1,14 @@
+<div class="container">
+  <onboarding-profile
+    active="$ctrl.currentStep === 1"
+    on-next="$ctrl.currentStep === 1 && $ctrl.next()"
+  ></onboarding-profile>
+  <onboarding-channel
+    active="$ctrl.currentStep === 2"
+    on-next="$ctrl.currentStep === 2 && $ctrl.next()"
+  ></onboarding-channel>
+  <onboarding-bookmark
+    active="$ctrl.currentStep === 3"
+    on-next="$ctrl.currentStep === 3 && $ctrl.next()"
+  ></onboarding-bookmark>
+</div>

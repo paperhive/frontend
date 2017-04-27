@@ -26,6 +26,7 @@ import 'leaflet';
 // official angular modules
 import { bootstrap, module } from 'angular';
 import ngAnimate from 'angular-animate';    // ngAnimate module
+import ngMessages from 'angular-messages';  // ngMessages module
 import ngRoute from 'angular-route';        // ngRoute module
 import ngSanitize from 'angular-sanitize';  // ngSanitize module
 
@@ -52,6 +53,7 @@ import utils from './utils/index';
 export const paperhive = module(
     'paperhive', [
       ngAnimate,
+      ngMessages,
       ngRoute,
       ngSanitize,
       angularChartist,
