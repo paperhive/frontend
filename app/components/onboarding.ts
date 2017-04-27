@@ -11,7 +11,12 @@ export default function(app) {
 
       next() {
         if (this.currentStep === 3) {
-          this.$location.url(`/channels/${this.channelId}`);
+          const returnUrl = this.$location.search().returnUrl;
+          if (/^\/documents/.test(returnUrl)) {
+            this.$location.url(returnUrl);
+          } else {
+            this.$location.url(`/channels/${this.channelId}`);
+          }
           return;
         }
         this.currentStep += 1;

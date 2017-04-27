@@ -12,13 +12,10 @@ export default function(app) {
           }
 
           function onLogin(data) {
-            $location.url(data.returnUrl);
             if (data.personCreated) {
-              notificationService.notifications.push({
-                type: 'info',
-                message: 'Welcome to PaperHive! You can set your username ' +
-                  '<a href="./settings" class="alert-link">here</a>.',
-              });
+              $location.url(`/onboarding?returnUrl=${encodeURIComponent(data.returnUrl)}`);
+            } else {
+              $location.url(data.returnUrl);
             }
           }
 
