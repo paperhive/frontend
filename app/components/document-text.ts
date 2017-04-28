@@ -27,11 +27,10 @@ class DocumentTextCtrl {
   onSearchMatchesUpdate: (o: {searchMatches: any[]}) => void;
 
   static $inject = ['$animate', '$element', '$http', '$location',
-    '$routeSegment', '$scope', '$window', 'config', 'notificationService',
-    'tourService'];
+    '$routeSegment', '$scope', '$window', 'config', 'notificationService'];
   constructor($animate, $element, public $http, public $location,
               public $routeSegment, public $scope, $window, public config,
-              public notificationService, public tourService) {
+              public notificationService) {
     this.hoveredHighlights = {};
     this.hoveredMarginDiscussions = {draft: true};
     this.pageCoordinates = {};

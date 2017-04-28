@@ -1,9 +1,4 @@
-<ul class="nav navbar-nav"
-  popover-placement="bottom"
-  popover-is-open="tour.stages[tour.index] === 'signup'"
-  uib-popover-template="tour.urls.signup"
-  popover-trigger="'none'"
->
+<ul class="nav navbar-nav">
   <li ng-if="!auth.user && !auth.inProgress">
     <p class="navbar-btn ph-md-margin-left ph-md-margin-right">
       <a href="./signup?returnPath={{auth.returnPath}}"

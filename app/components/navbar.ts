@@ -2,11 +2,10 @@ require('./onboarding.less');
 
 export default function(app) {
   app.component('navbar', {
-    controller : ['$routeSegment', '$scope', 'tourService',
-        function($routeSegment, $scope, tourService) {
+    controller : ['$routeSegment', '$scope',
+        function($routeSegment, $scope) {
       $scope.collapsed = true;
 
-      $scope.tour = tourService;
       $scope.$routeSegment = $routeSegment;
     }],
     template: require('./navbar.html'),
