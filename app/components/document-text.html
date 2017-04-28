@@ -46,12 +46,6 @@
         on-page-number-update="$ctrl.pdfInfo.pageNumber = pageNumber"
         on-outline-update="$ctrl.pdfInfo.outline = outline"
         on-text-update="$ctrl.pdfText = str; $ctrl.pdfPageLengths = pageLengths;"
-
-        popover-placement="right-top"
-        popover-append-to-body="true"
-        popover-is-open="$ctrl.tourService.stages[$ctrl.tourService.index] === 'highlight'"
-        uib-popover-template="$ctrl.tourService.urls.highlight"
-        popover-trigger="'none'"
       ></pdf-full>
     </div>
     <div class="col-md-3">

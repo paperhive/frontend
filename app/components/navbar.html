@@ -4,13 +4,7 @@
     role="navigation"
   >
   <div class="container-fluid">
-    <div
-      class="navbar-header"
-      popover-placement="bottom-left"
-      popover-is-open="tour.stages[tour.index] === 'start' && !tour.visited && $routeSegment.name !== 'main'"
-      uib-popover-template="tour.urls.start"
-      popover-trigger="'none'"
-    >
+    <div class="navbar-header">
       <!-- toggle nav -->
       <button ng-click="collapsed=!collapsed" type="button" class="navbar-toggle">
         <span class="sr-only">Toggle navigation</span>

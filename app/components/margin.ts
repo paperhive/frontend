@@ -28,9 +28,9 @@ export default function(app) {
     },
     controller: [
       '$document', '$element', '$q', '$scope', '$timeout', '$uibModal', '$window', 'scroll',
-      'channelService', 'distangleService', 'tourService',
+      'channelService', 'distangleService',
       function($document, $element, $q, $scope, $timeout, $uibModal, $window, scroll, channelService,
-               distangleService, tourService) {
+               distangleService) {
         const $ctrl = this;
         const clusterHeight = 135;
 
@@ -175,27 +175,6 @@ export default function(app) {
           });
           return promise;
         };
-
-        $ctrl.tour = tourService;
-        // scroll to discussion tour popover
-        $scope.$watch(
-          '$ctrl.discussionPositions["cDmUY04FkYx9"] !== undefined ' +
-          '&& $ctrl.tour.stages[$ctrl.tour.index] === "margin-discussion"',
-          shouldScroll => {
-            if (shouldScroll) {
-              // wait until popover is rendered
-              $timeout(() => {
-                // trigger popover positioning
-                angular.element($window).scroll();
-                $timeout(() => {
-                  scroll.scrollTo('#discussionTourPopover', {
-                    offset: ($ctrl.viewportOffsetTop || 0) + 130,
-                  });
-                });
-              }, 400);
-            }
-          },
-        );
 
         // sizes of discussions by discussion id
         $ctrl.discussionSizes = {};

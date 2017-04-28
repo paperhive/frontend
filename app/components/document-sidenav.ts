@@ -36,8 +36,8 @@ export default function(app) {
 
       onKeydownBind: (event: JQueryKeyEventObject) => void;
 
-      static $inject = ['$http', '$scope', '$window', 'tourService'];
-      constructor(public $http, $scope, public $window, public tour) {
+      static $inject = ['$http', '$scope', '$window'];
+      constructor(public $http, $scope, public $window) {
 
         $scope.$watchCollection('$ctrl.documentCtrl.revisions', this.updateKudos.bind(this));
         $scope.$watchCollection('$ctrl.activeRevision', this.updatePublisherLink.bind(this));
