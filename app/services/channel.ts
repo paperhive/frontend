@@ -117,6 +117,12 @@ export default function(app) {
         .then(() => remove(channel.members, {person: {id: memberId}}));
     }
 
+    hasRole(channel, memberId, role) {
+      const member = find(channel.members, {person: {id: memberId}}) as any;
+      if (!member) return false;
+      return member.roles.indexOf(role) !== -1;
+    }
+
     selectChannel(channel) {
       this.selectedChannel = channel;
     }
