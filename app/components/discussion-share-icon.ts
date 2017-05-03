@@ -8,7 +8,14 @@ export default function(app) {
       discussion: '<',
     },
     controller: class DiscussionShareIconCtrl {
+      discussion: any;
       popoverUrl = popoverUrl;
+      url: string;
+
+      constructor() {
+        const target = this.discussion.target;
+        this.url = `/documents/${target.document}/revisions/${target.documentRevision}?a=d:${this.discussion.id}`;
+      }
     },
     template: `
       <a class="btn btn-link btn-xs"
@@ -18,7 +25,7 @@ export default function(app) {
         popover-placement="bottom-right"
         popover-trigger="'outsideClick'"
         role="button"
-        ng-href="{{'documents' | routeSegmentUrl}}?a=d:{{$ctrl.discussion.id}}"
+        ng-href="{{$ctrl.url}}"
         ng-click="$event.preventDefault()"
       >
         <i class="fa fa-fw fa-lg fa-share-alt"></i>
