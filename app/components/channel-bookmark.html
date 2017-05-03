@@ -16,19 +16,19 @@
     <i class="fa fa-fw fa-caret-down ph-split-icon-right"></i>
   </button>
   <ul class="dropdown-menu ph-dropdown-menu-full" role="menu">
-    <li ng-repeat="channel in $ctrl.channelService.channels"
-      ng-class="{disabled: !channel.isActive || !$ctrl.channelService.hasRole(channel, $ctrl.authService.user.id, 'owner')}"
+    <li ng-repeat="channel in $ctrl.channelService.channels | filter:{isActive: '!false'}"
+      ng-class="{disabled: !$ctrl.channelService.hasRole(channel, $ctrl.authService.user.id, 'owner')}"
     >
       <a href=""
-        ng-click="channel.isActive &&
+        ng-click="
           $ctrl.channelService.hasRole(channel, $ctrl.authService.user.id, 'owner') &&
           ($ctrl.documentCtrl.bookmarks.indexOf(channel.id) > -1 ?
           $ctrl.removeBookmark(channel.id) : $ctrl.bookmark(channel.id));
           $event.stopPropagation()"
-        title="{{channel.isActive
-          ? ($ctrl.channelService.hasRole(channel, $ctrl.authService.user.id, 'owner')
-            ? $ctrl.channelService.getNameDescription(channel) : 'Only channel owners can bookmark documents.')
-          : 'Channel is inactive'
+        title="{{
+            $ctrl.channelService.hasRole(channel, $ctrl.authService.user.id, 'owner')
+            ? $ctrl.channelService.getNameDescription(channel)
+            : 'Only channel owners can bookmark documents.'
         }}"
       >
         <div class="ph-grow-container">
