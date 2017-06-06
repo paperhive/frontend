@@ -20,7 +20,10 @@ export default function(app) {
 
         $scope.$watch(
           () => channelService.get($routeParams.channelId),
-          channel => this.channel = channel,
+          channel => {
+            this.channel = channel;
+            channelService.selectChannel(channel);
+          },
         );
 
         $scope.$watch('$ctrl.authService.user', user => {
