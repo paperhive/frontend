@@ -25,7 +25,7 @@ gcloud auth activate-service-account --key-file gcloud-secret.json
 gcloud docker -- push ${PAPERHIVE_DOCKER_IMAGE}
 
 # configure kubectl
-kubectl config set-cluster paperhive-cluster --server=https://104.155.15.140 --api-version=v1 --certificate-authority=${DIR}/ca.crt
+kubectl config set-cluster paperhive-cluster --server=https://35.189.209.36 --api-version=v1 --certificate-authority=${DIR}/ca.crt
 kubectl config set-credentials travis-ci --token=${KUBERNETES_TOKEN}
 kubectl config set-context paperhive-context --cluster=paperhive-cluster --namespace=dev-frontend --user=travis-ci
 kubectl config use-context paperhive-context
