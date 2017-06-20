@@ -4,7 +4,7 @@
   "description": "PaperHive frontend",
   "scripts": {
     "build": "npm run clean && npm-run-all -s build:*",
-    "build:webpack": "webpack --config webpack.config.js --optimize-minimize",
+    "build:webpack": "NODE_ENV=production webpack --config webpack.config.js",
     "clean": "rimraf build",
     "lint:ts": "tslint app/**/*.ts",
     "lint:js": "eslint test *.js",
@@ -64,6 +64,7 @@
     "rimraf": "^2.5.4",
     "tslint": "^5.0.0",
     "typescript": "^2.1.5",
+    "uglifyjs-webpack-plugin": "^0.4.6",
     "webpack": "^3.0.0",
     "webpack-dev-server": "^2.4.0"
   },
