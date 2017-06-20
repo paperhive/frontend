@@ -2,13 +2,16 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const webpack = require('webpack');
 
 const config = require('./config.json');
 
 const extractCss = new ExtractTextPlugin('index.css');
 
-module.exports = {
+const isProd = process.env.NODE_ENV === 'production';
+
+const webpackConfig = {
   entry: {
     index: './app/index.ts',
   },
@@ -151,3 +154,9 @@ module.exports = {
   ],
   performance: { hints: false },
 };
+
+if (isProd) {
+  webpackConfig.plugins.push(new UglifyJSPlugin());
+}
+
+module.exports = webpackConfig;
