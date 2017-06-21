@@ -34,7 +34,7 @@ export default function(app) {
       publisherLink: string;
       docNav: string;
 
-      onKeydownBind: (event: JQueryKeyEventObject) => void;
+      onKeydownBind: (event: JQueryEventObject) => void;
 
       static $inject = ['$http', '$scope', '$window'];
       constructor(public $http, $scope, public $window) {

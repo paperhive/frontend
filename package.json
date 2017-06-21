@@ -26,7 +26,7 @@
     "@types/async": "^2.0.34",
     "@types/chartist": "^0.9.33",
     "@types/highlight.js": "^9.1.8",
-    "@types/jquery": "^2.0.34",
+    "@types/jquery": "^3.2.0",
     "@types/lodash": "^4.14.41",
     "@types/mathjax": "^0.0.31",
     "@types/node": "^8.0.0",
