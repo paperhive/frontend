@@ -2,11 +2,11 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   namespace: dev-frontend
-  name: frontend-$PAPERHIVE_BRANCH-ingress
+  name: "frontend-$PAPERHIVE_BRANCH-ingress"
   labels:
     name: frontend
-    branch: $PAPERHIVE_BRANCH
-    commit: $PAPERHIVE_COMMIT
+    branch: "$PAPERHIVE_BRANCH"
+    commit: "$PAPERHIVE_COMMIT"
   annotations:
     kubernetes.io/ingress.class: "nginx"
     kubernetes.io/tls-acme: "true"
@@ -20,7 +20,7 @@ spec:
   - host: dev.paperhive.org
     http:
       paths:
-      - path: /frontend/$PAPERHIVE_BRANCH
+      - path: "/frontend/$PAPERHIVE_BRANCH"
         backend:
-          serviceName: frontend-$PAPERHIVE_BRANCH-service
+          serviceName: "frontend-$PAPERHIVE_BRANCH-service"
           servicePort: 80
