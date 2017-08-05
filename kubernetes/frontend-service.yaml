@@ -2,11 +2,11 @@ apiVersion: v1
 kind: Service
 metadata:
   namespace: dev-frontend
-  name: frontend-$PAPERHIVE_BRANCH-service
+  name: "frontend-$PAPERHIVE_BRANCH-service"
   labels:
     name: frontend
-    branch: $PAPERHIVE_BRANCH
-    commit: $PAPERHIVE_COMMIT
+    branch: "$PAPERHIVE_BRANCH"
+    commit: "$PAPERHIVE_COMMIT"
 spec:
   type: NodePort
   ports:
@@ -15,5 +15,5 @@ spec:
       protocol: TCP
   selector:
     name: frontend
-    branch: $PAPERHIVE_BRANCH
-    commit: $PAPERHIVE_COMMIT
+    branch: "$PAPERHIVE_BRANCH"
+    commit: "$PAPERHIVE_COMMIT"
