@@ -28,7 +28,7 @@
     "@types/highlight.js": "^9.1.8",
     "@types/jquery": "^3.2.0",
     "@types/lodash": "^4.14.41",
-    "@types/mathjax": "^0.0.31",
+    "@types/mathjax": "^0.0.32",
     "@types/node": "^8.0.0",
     "@types/rangy": "^0.0.31",
     "@types/rx": "^4.1.1",
