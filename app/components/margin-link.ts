@@ -43,7 +43,7 @@ export default function(app) {
           ctrl.parentTop = parentBoundingRect.top;
 
           // count elements above/below the viewport and get next cluster
-          forEach(ctrl.clusters, (cluster) => {
+          forEach(ctrl.clusters, (cluster: any) => {
             const top = cluster.top;
 
             if (ctrl.position === 'top') {

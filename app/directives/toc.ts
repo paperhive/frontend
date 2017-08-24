@@ -78,7 +78,7 @@ export default function(app) {
             function applyScrollspyId(_toc, id) {
               if (!_toc) { return; }
               let contained = false;
-              _.forEach(_toc, function(entry) {
+              _.forEach(_toc, function(entry: any) {
                 entry.active = false;
                 if (applyScrollspyId(entry.subToc, id) || entry.id === id) {
                   entry.active = true;
@@ -111,4 +111,4 @@ export default function(app) {
       };
     }],
   );
-};
+}

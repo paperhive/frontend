@@ -1,6 +1,18 @@
 import { copy } from 'angular';
 import { assign, clone, cloneDeep, find, forEach, isArray, isEqual, pickBy } from 'lodash';
 
+type QueryValue = string | boolean | number | Date;
+
+interface IQueryObj {
+  [k: string]: QueryValue | QueryValue[];
+}
+
+interface IFilter {
+  getUrlQuery(): IQueryObj;
+  getApiQuery(): IQueryObj;
+  updateFromUrlQuery(query: IQueryObj);
+}
+
 interface IDateFilterOptions {
   apiParameters: {
     from: string;
@@ -20,7 +32,7 @@ interface IDateFilterData {
   to: string;
 }
 
-class DateFilter {
+class DateFilter implements IFilter {
   mode: string;
   from: Date;
   to: Date;
@@ -158,7 +170,7 @@ interface ITermsFilterOptions {
   onUpdate(): void;
 }
 
-class TermsFilter<T> {
+class TermsFilter<T extends QueryValue> implements IFilter {
   private terms: T[] = [];
 
   constructor(public options: ITermsFilterOptions) {}
@@ -262,7 +274,7 @@ class SelectCtrl {
 export default function(app) {
   app.component('search', {
     controller: class SearchCtrl {
-      filterCtrls = {
+      filterCtrls: {[k: string]: IFilter} = {
         access: new TermsFilter({
           onUpdate: this.updateCtrlParams.bind(this),
           type: 'boolean',
@@ -397,7 +409,7 @@ export default function(app) {
 
       static updateCtrlParams(ctrls, targetParams) {
         const params = {};
-        forEach(ctrls, filter => assign(params, filter.getApiQuery()));
+        forEach(ctrls, (filter: IFilter) => assign(params, filter.getApiQuery()));
         copy(pickBy(params, v => v !== undefined), targetParams);
       }
 
@@ -548,4 +560,4 @@ export default function(app) {
     },
     template: require('./search.html'),
   });
-};
+}
