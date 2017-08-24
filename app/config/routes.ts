@@ -18,7 +18,7 @@ export default function(app) {
             city: 'Berlin',
             country: 'Germany',
           },
-          phone: '+493031478924',
+          phone: '+493031475792',
         },
       };
 
