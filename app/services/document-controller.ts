@@ -77,6 +77,10 @@ export default function(app) {
             return `arXiv ${revision.remote.revision}`;
           }
 
+          if (revision.remote.type === 'transcript') {
+            return revision.publisher;
+          }
+
           if (revision.remote.type === 'oapen') return 'OAPEN';
 
           if (revision.remote.type === 'langsci') {
