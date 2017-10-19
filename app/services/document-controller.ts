@@ -45,6 +45,17 @@ export default function(app) {
                 return true;
               }
             }
+
+            if (revision.remote.type === 'springer') {
+              try {
+                const result = await $http.head(revision.file.url);
+                if (result.status === 200) {
+                  return true;
+                }
+              } catch (error) {
+                return false;
+              }
+            }
           } catch (err) {
             notificationService.notifications.push({
               type: 'error',
@@ -96,6 +107,10 @@ export default function(app) {
             return `PaperHive ${revision.remote.revision}`;
           }
 
+          if (revision.remote.type === 'springer') {
+            return revision.publisher;
+          }
+
           // isbn
           if (revision.isbn) {
             return `ISBN ${revision.isbn}`;
@@ -115,6 +130,8 @@ export default function(app) {
             case 'arxiv':
               return `https://arxiv.org/abs/${revision.remote.id}${revision.remote.revision}`;
             case 'elsevier':
+            case 'springer':
+            case 'transcript':
               return `https://dx.doi.org/${revision.remote.id}`;
             case 'langsci':
               return `http://langsci-press.org/catalog/book/${revision.remote.id}`;
