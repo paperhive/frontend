@@ -13,7 +13,7 @@
     "test:unit": "karma start --single-run",
     "test:e2e": "protractor protractor.conf.js",
     "watch": "npm run clean && npm-run-all -p watch:*",
-    "watch:webpack": "webpack-dev-server --inline --history-api-fallback"
+    "watch:webpack": "webpack-dev-server --inline --history-api-fallback --allowed-hosts localhost.paperhive.org"
   },
   "author": "André Gaul <andre@paperhive.org>",
   "license": "GPL-3.0",
