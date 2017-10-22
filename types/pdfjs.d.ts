@@ -244,6 +244,11 @@ interface PDFJSUtilStatic {
   normalizeRect(rect: number[]): number[];
 }
 
+interface PDFDocumentLoadingTask extends PDFPromise<PDFDocumentProxy> {
+  onPassword?: (fn: (password: string) => void, reason: string) => string,
+  onProgress?: (progressData: PDFProgressData) => void
+}
+
 interface PDFJS {
   maxImageSize: number;
   cMapUrl: string;
@@ -267,12 +272,7 @@ interface PDFJS {
   isEvalSupported: boolean;
   Util: PDFJSUtilStatic;
   AnnotationLayer: PDFAnnotationLayer;
-  getDocument(
-    source: string | Uint8Array | PDFSource,
-    pdfDataRangeTransport?: any,
-    passwordCallback?: (fn: (password: string) => void, reason: string) => string,
-    progressCallback?: (progressData: PDFProgressData) => void
-  ): PDFPromise<PDFDocumentProxy>;
+  getDocument(source: string | Uint8Array | PDFSource): PDFDocumentLoadingTask;
   PDFViewer(params: PDFViewerParams): void;
   renderTextLayer(params: PDFRenderTextParameters): PDFRenderTextTask;
 }
