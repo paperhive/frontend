@@ -214,13 +214,17 @@ interface PDFAnnotationLayerParameters {
   update(params: PDFAnnotationLayerParameters): void;
 }
 
+interface PDFGetAnnotationsParameters {
+  intent?: 'display' | 'print';
+}
+
 interface PDFPageProxy {
   pageNumber: number;
   rotate: number;
   ref: PDFRef;
   view: number[];
   getViewport(scale: number, rotate?: number): PDFPageViewport;
-  getAnnotations(): PDFPromise<PDFAnnotations>;
+  getAnnotations(params: PDFGetAnnotationsParameters?): PDFPromise<PDFAnnotations>;
   render(params: PDFRenderParams): PDFRenderTask;
   getTextContent(): PDFPromise<PDFTextContent>;
   // getOperationList(): PDFPromise<>;

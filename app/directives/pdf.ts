@@ -297,7 +297,7 @@ export default function(app) {
         });
 
         if (!this.annotations) {
-          this.annotations = await this.page.getAnnotations();
+          this.annotations = await this.page.getAnnotations({intent: 'display'});
         }
 
         // wipe all children from the container
