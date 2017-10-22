@@ -34,13 +34,14 @@ export default function(app) {
           if (!url) return;
 
           // get PDF
-          const loadingTask = PDFJS.getDocument(url, undefined, undefined, progress => {
+          const loadingTask = PDFJS.getDocument(url);
+          loadingTask.onProgress = progress => {
             $scope.$apply(() => {
               // update download status
               status.bytesLoaded = progress.loaded;
               status.bytesTotal = progress.total;
             });
-          });
+          };
 
           // update when download finished
           loadingTask.then(
