@@ -272,6 +272,10 @@ export default function(app) {
           : `pdfd:${dest}`;
         this.scrollToAnchor(anchor);
       }
+
+      onFileAttachmentAnnotation({id, filename, content}) {
+        console.warn('File attachments are not supported yet.');
+      }
     }
 
     // render pdf annotations (e.g., links)
