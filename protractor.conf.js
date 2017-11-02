@@ -15,12 +15,12 @@ exports.config = {
 // https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
 const saucelabsCapabilities = [{
   browserName: 'chrome',
-  version: '54',
+  version: '61',
   platform: 'Windows 10',
   name: 'PaperHive (chrome)',
 }, {
   browserName: 'firefox',
-  version: '50',
+  version: '56',
   platform: 'Windows 10',
   name: 'PaperHive (firefox)'
 }, {
@@ -32,8 +32,8 @@ const saucelabsCapabilities = [{
   // Note: Safari 10 requires Selenium 3
   // (not yet running on SauceLabs as of 2017-01-09)
   browserName: 'safari',
-  version: '9',
-  platform: 'OS X 10.11',
+  version: '11',
+  platform: 'macOS 10.12',
   name: 'PaperHive (safari)',
 },
 /*
