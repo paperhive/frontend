@@ -32,7 +32,7 @@ const saucelabsCapabilities = [{
   // Note: Safari 10 requires Selenium 3
   // (not yet running on SauceLabs as of 2017-01-09)
   browserName: 'safari',
-  version: '11',
+  version: '10',
   platform: 'macOS 10.12',
   name: 'PaperHive (safari)',
 },
