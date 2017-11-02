@@ -25,7 +25,7 @@ const saucelabsCapabilities = [{
   name: 'PaperHive (firefox)'
 }, {
   browserName: 'MicrosoftEdge',
-  version: '14',
+  version: '15',
   platform: 'Windows 10',
   name: 'PaperHive (edge)',
 }, {
