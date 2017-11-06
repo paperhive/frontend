@@ -82,14 +82,24 @@
           <p><i class="fa fa-lock fa-5x" aria-hidden="true"></i></p>
 
           <h3>No access to PDF :(</h3>
-          <p>
-            PaperHive relies on the publisher's access control and,
-            unfortunately, you currently don't have access to this document.
-          </p>
-          <p>
-            It might be worthwhile to check if you can open it from within your
-            institutional network or via your institution's VPN.
-          </p>
+
+          <div ng-if="$ctrl.revision.file.url">
+            <p>
+              PaperHive relies on the publisher's access control and,
+              unfortunately, you currently don't have access to this document.
+            </p>
+            <p>
+              It might be worthwhile to check if you can open it from within your
+              institutional network or via your institution's VPN.
+            </p>
+          </div>
+
+          <div ng-if="!$ctrl.revision.file.url">
+            <p>
+              Currently, PaperHive cannot retrieve the PDF of this document.
+            </p>
+          </div>
+
           <p ng-if="$ctrl.latestAccessibleRevision">
             You can also access
             <a href="./documents/{{$ctrl.latestAccessibleRevision.id}}/revisions/{{$ctrl.latestAccessibleRevision.revision}}">another version of the document</a>.
