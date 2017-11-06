@@ -31,19 +31,7 @@ export default function(app) {
           if (revision.isOpenAccess) return true;
           try {
             if (revision.remote.type === 'elsevier') {
-              // extract apiKey from file.url
-              const parsedUrl = urlParse(revision.file.url, true);
-              const apiKey = parsedUrl.query.apiKey;
-
-              const id = revision.pii ? `pii/${revision.pii}` : `doi/${revision.doi}`;
-
-              const result = await $http.get(
-                `https://api.elsevier.com/content/article/entitlement/${id}`,
-                {params: {apiKey, httpAccept: 'application/json'}},
-              );
-              if (get(result, 'data.entitlement-response.document-entitlement.entitled')) {
-                return true;
-              }
+              return false;
             }
 
             if (revision.remote.type === 'springer') {
