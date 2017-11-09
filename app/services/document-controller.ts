@@ -31,18 +31,17 @@ export default function(app) {
           if (revision.isOpenAccess) return true;
           try {
             if (revision.remote.type === 'elsevier') {
-              // extract apiKey from file.url
-              const parsedUrl = urlParse(revision.file.url, true);
-              const apiKey = parsedUrl.query.apiKey;
+              return false;
+            }
 
-              const id = revision.pii ? `pii/${revision.pii}` : `doi/${revision.doi}`;
-
-              const result = await $http.get(
-                `https://api.elsevier.com/content/article/entitlement/${id}`,
-                {params: {apiKey, httpAccept: 'application/json'}},
-              );
-              if (get(result, 'data.entitlement-response.document-entitlement.entitled')) {
-                return true;
+            if (revision.remote.type === 'springer') {
+              try {
+                const result = await $http.head(revision.file.url);
+                if (result.status === 200) {
+                  return true;
+                }
+              } catch (error) {
+                return false;
               }
             }
           } catch (err) {
@@ -77,6 +76,10 @@ export default function(app) {
             return `arXiv ${revision.remote.revision}`;
           }
 
+          if (revision.remote.type === 'transcript') {
+            return revision.publisher;
+          }
+
           if (revision.remote.type === 'oapen') return 'OAPEN';
 
           if (revision.remote.type === 'langsci') {
@@ -90,6 +93,10 @@ export default function(app) {
               return `Lecture notes`;
             }
             return `PaperHive ${revision.remote.revision}`;
+          }
+
+          if (revision.remote.type === 'springer') {
+            return revision.publisher;
           }
 
           // isbn
@@ -111,6 +118,8 @@ export default function(app) {
             case 'arxiv':
               return `https://arxiv.org/abs/${revision.remote.id}${revision.remote.revision}`;
             case 'elsevier':
+            case 'springer':
+            case 'transcript':
               return `https://dx.doi.org/${revision.remote.id}`;
             case 'langsci':
               return `http://langsci-press.org/catalog/book/${revision.remote.id}`;

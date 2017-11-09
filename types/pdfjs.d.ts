@@ -214,13 +214,17 @@ interface PDFAnnotationLayerParameters {
   update(params: PDFAnnotationLayerParameters): void;
 }
 
+interface PDFGetAnnotationsParameters {
+  intent?: 'display' | 'print';
+}
+
 interface PDFPageProxy {
   pageNumber: number;
   rotate: number;
   ref: PDFRef;
   view: number[];
   getViewport(scale: number, rotate?: number): PDFPageViewport;
-  getAnnotations(): PDFPromise<PDFAnnotations>;
+  getAnnotations(params: PDFGetAnnotationsParameters?): PDFPromise<PDFAnnotations>;
   render(params: PDFRenderParams): PDFRenderTask;
   getTextContent(): PDFPromise<PDFTextContent>;
   // getOperationList(): PDFPromise<>;
@@ -238,6 +242,11 @@ interface PDFObjects {
 
 interface PDFJSUtilStatic {
   normalizeRect(rect: number[]): number[];
+}
+
+interface PDFDocumentLoadingTask extends PDFPromise<PDFDocumentProxy> {
+  onPassword?: (fn: (password: string) => void, reason: string) => string,
+  onProgress?: (progressData: PDFProgressData) => void
 }
 
 interface PDFJS {
@@ -263,12 +272,7 @@ interface PDFJS {
   isEvalSupported: boolean;
   Util: PDFJSUtilStatic;
   AnnotationLayer: PDFAnnotationLayer;
-  getDocument(
-    source: string | Uint8Array | PDFSource,
-    pdfDataRangeTransport?: any,
-    passwordCallback?: (fn: (password: string) => void, reason: string) => string,
-    progressCallback?: (progressData: PDFProgressData) => void
-  ): PDFPromise<PDFDocumentProxy>;
+  getDocument(source: string | Uint8Array | PDFSource): PDFDocumentLoadingTask;
   PDFViewer(params: PDFViewerParams): void;
   renderTextLayer(params: PDFRenderTextParameters): PDFRenderTextTask;
 }

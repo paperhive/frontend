@@ -15,17 +15,17 @@ exports.config = {
 // https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
 const saucelabsCapabilities = [{
   browserName: 'chrome',
-  version: '54',
+  version: '61',
   platform: 'Windows 10',
   name: 'PaperHive (chrome)',
 }, {
   browserName: 'firefox',
-  version: '50',
+  version: '56',
   platform: 'Windows 10',
   name: 'PaperHive (firefox)'
 }, {
   browserName: 'MicrosoftEdge',
-  version: '14',
+  version: '15',
   platform: 'Windows 10',
   name: 'PaperHive (edge)',
 }, {

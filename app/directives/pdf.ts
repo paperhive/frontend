@@ -272,6 +272,10 @@ export default function(app) {
           : `pdfd:${dest}`;
         this.scrollToAnchor(anchor);
       }
+
+      onFileAttachmentAnnotation({id, filename, content}) {
+        console.warn('File attachments are not supported yet.');
+      }
     }
 
     // render pdf annotations (e.g., links)
@@ -297,7 +301,7 @@ export default function(app) {
         });
 
         if (!this.annotations) {
-          this.annotations = await this.page.getAnnotations();
+          this.annotations = await this.page.getAnnotations({intent: 'display'});
         }
 
         // wipe all children from the container
@@ -1116,6 +1120,11 @@ export default function(app) {
           case 'XYZ':
             top = destRef[3];
             break;
+          case 'Fit':
+          case 'FitV':
+          case 'FitB':
+          case 'FitBV':
+            break;
           case 'FitH':
           case 'FitBH':
             top = destRef[2];
@@ -1134,13 +1143,9 @@ export default function(app) {
           throw new Error('page number out of bounds');
         }
 
-        if (top === null || top === undefined) {
-          console.warn('ignoring destination without coordinates');
-          return;
-        }
         const page = this.pages[pageNumber];
         if (!page.pageSize) throw new Error('pageSize not available');
-        const coords = page.pageSize.convertToViewportPoint(0, top);
+        const coords = page.pageSize.convertToViewportPoint(0, top !== undefined ? top : page.pageSize.height);
 
         scroll.scrollTo(
           this.element.offset().top +
