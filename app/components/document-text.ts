@@ -107,7 +107,7 @@ class DocumentTextCtrl {
     }
 
     // No HTTPS/Cors? PaperHive can proxy the document if it's open access.
-    if (this.revision.isOpenAccess) {
+    if (this.revision.isOpenAccess && this.revision.file.url) {
       const encodedUrl = encodeURIComponent(this.revision.file.url);
       this.pdfUrl = `${this.config.apiUrl}/proxy?url=${encodedUrl}`;
     }
