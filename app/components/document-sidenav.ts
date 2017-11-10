@@ -28,7 +28,7 @@ export default function(app) {
       onSearchUpdate: (o: {searchStr: string, matchIndex: number}) => void;
       onToggle: any;
 
-      kudosOpen = true;
+      kudosOpen = false;
       kudosDoi: string;
       kudosTestedDoi: string;
       publisherLink: string;
@@ -87,9 +87,17 @@ export default function(app) {
         this.kudosTestedDoi = doi;
 
         // test doi against kudos server
-        this.$http.get(`https://api.growkudos.com/widgets/article/${doi}`)
+        this.$http.get(`https://api.growkudos.com/articles/${doi}`)
           .then(
-            () => this.kudosDoi = doi,
+            response => {
+              const data = response.data;
+
+              this.kudosDoi = doi;
+              this.kudosOpen =
+                data.author_perspectives && data.author_perspectives.length > 0 ||
+                data.impact_statement ||
+                data.lay_summary;
+            },
             response => {
               if (response.status !== 404) {
                 throw new Error(`Error testing DOI on Kudos (status ${response.status})`);
