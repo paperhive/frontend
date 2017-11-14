@@ -18,6 +18,11 @@
   "author": "André Gaul <andre@paperhive.org>",
   "license": "GPL-3.0",
   "private": true,
+  "greenkeeper": {
+    "ignore": [
+      "pdfjs-dist"
+    ]
+  },
   "devDependencies": {
     "@types/angular": "~1.6.2",
     "@types/angular-animate": "~1.5.5",
