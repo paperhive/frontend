@@ -161,11 +161,11 @@ interface ITermsFilterOptions {
   type: string;
   apiParameters: {
     term: string;
-    missing: string;
+    missing?: string;
   };
   urlParameters: {
     term: string;
-    missing: string;
+    missing?: string;
   };
   onUpdate(): void;
 }
@@ -196,11 +196,14 @@ class TermsFilter<T extends QueryValue> implements IFilter {
 
   getApiQuery() {
     const terms = this.terms.filter(term => term !== null);
-    return {
+    const result = {
       [this.options.apiParameters.term]: terms.length > 0 ? terms : undefined,
-      [this.options.apiParameters.missing]: this.terms.indexOf(null) !== -1
-        ? true : undefined,
-    };
+    } as any;
+    if (this.options.apiParameters.missing) {
+      result[this.options.apiParameters.missing] =
+        this.terms.indexOf(null) !== -1 ? true : undefined;
+    }
+    return result;
   }
 
   getUrlQuery() {
@@ -209,7 +212,9 @@ class TermsFilter<T extends QueryValue> implements IFilter {
       .filter(term => term !== null)
       .map(term => term === null ? null : term.toString());
     if (terms.length > 0) result[this.options.urlParameters.term] = terms;
-    if (this.terms.indexOf(null) !== -1) result[this.options.urlParameters.missing] = 'true';
+    if (this.options.urlParameters.missing && this.terms.indexOf(null) !== -1) {
+      result[this.options.urlParameters.missing] = 'true';
+    }
     return result;
   }
 
@@ -222,9 +227,11 @@ class TermsFilter<T extends QueryValue> implements IFilter {
       newTerms.push(parseValue(urlTerms, this.options.type));
     }
 
-    const missing = query[this.options.urlParameters.missing] as string;
-    if (missing !== undefined && parseValue(missing, 'boolean')) {
-      newTerms.push(null);
+    if (this.options.urlParameters.missing) {
+      const missing = query[this.options.urlParameters.missing] as string;
+      if (missing !== undefined && parseValue(missing, 'boolean')) {
+        newTerms.push(null);
+      }
     }
 
     if (!isEqual(newTerms, this.terms)) {
@@ -297,6 +304,12 @@ export default function(app) {
           onUpdate: this.updateCtrlParams.bind(this),
           apiParameters: {from: 'publishedAfter', to: 'publishedBefore'},
           urlParameters: {mode: 'publishedAtMode', from: 'publishedAtFrom', to: 'publishedBefore'},
+        }),
+        remoteType: new TermsFilter({
+          onUpdate: this.updateCtrlParams.bind(this),
+          type: 'string',
+          apiParameters: {term: 'remoteType'},
+          urlParameters: {term: 'remoteType'},
         }),
       };
 
