@@ -3,14 +3,15 @@ import angular from 'angular';
 export function getRevisionMetadata(revision) {
   // TODO: Cut description down to 150 chars? cf.
   // <http://moz.com/learn/seo/meta-description>
+  const authors = revision.authors.map(author => author.name).join(', ');
   const metadata = [
     {
       name: 'description',
-      content: revision.title + ' by ' + revision.authors.join(', ') + '.',
+      content: revision.title + ' by ' + authors + '.',
     },
     {
       name: 'author',
-      content: revision.authors.map(author => author.name).join(', '),
+      content: authors,
     },
     {name: 'keywords', content: revision.tags.join(', ')},
   ];
