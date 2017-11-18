@@ -1,10 +1,9 @@
 export default function(app) {
   app.component('navbarUser', {
-    controller: [ '$scope', 'authService',
-      function($scope, authService) {
-        $scope.auth = authService;
-      },
-    ],
+    controller: class NavbarUserCtrl {
+      static $inject = ['authService'];
+      constructor(public authService) {}
+    },
     template: require('./navbar-user.html'),
   });
-};
+}
