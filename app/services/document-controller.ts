@@ -217,6 +217,20 @@ export default function(app) {
             });
         }
 
+        static async upload(file: File, onProgress: (o: {submittedBytes: number}) => void) {
+          return $http.post(
+            `${config.apiUrl}/documents`,
+            file,
+            {
+              headers: {
+                'Content-Type': file.type,
+              },
+              uploadEventHandlers: {
+                progress: e => onProgress && onProgress({submittedBytes: e.loaded}),
+              },
+            },
+          );
+        }
       };
     },
   ]);
