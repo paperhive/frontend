@@ -25,5 +25,6 @@ export default function(app: IModule) {
       }
     },
     template: require('./file-select-button.html'),
+    transclude: true,
   });
 }
