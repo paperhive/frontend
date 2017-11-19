@@ -12,9 +12,10 @@ export default function(app: IModule) {
     controller: class FileSelectButtonCtrl {
       public onSelect: (o: {file: File}) => void;
 
-      static $inject = ['$element'];
-      constructor(public $element) {
-        $element.find('> label > input').on('change', event => this.select(event));
+      static $inject = ['$element', '$scope'];
+      constructor(public $element, $scope) {
+        $element.find('> label > input')
+          .on('change', event => $scope.$apply(() => this.select(event)));
       }
 
       protected select(event) {
