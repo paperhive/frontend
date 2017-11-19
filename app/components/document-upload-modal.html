@@ -1,0 +1,54 @@
+<form name="form" novalidate>
+  <div class="modal-header">
+    <button type="button" class="close" aria-label="Close" title="Close" ng-click="$ctrl.onCancel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h3 class="modal-title">Upload Document</h3>
+    <p class="lead">
+      Add a PDF to your PaperHive documents
+    </p>
+    <p>
+      The document will only be visible
+      to yourself by default. You can later share it in a channel for discussing it
+      in private with a closed group.
+    </p>
+  </div>
+  <div class="modal-body">
+    <p>
+      <file-select-button
+        accept="'.pdf,application/pdf'"
+        disabled="$ctrl.submitting"
+        on-select="$ctrl.selectedFile = file || $ctrl.selectedFile"
+      >
+        <i class="fa fa-fw fa-file-pdf-o"></i>
+        Select PDF
+      </file-select-button>
+    </p>
+
+    <p uib-collapse="!$ctrl.selectedFile" class="text-success">
+      <i class="fa fa-fw fa-check"></i>
+      Selected file
+      <em>{{$ctrl.selectedFile.name}}</em>
+      ({{$ctrl.selectedFile.size | prettyBytes}}).
+    </p>
+  </div>
+  <div class="modal-footer">
+    <p uib-collapse="!$ctrl.submitting">
+      <uib-progressbar
+        ng-if="$ctrl.submitting"
+        class="progress-striped active" max="$ctrl.selectedFile.size" value="$ctrl.submittedBytes"
+      >
+        <i>{{$ctrl.submittedBytes | prettyBytes}} / {{$ctrl.selectedFile.size | prettyBytes}}</i>
+      </uib-progressbar>
+    </p>
+    <span class="ph-md-margin-right text-danger" ng-if="$ctrl.error">
+      <i class="fa fa-fw fa-warning"></i> Error: {{$ctrl.error}}
+    </span>
+    <button type="submit" class="btn btn-primary" ng-class="{disabled: !$ctrl.selectedFile || $ctrl.submitting}"
+      ng-click="$ctrl.selectedFile && !$ctrl.submitting && $ctrl.submit()">
+      <i ng-if="!$ctrl.submitting" class="fa fa-fw fa-cloud-upload"></i>
+      <i ng-if="$ctrl.submitting" class="fa fa-fw fa-spinner fa-spin"></i>
+      Upload
+    </button>
+  </div>
+</form>
