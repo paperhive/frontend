@@ -5,14 +5,16 @@ require('./file-select-button.less');
 export default function(app: IModule) {
   app.component('fileSelectButton', {
     bindings: {
+      accept: '<',
+      required: '<',
       onSelect: '&',
     },
     controller: class FileSelectButtonCtrl {
-      public onSelect: (file: File) => void;
+      public onSelect: (o: {file: File}) => void;
 
       static $inject = ['$element'];
       constructor(public $element) {
-        $element.on('change', event => this.select(event));
+        $element.find('> label > input').on('change', event => this.select(event));
       }
 
       protected select(event) {
@@ -21,7 +23,7 @@ export default function(app: IModule) {
           this.onSelect(undefined);
           return;
         }
-        this.onSelect(files[0]);
+        this.onSelect({file: files[0]});
       }
     },
     template: require('./file-select-button.html'),
