@@ -6,7 +6,7 @@ export default function(app: IModule) {
   app.component('fileSelectButton', {
     bindings: {
       accept: '<',
-      required: '<',
+      disabled: '<',
       onSelect: '&',
     },
     controller: class FileSelectButtonCtrl {

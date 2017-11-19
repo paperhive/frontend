@@ -1,4 +1,4 @@
-<label class="btn btn-block btn-primary">
+<label class="btn btn-block btn-primary" ng-class="{disabled: $ctrl.disabled}">
   <ng-transclude></ng-transclude>
   <input type="file" accept="{{$ctrl.accept}}" ng-required="{{$ctrl.required}}">
 </label>
