@@ -114,6 +114,8 @@ export default function(app) {
         getRevisionPublisherLink(revision) {
           if (!revision) return;
 
+          if (revision.publisherUrl) return revision.publisherUrl;
+
           switch (revision.remote.type) {
             case 'arxiv':
               return `https://arxiv.org/abs/${revision.remote.id}${revision.remote.revision}`;
