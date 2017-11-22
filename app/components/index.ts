@@ -71,7 +71,7 @@ import onboarding from './onboarding';
 import onboardingBookmark from './onboarding-bookmark';
 import onboardingChannel from './onboarding-channel';
 import onboardingProfile from './onboarding-profile';
-import partnerLogos from './partner-logos';
+import partners from './partners';
 import passwordRequest from './password-request';
 import passwordReset from './password-reset';
 import pdf from './pdf';
@@ -92,7 +92,6 @@ import settingsProfile from './settings-profile';
 import signup from './signup';
 import subscribe from './subscribe';
 import subscribed from './subscribed';
-import supporterLogos from './supporter-logos';
 import terms from './terms';
 import urlShare from './url-share';
 import user from './user';
@@ -172,7 +171,7 @@ export default function(app) {
   onboardingBookmark(app);
   onboardingChannel(app);
   onboardingProfile(app);
-  partnerLogos(app);
+  partners(app);
   passwordRequest(app);
   passwordReset(app);
   pdf(app);
@@ -193,9 +192,8 @@ export default function(app) {
   signup(app);
   subscribe(app);
   subscribed(app);
-  supporterLogos(app);
   terms(app);
   urlShare(app);
   user(app);
   userProfile(app);
-};
+}
