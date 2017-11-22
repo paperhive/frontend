@@ -26,6 +26,11 @@
     </a>
     <ul id="user-menu-items" class="dropdown-menu">
       <li>
+        <a href ng-click="$ctrl.documentUploadModalService.open()">
+          <i class="fa fa-fw fa-cloud-upload"></i> Upload document
+        </a>
+      </li>
+      <li>
         <a href="./users/{{$ctrl.authService.user.account.username}}">
           <i class="fa fa-fw fa-user"></i> Profile
         </a>
