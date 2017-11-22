@@ -38,6 +38,7 @@ export default function(app: IModule) {
 
         // register handler for file drop
         $element.on('drop', event => {
+          enterCount = 0;
           event.preventDefault();
           $scope.$apply(() => this.onDrop(event));
         });
