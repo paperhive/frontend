@@ -3,15 +3,6 @@
     <button type="button" class="close" aria-label="Close" title="Close" ng-click="$ctrl.onCancel()">
       <span aria-hidden="true">&times;</span>
     </button>
-    <h3 class="modal-title">Upload Document</h3>
-    <p class="lead">
-      Add a PDF to your PaperHive documents
-    </p>
-    <p>
-      The document will only be visible
-      to yourself by default. You can later share it in a channel for discussing it
-      in private with a closed group.
-    </p>
   </div>
   <div class="modal-body">
     <p>
@@ -21,7 +12,7 @@
         on-select="$ctrl.selectedFile = file || $ctrl.selectedFile"
       >
         <i class="fa fa-fw fa-file-pdf-o"></i>
-        Select PDF
+        Select or drop PDF
       </file-select-button>
     </p>
 
@@ -30,6 +21,12 @@
       Selected file
       <em>{{$ctrl.selectedFile.name}}</em>
       ({{$ctrl.selectedFile.size | prettyBytes}}).
+    </p>
+
+    <p class="small text-muted">
+      The document will only be visible
+      to yourself by default. You can later share it in a channel for discussing it
+      in private with a closed group.
     </p>
   </div>
   <div class="modal-footer">
