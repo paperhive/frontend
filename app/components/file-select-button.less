@@ -1,3 +1,17 @@
-file-select-button > label > input[type="file"] {
-  display: none;
+@import "../../less/variables.less";
+
+file-select-button > label {
+  &.drop-zone {
+    padding: @padding-base-vertical*10 @padding-base-horizontal;
+    border-width: 5px;
+    border-style: dashed;
+
+    &.drag-active {
+      border-color: darken(@btn-default-border, 20%);
+    }
+  }
+
+  > input[type="file"] {
+    display: none;
+  }
 }
