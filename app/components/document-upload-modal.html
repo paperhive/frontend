@@ -5,23 +5,22 @@
     </button>
   </div>
   <div class="modal-body">
-    <p>
-      <file-select-button
-        accept="'.pdf,application/pdf'"
-        disabled="$ctrl.submitting"
-        on-select="$ctrl.selectedFile = file || $ctrl.selectedFile"
-      >
-        <i class="fa fa-fw fa-file-pdf-o"></i>
-        Select or drop PDF
-      </file-select-button>
-    </p>
+    <file-select-button
+      accept="'.pdf,application/pdf'"
+      disabled="$ctrl.submitting"
+      on-select="$ctrl.selectedFile = file || $ctrl.selectedFile"
+      class="ph-md-margin-bottom"
+    >
+      <div class="ph-md-margin-bottom"><i class="fa fa-5x fa-file-pdf-o"></i></div>
+      <div ng-if="!$ctrl.selectedFile">Select or drop PDF</div>
 
-    <p uib-collapse="!$ctrl.selectedFile" class="text-success">
-      <i class="fa fa-fw fa-check"></i>
-      Selected file
-      <em>{{$ctrl.selectedFile.name}}</em>
-      ({{$ctrl.selectedFile.size | prettyBytes}}).
-    </p>
+      <div ng-if="$ctrl.selectedFile" class="text-success">
+        <i class="fa fa-fw fa-check"></i>
+        Selected file
+        <em>{{$ctrl.selectedFile.name}}</em>
+        ({{$ctrl.selectedFile.size | prettyBytes}})
+      </div>
+    </file-select-button>
 
     <p class="small text-muted">
       The document will only be visible
@@ -43,8 +42,7 @@
     </span>
     <button type="submit" class="btn btn-primary" ng-class="{disabled: !$ctrl.selectedFile || $ctrl.submitting}"
       ng-click="$ctrl.selectedFile && !$ctrl.submitting && $ctrl.submit()">
-      <i ng-if="!$ctrl.submitting" class="fa fa-fw fa-cloud-upload"></i>
-      <i ng-if="$ctrl.submitting" class="fa fa-fw fa-spinner fa-spin"></i>
+      <i class="fa fa-fw fa-cloud-upload"></i>
       Upload
     </button>
   </div>

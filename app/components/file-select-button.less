@@ -1,17 +1,23 @@
 @import "../../less/variables.less";
 
-file-select-button > label {
-  &.drop-zone {
-    padding: @padding-base-vertical*10 @padding-base-horizontal;
+file-select-button {
+  display: block;
+
+  > label.drop-zone {
+    padding: @padding-base-vertical*5 @padding-base-horizontal;
     border-width: 5px;
     border-style: dashed;
 
     &.drag-active {
       border-color: darken(@btn-default-border, 20%);
     }
-  }
 
-  > input[type="file"] {
-    display: none;
+    > ng-transclude {
+      display: block;
+    }
+
+    > input[type="file"] {
+      display: none;
+    }
   }
 }
