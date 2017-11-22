@@ -28,7 +28,7 @@ const saucelabsCapabilities = [{
   version: '15',
   platform: 'Windows 10',
   name: 'PaperHive (edge)',
-}, {
+}, /* {
   // Note: Safari 10 requires Selenium 3
   // (not yet running on SauceLabs as of 2017-01-09)
   browserName: 'safari',
@@ -36,6 +36,7 @@ const saucelabsCapabilities = [{
   platform: 'OS X 10.11',
   name: 'PaperHive (safari)',
 },
+*/
 /*
 // currently the PDF rendering is broken on IE11 when scrolling
 // and we have no idea why
