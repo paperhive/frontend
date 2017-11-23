@@ -14,11 +14,20 @@
       <div class="ph-md-margin-bottom"><i class="fa fa-5x fa-file-pdf-o"></i></div>
       <div ng-if="!$ctrl.selectedFile">Select or drop PDF</div>
 
-      <div ng-if="$ctrl.selectedFile" class="text-success">
-        <i class="fa fa-fw fa-check"></i>
-        Selected file
-        <em>{{$ctrl.selectedFile.name}}</em>
-        ({{$ctrl.selectedFile.size | prettyBytes}})
+      <div ng-if="$ctrl.selectedFile">
+        <div ng-if="$ctrl.selectedFile.type === 'application/pdf'" class="text-success">
+          <i class="fa fa-fw fa-check"></i>
+          Selected file
+          <em>{{$ctrl.selectedFile.name}}</em>
+          ({{$ctrl.selectedFile.size | prettyBytes}})
+        </div>
+        <div ng-if="$ctrl.selectedFile.type !== 'application/pdf'" class="text-warning">
+          <i class="fa fa-fw fa-warning"></i>
+          Selected file
+          <em>{{$ctrl.selectedFile.name}}</em>
+          ({{$ctrl.selectedFile.size | prettyBytes}})
+          does not seem to be a PDF. You can only upload PDFs.
+        </div>
       </div>
     </file-select-button>
 
