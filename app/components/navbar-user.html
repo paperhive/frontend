@@ -25,7 +25,7 @@
       <i ng-if="dropdown_open" class="fa fa-fw fa-caret-up"></i>
     </a>
     <ul id="user-menu-items" class="dropdown-menu">
-      <li>
+      <li ng-if="$ctrl.featureFlagsService.flags.uploads">
         <a href ng-click="$ctrl.documentUploadModalService.open()">
           <i class="fa fa-fw fa-cloud-upload"></i> Upload document
         </a>
