@@ -1,0 +1,4 @@
+<label class="btn btn-block btn-default drop-zone" ng-class="{disabled: $ctrl.disabled, 'drag-active': $ctrl.dragActive}">
+  <ng-transclude></ng-transclude>
+  <input type="file" accept="{{$ctrl.accept}}" ng-required="{{$ctrl.required}}">
+</label>

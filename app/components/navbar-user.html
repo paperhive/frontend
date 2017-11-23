@@ -1,32 +1,37 @@
 <ul class="nav navbar-nav">
-  <li ng-if="!auth.user && !auth.inProgress">
+  <li ng-if="!$ctrl.authService.user && !$ctrl.authService.inProgress">
     <p class="navbar-btn ph-md-margin-left ph-md-margin-right">
-      <a href="./signup?returnPath={{auth.returnPath}}"
+      <a href="./signup?returnPath={{$ctrl.authService.returnPath}}"
         class="btn btn-primary"
       >Sign up</a>
-      <a href="./login?returnPath={{auth.returnPath}}" class="btn btn-default">
+      <a href="./login?returnPath={{$ctrl.authService.returnPath}}" class="btn btn-default">
         Log in
       </a>
     </p>
   </li>
-  <li ng-if="!auth.user && auth.inProgress">
+  <li ng-if="!$ctrl.authService.user && $ctrl.authService.inProgress">
     <p class="navbar-text">
       <uib-progressbar class="progress-striped active ph-no-margin" value="100">
         <span class="ph-lg-padding-left ph-lg-padding-right">Logging in...</span>
       </uib-progressbar>
     </p>
   </li>
-  <li ng-if="auth.user" class="dropdown" is-open="dropdown_open" uib-dropdown>
+  <li ng-if="$ctrl.authService.user" class="dropdown" is-open="dropdown_open" uib-dropdown>
     <a href="" class="dropdown-toggle" uib-dropdown-toggle>
-      <avatar user="auth.user" size="38" classes="ph-avatar img-circle">
+      <avatar user="$ctrl.authService.user" size="38" classes="ph-avatar img-circle">
       </avatar>
-      {{auth.user.displayName}}
+      {{$ctrl.authService.user.displayName}}
       <i ng-if="!dropdown_open" class="fa fa-fw fa-caret-down"></i>
       <i ng-if="dropdown_open" class="fa fa-fw fa-caret-up"></i>
     </a>
     <ul id="user-menu-items" class="dropdown-menu">
+      <li ng-if="$ctrl.featureFlagsService.flags.uploads">
+        <a href ng-click="$ctrl.documentUploadModalService.open()">
+          <i class="fa fa-fw fa-cloud-upload"></i> Upload document
+        </a>
+      </li>
       <li>
-        <a href="./users/{{auth.user.account.username}}">
+        <a href="./users/{{$ctrl.authService.user.account.username}}">
           <i class="fa fa-fw fa-user"></i> Profile
         </a>
       </li>
@@ -41,7 +46,7 @@
         </a>
       </li>
       <li>
-        <a href ng-click="auth.logout()">
+        <a href ng-click="$ctrl.authService.logout()">
           <i class="fa fa-fw fa-sign-out"></i> Log out
         </a>
       </li>

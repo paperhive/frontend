@@ -1,0 +1,61 @@
+<form name="form" novalidate>
+  <div class="modal-header">
+    <button type="button" class="close" aria-label="Close" title="Close" ng-click="$ctrl.onCancel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <file-select-button
+      accept="'.pdf,application/pdf'"
+      disabled="$ctrl.submitting"
+      on-select="$ctrl.selectedFile = file || $ctrl.selectedFile"
+      class="ph-md-margin-bottom"
+    >
+      <div class="ph-md-margin-bottom"><i class="fa fa-5x fa-file-pdf-o"></i></div>
+      <div ng-if="!$ctrl.selectedFile">Select or drop PDF</div>
+
+      <div ng-if="$ctrl.selectedFile">
+        <div ng-if="$ctrl.selectedFile.type === 'application/pdf'" class="text-success">
+          <i class="fa fa-fw fa-check"></i>
+          Selected file
+          <em>{{$ctrl.selectedFile.name}}</em>
+          ({{$ctrl.selectedFile.size | prettyBytes}})
+        </div>
+        <div ng-if="$ctrl.selectedFile.type !== 'application/pdf'" class="text-warning">
+          <i class="fa fa-fw fa-warning"></i>
+          Selected file
+          <em>{{$ctrl.selectedFile.name}}</em>
+          ({{$ctrl.selectedFile.size | prettyBytes}})
+          does not seem to be a PDF. You can only upload PDFs.
+        </div>
+      </div>
+    </file-select-button>
+
+    <p class="small text-muted">
+      The document will only be visible
+      to yourself by default. You can later share it in a channel for discussing it
+      in private with a closed group.
+    </p>
+  </div>
+  <div class="modal-footer">
+    <p uib-collapse="!$ctrl.submitting">
+      <uib-progressbar
+        ng-if="$ctrl.submitting"
+        class="progress-striped active" max="$ctrl.selectedFile.size" value="$ctrl.submittedBytes"
+      >
+        <span ng-if="$ctrl.submittedBytes < $ctrl.selectedFile.size">
+          {{$ctrl.submittedBytes | prettyBytes}} / {{$ctrl.selectedFile.size | prettyBytes}}
+        </span>
+        <span ng-if="$ctrl.submittedBytes === $ctrl.selectedFile.size">Processing...</span>
+      </uib-progressbar>
+    </p>
+    <span class="ph-md-margin-right text-danger" ng-if="$ctrl.error">
+      <i class="fa fa-fw fa-warning"></i> Error: {{$ctrl.error}}
+    </span>
+    <button type="submit" class="btn btn-primary" ng-class="{disabled: !$ctrl.selectedFile || $ctrl.submitting}"
+      ng-click="$ctrl.selectedFile && !$ctrl.submitting && $ctrl.submit()">
+      <i class="fa fa-fw fa-cloud-upload"></i>
+      Upload
+    </button>
+  </div>
+</form>
