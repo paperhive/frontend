@@ -6,6 +6,7 @@ import distangle from './distangle';
 import documentController from './document-controller';
 import documentUploadModal from './document-upload-modal';
 import documentsApi from './documents-api';
+import featureFlags from './feature-flags';
 import feedbackModal from './feedback-modal';
 import meta from './meta';
 import notifications from './notifications';
@@ -23,6 +24,7 @@ export default function(app) {
   documentController(app);
   documentUploadModal(app);
   documentsApi(app);
+  featureFlags(app);
   feedbackModal(app);
   meta(app);
   notifications(app);
@@ -30,4 +32,4 @@ export default function(app) {
   person(app);
   scroll(app);
   websockets(app);
-};
+}
