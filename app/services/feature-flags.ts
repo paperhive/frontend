@@ -1,4 +1,4 @@
-import { IRootScopeService } from 'angular';
+import { ILocationService, IRootScopeService, IWindowService } from 'angular';
 
 export default function(app) {
   type Flag = 'uploads' /* | 'feature1' | 'feature2' */;
@@ -6,8 +6,16 @@ export default function(app) {
   app.service('featureFlagsService', class FeatureFlags {
     public flags: {[k in Flag]?: boolean} = {};
 
-    static $inject = ['$rootScope', '$window'];
-    constructor(protected $rootScope: IRootScopeService, $window) {
+    static $inject = ['$location', '$rootScope', '$window'];
+    constructor($location: ILocationService, protected $rootScope: IRootScopeService, $window: IWindowService) {
+      // enable feature flags from URL query string (example: ?enableFeature=uploads)
+      const enableFeature = $location.search().enableFeature;
+      if (enableFeature !== undefined) {
+        const features = Array.isArray(enableFeature) ? enableFeature : [enableFeature];
+        // set directly because this runs in $apply() context
+        features.forEach(feature => this.flags[feature] = true);
+      }
+
       // expose {enable,disable}Feature on window for testing
       $window.enableFeature = flag => this.enable(flag);
       $window.disableFeature = flag => this.disable(flag);
