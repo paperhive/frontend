@@ -43,7 +43,10 @@
         ng-if="$ctrl.submitting"
         class="progress-striped active" max="$ctrl.selectedFile.size" value="$ctrl.submittedBytes"
       >
-        <i>{{$ctrl.submittedBytes | prettyBytes}} / {{$ctrl.selectedFile.size | prettyBytes}}</i>
+        <span ng-if="$ctrl.submittedBytes < $ctrl.selectedFile.size">
+          {{$ctrl.submittedBytes | prettyBytes}} / {{$ctrl.selectedFile.size | prettyBytes}}
+        </span>
+        <span ng-if="$ctrl.submittedBytes === $ctrl.selectedFile.size">Processing...</span>
       </uib-progressbar>
     </p>
     <span class="ph-md-margin-right text-danger" ng-if="$ctrl.error">
