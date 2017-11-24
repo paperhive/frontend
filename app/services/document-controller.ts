@@ -225,6 +225,9 @@ export default function(app) {
               headers: {
                 'Content-Type': file.type,
               },
+              params: {
+                filename: file.name,
+              },
               uploadEventHandlers: {
                 progress: e => onProgress && onProgress({submittedBytes: e.loaded}),
               },
