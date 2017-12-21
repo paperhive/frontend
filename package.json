@@ -55,7 +55,7 @@
     "jasmine": "^2.4.0",
     "jasmine-core": "^2.3.4",
     "json-loader": "^0.5.4",
-    "karma": "^1.0.0",
+    "karma": "^2.0.0",
     "karma-chrome-launcher": "^2.2.0",
     "karma-jasmine": "^1.0.2",
     "less": "^2.7.1",
