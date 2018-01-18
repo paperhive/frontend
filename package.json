@@ -88,7 +88,7 @@
     "angulartics-google-analytics": "^0.4.0",
     "async": "^2.1.4",
     "babel-runtime": "^6.18.0",
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^4.0.0",
     "chartist": "^0.11.0",
     "dentist": "^1.0.3",
     "font-awesome": "^4.7.0",
