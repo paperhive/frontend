@@ -22,13 +22,14 @@ export default function(app) {
         }
 
         fetchRevisions() {
-          return $http
-            .get(`${config.apiUrl}/documents/${this.documentId}/revisions`)
+          const loginPromise = auth.loginPromise || Promise.resolve();
+          return loginPromise
+            .then(() => $http.get(`${config.apiUrl}/documents/${this.documentId}/revisions`))
             .then(response => this.revisions = response.data.revisions);
         }
 
         static async isRevisionAccessible(revision) {
-          if (revision.isOpenAccess) return true;
+          if (revision.isOpenAccess || revision.remote.type === 'qnd') return true;
           try {
             if (revision.remote.type === 'elsevier') {
               return false;
@@ -99,6 +100,10 @@ export default function(app) {
             return revision.publisher;
           }
 
+          if (revision.publisher) {
+            return revision.publisher;
+          }
+
           // isbn
           if (revision.isbn) {
             return `ISBN ${revision.isbn}`;
@@ -128,6 +133,7 @@ export default function(app) {
             case 'oapen':
               return `https://oapen.org/search?identifier=${revision.remote.id}`;
             case 'paperhiveGhp':
+            case 'qnd':
               return undefined;
             default:
               throw new Error('unknown remote type');
