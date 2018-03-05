@@ -3,8 +3,8 @@ import { parse as urlParse } from 'url';
 
 export default function(app) {
   app.factory('DocumentController', [
-    '$http', '$rootScope', '$timeout', 'authService', 'config', 'notificationService',
-    ($http, $rootScope, $timeout, auth, config, notificationService) => {
+    '$http', '$q', '$rootScope', '$timeout', 'authService', 'config', 'notificationService',
+    ($http, $q, $rootScope, $timeout, auth, config, notificationService) => {
       // controller for one document
       return class DocumentController {
         revisions: any[];
@@ -22,7 +22,7 @@ export default function(app) {
         }
 
         fetchRevisions() {
-          const loginPromise = auth.loginPromise || Promise.resolve();
+          const loginPromise = auth.loginPromise || $q.resolve();
           return loginPromise
             .then(() => $http.get(`${config.apiUrl}/documents/${this.documentId}/revisions`))
             .then(response => this.revisions = response.data.revisions);
