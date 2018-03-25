@@ -225,7 +225,7 @@ export default function(app) {
 
         static async upload(file: File, onProgress: (o: {submittedBytes: number}) => void) {
           return $http.post(
-            `${config.apiUrl}/documents`,
+            `${config.apiUrl}/document-items/upload`,
             file,
             {
               headers: {
@@ -238,7 +238,8 @@ export default function(app) {
                 progress: e => onProgress && onProgress({submittedBytes: e.loaded}),
               },
             },
-          );
+          )
+            .then(response => response.data);
         }
       };
     },
