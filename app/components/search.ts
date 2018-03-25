@@ -386,7 +386,8 @@ export default function(app) {
       }
 
       submitQuery() {
-        this.searchParams.query = this.queryModel;
+        // set to undefined if emtpy string
+        this.searchParams.query = this.queryModel || undefined;
       }
 
       // update controller variables from location
