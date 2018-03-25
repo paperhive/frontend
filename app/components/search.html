@@ -168,7 +168,7 @@
       </div>
     </div>
   </div>
-  <button ng-if="$ctrl.documents.length < $ctrl.searchTotal"
+  <button ng-if="$ctrl.searchHits.length < $ctrl.searchTotal && !$ctrl.searchHitsComplete"
     ng-click="$ctrl.fetchDocumentsScroll()"
     ng-disabled="$ctrl.documentsScrollUpdating"
     class="btn btn-default" type="button"

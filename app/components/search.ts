@@ -337,18 +337,18 @@ export default function(app) {
       searchParams: any = {};
       filterCtrlParams: any = {};
 
+      searchFetchLimit = 10;
       // parameters defining how the results are fetched
       searchFetchParams = {
         sortBy: 'score',
-        limit: 10,
       };
 
       documentsParams: any = {};
       documentsUpdating: boolean;
       documentsCanceller: any;
-      documentsScrollToken: string;
       searchTotal: number;
       searchHits: any[] = [];
+      searchHitsComplete: boolean;
 
       documentsScrollUpdating: boolean;
       documentsScrollCanceller: any;
@@ -439,7 +439,10 @@ export default function(app) {
 
       updateParams() {
         const documentsParams = assign(
-          {groupBy: 'document'},
+          {
+            groupBy: 'document',
+            limit: this.searchFetchLimit,
+          },
           this.searchParams,
           this.searchFetchParams,
           this.filterCtrlParams,
@@ -461,8 +464,8 @@ export default function(app) {
         this.documentsUpdating = true;
         if (this.documentsCanceller) this.documentsCanceller.resolve();
         this.documentsCanceller = this.$q.defer();
-        delete this.documentsScrollToken;
         delete this.searchTotal;
+        delete this.searchHitsComplete;
         this.searchHits.splice(0, this.searchHits.length);
 
         // also cancel scroll requests
@@ -472,7 +475,10 @@ export default function(app) {
 
         return this.$http.get(
           `${this.config.apiUrl}/document-items/search`,
-          {params: this.documentsParams, timeout: this.documentsCanceller.promise},
+          {
+            params: this.documentsParams,
+            timeout: this.documentsCanceller.promise,
+          },
         )
           .then(
             response => {
@@ -504,15 +510,21 @@ export default function(app) {
         this.documentsScrollCanceller = this.$q.defer();
 
         return this.$http.get(
-          `${this.config.apiUrl}/documents/search/scroll`,
+          `${this.config.apiUrl}/document-items/search`,
           {
-            params: {scrollToken: this.documentsScrollToken},
+            params: {
+              ...this.documentsParams,
+              skip: this.searchHits.length,
+            },
             timeout: this.documentsScrollCanceller.promise,
           },
         )
           .then(
             response => {
-              this.searchHits.push(...response.data.documents);
+              this.searchHits.push(...response.data.hits);
+              if (response.data.hits.length < this.searchFetchLimit) {
+                this.searchHitsComplete = true;
+              }
             },
             response => {
               // request cancelled?
