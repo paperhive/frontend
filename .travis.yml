@@ -9,20 +9,23 @@ addons:
     username: paperhive
   jwt:
     secure: "j81HTjQenXBJTorpThKgTB2Sg64U6GM3Ytp5Y5oUeBMZJItvootdkAZD9qzVGZ3RPyRVr5C917CwQmjyincr7S2hv8flfEXNyWz0if2P5HHXuh3q3FUG3S0srQ9PDKLOmFioyasWksrH2XMz5XbQ2kFhNezjRS1UM2FYLgSPwqY="
-before_script:
+before_install:
   # gcloud key
   - curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
   # gcloud sdk repo
   - echo "deb https://packages.cloud.google.com/apt cloud-sdk-$(lsb_release -c -s) main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-  # install gcloud and jq
-  - sudo apt-get update && sudo apt-get install google-cloud-sdk jq kubectl
+  # install a couple of packages:
+  #  * for deployment: gcloud, jq
+  #  * for mozjpeg: nasm
+  - sudo apt-get update && sudo apt-get install google-cloud-sdk jq kubectl nasm
+before_script:
   # configure frontend with placeholders (will be replaced in container)
   - 'cat config.json.default | jq -c ". + {\"apiUrl\": \"\$PAPERHIVE_API_URL\", \"baseHref\": \"\$PAPERHIVE_BASE_HREF\"}" > config.json'
   # give the docker image a name
   - export DOCKER_IMAGE="gcr.io/paperhive-c0ff33/frontend:${TRAVIS_COMMIT:0:8}"
   - export DEFAULT_API_URL="$(jq -r '.apiUrl' config.json.default)"
 script:
-  - NODE_ENV=production npm run build
+  - npm run build
   # build docker image
   - docker build --build-arg DEFAULT_API_URL="${DEFAULT_API_URL}" -t ${DOCKER_IMAGE} .
   # run docker container for e2e tests

@@ -1,13 +1,11 @@
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require('path');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const webpack = require('webpack');
 
 const config = require('./config.json');
-
-const extractCss = new ExtractTextPlugin('index.css');
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -93,12 +91,8 @@ const webpackConfig = {
         ],
       },
       {
-        test: /\.json$/,
-        use: [{loader: 'json-loader'}],
-      },
-      {
         test: /\.less$/,
-        use: extractCss.extract(['css-loader?sourceMap', 'less-loader?sourceMap']),
+        use: [MiniCssExtractPlugin.loader, 'css-loader?sourceMap', 'less-loader?sourceMap'],
       },
       {
         // transpile ES6 dependencies with babel
@@ -117,7 +111,7 @@ const webpackConfig = {
     ],
   },
   plugins: [
-    extractCss,
+    new MiniCssExtractPlugin(),
     new CopyWebpackPlugin(
       [
         {
