@@ -1,6 +1,8 @@
 import { copy } from 'angular';
 import { assign, clone, cloneDeep, find, forEach, isArray, isEqual, pickBy } from 'lodash';
 
+require('./search.less');
+
 type QueryValue = string | boolean | number | Date;
 
 interface IQueryObj {
@@ -360,10 +362,10 @@ export default function(app) {
       total: number;
 
       static $inject = ['config', '$http', '$location', '$q', '$scope',
-        'feedbackModal', 'notificationService'];
+        'authService', 'feedbackModal', 'notificationService'];
 
       constructor(public config, public $http, public $location, public $q, $scope,
-                  public feedbackModal, public notificationService) {
+                  public authService, public feedbackModal, public notificationService) {
 
         $scope.$on('$locationChangeSuccess', this.updateFromLocation.bind(this));
         this.updateFromLocation();
@@ -375,6 +377,12 @@ export default function(app) {
         $scope.$watchCollection('$ctrl.documentsParams', this.fetchDocuments.bind(this));
         $scope.$watchCollection('$ctrl.filtersParams', this.fetchFilters.bind(this));
         this.fetchTotal();
+      }
+
+      isSharedWithYou(documentItem) {
+        return documentItem.channelShares
+          && this.authService.user
+          && documentItem.channelShares.find(share => share.person !== this.authService.user.id);
       }
 
       submitQuery() {
