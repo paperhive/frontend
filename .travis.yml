@@ -25,7 +25,7 @@ before_script:
   - export DOCKER_IMAGE="gcr.io/paperhive-c0ff33/frontend:${TRAVIS_COMMIT:0:8}"
   - export DEFAULT_API_URL="$(jq -r '.apiUrl' config.json.default)"
 script:
-  - NODE_ENV=production npm run build
+  - npm run build
   # build docker image
   - docker build --build-arg DEFAULT_API_URL="${DEFAULT_API_URL}" -t ${DOCKER_IMAGE} .
   # run docker container for e2e tests
