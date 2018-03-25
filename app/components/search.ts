@@ -1,6 +1,8 @@
 import { copy } from 'angular';
 import { assign, clone, cloneDeep, find, forEach, isArray, isEqual, pickBy } from 'lodash';
 
+import { isDocumentItemSharedWithUser } from '../utils/document-items';
+
 require('./search.less');
 
 type QueryValue = string | boolean | number | Date;
@@ -380,9 +382,7 @@ export default function(app) {
       }
 
       isSharedWithYou(documentItem) {
-        return documentItem.channelShares
-          && this.authService.user
-          && documentItem.channelShares.find(share => share.person !== this.authService.user.id);
+        return isDocumentItemSharedWithUser(documentItem, this.authService.user);
       }
 
       submitQuery() {
