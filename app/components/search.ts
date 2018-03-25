@@ -338,15 +338,15 @@ export default function(app) {
       // parameters defining how the results are fetched
       searchFetchParams = {
         sortBy: 'score',
-        size: 10,
+        limit: 10,
       };
 
       documentsParams: any = {};
       documentsUpdating: boolean;
       documentsCanceller: any;
       documentsScrollToken: string;
-      documentsTotal: number;
-      documents: any[] = [];
+      searchTotal: number;
+      searchHits: any[] = [];
 
       documentsScrollUpdating: boolean;
       documentsScrollCanceller: any;
@@ -378,14 +378,14 @@ export default function(app) {
       }
 
       submitQuery() {
-        this.searchParams.q = this.queryModel;
+        this.searchParams.query = this.queryModel;
       }
 
       // update controller variables from location
       updateFromLocation() {
         const search = this.$location.search();
 
-        const query = search.query || '';
+        const query = search.query;
 
         // set query input model
         this.queryModel = query;
@@ -393,8 +393,7 @@ export default function(app) {
         // set result set params
         // TODO: check if array is equal (otherwise digest is triggered)
         // this.searchParams.in = ['authors', 'ids', 'title']; // TODO
-        this.searchParams.q = query;
-        this.searchParams.restrictToLatest = search.restrictToLatest !== 'false';
+        this.searchParams.query = query;
 
         // set params
         forEach(this.filterCtrls, ctrl => ctrl.updateFromUrlQuery(search));
@@ -408,8 +407,7 @@ export default function(app) {
           // TODO:
           // in: isEqual(this.searchParams.in.sort(), ['authors', 'ids', 'title']) ?
           //  undefined : this.searchParams.in,
-          query: this.searchParams.q ? this.searchParams.q : undefined,
-          restrictToLatest: this.searchParams.restrictToLatest ? undefined : 'true',
+          query: this.searchParams.query ? this.searchParams.query : undefined,
         };
 
         // add parameters
@@ -433,7 +431,7 @@ export default function(app) {
 
       updateParams() {
         const documentsParams = assign(
-          {},
+          {groupBy: 'document'},
           this.searchParams,
           this.searchFetchParams,
           this.filterCtrlParams,
@@ -456,8 +454,8 @@ export default function(app) {
         if (this.documentsCanceller) this.documentsCanceller.resolve();
         this.documentsCanceller = this.$q.defer();
         delete this.documentsScrollToken;
-        delete this.documentsTotal;
-        this.documents.splice(0, this.documents.length);
+        delete this.searchTotal;
+        this.searchHits.splice(0, this.searchHits.length);
 
         // also cancel scroll requests
         if (this.documentsScrollCanceller) this.documentsScrollCanceller.resolve();
@@ -465,14 +463,13 @@ export default function(app) {
         this.documentsScrollUpdating = false;
 
         return this.$http.get(
-          `${this.config.apiUrl}/documents/search`,
+          `${this.config.apiUrl}/document-items/search`,
           {params: this.documentsParams, timeout: this.documentsCanceller.promise},
         )
           .then(
             response => {
-              this.documentsScrollToken = response.data.scrollToken;
-              this.documentsTotal = response.data.total;
-              copy(response.data.documents, this.documents);
+              this.searchTotal = response.data.totalItemCount;
+              copy(response.data.hits, this.searchHits);
             },
             response => {
               // request cancelled?
@@ -507,7 +504,7 @@ export default function(app) {
         )
           .then(
             response => {
-              this.documents.push(...response.data.documents);
+              this.searchHits.push(...response.data.documents);
             },
             response => {
               // request cancelled?
@@ -534,7 +531,7 @@ export default function(app) {
         this.filtersCanceller = this.$q.defer();
 
         return this.$http.get(
-          `${this.config.apiUrl}/documents/search/filters`,
+          `${this.config.apiUrl}/document-items/search/filters`,
           {params: this.filtersParams, timeout: this.filtersCanceller.promise},
         )
           .then(
@@ -559,11 +556,8 @@ export default function(app) {
 
       fetchTotal() {
         this.totalUpdating = true;
-        return this.$http.get(
-          `${this.config.apiUrl}/documents/search`,
-          {params: {restrictToLatest: true}},
-        ).then(
-          response => this.total = response.data.total,
+        return this.$http.get(`${this.config.apiUrl}/document-items/search`).then(
+          response => this.total = response.data.totalItemCount,
           response => this.notificationService.notifications.push({
             type: 'error',
             message: 'Could not fetch documents',

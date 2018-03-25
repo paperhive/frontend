@@ -397,6 +397,9 @@ export default function(app) {
         .segment('search', {
           template: '<search></search>',
           title: 'Search results',
+          resolve: {
+            auth: ['authService', (authService) => authService.loginPromise],
+          },
         })
 
         .segment('settings', {
