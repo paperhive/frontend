@@ -1,24 +1,32 @@
 export default function(app) {
   app.component('channelBookmark', {
     bindings: {
-      documentCtrl: '<',
+      bookmarks: '<',
+      onAddBookmark: '&',
+      onRemoveBookmark: '&',
     },
-    controller: class channelBookmarkCtrl {
-      documentCtrl: any;
+    controller: class ChannelBookmarkCtrl {
+      bookmarks: any[];
+      onAddBookmark: (o: {$channel: string}) => Promise<void>;
+      onRemoveBookmark: (o: {$channel: string}) => Promise<void>;
 
       submitting = false;
 
       static $inject = ['$uibModal', 'authService', 'channelService'];
       constructor(public $uibModal, public authService, public channelService) {}
 
+      isBookmarked(channel) {
+        return !!this.bookmarks.find(bookmark => bookmark.channel === channel);
+      }
+
       bookmark(channel) {
         this.submitting = true;
-        this.documentCtrl.bookmark(channel).then(() => this.submitting = false);
+        this.onAddBookmark({$channel: channel}).then(() => this.submitting = false);
       }
 
       removeBookmark(channel) {
         this.submitting = true;
-        this.documentCtrl.removeBookmark(channel).then(() => this.submitting = false);
+        this.onRemoveBookmark({$channel: channel}).then(() => this.submitting = false);
       }
 
       newChannelModalOpen() {

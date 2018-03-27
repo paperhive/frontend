@@ -1,27 +1,53 @@
-<div class="panel panel-default">
-  <div class="panel-body">
-    <h4>
-      <a href="./documents/{{$ctrl.document.id}}">
-        {{$ctrl.document.title}}
-      </a>
-    </h4>
-    <div>
-      <small>
-        <span ng-repeat="author in $ctrl.document.authors">
-          {{author.name}}{{$last ? '' : ', '}}
-        </span>
-      </small>
+<div class="ph-header-submenu-container ph-header-submenu-container-fixed" ng-style="{top: $root.navbarSize.height  + 'px'}">
+  <div class="container-fluid" on-resized="subnavSize = $size">
+    <div class="row">
+      <div class="ph-document-subnav" ng-class="{'ph-sidenav-open': $ctrl.sidenavOpen}">
+        <button ng-click="$ctrl.subnavOpen = !$ctrl.subnavOpen" type="button" class="btn btn-default visible-xs">
+          <i class="fa fa-fw fa-bars"></i> Toggle Navigation
+        </button>
+        <div class="navbar-collapse ph-no-padding" uib-collapse="!$ctrl.subnavOpen">
+          <ul class="nav nav-tabs ph-header-submenu">
+            <li ng-class="{active: ('documents.text' | routeSegmentStartsWith) || ('documents.revisions' | routeSegmentStartsWith)}">
+              <a href=".{{'documents.text' | routeSegmentUrl}}" ng-click="$ctrl.subnavOpen = false">
+                <i class="fa fa-fw fa-file-pdf-o"></i> Document
+              </a>
+            </li>
+            <li ng-class="{active: ('documents.discussions' | routeSegmentStartsWith)}">
+              <a href=".{{'documents.discussions' | routeSegmentUrl}}" ng-click="$ctrl.subnavOpen = false">
+                <i class="fa fa-fw fa-comments"></i> Discussions
+                <span class="badge" ng-if="$ctrl.discussionsCtrl.discussions.length > 0">
+                  {{$ctrl.discussionsCtrl.discussions.length}}
+                </span>
+              </a>
+            </li>
+            <li ng-class="{active: ('documents.activity' | routeSegmentStartsWith)}">
+              <a href=".{{'documents.activity' | routeSegmentUrl}}" ng-click="$ctrl.subnavOpen = false">
+                <i class="fa fa-heartbeat" aria-hidden="true"></i> Activity
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <div class="text-muted">
-      <small>
-        {{$ctrl.document.publishedAt | date:'yyyy'}} &middot; {{$ctrl.document.publisher}}
-      </small>
-    </div>
-
-    <!--span class="fa-stack fa-2x" style="position:absolute; bottom:-20px; right:-20px;">
-      <i class="fa fa-circle fa-stack-2x" style="color: #20b7e0"></i>
-      <i class="fa fa-comment fa-stack-1x fa-inverse"></i>
-    </span-->
-
   </div>
 </div>
+
+<document-sidenav
+  document-item="$ctrl.documentItem"
+  discussions-ctrl="$ctrl.discussionsCtrl"
+  discussions-by-revision="$ctrl.discussionsByRevision"
+  document-ctrl="$ctrl.documentCtrl"
+  open="$ctrl.sidenavOpen"
+  pdf-info="$ctrl.pdfInfo"
+  search-matches="$ctrl.searchMatches"
+  search-match-index="$ctrl.searchMatchIndex"
+  search-str="$ctrl.searchStr"
+  viewport-offset-top="$root.navbarSize.height + subnavSize.height"
+
+  on-toggle="$ctrl.sidenavOpen = open"
+  on-search-update="$ctrl.searchStr = searchStr; $ctrl.searchMatchIndex = matchIndex"
+  on-anchor-update="$ctrl.anchor = anchor"
+  on-add-bookmark="$ctrl.addBookmark($channel)"
+  on-remove-bookmark="$ctrl.removeBookmark($channel)"
+></document-sidenav>
+<div app-view-segment="1" class="ph-documents-columns"></div>

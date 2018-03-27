@@ -8,10 +8,10 @@
     </button>
     <div class="ph-sidenav-header">
       <h5 class="ph-lg-margin-top">
-        <mathjax body="$ctrl.activeRevision.title"></mathjax>
+        <mathjax body="$ctrl.documentItem.metadata.title"></mathjax>
       </h5>
       <h6 class="ph-lg-margin-bottom">
-        <span ng-repeat="author in $ctrl.activeRevision.authors">
+        <span ng-repeat="author in $ctrl.documentItem.metadata.authors">
           {{author.name}}{{$last ? '' :', '}}
         </span>
       </h6>
@@ -26,7 +26,10 @@
 
     <div class="ph-sidenav-info">
       <channel-bookmark
-        document-ctrl="$ctrl.documentCtrl"
+        ng-if="$ctrl.documentItem.public"
+        bookmarks="$ctrl.documentItem.channelBookmarks"
+        on-add-bookmark="$ctrl.onAddBookmark({$channel: $channel})"
+        on-delete-bookmark="$ctrl.onRemoveBookmark({$channel: $channel})"
       ></channel-bookmark>
 
       <div class="dropdown ph-sidenav-item ph-dropdown-large" is-open="$ctrl.revisionDropdownOpen" uib-dropdown
@@ -85,11 +88,11 @@
         </ul>
       </div>
     </div>
-    <p ng-if="$ctrl.discussionsCtrl.discussions.length > $ctrl.discussionsByRevision[$ctrl.activeRevision.revision].length"
+    <p ng-if="$ctrl.discussionsCtrl.discussions.length > $ctrl.discussionsByRevision[$ctrl.documentItem.revision].length"
       class="ph-sidenav-item"
     >
       <i class="fa fa-fw fa-comments"></i>
-      {{$ctrl.discussionsCtrl.discussions.length - $ctrl.discussionsByRevision[$ctrl.activeRevision.revision].length}}
+      {{$ctrl.discussionsCtrl.discussions.length - $ctrl.discussionsByRevision[$ctrl.documentItem.revision].length}}
       more discussions on other versions
     </p>
     <p ng-if="$ctrl.publisherLink" class="ph-sidenav-item">

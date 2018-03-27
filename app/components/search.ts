@@ -474,6 +474,7 @@ export default function(app) {
         delete this.documentsScrollCanceller;
         this.documentsScrollUpdating = false;
 
+        // TODO: use documentItemsApi
         return this.$http.get(
           `${this.config.apiUrl}/document-items/search`,
           {
@@ -510,6 +511,7 @@ export default function(app) {
         }
         this.documentsScrollCanceller = this.$q.defer();
 
+        // TODO: use documentItemsApi
         return this.$http.get(
           `${this.config.apiUrl}/document-items/search`,
           {
@@ -551,6 +553,7 @@ export default function(app) {
         }
         this.filtersCanceller = this.$q.defer();
 
+        // TODO: use documentItemsApi
         return this.$http.get(
           `${this.config.apiUrl}/document-items/search/filters`,
           {params: this.filtersParams, timeout: this.filtersCanceller.promise},
@@ -577,6 +580,7 @@ export default function(app) {
 
       fetchTotal() {
         this.totalUpdating = true;
+        // TODO: use documentItemsApi
         return this.$http.get(`${this.config.apiUrl}/document-items/search`).then(
           response => this.total = response.data.totalItemCount,
           response => this.notificationService.notifications.push({

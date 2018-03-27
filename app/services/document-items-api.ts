@@ -1,0 +1,63 @@
+export default function(app) {
+  app.service('documentItemsApi', class DocumentItemsApi {
+    static $inject = ['$http', 'config', 'notificationService'];
+    constructor(public $http, public config, public notificationService) {}
+
+    bookmarksGet(documentId) {
+      return this.$http.get(`${this.config.apiUrl}/documents/${documentId}/bookmarks`)
+        .catch(this.notificationService.httpError('could not get document bookmarks'))
+        .then(response => response.data);
+    }
+
+    bookmarkAdd(documentItem, channel) {
+      return this.$http
+        .post(`${this.config.apiUrl}/document-items/${documentItem}/channel-bookmarks/${channel}`)
+        .catch(this.notificationService.httpError('could not add bookmark'))
+        .then(response => response.data);
+    }
+
+    bookmarkDelete(documentItem, channel) {
+      return this.$http
+        .delete(`${this.config.apiUrl}/document-items/${documentItem}/channel-bookmarks/${channel}`)
+        .catch(this.notificationService.httpError('could not remove bookmark'));
+    }
+
+    get(documentItem) {
+      return this.$http.get(`${this.config.apiUrl}/document-items/${documentItem}`)
+        // TODO improve authorization error message
+        .catch(this.notificationService.httpError('could not retrieve document item'))
+        .then(response => response.data);
+    }
+
+    search(query) {
+      return this.$http.get(`${this.config.apiUrl}/documents/search`, {params: query})
+        .catch(this.notificationService.httpError('could not search documents'))
+        .then(response => response.data);
+    }
+
+    searchScroll(scrollToken) {
+      return this.$http.get(`${this.config.apiUrl}/documents/search/scroll`, {params: {scrollToken}})
+        .catch(this.notificationService.httpError('could not scroll documents'))
+        .then(response => response.data);
+    }
+
+    upload(file: File, onProgress: (o: {submittedBytes: number}) => void) {
+      return this.$http.post(
+        `${this.config.apiUrl}/document-items/upload`,
+        file,
+        {
+          headers: {
+            'Content-Type': file.type,
+          },
+          params: {
+            filename: file.name,
+          },
+          uploadEventHandlers: {
+            progress: e => onProgress && onProgress({submittedBytes: e.loaded}),
+          },
+        },
+      )
+        .then(response => response.data);
+    }
+  });
+}

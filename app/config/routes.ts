@@ -40,6 +40,9 @@ export default function(app) {
         // register new and remote before id-dependent routes
         .when('/documents/new', 'documents_new')
         .when('/documents/remote', 'documents_remote')
+        .when('/documents/items/:documentItem', 'documentItem')
+        .when('/documents/items/:documentItem/text', 'documentItem.text', {reloadOnSearch: false})
+        /*
         .when('/documents/:documentId', 'documents', {reloadOnSearch: false})
         .when('/documents/:documentId/activity', 'documents.activity')
         .when('/documents/:documentId/discussions', 'documents.discussions')
@@ -51,6 +54,7 @@ export default function(app) {
         .when('/documents/:documentId/text', 'documents.text', {reloadOnSearch: false})
         .when('/documents/:documentId/revisions/:revisionId', 'documents.revisions', {reloadOnSearch: false})
         .when('/documents/:documentId/about', 'documents.about')
+        */
         .when('/help/markdown', 'helpMarkdown')
         .when('/jobs', 'jobs')
         .when('/knowledgeunlatched', 'knowledgeunlatched')
@@ -239,10 +243,29 @@ export default function(app) {
           ],
         })
 
+        .segment('documentItem', {
+          template: '<document-item></document-item>',
+          // dependencies: ['documentItem]
+          title: 'Document · PaperHive',
+          resolve: {
+            auth: ['authService', (authService) => authService.loginPromise],
+          },
+        })
+        .within()
+          .segment('text', {
+            default: true,
+            template: require('./routes-document-item-text.html'),
+            title: 'Document · PaperHive',
+          })
+          .up()
+        /*
         .segment('documents', {
           template: '<document></document>',
           dependencies: ['documentId'],
           title: 'Document · PaperHive',
+          resolve: {
+            auth: ['authService', (authService) => authService.loginPromise],
+          },
         })
         .within()
           .segment('activity', {
@@ -313,6 +336,7 @@ export default function(app) {
             title: 'Document at revision · PaperHive',
           })
         .up()
+        */
         .segment('documents_new', {
           template: '<document-new></document-new>',
           title: 'Add a new document · PaperHive',
@@ -340,7 +364,7 @@ export default function(app) {
         })
 
         .segment('knowledgeunlatched', {
-          template: '<documents-list></documents-list>',
+          template: '<document-item-list></document-item-list>',
           title: 'Knowledge Unlatched books',
         })
 

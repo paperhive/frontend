@@ -2,11 +2,9 @@ import jquery from 'jquery';
 import { isArray, merge } from 'lodash';
 import { SearchIndex } from 'srch';
 
-class DocumentTextCtrl {
+class DocumentItemTextCtrl {
   // input
-  revision: any;
-  access: boolean;
-  latestAccessibleRevision: any;
+  documentItem: any;
   discussions: any[];
   filteredDiscussions: any[];
   indexSearchResults: number;
@@ -35,7 +33,7 @@ class DocumentTextCtrl {
     this.hoveredMarginDiscussions = {draft: true};
     this.pageCoordinates = {};
 
-    $scope.$watchGroup(['$ctrl.revision', '$ctrl.access'], this.updatePdfUrl.bind(this));
+    $scope.$watchGroup(['$ctrl.documentItem', '$ctrl.access'], this.updatePdfUrl.bind(this));
 
     // update highlights when discussions or draft selectors change
     $scope.$watchCollection('$ctrl.filteredDiscussions', this.updateHighlights.bind(this));
@@ -87,28 +85,29 @@ class DocumentTextCtrl {
       discussion,
       {
         target: {
-          document: this.revision.id,
-          documentRevision: this.revision.revision,
+          document: this.documentItem.document,
+          documentRevision: this.documentItem.revision,
         },
       },
     );
   }
 
   updatePdfUrl() {
-    if (!this.revision || !this.access) {
+    if (!this.documentItem) {
       this.pdfUrl = undefined;
       return;
     }
 
     // if the file available via HTTPS with enabled CORS then just use it
-    if (/^https/.test(this.revision.file.url) && this.revision.file.hasCors) {
-      this.pdfUrl = this.revision.file;
+    if (/^https/.test(this.documentItem.file.url) && this.documentItem.file.urlHasCors) {
+      this.pdfUrl = this.documentItem.file.url;
+      console.log(this.pdfUrl)
       return;
     }
 
-    // No HTTPS/Cors? PaperHive can proxy the document if it's open access.
-    if (this.revision.isOpenAccess && this.revision.file.url) {
-      const encodedUrl = encodeURIComponent(this.revision.file.url);
+    // No HTTPS/Cors? PaperHive can proxy the document if it's a public open access document.
+    if (this.documentItem.public && this.documentItem.metadata.isOpenAccess && this.documentItem.file.url) {
+      const encodedUrl = encodeURIComponent(this.documentItem.file.url);
       this.pdfUrl = `${this.config.apiUrl}/proxy?url=${encodedUrl}`;
     }
   }
@@ -159,12 +158,10 @@ class DocumentTextCtrl {
 }
 
 export default function(app) {
-  app.component('documentText', {
+  app.component('documentItemText', {
     bindings: {
       anchor: '<',
-      revision: '<',
-      access: '<',
-      latestAccessibleRevision: '<',
+      documentItem: '<',
       discussions: '<',
       filteredDiscussions: '<',
       viewportOffsetTop: '<',
@@ -181,7 +178,7 @@ export default function(app) {
       onPdfInfoUpdate: '&',
       onSearchMatchesUpdate: '&',
     },
-    controller: DocumentTextCtrl,
-    template: require('./document-text.html'),
+    controller: DocumentItemTextCtrl,
+    template: require('./document-item-text.html'),
   });
 }

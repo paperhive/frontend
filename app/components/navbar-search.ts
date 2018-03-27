@@ -37,10 +37,11 @@ export default function(app) {
         $scope.isOwnedByYou = documentItem => authService.user && documentItem.owner === authService.user.id;
         $scope.isSharedWithYou = documentItem => isDocumentItemSharedWithUser(documentItem, authService.user);
 
-        $scope.goToDocument = function(item, model, label) {
+        $scope.goToDocument = function(hit, model, label) {
+          console.log(hit)
           $location
             .path($routeSegment.getSegmentUrl(
-              'documents', {documentId: item.id},
+              'documentItem', {documentItem: hit.documentItem.id},
             ))
             .search({});
 

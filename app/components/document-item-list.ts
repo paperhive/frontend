@@ -30,7 +30,7 @@ const kuCategories = [
 ];
 
 export default function(app) {
-  app.component('documentsList', {
+  app.component('documentItemList', {
     controller: class DocumentsListCtrl {
       categories: any[];
 
@@ -64,6 +64,6 @@ export default function(app) {
 
       }
     },
-    template: require('./documents-list.html'),
+    template: require('./document-item-list.html'),
   });
 };

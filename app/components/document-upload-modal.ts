@@ -13,8 +13,8 @@ export default function(app: IModule) {
       public submittedBytes: number;
       public onUploaded: (o: {result: any}) => void;
 
-      static $inject = ['$scope', 'DocumentController'];
-      constructor(public $scope, public _DocumentController) {}
+      static $inject = ['$scope', 'documentItemsApi'];
+      constructor(public $scope, public documentItemsApi) {}
 
       public async submit() {
         this.$scope.$applyAsync(() => {
@@ -23,7 +23,7 @@ export default function(app: IModule) {
         });
 
         try {
-          const result = await this._DocumentController.upload(
+          const result = await this.documentItemsApi.upload(
             this.selectedFile,
             ({submittedBytes}) => this.$scope.$applyAsync(() => this.submittedBytes = submittedBytes),
           );

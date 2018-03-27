@@ -3,7 +3,7 @@ import jquery from 'jquery';
 export default function(app) {
   app.component('documentSidenav', {
     bindings: {
-      activeRevision: '<',
+      documentItem: '<',
       discussionsCtrl: '<',
       discussionsByRevision: '<',
       documentCtrl: '<',
@@ -14,11 +14,13 @@ export default function(app) {
       searchStr: '<',
       viewportOffsetTop: '<',
       onAnchorUpdate: '&',
+      onAddBookmark: '&',
+      onRemoveBookmark: '&',
       onToggle: '&',
       onSearchUpdate: '&',
     },
     controller: class DocumentSidenavCtrl {
-      activeRevision: string;
+      documentItem: string;
       documentCtrl: any;
       open: boolean;
       searchMatches: any[];
@@ -40,7 +42,6 @@ export default function(app) {
       constructor(public $http, $scope, public $window) {
 
         $scope.$watchCollection('$ctrl.documentCtrl.revisions', this.updateKudos.bind(this));
-        $scope.$watchCollection('$ctrl.activeRevision', this.updatePublisherLink.bind(this));
 
         this.onKeydownBind = this.onKeydown.bind(this);
         jquery($window).on('keydown', this.onKeydownBind);
@@ -104,11 +105,6 @@ export default function(app) {
               }
             },
           );
-      }
-
-      updatePublisherLink() {
-        this.publisherLink = this.activeRevision &&
-          this.documentCtrl.getRevisionPublisherLink(this.activeRevision);
       }
     },
     template: require('./document-sidenav.html'),

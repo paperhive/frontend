@@ -22,8 +22,7 @@
       <a href=""
         ng-click="
           $ctrl.channelService.hasRole(channel, $ctrl.authService.user.id, 'owner') &&
-          ($ctrl.documentCtrl.bookmarks.indexOf(channel.id) > -1 ?
-          $ctrl.removeBookmark(channel.id) : $ctrl.bookmark(channel.id));
+          ($ctrl.isBookmarked(channel.id) ? $ctrl.removeBookmark(channel.id) : $ctrl.bookmark(channel.id));
           $event.stopPropagation()"
         title="{{
             $ctrl.channelService.hasRole(channel, $ctrl.authService.user.id, 'owner')
@@ -34,8 +33,8 @@
         <div class="ph-grow-container">
           <div class="ph-grow-item">
             <i class="fa fa-fw ph-dropdown-icon-left" ng-class="{
-              'fa-star-o': ($ctrl.documentCtrl.bookmarks.indexOf(channel.id) === -1),
-              'fa-star': ($ctrl.documentCtrl.bookmarks.indexOf(channel.id) > -1),
+              'fa-star-o': !$ctrl.isBookmarked(channel.id),
+              'fa-star': $ctrl.isBookmarked(channel.id),
             }"></i>
             {{$ctrl.channelService.getName(channel)}}
             <small class="text-muted">{{$ctrl.channelService.getDescription(channel)}}</small>

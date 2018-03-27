@@ -2,12 +2,12 @@ import { find, get, remove, reverse, sortBy } from 'lodash';
 import { parse as urlParse } from 'url';
 
 export default function(app) {
-  app.factory('DocumentController', [
+  app.factory('DocumentItemController', [
     '$http', '$q', '$rootScope', '$timeout', 'authService', 'config', 'notificationService',
     ($http, $q, $rootScope, $timeout, auth, config, notificationService) => {
       // controller for one document
-      return class DocumentController {
-        revisions: any[];
+      return class DocumentItemController {
+        revisionItems: any[];
         revisionAccess = {};
         latestRevision: any;
         latestAccessibleRevision: any;
@@ -15,17 +15,25 @@ export default function(app) {
         isUserHiver: boolean;
         bookmarks: any[];
 
-        constructor(public documentId) {
+        constructor(public documentItemId) {
           $rootScope.$watchCollection(() => this.revisions, this.updateRevisionAccess.bind(this));
           $rootScope.$watch(() => auth.user, this.updateIsUserHiver.bind(this));
           $rootScope.$watchCollection(() => this.hivers, this.updateIsUserHiver.bind(this));
         }
 
-        fetchRevisions() {
-          const loginPromise = auth.loginPromise || $q.resolve();
-          return loginPromise
-            .then(() => $http.get(`${config.apiUrl}/documents/${this.documentId}/revisions`))
-            .then(response => this.revisions = response.data.revisions);
+        fetchItem() {
+          $http.get(`${config.apiUrl}/document-items/${this.documentItemId}`)
+            .then(response => this.documentItem = response.data);
+        }
+
+        fetchRevision(revision) {
+          $http.get(`${config.apiUrl}/document-items/by-revision/${revision}`)
+            .then(response => this.revisionItems = response.data.documentItems);
+        }
+
+        fetchDocument(document) {
+          $http.get(`${config.apiUrl}/document-items/by-document/${document}`)
+            .then(response => this.documentItems = response.data.documentItems);
         }
 
         static async isRevisionAccessible(revision) {
@@ -221,25 +229,6 @@ export default function(app) {
               const index = this.bookmarks.indexOf(channel);
               if (index > -1) this.bookmarks.splice(index, 1);
             });
-        }
-
-        static async upload(file: File, onProgress: (o: {submittedBytes: number}) => void) {
-          return $http.post(
-            `${config.apiUrl}/document-items/upload`,
-            file,
-            {
-              headers: {
-                'Content-Type': file.type,
-              },
-              params: {
-                filename: file.name,
-              },
-              uploadEventHandlers: {
-                progress: e => onProgress && onProgress({submittedBytes: e.loaded}),
-              },
-            },
-          )
-            .then(response => response.data);
         }
       };
     },

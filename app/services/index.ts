@@ -4,8 +4,8 @@ import channelsApi from './channelsApi';
 import clipboard from './clipboard';
 import distangle from './distangle';
 import documentController from './document-controller';
+import documentItemsApi from './document-items-api';
 import documentUploadModal from './document-upload-modal';
-import documentsApi from './documents-api';
 import featureFlags from './feature-flags';
 import feedbackModal from './feedback-modal';
 import meta from './meta';
@@ -23,7 +23,7 @@ export default function(app) {
   distangle(app);
   documentController(app);
   documentUploadModal(app);
-  documentsApi(app);
+  documentItemsApi(app);
   featureFlags(app);
   feedbackModal(app);
   meta(app);
