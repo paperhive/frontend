@@ -40,8 +40,11 @@ export default function(app) {
         // register new and remote before id-dependent routes
         .when('/documents/new', 'documents_new')
         .when('/documents/remote', 'documents_remote')
-        .when('/documents/items/:documentItem', 'documentItem')
+        .when('/documents/items/:documentItem', 'documentItem', {reloadOnSearch: false})
         .when('/documents/items/:documentItem/text', 'documentItem.text', {reloadOnSearch: false})
+        .when('/documents/items/:documentItem/activity', 'documentItem.activity')
+        .when('/documents/items/:documentItem/discussions', 'documentItem.discussions')
+        .when('/documents/items/:documentItem/hivers', 'documentItem.hivers')
         /*
         .when('/documents/:documentId', 'documents', {reloadOnSearch: false})
         .when('/documents/:documentId/activity', 'documents.activity')
@@ -482,4 +485,4 @@ export default function(app) {
       $routeProvider.otherwise({redirectTo: '/404'});
     },
   ]);
-};
+}
