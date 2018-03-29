@@ -20,8 +20,7 @@ export default function(app) {
       onSearchUpdate: '&',
     },
     controller: class DocumentSidenavCtrl {
-      documentItem: string;
-      documentCtrl: any;
+      documentItem: any;
       open: boolean;
       searchMatches: any[];
       searchMatchIndex: number;
@@ -41,7 +40,7 @@ export default function(app) {
       static $inject = ['$http', '$scope', '$window'];
       constructor(public $http, $scope, public $window) {
 
-        $scope.$watchCollection('$ctrl.documentCtrl.revisions', this.updateKudos.bind(this));
+        $scope.$watch('$ctrl.documentItem', this.updateKudos.bind(this));
 
         this.onKeydownBind = this.onKeydown.bind(this);
         jquery($window).on('keydown', this.onKeydownBind);
@@ -66,16 +65,9 @@ export default function(app) {
         this.docNav = this.docNav === id ? undefined : id;
       }
 
-      getDoi() {
-        if (!this.documentCtrl.revisions) return;
-        for (const revision of this.documentCtrl.revisions) {
-          if (revision.doi) return revision.doi;
-        }
-      }
-
       // i can haz kudos?
       updateKudos() {
-        const doi = this.getDoi();
+        const doi = this.documentItem && this.documentItem.metadata.doi;
 
         // reset kudosDoi if no doi is available
         if (!doi) {
