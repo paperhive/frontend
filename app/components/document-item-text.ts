@@ -93,23 +93,20 @@ class DocumentItemTextCtrl {
   }
 
   updatePdfUrl() {
-    if (!this.documentItem) {
-      this.pdfUrl = undefined;
-      return;
-    }
+    this.pdfUrl = this.getPdfUrl();
+  }
+
+  getPdfUrl() {
+    if (!this.documentItem || !this.documentItem.file || !this.documentItem.file.url) return;
 
     // if the file available via HTTPS with enabled CORS then just use it
     if (/^https/.test(this.documentItem.file.url) && this.documentItem.file.urlHasCors) {
-      this.pdfUrl = this.documentItem.file.url;
-      console.log(this.pdfUrl)
-      return;
+      return this.documentItem.file.url;
     }
 
     // No HTTPS/Cors? PaperHive can proxy the document if it's a public open access document.
-    if (this.documentItem.public && this.documentItem.metadata.isOpenAccess && this.documentItem.file.url) {
-      const encodedUrl = encodeURIComponent(this.documentItem.file.url);
-      this.pdfUrl = `${this.config.apiUrl}/proxy?url=${encodedUrl}`;
-    }
+    const encodedUrl = encodeURIComponent(this.documentItem.file.url);
+    return `${this.config.apiUrl}/proxy?url=${encodedUrl}`;
   }
 
   // note: a query parameter is used because a fragment identifier (hash)
