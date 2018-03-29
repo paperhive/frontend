@@ -37,8 +37,8 @@ export default function(app) {
 
       onKeydownBind: (event: JQueryEventObject) => void;
 
-      static $inject = ['$http', '$scope', '$window'];
-      constructor(public $http, $scope, public $window) {
+      static $inject = ['$http', '$scope', '$window', 'authService'];
+      constructor(public $http, $scope, public $window, public authService) {
 
         $scope.$watch('$ctrl.documentItem', this.updateKudos.bind(this));
 

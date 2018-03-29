@@ -15,6 +15,13 @@
           {{author.name}}{{$last ? '' :', '}}
         </span>
       </h6>
+      <p>
+        <span ng-show="!$ctrl.documentItem.public" class="label label-info">Private</span>
+        <span ng-show="$ctrl.documentItem.owner === $ctrl.authService.user.id" class="label label-info">Owner</span>
+        <span ng-show="$ctrl.isSharedWithYou(hit.documentItem)" class="label label-info">Shared with you</span>
+        <span ng-show="$ctrl.documentItem.public" class="label label-success">Public</span>
+        <span ng-show="$ctrl.documentItem.metadata.isOpenAccess" class="label label-success">Open Access</span>
+      </p>
     </div>
     <div class="ph-sidenav-item">
       <hive-button
