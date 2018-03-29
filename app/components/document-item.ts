@@ -287,7 +287,7 @@ export default function(app) {
 
       updateDocumentItem() {
         const documentItemId = this.$routeParams.documentItem;
-        if (this.documentItem && this.documentItem.id === documentItemId) return;
+        if (!documentItemId || this.documentItem && this.documentItem.id === documentItemId) return;
         this.documentItemsApi.get(documentItemId)
           .then(documentItem => {
             this.documentItem = documentItem;
