@@ -29,7 +29,7 @@
         ng-if="$ctrl.documentItem.public"
         bookmarks="$ctrl.documentItem.channelBookmarks"
         on-add-bookmark="$ctrl.onAddBookmark({$channel: $channel})"
-        on-delete-bookmark="$ctrl.onRemoveBookmark({$channel: $channel})"
+        on-remove-bookmark="$ctrl.onRemoveBookmark({$channel: $channel})"
       ></channel-bookmark>
 
       <div class="dropdown ph-sidenav-item ph-dropdown-large" is-open="$ctrl.revisionDropdownOpen" uib-dropdown
