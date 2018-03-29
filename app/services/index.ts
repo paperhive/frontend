@@ -3,7 +3,6 @@ import channel from './channel';
 import channelsApi from './channelsApi';
 import clipboard from './clipboard';
 import distangle from './distangle';
-import documentController from './document-controller';
 import documentItemsApi from './document-items-api';
 import documentUploadModal from './document-upload-modal';
 import featureFlags from './feature-flags';
@@ -21,7 +20,6 @@ export default function(app) {
   channelsApi(app);
   clipboard(app);
   distangle(app);
-  documentController(app);
   documentUploadModal(app);
   documentItemsApi(app);
   featureFlags(app);
