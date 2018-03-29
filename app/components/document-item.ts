@@ -286,7 +286,9 @@ export default function(app) {
       }
 
       updateDocumentItem() {
-        this.documentItemsApi.get(this.$routeParams.documentItem)
+        const documentItemId = this.$routeParams.documentItem;
+        if (this.documentItem && this.documentItem.id === documentItemId) return;
+        this.documentItemsApi.get(documentItemId)
           .then(documentItem => {
             this.documentItem = documentItem;
             // instanciate and init controller for discussions
