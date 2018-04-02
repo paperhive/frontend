@@ -4,6 +4,7 @@ export default function(app) {
   app.component('documentSidenav', {
     bindings: {
       documentItem: '<',
+      documentSubscriptions: '<',
       discussionsCtrl: '<',
       discussionsByRevision: '<',
       documentCtrl: '<',
@@ -16,6 +17,8 @@ export default function(app) {
       onAnchorUpdate: '&',
       onAddBookmark: '&',
       onRemoveBookmark: '&',
+      onAddDocumentSubscription: '&',
+      onRemoveDocumentSubscription: '&',
       onToggle: '&',
       onSearchUpdate: '&',
     },

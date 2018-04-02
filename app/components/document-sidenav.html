@@ -24,11 +24,12 @@
       </p>
     </div>
     <div class="ph-sidenav-item">
-      <hive-button
-        ng-if="$ctrl.documentCtrl.hivers !== undefined"
-        document-ctrl="$ctrl.documentCtrl"
+      <document-subscription-button
+        subscriptions="$ctrl.documentSubscriptions"
+        on-add-subscription="$ctrl.onAddDocumentSubscription()"
+        on-remove-subscription="$ctrl.onRemoveDocumentSubscription()"
         large="true"
-      ></hive-button>
+      ></document-subscription-button>
     </div>
 
     <div class="ph-sidenav-info">
@@ -177,7 +178,12 @@
   <button class="btn btn-link" ng-click="$ctrl.onToggle({open: true})">
     <i class="fa fa-chevron-right" aria-hidden="true"></i>
   </button>
-  <hive-button document-ctrl="$ctrl.documentCtrl" large="false"></hive-button>
+  <document-subscription-button
+    subscriptions="$ctrl.documentSubscriptions"
+    on-add-subscription="$ctrl.onAddDocumentSubscription()"
+    on-remove-subscription="$ctrl.onRemoveDocumentSubscription()"
+    large="false"
+  ></document-subscription-button>
 
   <div class="ph-sidenav-pagination">
     <ul class="ph-sidenav-icons">
