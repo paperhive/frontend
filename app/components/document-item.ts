@@ -199,6 +199,8 @@ export default function(app) {
       subnavOpen = false;
       sidenavOpen = true;
       documentItem: any;
+      documentSubscriptions: any[];
+      documentSubscription: any;
       discussionsCtrl: DiscussionsController;
       discussionsByRevision: any;
       filteredDiscussions: any[];
@@ -206,11 +208,12 @@ export default function(app) {
       // note: do *not* use $routeSegment.$routeParams because they still
       // use the old state in $routeChangeSuccess events
       static $inject = ['$http', '$routeParams', '$scope', 'authService', 'channelService', 'config',
-        'documentItemsApi', 'metaService', 'notificationService', 'websocketService'];
+        'documentItemsApi', 'documentSubscriptionsApi', 'metaService', 'notificationService', 'websocketService'];
 
       constructor(public $http, public $routeParams, public $scope, public authService,
                   public channelService, public config, public documentItemsApi,
-                  public metaService, notificationService, public websocketService
+                  public documentSubscriptionsApi, public metaService, notificationService,
+                  public websocketService,
       ) {
         this.updateDocumentItem();
 
@@ -220,8 +223,6 @@ export default function(app) {
         /*
         this.documentCtrl = new _DocumentController(documentId);
         this.documentCtrl.fetchRevisions(); // TODO: error handling
-        this.documentCtrl.fetchHivers(); // TODO: error handling
-        this.documentCtrl.fetchBookmarks(); // TODO: error handling
 
         $scope.$watchGroup([
           '$ctrl.documentCtrl.revisions',
@@ -233,8 +234,6 @@ export default function(app) {
 
 
         $scope.$watch('$ctrl.activeRevision', this.updateMetadata.bind(this));
-
-
 
         // update filtered discussions if discussions, channel or showAllChannels changed
         $scope.$watchCollection('$ctrl.discussionsCtrl.discussions', this.updateFilteredDiscussions.bind(this));
@@ -291,12 +290,37 @@ export default function(app) {
         this.documentItemsApi.get(documentItemId)
           .then(documentItem => {
             this.documentItem = documentItem;
+
             // instanciate and init controller for discussions
             this.discussionsCtrl = new DiscussionsController(
               documentItem.document, this.config, this.$scope, this.$http,
               this.authService, this.websocketService,
             );
-            return this.discussionsCtrl.refresh();
+            this.discussionsCtrl.refresh();
+
+            // get subscriptions
+            // TODO: check if there is a public item
+            if (documentItem.public) {
+              this.documentSubscriptionsApi
+                .getByDocument(documentItem.document)
+                .then(({documentSubscriptions}) => {
+                  this.documentSubscriptions = documentSubscriptions;
+                });
+              }
+          });
+      }
+
+      addDocumentSubscription() {
+        return this.documentSubscriptionsApi.add(this.documentItem.document)
+          .then(subscription => this.documentSubscriptions.push(subscription));
+      }
+
+      removeDocumentSubscription() {
+        return this.documentSubscriptionsApi.remove(this.documentItem.document)
+          .then(() => {
+            const index = this.documentSubscriptions
+              .findIndex(subscription => subscription.person === this.authService.user.id);
+            this.documentSubscriptions.splice(index, 1);
           });
       }
 
@@ -356,4 +380,4 @@ export default function(app) {
     },
     template: require('./document-item.html'),
   });
-};
+}
