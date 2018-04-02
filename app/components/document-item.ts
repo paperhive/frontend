@@ -8,14 +8,15 @@ class DiscussionsController {
   discussions: any[];
   documentUpdatesSubscription: any;
 
-  constructor(public document: string, public config: any, public $scope: any,
+  constructor(public documentItem: any, public config: any, public $scope: any,
               public $http: any, public authService, public websocketService) {
     this.discussions = [];
   }
 
   async refresh() {
     const response = await this.$http({
-      url: `${this.config.apiUrl}/documents/${this.document}/discussions`,
+      url: `${this.config.apiUrl}/discussions`,
+      params: {revision: this.documentItem.revision},
     });
     this.$scope.$apply(() => this.discussions = response.data.discussions);
     this.websocketDestroy();
@@ -92,7 +93,7 @@ class DiscussionsController {
   websocketInit() {
     const documentUpdates = this.websocketService.join('documents', {
       authToken: this.authService.token,
-      documentId: this.document,
+      documentId: this.documentItem.document,
     });
     this.documentUpdatesSubscription = documentUpdates.subscribe((update) => {
       const data = update.data;
@@ -220,55 +221,11 @@ export default function(app) {
         // TODO: do we need this?
         $scope.$on('$routeChangeSuccess', this.updateDocumentItem.bind(this));
 
-        /*
-        this.documentCtrl = new _DocumentController(documentId);
-        this.documentCtrl.fetchRevisions(); // TODO: error handling
-
-        $scope.$watchGroup([
-          '$ctrl.documentCtrl.revisions',
-          '$ctrl.documentCtrl.revisionAccess',
-          '$ctrl.documentCtrl.latestRevision',
-          '$ctrl.documentCtrl.latestAccessibleRevision',
-        ], this.updateActiveRevision.bind(this));
-
-
-
-        $scope.$watch('$ctrl.activeRevision', this.updateMetadata.bind(this));
-
         // update filtered discussions if discussions, channel or showAllChannels changed
         $scope.$watchCollection('$ctrl.discussionsCtrl.discussions', this.updateFilteredDiscussions.bind(this));
-        $scope.$watch('$ctrl.activeRevision', this.updateFilteredDiscussions.bind(this));
         $scope.$watch('$ctrl.channelService.selectedChannel', this.updateFilteredDiscussions.bind(this));
         $scope.$watch('$ctrl.channelService.showAllChannels', this.updateFilteredDiscussions.bind(this));
-        $scope.$watchCollection('$ctrl.documentCtrl.revisions', this.updateFilteredDiscussions.bind(this));
-        */
       }
-
-      /*
-      updateActiveRevision() {
-        // nothing to do if there are no revisions or no revision access information
-        if (!this.documentCtrl.revisions || !this.documentCtrl.revisionAccess) return;
-
-        // don't overwrite if we already got one
-        // (only if url changed)
-        const urlRevisionId = this.$routeParams.revisionId;
-        if (this.activeRevision &&
-            (!urlRevisionId ||
-             urlRevisionId && this.activeRevision.revision === urlRevisionId
-           )) return;
-
-        // prefer revision id from url
-        if (urlRevisionId) {
-          this.activeRevision = find(this.documentCtrl.revisions, {revision: urlRevisionId});
-          return;
-        }
-
-        // then latest accessible or latest revision
-        this.activeRevision =
-          this.documentCtrl.latestAccessibleRevision ||
-          this.documentCtrl.latestRevision;
-      }
-      */
 
       addBookmark(channel) {
         return this.documentItemsApi.bookmarkAdd(this.documentItem.id, channel)
@@ -293,7 +250,7 @@ export default function(app) {
 
             // instanciate and init controller for discussions
             this.discussionsCtrl = new DiscussionsController(
-              documentItem.document, this.config, this.$scope, this.$http,
+              documentItem, this.config, this.$scope, this.$http,
               this.authService, this.websocketService,
             );
             this.discussionsCtrl.refresh();
@@ -324,32 +281,10 @@ export default function(app) {
           });
       }
 
-      /*
       updateFilteredDiscussions() {
         if (this.filteredDiscussions === undefined) this.filteredDiscussions = [];
-        if (this.discussionsByRevision === undefined) this.discussionsByRevision = {};
 
-        // get revision data
-        const activeRevisionId = this.activeRevision && this.activeRevision.revision;
-        const revisionIds = this.documentCtrl.revisions
-          && this.documentCtrl.revisions.map(revision => revision.revision)
-          || [];
-
-        let discussions = this.discussionsCtrl.discussions || [];
-
-        // filter discussions by revision
-        const discussionsByRevision = {};
-        revisionIds.forEach(revisionId => discussionsByRevision[revisionId] = []);
-        discussions.forEach(discussion => {
-          const revision = discussion.target.documentRevision;
-          if (!discussionsByRevision[revision]) discussionsByRevision[revision] = [];
-          discussionsByRevision[revision].push(discussion);
-        });
-        angular.copy(discussionsByRevision, this.discussionsByRevision);
-
-        // only use discussions from the active revision
-        discussions = activeRevisionId && discussionsByRevision[activeRevisionId] || [];
-
+        let discussions = this.discussionsCtrl && this.discussionsCtrl.discussions || [];
         if (!discussions) {
           angular.copy([], this.filteredDiscussions);
           return;
@@ -368,6 +303,7 @@ export default function(app) {
         discussions.forEach(discussion => this.filteredDiscussions.push(discussion));
       }
 
+      /*
       updateMetadata() {
         if (!this.activeRevision) return;
         const metadata = getRevisionMetadata(this.activeRevision);
