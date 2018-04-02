@@ -85,8 +85,9 @@ class DocumentItemTextCtrl {
       discussion,
       {
         target: {
-          document: this.documentItem.document,
+          documentItem: this.documentItem.id,
           documentRevision: this.documentItem.revision,
+          document: this.documentItem.document,
         },
       },
     );
