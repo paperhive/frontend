@@ -13,8 +13,7 @@
         </div>
         <ul class="list-group">
           <li class="list-group-item" ng-repeat="discussion in $ctrl.discussions">
-            <a href="./{{'documents.discussions.thread' | routeSegmentUrl:
-              {discussionId: discussion.id} }}"
+            <a href="./{{'discussion.thread' | routeSegmentUrl:{discussion: discussion.id} }}"
             >
               <span ng-if="discussion.replies.length > 0"
                 class="pull-right ph-discussion-replies-counter"
@@ -23,8 +22,7 @@
               </span>
             </a>
             <h4>
-              <a href="./{{'documents.discussions.thread' | routeSegmentUrl:
-                {discussionId: discussion.id} }}"
+              <a href="./{{'discussion.thread' | routeSegmentUrl:{discussion: discussion.id} }}"
               ><mathjax body="discussion.title"></mathjax></a>
               <small>
                 <i ng-show="!discussion.channel"

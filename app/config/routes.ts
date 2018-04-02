@@ -37,6 +37,10 @@ export default function(app) {
         .when('/channels/:channelId/members', 'channel.members')
         .when('/channels/:channelId/settings', 'channel.settings')
         .when('/contact', 'contact')
+        // TODO: redirect to document item with anchor
+        .when('/discussions/:discussion', 'discussion')
+        // TODO: redirect to document item with opened discussion thread
+        .when('/discussions/:discussion/thread', 'discussion.thread')
         // register new and remote before id-dependent routes
         .when('/documents/new', 'documents_new')
         .when('/documents/remote', 'documents_remote')
