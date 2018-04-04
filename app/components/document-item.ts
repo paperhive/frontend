@@ -16,7 +16,7 @@ class DiscussionsController {
   async refresh() {
     const response = await this.$http({
       url: `${this.config.apiUrl}/discussions`,
-      params: {revision: this.documentItem.revision},
+      params: {documentRevision: this.documentItem.revision},
     });
     this.$scope.$apply(() => this.discussions = response.data.discussions);
     this.websocketDestroy();
