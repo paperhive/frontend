@@ -38,17 +38,12 @@ export default function(app) {
         $scope.isSharedWithYou = documentItem => isDocumentItemSharedWithUser(documentItem, authService.user);
 
         $scope.goToDocument = function(hit, model, label) {
-          console.log(hit)
-          $location
-            .path($routeSegment.getSegmentUrl(
-              'documentItem', {documentItem: hit.documentItem.id},
-            ))
-            .search({});
-
+          const url = $routeSegment.getSegmentUrl('documentItem', {documentItem: hit.documentItem.id});
+          $location.url(url);
           $scope.search.body = '';
         };
       },
     ],
     template: require('./navbar-search.html'),
   });
-};
+}
