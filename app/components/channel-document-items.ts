@@ -1,4 +1,4 @@
-import { isDocumentItemSharedWithUser } from '../utils/document-items';
+import { isDocumentItemBookmarkedInChannel, isDocumentItemSharedInChannel } from '../utils/document-items';
 
 export default function(app) {
   app.component('channelDocumentItems', {
@@ -7,11 +7,17 @@ export default function(app) {
       channel: '<',
     },
     controller: class ChannelDocumentItemsCtrl {
+      public channel: any;
+
       static $inject = ['authService'];
       constructor(public authService) {}
 
-      isSharedWithYou(documentItem) {
-        return isDocumentItemSharedWithUser(documentItem, this.authService.user);
+      isBookmarkedInChannel(documentItem) {
+        return isDocumentItemBookmarkedInChannel(documentItem, this.channel);
+      }
+
+      isSharedInChannel(documentItem) {
+        return isDocumentItemSharedInChannel(documentItem, this.channel);
       }
     },
     template: require('./channel-document-items.html'),

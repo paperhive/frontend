@@ -46,6 +46,20 @@ export function getHTMLMetadata(documentItem) {
   return metadata;
 }
 
+export function isDocumentItemBookmarkedInChannel(documentItem, channel) {
+  return documentItem
+    && documentItem.channelBookmarks
+    && channel
+    && documentItem.channelBookmarks.find(bookmark => bookmark.channel === channel.id);
+}
+
+export function isDocumentItemSharedInChannel(documentItem, channel) {
+  return documentItem
+    && documentItem.channelShares
+    && channel
+    && documentItem.channelShares.find(share => share.channel === channel.id);
+}
+
 export function isDocumentItemSharedWithUser(documentItem, user) {
   return documentItem
     && documentItem.channelShares
