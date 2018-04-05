@@ -1,5 +1,7 @@
 import jquery from 'jquery';
 
+import { isDocumentItemSharedWithUser } from '../utils/document-items';
+
 export default function(app) {
   app.component('documentSidenav', {
     bindings: {
@@ -68,6 +70,10 @@ export default function(app) {
           this.onSearchUpdate({searchStr: undefined, matchIndex: undefined});
         }
         this.docNav = this.docNav === id ? undefined : id;
+      }
+
+      isSharedWithYou(documentItem) {
+        return isDocumentItemSharedWithUser(documentItem, this.authService.user);
       }
 
       // i can haz kudos?
