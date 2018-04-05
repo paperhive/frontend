@@ -1,7 +1,7 @@
 import angular from 'angular';
 import { find, findIndex, map, merge, pick, remove } from 'lodash';
 
-import { getRevisionMetadata } from '../utils/documents';
+import { getHTMLMetadata } from '../utils/document-items';
 
 class DiscussionsController {
   // data
@@ -250,6 +250,12 @@ export default function(app) {
           .then(documentItem => {
             this.documentItem = documentItem;
 
+            const metadata = getHTMLMetadata(documentItem);
+            this.metaService.set({
+              title: documentItem.metadata.title + ' · PaperHive',
+              meta: metadata,
+            });
+
             // instanciate and init controller for discussions
             this.discussionsCtrl = new DiscussionsController(
               documentItem, this.config, this.$scope, this.$http,
@@ -308,17 +314,6 @@ export default function(app) {
         this.filteredDiscussions.splice(0, this.filteredDiscussions.length);
         discussions.forEach(discussion => this.filteredDiscussions.push(discussion));
       }
-
-      /*
-      updateMetadata() {
-        if (!this.activeRevision) return;
-        const metadata = getRevisionMetadata(this.activeRevision);
-        this.metaService.set({
-          title: this.activeRevision.title + ' · PaperHive',
-          meta: metadata,
-        });
-      }
-      */
     },
     template: require('./document-item.html'),
   });

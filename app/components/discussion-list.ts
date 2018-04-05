@@ -1,7 +1,5 @@
 import { find } from 'lodash';
 
-import { getRevisionMetadata } from '../utils/documents';
-
 export default function(app) {
   app.component(
     'discussionList', {
