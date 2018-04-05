@@ -27,8 +27,9 @@
       >
         <div class="ph-grow-container">
           <div class="ph-grow-item">
-            <i class="fa fa-fw ph-dropdown-icon-left fa-check" ng-class="{
-              'text-muted': !$ctrl.isShared(channel.id),
+            <i class="fa fa-fw ph-dropdown-icon-left" ng-class="{
+              'fa-check-square-o': $ctrl.isShared(channel.id),
+              'fa-square-o': !$ctrl.isShared(channel.id),
             }"></i>
             {{$ctrl.channelService.getName(channel)}}
             <small class="text-muted">{{$ctrl.channelService.getDescription(channel)}}</small>
