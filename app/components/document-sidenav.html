@@ -32,14 +32,23 @@
       ></document-subscription-button>
     </div>
 
-    <div class="ph-sidenav-info">
+    <div class="ph-sidenav-item" ng-if="$ctrl.documentItem.public">
       <channel-bookmark
-        ng-if="$ctrl.documentItem.public"
         bookmarks="$ctrl.documentItem.channelBookmarks"
         on-add-bookmark="$ctrl.onAddBookmark({$channel: $channel})"
         on-remove-bookmark="$ctrl.onRemoveBookmark({$channel: $channel})"
       ></channel-bookmark>
+    </div>
 
+    <div class="ph-sidenav-item" ng-if="!$ctrl.documentItem.public">
+      <channel-share
+        shares="$ctrl.documentItem.channelShares"
+        on-add-share="$ctrl.onAddShare({$channel: $channel})"
+        on-remove-share="$ctrl.onRemoveShare({$channel: $channel})"
+      ></channel-share>
+    </div>
+
+    <div class="ph-sidenav-info">
       <div class="dropdown ph-sidenav-item ph-dropdown-large" is-open="$ctrl.revisionDropdownOpen" uib-dropdown
         ng-if="$ctrl.documentCtrl.revisions && $ctrl.documentCtrl.revisionAccess && $ctrl.activeRevision"
       >

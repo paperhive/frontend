@@ -31,8 +31,8 @@ export default function(app) {
 
       newChannelModalOpen() {
         this.$uibModal.open({component: 'channelNew'});
-      };
+      }
     },
     template: require('./channel-bookmark.html'),
   });
-};
+}

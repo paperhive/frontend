@@ -17,6 +17,7 @@ import channelMembers from './channel-members';
 import channelNew from './channel-new';
 import channelSelector from './channel-selector';
 import channelSettings from './channel-settings';
+import channelShare from './channel-share';
 import channels from './channels';
 import channelsInvitations from './channels-invitations';
 import channelsList from './channels-list';
@@ -119,6 +120,7 @@ export default function(app) {
   channelSelector(app);
   channelSettings(app);
   channels(app);
+  channelShare(app);
   channelsInvitations(app);
   channelsList(app);
   channelNew(app);

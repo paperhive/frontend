@@ -242,6 +242,20 @@ export default function(app) {
           });
       }
 
+      addShare(channel) {
+        return this.documentItemsApi.shareAdd(this.documentItem.id, channel)
+          .then(share => this.documentItem.channelShares.push(share));
+      }
+
+      removeShare(channel) {
+        return this.documentItemsApi.shareDelete(this.documentItem.id, channel)
+          .then(() => {
+            const index = this.documentItem.channelShares
+              .findIndex(share => share.channel === channel);
+            this.documentItem.channelShares.splice(index, 1);
+          });
+      }
+
       updateDocumentItem() {
         const documentItemId = this.$routeParams.documentItem;
         if (!documentItemId || this.documentItem && this.documentItem.id === documentItemId) return;

@@ -17,6 +17,8 @@ export default function(app) {
       onAnchorUpdate: '&',
       onAddBookmark: '&',
       onRemoveBookmark: '&',
+      onAddShare: '&',
+      onRemoveShare: '&',
       onAddDocumentSubscription: '&',
       onRemoveDocumentSubscription: '&',
       onToggle: '&',

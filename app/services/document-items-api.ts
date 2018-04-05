@@ -3,12 +3,6 @@ export default function(app) {
     static $inject = ['$http', 'config', 'notificationService'];
     constructor(public $http, public config, public notificationService) {}
 
-    bookmarksGet(documentId) {
-      return this.$http.get(`${this.config.apiUrl}/documents/${documentId}/bookmarks`)
-        .catch(this.notificationService.httpError('could not get document bookmarks'))
-        .then(response => response.data);
-    }
-
     bookmarkAdd(documentItem, channel) {
       return this.$http
         .post(`${this.config.apiUrl}/document-items/${documentItem}/channel-bookmarks/${channel}`)
@@ -39,6 +33,19 @@ export default function(app) {
       return this.$http.get(`${this.config.apiUrl}/documents/search/scroll`, {params: {scrollToken}})
         .catch(this.notificationService.httpError('could not scroll documents'))
         .then(response => response.data);
+    }
+
+    shareAdd(documentItem, channel) {
+      return this.$http
+        .post(`${this.config.apiUrl}/document-items/${documentItem}/channel-shares/${channel}`)
+        .catch(this.notificationService.httpError('could not add share'))
+        .then(response => response.data);
+    }
+
+    shareDelete(documentItem, channel) {
+      return this.$http
+        .delete(`${this.config.apiUrl}/document-items/${documentItem}/channel-shares/${channel}`)
+        .catch(this.notificationService.httpError('could not remove share'));
     }
 
     upload(file: File, onProgress: (o: {submittedBytes: number}) => void) {
