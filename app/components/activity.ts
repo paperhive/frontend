@@ -23,7 +23,7 @@ export default function(app) {
         const params = {};
         switch (this.filterMode) {
           case 'channel':
-          case 'document':
+          case 'documentItem':
           case 'person':
             // don't do anything if the filterId is falsy
             if (!this.filterId) return;
