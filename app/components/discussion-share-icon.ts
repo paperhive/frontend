@@ -14,7 +14,7 @@ export default function(app) {
 
       constructor() {
         const target = this.discussion.target;
-        this.url = `/documents/${target.document}/revisions/${target.documentRevision}?a=d:${this.discussion.id}`;
+        this.url = `/documents/items/${target.documentItem}?a=d:${this.discussion.id}`;
       }
     },
     template: `
