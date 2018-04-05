@@ -1,3 +1,5 @@
+import { isDocumentItemSharedWithUser } from '../utils/document-items';
+
 export default function(app) {
   app.component('channelDocumentItems', {
     bindings: {
@@ -7,6 +9,10 @@ export default function(app) {
     controller: class ChannelDocumentItemsCtrl {
       static $inject = ['authService'];
       constructor(public authService) {}
+
+      isSharedWithYou(documentItem) {
+        return isDocumentItemSharedWithUser(documentItem, this.authService.user);
+      }
     },
     template: require('./channel-document-items.html'),
   });
