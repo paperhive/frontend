@@ -1,0 +1,70 @@
+<p ng-if="!$ctrl.documentItems.length">
+  You have no bookmarked or shared documents in this channel yet.
+  You can search for a relevant document and bookmark it in this
+  channel or upload a document and share it with this channel.
+</p>
+<div ng-if="$ctrl.documentItems.length" class="row">
+  <div class="col-sm-12">
+    <div class="ph-lg-margin-top ph-fade-in ph-fade-out ph-search-hit" ng-repeat="documentItem in $ctrl.documentItems">
+      <h4>
+        <a href="./documents/items/{{documentItem.id}}" title="{{documentItem.metadata.title}}">
+          <mathjax body="documentItem.metadata.title"></mathjax>
+        </a>
+      </h4>
+      <p>
+        <span ng-repeat="author in documentItem.metadata.authors">
+          {{author.name}}{{$last ? '' : ', '}}
+        </span>
+        <small class="text-muted ph-sm-margin-left">
+          {{documentItem.metadata.publishedAt | date: 'yyyy'}}
+        </small>
+      </p>
+      <p class="small">
+        <span ng-show="!documentItem.public" class="label label-info">Private</span>
+        <span ng-show="$ctrl.authService.user && documentItem.owner === $ctrl.authService.user.id" class="label label-info">Owner</span>
+        <span ng-show="$ctrl.isSharedWithYou(documentItem)" class="label label-info">Shared with you</span>
+        <span ng-show="documentItem.public" class="label label-success">Public</span>
+        <span ng-show="documentItem.metadata.isOpenAccess" class="label label-success">Open Access</span>
+      </p>
+      <div class="ph-sm-margin-top">
+        <small>
+          <mathjax
+            body="(documentItem.metadata.abstract | limitTo: 220) + (documentItem.metadata.abstract.length > 220 ? '&hellip;' : '')"
+          ></mathjax>
+        </small>
+      </div>
+    </div>
+    <!--div class="form-group">
+      <table class="table ph-md-margin-bottom">
+        <thead>
+          <tr>
+            <th>Document</th>
+            <th>Bookmarked by</th>
+            <th>Bookmarked</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="bookmark in $ctrl.bookmarks | orderBy: '-bookmarkedAt'">
+            <td>
+              <a ng-href="./documents/{{bookmark.document.id}}">{{bookmark.document.title}}</a>
+              <div>
+                <small class="text-muted" ng-repeat="author in bookmark.document.authors">
+                  {{author.name}}{{$last ? '' :', '}}
+                </small>
+              </div>
+            </td>
+            <td>
+              <avatar user="bookmark.person" size="30"
+                classes="img-circle ph-sm-margin-right"
+              ></avatar>
+              <a href="./users/{{bookmark.person.account.username}}">
+                {{bookmark.person.displayName}}
+              </a>
+            </td>
+            <td am-time-ago="bookmark.bookmarkedAt"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div-->
+  </div>
+</div>

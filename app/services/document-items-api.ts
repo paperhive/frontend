@@ -23,6 +23,13 @@ export default function(app) {
         .then(response => response.data);
     }
 
+    getByChannel(channel) {
+      return this.$http.get(`${this.config.apiUrl}/document-items/by-channel/${channel}`)
+        // TODO improve authorization error message
+        .catch(this.notificationService.httpError('could not retrieve document items for channel'))
+        .then(response => response.data);
+    }
+
     search(query) {
       return this.$http.get(`${this.config.apiUrl}/documents/search`, {params: query})
         .catch(this.notificationService.httpError('could not search documents'))

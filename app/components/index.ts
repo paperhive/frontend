@@ -6,7 +6,7 @@ import avatar from './avatar';
 import avatarList from './avatar-list';
 import channel from './channel';
 import channelBookmark from './channel-bookmark';
-import channelBookmarksList from './channel-bookmarks-list';
+import channelDocumentItems from './channel-document-items';
 import channelInvitationConfirm from './channel-invitation-confirm';
 import channelInvitationLink from './channel-invitation-link';
 import channelInvitationLinkConfirm from './channel-invitation-link-confirm';
@@ -109,7 +109,7 @@ export default function(app) {
   avatarList(app);
   channel(app);
   channelBookmark(app);
-  channelBookmarksList(app);
+  channelDocumentItems(app);
   channelInvitationConfirm(app);
   channelInvitationLink(app);
   channelInvitationLinkConfirm(app);

@@ -33,7 +33,7 @@ export default function(app) {
         .when('/channels/invitationLink', 'channelInvitationLinkConfirm')
         .when('/channels/:channelId', 'channel')
         .when('/channels/:channelId/activity', 'channel.activity')
-        .when('/channels/:channelId/bookmarks', 'channel.bookmarks')
+        .when('/channels/:channelId/document-items', 'channel.documentItems')
         .when('/channels/:channelId/members', 'channel.members')
         .when('/channels/:channelId/settings', 'channel.settings')
         .when('/contact', 'contact')
@@ -191,7 +191,10 @@ export default function(app) {
         .up()
 
         .segment('channel', {
-          template: '<channel></channel',
+          template: '<channel></channel>',
+          resolve: {
+            auth: ['authService', (authService) => authService.loginPromise],
+          },
         })
         .within()
           .segment('activity', {
@@ -203,13 +206,13 @@ export default function(app) {
               ></activity>`,
             title: 'Channel activity · PaperHive',
           })
-          .segment('bookmarks', {
+          .segment('documentItems', {
             template:
-              `<channel-bookmarks-list
-                bookmarks="$ctrl.bookmarks"
+              `<channel-document-items
+                document-items="$ctrl.documentItems"
                 channel="$ctrl.channel"
-              ></channel-bookmarks-list>`,
-            title: 'Channel bookmarks · PaperHive',
+              ></channel-document-items>`,
+            title: 'Channel documents · PaperHive',
           })
           .segment('members', {
             template:
