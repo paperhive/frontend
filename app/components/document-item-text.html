@@ -27,8 +27,9 @@
         highlights="$ctrl.highlights"
         emphasized-highlights="$ctrl.hoveredMarginDiscussions"
         popup-target="{
-          document: $ctrl.revision.id,
-          documentRevision: $ctrl.revision.revision,
+          documentItem: $ctrl.documentItem.id,
+          documentRevision: $ctrl.documentItem.revision,
+          document: $ctrl.documentItem.document,
           selectors: $ctrl.draftSelectors,
         }"
         scroll-to-anchor="$ctrl.allPagesInitialized && $ctrl.anchor"
