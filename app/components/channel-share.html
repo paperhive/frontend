@@ -3,12 +3,7 @@
     class="btn btn-default ph-split-container ph-split-container-icon-right dropdown-toggle"
   >
     <span class="ph-split-icon">
-      <i class="fa"
-        ng-class="{
-          'fa-star-o': $ctrl.shares.length === 0,
-          'fa-star': $ctrl.shares.length !== 0,
-        }"
-      ></i>
+      <i class="fa fa-plus"></i>
     </span>
     <span class="ph-split-text">
       Share in channel
@@ -32,9 +27,8 @@
       >
         <div class="ph-grow-container">
           <div class="ph-grow-item">
-            <i class="fa fa-fw ph-dropdown-icon-left" ng-class="{
-              'fa-star-o': !$ctrl.isShared(channel.id),
-              'fa-star': $ctrl.isShared(channel.id),
+            <i class="fa fa-fw ph-dropdown-icon-left fa-check" ng-class="{
+              'text-muted': !$ctrl.isShared(channel.id),
             }"></i>
             {{$ctrl.channelService.getName(channel)}}
             <small class="text-muted">{{$ctrl.channelService.getDescription(channel)}}</small>
