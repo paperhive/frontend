@@ -12,8 +12,8 @@
                 <i class="fa fa-fw fa-file-pdf-o"></i> Document
               </a>
             </li>
-            <li ng-class="{active: ('documentItem.discussions' | routeSegmentStartsWith)}">
-              <a href=".{{'documentItem.discussions' | routeSegmentUrl}}" ng-click="$ctrl.subnavOpen = false">
+            <li ng-class="{active: ('documentItem.discussion' | routeSegmentStartsWith)}">
+              <a href=".{{'documentItem.discussion.list' | routeSegmentUrl}}" ng-click="$ctrl.subnavOpen = false">
                 <i class="fa fa-fw fa-comments"></i> Discussions
                 <span class="badge" ng-if="$ctrl.discussionsCtrl.discussions.length > 0">
                   {{$ctrl.discussionsCtrl.discussions.length}}

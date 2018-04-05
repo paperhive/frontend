@@ -37,17 +37,20 @@ export default function(app) {
         .when('/channels/:channelId/members', 'channel.members')
         .when('/channels/:channelId/settings', 'channel.settings')
         .when('/contact', 'contact')
+        /*
         // TODO: redirect to document item with anchor
         .when('/discussions/:discussion', 'discussion')
         // TODO: redirect to document item with opened discussion thread
         .when('/discussions/:discussion/thread', 'discussion.thread')
+        */
         // register new and remote before id-dependent routes
         .when('/documents/new', 'documents_new')
         .when('/documents/remote', 'documents_remote')
         .when('/documents/items/:documentItem', 'documentItem', {reloadOnSearch: false})
         .when('/documents/items/:documentItem/text', 'documentItem.text', {reloadOnSearch: false})
         .when('/documents/items/:documentItem/activity', 'documentItem.activity')
-        .when('/documents/items/:documentItem/discussions', 'documentItem.discussions')
+        .when('/documents/items/:documentItem/discussions', 'documentItem.discussion.list')
+        .when('/documents/items/:documentItem/discussions/:discussion', 'documentItem.discussion.thread')
         .when('/documents/items/:documentItem/hivers', 'documentItem.hivers')
         /*
         .when('/documents/:documentId', 'documents', {reloadOnSearch: false})
@@ -259,6 +262,51 @@ export default function(app) {
           },
         })
         .within()
+          .segment('activity', {
+            template: `
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-9 col-md-offset-3">
+                    <activity
+                      filter-mode="documentItem"
+                      filter-id="$ctrl.documentItem.id"
+                    ></activity>
+                  </div>
+                </div>
+              </div>
+            `,
+            title: 'Activity · PaperHive',
+          })
+          .segment('discussion', {
+            template: `<div
+              ng-if="$ctrl.discussionsCtrl.discussions"
+              app-view-segment="2"
+            ></div>`,
+            title: 'Discussions · PaperHive',
+          })
+          .within()
+            .segment('list', {
+              default: true,
+              template: `<discussion-list
+                document-item="$ctrl.documentItem"
+                discussions="$ctrl.discussionsCtrl.discussions"
+              ></discussion-list>`,
+              title: 'Discussions · PaperHive',
+            })
+            .segment('thread', {
+              // Ideally, we'd already provide the exact discussion here,
+              // rather than all discussions and the discussionId.
+              template: `<discussion-thread-view
+                discussions="$ctrl.discussionsCtrl.discussions"
+                on-discussion-update="$ctrl.discussionsCtrl.discussionUpdate(discussion)"
+                on-reply-submit="$ctrl.discussionsCtrl.replySubmit(reply)"
+                on-reply-update="$ctrl.discussionsCtrl.replyUpdate(reply)"
+                on-reply-delete="$ctrl.discussionsCtrl.replyDelete(reply)"
+              ></discussion-thread-view>`,
+              dependencies: ['discussion'],
+              title: 'Discussion · PaperHive',
+            })
+            .up()
           .segment('text', {
             default: true,
             template: require('./routes-document-item-text.html'),

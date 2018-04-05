@@ -31,7 +31,7 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-right ph-margin-dropdown">
               <li>
-                <a ng-href=".{{'discussion.thread' | routeSegmentUrl:{discussion: discussion.id} }}#{{$ctrl.reply.id}}">
+                <a ng-href=".{{'documentItem.discussion.thread' | routeSegmentUrl:{discussion: $ctrl.reply.discussion} }}#{{$ctrl.reply.id}}">
                   <i class="fa fa-fw fa-comments"></i> Show discussion view
                 </a>
               </li>

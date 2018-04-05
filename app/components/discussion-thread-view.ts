@@ -17,9 +17,9 @@ export default function(app) {
         this.channelService = channelService;
 
         $scope.$watchCollection('$ctrl.discussions', discussions => {
-          // discussion with ID $routeSegment.$routeParams.discussionId
+          // discussion with ID $routeSegment.$routeParams.discussion
           $ctrl.discussion =
-            find(discussions, {id: $routeSegment.$routeParams.discussionId});
+            find(discussions, {id: $routeSegment.$routeParams.discussion});
 
           if ($ctrl.discussion) {
             // set meta data
@@ -74,4 +74,4 @@ export default function(app) {
     ],
     template: require('./discussion-thread-view.html'),
   });
-};
+}
