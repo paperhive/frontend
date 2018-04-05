@@ -201,7 +201,6 @@ export default function(app) {
       sidenavOpen = true;
       documentItem: any;
       documentSubscriptions: any[];
-      documentSubscription: any;
       discussionsCtrl: DiscussionsController;
       discussionsByRevision: any;
       filteredDiscussions: any[];
@@ -220,6 +219,8 @@ export default function(app) {
 
         // TODO: do we need this?
         $scope.$on('$routeChangeSuccess', this.updateDocumentItem.bind(this));
+
+        $scope.$watch('$ctrl.documentItem', this.updateDocumentSubscriptions.bind(this));
 
         // update filtered discussions if discussions, channel or showAllChannels changed
         $scope.$watchCollection('$ctrl.discussionsCtrl.discussions', this.updateFilteredDiscussions.bind(this));
@@ -255,16 +256,20 @@ export default function(app) {
               this.authService, this.websocketService,
             );
             this.discussionsCtrl.refresh();
+          });
+      }
 
-            // get subscriptions
-            // TODO: check if there is a public item
-            if (documentItem.public) {
-              this.documentSubscriptionsApi
-                .getByDocument(documentItem.document)
-                .then(({documentSubscriptions}) => {
-                  this.documentSubscriptions = documentSubscriptions;
-                });
-              }
+      updateDocumentSubscriptions() {
+        // TODO: check if there is a public item
+        if (!this.documentItem || !this.documentItem.public) {
+          this.documentSubscriptions = undefined;
+          return;
+        }
+
+        this.documentSubscriptionsApi
+          .getByDocument(this.documentItem.document)
+          .then(({documentSubscriptions}) => {
+            this.documentSubscriptions = documentSubscriptions;
           });
       }
 
