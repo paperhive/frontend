@@ -23,7 +23,7 @@
         <span ng-show="$ctrl.documentItem.metadata.isOpenAccess" class="label label-success">Open Access</span>
       </p>
     </div>
-    <div class="ph-sidenav-item">
+    <div class="ph-sidenav-item" ng-if="$ctrl.documentSubscriptions">
       <document-subscription-button
         subscriptions="$ctrl.documentSubscriptions"
         on-add-subscription="$ctrl.onAddDocumentSubscription()"
