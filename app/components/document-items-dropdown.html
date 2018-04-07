@@ -1,0 +1,33 @@
+<div class="dropdown ph-dropdown-large" is-open="$ctrl.dropdownOpen" uib-dropdown>
+  <button uib-dropdown-toggle
+    class="btn btn-default ph-split-container ph-split-container-icon-right dropdown-toggle"
+    title="{{$ctrl.getDescription($ctrl.documentItem)}}, {{$ctrl.documentItem.metadata.publishedAt | date:'MMM yyyy'}}"
+  >
+    <span class="ph-split-icon"><i class="fa fa-history" aria-hidden="true"></i></span>
+    <span class="ph-split-text">
+      <span class="ph-sidenav-journal">{{$ctrl.getDescription($ctrl.documentItem)}}</span>,
+      {{$ctrl.documentItem.metadata.publishedAt | date:'MMM yyyy'}}
+    </span>
+    <i class="fa fa-fw fa-caret-down ph-split-icon-right"></i>
+  </button>
+  <ul class="dropdown-menu ph-dropdown-menu-full">
+    <li ng-repeat="documentItem in $ctrl.documentItems | orderBy:'metadata.publishedAt':true"
+        ng-click="$ctrl.dropdownOpen = false">
+      <a
+        class="ph-split-container ph-split-container-no-icon"
+        href="./documents/items/{{documentItem.id}}"
+        title="{{$ctrl.getDescription(documentItem)}}, {{documentItem.metadata.publishedAt | date:'MMM yyyy'}}"
+      >
+        <span class="ph-split-text"
+          ng-class="{'ph-dropdown-menu-active': documentItem.id === $ctrl.documentItem.id}"
+        >
+          <span class="ph-sidenav-journal">{{$ctrl.getDescription(documentItem)}}</span>,
+          {{documentItem.metadata.publishedAt | date:'MMM yyyy'}}
+        </span>
+        <!--span ng-if="$ctrl.discussionsByRevision[revision.revision].length > 0" class="ph-split-icon-right">
+          {{$ctrl.discussionsByRevision[revision.revision].length}} <i class="fa fa-fw fa-comments"></i>
+        </span-->
+      </a>
+    </li>
+  </ul>
+</div>

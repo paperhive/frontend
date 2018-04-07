@@ -31,6 +31,7 @@ import documentItem from './document-item';
 import documentItemList from './document-item-list';
 import documentItemListElement from './document-item-list-element';
 import documentItemText from './document-item-text';
+import documentItemsDropdown from './document-items-dropdown';
 import documentNew from './document-new';
 import documentRemote from './document-remote';
 import documentSidenav from './document-sidenav';
@@ -133,6 +134,7 @@ export default function(app) {
   documentItem(app);
   documentItemList(app);
   documentItemListElement(app);
+  documentItemsDropdown(app);
   documentItemText(app);
   documentNew(app);
   documentRemote(app);
