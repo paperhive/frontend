@@ -30,6 +30,13 @@ export default function(app) {
         .then(response => response.data);
     }
 
+    getByDocument(document) {
+      return this.$http.get(`${this.config.apiUrl}/document-items/by-document/${document}`)
+        // TODO improve authorization error message
+        .catch(this.notificationService.httpError('could not retrieve document items for document'))
+        .then(response => response.data);
+    }
+
     search(query) {
       return this.$http.get(`${this.config.apiUrl}/documents/search`, {params: query})
         .catch(this.notificationService.httpError('could not search documents'))

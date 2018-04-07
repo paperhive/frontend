@@ -48,62 +48,11 @@
       ></channel-share>
     </div>
 
-    <div class="ph-sidenav-info">
-      <div class="dropdown ph-sidenav-item ph-dropdown-large" is-open="$ctrl.revisionDropdownOpen" uib-dropdown
-        ng-if="$ctrl.documentCtrl.revisions && $ctrl.documentCtrl.revisionAccess && $ctrl.activeRevision"
-      >
-        <button uib-dropdown-toggle
-          class="btn btn-default ph-split-container ph-split-container-icon-right dropdown-toggle"
-          title="{{$ctrl.documentCtrl.getRevisionDescription($ctrl.activeRevision)}}, {{$ctrl.activeRevision.publishedAt | date:'MMM yyyy'}}"
-        >
-          <span class="ph-split-icon"><i class="fa fa-history" aria-hidden="true"></i></span>
-          <span class="ph-split-text">
-            <span class="ph-sidenav-journal">{{$ctrl.documentCtrl.getRevisionDescription($ctrl.activeRevision)}}</span>,
-            {{$ctrl.activeRevision.publishedAt | date:'MMM yyyy'}}
-          </span>
-          <i class="fa fa-fw fa-caret-down ph-split-icon-right"></i>
-        </button>
-        <ul class="dropdown-menu ph-dropdown-menu-full">
-          <li ng-repeat="revision in $ctrl.documentCtrl.revisions | orderBy:'publishedAt':true"
-              ng-class="{disabled: !$ctrl.documentCtrl.revisionAccess[revision.revision]}"
-              ng-click="$ctrl.revisionDropdownOpen = false">
-            <a ng-if="$ctrl.documentCtrl.revisionAccess[revision.revision]"
-              class="ph-split-container ph-split-container-no-icon"
-              href="./documents/{{revision.id}}/revisions/{{revision.revision}}"
-              title="{{$ctrl.documentCtrl.getRevisionDescription(revision)}}, {{revision.publishedAt | date:'MMM yyyy'}}"
-            >
-              <span class="ph-split-text"
-                ng-class="{'ph-dropdown-menu-active': revision === $ctrl.activeRevision}"
-              >
-                <span class="ph-sidenav-journal">{{$ctrl.documentCtrl.getRevisionDescription(revision)}}</span>,
-                {{revision.publishedAt | date:'MMM yyyy'}}
-              </span>
-              <span ng-if="$ctrl.discussionsByRevision[revision.revision].length > 0" class="ph-split-icon-right">
-                {{$ctrl.discussionsByRevision[revision.revision].length}} <i class="fa fa-fw fa-comments"></i>
-              </span>
-            </a>
-            <a ng-if="$ctrl.documentCtrl.revisionAccess[revision.revision] === undefined"
-              class="ph-split-container ph-split-container-no-icon ph-split-container-icon-right"
-            >
-              <span class="ph-split-text">
-                <span class="ph-sidenav-journal">{{$ctrl.documentCtrl.getRevisionDescription(revision)}}</span>,
-                {{revision.publishedAt | date:'MMM yyyy'}}
-              </span>
-              <i class="fa fa-fw fa-spinner fa-spin ph-split-icon-right"></i>
-            </a>
-            <a ng-if="$ctrl.documentCtrl.revisionAccess[revision.revision] === false"
-              title="This document is currently not accessible and cannot be displayed."
-              class="ph-split-container ph-split-container-no-icon ph-split-container-icon-right"
-            >
-              <span class="ph-split-text">
-                <span class="ph-sidenav-journal">{{$ctrl.documentCtrl.getRevisionDescription(revision)}}</span>,
-                {{revision.publishedAt | date:'MMM yyyy'}}
-              </span>
-              <i class="fa fa-fw fa-lock ph-split-icon-right"></i>
-            </a>
-          </li>
-        </ul>
-      </div>
+    <div class="ph-sidenav-item">
+      <document-items-dropdown
+        document-item="$ctrl.documentItem"
+        document-items="$ctrl.documentItems"
+      ></document-items-dropdown>
     </div>
     <p ng-if="$ctrl.discussionsCtrl.discussions.length > $ctrl.discussionsByRevision[$ctrl.documentItem.revision].length"
       class="ph-sidenav-item"
@@ -112,9 +61,9 @@
       {{$ctrl.discussionsCtrl.discussions.length - $ctrl.discussionsByRevision[$ctrl.documentItem.revision].length}}
       more discussions on other versions
     </p>
-    <p ng-if="$ctrl.publisherLink" class="ph-sidenav-item">
+    <p ng-if="$ctrl.documentItem.metadata.publisherUrl" class="ph-sidenav-item">
       <i class="fa fa-fw fa-home"></i>
-      <a href="{{$ctrl.publisherLink}}">Visit publisher's publication page</a>
+      <a href="{{$ctrl.documentItem.metadata.publisherUrl}}">Visit publisher's publication page</a>
     </p>
     <div class="ph-sidenav-accordion">
       <uib-accordion close-others="oneAtATime">

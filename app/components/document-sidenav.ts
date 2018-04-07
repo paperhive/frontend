@@ -28,6 +28,7 @@ export default function(app) {
     },
     controller: class DocumentSidenavCtrl {
       documentItem: any;
+      documentItems: any[];
       open: boolean;
       searchMatches: any[];
       searchMatchIndex: number;
@@ -44,9 +45,9 @@ export default function(app) {
 
       onKeydownBind: (event: JQueryEventObject) => void;
 
-      static $inject = ['$http', '$scope', '$window', 'authService'];
-      constructor(public $http, $scope, public $window, public authService) {
-
+      static $inject = ['$http', '$scope', '$window', 'authService', 'documentItemsApi'];
+      constructor(public $http, $scope, public $window, public authService, public documentItemsApi) {
+        $scope.$watch('$ctrl.documentItem', this.updateDocumentItems.bind(this));
         $scope.$watch('$ctrl.documentItem', this.updateKudos.bind(this));
 
         this.onKeydownBind = this.onKeydown.bind(this);
@@ -74,6 +75,14 @@ export default function(app) {
 
       isSharedWithYou(documentItem) {
         return isDocumentItemSharedWithUser(documentItem, this.authService.user);
+      }
+
+      updateDocumentItems() {
+        this.documentItems = undefined;
+        if (!this.documentItem) return;
+
+        this.documentItemsApi.getByDocument(this.documentItem.document)
+          .then(({documentItems}) => this.documentItems = documentItems);
       }
 
       // i can haz kudos?
