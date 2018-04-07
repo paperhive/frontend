@@ -1,5 +1,52 @@
 import angular from 'angular';
 
+export function getDescription(documentItem) {
+  if (!documentItem) return;
+
+  // arxiv
+  switch (documentItem.remote.type) {
+    case 'arxiv':
+      // For arXiv, concatenate the remote name and the version without comma.
+      return `arXiv ${documentItem.remote.revision}`;
+
+    case 'langsci': {
+      const rev = documentItem.remote.revision === 'openreview' ?
+        'open review' : documentItem.remote.revision;
+      return `LangSci ${rev}`;
+    }
+
+    case 'transcript':
+      return documentItem.metadata.publisher;
+
+    case 'oapen':
+      return 'OAPEN';
+  }
+
+  // prefer short/shortened journal name
+  if (documentItem.metadata.journalShort) {
+    return documentItem.metadata.journalShort;
+  }
+
+  if (documentItem.metadata.journal) {
+    return documentItem.metadata.journal;
+  }
+
+  if (documentItem.metadata.publisher) {
+    return documentItem.metadata.publisher;
+  }
+
+  // isbn
+  if (documentItem.metadata.isbn) {
+    return `ISBN ${documentItem.metadata.isbn}`;
+  }
+
+  // fallback: remote with revision or id
+  if (documentItem.remote.revision) {
+    return `${documentItem.remote.type}, ${documentItem.remote.revision}`;
+  }
+  return `${documentItem.remote.type}, ${documentItem.remote.id}`;
+}
+
 export function getHTMLMetadata(documentItem) {
   // TODO: Cut description down to 150 chars? cf.
   // <http://moz.com/learn/seo/meta-description>
