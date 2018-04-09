@@ -16,10 +16,7 @@
   >
     <img alt="logo black" src="../../static/img/logo-hexagon-black.svg"/> Subscribe
   </button>
-  <a
-    class="btn btn-default"
-    title="Show all users who subscribed this document."
-  >
+  <a class="btn btn-default">
     <span ng-if="$ctrl.subscriptions">{{$ctrl.subscriptions.length}}</span>
     <span ng-if="!$ctrl.subscriptions">&nbsp;</span>
   </a>
