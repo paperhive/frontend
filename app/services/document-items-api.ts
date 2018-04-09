@@ -30,6 +30,13 @@ export default function(app) {
         .then(response => response.data);
     }
 
+    getByRevision(revision) {
+      return this.$http.get(`${this.config.apiUrl}/document-items/by-revision/${revision}`)
+        // TODO improve authorization error message
+        .catch(this.notificationService.httpError('could not retrieve document items for revision'))
+        .then(response => response.data);
+    }
+
     getByDocument(document) {
       return this.$http.get(`${this.config.apiUrl}/document-items/by-document/${document}`)
         // TODO improve authorization error message

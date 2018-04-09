@@ -52,19 +52,11 @@ export default function(app) {
         .when('/documents/items/:documentItem/discussions', 'documentItem.discussion.list')
         .when('/documents/items/:documentItem/discussions/:discussion', 'documentItem.discussion.thread')
         .when('/documents/items/:documentItem/hivers', 'documentItem.hivers')
-        /*
-        .when('/documents/:documentId', 'documents', {reloadOnSearch: false})
-        .when('/documents/:documentId/activity', 'documents.activity')
-        .when('/documents/:documentId/discussions', 'documents.discussions')
-        .when('/documents/:documentId/hivers', 'documents.hivers')
-        // .when('/documents/:documentId/discussions/new',
-        //       'documents.discussions.new')
-        .when('/documents/:documentId/discussions/:discussionId',
-              'documents.discussions.thread')
-        .when('/documents/:documentId/text', 'documents.text', {reloadOnSearch: false})
-        .when('/documents/:documentId/revisions/:revisionId', 'documents.revisions', {reloadOnSearch: false})
-        .when('/documents/:documentId/about', 'documents.about')
-        */
+
+        // legacy routes
+        .when('/documents/:documentId', 'document')
+        .when('/documents/:documentId/revisions/:revisionId', 'documentrevision')
+
         .when('/help/markdown', 'helpMarkdown')
         .when('/jobs', 'jobs')
         .when('/knowledgeunlatched', 'knowledgeunlatched')
@@ -316,15 +308,39 @@ export default function(app) {
             title: 'Document · PaperHive',
           })
           .up()
-        /*
-        .segment('documents', {
-          template: '<document></document>',
-          dependencies: ['documentId'],
-          title: 'Document · PaperHive',
+
+        .segment('document', {
           resolve: {
-            auth: ['authService', (authService) => authService.loginPromise],
+            auth: [
+              '$location', '$routeParams', '$routeSegment', 'documentItemsApi',
+              ($location, $routeParams, $routeSegment, documentItemsApi) => {
+                documentItemsApi
+                  .getByDocument($routeParams.documentId)
+                  .then(({documentItems}) => {
+                    const url = $routeSegment.getSegmentUrl('documentItem', {documentItem: documentItems[0].id});
+                    $location.path(url);
+                  });
+              },
+            ],
           },
         })
+
+        .segment('documentrevision', {
+          resolve: {
+            auth: [
+              '$location', '$routeParams', '$routeSegment', 'documentItemsApi',
+              ($location, $routeParams, $routeSegment, documentItemsApi) => {
+                documentItemsApi
+                  .getByRevision($routeParams.revisionId)
+                  .then(({documentItems}) => {
+                    const url = $routeSegment.getSegmentUrl('documentItem', {documentItem: documentItems[0].id});
+                    $location.path(url);
+                  });
+              },
+            ],
+          },
+        })
+        /*
         .within()
           .segment('activity', {
             template: `
