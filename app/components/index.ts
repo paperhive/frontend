@@ -28,8 +28,6 @@ import discussionShareIcon from './discussion-share-icon';
 import discussionThreadView from './discussion-thread-view';
 import documentInfoKudos from './document-info-kudos';
 import documentItem from './document-item';
-import documentItemList from './document-item-list';
-import documentItemListElement from './document-item-list-element';
 import documentItemText from './document-item-text';
 import documentItemsDropdown from './document-items-dropdown';
 import documentNew from './document-new';
@@ -132,8 +130,6 @@ export default function(app) {
   discussionThreadView(app);
   documentInfoKudos(app);
   documentItem(app);
-  documentItemList(app);
-  documentItemListElement(app);
   documentItemsDropdown(app);
   documentItemText(app);
   documentNew(app);
