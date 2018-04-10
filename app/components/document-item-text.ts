@@ -33,7 +33,7 @@ class DocumentItemTextCtrl {
     this.hoveredMarginDiscussions = {draft: true};
     this.pageCoordinates = {};
 
-    $scope.$watchGroup(['$ctrl.documentItem', '$ctrl.access'], this.updatePdfUrl.bind(this));
+    $scope.$watch('$ctrl.documentItem', this.updatePdfUrl.bind(this));
 
     // update highlights when discussions or draft selectors change
     $scope.$watchCollection('$ctrl.filteredDiscussions', this.updateHighlights.bind(this));
