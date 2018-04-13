@@ -45,7 +45,6 @@ export default function(app) {
         */
         // register new and remote before id-dependent routes
         .when('/documents/new', 'documents_new')
-        .when('/documents/remote', 'documents_remote')
         .when('/documents/items/:documentItem', 'documentItem', {reloadOnSearch: false})
         .when('/documents/items/:documentItem/text', 'documentItem.text', {reloadOnSearch: false})
         .when('/documents/items/:documentItem/activity', 'documentItem.activity')
@@ -54,6 +53,7 @@ export default function(app) {
         .when('/documents/items/:documentItem/hivers', 'documentItem.hivers')
 
         // legacy routes
+        .when('/documents/remote', 'documentremote')
         .when('/documents/:documentId', 'document')
         .when('/documents/:documentId/revisions/:revisionId', 'documentrevision')
 
@@ -415,9 +415,22 @@ export default function(app) {
           template: '<document-new></document-new>',
           title: 'Add a new document · PaperHive',
         })
-        .segment('documents_remote', {
-          template: '<document-remote></document-remote>',
-          title: 'Document remote redirect · PaperHive',
+        .segment('documentremote', {
+          resolve: {
+            auth: [
+              '$location', '$routeParams', '$routeSegment', 'documentItemsApi',
+              ($location, $routeParams, $routeSegment, documentItemsApi) => {
+                const type = $location.search().type;
+                const id = $location.search().id;
+                documentItemsApi
+                  .getByExternalDocumentId(type, id)
+                  .then(({documentItems}) => {
+                    const url = $routeSegment.getSegmentUrl('documentItem', {documentItem: documentItems[0].id});
+                    $location.path(url);
+                  });
+              },
+            ],
+          },
         })
 
         .segment('helpMarkdown', {

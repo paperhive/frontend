@@ -44,6 +44,15 @@ export default function(app) {
         .then(response => response.data);
     }
 
+    getByExternalDocumentId(type, id) {
+      return this.$http({
+        url: `${this.config.apiUrl}/document-items/by-document/external`,
+        params: {type, id},
+      })
+        .catch(this.notificationService.httpError('could not retrieve document items for external document id'))
+        .then(response => response.data);
+    }
+
     search(query) {
       return this.$http.get(`${this.config.apiUrl}/documents/search`, {params: query})
         .catch(this.notificationService.httpError('could not search documents'))
