@@ -31,7 +31,6 @@ import documentItem from './document-item';
 import documentItemText from './document-item-text';
 import documentItemsDropdown from './document-items-dropdown';
 import documentNew from './document-new';
-import documentRemote from './document-remote';
 import documentSidenav from './document-sidenav';
 import documentSidenavOutlineItem from './document-sidenav-outline-item';
 import documentSidenavPagination from './document-sidenav-pagination';
@@ -133,7 +132,6 @@ export default function(app) {
   documentItemsDropdown(app);
   documentItemText(app);
   documentNew(app);
-  documentRemote(app);
   documentSidenav(app);
   documentSidenavOutlineItem(app);
   documentSidenavPagination(app);
