@@ -63,6 +63,7 @@ export default function(app) {
           .then(bookmark => {
             documentItem.channelBookmarks = documentItem.channelBookmarks || [];
             documentItem.channelBookmarks.push(bookmark);
+            this.bookmarked = true;
           })
           .finally(() => this.bookmarkSubmitting[documentItem.id] = false);
       }
