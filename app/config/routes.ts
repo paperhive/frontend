@@ -33,24 +33,30 @@ export default function(app) {
         .when('/channels/invitationLink', 'channelInvitationLinkConfirm')
         .when('/channels/:channelId', 'channel')
         .when('/channels/:channelId/activity', 'channel.activity')
-        .when('/channels/:channelId/bookmarks', 'channel.bookmarks')
+        .when('/channels/:channelId/document-items', 'channel.documentItems')
         .when('/channels/:channelId/members', 'channel.members')
         .when('/channels/:channelId/settings', 'channel.settings')
         .when('/contact', 'contact')
+        /*
+        // TODO: redirect to document item with anchor
+        .when('/discussions/:discussion', 'discussion')
+        // TODO: redirect to document item with opened discussion thread
+        .when('/discussions/:discussion/thread', 'discussion.thread')
+        */
         // register new and remote before id-dependent routes
         .when('/documents/new', 'documents_new')
-        .when('/documents/remote', 'documents_remote')
-        .when('/documents/:documentId', 'documents', {reloadOnSearch: false})
-        .when('/documents/:documentId/activity', 'documents.activity')
-        .when('/documents/:documentId/discussions', 'documents.discussions')
-        .when('/documents/:documentId/hivers', 'documents.hivers')
-        // .when('/documents/:documentId/discussions/new',
-        //       'documents.discussions.new')
-        .when('/documents/:documentId/discussions/:discussionId',
-              'documents.discussions.thread')
-        .when('/documents/:documentId/text', 'documents.text', {reloadOnSearch: false})
-        .when('/documents/:documentId/revisions/:revisionId', 'documents.revisions', {reloadOnSearch: false})
-        .when('/documents/:documentId/about', 'documents.about')
+        .when('/documents/items/:documentItem', 'documentItem', {reloadOnSearch: false})
+        .when('/documents/items/:documentItem/text', 'documentItem.text', {reloadOnSearch: false})
+        .when('/documents/items/:documentItem/activity', 'documentItem.activity')
+        .when('/documents/items/:documentItem/discussions', 'documentItem.discussion.list')
+        .when('/documents/items/:documentItem/discussions/:discussion', 'documentItem.discussion.thread')
+        .when('/documents/items/:documentItem/hivers', 'documentItem.hivers')
+
+        // legacy routes
+        .when('/documents/remote', 'documentremote')
+        .when('/documents/:documentId', 'document')
+        .when('/documents/:documentId/revisions/:revisionId', 'documentrevision')
+
         .when('/help/markdown', 'helpMarkdown')
         .when('/jobs', 'jobs')
         .when('/knowledgeunlatched', 'knowledgeunlatched')
@@ -177,7 +183,10 @@ export default function(app) {
         .up()
 
         .segment('channel', {
-          template: '<channel></channel',
+          template: '<channel></channel>',
+          resolve: {
+            auth: ['authService', (authService) => authService.loginPromise],
+          },
         })
         .within()
           .segment('activity', {
@@ -189,13 +198,13 @@ export default function(app) {
               ></activity>`,
             title: 'Channel activity · PaperHive',
           })
-          .segment('bookmarks', {
+          .segment('documentItems', {
             template:
-              `<channel-bookmarks-list
-                bookmarks="$ctrl.bookmarks"
+              `<channel-document-items
+                document-items="$ctrl.documentItems"
                 channel="$ctrl.channel"
-              ></channel-bookmarks-list>`,
-            title: 'Channel bookmarks · PaperHive',
+              ></channel-document-items>`,
+            title: 'Channel documents · PaperHive',
           })
           .segment('members', {
             template:
@@ -239,11 +248,99 @@ export default function(app) {
           ],
         })
 
-        .segment('documents', {
-          template: '<document></document>',
-          dependencies: ['documentId'],
+        .segment('documentItem', {
+          template: '<document-item></document-item>',
+          // dependencies: ['documentItem]
           title: 'Document · PaperHive',
+          resolve: {
+            auth: ['authService', (authService) => authService.loginPromise],
+          },
         })
+        .within()
+          .segment('activity', {
+            template: `
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-9 col-md-offset-3">
+                    <activity
+                      filter-mode="documentItem"
+                      filter-id="$ctrl.documentItem.id"
+                    ></activity>
+                  </div>
+                </div>
+              </div>
+            `,
+            title: 'Activity · PaperHive',
+          })
+          .segment('discussion', {
+            template: `<div
+              ng-if="$ctrl.discussionsCtrl.discussions"
+              app-view-segment="2"
+            ></div>`,
+            title: 'Discussions · PaperHive',
+          })
+          .within()
+            .segment('list', {
+              default: true,
+              template: `<discussion-list
+                document-item="$ctrl.documentItem"
+                discussions="$ctrl.discussionsCtrl.discussions"
+              ></discussion-list>`,
+              title: 'Discussions · PaperHive',
+            })
+            .segment('thread', {
+              // Ideally, we'd already provide the exact discussion here,
+              // rather than all discussions and the discussionId.
+              template: `<discussion-thread-view
+                discussions="$ctrl.discussionsCtrl.discussions"
+                on-discussion-update="$ctrl.discussionsCtrl.discussionUpdate(discussion)"
+                on-reply-submit="$ctrl.discussionsCtrl.replySubmit(reply)"
+                on-reply-update="$ctrl.discussionsCtrl.replyUpdate(reply)"
+                on-reply-delete="$ctrl.discussionsCtrl.replyDelete(reply)"
+              ></discussion-thread-view>`,
+              dependencies: ['discussion'],
+              title: 'Discussion · PaperHive',
+            })
+            .up()
+          .segment('text', {
+            default: true,
+            template: require('./routes-document-item-text.html'),
+            title: 'Document · PaperHive',
+          })
+          .up()
+
+        .segment('document', {
+          resolve: {
+            auth: [
+              '$location', '$routeParams', '$routeSegment', 'documentItemsApi',
+              ($location, $routeParams, $routeSegment, documentItemsApi) => {
+                documentItemsApi
+                  .getByDocument($routeParams.documentId)
+                  .then(({documentItems}) => {
+                    const url = $routeSegment.getSegmentUrl('documentItem', {documentItem: documentItems[0].id});
+                    $location.path(url);
+                  });
+              },
+            ],
+          },
+        })
+
+        .segment('documentrevision', {
+          resolve: {
+            auth: [
+              '$location', '$routeParams', '$routeSegment', 'documentItemsApi',
+              ($location, $routeParams, $routeSegment, documentItemsApi) => {
+                documentItemsApi
+                  .getByRevision($routeParams.revisionId)
+                  .then(({documentItems}) => {
+                    const url = $routeSegment.getSegmentUrl('documentItem', {documentItem: documentItems[0].id});
+                    $location.path(url);
+                  });
+              },
+            ],
+          },
+        })
+        /*
         .within()
           .segment('activity', {
             template: `
@@ -313,13 +410,27 @@ export default function(app) {
             title: 'Document at revision · PaperHive',
           })
         .up()
+        */
         .segment('documents_new', {
           template: '<document-new></document-new>',
           title: 'Add a new document · PaperHive',
         })
-        .segment('documents_remote', {
-          template: '<document-remote></document-remote>',
-          title: 'Document remote redirect · PaperHive',
+        .segment('documentremote', {
+          resolve: {
+            auth: [
+              '$location', '$routeParams', '$routeSegment', 'documentItemsApi',
+              ($location, $routeParams, $routeSegment, documentItemsApi) => {
+                const type = $location.search().type;
+                const id = $location.search().id;
+                documentItemsApi
+                  .getByExternalDocumentId(type, id)
+                  .then(({documentItems}) => {
+                    const url = $routeSegment.getSegmentUrl('documentItem', {documentItem: documentItems[0].id});
+                    $location.path(url);
+                  });
+              },
+            ],
+          },
         })
 
         .segment('helpMarkdown', {
@@ -340,7 +451,7 @@ export default function(app) {
         })
 
         .segment('knowledgeunlatched', {
-          template: '<documents-list></documents-list>',
+          template: '<document-item-list></document-item-list>',
           title: 'Knowledge Unlatched books',
         })
 
@@ -397,6 +508,9 @@ export default function(app) {
         .segment('search', {
           template: '<search></search>',
           title: 'Search results',
+          resolve: {
+            auth: ['authService', (authService) => authService.loginPromise],
+          },
         })
 
         .segment('settings', {
@@ -455,4 +569,4 @@ export default function(app) {
       $routeProvider.otherwise({redirectTo: '/404'});
     },
   ]);
-};
+}

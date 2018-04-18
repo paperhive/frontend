@@ -2,11 +2,9 @@ import jquery from 'jquery';
 import { isArray, merge } from 'lodash';
 import { SearchIndex } from 'srch';
 
-class DocumentTextCtrl {
+class DocumentItemTextCtrl {
   // input
-  revision: any;
-  access: boolean;
-  latestAccessibleRevision: any;
+  documentItem: any;
   discussions: any[];
   filteredDiscussions: any[];
   indexSearchResults: number;
@@ -35,7 +33,7 @@ class DocumentTextCtrl {
     this.hoveredMarginDiscussions = {draft: true};
     this.pageCoordinates = {};
 
-    $scope.$watchGroup(['$ctrl.revision', '$ctrl.access'], this.updatePdfUrl.bind(this));
+    $scope.$watch('$ctrl.documentItem', this.updatePdfUrl.bind(this));
 
     // update highlights when discussions or draft selectors change
     $scope.$watchCollection('$ctrl.filteredDiscussions', this.updateHighlights.bind(this));
@@ -87,30 +85,29 @@ class DocumentTextCtrl {
       discussion,
       {
         target: {
-          document: this.revision.id,
-          documentRevision: this.revision.revision,
+          documentItem: this.documentItem.id,
+          documentRevision: this.documentItem.revision,
+          document: this.documentItem.document,
         },
       },
     );
   }
 
   updatePdfUrl() {
-    if (!this.revision || !this.access) {
-      this.pdfUrl = undefined;
-      return;
-    }
+    this.pdfUrl = this.getPdfUrl();
+  }
+
+  getPdfUrl() {
+    if (!this.documentItem || !this.documentItem.file || !this.documentItem.file.url) return;
 
     // if the file available via HTTPS with enabled CORS then just use it
-    if (/^https/.test(this.revision.file.url) && this.revision.file.hasCors) {
-      this.pdfUrl = this.revision.file;
-      return;
+    if (/^https/.test(this.documentItem.file.url) && this.documentItem.file.urlHasCors) {
+      return this.documentItem.file.url;
     }
 
-    // No HTTPS/Cors? PaperHive can proxy the document if it's open access.
-    if (this.revision.isOpenAccess && this.revision.file.url) {
-      const encodedUrl = encodeURIComponent(this.revision.file.url);
-      this.pdfUrl = `${this.config.apiUrl}/proxy?url=${encodedUrl}`;
-    }
+    // No HTTPS/Cors? PaperHive can proxy the document if it's a public open access document.
+    const encodedUrl = encodeURIComponent(this.documentItem.file.url);
+    return `${this.config.apiUrl}/proxy?url=${encodedUrl}`;
   }
 
   // note: a query parameter is used because a fragment identifier (hash)
@@ -159,12 +156,10 @@ class DocumentTextCtrl {
 }
 
 export default function(app) {
-  app.component('documentText', {
+  app.component('documentItemText', {
     bindings: {
       anchor: '<',
-      revision: '<',
-      access: '<',
-      latestAccessibleRevision: '<',
+      documentItem: '<',
       discussions: '<',
       filteredDiscussions: '<',
       viewportOffsetTop: '<',
@@ -181,7 +176,7 @@ export default function(app) {
       onPdfInfoUpdate: '&',
       onSearchMatchesUpdate: '&',
     },
-    controller: DocumentTextCtrl,
-    template: require('./document-text.html'),
+    controller: DocumentItemTextCtrl,
+    template: require('./document-item-text.html'),
   });
 }

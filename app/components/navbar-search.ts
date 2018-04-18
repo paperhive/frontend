@@ -1,12 +1,14 @@
+import { isDocumentItemSharedWithUser } from '../utils/document-items';
+
 const navbarSearchItemUrl = require('!ngtemplate-loader?relativeTo=/app!html-loader!./navbar-search-item.html');
 
 export default function(app) {
   app.component('navbarSearch', {
-    controller: ['$scope', '$http', '$location', '$routeSegment', 'config',
-      'notificationService',
+    controller: ['$scope', '$http', '$location', '$routeSegment',
+      'authService', 'config', 'notificationService',
       function(
-        $scope, $http, $location, $routeSegment, config,
-        notificationService,
+        $scope, $http, $location, $routeSegment,
+        authService, config, notificationService,
       ) {
         $scope.navbarSearchItemUrl = navbarSearchItemUrl;
 
@@ -16,12 +18,12 @@ export default function(app) {
 
         $scope.search = {};
         $scope.phSearch = function(query, limit) {
-          return $http.get(config.apiUrl + '/documents/prefix_search', {
-            params: {q: query, limit},
+          return $http.get(config.apiUrl + '/document-items/search/by-prefix', {
+            params: {prefix: query, limit},
           })
           .then(
             function(response) {
-              return response.data.documents;
+              return response.data.hits;
             },
             function(response) {
               notificationService.notifications.push({
@@ -32,17 +34,16 @@ export default function(app) {
           );
         };
 
-        $scope.goToDocument = function(item, model, label) {
-          $location
-            .path($routeSegment.getSegmentUrl(
-              'documents', {documentId: item.id},
-            ))
-            .search({});
+        $scope.isOwnedByYou = documentItem => authService.user && documentItem.owner === authService.user.id;
+        $scope.isSharedWithYou = documentItem => isDocumentItemSharedWithUser(documentItem, authService.user);
 
+        $scope.goToDocument = function(hit, model, label) {
+          const url = $routeSegment.getSegmentUrl('documentItem', {documentItem: hit.documentItem.id});
+          $location.url(url);
           $scope.search.body = '';
         };
       },
     ],
     template: require('./navbar-search.html'),
   });
-};
+}

@@ -15,7 +15,7 @@
 
       <div ng-if="$ctrl.activities !== undefined">
         <div ng-if="$ctrl.filterMode === 'channel'">
-          Here you can find the recent discussions, replies and hives of
+          Here you can find the recent discussions, replies and subscriptions of
           this channel.
           <span ng-if="$ctrl.activities.length === 0">
             Unfortunately, there is no activity yet. Be the first to start a discussion.
@@ -23,25 +23,25 @@
           </span>
         </div>
 
-        <div ng-if="$ctrl.filterMode === 'document'">
-          Here you can find the recent discussions, replies and hives on
+        <div ng-if="$ctrl.filterMode === 'documentItem'">
+          Here you can find the recent discussions, replies and subscriptions on
           this document.
           <span ng-if="$ctrl.activities.length === 0">
-            Unfortunately, there is no activity yet. Be the first to hive the
+            Unfortunately, there is no activity yet. Be the first to subscribe the
             document or start a discussion.
           </span>
         </div>
 
         <div ng-if="$ctrl.filterMode === 'person'">
           <span ng-if="$ctrl.authService.user.id === $ctrl.filterId">
-            Here you can find your recent discussions, replies and hived documents.
+            Here you can find your recent discussions, replies and subscribed documents.
             <span ng-if="$ctrl.activities.length === 0">
-              A good way to get started is to search and hive a document
+              A good way to get started is to search and subscribe a document
               you are interested in.
             </span>
           </span>
           <span ng-if="$ctrl.authService.user.id !== $ctrl.filterId">
-            Here you can find recent discussions, replies and hived documents by
+            Here you can find recent discussions, replies and subscribed documents by
             {{$ctrl.person.displayName}}.
             <span ng-if="$ctrl.activities.length === 0">
               Unfortunately, {{$ctrl.person.displayName}} has no recent activity.
@@ -61,10 +61,13 @@
         ng-if="activity.activityType === 'updateDiscussion' || activity.activityType === 'createDiscussion'"
       ></i>
       <i class="fa fa-star" aria-hidden="true"
-        ng-if="activity.activityType === 'documentBookmarked'"
+        ng-if="activity.activityType === 'addedDocumentItemChannelBookmark'"
+      ></i>
+      <i class="fa fa-share-alt" aria-hidden="true"
+        ng-if="activity.activityType === 'addedDocumentItemChannelShare'"
       ></i>
       <img alt="logo white" src="../../static/img/logo-hexagon-white.svg"
-        ng-if="activity.activityType === 'documentHived'"/>
+        ng-if="activity.activityType === 'addedDocumentSubscription'"/>
     </div>
 
     <div class="panel panel-default ph-timeline-panel ph-activity-container">
@@ -85,13 +88,13 @@
         </a>
         <a ng-href="./users/{{activity.person.account.username}}">{{activity.person.displayName}}</a>
         <span ng-switch="activity.activityType">
-          <span ng-switch-when="documentHived">
-            <span ng-if="$ctrl.filterMode === 'document'">hived this document</span>
+          <span ng-switch-when="addedDocumentSubscription">
+            <span ng-if="$ctrl.filterMode === 'documentItem'">subscribed to this document</span>
             <span ng-if="$ctrl.filterMode === 'person'">
-              hived
+              subscribed to
               <small>
-                <a ng-href="./documents/{{activity.document.id}}">{{activity.documentRevision.title}}</a>
-                <span class="text-muted" ng-repeat="author in activity.documentRevision.authors">
+                <a ng-href="./documents/items/{{activity.documentItems[0].id}}">{{activity.documentItems[0].metadata.title}}</a>
+                <span class="text-muted" ng-repeat="author in activity.documentItems[0].metadata.authors">
                   {{author.name}}{{$last ? '' :', '}}
                 </span>
               </small>
@@ -101,29 +104,32 @@
           <span ng-switch-when="createReply">replied to the discussion</span>
           <span ng-switch-when="updateReply">updated a reply to the discussion</span>
           <span ng-switch-when="updateDiscussion">updated the discussion</span>
-          <span ng-switch-when="documentBookmarked">
-            <span ng-if="$ctrl.filterMode === 'document'">bookmarked this document</span>
+          <span ng-switch-when="addedDocumentItemChannelBookmark">
+            <span ng-if="$ctrl.filterMode === 'documentItem'">bookmarked this document</span>
             <span ng-if="$ctrl.filterMode === 'person' || $ctrl.filterMode === 'channel'">
               bookmarked
               <small>
-                <a ng-href="./documents/{{activity.document.id}}">{{activity.documentRevision.title}}</a>
-                <span class="text-muted" ng-repeat="author in activity.documentRevision.authors">
+                <a ng-href="./documents/items/{{activity.documentItems[0].id}}">{{activity.documentItems[0].metadata.title}}</a>
+                <span class="text-muted" ng-repeat="author in activity.documentItems[0].metadata.authors">
                   {{author.name}}{{$last ? '' :', '}}
                 </span>
               </small>
             </span>
+            <span ng-if="$ctrl.filterMode !== 'channel'">
+              in the channel <a ng-href="./channels/{{activity.channel.id}}">{{activity.channel.name}}</a>
+            </span>
           </span>
         </span>
 
-        <span ng-if="activity.activityType !== 'documentHived' && activity.activityType !== 'documentBookmarked'">
-          <a ng-href="./documents/{{activity.document.id}}?a=d:{{activity.discussion.id}}">
+        <span ng-if="activity.activityType !== 'addedDocumentSubscription' && activity.activityType !== 'addedDocumentItemChannelBookmark'">
+          <a ng-href="./documents/items/{{activity.documentItem}}?a=d:{{activity.discussion.id}}">
             <mathjax body="activity.discussion.title"></mathjax>
           </a>
           <div ng-if="$ctrl.filterMode === 'person' || $ctrl.filterMode === 'channel'">
             <small>
               on
-              <a ng-href="./documents/{{activity.document.id}}">{{activity.documentRevision.title}}</a>
-              <span class="text-muted" ng-repeat="author in activity.documentRevision.authors">
+              <a ng-href="./documents/items/{{activity.documentItems[0].id}}">{{activity.documentItems[0].metadata.title}}</a>
+              <span class="text-muted" ng-repeat="author in activity.documentItems[0].metadata.authors">
                 {{author.name}}{{$last ? '' :', '}}
               </span>
             </small>

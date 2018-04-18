@@ -1,0 +1,41 @@
+<div ng-if="$ctrl.large" class="ph-hive-button-large btn-group" role="group">
+  <button ng-if="$ctrl.subscription" type="button" class="btn btn-default"
+    ng-disabled="$ctrl.submitting" ng-click="$ctrl.removeSubscription()"
+    title="Cancel notifications by unsubscribing this document."
+  >
+    <img alt="logo black" src="../../static/img/logo-hexagon.svg"/> Unsubscribe
+  </button>
+  <button ng-if="!$ctrl.subscription" type="button" class="btn btn-default"
+    title="{{
+      $ctrl.authService.user ?
+      'Subscribe to this document for receiving updates.' :
+      'You have to be logged in to subscribe the document.'
+    }}"
+    ng-disabled="!$ctrl.authService.user || $ctrl.submitting"
+    ng-click="$ctrl.addSubscription()"
+  >
+    <img alt="logo black" src="../../static/img/logo-hexagon-black.svg"/> Subscribe
+  </button>
+  <a class="btn btn-default">
+    <span ng-if="$ctrl.subscriptions">{{$ctrl.subscriptions.length}}</span>
+    <span ng-if="!$ctrl.subscriptions">&nbsp;</span>
+  </a>
+</div>
+<div ng-if="!$ctrl.large" class="ph-hive-button-small">
+  <button ng-if="$ctrl.subscription" type="button" class="btn btn-link"
+    ng-disabled="$ctrl.submitting" ng-click="$ctrl.removeSubscription()"
+    title="Cancel notifications by unsubscribing this document."
+  >
+    <img alt="logo black" src="../../static/img/logo-hexagon.svg"/>
+  </button>
+  <button ng-if="!$ctrl.subscription" type="button" class="btn btn-link"
+    title="{{
+      $ctrl.authService.user ?
+      'Subscribe to this document for receiving updates.' :
+      'You have to be logged in to subscribe the document.'
+    }}"
+    ng-disabled="!$ctrl.authService.user || $ctrl.submitting" ng-click="$ctrl.addSubscription()"
+  >
+    <img alt="logo black" src="../../static/img/logo-hexagon-black.svg"/>
+  </button>
+</div>

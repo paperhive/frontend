@@ -5,13 +5,13 @@ export default function(app) {
     controller: class ChannelCtrl {
       isOwner: boolean;
       channel: any;
-      bookmarks: any[];
+      documentItems: any[];
 
       static $inject = ['$http', '$routeParams', '$scope', '$uibModal',
-        'authService', 'channelService', 'config'];
+        'authService', 'channelService', 'config', 'documentItemsApi'];
       constructor(public $http, public $routeParams, public $scope,
                   public $uibModal, public authService, public channelService,
-                  public config) {
+                  public config, public documentItemsApi) {
         $scope.$watchCollection('$ctrl.channel.members', members => {
           if (!members) this.isOwner = false;
           const self: any = authService.user && find(members, {person: {id: authService.user.id}});
@@ -26,11 +26,7 @@ export default function(app) {
           },
         );
 
-        $scope.$watch('$ctrl.authService.user', user => {
-          if (!user) return;
-          $http.get(`${this.config.apiUrl}/channels/${this.$routeParams.channelId}/bookmarks`)
-            .then(response => this.bookmarks = response.data.bookmarks);
-        });
+        $scope.$watch('$ctrl.channel', this.updateDocuments.bind(this));
       }
 
       invitationLinkModalOpen() {
@@ -40,7 +36,7 @@ export default function(app) {
             channel: () => this.channel,
           },
         });
-      };
+      }
 
       invitationModalOpen() {
         this.$uibModal.open({
@@ -49,9 +45,15 @@ export default function(app) {
             channelId: () => this.$routeParams.channelId,
           },
         });
-      };
+      }
 
+      updateDocuments() {
+        this.documentItems = undefined;
+        if (!this.channel) return;
+        this.documentItemsApi.getByChannel(this.channel.id)
+          .then(({documentItems}) => this.documentItems = documentItems);
+      }
     },
     template: require('./channel.html'),
   });
-};
+}

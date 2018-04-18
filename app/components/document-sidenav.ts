@@ -1,9 +1,12 @@
 import jquery from 'jquery';
 
+import { isDocumentItemSharedWithUser } from '../utils/document-items';
+
 export default function(app) {
   app.component('documentSidenav', {
     bindings: {
-      activeRevision: '<',
+      documentItem: '<',
+      documentSubscriptions: '<',
       discussionsCtrl: '<',
       discussionsByRevision: '<',
       documentCtrl: '<',
@@ -14,12 +17,18 @@ export default function(app) {
       searchStr: '<',
       viewportOffsetTop: '<',
       onAnchorUpdate: '&',
+      onAddBookmark: '&',
+      onRemoveBookmark: '&',
+      onAddShare: '&',
+      onRemoveShare: '&',
+      onAddDocumentSubscription: '&',
+      onRemoveDocumentSubscription: '&',
       onToggle: '&',
       onSearchUpdate: '&',
     },
     controller: class DocumentSidenavCtrl {
-      activeRevision: string;
-      documentCtrl: any;
+      documentItem: any;
+      documentItems: any[];
       open: boolean;
       searchMatches: any[];
       searchMatchIndex: number;
@@ -36,11 +45,10 @@ export default function(app) {
 
       onKeydownBind: (event: JQueryEventObject) => void;
 
-      static $inject = ['$http', '$scope', '$window'];
-      constructor(public $http, $scope, public $window) {
-
-        $scope.$watchCollection('$ctrl.documentCtrl.revisions', this.updateKudos.bind(this));
-        $scope.$watchCollection('$ctrl.activeRevision', this.updatePublisherLink.bind(this));
+      static $inject = ['$http', '$scope', '$window', 'authService', 'documentItemsApi'];
+      constructor(public $http, $scope, public $window, public authService, public documentItemsApi) {
+        $scope.$watch('$ctrl.documentItem', this.updateDocumentItems.bind(this));
+        $scope.$watch('$ctrl.documentItem', this.updateKudos.bind(this));
 
         this.onKeydownBind = this.onKeydown.bind(this);
         jquery($window).on('keydown', this.onKeydownBind);
@@ -65,16 +73,21 @@ export default function(app) {
         this.docNav = this.docNav === id ? undefined : id;
       }
 
-      getDoi() {
-        if (!this.documentCtrl.revisions) return;
-        for (const revision of this.documentCtrl.revisions) {
-          if (revision.doi) return revision.doi;
-        }
+      isSharedWithYou(documentItem) {
+        return isDocumentItemSharedWithUser(documentItem, this.authService.user);
+      }
+
+      updateDocumentItems() {
+        this.documentItems = undefined;
+        if (!this.documentItem) return;
+
+        this.documentItemsApi.getByDocument(this.documentItem.document)
+          .then(({documentItems}) => this.documentItems = documentItems);
       }
 
       // i can haz kudos?
       updateKudos() {
-        const doi = this.getDoi();
+        const doi = this.documentItem && this.documentItem.metadata.doi;
 
         // reset kudosDoi if no doi is available
         if (!doi) {
@@ -104,11 +117,6 @@ export default function(app) {
               }
             },
           );
-      }
-
-      updatePublisherLink() {
-        this.publisherLink = this.activeRevision &&
-          this.documentCtrl.getRevisionPublisherLink(this.activeRevision);
       }
     },
     template: require('./document-sidenav.html'),

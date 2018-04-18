@@ -78,15 +78,15 @@
                   Activity
                 </a>
               </li>
-              <li ng-class="{active: ('channel.bookmarks' | routeSegmentStartsWith)}">
+              <li ng-class="{active: ('channel.documentItems' | routeSegmentStartsWith)}">
                 <a
-                  href=".{{'channel.bookmarks' | routeSegmentUrl}}"
+                  href=".{{'channel.documentItems' | routeSegmentUrl}}"
                   ng-click="$ctrl.subnavOpen = false"
                 >
                   <i class="fa fa-fw fa-star"></i>
-                  Bookmarks
+                  Documents
                   <span class="badge ph-xs-margin-left">
-                    {{$ctrl.bookmarks.length}}
+                    {{$ctrl.documentItems.length}}
                   </span>
                 </a>
               </li>

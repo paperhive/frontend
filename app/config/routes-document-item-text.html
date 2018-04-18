@@ -1,8 +1,6 @@
-<document-text
-  revision="$ctrl.activeRevision"
-  access="$ctrl.documentCtrl.revisionAccess[$ctrl.activeRevision.revision]"
-  latest-accessible-revision="$ctrl.documentCtrl.latestAccessibleRevision"
-  discussions="$ctrl.discussionsByRevision[$ctrl.activeRevision.revision]"
+<document-item-text
+  document-item="$ctrl.documentItem"
+  discussions="$ctrl.discussionsByRevision[$ctrl.documentItem.revision]"
   filtered-discussions="$ctrl.filteredDiscussions"
   viewport-offset-top="$root.navbarSize.height + subnavSize.height"
   expanded="!$ctrl.sidenavOpen"
@@ -17,4 +15,4 @@
   on-reply-delete="$ctrl.discussionsCtrl.replyDelete(reply)"
   on-pdf-info-update="$ctrl.pdfInfo = pdfInfo"
   on-search-matches-update="$ctrl.searchMatches = searchMatches; $ctrl.searchMatchIndex = searchMatches.length > 0 ? 0 : undefined"
-></document-text>`
+></document-item-text>`

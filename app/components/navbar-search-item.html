@@ -5,10 +5,15 @@
     </div>
     <div class="media-body">
       <div>
-        <mathjax body="match.model.title | uibTypeaheadHighlight:query"></mathjax>
+        <mathjax body="match.model.documentItem.metadata.title | uibTypeaheadHighlight:query"></mathjax>
       </div>
       <small>
-        <span ng-repeat="author in match.model.authors">
+        <span ng-show="!match.model.documentItem.public" class="label label-info">Private</span>
+        <span ng-show="$parent.$parent.$parent.isOwnedByYou(match.model.documentItem)" class="label label-info">Owner</span>
+        <span ng-show="$parent.$parent.$parent.isSharedWithYou(match.model.documentItem)" class="label label-info">Shared with you</span>
+        <span ng-show="match.model.documentItem.public" class="label label-success">Public</span>
+        <span ng-show="match.model.documentItem.metadata.isOpenAccess" class="label label-success">Open Access</span>
+        <span ng-repeat="author in match.model.documentItem.metadata.authors">
           {{author.name}}{{$last ? '' : ', '}}
         </span>
       </small>

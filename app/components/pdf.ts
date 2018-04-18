@@ -54,14 +54,7 @@ export default function(app) {
               ctrl.onUpdate({status});
 
             }),
-            reason => $scope.$apply(() => {
-              // error downloading pdf
-              notificationService.notifications.push({
-                type: 'error',
-                message: reason || 'Could not download PDF.',
-              });
-              ctrl.onUpdate({status: {}});
-            }),
+            reason => $scope.$apply(() => ctrl.onUpdate({status: {error: reason}})),
           );
         });
 

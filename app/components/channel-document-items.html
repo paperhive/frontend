@@ -1,0 +1,39 @@
+<p ng-if="!$ctrl.documentItems.length">
+  You have no bookmarked or shared documents in this channel yet.
+  You can search for a relevant document and bookmark it in this
+  channel or upload a document and share it with this channel.
+</p>
+<div ng-if="$ctrl.documentItems.length" class="row">
+  <div class="col-sm-12">
+    <div class="ph-lg-margin-top ph-fade-in ph-fade-out ph-search-hit" ng-repeat="documentItem in $ctrl.documentItems">
+      <h4>
+        <a href="./documents/items/{{documentItem.id}}" title="{{documentItem.metadata.title}}">
+          <mathjax body="documentItem.metadata.title"></mathjax>
+        </a>
+      </h4>
+      <p>
+        <span ng-repeat="author in documentItem.metadata.authors">
+          {{author.name}}{{$last ? '' : ', '}}
+        </span>
+        <small class="text-muted ph-sm-margin-left">
+          {{documentItem.metadata.publishedAt | date: 'yyyy'}}
+        </small>
+      </p>
+      <p class="small">
+        <span ng-show="!documentItem.public" class="label label-info">Private</span>
+        <span ng-show="documentItem.public" class="label label-success">Public</span>
+        <span ng-show="documentItem.metadata.isOpenAccess" class="label label-success">Open Access</span>
+        <span ng-show="$ctrl.authService.user && documentItem.owner === $ctrl.authService.user.id" class="label label-info">Owner</span>
+        <span ng-show="$ctrl.isSharedInChannel(documentItem)" class="label label-info">Shared in channel</span>
+        <span ng-show="$ctrl.isBookmarkedInChannel(documentItem)" class="label label-info">Bookmarked in channel</span>
+      </p>
+      <div class="ph-sm-margin-top">
+        <small>
+          <mathjax
+            body="(documentItem.metadata.abstract | limitTo: 220) + (documentItem.metadata.abstract.length > 220 ? '&hellip;' : '')"
+          ></mathjax>
+        </small>
+      </div>
+    </div>
+  </div>
+</div>

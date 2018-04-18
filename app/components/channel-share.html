@@ -3,15 +3,10 @@
     class="btn btn-default ph-split-container ph-split-container-icon-right dropdown-toggle"
   >
     <span class="ph-split-icon">
-      <i class="fa"
-        ng-class="{
-          'fa-star-o': $ctrl.bookmarks.length === 0,
-          'fa-star': $ctrl.bookmarks.length !== 0,
-        }"
-      ></i>
+      <i class="fa fa-plus"></i>
     </span>
     <span class="ph-split-text">
-      Bookmark in channel
+      Share in channel
     </span>
     <i class="fa fa-fw fa-caret-down ph-split-icon-right"></i>
   </button>
@@ -22,19 +17,19 @@
       <a href=""
         ng-click="
           $ctrl.channelService.hasRole(channel, $ctrl.authService.user.id, 'owner') &&
-          ($ctrl.isBookmarked(channel.id) ? $ctrl.removeBookmark(channel.id) : $ctrl.bookmark(channel.id));
+          ($ctrl.isShared(channel.id) ? $ctrl.removeShare(channel.id) : $ctrl.share(channel.id));
           $event.stopPropagation()"
         title="{{
             $ctrl.channelService.hasRole(channel, $ctrl.authService.user.id, 'owner')
             ? $ctrl.channelService.getNameDescription(channel)
-            : 'Only channel owners can bookmark documents.'
+            : 'Only channel owners can share documents.'
         }}"
       >
         <div class="ph-grow-container">
           <div class="ph-grow-item">
             <i class="fa fa-fw ph-dropdown-icon-left" ng-class="{
-              'fa-star-o': !$ctrl.isBookmarked(channel.id),
-              'fa-star': $ctrl.isBookmarked(channel.id),
+              'fa-check-square-o': $ctrl.isShared(channel.id),
+              'fa-square-o': !$ctrl.isShared(channel.id),
             }"></i>
             {{$ctrl.channelService.getName(channel)}}
             <small class="text-muted">{{$ctrl.channelService.getDescription(channel)}}</small>
