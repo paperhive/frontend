@@ -54,14 +54,8 @@ export default function(app) {
     }
 
     search(query) {
-      return this.$http.get(`${this.config.apiUrl}/documents/search`, {params: query})
+      return this.$http.get(`${this.config.apiUrl}/document-items/search`, {params: query})
         .catch(this.notificationService.httpError('could not search documents'))
-        .then(response => response.data);
-    }
-
-    searchScroll(scrollToken) {
-      return this.$http.get(`${this.config.apiUrl}/documents/search/scroll`, {params: {scrollToken}})
-        .catch(this.notificationService.httpError('could not scroll documents'))
         .then(response => response.data);
     }
 
