@@ -1,5 +1,5 @@
 import { copy } from 'angular';
-import { cloneDeep, find } from 'lodash';
+import { cloneDeep, find, get } from 'lodash';
 
 require('./onboarding.less');
 require('./onboarding-bookmark.less');
@@ -16,60 +16,67 @@ export default function(app) {
       query: string;
 
       searching = false;
+      searchTotal: number;
+      searchHits: any[] = [];
+      searchHitsComplete: boolean;
 
       total: number;
-      documentsScrollToken: string;
-      documentsTotal: number;
-      documents: any[] = [];
       totalUpdating = false;
       scrollUpdating = false;
 
       bookmarked = false;
       bookmarkSubmitting = {};
 
-      static $inject = ['$http', 'authService', 'channelService', 'documentsApi', 'personService'];
-      constructor(public $http, public authService, public channelService, public documentsApi, public personService) {
+      static $inject = ['$http', 'authService', 'channelService', 'documentItemsApi', 'personService'];
+      constructor(public $http, public authService, public channelService,
+                  public documentItemsApi, public personService) {
         this.updateTotal();
       }
 
-      getBib(document) {
+      getBib(documentItem) {
         const items = [];
-        const journal = document.journal
-          && (document.journal.nameShort || document.journal.nameLong);
+        const metadata = documentItem.metadata;
+        const journal = metadata.journalShort || metadata.journal;
         if (journal) items.push(journal);
-        if (document.volume) items.push(`vol. ${document.volume}`);
-        if (document.issue) items.push(`issue ${document.issue}`);
-        if (document.publisher) items.push(document.publisher);
+        if (metadata.volume) items.push(`vol. ${metadata.volume}`);
+        if (metadata.issue) items.push(`issue ${metadata.issue}`);
+        if (metadata.publisher) items.push(metadata.publisher);
         return items.join(', ');
       }
 
-      getBookmarks(documents) {
-        const channelId = this.authService.user.account.onboarding.channel.channel;
-        if (!channelId) throw new Error('no channel available');
-
-        return Promise.all(documents.map(document => {
-          return this.documentsApi.bookmarksGet(document.id)
-            .then(data => {
-              document.bookmarked = !!find(data.bookmarks, {channel: {id: channelId}});
-              return document;
-            });
-        }));
+      getChannel() {
+        return get(this, 'authService.user.account.onboarding.channel.channel');
       }
 
-      toggleBookmark(document) {
-        const channelId = this.authService.user.account.onboarding.channel.channel;
-        if (!channelId) throw new Error('no channel available');
+      isBookmarked(documentItem) {
+        const channel = this.getChannel();
+        if (!channel || !documentItem) return;
+        return documentItem.channelBookmarks
+          && documentItem.channelBookmarks.find(bookmark => bookmark.channel === channel);
+      }
 
-        this.bookmarkSubmitting[document.id] = true;
-        const promise = document.bookmarked
-          ? this.documentsApi.bookmarkDelete(document.id, channelId)
-          : this.documentsApi.bookmarkAdd(document.id, channelId);
-        promise
-          .then(() => {
-            document.bookmarked = !document.bookmarked;
-            if (document.bookmarked) this.bookmarked = true;
+       addBookmark(documentItem) {
+        const channel = this.getChannel();
+        if (!channel) throw new Error('no channel available');
+        this.bookmarkSubmitting[documentItem.id] = true;
+        this.documentItemsApi.bookmarkAdd(documentItem.id, channel)
+          .then(bookmark => {
+            documentItem.channelBookmarks = documentItem.channelBookmarks || [];
+            documentItem.channelBookmarks.push(bookmark);
           })
-          .finally(() => this.bookmarkSubmitting[document.id] = false);
+          .finally(() => this.bookmarkSubmitting[documentItem.id] = false);
+      }
+
+      removeBookmark(documentItem) {
+        const channel = this.getChannel();
+        if (!channel) throw new Error('no channel available');
+        this.bookmarkSubmitting[documentItem.id] = true;
+        this.documentItemsApi.bookmarkDelete(documentItem.id, channel)
+          .then(() => {
+            const index = documentItem.channelBookmarks.findIndex(bookmark => bookmark.channel === channel);
+            documentItem.channelBookmarks.splice(index, 1);
+          })
+          .finally(() => this.bookmarkSubmitting[documentItem.id] = false);
       }
 
       next() {
@@ -79,33 +86,40 @@ export default function(app) {
         this.personService.update(person).then(() => this.onNext());
       }
 
-      scroll() {
-        this.scrollUpdating = true;
-        this.documentsApi.searchScroll(this.documentsScrollToken)
-          .then(data => this.getBookmarks(data.documents))
-          .then(documents => this.documents.push(...documents))
-          .finally(() => this.scrollUpdating = false);
+      search() {
+        delete this.searchTotal;
+        delete this.searchHitsComplete;
+        this.searching = true;
+
+        const options = {limit: 3, public: true} as any;
+        if (this.query) options.query = this.query;
+
+        this.documentItemsApi.search(options)
+          .then(({hits, totalItemCount}) => {
+            this.searchTotal = totalItemCount;
+            copy(hits, this.searchHits);
+          })
+          .finally(() => this.searching = false);
       }
 
-      search() {
-        this.searching = true;
-        this.documentsApi.search({q: this.query, restrictToLatest: true, size: 3})
-          .then(data => {
-            this.documentsScrollToken = data.scrollToken;
-            this.documentsTotal = data.total;
-            return this.getBookmarks(data.documents);
-          })
-          .then(documents => copy(documents, this.documents))
-          .finally(() => this.searching = false);
+      searchScroll() {
+        this.scrollUpdating = true;
+
+        const options = {limit: 3, skip: this.searchHits.length, public: true} as any;
+        if (this.query) options.query = this.query;
+
+        this.documentItemsApi.search(options)
+          .then(({hits}) => this.searchHits.push(...hits))
+          .finally(() => this.scrollUpdating = false);
       }
 
       updateTotal() {
         this.totalUpdating = true;
-        this.documentsApi.search({restrictToLatest: true})
-          .then(data => this.total = data.total)
+        this.documentItemsApi.search()
+          .then(({totalItemCount}) => this.total = totalItemCount)
           .finally(() => this.totalUpdating = false);
       }
     },
     template: require('./onboarding-bookmark.html'),
   });
-};
+}

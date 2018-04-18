@@ -44,49 +44,49 @@
     Searching...
   </p>
   <div ng-if="!$ctrl.searching">
-    <p ng-if="$ctrl.documentsTotal === 0">No documents match your query.</p>
-    <p ng-if="$ctrl.documentsTotal > 0">
-      Found {{$ctrl.documentsTotal | number}} documents.
+    <p ng-if="$ctrl.searchTotal === 0">No documents match your query.</p>
+    <p ng-if="$ctrl.searchTotal > 0">
+      Found {{$ctrl.searchTotal | number}} documents.
     </p>
   </div>
-  <div ng-repeat="document in $ctrl.documents track by document.id" class="ph-component-document">
+  <div ng-repeat="hit in $ctrl.searchHits track by hit.documentItem.id" class="ph-component-document">
     <div class="ph-component-document-controls">
       <button type="button" class="btn btn-link btn-sm"
         title="Bookmark"
-        ng-click="$ctrl.toggleBookmark(document)"
-        ng-disabled="!$ctrl.active || $ctrl.bookmarkSubmitting[document.id]"
+        ng-click="$ctrl.isBookmarked(hit.documentItem) ? $ctrl.removeBookmark(hit.documentItem): $ctrl.addBookmark(hit.documentItem)"
+        ng-disabled="!$ctrl.active || $ctrl.bookmarkSubmitting[hit.documentItem.id]"
       >
         <i class="fa fa-lg" ng-class="{
-          'fa-star': document.bookmarked,
-          'fa-star-o': !document.bookmarked,
+          'fa-star': $ctrl.isBookmarked(hit.documentItem),
+          'fa-star-o': !$ctrl.isBookmarked(hit.documentItem),
         }"></i>
       </button>
     </div>
     <div class="ph-component-document-body">
       <h4 class="ph-component-title">
-        <a href="./documents/{{document.id}}" target="_blank" title="{{document.title}}">
-          <mathjax body="document.title"></mathjax>
+        <a href="./documents/items/{{hit.documentItem.id}}" target="_blank" title="{{hit.documentItem.metadata.title}}">
+          <mathjax body="hit.documentItem.metadata.title"></mathjax>
         </a>
       </h4>
       <div class="ph-component-document-author-year">
         <div class="ph-component-document-author">
-          <span ng-repeat="author in document.authors">
+          <span ng-repeat="author in hit.documentItem.metadata.authors">
             {{author.name}}{{$last ? '' : ', '}}
           </span>
         </div>
-        <div class="text-muted">&nbsp;·&nbsp;{{document.publishedAt | date: 'yyyy'}}</div>
+        <div class="text-muted">&nbsp;·&nbsp;{{hit.documentItem.metadata.publishedAt | date: 'yyyy'}}</div>
       </div>
       <div class="ph-component-document-bib text-muted">
-        {{$ctrl.getBib(document)}}
+        {{$ctrl.getBib(hit.documentItem)}}
       </div>
     </div>
   </div>
-  <button ng-if="$ctrl.documents.length < $ctrl.documentsTotal"
-    ng-click="$ctrl.scroll()"
+  <button ng-if="$ctrl.searchHits.length < $ctrl.searchTotal"
+    ng-click="$ctrl.searchScroll()"
     ng-disabled="$ctrl.scrollUpdating"
     class="btn btn-default" type="button"
   >
-    <i ng-if="!$ctrl.scUpdating" class="fa fa-fw fa-angle-double-down"></i>
+    <i ng-if="!$ctrl.scrollUpdating" class="fa fa-fw fa-angle-double-down"></i>
     <i ng-if="$ctrl.scrollUpdating" class="fa fa-fw fa-circle-o-notch fa-spin"></i>
     Load more
   </button>
