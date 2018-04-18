@@ -8,7 +8,7 @@ export default function(app) {
       };
 
       service.httpError = function(msg) {
-        return function(data) {
+        return ({data}) => {
           service.notifications.push({
             type: 'error',
             message: (data && data.message) || msg || 'unknown error',
@@ -20,4 +20,4 @@ export default function(app) {
       return service;
     },
   ]);
-};
+}
