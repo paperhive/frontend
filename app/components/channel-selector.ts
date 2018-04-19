@@ -65,8 +65,9 @@ export default function(app) {
 
         if (!this.discussions) return;
 
+
         this.discussions.forEach(discussion => {
-          if (discussion.onlyMe) {
+          if (discussion.authorOnly) {
             this.onlyMeDiscussions++;
             return;
           }
