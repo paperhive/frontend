@@ -30,7 +30,11 @@
       <i class="fa fa-caret-down"></i>
     </button>
     <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu>
-      <li ng-click="$ctrl.isOpen = false" ng-class="{active: $ctrl.channelService.public}">
+      <li
+        ng-if="$ctrl.documentItem.public"
+        ng-click="$ctrl.isOpen = false"
+        ng-class="{active: $ctrl.channelService.public}"
+      >
         <a href=""
           ng-click="$ctrl.channelService.selectPublic()"
           title="Public channel"
@@ -70,7 +74,7 @@
         </a>
       </li>
       <li
-        ng-repeat="channel in $ctrl.channelService.channels"
+        ng-repeat="channel in $ctrl.channels"
         ng-click="$ctrl.isOpen = false"
         ng-class="{'active ph-private-channel': channel.id === $ctrl.channelService.selectedChannel.id}"
       >
