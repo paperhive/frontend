@@ -6,9 +6,12 @@
       classes="ph-margin-avatar img-circle"
     ></avatar>
     <!-- channel flag -->
-    <div class="ph-channel-description" ng-class="{'ph-channel-private': $ctrl.channel}">
-      <span ng-if="!$ctrl.channel">
+    <div class="ph-channel-description" ng-class="{'ph-channel-private': $ctrl.discussion.authorOnly || $ctrl.channel}">
+      <span ng-if="!$ctrl.discussion.authorOnly && !$ctrl.channel">
         <i class="fa fa-fw fa-globe"></i> Public channel
+      </span>
+      <span ng-if="$ctrl.discussion.authorOnly">
+        <i class="fa fa-fw fa-lock"></i> Only me
       </span>
       <span ng-if="$ctrl.channel">
         <i class="fa fa-fw fa-user"></i>
