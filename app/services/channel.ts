@@ -2,20 +2,25 @@ import angular from 'angular';
 import { find, remove } from 'lodash';
 
 export default function(app) {
-  app.service('channelService', class channelService {
+  app.service('channelService', class ChannelService {
     channels: any[];
     invitations: any[];
     channelsById: any;
+    public: boolean;
+    onlyMe: boolean;
     selectedChannel: any;
     showAllChannels = true;
 
     static $inject = ['$rootScope', 'authService', 'channelsApi'];
     constructor($rootScope, public authService, public channelsApi) {
+      this.public = true;
       $rootScope.$watch(() => authService.user, user => {
         if (!user) {
           this.channels = undefined;
           this.invitations = undefined;
           this.channelsById = undefined;
+          this.public = true;
+          this.onlyMe = false;
           this.selectedChannel = undefined;
           return;
         }
@@ -123,7 +128,21 @@ export default function(app) {
       return member.roles.indexOf(role) !== -1;
     }
 
+    selectPublic() {
+      this.public = true;
+      this.onlyMe = false;
+      delete this.selectedChannel;
+    }
+
+    selectOnlyMe() {
+      this.public = false;
+      this.onlyMe = true;
+      delete this.selectedChannel;
+    }
+
     selectChannel(channel) {
+      this.public = false;
+      this.onlyMe = false;
       this.selectedChannel = channel;
     }
 
