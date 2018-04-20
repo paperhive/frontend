@@ -6,7 +6,10 @@
   <div class="ph-margin-controls-permanent"
     on-resized="$ctrl.controlsSize = $size"
   >
-    <channel-selector discussions="$ctrl.discussions"></channel-selector>
+    <channel-selector
+      document-item="$ctrl.documentItem"
+      discussions="$ctrl.discussions"
+    ></channel-selector>
     <!--filter-button></filter-button-->
   </div>
   <margin-link

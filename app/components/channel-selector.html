@@ -1,8 +1,13 @@
 <div class="dropdown ph-dropdown-flex" uib-dropdown>
   <div class="ph-selected-channel">
-    <div ng-if="!$ctrl.channelService.selectedChannel">
+    <div ng-if="$ctrl.channelService.public">
       <i class="fa fa-fw fa-globe ph-channel-icon-public"></i>
-      {{$ctrl.channelService.getName($ctrl.channelService.selectedChannel)}}
+      Public channel
+      <span ng-if="$ctrl.channelService.selectedChannel">{{$ctrl.channelService.getName($ctrl.channelService.selectedChannel)}}</span>
+    </div>
+    <div ng-if="$ctrl.channelService.onlyMe">
+      <i class="fa fa-fw fa-lock ph-channel-icon-private"></i>
+      Only me
     </div>
     <div ng-if="$ctrl.channelService.selectedChannel">
       <span class="fa-stack fa-stack-sm fa-fw ph-channel-icon-private">
@@ -25,9 +30,13 @@
       <i class="fa fa-caret-down"></i>
     </button>
     <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu>
-      <li ng-click="$ctrl.isOpen = false" ng-class="{active: !$ctrl.channelService.selectedChannel}">
+      <li
+        ng-if="$ctrl.documentItem.public"
+        ng-click="$ctrl.isOpen = false"
+        ng-class="{active: $ctrl.channelService.public}"
+      >
         <a href=""
-          ng-click="$ctrl.channelService.selectChannel(undefined)"
+          ng-click="$ctrl.channelService.selectPublic()"
           title="Public channel"
         >
           <div class="ph-grow-container">
@@ -43,7 +52,29 @@
         </a>
       </li>
       <li
-        ng-repeat="channel in $ctrl.channelService.channels"
+        ng-click="$ctrl.isOpen = false" ng-class="{
+          'active ph-private-channel': $ctrl.channelService.onlyMe,
+          disabled: !$ctrl.authService.user,
+        }"
+      >
+        <a href=""
+          ng-click="$ctrl.authService.user ? $ctrl.channelService.selectOnlyMe() : ($event.preventDefault() || $event.stopPropagation())"
+          title="Only me"
+        >
+          <div class="ph-grow-container">
+            <div class="ph-grow-item">
+              <i class="fa fa-fw fa-lock ph-channel-icon ph-channel-icon-private"></i>
+              Only me
+            </div>
+            <div class="pull-right" ng-if="$ctrl.onlyMeDiscussions">
+              {{$ctrl.onlyMeDiscussions}}
+              <i class="fa fa-comments"></i>
+            </div>
+          </div>
+        </a>
+      </li>
+      <li
+        ng-repeat="channel in $ctrl.channels"
         ng-click="$ctrl.isOpen = false"
         ng-class="{'active ph-private-channel': channel.id === $ctrl.channelService.selectedChannel.id}"
       >

@@ -26,12 +26,14 @@ export default function(app) {
 
         ctrl.submit = function() {
 
+          const onlyMe = channelService.onlyMe;
           const channel = channelService.selectedChannel &&
             channelService.selectedChannel.id;
           const discussion = {
             target: {selectors: cloneDeep(ctrl.selectors)},
             title: $scope.comment.title,
             body: $scope.comment.body,
+            authorOnly: onlyMe,
             channel,
           };
           delete discussion.target.selectors.isBackwards;

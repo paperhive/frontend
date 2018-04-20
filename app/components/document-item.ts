@@ -224,6 +224,8 @@ export default function(app) {
 
         // update filtered discussions if discussions, channel or showAllChannels changed
         $scope.$watchCollection('$ctrl.discussionsCtrl.discussions', this.updateFilteredDiscussions.bind(this));
+        $scope.$watch('$ctrl.channelService.onlyMe', this.updateFilteredDiscussions.bind(this));
+        $scope.$watch('$ctrl.channelService.public', this.updateFilteredDiscussions.bind(this));
         $scope.$watch('$ctrl.channelService.selectedChannel', this.updateFilteredDiscussions.bind(this));
         $scope.$watch('$ctrl.channelService.showAllChannels', this.updateFilteredDiscussions.bind(this));
       }
@@ -321,7 +323,10 @@ export default function(app) {
           discussions = discussions.filter(discussion => {
             const channelId = this.channelService.selectedChannel &&
               this.channelService.selectedChannel.id;
-            return discussion.channel === channelId;
+            if (channelId && discussion.channel === channelId) return true;
+            if (this.channelService.onlyMe && discussion.authorOnly) return true;
+            if (this.channelService.public && !discussion.authorOnly && !discussion.channel) return true;
+            return false;
           });
         }
 
