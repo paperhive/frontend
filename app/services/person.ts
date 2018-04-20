@@ -23,6 +23,7 @@ export default function(app) {
       ['id', 'gravatarMd5', 'firstSignin', 'createdAt', 'updatedAt', 'externalIds']
         .forEach(key => delete _person[key]);
       delete _person.account.createdAt;
+      delete _person.account.featureFlags;
 
       return this.peopleApi.update(id, _person).then(newPerson => {
         this.authService.user = newPerson;
