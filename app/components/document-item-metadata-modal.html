@@ -81,8 +81,8 @@
       </div>
       <div class="help-block">
         <span ng-if="$ctrl.hasError('publishedAt')">
-          <span ng-if="metadataForm.publishedAt.$error.required">
-            Please enter a publication date for this document.
+          <span ng-if="metadataForm.publishedAt.$error">
+            Please enter a valid publication date of the form YYYY-MM-DD.
           </span>
         </span>
       </div>
