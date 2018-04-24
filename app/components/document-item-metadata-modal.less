@@ -1,0 +1,16 @@
+@import "../../less/mixins.less";
+@import "../../less/variables.less";
+
+document-item-metadata-modal {
+  .ph-author {
+    display: flex;
+    align-items: center;
+    .ph-collapse-mixin(40px);
+    .ph-expand-mixin(40px);
+  }
+
+  .ph-author-name {
+    flex-grow: 1;
+    .text-overflow();
+  }
+}
