@@ -53,6 +53,41 @@
         </span>
       </div>
     </div>
+
+    <div class="form-group" ng-class="{
+        'has-error': $ctrl.hasError('publishedAt'),
+        'has-success': metadataForm.publishedAt.$valid
+      }"
+    >
+      <label>Publication date</label>
+      <div class="input-group">
+        <input
+          type="text" class="form-control" name="publishedAt" ng-model="$ctrl.metadata.publishedAt"
+          required ng-disabled="$ctrl.submitting || $ctrl.succeeded"
+          uib-datepicker-popup="yyyy-MM-dd"
+          is-open="$ctrl.publishedAtOpened"
+          on-open-focus="false"
+          close-on-date-selection="true"
+          show-button-bar="false"
+          popup-placement="auto top-right"
+          ng-focus="$ctrl.publishedAtOpened = true"
+          ng-click="$ctrl.publishedAtOpened = true"
+        >
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button" ng-click="$ctrl.publishedAtOpened = !$ctrl.publishedAtOpened">
+            <i class="fa fa-fw fa-calendar"></i>
+          </button>
+        </span>
+      </div>
+      <div class="help-block">
+        <span ng-if="$ctrl.hasError('publishedAt')">
+          <span ng-if="metadataForm.publishedAt.$error.required">
+            Please enter a publication date for this document.
+          </span>
+        </span>
+      </div>
+    </div>
+
   </div>
   <div class="modal-footer">
     <span class="ph-md-margin-right text-danger" ng-if="$ctrl.error">

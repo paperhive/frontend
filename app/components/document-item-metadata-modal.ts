@@ -25,6 +25,7 @@ export default function(app) {
       static $inject = ['$scope', 'documentItemsApi'];
       constructor(public $scope, public documentItemsApi) {
         this.metadata = cloneDeep(this.resolve.documentItem.metadata);
+        this.metadata.publishedAt = new Date(this.metadata.publishedAt);
         if (!this.metadata.authors) this.metadata.authors = [];
       }
 
