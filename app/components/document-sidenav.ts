@@ -16,6 +16,7 @@ export default function(app) {
       searchMatchIndex: '<',
       searchStr: '<',
       viewportOffsetTop: '<',
+      onDocumentItemUpdate: '&',
       onAnchorUpdate: '&',
       onAddBookmark: '&',
       onRemoveBookmark: '&',
@@ -34,6 +35,7 @@ export default function(app) {
       searchMatchIndex: number;
       searchStr: string;
       viewportOffsetTop: number;
+      onDocumentItemUpdate: (o: {documentItem: any}) => void;
       onSearchUpdate: (o: {searchStr: string, matchIndex: number}) => void;
       onToggle: any;
 
@@ -82,11 +84,15 @@ export default function(app) {
       }
 
       openMetadataModal() {
-        return this.$uibModal.open({
-          backdrop: 'static',
-          component: 'documentItemMetadataModal',
-          resolve: {documentItem: () => this.documentItem},
-        });
+        return this.$uibModal
+          .open({
+            backdrop: 'static',
+            component: 'documentItemMetadataModal',
+            resolve: {documentItem: () => this.documentItem},
+          })
+          .result
+          .then(({documentItem}) => this.onDocumentItemUpdate({documentItem}))
+          .catch(() => { /* no-op */});
       }
 
       updateDocumentItems() {

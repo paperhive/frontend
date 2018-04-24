@@ -1,3 +1,5 @@
+import { cloneDeep } from 'lodash';
+
 export default function(app) {
   app.component('documentItemMetadataModal', {
     bindings: {
@@ -6,7 +8,7 @@ export default function(app) {
       resolve: '<',
     },
     controller: class DocumentItemMetadataModalCtrl {
-      close: (o: {documentItem: any}) => void;
+      close: (o: {$value: any}) => void;
       resolve: {
         documentItem: any;
       };
@@ -18,7 +20,7 @@ export default function(app) {
 
       static $inject = ['documentItemsApi'];
       constructor(public documentItemsApi) {
-        this.metadata = {...this.resolve.documentItem.metadata};
+        this.metadata = cloneDeep(this.resolve.documentItem.metadata);
       }
 
       public submit() {
@@ -26,8 +28,12 @@ export default function(app) {
         this.succeeded = false;
         this.documentItemsApi
           .updateMetadata(this.resolve.documentItem.id, this.metadata)
-          .then(documentItem => this.close({documentItem}))
-          .catch(error => this.error = error);
+          .then(documentItem => {
+            this.succeeded = true;
+            return this.close({$value: {documentItem}});
+          })
+          .catch(error => this.error = error)
+          .finally(() => this.submitting = false);
       }
     },
     template: require('./document-item-metadata-modal.html'),

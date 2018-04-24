@@ -258,6 +258,11 @@ export default function(app) {
           });
       }
 
+      setDocumentItem(documentItem) {
+        this.documentItem = this.documentItem || {};
+        angular.copy(documentItem, this.documentItem);
+      }
+
       updateDocumentItem() {
         const documentItemId = this.$routeParams.documentItem;
         if (!documentItemId || this.documentItem && this.documentItem.id === documentItemId) return;
