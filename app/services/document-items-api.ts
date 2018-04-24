@@ -74,7 +74,7 @@ export default function(app) {
 
     updateMetadata(documentItem, metadata) {
       return this.$http
-        .put(`${this.config.apiUrl}/document-items/${documentItem}/metadata}`, metadata)
+        .put(`${this.config.apiUrl}/document-items/${documentItem}/metadata`, metadata)
         .catch(this.notificationService.httpError('could not update metadata'))
         .then(response => response.data);
     }
