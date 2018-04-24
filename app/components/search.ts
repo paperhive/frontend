@@ -292,6 +292,12 @@ export default function(app) {
           apiParameters: {term: 'openAccess', missing: 'openAccessMissing'},
           urlParameters: {term: 'access', missing: 'accessMissing'},
         }),
+        crossrefMember: new TermsFilter({
+          onUpdate: this.updateCtrlParams.bind(this),
+          type: 'string',
+          apiParameters: {term: 'crossrefMember', missing: 'crossrefMemberMissing'},
+          urlParameters: {term: 'crossrefMember', missing: 'crossrefMemberMissing'},
+        }),
         documentType: new TermsFilter({
           onUpdate: this.updateCtrlParams.bind(this),
           type: 'string',
