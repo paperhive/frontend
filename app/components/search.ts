@@ -400,6 +400,13 @@ export default function(app) {
       updateFromLocation() {
         const search = this.$location.search();
 
+        // redirect for springer
+        const {remoteType} = search;
+        if (remoteType === 'springer') {
+          delete search.remoteType;
+          search.crossrefMember = '297';
+        }
+
         const query = search.query;
 
         // set query input model
