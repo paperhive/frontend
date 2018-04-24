@@ -17,11 +17,30 @@
       </h6>
       <p>
         <span ng-show="!$ctrl.documentItem.public" class="label label-info">Private</span>
-        <span ng-show="$ctrl.authService.user && $ctrl.documentItem.owner === $ctrl.authService.user.id" class="label label-info">Owner</span>
+        <span ng-show="$ctrl.isOwner($ctrl.documentItem)" class="label label-info">Owner</span>
         <span ng-show="$ctrl.isSharedWithYou($ctrl.documentItem)" class="label label-info">Shared with you</span>
         <span ng-show="$ctrl.documentItem.public" class="label label-success">Public</span>
         <span ng-show="$ctrl.documentItem.metadata.isOpenAccess" class="label label-success">Open Access</span>
       </p>
+    </div>
+    <div class="btn-group" uib-dropdown ng-if="$ctrl.isOwner($ctrl.documentItem)">
+      <button class="btn btn-link btn-xs"
+        uib-dropdown-toggle
+        uib-tooltip="Document options"
+        tooltip-class="tooltip-nowrap"
+      >
+        <i class="fa fa-fw fa-lg fa-ellipsis-v"></i>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-left ph-margin-dropdown">
+        <li>
+          <a ng-click="$ctrl.openMetadataModal()" href>
+            <i class="fa fa-fw fa-pencil"></i> Update metadata
+          </a>
+          <a href>
+            <i class="fa fa-fw fa-times"></i> Delete
+          </a>
+        </li>
+      </ul>
     </div>
     <div class="ph-sidenav-item" ng-if="$ctrl.documentSubscriptions">
       <document-subscription-button

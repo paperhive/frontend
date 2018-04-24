@@ -1,6 +1,6 @@
 import jquery from 'jquery';
 
-import { isDocumentItemSharedWithUser } from '../utils/document-items';
+import { isDocumentItemOwnedByUser, isDocumentItemSharedWithUser } from '../utils/document-items';
 
 export default function(app) {
   app.component('documentSidenav', {
@@ -45,8 +45,8 @@ export default function(app) {
 
       onKeydownBind: (event: JQueryEventObject) => void;
 
-      static $inject = ['$http', '$scope', '$window', 'authService', 'documentItemsApi'];
-      constructor(public $http, $scope, public $window, public authService, public documentItemsApi) {
+      static $inject = ['$http', '$scope', '$uibModal', '$window', 'authService', 'documentItemsApi'];
+      constructor(public $http, $scope, public $uibModal, public $window, public authService, public documentItemsApi) {
         $scope.$watch('$ctrl.documentItem', this.updateDocumentItems.bind(this));
         $scope.$watch('$ctrl.documentItem', this.updateKudos.bind(this));
 
@@ -73,8 +73,20 @@ export default function(app) {
         this.docNav = this.docNav === id ? undefined : id;
       }
 
+      isOwner(documentItem) {
+        return isDocumentItemOwnedByUser(documentItem, this.authService.user)
+      }
+
       isSharedWithYou(documentItem) {
         return isDocumentItemSharedWithUser(documentItem, this.authService.user);
+      }
+
+      openMetadataModal() {
+        return this.$uibModal.open({
+          backdrop: 'static',
+          component: 'documentItemMetadataModal',
+          resolve: {documentItem: () => this.documentItem},
+        });
       }
 
       updateDocumentItems() {

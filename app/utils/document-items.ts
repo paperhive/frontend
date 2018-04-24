@@ -107,6 +107,13 @@ export function isDocumentItemSharedInChannel(documentItem, channel) {
     && documentItem.channelShares.find(share => share.channel === channel.id);
 }
 
+export function isDocumentItemOwnedByUser(documentItem, user) {
+  return documentItem &&
+    documentItem.owner &&
+    user &&
+    documentItem.owner === user.id;
+}
+
 export function isDocumentItemSharedWithUser(documentItem, user) {
   return documentItem
     && documentItem.channelShares
