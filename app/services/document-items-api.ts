@@ -72,11 +72,11 @@ export default function(app) {
         .catch(this.notificationService.httpError('could not remove share'));
     }
 
-    upsertFromRemote(type, id) {
+    updateMetadata(documentItem, metadata) {
       return this.$http
-        .post(`${this.config.apiUrl}/document-items/remote`, undefined, {params: {type, id}})
-        .then(response => response.data)
-        .catch(this.notificationService.httpError('could not upsert from remote'));
+        .put(`${this.config.apiUrl}/document-items/${documentItem}/metadata}`, metadata)
+        .catch(this.notificationService.httpError('could not update metadata'))
+        .then(response => response.data);
     }
 
     upload(file: File, onProgress: (o: {submittedBytes: number}) => void) {
@@ -96,6 +96,13 @@ export default function(app) {
         },
       )
         .then(response => response.data);
+    }
+
+    upsertFromRemote(type, id) {
+      return this.$http
+        .post(`${this.config.apiUrl}/document-items/remote`, undefined, {params: {type, id}})
+        .then(response => response.data)
+        .catch(this.notificationService.httpError('could not upsert from remote'));
     }
   });
 }
