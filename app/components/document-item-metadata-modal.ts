@@ -18,9 +18,15 @@ export default function(app) {
       public succeeded = false;
       public metadata: any;
 
-      static $inject = ['documentItemsApi'];
-      constructor(public documentItemsApi) {
+      static $inject = ['$scope', 'documentItemsApi'];
+      constructor(public $scope, public documentItemsApi) {
         this.metadata = cloneDeep(this.resolve.documentItem.metadata);
+      }
+
+      public hasError(field) {
+        const form = this.$scope.metadataForm;
+        return form && (form.$submitted || form[field].$touched) &&
+          form[field].$invalid;
       }
 
       public submit() {
