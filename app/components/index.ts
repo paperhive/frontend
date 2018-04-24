@@ -28,6 +28,7 @@ import discussionShareIcon from './discussion-share-icon';
 import discussionThreadView from './discussion-thread-view';
 import documentInfoKudos from './document-info-kudos';
 import documentItem from './document-item';
+import documentItemMetadataModal from './document-item-metadata-modal';
 import documentItemText from './document-item-text';
 import documentItemsDropdown from './document-items-dropdown';
 import documentNew from './document-new';
@@ -130,6 +131,7 @@ export default function(app) {
   documentInfoKudos(app);
   documentItem(app);
   documentItemsDropdown(app);
+  documentItemMetadataModal(app);
   documentItemText(app);
   documentNew(app);
   documentSidenav(app);
