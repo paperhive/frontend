@@ -292,6 +292,12 @@ export default function(app) {
           apiParameters: {term: 'openAccess', missing: 'openAccessMissing'},
           urlParameters: {term: 'access', missing: 'accessMissing'},
         }),
+        crossrefMember: new TermsFilter({
+          onUpdate: this.updateCtrlParams.bind(this),
+          type: 'string',
+          apiParameters: {term: 'crossrefMember', missing: 'crossrefMemberMissing'},
+          urlParameters: {term: 'crossrefMember', missing: 'crossrefMemberMissing'},
+        }),
         documentType: new TermsFilter({
           onUpdate: this.updateCtrlParams.bind(this),
           type: 'string',
@@ -393,6 +399,13 @@ export default function(app) {
       // update controller variables from location
       updateFromLocation() {
         const search = this.$location.search();
+
+        // redirect for springer
+        const {remoteType} = search;
+        if (remoteType === 'springer') {
+          delete search.remoteType;
+          search.crossrefMember = '297';
+        }
 
         const query = search.query;
 
