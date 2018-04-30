@@ -26,10 +26,10 @@
           </button>
           <ul class="dropdown-menu dropdown-menu-left ph-margin-dropdown">
             <li>
-              <a ng-click="$ctrl.openMetadataModal()" href>
+              <a ng-click="$ctrl.openMetadataModal()" href title="Update the document's metadata">
                 <i class="fa fa-fw fa-pencil"></i> Update metadata
               </a>
-              <a href>
+              <a ng-click="$ctrl.deleteDocumentItem()" href title="Delete the document">
                 <i class="fa fa-fw fa-times"></i> Delete
               </a>
             </li>
