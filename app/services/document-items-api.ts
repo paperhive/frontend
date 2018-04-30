@@ -16,6 +16,12 @@ export default function(app) {
         .catch(this.notificationService.httpError('could not remove bookmark'));
     }
 
+    delete(documentItem) {
+      return this.$http.delete(`${this.config.apiUrl}/document-items/${documentItem}`)
+        // TODO improve authorization error message
+        .catch(this.notificationService.httpError('could not delete document item'));
+    }
+
     get(documentItem) {
       return this.$http.get(`${this.config.apiUrl}/document-items/${documentItem}`)
         // TODO improve authorization error message
