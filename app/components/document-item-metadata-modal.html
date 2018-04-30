@@ -1,0 +1,106 @@
+<form name="metadataForm" novalidate>
+  <div class="modal-header">
+    <button type="button" class="close" aria-label="Close" title="Close" ng-click="$ctrl.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group" ng-class="{
+      'has-error': $ctrl.hasError('title'),
+      'has-success': metadataForm.title.$valid
+     }"
+    >
+      <label>Title</label>
+      <input
+        type="text" class="form-control" name="title" ng-model="$ctrl.metadata.title"
+        required ng-disabled="$ctrl.submitting || $ctrl.succeeded"
+      >
+      <div class="help-block">
+        <span ng-if="$ctrl.hasError('title')">
+          <span ng-if="metadataForm.title.$error.required">
+            Please enter a title for this document.
+          </span>
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Authors</label>
+      <p ng-if="$ctrl.metadata.authors.length === 0" class="text-danger ph-fade ph-expand ph-collapse">
+        <i class="fa fa-fw fa-warning"></i> You need to add at least one author.
+      </p>
+      <div ng-repeat="author in $ctrl.metadata.authors" class="ph-author ph-fade">
+        <div class="ph-author-name" title="{{author.name}}">{{author.name}}</div>
+        <button type="button" class="btn btn-link ph-link-icon"
+          ng-click="$ctrl.metadata.authors.splice($index, 1)"
+        >
+          <i class="fa fa-fw fa-times"></i> Remove
+        </button>
+      </div>
+      <div class="input-group">
+        <input name="author" type="text" class="form-control" placeholder="Author name"
+          ng-model="$ctrl.author"
+          ng-disabled="$ctrl.submitting || $ctrl.succeeded"
+          ng-keypress="$event.charCode === 13 && ($event.preventDefault() || $ctrl.addAuthor())"
+        >
+        <span class="input-group-btn">
+          <button class="btn btn-primary" type="button"
+            ng-click="$ctrl.addAuthor()"
+            ng-disabled="$ctrl.submitting || $ctrl.succeeded || !$ctrl.author"
+          >
+            <i class="fa fa-fw fa-plus" aria-hidden="true"></i> Add
+          </button>
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group" ng-class="{
+        'has-error': $ctrl.hasError('publishedAt'),
+        'has-success': metadataForm.publishedAt.$valid
+      }"
+    >
+      <label>Publication date</label>
+      <div class="input-group">
+        <input
+          type="text" class="form-control" name="publishedAt" ng-model="$ctrl.metadata.publishedAt"
+          required ng-disabled="$ctrl.submitting || $ctrl.succeeded"
+          uib-datepicker-popup="yyyy-MM-dd"
+          is-open="$ctrl.publishedAtOpened"
+          on-open-focus="false"
+          close-on-date-selection="true"
+          show-button-bar="false"
+          popup-placement="auto top-right"
+          ng-focus="$ctrl.publishedAtOpened = true"
+          ng-click="$ctrl.publishedAtOpened = true"
+        >
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button" ng-click="$ctrl.publishedAtOpened = !$ctrl.publishedAtOpened">
+            <i class="fa fa-fw fa-calendar"></i>
+          </button>
+        </span>
+      </div>
+      <div class="help-block">
+        <span ng-if="$ctrl.hasError('publishedAt')">
+          <span ng-if="metadataForm.publishedAt.$error">
+            Please enter a valid publication date of the form YYYY-MM-DD.
+          </span>
+        </span>
+      </div>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <span class="ph-md-margin-right text-danger" ng-if="$ctrl.error">
+      <i class="fa fa-fw fa-warning"></i> Error: {{$ctrl.error}}
+    </span>
+    <button type="submit" class="btn btn-primary"
+      ng-click="!$ctrl.isSubmitDisabled() && $ctrl.submit()"
+      ng-class="{disabled: $ctrl.isSubmitDisabled()}"
+    >
+      <i ng-if="$ctrl.submitting" class="fa fa-fw fa-spinner fa-spin"></i>
+      <i ng-if="!$ctrl.submitting" class="fa fa-fw fa-check"></i>
+      Update
+    </button>
+  </div>
+</form>
+

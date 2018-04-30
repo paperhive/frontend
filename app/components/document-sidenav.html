@@ -15,14 +15,36 @@
           {{author.name}}{{$last ? '' :', '}}
         </span>
       </h6>
-      <p>
-        <span ng-show="!$ctrl.documentItem.public" class="label label-info">Private</span>
-        <span ng-show="$ctrl.authService.user && $ctrl.documentItem.owner === $ctrl.authService.user.id" class="label label-info">Owner</span>
-        <span ng-show="$ctrl.isSharedWithYou($ctrl.documentItem)" class="label label-info">Shared with you</span>
-        <span ng-show="$ctrl.documentItem.public" class="label label-success">Public</span>
-        <span ng-show="$ctrl.documentItem.metadata.isOpenAccess" class="label label-success">Open Access</span>
-      </p>
+      <div class="clearfix">
+        <div class="btn-group pull-right" uib-dropdown ng-if="$ctrl.isOwner($ctrl.documentItem)">
+          <button class="btn btn-link btn-xs"
+            uib-dropdown-toggle
+            uib-tooltip="Options"
+            tooltip-class="tooltip-nowrap"
+          >
+            <i class="fa fa-fw fa-lg fa-ellipsis-v"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-left ph-margin-dropdown">
+            <li>
+              <a ng-click="$ctrl.openMetadataModal()" href title="Update the document's metadata">
+                <i class="fa fa-fw fa-pencil"></i> Update metadata
+              </a>
+              <a ng-click="$ctrl.deleteDocumentItem()" href title="Delete the document">
+                <i class="fa fa-fw fa-times"></i> Delete
+              </a>
+            </li>
+          </ul>
+        </div>
+        <p>
+          <span ng-show="!$ctrl.documentItem.public" class="label label-info">Private</span>
+          <span ng-show="$ctrl.isOwner($ctrl.documentItem)" class="label label-info">Owner</span>
+          <span ng-show="$ctrl.isSharedWithYou($ctrl.documentItem)" class="label label-info">Shared with you</span>
+          <span ng-show="$ctrl.documentItem.public" class="label label-success">Public</span>
+          <span ng-show="$ctrl.documentItem.metadata.isOpenAccess" class="label label-success">Open Access</span>
+        </p>
+      </div>
     </div>
+
     <div class="ph-sidenav-item" ng-if="$ctrl.documentSubscriptions">
       <document-subscription-button
         subscriptions="$ctrl.documentSubscriptions"

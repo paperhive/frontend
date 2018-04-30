@@ -1,6 +1,6 @@
 import jquery from 'jquery';
 
-import { isDocumentItemSharedWithUser } from '../utils/document-items';
+import { isDocumentItemOwnedByUser, isDocumentItemSharedWithUser } from '../utils/document-items';
 
 export default function(app) {
   app.component('documentSidenav', {
@@ -16,6 +16,7 @@ export default function(app) {
       searchMatchIndex: '<',
       searchStr: '<',
       viewportOffsetTop: '<',
+      onDocumentItemUpdate: '&',
       onAnchorUpdate: '&',
       onAddBookmark: '&',
       onRemoveBookmark: '&',
@@ -34,6 +35,7 @@ export default function(app) {
       searchMatchIndex: number;
       searchStr: string;
       viewportOffsetTop: number;
+      onDocumentItemUpdate: (o: {documentItem: any}) => void;
       onSearchUpdate: (o: {searchStr: string, matchIndex: number}) => void;
       onToggle: any;
 
@@ -45,8 +47,10 @@ export default function(app) {
 
       onKeydownBind: (event: JQueryEventObject) => void;
 
-      static $inject = ['$http', '$scope', '$window', 'authService', 'documentItemsApi'];
-      constructor(public $http, $scope, public $window, public authService, public documentItemsApi) {
+      static $inject = ['$http', '$location', '$scope', '$uibModal', '$window',
+        'authService', 'confirmModalService', 'documentItemsApi'];
+      constructor(public $http, public $location, $scope, public $uibModal, public $window,
+                  public authService, public confirmModalService, public documentItemsApi) {
         $scope.$watch('$ctrl.documentItem', this.updateDocumentItems.bind(this));
         $scope.$watch('$ctrl.documentItem', this.updateKudos.bind(this));
 
@@ -66,6 +70,19 @@ export default function(app) {
         }
       }
 
+      deleteDocumentItem() {
+        this.confirmModalService
+          .open({
+            title: 'Delete document?',
+            message: 'Are you sure you want to delete this document? The PDF will be permanently deleted.',
+            confirmButtonText: 'Delete',
+          })
+          .then(
+            () => this.documentItemsApi.delete(this.documentItem.id).then(() => this.$location.url('/')),
+            () => { /* no-op */ },
+          );
+      }
+
       docNavToggle(id) {
         if (this.docNav === 'search') {
           this.onSearchUpdate({searchStr: undefined, matchIndex: undefined});
@@ -73,8 +90,24 @@ export default function(app) {
         this.docNav = this.docNav === id ? undefined : id;
       }
 
+      isOwner(documentItem) {
+        return isDocumentItemOwnedByUser(documentItem, this.authService.user);
+      }
+
       isSharedWithYou(documentItem) {
         return isDocumentItemSharedWithUser(documentItem, this.authService.user);
+      }
+
+      openMetadataModal() {
+        return this.$uibModal
+          .open({
+            backdrop: 'static',
+            component: 'documentItemMetadataModal',
+            resolve: {documentItem: () => this.documentItem},
+          })
+          .result
+          .then(({documentItem}) => this.onDocumentItemUpdate({documentItem}))
+          .catch(() => { /* no-op */});
       }
 
       updateDocumentItems() {

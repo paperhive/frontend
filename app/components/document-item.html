@@ -46,6 +46,7 @@
   viewport-offset-top="$root.navbarSize.height + subnavSize.height"
 
   on-toggle="$ctrl.sidenavOpen = open"
+  on-document-item-update="$ctrl.setDocumentItem(documentItem)"
   on-search-update="$ctrl.searchStr = searchStr; $ctrl.searchMatchIndex = matchIndex"
   on-anchor-update="$ctrl.anchor = anchor"
   on-add-bookmark="$ctrl.addBookmark($channel)"
