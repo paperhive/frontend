@@ -22,6 +22,7 @@ import channels from './channels';
 import channelsInvitations from './channels-invitations';
 import channelsList from './channels-list';
 import comment from './comment';
+import confirmModal from './confirm-modal';
 import contact from './contact';
 import discussionList from './discussion-list';
 import discussionShareIcon from './discussion-share-icon';
@@ -124,6 +125,7 @@ export default function(app) {
   channelsList(app);
   channelNew(app);
   comment(app);
+  confirmModal(app);
   contact(app);
   discussionList(app);
   discussionShareIcon(app);

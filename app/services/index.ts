@@ -2,6 +2,7 @@ import auth from './auth';
 import channel from './channel';
 import channelsApi from './channelsApi';
 import clipboard from './clipboard';
+import confirmModal from './confirm-modal';
 import distangle from './distangle';
 import documentItemsApi from './document-items-api';
 import documentSubscriptionsApi from './document-subscriptions-api';
@@ -20,6 +21,7 @@ export default function(app) {
   channel(app);
   channelsApi(app);
   clipboard(app);
+  confirmModal(app);
   distangle(app);
   documentUploadModal(app);
   documentItemsApi(app);
