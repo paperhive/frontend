@@ -48,9 +48,12 @@ export default function(app) {
       onKeydownBind: (event: JQueryEventObject) => void;
 
       static $inject = ['$http', '$location', '$scope', '$uibModal', '$window',
-        'authService', 'confirmModalService', 'documentItemsApi'];
+        'authService', 'confirmModalService', 'documentItemsApi',
+        'documentUploadModalService', 'featureFlagsService'];
       constructor(public $http, public $location, $scope, public $uibModal, public $window,
-                  public authService, public confirmModalService, public documentItemsApi) {
+                  public authService, public confirmModalService, public documentItemsApi,
+                  public documentUploadModalService, public featureFlagsService,
+                ) {
         $scope.$watch('$ctrl.documentItem', this.updateDocumentItems.bind(this));
         $scope.$watch('$ctrl.documentItem', this.updateKudos.bind(this));
 
@@ -150,6 +153,13 @@ export default function(app) {
               }
             },
           );
+      }
+
+      uploadRevision() {
+        this.documentUploadModalService.open({
+          document: this.documentItem.document,
+          revision: this.documentItem.revision,
+        });
       }
     },
     template: require('./document-sidenav.html'),

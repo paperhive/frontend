@@ -3,15 +3,17 @@ import { IModule } from 'angular';
 export default function(app: IModule) {
   app.component('documentUploadModal', {
     bindings: {
-      onCancel: '&',
-      onUploaded: '&',
+      close: '&',
+      dismiss: '&',
+      resolve: '<',
     },
     controller: class DocumentUploadModalCtrl {
       public error: string;
       public selectedFile: File;
       public submitting = false;
       public submittedBytes: number;
-      public onUploaded: (o: {result: any}) => void;
+      public close: (o: {$value: any}) => void;
+      public resolve: any;
 
       static $inject = ['$scope', 'documentItemsApi'];
       constructor(public $scope, public documentItemsApi) {}
@@ -22,14 +24,17 @@ export default function(app: IModule) {
           this.submittedBytes = 0;
         });
 
+        const {document, revision, metadata} = this.resolve;
+
         try {
-          const result = await this.documentItemsApi.upload(
+          const documentItem = await this.documentItemsApi.upload(
             this.selectedFile,
+            {document, revision, metadata},
             ({submittedBytes}) => this.$scope.$applyAsync(() => this.submittedBytes = submittedBytes),
           );
 
           this.$scope.$applyAsync(() => {
-            this.onUploaded({result});
+            this.close({$value: {documentItem}});
           });
         } catch (error) {
           this.$scope.$applyAsync(() => {
