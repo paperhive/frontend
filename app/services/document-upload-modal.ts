@@ -21,7 +21,7 @@ export default function(app: IModule) {
           const url = this.$routeSegment.getSegmentUrl('documentItem', {documentItem: documentItem.id});
           this.$location.url(url);
         })
-        .catch(() => { /* ignore error */ });
+        .catch(() => { /* ignore closing the modal */ });
     }
   });
 }

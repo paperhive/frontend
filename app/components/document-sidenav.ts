@@ -155,8 +155,11 @@ export default function(app) {
           );
       }
 
-      upload() {
-
+      uploadRevision() {
+        this.documentUploadModalService.open({
+          document: this.documentItem.document,
+          revision: this.documentItem.revision,
+        });
       }
     },
     template: require('./document-sidenav.html'),

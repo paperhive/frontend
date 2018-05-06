@@ -88,7 +88,7 @@
       <a href="{{$ctrl.documentItem.metadata.publisherUrl}}">Visit publisher's publication page</a>
     </p>
     <div class="ph-sidenav-item" ng-if="$ctrl.featureFlagsService.flags.uploads">
-      <button class="btn btn-default">
+      <button class="btn btn-default" ng-click="$ctrl.uploadRevision()">
         <i class="fa fa-fw fa-cloud-upload"></i>
         Upload PDF
       </button>
