@@ -13,6 +13,7 @@ export default function(app: IModule) {
       public submitting = false;
       public submittedBytes: number;
       public close: (o: {$value: any}) => void;
+      public resolve: any;
 
       static $inject = ['$scope', 'documentItemsApi'];
       constructor(public $scope, public documentItemsApi) {}
@@ -23,9 +24,12 @@ export default function(app: IModule) {
           this.submittedBytes = 0;
         });
 
+        const {document, revision, metadata} = this.resolve;
+
         try {
           const documentItem = await this.documentItemsApi.upload(
             this.selectedFile,
+            {document, revision, metadata},
             ({submittedBytes}) => this.$scope.$applyAsync(() => this.submittedBytes = submittedBytes),
           );
 
