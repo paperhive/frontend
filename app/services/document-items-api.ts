@@ -85,7 +85,7 @@ export default function(app) {
         .then(response => response.data);
     }
 
-    upload(file: File, onProgress: (o: {submittedBytes: number}) => void) {
+    upload(file: File, options, onProgress: (o: {submittedBytes: number}) => void) {
       return this.$http.post(
         `${this.config.apiUrl}/document-items/upload`,
         file,
@@ -94,6 +94,7 @@ export default function(app) {
             'Content-Type': file.type,
           },
           params: {
+            ...options,
             filename: file.name,
           },
           uploadEventHandlers: {
