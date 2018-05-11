@@ -81,7 +81,7 @@
     "angular-chartist.js": "^4.2.3",
     "angular-messages": "~1.6.4",
     "angular-moment": "^1.2.0",
-    "angular-route": "~1.6.1",
+    "angular-route": "~1.7.0",
     "angular-route-segment": "^1.5.1",
     "angular-sanitize": "~1.6.1",
     "angular-ui-bootstrap": "^2.3.0",
