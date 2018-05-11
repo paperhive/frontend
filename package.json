@@ -38,7 +38,7 @@
     "@types/rangy": "^0.0.32",
     "@types/rx": "^4.1.1",
     "@types/socket.io-client": "^1.4.29",
-    "angular-mocks": "~1.6.1",
+    "angular-mocks": "~1.7.0",
     "awesome-typescript-loader": "^5.0.0-1",
     "babel-core": "^6.18.2",
     "babel-loader": "^7.1.4",
