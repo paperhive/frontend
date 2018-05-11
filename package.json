@@ -77,7 +77,7 @@
   "dependencies": {
     "@types/pretty-bytes": "^4.0.0",
     "angular": "~1.6.1",
-    "angular-animate": "~1.6.1",
+    "angular-animate": "~1.7.0",
     "angular-chartist.js": "^4.2.3",
     "angular-messages": "~1.6.4",
     "angular-moment": "^1.2.0",
