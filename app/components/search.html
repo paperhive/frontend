@@ -120,6 +120,36 @@
         ></search-dropdown>
       </div>
     </div>
+    <div
+      class="row"
+      ng-if="
+        $ctrl.filterCtrls.crossrefMember.isActive()
+        || $ctrl.filterCtrls.funder.isActive()
+        || $ctrl.filterCtrls.tag.isActive()
+      "
+    >
+      <div class="col-sm-12">
+        <h5>Other active filters:</h5>
+        <search-chips
+          description="Publisher"
+          aggregation="$ctrl.filters.crossrefMember.aggregation"
+          selected="$ctrl.filterCtrls.crossrefMember.terms"
+          on-remove="$ctrl.filterCtrls.crossrefMember.remove(term)"
+        ></search-chips>
+        <search-chips
+          description="Funder"
+          aggregation="$ctrl.filters.funder.aggregation"
+          selected="$ctrl.filterCtrls.funder.terms"
+          on-remove="$ctrl.filterCtrls.funder.remove(term)"
+        ></search-chips>
+        <search-chips
+          description="Tag"
+          aggregation="$ctrl.filters.tag.aggregation"
+          selected="$ctrl.filterCtrls.tag.terms"
+          on-remove="$ctrl.filterCtrls.tag.remove(term)"
+        ></search-chips>
+      </div>
+    </div>
   </div>
 </div>
 <div class="container ph-md-padding-top ph-lg-margin-bottom">
