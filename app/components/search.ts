@@ -304,6 +304,12 @@ export default function(app) {
           apiParameters: {term: 'documentType', missing: 'documentTypeMissing'},
           urlParameters: {term: 'documentType', missing: 'documentTypeMissing'},
         }),
+        funder: new TermsFilter({
+          onUpdate: this.updateCtrlParams.bind(this),
+          type: 'string',
+          apiParameters: {term: 'funder'},
+          urlParameters: {term: 'funder'},
+        }),
         journal: new TermsFilter({
           onUpdate: this.updateCtrlParams.bind(this),
           type: 'string',
@@ -320,6 +326,12 @@ export default function(app) {
           type: 'string',
           apiParameters: {term: 'remoteType'},
           urlParameters: {term: 'remoteType'},
+        }),
+        tag: new TermsFilter({
+          onUpdate: this.updateCtrlParams.bind(this),
+          type: 'string',
+          apiParameters: {term: 'tag'},
+          urlParameters: {term: 'tag'},
         }),
       };
 
