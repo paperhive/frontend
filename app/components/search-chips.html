@@ -1,0 +1,11 @@
+<button
+  type="button"
+  class="btn btn-sm btn-default"
+  ng-repeat="item in $ctrl.items track by item.term"
+  ng-click="$ctrl.onRemove({term: item.term})"
+>
+  <i class="fa fa-fw fa-filter"></i>
+  {{$ctrl.description}}:
+  {{item.label}}
+  <i class="fa fa-fw fa-times"></i>
+</button>
