@@ -84,6 +84,7 @@ import personDocumentSubscriptions from './person-document-subscriptions';
 import phFooter from './ph-footer';
 import publishers from './publishers';
 import search from './search';
+import searchChips from './search-chips';
 import searchDate from './search-date';
 import searchDateDropdown from './search-date-dropdown';
 import searchDonut from './search-donut';
@@ -187,6 +188,7 @@ export default function(app) {
   phFooter(app);
   publishers(app);
   search(app);
+  searchChips(app);
   searchDate(app);
   searchDateDropdown(app);
   searchDonut(app);
