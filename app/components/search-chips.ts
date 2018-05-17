@@ -33,6 +33,7 @@ export default function(app) {
       static $inject = ['$scope'];
       constructor($scope) {
         $scope.$watchCollection('$ctrl.selected', this.updateItems.bind(this));
+        $scope.$watch('$ctrl.aggregation', this.updateItems.bind(this));
       }
 
       $onChanges() {
@@ -42,7 +43,7 @@ export default function(app) {
       updateItems() {
         this.items = [];
 
-        if (!this.selected) return;
+        if (!this.selected || !this.aggregation) return;
         this.selected.forEach(term => {
           const bucket = this.aggregation.buckets.find(item => item.term === term);
           if (bucket) {
