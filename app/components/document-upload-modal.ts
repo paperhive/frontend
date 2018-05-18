@@ -29,9 +29,13 @@ export default function(app: IModule) {
         try {
           const documentItem = await this.documentItemsApi.upload(
             this.selectedFile,
-            {document, revision, metadata},
+            {document, revision},
             ({submittedBytes}) => this.$scope.$applyAsync(() => this.submittedBytes = submittedBytes),
           );
+
+          if (metadata) {
+            documentItem.metadata = await this.documentItemsApi.updateMetadata(documentItem.id, metadata);
+          }
 
           this.$scope.$applyAsync(() => {
             this.close({$value: {documentItem}});
