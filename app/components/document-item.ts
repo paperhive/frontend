@@ -200,7 +200,9 @@ export default function(app) {
       subnavOpen = false;
       sidenavOpen = true;
       documentItem: any;
+      documentItems: any[];
       documentSubscriptions: any[];
+      availableChannels: any;
       discussionsCtrl: DiscussionsController;
       discussionsByRevision: any;
       filteredDiscussions: any[];
@@ -221,6 +223,7 @@ export default function(app) {
         $scope.$on('$routeChangeSuccess', this.updateDocumentItem.bind(this));
 
         $scope.$watch('$ctrl.documentItem', this.updateDocumentSubscriptions.bind(this));
+        $scope.$watchCollection('$ctrl.documentItem.channelShares', this.updateAvailableChannels.bind(this));
 
         // update filtered discussions if discussions, channel or showAllChannels changed
         $scope.$watchCollection('$ctrl.discussionsCtrl.discussions', this.updateFilteredDiscussions.bind(this));
@@ -267,6 +270,7 @@ export default function(app) {
         const documentItemId = this.$routeParams.documentItem;
         if (!documentItemId || this.documentItem && this.documentItem.id === documentItemId) return;
         this.documentItem = undefined;
+        this.documentItems = undefined;
         this.documentItemsApi.get(documentItemId)
           .then(documentItem => {
             this.documentItem = documentItem;
@@ -283,7 +287,45 @@ export default function(app) {
               this.authService, this.websocketService,
             );
             this.discussionsCtrl.refresh();
+
+            return this.documentItemsApi.getByDocument(documentItem.document);
+          })
+          .then(({documentItems}) => {
+            this.documentItems = documentItems;
+            this.updateAvailableChannels();
           });
+      }
+
+      updateAvailableChannels() {
+        this.availableChannels = undefined;
+        if (!this.documentItem || !this.documentItems) return;
+        const revisionItems = this.documentItems.filter(item => item.revision === this.documentItem.revision);
+        const hasPublicRevisionItem = !!revisionItems.find(item => item.public);
+
+        if (hasPublicRevisionItem) {
+          this.availableChannels = {
+            public: true,
+            channels: this.channelService.channels && [...this.channelService.channels.map(channel => channel.id)],
+          };
+        } else {
+          // get all channels that are valid for this revision
+          const channels = [];
+          [this.documentItem, this.documentItems.filter(item => item.id !== this.documentItem.id)]
+            .forEach(item => item.channelShares && item.channelShares.forEach(({channel}) => {
+              if (channels.indexOf(channel) === -1) {
+                channels.push(channel);
+              }
+            }));
+
+          this.availableChannels = {public: false, channels};
+        }
+
+        // update selected channel if necessary
+        if (this.channelService.onlyMe) return;
+        if (this.channelService.public && this.availableChannels.public) return;
+        const {selectedChannel} = this.channelService;
+        if (selectedChannel && this.availableChannels.channels.indexOf(selectedChannel.id) !== -1) return;
+        this.channelService.selectOnlyMe();
       }
 
       updateDocumentSubscriptions() {

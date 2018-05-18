@@ -3,7 +3,6 @@
     <div ng-if="$ctrl.channelService.public">
       <i class="fa fa-fw fa-globe ph-channel-icon-public"></i>
       Public channel
-      <span ng-if="$ctrl.channelService.selectedChannel">{{$ctrl.channelService.getName($ctrl.channelService.selectedChannel)}}</span>
     </div>
     <div ng-if="$ctrl.channelService.onlyMe">
       <i class="fa fa-fw fa-lock ph-channel-icon-private"></i>
@@ -31,7 +30,7 @@
     </button>
     <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu>
       <li
-        ng-if="$ctrl.documentItem.public"
+        ng-if="$ctrl.availableChannels.public"
         ng-click="$ctrl.isOpen = false"
         ng-class="{active: $ctrl.channelService.public}"
       >
@@ -74,7 +73,8 @@
         </a>
       </li>
       <li
-        ng-repeat="channel in $ctrl.channels"
+        ng-repeat="channel in $ctrl.channelService.channels"
+        ng-if="$ctrl.availableChannels.channels.indexOf(channel.id) !== -1"
         ng-click="$ctrl.isOpen = false"
         ng-class="{'active ph-private-channel': channel.id === $ctrl.channelService.selectedChannel.id}"
       >

@@ -6,6 +6,7 @@ export default function(app) {
   app.component('documentSidenav', {
     bindings: {
       documentItem: '<',
+      documentItems: '<',
       documentSubscriptions: '<',
       discussionsCtrl: '<',
       discussionsByRevision: '<',
@@ -54,7 +55,6 @@ export default function(app) {
                   public authService, public confirmModalService, public documentItemsApi,
                   public documentUploadModalService, public featureFlagsService,
                 ) {
-        $scope.$watch('$ctrl.documentItem', this.updateDocumentItems.bind(this));
         $scope.$watch('$ctrl.documentItem', this.updateKudos.bind(this));
 
         this.onKeydownBind = this.onKeydown.bind(this);
@@ -111,14 +111,6 @@ export default function(app) {
           .result
           .then(({documentItem}) => this.onDocumentItemUpdate({documentItem}))
           .catch(() => { /* no-op */});
-      }
-
-      updateDocumentItems() {
-        this.documentItems = undefined;
-        if (!this.documentItem) return;
-
-        this.documentItemsApi.getByDocument(this.documentItem.document)
-          .then(({documentItems}) => this.documentItems = documentItems);
       }
 
       // i can haz kudos?

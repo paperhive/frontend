@@ -7,7 +7,7 @@ require('./margin.less');
 export default function(app) {
   app.component('margin', {
     bindings: {
-      documentItem: '<',
+      availableChannels: '<',
       discussions: '<',
       filteredDiscussions: '<',
       draftSelectors: '<',
