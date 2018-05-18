@@ -34,7 +34,7 @@ export default function(app: IModule) {
           );
 
           if (metadata) {
-            await this.documentItemsApi.updateMetadata(documentItem.id, metadata);
+            documentItem.metadata = await this.documentItemsApi.updateMetadata(documentItem.id, metadata);
           }
 
           this.$scope.$applyAsync(() => {
