@@ -7,7 +7,7 @@
     on-resized="$ctrl.controlsSize = $size"
   >
     <channel-selector
-      document-item="$ctrl.documentItem"
+      available-channels="$ctrl.availableChannels"
       discussions="$ctrl.discussions"
     ></channel-selector>
     <!--filter-button></filter-button-->
@@ -66,6 +66,7 @@
   class="ph-slide-in ph-slide-in-left ph-slide-out ph-slide-out-right"
   ng-style="{top: $ctrl.viewportOffsetTop || 0}"
   selectors="$ctrl.draftSelectors"
+  available-channels="$ctrl.availableChannels"
   on-submit="$ctrl.submitDiscussion(discussion)"
   on-close="$ctrl.closeDraftPane().catch($ctrl.noop)"
   on-unsaved-content-update="$ctrl.draftPaneUnsavedContent = unsavedContent"

@@ -6,6 +6,7 @@ export default function(app) {
   app.component('marginDraftPane', {
     bindings: {
       selectors: '<',
+      availableChannels: '<',
       onSubmit: '&',
       onClose: '&',
       onUnsavedContentUpdate: '&',

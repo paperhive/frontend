@@ -5,6 +5,7 @@ import { SearchIndex } from 'srch';
 class DocumentItemTextCtrl {
   // input
   documentItem: any;
+  availableChannels: any;
   discussions: any[];
   filteredDiscussions: any[];
   indexSearchResults: number;
@@ -160,6 +161,7 @@ export default function(app) {
     bindings: {
       anchor: '<',
       documentItem: '<',
+      availableChannels: '<',
       discussions: '<',
       filteredDiscussions: '<',
       viewportOffsetTop: '<',
