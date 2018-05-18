@@ -159,6 +159,7 @@ export default function(app) {
         this.documentUploadModalService.open({
           document: this.documentItem.document,
           revision: this.documentItem.revision,
+          metadata: this.documentItem.metadata,
         });
       }
     },
