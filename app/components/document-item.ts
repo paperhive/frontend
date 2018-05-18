@@ -200,6 +200,7 @@ export default function(app) {
       subnavOpen = false;
       sidenavOpen = true;
       documentItem: any;
+      documentItems: any[];
       documentSubscriptions: any[];
       discussionsCtrl: DiscussionsController;
       discussionsByRevision: any;
@@ -267,6 +268,7 @@ export default function(app) {
         const documentItemId = this.$routeParams.documentItem;
         if (!documentItemId || this.documentItem && this.documentItem.id === documentItemId) return;
         this.documentItem = undefined;
+        this.documentItems = undefined;
         this.documentItemsApi.get(documentItemId)
           .then(documentItem => {
             this.documentItem = documentItem;
@@ -283,6 +285,11 @@ export default function(app) {
               this.authService, this.websocketService,
             );
             this.discussionsCtrl.refresh();
+
+            return this.documentItemsApi.getByDocument(documentItem.document);
+          })
+          .then(({documentItems}) => {
+            this.documentItems = documentItems;
           });
       }
 
