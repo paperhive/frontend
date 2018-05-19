@@ -222,7 +222,7 @@ export default function(app) {
         // TODO: do we need this?
         $scope.$on('$routeChangeSuccess', this.updateDocumentItem.bind(this));
 
-        $scope.$watch('$ctrl.documentItem', this.updateDocumentSubscriptions.bind(this));
+        $scope.$watch('$ctrl.documentItems', this.updateDocumentSubscriptions.bind(this));
         $scope.$watchCollection('$ctrl.documentItem.channelShares', this.updateAvailableChannels.bind(this));
 
         // update filtered discussions if discussions, channel or showAllChannels changed
@@ -329,11 +329,11 @@ export default function(app) {
       }
 
       updateDocumentSubscriptions() {
-        // TODO: check if there is a public item
-        if (!this.documentItem || !this.documentItem.public) {
-          this.documentSubscriptions = undefined;
-          return;
-        }
+        this.documentSubscriptions = undefined;
+        if (!this.documentItem || !this.documentItems) return;
+
+        const hasPublicItem = !!this.documentItems.find(item => item.public);
+        if (!hasPublicItem) return;
 
         this.documentSubscriptionsApi
           .getByDocument(this.documentItem.document)
