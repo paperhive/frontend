@@ -5,11 +5,14 @@ import { SearchIndex } from 'srch';
 class DocumentItemTextCtrl {
   // input
   documentItem: any;
+  documentItems: any[];
   availableChannels: any;
   discussions: any[];
   filteredDiscussions: any[];
   indexSearchResults: number;
 
+  accessibleItem: any;
+  accessibleItemType: string;
   draftSelectors: any;
   highlights: any[];
   hoveredHighlights: any;
@@ -26,10 +29,13 @@ class DocumentItemTextCtrl {
   onSearchMatchesUpdate: (o: {searchMatches: any[]}) => void;
 
   static $inject = ['$animate', '$element', '$http', '$location',
-    '$routeSegment', '$scope', '$window', 'config', 'notificationService'];
+    '$routeSegment', '$scope', '$window', 'authService', 'config',
+    'documentUploadModalService', 'featureFlagsService', 'notificationService'];
   constructor($animate, $element, public $http, public $location,
-              public $routeSegment, public $scope, $window, public config,
-              public notificationService) {
+              public $routeSegment, public $scope, $window,
+              public authService, public config,
+              public documentUploadModalService,
+              public featureFlagsService, public notificationService) {
     this.hoveredHighlights = {};
     this.hoveredMarginDiscussions = {draft: true};
     this.pageCoordinates = {};
@@ -62,6 +68,8 @@ class DocumentItemTextCtrl {
     });
 
     $scope.$watchCollection('$ctrl.pdfInfo', pdfInfo => this.onPdfInfoUpdate({pdfInfo}));
+
+    $scope.$watchCollection('$ctrl.documentItems', this.updateAccessibleItem.bind(this));
 
     // update search index
     $scope.$watch('$ctrl.pdfText', this.updateSearchIndex.bind(this));
@@ -111,6 +119,30 @@ class DocumentItemTextCtrl {
     return `${this.config.apiUrl}/proxy?url=${encodedUrl}`;
   }
 
+  updateAccessibleItem() {
+    this.accessibleItem = undefined;
+    this.accessibleItemType = undefined;
+    if (!this.documentItem || !this.documentItems) return;
+
+    const revisionItems = this.documentItems.filter(item => item.revision === this.documentItem.revision);
+
+    if (this.authService.user) {
+      const ownedItem = revisionItems.find(item => item.owner === this.authService.user.id);
+      if (ownedItem) {
+        this.accessibleItem = ownedItem;
+        this.accessibleItemType = 'owned';
+        return;
+      }
+    }
+
+    const sharedItem = revisionItems.find(item => item.remote.type === 'upload');
+    if (sharedItem) {
+      this.accessibleItem = sharedItem;
+      this.accessibleItemType = 'shared';
+      return;
+    }
+  }
+
   // note: a query parameter is used because a fragment identifier (hash)
   //       is *not* part of the URL.
   updateAnchorFromUrl() {
@@ -149,6 +181,14 @@ class DocumentItemTextCtrl {
     this.pdfInfo.searchIndex = new SearchIndex(this.pdfText);
   }
 
+  uploadRevision() {
+    this.documentUploadModalService.open({
+      document: this.documentItem.document,
+      revision: this.documentItem.revision,
+      metadata: this.documentItem.metadata,
+    });
+  }
+
   search() {
     this.searchMatches = this.pdfInfo && this.pdfInfo.searchIndex && this.searchStr
       ? this.pdfInfo.searchIndex.search(this.searchStr) : undefined;
@@ -161,6 +201,7 @@ export default function(app) {
     bindings: {
       anchor: '<',
       documentItem: '<',
+      documentItems: '<',
       availableChannels: '<',
       discussions: '<',
       filteredDiscussions: '<',
