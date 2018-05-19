@@ -26,10 +26,13 @@ class DocumentItemTextCtrl {
   onSearchMatchesUpdate: (o: {searchMatches: any[]}) => void;
 
   static $inject = ['$animate', '$element', '$http', '$location',
-    '$routeSegment', '$scope', '$window', 'config', 'notificationService'];
+    '$routeSegment', '$scope', '$window', 'authService', 'config',
+    'documentUploadModalService', 'featureFlagsService', 'notificationService'];
   constructor($animate, $element, public $http, public $location,
-              public $routeSegment, public $scope, $window, public config,
-              public notificationService) {
+              public $routeSegment, public $scope, $window,
+              public authService, public config,
+              public documentUploadModalService,
+              public featureFlagsService, public notificationService) {
     this.hoveredHighlights = {};
     this.hoveredMarginDiscussions = {draft: true};
     this.pageCoordinates = {};
@@ -147,6 +150,14 @@ class DocumentItemTextCtrl {
     this.pdfInfo.searchIndex = undefined;
     if (!this.pdfText) return;
     this.pdfInfo.searchIndex = new SearchIndex(this.pdfText);
+  }
+
+  uploadRevision() {
+    this.documentUploadModalService.open({
+      document: this.documentItem.document,
+      revision: this.documentItem.revision,
+      metadata: this.documentItem.metadata,
+    });
   }
 
   search() {

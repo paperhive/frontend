@@ -103,8 +103,23 @@
             you possibly don't have access to this document currently.
             <a href="./contact">Let us know</a> if you think this is a mistake!
           </p>
+          <p class="text-center" ng-if="$ctrl.documentItem.public && $ctrl.authService.user && $ctrl.featureFlagsService.flags.uploads">
+            <button
+              class="btn btn-default"
+              ng-click="$ctrl.uploadRevision()"
+              title="Upload the PDF for this document to your private PaperHive documents for working with it from anywhere."
+            >
+              <i class="fa fa-fw fa-cloud-upload"></i>
+              Bring your own PDF
+            </button>
+          </p>
           <p>
-            It might be worthwhile to try the following:
+            <span ng-if="$ctrl.documentItem.public && $ctrl.authService.user && $ctrl.featureFlagsService.flags.uploads">
+              If you don't have the PDF it might be worthwhile to try the following:
+            </span>
+            <span ng-if="!$ctrl.documentItem.public || !$ctrl.authService.user || !$ctrl.featureFlagsService.flags.uploads">
+              It might be worthwhile to try the following:
+            </span>
             <ul>
               <li>
                 Open the document from within your institutional network or
