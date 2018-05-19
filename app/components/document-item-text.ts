@@ -5,11 +5,14 @@ import { SearchIndex } from 'srch';
 class DocumentItemTextCtrl {
   // input
   documentItem: any;
+  documentItems: any[];
   availableChannels: any;
   discussions: any[];
   filteredDiscussions: any[];
   indexSearchResults: number;
 
+  accessibleItem: any;
+  accessibleItemType: string;
   draftSelectors: any;
   highlights: any[];
   hoveredHighlights: any;
@@ -66,6 +69,8 @@ class DocumentItemTextCtrl {
 
     $scope.$watchCollection('$ctrl.pdfInfo', pdfInfo => this.onPdfInfoUpdate({pdfInfo}));
 
+    $scope.$watchCollection('$ctrl.documentItems', this.updateAccessibleItem.bind(this));
+
     // update search index
     $scope.$watch('$ctrl.pdfText', this.updateSearchIndex.bind(this));
     $scope.$watch('$ctrl.searchStr', this.search.bind(this));
@@ -112,6 +117,30 @@ class DocumentItemTextCtrl {
     // No HTTPS/Cors? PaperHive can proxy the document if it's a public open access document.
     const encodedUrl = encodeURIComponent(this.documentItem.file.url);
     return `${this.config.apiUrl}/proxy?url=${encodedUrl}`;
+  }
+
+  updateAccessibleItem() {
+    this.accessibleItem = undefined;
+    this.accessibleItemType = undefined;
+    if (!this.documentItem || !this.documentItems) return;
+
+    const revisionItems = this.documentItems.filter(item => item.revision === this.documentItem.revision);
+
+    if (this.authService.user) {
+      const ownedItem = revisionItems.find(item => item.owner === this.authService.user.id);
+      if (ownedItem) {
+        this.accessibleItem = ownedItem;
+        this.accessibleItemType = 'owned';
+        return;
+      }
+    }
+
+    const sharedItem = revisionItems.find(item => item.remote.type === 'upload');
+    if (sharedItem) {
+      this.accessibleItem = sharedItem;
+      this.accessibleItemType = 'shared';
+      return;
+    }
   }
 
   // note: a query parameter is used because a fragment identifier (hash)
@@ -172,6 +201,7 @@ export default function(app) {
     bindings: {
       anchor: '<',
       documentItem: '<',
+      documentItems: '<',
       availableChannels: '<',
       discussions: '<',
       filteredDiscussions: '<',
