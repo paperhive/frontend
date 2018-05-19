@@ -34,7 +34,7 @@ class DiscussionsController {
   }
 
   async discussionUpdate(discussion) {
-    const _discussion = pick(discussion, 'channel', 'title', 'body', 'target', 'tags');
+    const _discussion = pick(discussion, 'channel', 'authorOnly', 'title', 'body', 'target', 'tags');
     const response = await this.$http({
       url: `${this.config.apiUrl}/discussions/${discussion.id}`,
       method: 'PUT',
