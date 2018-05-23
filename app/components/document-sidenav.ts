@@ -55,7 +55,7 @@ export default function(app) {
                   public authService, public confirmModalService, public documentItemsApi,
                   public documentUploadModalService, public featureFlagsService,
                 ) {
-        $scope.$watch('$ctrl.documentItem', this.updateKudos.bind(this));
+        // $scope.$watch('$ctrl.documentItem', this.updateKudos.bind(this));
 
         this.onKeydownBind = this.onKeydown.bind(this);
         jquery($window).on('keydown', this.onKeydownBind);
