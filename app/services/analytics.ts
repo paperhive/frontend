@@ -39,6 +39,8 @@ export default function(app) {
         this.$window.ga('create', 'UA-62775822-1', 'auto');
         this.$window.ga('set', 'anonymizeIp', true);
         this.$window.ga('set', 'forceSSL', true);
+        this.$window.ga('set', 'location', undefined);
+        this.$window.ga('set', 'hostname', this.$location.host());
 
         this.gaElement = element(`<script async src="https://www.google-analytics.com/analytics.js"></script>`);
         this.gaElement.appendTo(this.$document[0].head);
