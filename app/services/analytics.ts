@@ -1,12 +1,23 @@
 import { element } from 'angular';
 
+import {localStorageAvailable} from '../utils/local-storage';
+
 export default function(app) {
   app.service('analyticsService', class AnalyticsService {
     enabled = false;
+    askForConsent = false;
     gaElement: JQLite;
 
     static $inject = ['$analytics', '$document', '$location', '$window'];
-    constructor(public $analytics, public $document, public $location, public $window) {}
+    constructor(public $analytics, public $document, public $location, public $window) {
+      if (localStorageAvailable && this.$window.localStorage.analyticsEnabled) {
+        this.enable();
+      }
+    }
+
+    askForConsentIfRequired() {
+      if (!this.enabled) this.askForConsent = true;
+    }
 
     enable() {
       if (this.enabled) return;
@@ -37,12 +48,21 @@ export default function(app) {
       }
 
       this.enabled = true;
+      if (localStorageAvailable) {
+        this.$window.localStorage.analyticsEnabled = true;
+      }
+      this.askForConsent = false;
     }
 
     disable() {
       if (!this.enabled) return;
+
       this.$analytics.setOptOut(true);
+
       this.enabled = false;
+      if (localStorageAvailable) {
+        this.$window.localStorage.analyticsEnabled = false;
+      }
     }
   });
 }
