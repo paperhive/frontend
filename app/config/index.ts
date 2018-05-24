@@ -1,4 +1,4 @@
-import angulartics from './angulartics';
+import analytics from './analytics';
 import animate from './animate';
 import debug from './debug';
 import html5Mode from './html5-mode';
@@ -12,7 +12,7 @@ import routes from './routes';
 import scroll from './scroll';
 
 export default function(app) {
-  angulartics(app);
+  analytics(app);
   animate(app);
   debug(app);
   html5Mode(app);
