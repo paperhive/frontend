@@ -213,11 +213,22 @@ export default function(app) {
       if (localStorageAvailable) {
         // set token from local storage when initializing (if available)
         if ($window.localStorage.token) {
-          authService.loginToken($window.localStorage.token);
+          authService.loginToken($window.localStorage.token)
+            .then(
+              // signed in: enable analytics
+              () => analyticsService.enable(),
+              // sign in failed: ask for consent if required
+              () => analyticsService.askForConsentIfRequired(),
+            );
+        } else {
+          // not signing in: ask for consent if required
+          analyticsService.askForConsentIfRequired();
         }
+      } else {
+        analyticsService.askForConsentIfRequired();
       }
 
       return authService;
     },
   ]);
-};
+}
