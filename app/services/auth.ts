@@ -13,8 +13,10 @@ export default function(app) {
     };
   });
 
-  app.factory('authService', ['authState', 'config', '$http', '$q', '$rootScope', '$window', '$location', 'notificationService',
-    function(authState, config, $http, $q, $rootScope, $window, $location, notificationService) {
+  app.factory('authService', [
+    'analyticsService', 'authState', 'config',
+    '$http', '$q', '$rootScope', '$window', '$location', 'notificationService',
+    function(analyticsService, authState, config, $http, $q, $rootScope, $window, $location, notificationService) {
       const authService = authState;
 
       // authService.returnPath
@@ -83,6 +85,9 @@ export default function(app) {
                   if (localStorageAvailable) {
                     $window.localStorage.token = response.data.token;
                   }
+
+                  // enable analytics
+                  analyticsService.enable();
 
                   // url where the user is sent after login
                   let newUrl = response.data.returnUrl;
