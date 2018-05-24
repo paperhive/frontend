@@ -1,4 +1,5 @@
 import about from './about';
+import accountDeleteModal from './account-delete-modal';
 import activity from './activity';
 import analyticsConsent from './analytics-consent';
 import attribution from './attribution';
@@ -105,6 +106,7 @@ import userProfile from './user-profile';
 
 export default function(app) {
   about(app);
+  accountDeleteModal(app);
   activity(app);
   analyticsConsent(app);
   attribution(app);

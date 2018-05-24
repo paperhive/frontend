@@ -1,0 +1,45 @@
+<form name="accountDeleteForm" novalidate>
+  <div class="modal-header">
+    <button type="button" class="close" aria-label="Close" title="Close" ng-click="$ctrl.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title">Delete your account</h4>
+  </div>
+  <div class="modal-body">
+    <div class="form-group has-feedback" ng-class="{
+      'has-error': $ctrl.hasError('confirmationText'),
+      'has-success': accountDeleteForm.confirmationText.$valid
+     }"
+    >
+      <label>Confirmation</label>
+      <input
+        type="text" class="form-control" name="confirmationText"
+        ng-model="$ctrl.confirmationText"
+        required ng-disabled="$ctrl.submitting || $ctrl.succeeded"
+        ng-pattern="'DELETE'"
+      >
+      <i ng-if="$ctrl.hasError('confirmationText')"
+        class="fa fa-times form-control-feedback" aria-hidden="true"
+      ></i>
+      <i ng-if="accountDeleteForm.confirmationText.$valid"
+        class="fa fa-check form-control-feedback" aria-hidden="true"
+      ></i>
+      <p class="help-block">
+        Type DELETE to confirm.
+      </p>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <span class="ph-md-margin-right text-danger" ng-if="$ctrl.error">
+      <i class="fa fa-fw fa-warning"></i> Error: {{$ctrl.error}}
+    </span>
+    <button type="submit" class="btn btn-danger"
+      ng-click="accountDeleteForm.$valid && $ctrl.submit()"
+      ng-class="{disabled: !accountDeleteForm.$valid}"
+    >
+      <i ng-if="$ctrl.submitting" class="fa fa-fw fa-spinner fa-spin"></i>
+      <i ng-if="!$ctrl.submitting" class="fa fa-fw fa-trash"></i>
+      Delete account <em>{{$ctrl.authService.user.account.username}}</em>
+    </button>
+  </div>
+</form>
