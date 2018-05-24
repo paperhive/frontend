@@ -110,7 +110,7 @@ export default function(app) {
                         notificationService.notifications.push({
                           type: 'info',
                           message: `
-                            <strong><a href="/onboarding">Complete your profile</a></strong>
+                            <strong><a href="./onboarding">Complete your profile</a></strong>
                             to get started.
                             `,
                         });
