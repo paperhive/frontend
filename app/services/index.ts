@@ -1,3 +1,4 @@
+import analytics from './analytics';
 import auth from './auth';
 import channel from './channel';
 import channelsApi from './channelsApi';
@@ -17,6 +18,7 @@ import scroll from './scroll';
 import websockets from './websockets';
 
 export default function(app) {
+  analytics(app);
   auth(app);
   channel(app);
   channelsApi(app);

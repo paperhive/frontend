@@ -1,0 +1,13 @@
+<div uib-alert
+  ng-show="$ctrl.analyticsService.askForConsent"
+  class="alert-info text-center ph-navbar-alert"
+>
+  <i class="fa fa-fw fa-info-circle"></i>
+  PaperHive uses cookies for personalization and analytics.
+  To find out more, read our
+  <strong><a href="./terms#privacy">privacy policy</a></strong>.
+  <button class="btn btn-primary" ng-click="$ctrl.agree()">
+    <i class="fa fa-fw fa-check"></i>
+    I agree
+  </button>
+</div>

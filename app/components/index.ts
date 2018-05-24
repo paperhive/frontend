@@ -1,5 +1,6 @@
 import about from './about';
 import activity from './activity';
+import analyticsConsent from './analytics-consent';
 import attribution from './attribution';
 import authReturn from './auth-return';
 import avatar from './avatar';
@@ -104,6 +105,7 @@ import userProfile from './user-profile';
 export default function(app) {
   about(app);
   activity(app);
+  analyticsConsent(app);
   attribution(app);
   authReturn(app);
   avatar(app);

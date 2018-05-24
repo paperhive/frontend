@@ -13,8 +13,10 @@ export default function(app) {
     };
   });
 
-  app.factory('authService', ['authState', 'config', '$http', '$q', '$rootScope', '$window', '$location', 'notificationService',
-    function(authState, config, $http, $q, $rootScope, $window, $location, notificationService) {
+  app.factory('authService', [
+    'analyticsService', 'authState', 'config',
+    '$http', '$q', '$rootScope', '$window', '$location', 'notificationService',
+    function(analyticsService, authState, config, $http, $q, $rootScope, $window, $location, notificationService) {
       const authService = authState;
 
       // authService.returnPath
@@ -84,6 +86,9 @@ export default function(app) {
                     $window.localStorage.token = response.data.token;
                   }
 
+                  // enable analytics
+                  analyticsService.enable();
+
                   // url where the user is sent after login
                   let newUrl = response.data.returnUrl;
 
@@ -105,7 +110,7 @@ export default function(app) {
                         notificationService.notifications.push({
                           type: 'info',
                           message: `
-                            <strong><a href="/onboarding">Complete your profile</a></strong>
+                            <strong><a href="./onboarding">Complete your profile</a></strong>
                             to get started.
                             `,
                         });
@@ -208,11 +213,22 @@ export default function(app) {
       if (localStorageAvailable) {
         // set token from local storage when initializing (if available)
         if ($window.localStorage.token) {
-          authService.loginToken($window.localStorage.token);
+          authService.loginToken($window.localStorage.token)
+            .then(
+              // signed in: enable analytics
+              () => analyticsService.enable(),
+              // sign in failed: ask for consent if required
+              () => analyticsService.askForConsentIfRequired(),
+            );
+        } else {
+          // not signing in: ask for consent if required
+          analyticsService.askForConsentIfRequired();
         }
+      } else {
+        analyticsService.askForConsentIfRequired();
       }
 
       return authService;
     },
   ]);
-};
+}
