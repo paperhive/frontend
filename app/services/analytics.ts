@@ -4,12 +4,15 @@ import {localStorageAvailable} from '../utils/local-storage';
 
 export default function(app) {
   app.service('analyticsService', class AnalyticsService {
+    routeChanged = false;
     enabled = false;
     askForConsent = false;
     gaElement: JQLite;
 
-    static $inject = ['$analytics', '$document', '$location', '$window'];
-    constructor(public $analytics, public $document, public $location, public $window) {
+    static $inject = ['$analytics', '$document', '$location', '$rootScope', '$window'];
+    constructor(public $analytics, public $document, public $location, public $rootScope, public $window) {
+      $rootScope.$on('$routeChangeSuccess', () => this.routeChanged = true);
+
       if (localStorageAvailable && this.$window.localStorage.analyticsEnabled) {
         this.enable();
       }
@@ -37,14 +40,18 @@ export default function(app) {
         this.$window.ga('set', 'anonymizeIp', true);
         this.$window.ga('set', 'forceSSL', true);
 
-        this.gaElement = element(`<script async src="//www.google-analytics.com/analytics.js"></script>`);
+        this.gaElement = element(`<script async src="https://www.google-analytics.com/analytics.js"></script>`);
         this.gaElement.appendTo(this.$document[0].head);
       }
 
       if (this.$analytics.getOptOut()) {
         this.$analytics.setOptOut(false);
-        const url = this.$analytics.settings.pageTracking.basePath + this.$location.url();
-        this.$analytics.pageTrack(url);
+
+        // track page if enabled after initial route change
+        if (this.routeChanged) {
+          const url = this.$analytics.settings.pageTracking.basePath + this.$location.url();
+          this.$analytics.pageTrack(url);
+        }
       }
 
       this.enabled = true;
