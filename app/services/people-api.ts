@@ -11,6 +11,14 @@ export default function(app) {
         );
     }
 
+    deleteAccount(personId) {
+      return this.$http.delete(`${this.config.apiUrl}/people/${personId}/account`)
+        .then(
+          response => response.data,
+          this.notificationService.httpError('could not delete account'),
+        );
+    }
+
     getByUsername(username) {
       return this.$http.get(`${this.config.apiUrl}/people/username/${username}`)
         .then(
