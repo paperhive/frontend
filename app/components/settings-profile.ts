@@ -50,10 +50,7 @@ export default function(app) {
         };
 
         ctrl.openDeleteAccountModal = function() {
-          $uibModal.open({
-            backdrop: 'static',
-            component: 'account-delete-modal',
-          });
+          $uibModal.open({component: 'account-delete-modal'});
         };
     }],
     template: require('./settings-profile.html'),
