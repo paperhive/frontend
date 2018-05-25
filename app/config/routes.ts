@@ -66,6 +66,7 @@ export default function(app) {
         .when('/partners', 'partners')
         .when('/password/request', 'passwordRequest')
         .when('/password/reset', 'passwordReset')
+        .when('/privacy', 'privacy')
         .when('/publishers', 'publishers')
         .when('/return/channelInvitation', 'channelInvitationConfirm')
         .when('/search', 'search', {reloadOnSearch: false})
@@ -498,6 +499,17 @@ export default function(app) {
         .segment('passwordReset', {
           template: '<password-reset></password-reset>',
           title: 'Reset your password · PaperHive',
+        })
+
+        .segment('privacy', {
+          template: '<privacy></privacy>',
+          title: 'Privacy Policy · PaperHive',
+          meta: [
+            {
+              name: 'description',
+              content: 'Privacy Policy of PaperHive.',
+            },
+          ],
         })
 
         .segment('publishers', {
