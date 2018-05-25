@@ -11,8 +11,8 @@ export default function(app) {
       public submitting = false;
       public succeeded = false;
 
-      static $inject = ['$http', '$scope', 'authService', 'config'];
-      constructor(public $http, public $scope, public authService, public config) {}
+      static $inject = ['$http', '$scope', 'authService', 'peopleApi'];
+      constructor(public $http, public $scope, public authService, public peopleApi) {}
 
       public hasError(field) {
         const form = this.$scope.accountDeleteForm;
@@ -23,8 +23,7 @@ export default function(app) {
       public submit() {
         this.submitting = true;
         this.succeeded = false;
-        // TODO: fix URL
-        this.$http.delete(this.config.apiUrl)
+        this.peopleApi.deleteAccount(this.authService.user.id)
           .then(() => {
             this.succeeded = true;
             return this.close();
