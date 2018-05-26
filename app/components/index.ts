@@ -83,6 +83,7 @@ import pdfPopup from './pdf-popup';
 import pdfSelectionPopup from './pdf-selection-popup';
 import personDocumentSubscriptions from './person-document-subscriptions';
 import phFooter from './ph-footer';
+import privacy from './privacy';
 import publishers from './publishers';
 import search from './search';
 import searchChips from './search-chips';
@@ -188,6 +189,7 @@ export default function(app) {
   pdfSelectionPopup(app);
   personDocumentSubscriptions(app);
   phFooter(app);
+  privacy(app);
   publishers(app);
   search(app);
   searchChips(app);
