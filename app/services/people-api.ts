@@ -11,8 +11,11 @@ export default function(app) {
         );
     }
 
-    deleteAccount(personId) {
-      return this.$http.delete(`${this.config.apiUrl}/people/${personId}/account`)
+    deleteAccount(personId, options) {
+      return this.$http.delete(
+        `${this.config.apiUrl}/people/${personId}/account`,
+        {params: options},
+      )
         .then(
           response => response.data,
           this.notificationService.httpError('could not delete account'),
