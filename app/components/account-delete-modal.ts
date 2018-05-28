@@ -9,6 +9,7 @@ export default function(app) {
     controller: class DocumentItemMetadataModalCtrl {
       close: () => void;
 
+      public deleteExternalIds = false;
       public error: string;
       public submitting = false;
       public succeeded = false;
@@ -31,7 +32,11 @@ export default function(app) {
       public submit() {
         this.submitting = true;
         this.succeeded = false;
-        this.peopleApi.deleteAccount(this.authService.user.id)
+
+        this.peopleApi.deleteAccount(
+          this.authService.user.id,
+          {deleteExternalIds: this.deleteExternalIds},
+        )
           .then(() => {
             this.succeeded = true;
             this.authService.logout();

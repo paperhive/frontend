@@ -58,6 +58,23 @@
       ></i>
     </p>
     <hr>
+    <h5>External identifiers</h5>
+    <p>
+      External identifiers are identifiers that you associated with your
+      PaperHive account, for example Google accounts, ORCID accounts, or email
+      addresses. You can delete them along with all other data but then you
+      won't be able to recover your account and regain control over your
+      contributions to public discussions.
+    </p>
+    <div class="form-group">
+      <label>
+        <input type="checkbox"
+          name="deleteExternalIds" id="deleteExternalIds"
+          data-ng-model="$ctrl.deleteExternalIds">
+        Delete external identifiers
+      </label>
+    </div>
+    <hr>
     <div class="form-group has-feedback" ng-class="{
       'has-error': $ctrl.hasError('confirmationText'),
       'has-success': accountDeleteForm.confirmationText.$valid
