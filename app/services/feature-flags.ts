@@ -1,7 +1,7 @@
 import { ILocationService, IRootScopeService, IWindowService } from 'angular';
 
 export default function(app) {
-  type Flag = 'uploads' /* | 'feature1' | 'feature2' */;
+  type Flag = 'uploads' | 'uploadNewRevision';
   type Flags = {[k in Flag]?: boolean};
 
   app.service('featureFlagsService', class FeatureFlags {

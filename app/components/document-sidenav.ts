@@ -154,6 +154,12 @@ export default function(app) {
           metadata: this.documentItem.metadata,
         });
       }
+
+      uploadNewRevision() {
+        this.documentUploadModalService.open({
+          document: this.documentItem.document,
+        });
+      }
     },
     template: require('./document-sidenav.html'),
   });
