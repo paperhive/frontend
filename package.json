@@ -33,7 +33,7 @@
     "@types/highlight.js": "^9.1.8",
     "@types/jquery": "^3.2.0",
     "@types/lodash": "^4.14.78",
-    "@types/mathjax": "0.0.32",
+    "@types/mathjax": "0.0.33",
     "@types/node": "^10.0.3",
     "@types/rangy": "^0.0.32",
     "@types/rx": "^4.1.1",
