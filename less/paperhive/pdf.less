@@ -95,13 +95,13 @@ pdf-full {
   & > .ph-pdf-highlights {
     .ph-selection(none);
 
-    opacity: 0.4;
-
     // do not lighten up colors by highlighting, e.g., black text remains black
     // although we the highlight is a layer on top of the text.
     mix-blend-mode: multiply;
 
     .ph-pdf-highlight {
+      opacity: 0.4;
+
       transition: background-color 0.3s ease;
       background-color: @ph-text-highlight-color;
       &.ph-pdf-highlight-emphasize {
