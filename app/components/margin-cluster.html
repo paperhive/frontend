@@ -34,23 +34,28 @@
   <div ng-if="$ctrl.cluster.discussions.length > 2" class="ph-component-shadow-2"></div>
   <div ng-if="$ctrl.cluster.discussions.length > 1" class="ph-component-shadow-1"></div>
   <div class="ph-margin-row-content">
-    <p class="ph-xs-margin-bottom ph-margin-info">
-      <a href="./users/{{$ctrl.cluster.discussions[0].author.account.username}}">
-        {{$ctrl.cluster.discussions[0].author.displayName}}</a>
-      · <span am-time-ago="$ctrl.cluster.discussions[0].createdAt"></span>
-    </p>
-    <div class="ph-component-body-container">
-      <div ng-if="!$ctrl.cluster.discussions[0].body" class="ph-component-discussion-title ph-xs-margin-bottom">
-        <mathjax body="$ctrl.cluster.discussions[0].title"></mathjax>
-      </div>
-      <div ng-if="$ctrl.cluster.discussions[0].body">
-        <p class="ph-margin-title ph-component-discussion-title ph-no-margin ph-xs-margin-bottom">
+    <p ng-if="$ctrl.cluster.discussions[0].deleted" class="ph-margin-info">
+        <em>Contribution has been deleted. Reason: {{$ctrl.cluster.discussions[0].deletedReason}}.</em>
+      </p>
+    <div ng-if="!$ctrl.cluster.discussions[0].deleted">
+      <p class="ph-xs-margin-bottom ph-margin-info">
+        <a href="./users/{{$ctrl.cluster.discussions[0].author.account.username}}">
+          {{$ctrl.cluster.discussions[0].author.displayName}}</a>
+        · <span am-time-ago="$ctrl.cluster.discussions[0].createdAt"></span>
+      </p>
+      <div class="ph-component-body-container">
+        <div ng-if="!$ctrl.cluster.discussions[0].body" class="ph-component-discussion-title ph-xs-margin-bottom">
           <mathjax body="$ctrl.cluster.discussions[0].title"></mathjax>
-        </p>
-        <kramjax
-          body="$ctrl.cluster.discussions[0].body"
-          class="ph-component-discussion-body"
-        ></kramjax>
+        </div>
+        <div ng-if="$ctrl.cluster.discussions[0].body">
+          <p class="ph-margin-title ph-component-discussion-title ph-no-margin ph-xs-margin-bottom">
+            <mathjax body="$ctrl.cluster.discussions[0].title"></mathjax>
+          </p>
+          <kramjax
+            body="$ctrl.cluster.discussions[0].body"
+            class="ph-component-discussion-body"
+          ></kramjax>
+        </div>
       </div>
     </div>
     <div class="clearfix">

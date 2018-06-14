@@ -32,20 +32,25 @@
       <div class="ph-margin-row-content">
         <!-- view original comment -->
         <div ng-if="!$ctrl.editing" class="clearfix">
-          <p class="ph-xs-margin-bottom ph-margin-info">
-            <a href="./users/{{$ctrl.discussion.author.account.username}}">
-              {{$ctrl.discussion.author.displayName}}</a>
-            · <span am-time-ago="$ctrl.discussion.createdAt"></span>
+          <p ng-if="$ctrl.discussion.deleted" class="ph-margin-info">
+            <em>Contribution has been deleted. Reason: {{$ctrl.discussion.deletedReason}}.</em>
           </p>
-          <div class="ph-margin-body ph-xs-margin-bottom">
-            <div ng-if="!$ctrl.discussion.body">
-              <mathjax body="$ctrl.discussion.title"></mathjax>
-            </div>
-            <div ng-if="$ctrl.discussion.body">
-              <p class="ph-margin-title ph-no-margin ph-xs-margin-bottom">
+          <div ng-if="!$ctrl.discussion.deleted">
+            <p class="ph-xs-margin-bottom ph-margin-info">
+              <a href="./users/{{$ctrl.discussion.author.account.username}}">
+                {{$ctrl.discussion.author.displayName}}</a>
+              · <span am-time-ago="$ctrl.discussion.createdAt"></span>
+            </p>
+            <div class="ph-margin-body ph-xs-margin-bottom">
+              <div ng-if="!$ctrl.discussion.body">
                 <mathjax body="$ctrl.discussion.title"></mathjax>
-              </p>
-              <kramjax body="$ctrl.discussion.body"></kramjax>
+              </div>
+              <div ng-if="$ctrl.discussion.body">
+                <p class="ph-margin-title ph-no-margin ph-xs-margin-bottom">
+                  <mathjax body="$ctrl.discussion.title"></mathjax>
+                </p>
+                <kramjax body="$ctrl.discussion.body"></kramjax>
+              </div>
             </div>
           </div>
           <div class="pull-right">
@@ -58,7 +63,7 @@
             >
               <discussion-share-icon discussion="$ctrl.discussion"></discussion-share-icon>
             </div>
-            <div class="btn-group" uib-dropdown>
+            <div ng-if="!$ctrl.discussion.deleted" class="btn-group" uib-dropdown>
               <button class="btn btn-link btn-xs"
                 uib-dropdown-toggle
                 uib-tooltip="Options"
