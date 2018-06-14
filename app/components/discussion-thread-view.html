@@ -2,17 +2,25 @@
   <div class="row">
     <div class="col-md-9 col-md-offset-3">
       <h3 class="ph-no-margin-top">
+        <em ng-if="$ctrl.discussion.deleted">Deleted discussion</em>
         <inline-editable
+          ng-if="!$ctrl.discussion.deleted"
           content="$ctrl.discussion.title"
           can-edit="$ctrl.auth.user.id === $ctrl.discussion.author.id"
           on-submit="$ctrl.updateDiscussion({title: content})"
           >
         </inline-editable>
       </h3>
-      <a href="./users/{{$ctrl.discussion.author.account.username}}">
-        {{$ctrl.discussion.author.displayName}}</a>
-      opened this discussion
-      <span am-time-ago="$ctrl.discussion.createdAt"></span>
+      <span ng-if="$ctrl.discussion.deleted">
+        <em>The first contribution to this discussion has been deleted (reason: {{$ctrl.discussion.deletedReason}})</em>
+      </span>
+      <span ng-if="!$ctrl.discussion.deleted">
+        <a
+          href="./users/{{$ctrl.discussion.author.account.username}}"
+        >{{$ctrl.discussion.author.displayName}}</a>
+        opened this discussion
+        <span am-time-ago="$ctrl.discussion.createdAt"></span>
+      </span>
       <span ng-if="$ctrl.discussion.replies.length == 1">
         &middot; {{$ctrl.discussion.replies.length}} reply
       </span>

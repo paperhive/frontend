@@ -10,9 +10,13 @@ export default function(app) {
       $scope.$watchCollection('$ctrl.discussion.replies', () => {
         if (!$ctrl.discussion) return;
 
-        $scope.participants = map($ctrl.discussion.replies, 'author');
+        $scope.participants = $ctrl.discussion.replies
+          .filter(reply => !reply.deleted)
+          .map(reply => reply.author);
         // prepend original annotation author
-        $scope.participants.unshift($ctrl.discussion.author);
+        if (!$ctrl.discussion.deleted) {
+          $scope.participants.unshift($ctrl.discussion.author);
+        }
 
         // make list unique w.r.t. id
         $scope.participants = uniqBy($scope.participants, 'id');

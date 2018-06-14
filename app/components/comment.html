@@ -6,36 +6,41 @@
 
 <div class="panel panel-default">
   <div class="panel-heading clearfix">
-    <a href="./users/{{comment.author.account.username}}">
-      {{comment.author.displayName}}</a>
-    commented
-    <span am-time-ago="comment.createdAt"></span>
-    <span ng-if="comment.createdAt !== comment.updatedAt">
-      <em class="text-muted">(edited <span am-time-ago="comment.updatedAt"></span>)</em>
-    </span>
-    <span
-      class="pull-right"
-      ng-show="auth.user.id === comment.author.id && !editMode"
-      >
-      <button
-        class="btn btn-link ph-no-padding-top ph-no-padding-bottom"
-        ng-disabled="submitting"
-        ng-click="editMode = true"
+    <div ng-if="comment.deleted">
+      <em>This contribution has been deleted. Reason: {{comment.deletedReason}}.</em>
+    </div>
+    <div ng-if="!comment.deleted">
+      <a href="./users/{{comment.author.account.username}}">
+        {{comment.author.displayName}}</a>
+      commented
+      <span am-time-ago="comment.createdAt"></span>
+      <span ng-if="comment.createdAt !== comment.updatedAt">
+        <em class="text-muted">(edited <span am-time-ago="comment.updatedAt"></span>)</em>
+      </span>
+      <span
+        class="pull-right"
+        ng-show="auth.user.id === comment.author.id && !editMode"
         >
-        <i class="fa fa-pencil"></i>
-      </button>
-      <button
-        ng-if="deletable && auth.user.id === comment.author.id"
-        class="btn btn-link ph-no-padding-top ph-no-padding-bottom"
-        confirmed-click="delete()"
-        ng-disabled="submitting"
-        ng-confirm-click="Really delete reply?"
-        >
-        <i class="fa fa-remove"></i>
-      </button>
-    </span>
+        <button
+          class="btn btn-link ph-no-padding-top ph-no-padding-bottom"
+          ng-disabled="submitting"
+          ng-click="editMode = true"
+          >
+          <i class="fa fa-pencil"></i>
+        </button>
+        <button
+          ng-if="deletable && auth.user.id === comment.author.id"
+          class="btn btn-link ph-no-padding-top ph-no-padding-bottom"
+          confirmed-click="delete()"
+          ng-disabled="submitting"
+          ng-confirm-click="Really delete reply?"
+          >
+          <i class="fa fa-remove"></i>
+        </button>
+      </span>
+    </div>
   </div>
-  <div class="panel-body">
+  <div ng-if="!comment.deleted" class="panel-body">
     <form class="clearfix"
       name="commentForm"
       ng-if="editMode"
@@ -86,9 +91,6 @@
     <kramjax
       ng-if="!editMode && comment.body"
       body="comment.body"
-      ></kramjax>
-    <em ng-if="!comment.body" class="text-muted">
-      No description provided.
-    </em>
+    ></kramjax>
   </div>
 </div>
