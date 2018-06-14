@@ -6,8 +6,8 @@ export default function(app) {
       user: '<',
     },
     controller: [
-      '$scope', '$http', 'authService', 'config', 'notificationService',
-      function($scope, $http, authService, config, notificationService) {
+      '$scope', '$http', '$uibModal', 'authService', 'config', 'notificationService',
+      function($scope, $http, $uibModal, authService, config, notificationService) {
         const ctrl = this;
 
         ctrl.setting = {};
@@ -47,8 +47,12 @@ export default function(app) {
               ctrl.setting.succeeded = false;
             },
           );
-      };
+        };
+
+        ctrl.openDeleteAccountModal = function() {
+          $uibModal.open({component: 'account-delete-modal'});
+        };
     }],
     template: require('./settings-profile.html'),
   });
-};
+}

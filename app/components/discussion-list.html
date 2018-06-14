@@ -22,7 +22,13 @@
               </span>
             </a>
             <h4>
-              <a href=".{{'documentItem.discussion.thread' | routeSegmentUrl:{discussion: discussion.id} }}"
+              <a
+                ng-if="discussion.deleted"
+                href=".{{'documentItem.discussion.thread' | routeSegmentUrl:{discussion: discussion.id} }}"
+              ><em>Deleted discussion</em></a>
+              <a
+                ng-if="!discussion.deleted"
+                href=".{{'documentItem.discussion.thread' | routeSegmentUrl:{discussion: discussion.id} }}"
               ><mathjax body="discussion.title"></mathjax></a>
               <small>
                 <i ng-show="!discussion.channel"
@@ -34,13 +40,8 @@
                   uib-tooltip="{{$ctrl.channelService.channelsById[discussion.channel].name}}"
                 ></i>
               </small>
-              <ul ng-if="discussion.tags.length > 0" class="ph-tags list-inline">
-                <li ng-repeat="tag in discussion.tags">
-                  <a href="#" class="btn btn-default">{{tag}}</a>
-                </li>
-              </ul>
             </h4>
-            <span class="ph-discussion-subtitle">
+            <span class="ph-discussion-subtitle" ng-if="!discussion.deleted">
               opened <span am-time-ago="discussion.createdAt"></span>
               by
               <a href="./users/{{discussion.author.account.username}}">
