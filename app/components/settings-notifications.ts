@@ -34,8 +34,10 @@ export default function(app) {
           ...personUpdate.account.setting,
           emailNotificationFrequency: this.emailNotificationFrequency,
         };
+        this.saving = true;
         this.peopleApi.update(this.authService.user.id, personUpdate)
-          .then(result => console.log(result))
+          .then(person => this.authService.user = person)
+          .finally(() => this.saving = false);
       }
     },
     template: require('./settings-notifications.html'),
