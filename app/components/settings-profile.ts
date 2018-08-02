@@ -51,4 +51,4 @@ export default function(app) {
     }],
     template: require('./settings-profile.html'),
   });
-};
+}
