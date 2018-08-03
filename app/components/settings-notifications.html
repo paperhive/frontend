@@ -1,0 +1,80 @@
+<p>
+  PaperHive notifies you about new activity on documents you follow and
+  in discussions and channels you participate in. You can choose how
+  often you want to receive such notifications via email.
+</p>
+<form name="notificationForm">
+  <!--emailNotificationsFrequency-->
+  <div class="form-group">
+    <label for="emailNotificationFrequency" class="col-sm-3 control-label">
+      Email notification frequency
+    </label>
+    <div class="col-sm-8">
+      <div class="radio">
+        <label>
+          <input
+            type="radio"
+            name="emailNotificationFrequency"
+            id="emailNotificationFrequencyImmediately"
+            ng-model="$ctrl.emailNotificationFrequency"
+            value="immediately"
+          >
+          Immediately<br>
+          <span class="text-muted small">You will receive email notifications instantly.</span>
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input
+            type="radio"
+            name="emailNotificationFrequency"
+            id="emailNotificationFrequencyDaily"
+            ng-model="$ctrl.emailNotificationFrequency"
+            value="daily"
+          >
+          Daily<br>
+          <span class="text-muted small">You will receive at most one email per day with a summary of all notifications.</span>
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input
+            type="radio"
+            name="emailNotificationFrequency"
+            id="emailNotificationFrequencyDaily"
+            ng-model="$ctrl.emailNotificationFrequency"
+            value="weekly"
+          >
+          Weekly<br>
+          <span class="text-muted small">You will receive at most one email per week with a summary of all notifications.</span>
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input
+            type="radio"
+            name="emailNotificationFrequency"
+            id="emailNotificationFrequencyDaily"
+            ng-model="$ctrl.emailNotificationFrequency"
+            value="never"
+          >
+          Never<br>
+          <span class="text-muted small">You will never receive email notifications.</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!--save-->
+  <!-- see vertical alignment: http://stackoverflow.com/a/25517025/4419582 -->
+  <div class="row ph-vertical-align">
+    <div class="col-sm-2 col-sm-offset-3">
+      <button ng-click="$ctrl.save()" class="btn btn-primary"
+          ng-disabled="$ctrl.saving">
+        <i class="fa fa-fw fa-check" ng-show="!$ctrl.saving"></i>
+        <i class="fa fa-fw fa-spinner fa-spin" ng-show="$ctrl.saving"></i>
+        Save
+      </button>
+    </div>
+  </div>
+</form>

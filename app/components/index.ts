@@ -94,6 +94,7 @@ import searchDropdown from './search-dropdown';
 import settings from './settings';
 import settingsAccounts from './settings-accounts';
 import settingsEmail from './settings-email';
+import settingsNotifications from './settings-notifications';
 import settingsProfile from './settings-profile';
 import signup from './signup';
 import subscribe from './subscribe';
@@ -200,6 +201,7 @@ export default function(app) {
   settings(app);
   settingsAccounts(app);
   settingsEmail(app);
+  settingsNotifications(app);
   settingsProfile(app);
   signup(app);
   subscribe(app);
