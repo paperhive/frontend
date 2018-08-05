@@ -8,14 +8,9 @@ metadata:
     branch: "$PAPERHIVE_BRANCH"
     commit: "$PAPERHIVE_COMMIT"
   annotations:
-    kubernetes.io/ingress.class: "nginx"
-    kubernetes.io/tls-acme: "true"
-    ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: "traefik"
+    traefik.ingress.kubernetes.io/rule-type: PathPrefixStrip
 spec:
-  tls:
-  - secretName: dev-paperhive-org
-    hosts:
-    - dev.paperhive.org
   rules:
   - host: dev.paperhive.org
     http:

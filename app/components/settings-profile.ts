@@ -1,4 +1,5 @@
 import {cloneDeep, forEach} from 'lodash';
+import { createPersonUpdate } from '../utils/people';
 
 export default function(app) {
   app.component('settingsProfile', {
@@ -13,18 +14,7 @@ export default function(app) {
         ctrl.setting = {};
 
         ctrl.saveRaw = () => {
-          const obj = cloneDeep(ctrl.user);
-
-          // TODO revisit. whitelist?
-          // remove all keys which we are not allowed to set
-          const deleteKeys = ['id', 'gravatarMd5', 'firstSignin',
-            'createdAt', 'updatedAt', 'externalIds'];
-          forEach(deleteKeys, function(key) { delete obj[key]; });
-
-          delete obj.account.createdAt;
-
-          // save
-          return $http.put(config.apiUrl + '/people/' + ctrl.user.id, obj);
+          return $http.put(config.apiUrl + '/people/' + ctrl.user.id, createPersonUpdate(ctrl.user));
         };
 
         // save to api
