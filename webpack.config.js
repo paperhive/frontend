@@ -5,7 +5,10 @@ const path = require('path');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const webpack = require('webpack');
 
-const config = require('./config.json');
+const paperHiveConfig = {
+  apiUrl: process.env.PAPERHIVE_API_URL || 'https://staging.paperhive.org/api',
+  baseHref: process.env.PAPERHIVE_BASE_HREF || '/',
+};
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -138,8 +141,7 @@ const webpackConfig = {
     ),
     new HtmlWebpackPlugin({
       template: './app/index.html',
-      config,
-      dev: process.env.NODE_ENV !== 'production'
+      paperHiveConfig,
     }),
     new webpack.ProvidePlugin({
       'jQuery': 'jquery', // for javascript-detect-element-resize
