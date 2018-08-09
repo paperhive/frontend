@@ -1,6 +1,6 @@
 /*!
  * PaperHive (https://paperhive.org)
- * Copyright 2014-2017 André Gaul <andre@paperhive.org>,
+ * Copyright 2014-2018 André Gaul <andre@paperhive.org>,
  *                     Nico Schlömer <nico@paperhive.org>
  * Licensed under GPL3
  * (https://github.com/paperhive/paperhive-frontend/blob/master/LICENSE)
