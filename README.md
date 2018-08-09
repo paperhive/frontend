@@ -9,16 +9,23 @@
 * nodejs and npm (included in nodejs): the easies way to install nodejs is via
   [nvm](https://github.com/creationix/nvm)
 
+#### Configuration
+
+The build (`npm run build`) and development (`npm run watch`) scripts respect
+these optional environment variables that you might want to change:
+
+* `PAPERHIVE_API_URL` (optional): the PaperHive API to use.
+  Defaults to `https://dev.paperhive.org/master`.
+* `PAPERHIVE_BASE_HREF` (optional): the base path where the frontend is
+  served. Defaults to `/`.
+
 #### Build
 ```
 git clone git@github.com:paperhive/paperhive-frontend.git --recursive
 cd paperhive-frontend
 npm install
-cp config.json.default config.json
-```
-Adapt `config.json` to your needs and finally run:
-```
 npm run build
+
 ```
 Upon completion, the files for deployment are placed in the directory `build/`.
 
