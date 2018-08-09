@@ -6,7 +6,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const webpack = require('webpack');
 
 const paperHiveConfig = {
-  apiUrl: process.env.PAPERHIVE_API_URL || 'https://staging.paperhive.org/api',
+  apiUrl: process.env.PAPERHIVE_API_URL || 'https://dev.paperhive.org/master/api',
   baseHref: process.env.PAPERHIVE_BASE_HREF || '/',
 };
 
