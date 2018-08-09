@@ -2,7 +2,7 @@ FROM nginx
 ENV \
   PRERENDER_TOKEN="missing_token" \
   PAPERHIVE_BASE_HREF="/" \
-  PAPERHIVE_API_URL="https://dev.paperhive.org/master/api"
+  PAPERHIVE_API_URL="https://dev.paperhive.org/api"
 
 COPY build /frontend/html
 COPY build/index.html /frontend/templates/index.html

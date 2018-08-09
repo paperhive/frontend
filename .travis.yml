@@ -21,7 +21,7 @@ script:
   # build docker image
   - docker build -t frontend .
   # run docker container for e2e tests
-  - docker run -d --rm --name frontend -p 8080:80 -e PAPERHIVE_API_URL=https://dev.paperhive.org/backend/master frontend
+  - docker run -d --rm --name frontend -p 8080:80 frontend
   - npm test
   - docker stop frontend
 after_success:
