@@ -67,7 +67,7 @@ export const paperhive = module(
       'angulartics.google.analytics',
     ],
   )
-  .constant('config', (<any> window).paperhiveConfig)
+  .constant('config', (window as any).paperHiveConfig)
   ;
 
 config(paperhive);

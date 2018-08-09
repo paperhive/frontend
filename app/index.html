@@ -3,8 +3,8 @@
 <html lang="en" ng-app="paperhive" ng-strict-di>
   <head>
     <!-- runtime config (overwritten by docker start script) -->
-    <base href="${htmlWebpackPlugin.options.config.baseHref}">
-    <script>window.paperhiveConfig = ${JSON.stringify(htmlWebpackPlugin.options.config)};</script>
+    <base href="${htmlWebpackPlugin.options.paperHiveConfig.baseHref}">
+    <script>window.paperHiveConfig = ${JSON.stringify(htmlWebpackPlugin.options.paperHiveConfig)};</script>
 
     <title data-ng-bind="metaService.data.title">PaperHive</title>
 
