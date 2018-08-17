@@ -99,7 +99,7 @@ const webpackConfig = {
       },
       {
         // transpile ES6 dependencies with babel
-        include: ['srch']
+        include: ['srch', 'pretty-bytes']
           .map(mod => path.resolve(__dirname, `./node_modules/${mod}`)),
         test: /\.js/,
         loader: 'babel-loader',

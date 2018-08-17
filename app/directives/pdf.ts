@@ -103,7 +103,7 @@ function getRectanglesSelector(range, container, restoreSelection = true) {
   const rects = textNodes.map(node => {
     const $node = jquery(node);
     const $span = $node.wrap('<span/>').parent();
-    const rect = $span.get(0).getBoundingClientRect();
+    const rect = ($span.get(0) as HTMLElement).getBoundingClientRect();
     $node.unwrap();
 
     return {
