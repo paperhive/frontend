@@ -1,7 +1,7 @@
 import { copy } from 'angular';
 import { assign, clone, cloneDeep, find, forEach, isArray, isEqual, pickBy } from 'lodash';
 
-import { isDocumentItemSharedWithUser, groupDocumentItemsByRevision } from '../utils/document-items';
+import { isDocumentItemSharedWithUser, postProcessHits } from '../utils/document-items';
 
 require('./search.less');
 
@@ -280,17 +280,6 @@ class SelectCtrl {
     if (!item) throw new Error('invalid parameter');
     this.select(item);
   }
-}
-
-function postProcessHits(hits) {
-  return hits.map(hit => {
-    const groupHitsByRevision = groupDocumentItemsByRevision(hit.groupHits);
-    return {
-      ...hit,
-      revisionTopHitDocumentItem: groupHitsByRevision[hit.documentItem.revision][0],
-      groupHitsByRevision,
-    };
-  });
 }
 
 export default function(app) {

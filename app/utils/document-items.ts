@@ -151,3 +151,14 @@ export function groupDocumentItemsByRevision(documentItems) {
   });
   return byRevision;
 }
+
+export function postProcessHits(hits) {
+  return hits.map(hit => {
+    const groupHitsByRevision = groupDocumentItemsByRevision(hit.groupHits);
+    return {
+      ...hit,
+      revisionTopHitDocumentItem: groupHitsByRevision[hit.documentItem.revision][0],
+      groupHitsByRevision,
+    };
+  });
+}
