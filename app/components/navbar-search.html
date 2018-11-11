@@ -12,7 +12,7 @@
       name="srch-term"
       id="srch-term"
       ng-model="search.body"
-      uib-typeahead="hit as hit.documentItem.metadata.title for hit in phSearch($viewValue, 5)"
+      uib-typeahead="hit as hit.revisionTopHitDocumentItem.metadata.title for hit in phSearch($viewValue, 5)"
       typeahead-on-select="goToDocument($item, $model, $label)"
       typeahead-template-url="{{navbarSearchItemUrl}}"
       ng-keypress="($event.which === 13) && showAllResults(search.body)"

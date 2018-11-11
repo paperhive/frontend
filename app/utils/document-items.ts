@@ -120,3 +120,45 @@ export function isDocumentItemSharedWithUser(documentItem, user) {
     && user
     && documentItem.channelShares.find(share => share.person !== user.id);
 }
+
+function getDocumentItemScore(documentItem) {
+  switch (documentItem.remote.type) {
+    case 'upload':
+      return 3;
+    case 'berghahnBooks':
+    case 'langsci':
+    case 'transcript':
+      return 2;
+    case 'crossref':
+      return 1;
+    default:
+      return 0;
+  }
+}
+
+function sortRevisionDocumentItems(documentItems) {
+  return documentItems.sort((a, b) => getDocumentItemScore(b) - getDocumentItemScore(a));
+}
+
+export function groupDocumentItemsByRevision(documentItems) {
+  const byRevision = {};
+  documentItems.forEach(documentItem => {
+    const { revision } = documentItem;
+    byRevision[revision] = [...(byRevision[revision] || []), documentItem];
+  });
+  Object.keys(byRevision).forEach(revision => {
+    byRevision[revision] = sortRevisionDocumentItems(byRevision[revision]);
+  });
+  return byRevision;
+}
+
+export function postProcessHits(hits) {
+  return hits.map(hit => {
+    const groupHitsByRevision = groupDocumentItemsByRevision(hit.groupHits);
+    return {
+      ...hit,
+      revisionTopHitDocumentItem: groupHitsByRevision[hit.documentItem.revision][0],
+      groupHitsByRevision,
+    };
+  });
+}

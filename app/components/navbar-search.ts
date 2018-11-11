@@ -1,4 +1,4 @@
-import { isDocumentItemSharedWithUser } from '../utils/document-items';
+import { isDocumentItemSharedWithUser, postProcessHits } from '../utils/document-items';
 
 const navbarSearchItemUrl = require('!ngtemplate-loader?relativeTo=/app!html-loader!./navbar-search-item.html');
 
@@ -23,7 +23,7 @@ export default function(app) {
           })
           .then(
             function(response) {
-              return response.data.hits;
+              return postProcessHits(response.data.hits);
             },
             function(response) {
               notificationService.notifications.push({
@@ -38,7 +38,7 @@ export default function(app) {
         $scope.isSharedWithYou = documentItem => isDocumentItemSharedWithUser(documentItem, authService.user);
 
         $scope.goToDocument = function(hit, model, label) {
-          const url = $routeSegment.getSegmentUrl('documentItem', {documentItem: hit.documentItem.id});
+          const url = $routeSegment.getSegmentUrl('documentItem', {documentItem: hit.revisionTopHitDocumentItem.id});
           $location.url(url);
           $scope.search.body = '';
         };

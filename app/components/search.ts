@@ -1,7 +1,7 @@
 import { copy } from 'angular';
 import { assign, clone, cloneDeep, find, forEach, isArray, isEqual, pickBy } from 'lodash';
 
-import { isDocumentItemSharedWithUser } from '../utils/document-items';
+import { isDocumentItemSharedWithUser, postProcessHits } from '../utils/document-items';
 
 require('./search.less');
 
@@ -467,6 +467,7 @@ export default function(app) {
         const documentsParams = assign(
           {
             groupBy: 'document',
+            groupHits: 'true',
             limit: this.searchFetchLimit,
           },
           this.searchParams,
@@ -510,7 +511,7 @@ export default function(app) {
           .then(
             response => {
               this.searchTotal = response.data.totalItemCount;
-              copy(response.data.hits, this.searchHits);
+              copy(postProcessHits(response.data.hits), this.searchHits);
             },
             response => {
               // request cancelled?
@@ -549,7 +550,7 @@ export default function(app) {
         )
           .then(
             response => {
-              this.searchHits.push(...response.data.hits);
+              this.searchHits.push(...postProcessHits(response.data.hits));
               if (response.data.hits.length < this.searchFetchLimit) {
                 this.searchHitsComplete = true;
               }
