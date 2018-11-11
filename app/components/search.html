@@ -169,29 +169,29 @@
     <div class="col-md-8">
       <div class="ph-lg-margin-top ph-fade-in ph-fade-out ph-search-hit" ng-repeat="hit in $ctrl.searchHits">
         <h4>
-          <a href="./documents/items/{{hit.documentItem.id}}" title="{{hit.documentItem.metadata.title}}">
-            <mathjax body="hit.documentItem.metadata.title"></mathjax>
+          <a href="./documents/items/{{hit.revisionTopHitDocumentItem.id}}" title="{{hit.revisionTopHitDocumentItem.metadata.title}}">
+            <mathjax body="hit.revisionTopHitDocumentItem.metadata.title"></mathjax>
           </a>
         </h4>
         <p>
-          <span ng-repeat="author in hit.documentItem.metadata.authors">
+          <span ng-repeat="author in hit.revisionTopHitDocumentItem.metadata.authors">
             {{author.name}}{{$last ? '' : ', '}}
           </span>
           <small class="text-muted ph-sm-margin-left">
-            {{hit.documentItem.metadata.publishedAt | date: 'yyyy'}}
+            {{hit.revisionTopHitDocumentItem.metadata.publishedAt | date: 'yyyy'}}
           </small>
         </p>
         <p class="small">
-          <span ng-show="!hit.documentItem.public" class="label label-info">Private</span>
-          <span ng-show="$ctrl.authService.user && hit.documentItem.owner === $ctrl.authService.user.id" class="label label-info">Owner</span>
-          <span ng-show="$ctrl.isSharedWithYou(hit.documentItem)" class="label label-info">Shared with you</span>
-          <span ng-show="hit.documentItem.public" class="label label-success">Public</span>
-          <span ng-show="hit.documentItem.metadata.isOpenAccess" class="label label-success">Open Access</span>
+          <span ng-show="!hit.revisionTopHitDocumentItem.public" class="label label-info">Private</span>
+          <span ng-show="$ctrl.authService.user && hit.revisionTopHitDocumentItem.owner === $ctrl.authService.user.id" class="label label-info">Owner</span>
+          <span ng-show="$ctrl.isSharedWithYou(hit.revisionTopHitDocumentItem)" class="label label-info">Shared with you</span>
+          <span ng-show="hit.revisionTopHitDocumentItem.public" class="label label-success">Public</span>
+          <span ng-show="hit.revisionTopHitDocumentItem.metadata.isOpenAccess" class="label label-success">Open Access</span>
         </p>
         <div class="ph-sm-margin-top">
           <small>
             <mathjax
-              body="(hit.documentItem.metadata.abstract | limitTo: 220) + (hit.documentItem.metadata.abstract.length > 220 ? '&hellip;' : '')"
+              body="(hit.revisionTopHitDocumentItem.metadata.abstract | limitTo: 220) + (hit.revisionTopHitDocumentItem.metadata.abstract.length > 220 ? '&hellip;' : '')"
             ></mathjax>
           </small>
         </div>

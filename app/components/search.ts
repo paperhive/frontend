@@ -1,7 +1,7 @@
 import { copy } from 'angular';
 import { assign, clone, cloneDeep, find, forEach, isArray, isEqual, pickBy } from 'lodash';
 
-import { isDocumentItemSharedWithUser } from '../utils/document-items';
+import { isDocumentItemSharedWithUser, groupDocumentItemsByRevision } from '../utils/document-items';
 
 require('./search.less');
 
@@ -282,6 +282,17 @@ class SelectCtrl {
   }
 }
 
+function postProcessHits(hits) {
+  return hits.map(hit => {
+    const groupHitsByRevision = groupDocumentItemsByRevision(hit.groupHits);
+    return {
+      ...hit,
+      revisionTopHitDocumentItem: groupHitsByRevision[hit.documentItem.revision][0],
+      groupHitsByRevision,
+    };
+  });
+}
+
 export default function(app) {
   app.component('search', {
     controller: class SearchCtrl {
@@ -467,6 +478,7 @@ export default function(app) {
         const documentsParams = assign(
           {
             groupBy: 'document',
+            groupHits: 'true',
             limit: this.searchFetchLimit,
           },
           this.searchParams,
@@ -510,7 +522,7 @@ export default function(app) {
           .then(
             response => {
               this.searchTotal = response.data.totalItemCount;
-              copy(response.data.hits, this.searchHits);
+              copy(postProcessHits(response.data.hits), this.searchHits);
             },
             response => {
               // request cancelled?
@@ -549,7 +561,7 @@ export default function(app) {
         )
           .then(
             response => {
-              this.searchHits.push(...response.data.hits);
+              this.searchHits.push(...postProcessHits(response.data.hits));
               if (response.data.hits.length < this.searchFetchLimit) {
                 this.searchHitsComplete = true;
               }
