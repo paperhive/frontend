@@ -1,6 +1,6 @@
 {
   "name": "paperhive-frontend",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "PaperHive frontend",
   "scripts": {
     "build": "npm run clean && npm-run-all -s build:*",
