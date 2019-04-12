@@ -426,7 +426,10 @@ export default function(app) {
                 documentItemsApi
                   .getByExternalDocumentId(type, id)
                   .then(({documentItems}) => {
-                    const url = $routeSegment.getSegmentUrl('documentItem', {documentItem: documentItems[0].id});
+                    const sortedDocumentItems = documentItems
+                      .sort((a, b) => a.metadata.publishedAt <= b.metadata.publishedAt ? -1 : 1)
+                      .reverse();
+                    const url = $routeSegment.getSegmentUrl('documentItem', {documentItem: sortedDocumentItems[0].id});
                     $location.path(url);
                   });
               },
